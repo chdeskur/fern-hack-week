@@ -52,7 +52,8 @@ export const WebsocketMessageAccordionItem: FC<
         <span className="fern-web-socket-trigger-data">
           {JSON.stringify(message.data)}
         </span>
-        {message.displayName != null || message.type != null ? (
+        {message.displayName != null ||
+        (message.type != null && message.type !== "") ? (
           <span className="fern-web-socket-type">
             <span className="fern-web-socket-badge">
               {message.displayName ?? message.type}
@@ -60,15 +61,15 @@ export const WebsocketMessageAccordionItem: FC<
           </span>
         ) : null}
 
+        <ChevronDown
+          className="fern-web-socket-chevron group-data-[state=open]:rotate-180"
+          aria-hidden
+        />
+
         <CopyToClipboardButton
           className="fern-web-socket-copy"
           content={() => JSON.stringify(message.data, null, 2)}
           onClick={(e) => e.stopPropagation()}
-        />
-
-        <ChevronDown
-          className="fern-web-socket-chevron group-data-[state=open]:rotate-180"
-          aria-hidden
         />
       </Accordion.Trigger>
       <Accordion.Content
