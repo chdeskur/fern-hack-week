@@ -20,7 +20,6 @@ import {
   SEARCH_INDEX,
   SearchClientRoot,
 } from "@fern-docs/search-ui";
-import { VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 
 import { Feedback } from "@/components/feedback/Feedback";
@@ -30,6 +29,7 @@ import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
+import { useCurrentVersionId } from "@/state/navigation";
 import {
   searchDialogOpenAtom,
   searchInitializedAtom,
@@ -59,11 +59,11 @@ const askAiAtom = atom(false);
 
 export const SearchV2 = React.memo(function SearchV2({
   domain,
-  version,
 }: {
   domain: string;
-  version?: VersionSwitcherInfo;
 }) {
+  const currentVersion = useCurrentVersionId();
+
   const isDarkCodeEnabled = useIsDarkCode();
   const userToken = useAlgoliaUserToken();
   const user = useFernUser();
@@ -160,7 +160,9 @@ export const SearchV2 = React.memo(function SearchV2({
       indexName={SEARCH_INDEX}
       fetchFacets={facetFetcher}
       authenticatedUserToken={user?.email}
-      initialFilters={{ "version.title": version?.title }}
+      initialFilters={
+        currentVersion != null ? { "version.title": currentVersion } : undefined
+      }
       analyticsTags={["search-v2-dialog"]}
     >
       <DesktopSearchDialog open={open} onOpenChange={setOpen}>
