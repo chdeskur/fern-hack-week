@@ -17,6 +17,29 @@ import { CurlSnippetBuilder } from "./builders/curl";
 import { PythonRequestSnippetBuilder } from "./builders/python";
 import { TypescriptFetchSnippetBuilder } from "./builders/typescript";
 
+// Mock File class for testing
+class MockFile {
+  constructor(
+    public readonly name: string,
+    public readonly type: string,
+    public readonly lastModified: number = Date.now()
+  ) {}
+
+  // Required File interface properties
+  public readonly size = 0;
+  public readonly webkitRelativePath = "";
+  public readonly arrayBuffer = async () => new ArrayBuffer(0);
+  public readonly slice = () => new Blob();
+  public readonly stream = () => new ReadableStream();
+  public readonly text = async () => "";
+  public readonly bytes = async () => new Uint8Array(0);
+}
+
+// mock file option
+const mockFile = (name: string, type: string): MockFile => {
+  return new MockFile(name, type);
+};
+
 describe("PlaygroundCodeSnippetBuilder", () => {
   const node: EndpointNode = {
     type: "endpoint",
@@ -118,15 +141,61 @@ describe("PlaygroundCodeSnippetBuilder", () => {
     globalHeaders: [],
   };
 
+  const multipartFormState: PlaygroundEndpointRequestFormState = {
+    type: "endpoint",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+    },
+    pathParameters: {
+      test: "hello@example",
+    },
+    queryParameters: {},
+    body: {
+      type: "form-data",
+      value: {
+        file1: {
+          type: "file",
+          value: mockFile("test.txt", "text/plain"),
+        },
+        file2: {
+          type: "fileArray",
+          value: [
+            mockFile("image1.jpg", "image/jpeg"),
+            mockFile("image2.jpg", "image/jpeg"),
+          ],
+        },
+        textField: {
+          type: "json",
+          value: "simple string value",
+        },
+        jsonField: {
+          type: "json",
+          value: {
+            nested: {
+              value: 123,
+            },
+          },
+        },
+      },
+    },
+  };
+
   it("should render curl", () => {
     expect(
-      new CurlSnippetBuilder(context, formState, {}, undefined).build()
+      new CurlSnippetBuilder(context, formState, {}, undefined, false).build()
     ).toMatchSnapshot();
   });
 
   it("should render python", () => {
     expect(
-      new PythonRequestSnippetBuilder(context, formState, {}, undefined).build()
+      new PythonRequestSnippetBuilder(
+        context,
+        formState,
+        {},
+        undefined,
+        false
+      ).build()
     ).toMatchSnapshot();
   });
 
@@ -136,7 +205,20 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         context,
         formState,
         {},
-        undefined
+        undefined,
+        false
+      ).build()
+    ).toMatchSnapshot();
+  });
+
+  it("should render python with multipart form data", () => {
+    expect(
+      new PythonRequestSnippetBuilder(
+        context,
+        multipartFormState,
+        {},
+        undefined,
+        false
       ).build()
     ).toMatchSnapshot();
   });
