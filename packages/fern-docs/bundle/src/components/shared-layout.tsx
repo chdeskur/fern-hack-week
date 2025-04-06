@@ -23,7 +23,7 @@ export default async function SharedLayout({
 }: {
   children: React.ReactNode;
   headertabs: React.ReactNode;
-  sidebar: React.ReactNode;
+  sidebar?: React.ReactNode;
   versionSelect: React.ReactNode;
   loader: DocsLoader;
   logo: React.ReactNode;
