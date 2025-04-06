@@ -5,10 +5,10 @@ import { constructDocsUrlParam } from "@/utils/constructDocsUrlParam";
 import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
 
 import getMyDocsSites from "../../api/get-my-docs-sites/handler";
-import { getCurrentSession } from "../../services/auth0/getCurrentSession";
+import { getCurrentSessionOrThrow } from "../../services/auth0/getCurrentSession";
 
 export default async function Page() {
-  const { session, orgId } = await getCurrentSession();
+  const { session, orgId } = await getCurrentSessionOrThrow();
 
   const { docsSites } = await getMyDocsSites({
     token: session.tokenSet.accessToken,

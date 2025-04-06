@@ -11,40 +11,46 @@ export interface FullSessionData {
   orgId: Auth0OrgID;
 }
 
-export async function getCurrentSession(): Promise<FullSessionData> {
+export async function getCurrentSession(): Promise<
+  FullSessionData | undefined
+> {
   const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
   if (session == null) {
-    throw new Error("Not authenticated");
+    return undefined;
   }
 
   const { orgId, userId } = decodeAccessToken(session.tokenSet.accessToken);
+  if (orgId == null) {
+    return undefined;
+  }
 
   return { session, orgId, userId };
+}
+
+export async function getCurrentSessionOrThrow(): Promise<FullSessionData> {
+  const session = await getCurrentSession();
+  if (session == null) {
+    throw new Error("Not authenticated");
+  }
+  return session;
 }
 
 export function decodeAccessToken(token: string) {
   const jwtPayload = jwt.decode(token);
   if (jwtPayload == null) {
-    throw new Error("JWT payload is not defined");
+    throw new Error("accessToken JWT payload is not defined");
   }
   if (typeof jwtPayload !== "object") {
-    throw new Error("JWT payload is not an object");
+    throw new Error("accessToken JWT payload is not an object");
   }
   if (jwtPayload?.sub == null) {
-    throw new Error("JWT payload does not include 'sub'");
-  }
-
-  const orgId = jwtPayload.org_id;
-  if (orgId == null) {
-    throw new Error("JWT payload does not have org_id");
-  }
-  if (typeof orgId !== "string") {
-    throw new Error("JWT payload's org_id is not a string");
+    throw new Error("accessToken JWT payload does not include 'sub'");
   }
 
   return {
     userId: Auth0UserID(jwtPayload.sub),
-    orgId: Auth0OrgID(orgId),
+    orgId:
+      jwtPayload.org_id != null ? Auth0OrgID(jwtPayload.org_id) : undefined,
   };
 }

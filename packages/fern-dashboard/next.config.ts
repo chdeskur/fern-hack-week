@@ -41,6 +41,9 @@ const nextConfig: NextConfig = {
 
   // so it doesn't cover the theme toggle
   devIndicators: { position: "bottom-right" },
+
+  // This is required to support PostHog trailing slash API requests
+  skipTrailingSlashRedirect: true,
 };
 
 export default nextConfig;

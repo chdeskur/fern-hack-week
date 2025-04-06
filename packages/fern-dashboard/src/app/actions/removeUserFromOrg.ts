@@ -2,7 +2,7 @@
 
 import * as auth0Management from "@/app/services/auth0/management";
 
-import { getCurrentSession } from "../services/auth0/getCurrentSession";
+import { getCurrentSessionOrThrow } from "../services/auth0/getCurrentSession";
 import { Auth0UserID } from "../services/auth0/types";
 
 export async function removeUserFromOrg({
@@ -11,7 +11,7 @@ export async function removeUserFromOrg({
   userIdToRemove: Auth0UserID;
 }) {
   const auth0 = auth0Management.getAuth0ManagementClient();
-  const { userId, orgId } = await getCurrentSession();
+  const { userId, orgId } = await getCurrentSessionOrThrow();
   await auth0Management.ensureUserBelongsToOrg(userId, orgId);
 
   if (userId === userIdToRemove) {

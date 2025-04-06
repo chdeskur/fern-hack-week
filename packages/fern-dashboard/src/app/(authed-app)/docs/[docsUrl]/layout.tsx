@@ -1,4 +1,4 @@
-import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { getCurrentSessionOrThrow } from "@/app/services/auth0/getCurrentSession";
 import { DocsSiteLayout } from "@/components/docs-page/DocsSiteLayout";
 import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
 
@@ -10,7 +10,7 @@ export default async function Layout({
   children: React.JSX.Element;
 }>) {
   const docsUrl = parseDocsUrlParam(await params);
-  const { orgId } = await getCurrentSession();
+  const { orgId } = await getCurrentSessionOrThrow();
 
   return (
     <DocsSiteLayout docsUrl={docsUrl} orgId={orgId}>

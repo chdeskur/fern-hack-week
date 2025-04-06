@@ -1,7 +1,7 @@
 "use server";
 
 import { getAuth0ClientId } from "../services/auth0/auth0";
-import { getCurrentSession } from "../services/auth0/getCurrentSession";
+import { getCurrentSessionOrThrow } from "../services/auth0/getCurrentSession";
 import {
   ensureUserBelongsToOrg,
   getAuth0ManagementClient,
@@ -13,7 +13,7 @@ export async function inviteUserToOrg({
   inviteeEmail: string;
 }) {
   const auth0 = getAuth0ManagementClient();
-  const { session, userId, orgId } = await getCurrentSession();
+  const { session, userId, orgId } = await getCurrentSessionOrThrow();
   await ensureUserBelongsToOrg(userId, orgId);
 
   await auth0.organizations.createInvitation(

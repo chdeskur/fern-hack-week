@@ -1,6 +1,6 @@
 "use server";
 
-import { getCurrentSession } from "../services/auth0/getCurrentSession";
+import { getCurrentSessionOrThrow } from "../services/auth0/getCurrentSession";
 import {
   ensureUserBelongsToOrg,
   getAuth0ManagementClient,
@@ -11,7 +11,7 @@ export async function rescindInvitation({
 }: {
   invitationId: string;
 }) {
-  const { userId, orgId } = await getCurrentSession();
+  const { userId, orgId } = await getCurrentSessionOrThrow();
   await ensureUserBelongsToOrg(userId, orgId);
 
   const auth0 = getAuth0ManagementClient();

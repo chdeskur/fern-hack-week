@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import {
   decodeAccessToken,
-  getCurrentSession,
+  getCurrentSessionOrThrow,
 } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgID, Auth0UserID } from "@/app/services/auth0/types";
 
@@ -22,10 +22,13 @@ export async function maybeGetCurrentSession(
     if (req.headers.get("authorization") != null) {
       const { token } = parseAuthHeader(req);
       const { userId, orgId } = decodeAccessToken(token);
+      if (orgId == null) {
+        throw new Error("accessToken is missing orgId");
+      }
       return { data: { token, userId, orgId } };
     }
 
-    const sessionData = await getCurrentSession();
+    const sessionData = await getCurrentSessionOrThrow();
     return {
       data: {
         token: sessionData.session.tokenSet.accessToken,

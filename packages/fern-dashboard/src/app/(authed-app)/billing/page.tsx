@@ -1,3 +1,13 @@
+import { FeatureFlagged } from "@/components/posthog/FeatureFlagged";
+import { PosthogFeatureFlag } from "@/components/posthog/featureFlags";
+
 export default async function Page() {
-  return <div>billing</div>;
+  return (
+    <FeatureFlagged
+      flag={PosthogFeatureFlag.ENABLE_API_KEYS_PAGE}
+      redirectWhenDisabled
+    >
+      <div>billing</div>
+    </FeatureFlagged>
+  );
 }
