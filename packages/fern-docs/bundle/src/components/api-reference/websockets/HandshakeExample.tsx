@@ -18,7 +18,7 @@ export function HandshakeExample({
   const [baseUrl] = usePlaygroundBaseUrl(channel);
   return (
     <div className="flex px-1 py-3">
-      <table className="min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words font-mono text-sm">
+      <table className="text-body min-w-0 flex-1 shrink table-fixed border-separate border-spacing-x-2 whitespace-normal break-words font-mono text-sm">
         <tbody>
           <tr>
             <td className="text-left align-top">URL</td>
