@@ -1,3 +1,5 @@
+import { uniqBy } from "es-toolkit/array";
+
 import {
   HttpRequestBodyShape,
   TypeDefinition,
@@ -112,4 +114,18 @@ export function shouldRenderInline(
     unknown: () => false,
     _other: () => false,
   });
+}
+
+export function uniqueFiles(files: File[]): readonly File[] | undefined {
+  return uniqBy(files, (f) => `${f.webkitRelativePath}/${f.name}/${f.size}`);
+}
+
+export function isValidFile(file: any): file is File {
+  return (
+    file != null &&
+    typeof file === "object" &&
+    "name" in file &&
+    "size" in file &&
+    "type" in file
+  );
 }

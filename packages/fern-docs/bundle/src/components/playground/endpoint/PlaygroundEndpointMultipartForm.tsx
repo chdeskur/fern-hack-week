@@ -21,6 +21,7 @@ import {
   PlaygroundFormStateBody,
 } from "../types";
 import { formDataFieldIsRequired, getEmptyValueForField } from "../utils";
+import { isValidFile } from "../utils/utils";
 
 interface PlaygroundEndpointMultipartFormProps {
   endpoint: EndpointDefinition;
@@ -104,11 +105,17 @@ export function PlaygroundEndpointMultipartForm({
         setFormDataEntry(key, undefined);
         return;
       } else {
+        // validate files before setting them
+        const validFiles = files.filter(isValidFile);
+        if (validFiles.length === 0) {
+          setFormDataEntry(key, undefined);
+          return;
+        }
         setFormDataEntry(
           key,
           type === "files"
-            ? { type: "fileArray", value: files }
-            : { type: "file", value: files[0] }
+            ? { type: "fileArray", value: validFiles }
+            : { type: "file", value: validFiles[0] }
         );
       }
     },

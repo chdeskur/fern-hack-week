@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 
-import { uniqBy } from "es-toolkit/array";
 import { File, FilePlus, Mic, X } from "lucide-react";
 import prettyBytes from "pretty-bytes";
 
@@ -18,6 +17,7 @@ import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
 
 import { WithLabelInternal } from "../WithLabel";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
+import { isValidFile, uniqueFiles } from "../utils/utils";
 import { PlaygroundAudioControls } from "./PlaygroundAudioControls";
 import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
 
@@ -42,17 +42,18 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
     allowAudioRecording = true,
   }) => {
     // Remove invalid files
-    // TODO: This is a temporary workaround to remove invalid files from the value.
-    // this should be handled in a better way
     useEffect(() => {
       if (value != null) {
         const hasInvalidFiles = value.some((f) => !isValidFile(f));
         if (hasInvalidFiles) {
-          onValueChange(value.filter(isValidFile));
+          // force a re-render to clear the invalid files
+          setTimeout(() => {
+            onValueChange(undefined);
+          }, 0);
         }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [value]);
 
     const [drag, setDrag] = useState(false);
     const ref = useRef<HTMLInputElement>(null);
@@ -189,53 +190,58 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
             </div>
           ) : (
             <div className="divide-border-default divide-y">
-              {value.map((file) => (
-                <div key={file.name} className="flex justify-between px-4 py-2">
-                  <div className="flex min-w-0 shrink items-center gap-2">
-                    <div className="p-1">
-                      <File />
-                    </div>
-                    <span className="inline-flex min-w-0 shrink items-baseline gap-2">
-                      <span className="truncate text-sm">{file.name}</span>
-                      <span className="text-(color:--grayscale-a11) text-xs">
-                        ({prettyBytes(file.size)})
+              {value.map((file) =>
+                isValidFile(file) ? (
+                  <div
+                    key={file.name}
+                    className="flex justify-between px-4 py-2"
+                  >
+                    <div className="flex min-w-0 shrink items-center gap-2">
+                      <div className="p-1">
+                        <File />
+                      </div>
+                      <span className="inline-flex min-w-0 shrink items-baseline gap-2">
+                        <span className="truncate text-sm">{file.name}</span>
+                        <span className="text-(color:--grayscale-a11) text-xs">
+                          ({prettyBytes(file.size)})
+                        </span>
                       </span>
-                    </span>
+                    </div>
+                    <FernButtonGroup className="-mr-2">
+                      {audioUrl && (
+                        <PlaygroundAudioControls audioUrl={audioUrl} />
+                      )}
+                      {!audioUrl && (
+                        <FernButton
+                          text="Change"
+                          onClick={() => ref.current?.click()}
+                          size="small"
+                          variant="minimal"
+                        />
+                      )}
+                      {canRecordAudio && (
+                        <FernButton
+                          icon={<Mic />}
+                          onClick={() => void startRecording()}
+                          size="small"
+                          variant="minimal"
+                        />
+                      )}
+                      <FernButton
+                        icon={<X />}
+                        size="small"
+                        variant="minimal"
+                        onClick={() => {
+                          onValueChange(value.filter((f) => f !== file));
+                          if (ref.current != null) {
+                            ref.current.value = "";
+                          }
+                        }}
+                      />
+                    </FernButtonGroup>
                   </div>
-                  <FernButtonGroup className="-mr-2">
-                    {audioUrl && (
-                      <PlaygroundAudioControls audioUrl={audioUrl} />
-                    )}
-                    {!audioUrl && (
-                      <FernButton
-                        text="Change"
-                        onClick={() => ref.current?.click()}
-                        size="small"
-                        variant="minimal"
-                      />
-                    )}
-                    {canRecordAudio && (
-                      <FernButton
-                        icon={<Mic />}
-                        onClick={() => void startRecording()}
-                        size="small"
-                        variant="minimal"
-                      />
-                    )}
-                    <FernButton
-                      icon={<X />}
-                      size="small"
-                      variant="minimal"
-                      onClick={() => {
-                        onValueChange(value.filter((f) => f !== file));
-                        if (ref.current != null) {
-                          ref.current.value = "";
-                        }
-                      }}
-                    />
-                  </FernButtonGroup>
-                </div>
-              ))}
+                ) : null
+              )}
               {type === "files" && (
                 // TODO: allow multiple recordings
                 <div className="flex justify-end p-4">
@@ -258,17 +264,3 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
 );
 
 PlaygroundFileUploadForm.displayName = "PlaygroundFileUploadForm";
-
-function uniqueFiles(files: File[]): readonly File[] | undefined {
-  return uniqBy(files, (f) => `${f.webkitRelativePath}/${f.name}/${f.size}`);
-}
-
-function isValidFile(file: any): file is File {
-  return (
-    file != null &&
-    typeof file === "object" &&
-    "name" in file &&
-    "size" in file &&
-    "type" in file
-  );
-}
