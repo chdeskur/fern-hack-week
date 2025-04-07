@@ -20,7 +20,6 @@ export abstract class PlaygroundCodeSnippetBuilder {
     this.url = buildEndpointUrl({
       endpoint: context.endpoint,
       pathParameters: formState.pathParameters,
-      queryParameters: formState.queryParameters,
       baseUrl,
     });
   }

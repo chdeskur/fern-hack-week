@@ -1,7 +1,7 @@
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 import { PlaygroundFormDataEntryValue } from "../../types";
-import { buildPath, indentAfter } from "./common";
+import { buildPath, buildUrlWithQueryParams, indentAfter } from "./common";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
 interface PythonRequestParams {
@@ -11,11 +11,10 @@ interface PythonRequestParams {
 }
 
 export class PythonRequestSnippetBuilder extends PlaygroundCodeSnippetBuilder {
-  // TODO: write more tests for this
   #buildRequests({ json, data, files }: PythonRequestParams) {
     return `# ${this.context.node.title} (${this.context.endpoint.method} ${buildPath(this.context.endpoint.path)})
 response = requests.${this.context.endpoint.method.toLowerCase()}(
-  "${this.url}",
+  "${buildUrlWithQueryParams(this.url, this.formState.queryParameters)}",
   headers=${indentAfter(JSON.stringify({ ...this.formState.headers, "Content-Type": undefined }, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
     data != null ? `\n  data=${indentAfter(data, 2, 0)},` : ""
   }${files != null ? `\n  files=${indentAfter(files, 2, 0)},` : ""}

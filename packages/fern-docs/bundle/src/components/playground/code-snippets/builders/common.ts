@@ -18,6 +18,27 @@ export function buildPath(
     .join("");
 }
 
+export function buildUrlWithQueryParams(
+  baseUrl: string,
+  queryParameters: Record<string, unknown>
+): string {
+  const queryParams = Object.entries(queryParameters)
+    .filter(([_, value]) => value != null)
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return value
+          .map(
+            (v) => `${encodeURIComponent(key)}=${encodeURIComponent(String(v))}`
+          )
+          .join("&");
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`;
+    })
+    .join("&");
+
+  return queryParams ? `${baseUrl}?${queryParams}` : baseUrl;
+}
+
 export function indentAfter(
   str: string,
   indent: number,
