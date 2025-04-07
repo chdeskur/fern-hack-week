@@ -22,6 +22,11 @@ jobs:
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
       - name: Promote Deployment
-        run: vercel promote https://dashboard.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+          vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}

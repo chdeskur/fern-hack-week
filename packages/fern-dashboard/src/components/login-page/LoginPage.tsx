@@ -6,6 +6,11 @@ import loginPreview from "../../../public/login-preview.avif";
 import { LoginButton } from "../auth/LoginButton";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
 import { Button } from "../ui/button";
+import { CohereLogo } from "./logos/CohereLogo";
+import { IntercomLogo } from "./logos/IntercomLogo";
+import { PineconeLogo } from "./logos/PineconeLogo";
+import { SquareLogo } from "./logos/SquareLogo";
+import { WebflowLogo } from "./logos/WebflowLogo";
 
 export const LoginPage = () => {
   return (
@@ -69,19 +74,12 @@ export const LoginPage = () => {
             <div className="text-gray-1000 text-center text-sm">
               Giving API superpowers to world-class companies
             </div>
-            <div className="flex justify-center gap-4">
-              <div className="dark:bg-gray-1200 flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black">
-                LOGO
-              </div>
-              <div className="dark:bg-gray-1200 flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black">
-                LOGO
-              </div>
-              <div className="dark:bg-gray-1200 flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black">
-                LOGO
-              </div>
-              <div className="dark:bg-gray-1200 flex w-32 items-center justify-center rounded border border-gray-300 bg-gray-200 py-2 font-bold dark:border-black">
-                LOGO
-              </div>
+            <div className="flex items-center justify-center sm:gap-3 md:gap-6 lg:gap-8">
+              <SquareLogo />
+              <WebflowLogo />
+              <IntercomLogo />
+              <PineconeLogo />
+              <CohereLogo />
             </div>
           </div>
         </div>

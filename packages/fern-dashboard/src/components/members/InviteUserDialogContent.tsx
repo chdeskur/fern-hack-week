@@ -73,6 +73,19 @@ export function InviteUserDialogContent({
         queryKey: ReactQueryKey.orgInvitations(),
       });
     },
+    onSuccess: ({ invitationId }) => {
+      const queryKey = ReactQueryKey.orgInvitations();
+
+      queryClient.setQueryData<inferQueryData<typeof queryKey>>(
+        queryKey,
+        (oldInvitations) =>
+          oldInvitations?.map((invitation) =>
+            invitation.id == null && invitation.inviteeEmail === email
+              ? { ...invitation, id: invitationId }
+              : invitation
+          )
+      );
+    },
   });
 
   const isInviting = inviteUser.isPending;

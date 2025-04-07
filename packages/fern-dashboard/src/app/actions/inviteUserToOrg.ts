@@ -16,7 +16,7 @@ export async function inviteUserToOrg({
   const { session, userId, orgId } = await getCurrentSessionOrThrow();
   await ensureUserBelongsToOrg(userId, orgId);
 
-  await auth0.organizations.createInvitation(
+  const invitation = await auth0.organizations.createInvitation(
     { id: orgId },
     {
       inviter: { name: session.user.name ?? "" },
@@ -25,4 +25,8 @@ export async function inviteUserToOrg({
       send_invitation_email: true,
     }
   );
+
+  return {
+    invitationId: invitation.data.id,
+  };
 }

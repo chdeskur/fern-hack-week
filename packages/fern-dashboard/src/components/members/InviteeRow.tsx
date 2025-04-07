@@ -20,7 +20,7 @@ export function InviteeRow({ invitation }: InviteeRow.Props) {
   const rescind = useMutation({
     mutationFn: async () => {
       if (invitation.id != null) {
-        await rescindInvitation({
+        return await rescindInvitation({
           invitationId: invitation.id,
         });
       }
