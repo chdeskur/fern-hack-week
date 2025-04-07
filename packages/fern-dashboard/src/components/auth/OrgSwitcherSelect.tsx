@@ -3,9 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { GetOrganizations200ResponseOneOfInner } from "auth0";
-
-import { Auth0OrgID } from "@/app/services/auth0/types";
+import { Auth0OrgID, Auth0Organization } from "@/app/services/auth0/types";
 import {
   Select,
   SelectContent,
@@ -15,10 +13,12 @@ import {
 } from "@/components/ui/select";
 import { getLoginUrl } from "@/utils/getLoginUrl";
 
+import { OrgLogo } from "./org-logo/OrgLogo";
+
 export declare namespace OrgSwitcherSelect {
   export interface Props {
     currentOrgId: Auth0OrgID | undefined;
-    organizations: GetOrganizations200ResponseOneOfInner[];
+    organizations: Auth0Organization[];
   }
 }
 
@@ -52,13 +52,16 @@ export const OrgSwitcherSelect = ({
       onValueChange={(value) => void onClickOrg(value as Auth0OrgID)}
       disabled={organizations.length === 0}
     >
-      <SelectTrigger className="min-w-[180px]">
+      <SelectTrigger className="shrink-0 md:min-w-[200px]">
         <SelectValue placeholder="Organization" />
       </SelectTrigger>
       <SelectContent>
         {organizations.map((organization) => (
           <SelectItem key={organization.id} value={organization.id}>
-            {organization.display_name}
+            <OrgLogo organization={organization} />
+            <span className="hidden md:inline">
+              {organization.display_name}
+            </span>
           </SelectItem>
         ))}
       </SelectContent>

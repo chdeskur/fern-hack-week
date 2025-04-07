@@ -6,6 +6,7 @@ import { DocsUrl } from "@/utils/types";
 
 import { Page404 } from "../Page404";
 import { PageHeader } from "../layout/PageHeader";
+import { PosthogFeatureFlags } from "../posthog/feature-flags/flags";
 import { DocsSiteNavBar } from "./DocsSiteNavBar";
 import { useMaybeRedirectToOrgForCurrentDocsUrl } from "./useMaybeRedirectToOrgForCurrentDocsUrl";
 
@@ -13,6 +14,7 @@ export declare namespace DocsSiteLayout {
   export interface Props {
     docsUrl: DocsUrl;
     orgId: Auth0OrgID;
+    featureFlags: PosthogFeatureFlags;
     children: React.JSX.Element;
   }
 }
@@ -20,6 +22,7 @@ export declare namespace DocsSiteLayout {
 export function DocsSiteLayout({
   docsUrl,
   orgId,
+  featureFlags,
   children,
 }: DocsSiteLayout.Props) {
   const { willNotRedirect } = useMaybeRedirectToOrgForCurrentDocsUrl({
@@ -33,7 +36,7 @@ export function DocsSiteLayout({
   }
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col">
+    <div className="flex min-w-0 flex-1 flex-col gap-3">
       <PageHeader
         title={docsUrl}
         titleRightContent={
@@ -46,7 +49,7 @@ export function DocsSiteLayout({
         }
       />
       <div className="flex flex-col gap-4">
-        <DocsSiteNavBar />
+        <DocsSiteNavBar featureFlags={featureFlags} />
         <div className="flex">{children}</div>
       </div>
     </div>

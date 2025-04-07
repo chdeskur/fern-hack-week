@@ -14,6 +14,14 @@ export interface FullSessionData {
 export async function getCurrentSession(): Promise<
   FullSessionData | undefined
 > {
+  const maybeSession = await getCurrentSessionWithoutRequiringOrgId();
+  if (maybeSession?.orgId != null) {
+    return { ...maybeSession, orgId: maybeSession.orgId };
+  }
+  return undefined;
+}
+
+export async function getCurrentSessionWithoutRequiringOrgId() {
   const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
   if (session == null) {
@@ -21,9 +29,6 @@ export async function getCurrentSession(): Promise<
   }
 
   const { orgId, userId } = decodeAccessToken(session.tokenSet.accessToken);
-  if (orgId == null) {
-    return undefined;
-  }
 
   return { session, orgId, userId };
 }

@@ -29,17 +29,18 @@ export async function Header({ session }: Header.Props) {
   const orgId = org_id != null ? Auth0OrgID(org_id) : undefined;
 
   return (
-    <div className="flex justify-between p-4">
-      <div className="flex items-center gap-4">
+    <div className="flex justify-between gap-4 p-4">
+      <div className="flex min-w-0 items-center gap-4">
         <ThemedFernLogo className="w-16" />
         <OrgSwitcher currentOrgId={orgId} />
-        <div className="flex sm:hidden">
+        <div className="flex items-center md:hidden">/</div>
+        <div className="flex min-w-0 md:hidden">
           <DocsSiteSwitcher />
         </div>
       </div>
-      <div className="flex gap-4">
-        <div className="hidden items-center gap-2 sm:flex">
-          <SupportButton />
+      <div className="flex shrink-0 gap-4">
+        <div className="hidden items-center gap-2 md:flex">
+          <SupportButton className="mr-4" />
           <HeaderLinkButton
             text="Docs"
             href="https://buildwithfern.com/learn"

@@ -19,7 +19,7 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
   const isSelected = pathname.startsWith(href);
 
   const className = cn(
-    "hidden sm:flex",
+    "hidden md:flex",
     "flex-1 flex-row gap-2 text-sm transition",
     isSelected
       ? "text-green-1100"
@@ -35,9 +35,7 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
       </div>
       <div className="flex min-w-0 items-center py-2 pr-4">
         {icon}
-        <div className="overflow-x-hidden text-ellipsis whitespace-nowrap">
-          {title}
-        </div>
+        <div className="truncate">{title}</div>
       </div>
     </>
   );

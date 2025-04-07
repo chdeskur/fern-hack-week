@@ -6,6 +6,8 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
+import { cn } from "@/utils/utils";
+
 export declare namespace DocsSiteLink {
   export interface Props {
     docsSiteUrl: FdrAPI.dashboard.DocsSiteUrl;
@@ -21,13 +23,17 @@ export function DocsSiteLink({ docsSiteUrl }: DocsSiteLink.Props) {
     <a
       href={new URL(path ?? "", `https://${domain}`).toString()}
       target="_blank"
-      className="text-gray-1100 hover:border-b-gray-1100 inline-flex items-center gap-1 border-b border-b-transparent dark:text-gray-400 dark:hover:border-b-gray-400"
+      className="text-gray-1100 hover:border-b-gray-1100 inline-flex min-w-0 items-center gap-1 whitespace-nowrap border-b border-b-transparent dark:text-gray-400 dark:hover:border-b-gray-400"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {domain}
-      {path}
-      {isHovered && <ArrowTopRightOnSquareIcon className="size-4" />}
+      <span className="truncate">
+        {domain}
+        {path}
+      </span>
+      <ArrowTopRightOnSquareIcon
+        className={cn("size-4 shrink-0", !isHovered && "invisible")}
+      />
     </a>
   );
 }

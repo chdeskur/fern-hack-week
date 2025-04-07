@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "@/utils/utils";
+
 export declare namespace ThemedFernLogo {
   export interface Props {
     className?: string;
@@ -12,7 +14,7 @@ export const ThemedFernLogo = ({ className }: ThemedFernLogo.Props) => {
       viewBox="0 0 604 164"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={cn("shrink-0", className)}
     >
       <path
         fillRule="evenodd"

@@ -1,18 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import { getAuth0Client } from "./app/services/auth0/auth0";
-import {
-  getAuth0ManagementClient,
-  invalidateCachesAfterAcceptingInvitation,
-} from "./app/services/auth0/management";
-import { Auth0OrgID, Auth0UserID } from "./app/services/auth0/types";
 
 export async function middleware(req: NextRequest) {
   const posthogResponse = applyPosthogMiddleware(req);
   if (posthogResponse != null) {
     return posthogResponse;
   }
-  await handleInvitationInvite(req);
   return await applyAuth0Middleware(req);
 }
 
@@ -40,43 +34,6 @@ async function applyAuth0Middleware(req: NextRequest): Promise<NextResponse> {
   }
 
   return authResponse;
-}
-
-async function handleInvitationInvite(req: NextRequest) {
-  if (req.nextUrl.pathname !== "/auth/login") {
-    return;
-  }
-
-  const orgId = req.nextUrl.searchParams.get("organization");
-  const invitationId = req.nextUrl.searchParams.get("invitation");
-  if (orgId == null || invitationId == null) {
-    return;
-  }
-
-  const auth0ManagementClient = getAuth0ManagementClient();
-  try {
-    const { data: invitation } =
-      await auth0ManagementClient.organizations.getInvitation({
-        id: orgId,
-        invitation_id: invitationId,
-      });
-
-    const { data: users } = await auth0ManagementClient.usersByEmail.getByEmail(
-      {
-        email: invitation.invitee.email,
-      }
-    );
-    const user = users[0];
-
-    if (user != null) {
-      await invalidateCachesAfterAcceptingInvitation({
-        userId: Auth0UserID(user.user_id),
-        orgId: Auth0OrgID(orgId),
-      });
-    }
-  } catch (e) {
-    console.error("Failed to invalidate caches after accepting invitation", e);
-  }
 }
 
 const INGEST_PATH_REGEX = /^\/ingest/;

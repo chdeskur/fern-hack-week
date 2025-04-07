@@ -16,7 +16,7 @@ export declare namespace DocsSiteImageLayout {
 export function DocsSiteImageLayout({ children }: DocsSiteImageLayout.Props) {
   return (
     <div
-      className="relative flex w-[150px] overflow-hidden rounded-lg border border-gray-500 sm:w-[350px] md:w-[400px] lg:w-[450px] dark:border-gray-900"
+      className="relative flex shrink-0 overflow-hidden rounded-lg border border-gray-500 md:w-[40%] md:min-w-[150px] md:max-w-[400px] dark:border-gray-900"
       style={{
         aspectRatio: `${HOMEPAGE_SCREENSHOT_WIDTH} / ${HOMEPAGE_SCREENSHOT_HEIGHT}`,
       }}

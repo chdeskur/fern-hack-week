@@ -38,7 +38,7 @@ export function DocsSiteNavBarItem({ title, href }: DocsSiteNavBarItem.Props) {
 
   const children = (
     <>
-      <div className="flex py-3">{title}</div>
+      <div className="flex pb-3">{title}</div>
       {isSelected && <div className="h-0.5 rounded-full bg-gray-700" />}
     </>
   );

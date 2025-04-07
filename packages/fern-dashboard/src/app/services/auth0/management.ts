@@ -8,7 +8,7 @@ import {
 
 import { AsyncRedisCache } from "../redis/AsyncRedisCache";
 import { RedisCacheKey, RedisCacheKeyType } from "../redis/cacheKey";
-import { Auth0OrgID, Auth0UserID } from "./types";
+import { Auth0OrgID, Auth0Organization, Auth0UserID } from "./types";
 
 /****************************
  * getAuth0ManagementClient *
@@ -99,24 +99,6 @@ export async function invalidateCachesAfterRescindingInvitation(
   );
 }
 
-export async function invalidateCachesAfterAcceptingInvitation({
-  userId,
-  orgId,
-}: {
-  userId: Auth0UserID;
-  orgId: Auth0OrgID;
-}) {
-  await Promise.all([
-    MY_ORGANIZATIONS_CACHE.invalidate(RedisCacheKey.myOrganizations(userId)),
-    ORGANIZATION_MEMBERS_CACHE.invalidate(
-      RedisCacheKey.organizationMembers(orgId)
-    ),
-    ORGANIZATION_INVITATIONS_CACHE.invalidate(
-      RedisCacheKey.organizationInvitations(orgId)
-    ),
-  ]);
-}
-
 /***********
  * helpers *
  ***********/
@@ -130,7 +112,7 @@ export async function getOrganization(orgId: Auth0OrgID) {
           id: orgId,
         });
 
-      return organization;
+      return organization as Auth0Organization;
     }
   );
 }
@@ -144,7 +126,7 @@ export async function getMyOrganizations(userId: Auth0UserID) {
           id: userId,
         });
 
-      return organizations;
+      return organizations as Auth0Organization[];
     }
   );
 }

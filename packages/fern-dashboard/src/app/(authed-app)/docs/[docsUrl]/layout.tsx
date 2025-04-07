@@ -1,5 +1,6 @@
 import { getCurrentSessionOrThrow } from "@/app/services/auth0/getCurrentSession";
 import { DocsSiteLayout } from "@/components/docs-page/DocsSiteLayout";
+import { getAllFeatureFlags } from "@/components/posthog/feature-flags/server-side";
 import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
 
 export default async function Layout({
@@ -10,10 +11,14 @@ export default async function Layout({
   children: React.JSX.Element;
 }>) {
   const docsUrl = parseDocsUrlParam(await params);
-  const { orgId } = await getCurrentSessionOrThrow();
+  const { userId, orgId } = await getCurrentSessionOrThrow();
 
   return (
-    <DocsSiteLayout docsUrl={docsUrl} orgId={orgId}>
+    <DocsSiteLayout
+      docsUrl={docsUrl}
+      orgId={orgId}
+      featureFlags={await getAllFeatureFlags(userId)}
+    >
       {children}
     </DocsSiteLayout>
   );

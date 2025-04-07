@@ -3,7 +3,13 @@
 import { getPylon } from "../pylon/getPylon";
 import { Button } from "../ui/button";
 
-export function SupportButton() {
+export declare namespace SupportButton {
+  export interface Props {
+    className?: string;
+  }
+}
+
+export function SupportButton({ className }: SupportButton.Props) {
   return (
     <Button
       size="sm"
@@ -12,6 +18,7 @@ export function SupportButton() {
         getPylon()?.("show");
         getPylon()?.("showChatBubble");
       }}
+      className={className}
     >
       Support
     </Button>

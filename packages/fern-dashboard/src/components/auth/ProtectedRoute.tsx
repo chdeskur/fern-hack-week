@@ -4,7 +4,7 @@ import React from "react";
 import { createPersonalProject } from "@/app/actions/createPersonalProject";
 import getMyOrganizations from "@/app/api/get-my-organizations/handler";
 import { getAuth0Client } from "@/app/services/auth0/auth0";
-import { Auth0OrgID, Auth0UserID } from "@/app/services/auth0/types";
+import { Auth0UserID } from "@/app/services/auth0/types";
 import { getLoginUrl } from "@/utils/getLoginUrl";
 
 export declare namespace ProtectedRoute {
@@ -32,7 +32,7 @@ export const ProtectedRoute = async ({ children }: ProtectedRoute.Props) => {
 
     redirect(
       getLoginUrl({
-        orgId: Auth0OrgID(orgIdToRedirectTo),
+        orgId: orgIdToRedirectTo,
       })
     );
   }

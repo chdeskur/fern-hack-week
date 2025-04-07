@@ -32,6 +32,7 @@ export const ReactQueryKey = {
     ),
   docsUrlOwner: (docsUrl: DocsUrl) =>
     queryKey<getDocsUrlOwner.Response>("docs-url-owner", docsUrl),
+  orgSvgLogo: (svgUrl: string) => queryKey<string>("org-svg", svgUrl),
 } as const;
 
 function queryKey<T>(...key: string[]) {

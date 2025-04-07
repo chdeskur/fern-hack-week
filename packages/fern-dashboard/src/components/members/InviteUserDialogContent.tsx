@@ -2,10 +2,10 @@ import { useMemo, useState } from "react";
 
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { GetOrganizations200ResponseOneOfInner } from "auth0";
 import { toast } from "sonner";
 
 import { inviteUserToOrg } from "@/app/actions/inviteUserToOrg";
+import { Auth0Organization } from "@/app/services/auth0/types";
 import { ReactQueryKey, inferQueryData } from "@/state/queryKeys";
 import { getOrgDisplayName } from "@/utils/getOrgDisplayName";
 
@@ -21,7 +21,7 @@ import { Input } from "../ui/input";
 
 export declare namespace InviteUserDialogContent {
   export interface Props {
-    org: GetOrganizations200ResponseOneOfInner | undefined;
+    org: Auth0Organization | undefined;
     close: () => void;
   }
 }

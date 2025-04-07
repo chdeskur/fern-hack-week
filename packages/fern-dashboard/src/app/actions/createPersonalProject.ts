@@ -5,12 +5,17 @@ import { User } from "@auth0/nextjs-auth0/types";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { APIResponse } from "@fern-api/venus-api-sdk/core";
 
-import { getCurrentSessionOrThrow } from "../services/auth0/getCurrentSession";
+import { getCurrentSessionWithoutRequiringOrgId } from "../services/auth0/getCurrentSession";
 import { Auth0OrgID, Auth0UserID } from "../services/auth0/types";
 import { getVenusClient } from "../services/venus/getVenusClient";
 
 export async function createPersonalProject(): Promise<Auth0OrgID> {
-  const { session, userId } = await getCurrentSessionOrThrow();
+  const maybeSession = await getCurrentSessionWithoutRequiringOrgId();
+  if (maybeSession == null) {
+    throw new Error("Not authenticated");
+  }
+  const { session, userId } = maybeSession;
+
   const venus = getVenusClient({ token: session.tokenSet.accessToken });
 
   const orgId = await createPersonalProjectInVenus({

@@ -44,11 +44,11 @@ export function MemberOrInviteeRow({
               width={40}
               height={40}
             />
-          ) : (
-            <div className="dark: dark:bg-gray-1200 flex flex-1 items-center justify-center text-xl uppercase text-gray-900">
-              {typeof title === "string" && title[0]}
+          ) : typeof title === "string" ? (
+            <div className="dark:bg-gray-1200 flex flex-1 items-center justify-center bg-gray-700 text-xl uppercase text-gray-900">
+              {title[0]}
             </div>
-          )}
+          ) : null}
         </div>
         <div className="flex min-w-0 flex-col gap-1">
           <div className="flex font-bold">{title}</div>

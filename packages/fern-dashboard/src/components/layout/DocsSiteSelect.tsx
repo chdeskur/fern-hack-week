@@ -45,8 +45,10 @@ export const DocsSiteSelect = ({
       onValueChange={(value) => void onClickUrl(value as DocsUrl)}
       disabled={docsSites.length === 0}
     >
-      <SelectTrigger className="min-w-[180px]">
-        <SelectValue placeholder="Organization" />
+      <SelectTrigger>
+        <span className="truncate">
+          <SelectValue placeholder="Organization" />
+        </span>
       </SelectTrigger>
       <SelectContent>
         {docsSites.map((docsSite) => {

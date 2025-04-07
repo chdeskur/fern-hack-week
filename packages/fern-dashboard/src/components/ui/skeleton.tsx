@@ -14,9 +14,7 @@ function Skeleton({
       )}
       {...props}
     >
-      <div className="invisible overflow-x-hidden text-ellipsis whitespace-nowrap">
-        {children}
-      </div>
+      <div className="invisible truncate">{children}</div>
     </div>
   );
 }
