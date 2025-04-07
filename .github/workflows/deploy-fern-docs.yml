@@ -6,57 +6,57 @@ on:
     tags:
       - "docs@*" 
 jobs:
-  # Deploy-Production:
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     VERCEL_PROJECT_ID: prj_XXWllSgR38im0A8e0cKXjOnMoo07
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 2 # This helps turbo resolve changes faster
-  #     - name: Install
-  #       uses: ./.github/actions/install
-  #     - name: Install Vercel CLI
-  #       run: npm install --global vercel@latest
-  #     - name: Pull Vercel Environment Information
-  #       run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-  #     - name: Build Project Artifacts
-  #       run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-  #     - name: Deploy Project Artifacts to Vercel
-  #       id: deploy
-  #       run: |
-  #         url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
-  #         echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
-  #     - name: Promote Deployment
-  #       run: |
-  #         url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
-  #         vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}
+  Deploy-Production:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_PROJECT_ID: prj_XXWllSgR38im0A8e0cKXjOnMoo07
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+      - name: Install
+        uses: ./.github/actions/install
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
+      - name: Promote Deployment
+        run: |
+          url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+          vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}
 
-  # Deploy-Production-Slash:
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     VERCEL_PROJECT_ID: prj_TnhxLeFgHnzYBZV6XfKMZ8sfUd13
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 2 # This helps turbo resolve changes faster
-  #     - name: Install
-  #       uses: ./.github/actions/install
-  #     - name: Install Vercel CLI
-  #       run: npm install --global vercel@latest
-  #     - name: Pull Vercel Environment Information
-  #       run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-  #     - name: Build Project Artifacts
-  #       run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-  #     - name: Deploy Project Artifacts to Vercel
-  #       id: deploy
-  #       run: |
-  #         url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
-  #         echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
-  #     - name: Promote Deployment
-  #       run: |
-  #         url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
-  #         vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}       
+  Deploy-Production-Slash:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_PROJECT_ID: prj_TnhxLeFgHnzYBZV6XfKMZ8sfUd13
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+      - name: Install
+        uses: ./.github/actions/install
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
+      - name: Promote Deployment
+        run: |
+          url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+          vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}       
           
   Deploy-Production-Assets:
       runs-on: ubuntu-latest
