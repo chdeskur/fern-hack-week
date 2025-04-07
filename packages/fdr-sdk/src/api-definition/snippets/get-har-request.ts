@@ -83,7 +83,10 @@ export function getHarRequest(
         if (value.type === "json") {
           request.postData.params.push({
             name,
-            value: JSON.stringify(value.value, null, 2),
+            value:
+              typeof value.value === "string"
+                ? value.value
+                : JSON.stringify(value.value, null, 2),
           });
         } else if (value.type === "filename") {
           request.postData.params.push({
