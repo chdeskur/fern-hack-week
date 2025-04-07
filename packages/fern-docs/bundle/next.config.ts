@@ -9,6 +9,8 @@ const cdnUri =
     ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI)
     : undefined;
 const isTrailingSlashEnabled = process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
+const isAssetPrefixDisabled =
+  process.env.NEXT_PUBLIC_ASSET_PREFIX_DISABLED === "1";
 
 // TODO: move this to a shared location (this is copied in FernImage.tsx)
 const NEXT_IMAGE_HOSTS = [
@@ -119,7 +121,11 @@ const nextConfig: NextConfig = {
    *
    * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
    */
-  assetPrefix: cdnUri != null ? cdnUri.href : undefined,
+  assetPrefix: isAssetPrefixDisabled
+    ? undefined
+    : cdnUri != null
+      ? cdnUri.href
+      : undefined,
   compiler: {
     // Note: i think this removes console logs in server-side code?
     // removeConsole:
