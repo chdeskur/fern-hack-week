@@ -14,8 +14,8 @@ import {
 import { LogoutButton } from "../auth/LogoutButton";
 import { OrgSwitcher } from "../auth/OrgSwitcher";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
-import { DocsSiteSwitcher } from "./DocsSiteSwitcher";
 import { HeaderLinkButton } from "./HeaderLinkButton";
+import { MaybeDocsHeaderItems } from "./MaybeDocsHeaderItems";
 import { SupportButton } from "./SupportButton";
 
 export declare namespace Header {
@@ -33,10 +33,7 @@ export async function Header({ session }: Header.Props) {
       <div className="flex min-w-0 items-center gap-4">
         <ThemedFernLogo className="w-16" />
         <OrgSwitcher currentOrgId={orgId} />
-        <div className="flex items-center md:hidden">/</div>
-        <div className="flex min-w-0 md:hidden">
-          <DocsSiteSwitcher />
-        </div>
+        <MaybeDocsHeaderItems />
       </div>
       <div className="flex shrink-0 gap-4">
         <div className="hidden items-center gap-2 md:flex">

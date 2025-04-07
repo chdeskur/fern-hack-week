@@ -1,4 +1,5 @@
 export const PosthogFeatureFlag = {
+  ENABLE_DOCS_PAGE: "dashboard-enable-docs-page",
   ENABLE_SDKS_PAGE: "dashboard-enable-sdks-page",
   ENABLE_API_KEYS_PAGE: "dashboard-enable-api-keys-page",
   ENABLE_BILLING_PAGE: "dashboard-enable-billing-page",

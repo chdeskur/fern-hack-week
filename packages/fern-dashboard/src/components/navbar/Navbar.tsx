@@ -16,7 +16,9 @@ export function Navbar() {
   return (
     <div className="flex flex-col justify-between md:w-64 md:py-6 md:pl-4 lg:w-72">
       <div className="flex overflow-y-auto md:flex-col">
-        <DocsNavbarItems />
+        <FeatureFlaggedServerSide flag={PosthogFeatureFlag.ENABLE_DOCS_PAGE}>
+          <DocsNavbarItems />
+        </FeatureFlaggedServerSide>
         <FeatureFlaggedServerSide flag={PosthogFeatureFlag.ENABLE_SDKS_PAGE}>
           <NavbarItem
             title="SDKs"

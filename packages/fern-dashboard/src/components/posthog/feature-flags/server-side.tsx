@@ -33,7 +33,7 @@ export async function FeatureFlaggedServerSide({
   return null;
 }
 
-async function isFeatureFlagEnabledForUser(
+export async function isFeatureFlagEnabledForUser(
   featureFlag: PosthogFeatureFlag,
   userId: Auth0UserID
 ) {

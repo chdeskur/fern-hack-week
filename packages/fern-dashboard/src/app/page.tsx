@@ -1,6 +1,10 @@
 import { redirect } from "next/navigation";
 
 import { getAuth0Client } from "@/app/services/auth0/auth0";
+import { PosthogFeatureFlag } from "@/components/posthog/feature-flags/flags";
+import { isFeatureFlagEnabledForUser } from "@/components/posthog/feature-flags/server-side";
+
+import { Auth0UserID } from "./services/auth0/types";
 
 export default async function Page() {
   const auth0 = await getAuth0Client();
@@ -8,7 +12,16 @@ export default async function Page() {
 
   if (session == null) {
     redirect("/login");
-  } else {
+  }
+
+  const isDocsPageEnabled = await isFeatureFlagEnabledForUser(
+    PosthogFeatureFlag.ENABLE_DOCS_PAGE,
+    Auth0UserID(session.user.sub)
+  );
+
+  if (isDocsPageEnabled) {
     redirect("/docs");
+  } else {
+    redirect("/members");
   }
 }
