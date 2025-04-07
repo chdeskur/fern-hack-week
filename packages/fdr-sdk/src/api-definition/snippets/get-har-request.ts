@@ -62,6 +62,18 @@ export function getHarRequest(
       mimeType,
     };
 
+    // filter out request parameters that have no value
+    if (requestBody.value && typeof requestBody.value === "object") {
+      requestBody.value = Object.fromEntries(
+        Object.entries(requestBody.value).filter(([_, valueObj]) => {
+          if (typeof valueObj === "object" && valueObj != null) {
+            return "value" in valueObj;
+          }
+          return true;
+        })
+      );
+    }
+
     if (requestBody.type === "json") {
       request.postData.text = JSON.stringify(requestBody.value, null, 2);
     } else if (requestBody.type === "form") {
