@@ -49,6 +49,9 @@ export async function GET(
   const { host, domain } = await props.params;
   revalidateTag(domain);
 
+  // delay to ensure invalidation propagates before cache is accessed
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
   const stream = new ReadableStream({
     async start(controller) {
       try {
