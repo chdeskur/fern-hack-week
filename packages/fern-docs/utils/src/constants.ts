@@ -61,6 +61,7 @@ export const FERN_DOCS_ORIGINS = [
   "legacy-dev.ferndocs.com",
   "legacy-staging.ferndocs.com",
   "legacy.ferndocs.com",
+  "prod-assets.ferndocs.com",
   "prod-slash.ferndocs.com",
   "prod.ferndocs.com",
   "staging.ferndocs.com",
