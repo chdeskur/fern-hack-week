@@ -1,6 +1,15 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import type { NextConfig } from "next";
 
+const CSP_HEADER = `
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' *.usepylon.com *.posthog.com *.pusher.com d3vl36l12sfx26.cloudfront.net;
+  connect-src 'self' ws: *.usepylon.com *.posthog.com *.pusher.com;
+  style-src 'self' 'unsafe-inline' *.usepylon.com *.posthog.com;
+  font-src 'self' pylon-avatars.s3.us-west-1.amazonaws.com *.usepylon.com;
+  img-src 'self' data: pylon-avatars.s3.us-west-1.amazonaws.com *.usepylon.com d3vl36l12sfx26.cloudfront.net ${process.env.NEXT_PUBLIC_HOMEPAGE_IMAGES_S3_BUCKET_NAME}.s3.us-east-1.amazonaws.com;
+`.replace(/\n/g, "");
+
 const nextConfig: NextConfig = {
   transpilePackages: [
     /**
@@ -23,12 +32,6 @@ const nextConfig: NextConfig = {
         pathname: "/u/**",
         search: "?v=4",
       },
-      {
-        protocol: "https",
-        hostname: `${process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME}.s3.us-east-1.amazonaws.com`,
-        port: "",
-        pathname: "/**",
-      },
     ],
   },
   webpack: (webpackConfig) => {
@@ -41,6 +44,20 @@ const nextConfig: NextConfig = {
 
   // so it doesn't cover the theme toggle
   devIndicators: { position: "bottom-right" },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: CSP_HEADER,
+          },
+        ],
+      },
+    ];
+  },
 
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true,

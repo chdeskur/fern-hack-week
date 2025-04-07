@@ -14,8 +14,9 @@ import {
 import { LogoutButton } from "../auth/LogoutButton";
 import { OrgSwitcher } from "../auth/OrgSwitcher";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
-import { Button } from "../ui/button";
 import { DocsSiteSwitcher } from "./DocsSiteSwitcher";
+import { HeaderLinkButton } from "./HeaderLinkButton";
+import { SupportButton } from "./SupportButton";
 
 export declare namespace Header {
   export interface Props {
@@ -38,15 +39,15 @@ export async function Header({ session }: Header.Props) {
       </div>
       <div className="flex gap-4">
         <div className="hidden items-center gap-2 sm:flex">
-          <Button size="sm" variant="outline">
-            Feedback
-          </Button>
-          <Button size="sm" variant="ghost">
-            Docs
-          </Button>
-          <Button size="sm" variant="ghost">
-            Changelog
-          </Button>
+          <SupportButton />
+          <HeaderLinkButton
+            text="Docs"
+            href="https://buildwithfern.com/learn"
+          />
+          <HeaderLinkButton
+            text="Changelog"
+            href="https://buildwithfern.com/learn/docs/getting-started/changelog"
+          />
         </div>
         <Popover>
           <PopoverTrigger className="cursor-pointer">

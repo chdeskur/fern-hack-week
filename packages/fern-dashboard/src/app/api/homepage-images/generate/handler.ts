@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import chromium from "@sparticuz/chromium";
 import puppeteer, { Browser, Page } from "puppeteer-core";
@@ -90,9 +89,9 @@ async function takeScreenshotAndWriteToAws({
     [IMAGE_FILETYPE]({ quality: 50 })
     .toBuffer();
 
-  if (process.env.HOMEPAGE_IMAGES_S3_BUCKET_NAME == null) {
+  if (process.env.NEXT_PUBLIC_HOMEPAGE_IMAGES_S3_BUCKET_NAME == null) {
     throw new Error(
-      "HOMEPAGE_IMAGES_S3_BUCKET_NAME is not defined in the environment"
+      "NEXT_PUBLIC_HOMEPAGE_IMAGES_S3_BUCKET_NAME is not defined in the environment"
     );
   }
 

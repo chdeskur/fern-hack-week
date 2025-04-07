@@ -1,5 +1,6 @@
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { ServerSidePylonSetup } from "@/components/pylon/ServerSidePylonSetup";
 
 export default async function AuthedLayout({
   children,
@@ -8,7 +9,10 @@ export default async function AuthedLayout({
 }>) {
   return (
     <ProtectedRoute>
-      <AppLayout>{children}</AppLayout>
+      <>
+        <ServerSidePylonSetup />
+        <AppLayout>{children}</AppLayout>
+      </>
     </ProtectedRoute>
   );
 }
