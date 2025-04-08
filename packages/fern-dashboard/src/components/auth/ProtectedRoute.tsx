@@ -35,11 +35,7 @@ export const ProtectedRoute = async ({
 
   if (session.user.org_id == null) {
     const firstOrg = await getOrCreateFirstOrgForUser(session);
-    redirect(
-      getLoginUrl({
-        orgId: firstOrg.orgId,
-      })
-    );
+    redirect(getLoginUrl({ orgId: firstOrg.orgId }));
   }
 
   let orgIdFromUrl: Auth0OrgID;
@@ -50,11 +46,17 @@ export const ProtectedRoute = async ({
     return <Page404 />;
   }
 
+  const userId = Auth0UserID(session.user.sub);
   const isUserInOrgFromUrl = await auth0Management.doesUserBelongsToOrg(
-    Auth0UserID(session.user.sub),
+    userId,
     orgIdFromUrl
   );
+
   if (!isUserInOrgFromUrl) {
+    if (await auth0Management.isFernEmployee(userId)) {
+      await auth0Management.addUserToOrg(userId, orgIdFromUrl);
+      redirect(getLoginUrl({ orgId: orgIdFromUrl }));
+    }
     return <Page404 />;
   }
 

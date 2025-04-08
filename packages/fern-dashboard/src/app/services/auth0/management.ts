@@ -196,6 +196,20 @@ export async function createIsFernEmployee(): Promise<
   return (userId: Auth0UserID) => fernMembers.has(Auth0UserID(userId));
 }
 
+/**
+ * when checking multiple userIds at once, use createIsFernEmployee
+ * to avoid loading the fern org members with every check
+ */
+export async function isFernEmployee(userId: Auth0UserID): Promise<boolean> {
+  const fernOrgMembers = await getOrgMembers(getFernAuth0OrgID(), {
+    includeFernEmployees: true,
+  });
+  const fernMembers = new Set(
+    fernOrgMembers.map((member) => Auth0UserID(member.user_id))
+  );
+  return fernMembers.has(Auth0UserID(userId));
+}
+
 function getFernAuth0OrgID(): Auth0OrgID {
   if (process.env.FERN_AUTH0_ORG_ID == null) {
     throw new Error("FERN_AUTH0_ORG_ID is not defined in the environment");
@@ -251,4 +265,10 @@ export async function doesUserBelongsToOrg(
 ) {
   const orgs = await getMyOrganizations(userId);
   return orgs.some((o) => o.id === orgId);
+}
+
+export async function addUserToOrg(userId: Auth0UserID, orgId: Auth0OrgID) {
+  const auth0 = getAuth0ManagementClient();
+  await auth0.organizations.addMembers({ id: orgId }, { members: [userId] });
+  await invalidateCachesAfterAddingOrRemovingOrgMember({ orgId });
 }

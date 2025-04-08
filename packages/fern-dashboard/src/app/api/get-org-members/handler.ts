@@ -8,9 +8,8 @@ export default async function getOrgMembers({
   userId: Auth0UserID;
   orgId: Auth0OrgID;
 }) {
-  const isFernEmployee = await auth0Management.createIsFernEmployee();
   const members = await auth0Management.getOrgMembers(orgId, {
-    includeFernEmployees: isFernEmployee(userId),
+    includeFernEmployees: await auth0Management.isFernEmployee(userId),
   });
   return members;
 }
