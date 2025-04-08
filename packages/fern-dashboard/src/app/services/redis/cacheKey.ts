@@ -3,12 +3,7 @@ import {
   GetMembers200ResponseOneOfInner,
 } from "auth0";
 
-import {
-  Auth0OrgID,
-  Auth0OrgName,
-  Auth0Organization,
-  Auth0UserID,
-} from "../auth0/types";
+import { Auth0OrgID, Auth0OrgName, Auth0Organization } from "../auth0/types";
 
 export type RedisCacheKey<T extends RedisCacheKeyType> = string & {
   __type: T;
@@ -16,7 +11,6 @@ export type RedisCacheKey<T extends RedisCacheKeyType> = string & {
 
 export const RedisCacheKeyType = {
   ORGANIZATION: "ORGANIZATION",
-  MY_ORGANIZATIONS: "MY_ORGANIZATIONS",
   ORGANIZATION_MEMBERS: "ORGANIZATION_MEMBERS",
   ORGANIZATION_INVITATIONS: "ORGANIZATION_INVITATIONS",
   ORGANIZATION_NAME: "ORGANIZATION_NAME",
@@ -27,7 +21,6 @@ export type RedisCacheKeyType =
 
 export type RedisCacheDataTypes = {
   [RedisCacheKeyType.ORGANIZATION]: Auth0Organization;
-  [RedisCacheKeyType.MY_ORGANIZATIONS]: Auth0Organization[];
   [RedisCacheKeyType.ORGANIZATION_MEMBERS]: GetMembers200ResponseOneOfInner[];
   [RedisCacheKeyType.ORGANIZATION_INVITATIONS]: GetInvitations200ResponseOneOfInner[];
   [RedisCacheKeyType.ORGANIZATION_NAME]: Auth0OrgID;
@@ -36,8 +29,6 @@ export type RedisCacheDataTypes = {
 export const RedisCacheKey = {
   organization: (orgId: Auth0OrgID) =>
     cacheKey(RedisCacheKeyType.ORGANIZATION)(`org-${orgId}`),
-  myOrganizations: (userId: Auth0UserID) =>
-    cacheKey(RedisCacheKeyType.MY_ORGANIZATIONS)(`my-orgs-${userId}`),
   organizationMembers: (orgId: Auth0OrgID) =>
     cacheKey(RedisCacheKeyType.ORGANIZATION_MEMBERS)(`org-members-${orgId}`),
   organizationInvitations: (orgId: Auth0OrgID) =>

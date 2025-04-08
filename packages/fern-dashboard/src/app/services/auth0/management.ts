@@ -59,11 +59,6 @@ const ORGANIZATION_NAME_CACHE = new AsyncRedisCache(
   { ttlInSeconds: 10 }
 );
 
-const MY_ORGANIZATIONS_CACHE = new AsyncRedisCache(
-  RedisCacheKeyType.MY_ORGANIZATIONS,
-  { ttlInSeconds: 10 }
-);
-
 const ORGANIZATION_MEMBERS_CACHE = new AsyncRedisCache(
   RedisCacheKeyType.ORGANIZATION_MEMBERS,
   { ttlInSeconds: 10 }
@@ -79,18 +74,13 @@ const ORGANIZATION_INVITATIONS_CACHE = new AsyncRedisCache(
  **********************/
 
 export async function invalidateCachesAfterAddingOrRemovingOrgMember({
-  userId,
   orgId,
 }: {
-  userId: Auth0UserID;
   orgId: Auth0OrgID;
 }) {
-  await Promise.all([
-    MY_ORGANIZATIONS_CACHE.invalidate(RedisCacheKey.myOrganizations(userId)),
-    ORGANIZATION_MEMBERS_CACHE.invalidate(
-      RedisCacheKey.organizationMembers(orgId)
-    ),
-  ]);
+  await ORGANIZATION_MEMBERS_CACHE.invalidate(
+    RedisCacheKey.organizationMembers(orgId)
+  );
 }
 
 export async function invalidateCachesAfterInvitingUserToOrg(
@@ -142,17 +132,12 @@ export async function getOrganizationIdFromName(orgName: Auth0OrgName) {
 }
 
 export async function getMyOrganizations(userId: Auth0UserID) {
-  return await MY_ORGANIZATIONS_CACHE.get(
-    RedisCacheKey.myOrganizations(userId),
-    async () => {
-      const { data: organizations } =
-        await getAuth0ManagementClient().users.getUserOrganizations({
-          id: userId,
-        });
+  const { data: organizations } =
+    await getAuth0ManagementClient().users.getUserOrganizations({
+      id: userId,
+    });
 
-      return organizations as Auth0Organization[];
-    }
-  );
+  return organizations as Auth0Organization[];
 }
 
 export async function getOrgMembers(

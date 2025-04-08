@@ -30,7 +30,6 @@ export async function removeUserFromOrg({
   );
 
   await auth0Management.invalidateCachesAfterAddingOrRemovingOrgMember({
-    userId,
     orgId,
   });
 }
