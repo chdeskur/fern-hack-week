@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -8,6 +9,7 @@ import {
   Auth0OrgName,
   Auth0UserID,
 } from "@/app/services/auth0/types";
+import { X_PATHNAME_HEADER } from "@/middleware";
 import { getLoginUrl } from "@/utils/getLoginUrl";
 
 import { Page404 } from "../Page404";
@@ -57,9 +59,15 @@ export const ProtectedRoute = async ({
   }
 
   if (session.user.org_id !== orgIdFromUrl) {
+    const requestHeaders = await headers();
+    const currentPathname = requestHeaders.get(X_PATHNAME_HEADER);
     redirect(
       getLoginUrl({
         orgId: orgIdFromUrl,
+        returnTo:
+          currentPathname != null
+            ? currentPathname.replace(new RegExp(`^/${orgIdFromUrl}`), "")
+            : undefined,
       })
     );
   }
