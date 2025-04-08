@@ -83,32 +83,70 @@ ${this.#buildRequests({ json: JSON.stringify(this.maybeWrapJsonBody(value), unde
           })
           .filter(isNonNullish);
 
-        const fileEntries = [...singleFiles, ...fileArrays].join("\n");
-        const files =
-          fileEntries.length > 0
-            ? `{\n${indentAfter(fileEntries, 2)}\n}`
-            : undefined;
-
         const dataEntries = Object.entries(value)
           .filter(
             (entry): entry is [string, PlaygroundFormDataEntryValue.Json] =>
               PlaygroundFormDataEntryValue.isJson(entry[1]) ||
               PlaygroundFormDataEntryValue.isExploded(entry[1])
           )
-          .map(([k, v]) =>
-            v.value == null
+          .map(([k, v]) => {
+            if (PlaygroundFormDataEntryValue.isExploded(v)) {
+              const items: string[] = [];
+              for (const item of (v as PlaygroundFormDataEntryValue.Exploded)
+                .value) {
+                items.push(`'${k}': ${this.#formatFormDataValue(item)},`);
+              }
+              return items.join("\n");
+            }
+
+            return v.value == null
               ? undefined
-              : `'${k}': ${this.#formatFormDataValue(v.value)},`
-          )
+              : `'${k}': ${this.#formatFormDataValue(v.value)},`;
+          })
           .filter(isNonNullish)
           .join("\n");
 
-        const data =
-          dataEntries.length > 0
-            ? `{\n${indentAfter(dataEntries, 2)}\n}`
+        let fileEntries = [...singleFiles, ...fileArrays].join("\n");
+        let data: string | undefined = undefined;
+
+        if (fileEntries.length === 0 && dataEntries.length > 0) {
+          fileEntries = Object.entries(value)
+            .filter(
+              (entry): entry is [string, PlaygroundFormDataEntryValue.Json] =>
+                PlaygroundFormDataEntryValue.isJson(entry[1]) ||
+                PlaygroundFormDataEntryValue.isExploded(entry[1])
+            )
+            .map(([k, v]) => {
+              if (PlaygroundFormDataEntryValue.isExploded(v)) {
+                const items: string[] = [];
+                for (const item of (v as PlaygroundFormDataEntryValue.Exploded)
+                  .value) {
+                  items.push(
+                    `'${k}': (None, ${this.#formatFormDataValue(item)})`
+                  );
+                }
+                return items.join(",\n");
+              }
+
+              return v.value == null
+                ? undefined
+                : `'${k}': (None, ${this.#formatFormDataValue(v.value)})`;
+            })
+            .filter(isNonNullish)
+            .join(",\n");
+        } else if (dataEntries.length > 0) {
+          data = `{\n${indentAfter(dataEntries, 2)}\n}`;
+        }
+
+        const files =
+          fileEntries.length > 0
+            ? `{\n${indentAfter(fileEntries, 2)}\n}`
             : undefined;
 
-        if (data?.includes("json.dumps")) {
+        if (
+          data?.includes("json.dumps") ||
+          fileEntries.includes("json.dumps")
+        ) {
           imports.push("json");
         }
 

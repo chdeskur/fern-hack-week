@@ -61,6 +61,29 @@ response = requests.post(
 print(response.json())"
 `;
 
+exports[`PlaygroundCodeSnippetBuilder > should render python with multipart form data without files 1`] = `
+"import requests
+import json
+
+# My endpoint (POST /test/:test)
+response = requests.post(
+  "https://example.com/test/hello%40example",
+  headers={
+    "Accept": "application/json"
+  },
+  files={
+    'textField': (None, "simple string value"),
+    'jsonField': (None, json.dumps({
+        "nested": {
+          "value": 123
+        }
+      }))
+  },
+)
+
+print(response.json())"
+`;
+
 exports[`PlaygroundCodeSnippetBuilder > should render typescript 1`] = `
 "// My endpoint (POST /test/:test)
 const response = await fetch("https://example.com/test/hello%40example", {

@@ -181,6 +181,35 @@ describe("PlaygroundCodeSnippetBuilder", () => {
     },
   };
 
+  const multipartFormStateWithoutFiles: PlaygroundEndpointRequestFormState = {
+    type: "endpoint",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+    },
+    pathParameters: {
+      test: "hello@example",
+    },
+    queryParameters: {},
+    body: {
+      type: "form-data",
+      value: {
+        textField: {
+          type: "json",
+          value: "simple string value",
+        },
+        jsonField: {
+          type: "json",
+          value: {
+            nested: {
+              value: 123,
+            },
+          },
+        },
+      },
+    },
+  };
+
   it("should render curl", () => {
     expect(
       new CurlSnippetBuilder(context, formState, {}, undefined, false).build()
@@ -216,6 +245,18 @@ describe("PlaygroundCodeSnippetBuilder", () => {
       new PythonRequestSnippetBuilder(
         context,
         multipartFormState,
+        {},
+        undefined,
+        false
+      ).build()
+    ).toMatchSnapshot();
+  });
+
+  it("should render python with multipart form data without files", () => {
+    expect(
+      new PythonRequestSnippetBuilder(
+        context,
+        multipartFormStateWithoutFiles,
         {},
         undefined,
         false
