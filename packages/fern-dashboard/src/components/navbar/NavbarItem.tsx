@@ -39,8 +39,8 @@ export const NavbarItem = ({
 
   const className = cn(
     "flex flex-1 flex-col items-center gap-2 py-2 text-sm transition md:flex-row",
-    isSelected ? "text-green-1100" : "text-gray-900",
-    isClickable && "hover:text-gray-1200 dark:hover:text-gray-700"
+    isSelected ? "text-primary" : "text-gray-900",
+    isClickable && "hover:text-gray-1200"
   );
 
   const children = (

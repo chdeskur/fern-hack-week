@@ -23,9 +23,7 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
   const className = cn(
     "hidden md:flex",
     "flex-1 flex-row gap-2 text-sm transition",
-    isSelected
-      ? "text-green-1100"
-      : "hover:text-gray-1100 text-gray-900 dark:hover:text-gray-700"
+    isSelected ? "text-primary" : "hover:text-gray-1100 text-gray-900"
   );
 
   const children = (

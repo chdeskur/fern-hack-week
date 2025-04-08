@@ -33,9 +33,9 @@ export function MemberOrInviteeRow({
     dropdownMenuItems != null || forceShowDropownMenuTrigger;
 
   return (
-    <div className="dark:border-gray-1100 flex justify-between border-b border-gray-500 p-4 last:border-b-0">
+    <div className="border-border flex justify-between border-b p-4 last:border-b-0">
       <div className="flex min-w-0 items-center gap-4">
-        <div className="dark:border-gray-1100 flex size-10 min-w-0 shrink-0 overflow-hidden rounded-full border-2 border-gray-500 bg-gray-300">
+        <div className="border-border flex size-10 min-w-0 shrink-0 overflow-hidden rounded-full border-2 bg-gray-300">
           {pictureUrl != null ? (
             <Image
               src={pictureUrl}
@@ -45,7 +45,7 @@ export function MemberOrInviteeRow({
               height={40}
             />
           ) : typeof title === "string" ? (
-            <div className="dark:bg-gray-1200 flex flex-1 items-center justify-center bg-gray-700 text-xl uppercase text-gray-900">
+            <div className="flex flex-1 items-center justify-center bg-gray-700 text-xl uppercase text-gray-900">
               {title[0]}
             </div>
           ) : null}

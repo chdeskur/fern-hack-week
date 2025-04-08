@@ -24,7 +24,7 @@ export function DocsSiteLink({ docsSiteUrl }: DocsSiteLink.Props) {
       <a
         href={new URL(path ?? "", `https://${domain}`).toString()}
         target="_blank"
-        className="text-gray-1100 hover:border-b-gray-1100 inline-flex min-w-0 max-w-full items-center gap-1 whitespace-nowrap border-b border-b-transparent dark:text-gray-400 dark:hover:border-b-gray-400"
+        className="text-gray-1100 hover:border-b-gray-1100 inline-flex min-w-0 max-w-full items-center gap-1 whitespace-nowrap border-b border-b-transparent"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >

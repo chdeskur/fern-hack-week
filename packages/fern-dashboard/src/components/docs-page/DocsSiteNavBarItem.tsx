@@ -32,7 +32,7 @@ export function DocsSiteNavBarItem({ title, href }: DocsSiteNavBarItem.Props) {
   const isClickable = !isSelected;
 
   const className = cn(
-    "flex flex-col pl-4 pr-4 first:pl-0 last:pr-0",
+    "flex flex-col pl-4 pr-4 transition first:pl-0 last:pr-0",
     isSelected ? "text-gray-1100" : "text-gray-900",
     isClickable && "hover:text-gray-1100"
   );

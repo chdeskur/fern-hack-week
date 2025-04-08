@@ -8,10 +8,7 @@ function Skeleton({
   return (
     <div
       data-slot="skeleton"
-      className={cn(
-        "dark:bg-gray-1100 animate-pulse rounded-md bg-gray-400",
-        className
-      )}
+      className={cn("animate-pulse rounded-md bg-gray-400", className)}
       {...props}
     >
       <div className="invisible truncate">{children}</div>

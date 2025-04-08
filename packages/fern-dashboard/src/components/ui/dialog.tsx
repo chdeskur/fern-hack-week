@@ -87,7 +87,7 @@ function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "dark:bg-gray-1200 dark:border-gray-1100 flex flex-col gap-2 border-y border-gray-500 bg-gray-200 p-6",
+        "border-border flex flex-col gap-2 border-y bg-gray-200 p-6",
         className
       )}
       {...props}
@@ -100,7 +100,7 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="dialog-footer"
       className={cn(
-        "dark:bg-gray-1200 dark:border-gray-1100 mt-auto flex flex-row justify-end gap-2 border-t border-gray-500 bg-gray-200 p-6",
+        "border-border mt-auto flex flex-row justify-end gap-2 border-t bg-gray-200 p-6",
         className
       )}
       {...props}

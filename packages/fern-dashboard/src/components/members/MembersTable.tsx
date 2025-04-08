@@ -57,7 +57,7 @@ export function MembersTable({
   };
 
   return (
-    <div className="dark:bg-gray-1200 dark:border-gray-1100 flex flex-col rounded-xl border border-gray-500 bg-gray-100">
+    <div className="border-border flex flex-col rounded-xl border bg-gray-100">
       {getRows()}
     </div>
   );

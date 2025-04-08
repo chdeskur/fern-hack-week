@@ -17,12 +17,10 @@ export function PageHeader({
     <div className="mb-5 flex justify-between">
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-3">
-          <div className="text-xl font-bold dark:text-gray-200">{title}</div>
+          <div className="text-xl font-bold">{title}</div>
           {titleRightContent}
         </div>
-        {subtitle != null && (
-          <div className="text-gray-900 dark:text-gray-400">{subtitle}</div>
-        )}
+        {subtitle != null && <div className="text-gray-900">{subtitle}</div>}
       </div>
       {rightContent}
     </div>

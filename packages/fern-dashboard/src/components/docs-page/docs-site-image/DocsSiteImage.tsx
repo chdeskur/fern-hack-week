@@ -37,7 +37,7 @@ export function DocsSiteImage({ docsSite }: DocsSiteImage.Props) {
   if (imageUrl.type === "failed") {
     return (
       <DocsSiteImageLayout>
-        <div className="flex flex-1 flex-col items-center justify-center gap-2 bg-white text-gray-900 dark:bg-black dark:text-gray-900">
+        <div className="flex flex-1 flex-col items-center justify-center gap-2 bg-white text-gray-900 dark:bg-black">
           <ExclamationCircleIcon className="size-10" />
           <div>Failed to load</div>
         </div>

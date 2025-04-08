@@ -58,7 +58,7 @@ export async function Header({ session }: Header.Props) {
                 height={32}
               />
             ) : (
-              <div className="bg-gray-1200 size-8 rounded-full border border-gray-500 p-1">
+              <div className="bg-gray-1200 border-border size-8 rounded-full border p-1">
                 <UserIcon className="size-full text-white" />
               </div>
             )}
@@ -66,7 +66,7 @@ export async function Header({ session }: Header.Props) {
           <PopoverContent collisionPadding={8}>
             <PopoverArrow className="fill-white" />
             <div className="flex flex-col gap-4">
-              <div className="text-gray-1000 flex flex-col text-xs">
+              <div className="flex flex-col text-xs text-gray-900">
                 <div>{name}</div>
                 <div>{email}</div>
               </div>

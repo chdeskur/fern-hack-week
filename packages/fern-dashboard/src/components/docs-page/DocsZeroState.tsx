@@ -21,15 +21,13 @@ export async function DocsZeroState({ user }: DocsZeroState.Props) {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="text-xl font-bold dark:text-gray-200">
-        {welcomeString}
-      </div>
+      <div className="text-xl font-bold">{welcomeString}</div>
       <div className="mt-2 text-sm text-gray-900">
         Delight your developers with gorgeous Docs.
       </div>
       <div className="mt-12">
         <div className="flex flex-col gap-12">
-          <div className="dark:border-gray-1100 flex h-[300px] justify-center overflow-hidden border-b border-gray-700">
+          <div className="border-border flex h-[300px] justify-center overflow-hidden border-b">
             <div className="relative mx-[5%] flex max-w-[700px] flex-1 justify-center">
               <Image
                 className="absolute top-0"

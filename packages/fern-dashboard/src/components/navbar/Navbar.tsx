@@ -50,7 +50,7 @@ export function Navbar() {
         </FeatureFlaggedServerSide>
       </div>
       <div className="hidden flex-col md:flex">
-        <div className="dark:bg-gray-1100 mb-4 mr-4 h-px bg-gray-500" />
+        <div className="mb-4 mr-4 h-px bg-gray-500" />
         <ThemeToggle />
       </div>
     </div>

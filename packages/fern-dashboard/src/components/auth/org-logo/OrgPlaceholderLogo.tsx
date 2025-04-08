@@ -8,7 +8,7 @@ export declare namespace OrgPlaceholderLogo {
 
 export function OrgPlaceholderLogo({ org }: OrgPlaceholderLogo.Props) {
   return (
-    <div className="dark:bg-gray-1200 dark:border-gray-1100 flex flex-1 items-center justify-center rounded border bg-gray-700 p-1 text-xl uppercase text-gray-900">
+    <div className="text-primary border-border flex flex-1 items-center justify-center rounded border bg-green-200 p-1 text-xl uppercase">
       {org.display_name[0]}
     </div>
   );

@@ -5,9 +5,5 @@ export declare namespace NavbarSectionTitle {
 }
 
 export const NavbarSectionTitle = ({ title }: NavbarSectionTitle.Props) => {
-  return (
-    <div className="my-3 hidden text-xs font-bold md:flex dark:text-gray-300">
-      {title}
-    </div>
-  );
+  return <div className="my-3 hidden text-xs font-bold md:flex">{title}</div>;
 };
