@@ -1,7 +1,5 @@
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
-
-import { Auth0OrgID } from "@/app/services/auth0/types";
-import { getVenusClient } from "@/app/services/venus/getVenusClient";
+import * as auth0Management from "@/app/services/auth0/management";
+import { Auth0OrgID, Auth0OrgName } from "@/app/services/auth0/types";
 
 import { getDocsUrlMetadata } from "../utils/getDocsUrlMetadata";
 
@@ -27,17 +25,9 @@ export default async function getDocsUrlOwnerHandler({
     throw new Error("Failed to load docs URL metadata");
   }
 
-  const owningOrg = await getVenusClient({ token }).organization.get(
-    FernVenusApi.OrganizationId(docsUrlMetadata.body.org)
-  );
-
-  if (!owningOrg.ok) {
-    console.error(
-      "Failed to load org from venus",
-      JSON.stringify(owningOrg.error)
-    );
-    throw new Error("Failed to load org from venus");
-  }
-
-  return { orgId: Auth0OrgID(owningOrg.body.auth0Id) };
+  return {
+    orgId: await auth0Management.getOrganizationIdFromName(
+      Auth0OrgName(docsUrlMetadata.body.org)
+    ),
+  };
 }

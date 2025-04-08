@@ -12,9 +12,9 @@ export declare namespace DocsSiteInfo {
 
 export function DocsSiteInfo({ docsSite }: DocsSiteInfo.Props) {
   return (
-    <div className="flex min-w-0 flex-col">
+    <div className="flex min-w-0 flex-1 flex-col">
       <div className="mb-2 text-gray-900 dark:text-gray-800">Domains</div>
-      <div className="flex flex-col items-stretch gap-1">
+      <div className="flex flex-col items-start gap-1">
         {docsSite.urls.map((url) => (
           <DocsSiteLink key={`${url.domain}${url.path}`} docsSiteUrl={url} />
         ))}

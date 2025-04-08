@@ -1,14 +1,12 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 
 import { DocsSiteSwitcher } from "./DocsSiteSwitcher";
 
-const DOCS_SITE_URL_REGEX = /^\/docs\/.+$/;
-
 export function MaybeDocsHeaderItems() {
-  const pathname = usePathname();
-  if (!DOCS_SITE_URL_REGEX.test(pathname)) {
+  const { docsUrl } = useParams();
+  if (docsUrl == null) {
     return null;
   }
   return (

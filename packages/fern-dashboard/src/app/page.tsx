@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
 
-import { getAuth0Client } from "@/app/services/auth0/auth0";
-import { PosthogFeatureFlag } from "@/components/posthog/feature-flags/flags";
-import { isFeatureFlagEnabledForUser } from "@/components/posthog/feature-flags/server-side";
+import { SessionData } from "@auth0/nextjs-auth0/types";
 
-import { Auth0UserID } from "./services/auth0/types";
+import { getAuth0Client } from "@/app/services/auth0/auth0";
+import { getOrCreateFirstOrgForUser } from "@/components/auth/getOrCreateFirstOrgForUser";
+
+import { getOrganization } from "./services/auth0/management";
+import { Auth0OrgID, Auth0OrgName } from "./services/auth0/types";
 
 export default async function Page() {
   const auth0 = await getAuth0Client();
@@ -14,14 +16,18 @@ export default async function Page() {
     redirect("/login");
   }
 
-  const isDocsPageEnabled = await isFeatureFlagEnabledForUser(
-    PosthogFeatureFlag.ENABLE_DOCS_PAGE,
-    Auth0UserID(session.user.sub)
-  );
+  const orgName = await getOrgNameForRedirect(session);
+  redirect(`/${orgName}`);
+}
 
-  if (isDocsPageEnabled) {
-    redirect("/docs");
-  } else {
-    redirect("/members");
+async function getOrgNameForRedirect(
+  session: SessionData
+): Promise<Auth0OrgName> {
+  if (session.user.org_id != null) {
+    const orgName = await getOrganization(Auth0OrgID(session.user.org_id));
+    return orgName.name;
   }
+
+  const firstOrg = await getOrCreateFirstOrgForUser(session);
+  return firstOrg.orgName;
 }

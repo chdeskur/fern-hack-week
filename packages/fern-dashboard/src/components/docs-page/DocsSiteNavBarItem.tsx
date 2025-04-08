@@ -1,22 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
+import { usePathnameWithoutOrgName } from "@/utils/usePathnameWithoutOrgName";
 import { cn } from "@/utils/utils";
 
 export declare namespace DocsSiteNavBarItem {
   export interface Props {
     title: string;
-    href: `/${string}`;
+    href: string;
   }
 }
 
-const DOCS_PATHNAME_REGEX = /(\/docs\/[^/]+)(.*)\/?/;
+const DOCS_PATHNAME_REGEX = /^(\/docs\/[^/]+)\/?([^/]*)\/?$/;
 
 export function DocsSiteNavBarItem({ title, href }: DocsSiteNavBarItem.Props) {
-  const pathname = usePathname();
+  const orgName = useOrgNameFromPathname();
+  const pathname = usePathnameWithoutOrgName();
   const { pathnameForDocsSite, tabPathname } = useMemo(() => {
     const match = pathname.match(DOCS_PATHNAME_REGEX);
     const pathnameForDocsSite = match?.[1];
@@ -26,8 +28,7 @@ export function DocsSiteNavBarItem({ title, href }: DocsSiteNavBarItem.Props) {
     }
     return { pathnameForDocsSite, tabPathname };
   }, [pathname]);
-  const isSelected =
-    tabPathname === href || (tabPathname === "" && href === "/");
+  const isSelected = tabPathname === href;
   const isClickable = !isSelected;
 
   const className = cn(
@@ -45,7 +46,10 @@ export function DocsSiteNavBarItem({ title, href }: DocsSiteNavBarItem.Props) {
 
   if (isClickable) {
     return (
-      <Link className={className} href={pathnameForDocsSite + href}>
+      <Link
+        className={className}
+        href={`/${orgName}${pathnameForDocsSite}/${href}`}
+      >
         {children}
       </Link>
     );

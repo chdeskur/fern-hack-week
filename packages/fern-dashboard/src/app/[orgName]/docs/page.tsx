@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DocsZeroState } from "@/components/docs-page/DocsZeroState";
 import { PosthogFeatureFlag } from "@/components/posthog/feature-flags/flags";
 import { FeatureFlaggedServerSide } from "@/components/posthog/feature-flags/server-side";
@@ -9,7 +10,11 @@ import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
 import getMyDocsSites from "../../api/get-my-docs-sites/handler";
 import { getCurrentSessionOrThrow } from "../../services/auth0/getCurrentSession";
 
-export default async function Page() {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ orgName: Auth0OrgName }>;
+}) {
   const { session, orgId } = await getCurrentSessionOrThrow();
 
   const { docsSites } = await getMyDocsSites({
@@ -19,7 +24,10 @@ export default async function Page() {
 
   const firstDocsSite = docsSites[0];
   if (firstDocsSite != null) {
-    redirect(`/docs/${constructDocsUrlParam(getDocsSiteUrl(firstDocsSite))}`);
+    const { orgName } = await params;
+    redirect(
+      `/${orgName}/docs/${constructDocsUrlParam(getDocsSiteUrl(firstDocsSite))}`
+    );
   }
 
   return (

@@ -1,19 +1,25 @@
 import { redirect } from "next/navigation";
 import React from "react";
 
-import { createPersonalProject } from "@/app/actions/createPersonalProject";
-import getMyOrganizations from "@/app/api/get-my-organizations/handler";
 import { getAuth0Client } from "@/app/services/auth0/auth0";
-import { Auth0UserID } from "@/app/services/auth0/types";
+import * as auth0Management from "@/app/services/auth0/management";
+import { Auth0OrgID, Auth0OrgName } from "@/app/services/auth0/types";
 import { getLoginUrl } from "@/utils/getLoginUrl";
+
+import { Page404 } from "../Page404";
+import { getOrCreateFirstOrgForUser } from "./getOrCreateFirstOrgForUser";
 
 export declare namespace ProtectedRoute {
   export interface Props {
+    orgName: Auth0OrgName;
     children: React.JSX.Element;
   }
 }
 
-export const ProtectedRoute = async ({ children }: ProtectedRoute.Props) => {
+export const ProtectedRoute = async ({
+  orgName,
+  children,
+}: ProtectedRoute.Props) => {
   const auth0 = await getAuth0Client();
   const session = await auth0.getSession();
 
@@ -22,17 +28,26 @@ export const ProtectedRoute = async ({ children }: ProtectedRoute.Props) => {
   }
 
   if (session.user.org_id == null) {
-    const organizations = await getMyOrganizations(
-      Auth0UserID(session.user.sub)
-    );
-    let orgIdToRedirectTo = organizations[0]?.id;
-    if (orgIdToRedirectTo == null) {
-      orgIdToRedirectTo = await createPersonalProject();
-    }
-
+    const firstOrg = await getOrCreateFirstOrgForUser(session);
     redirect(
       getLoginUrl({
-        orgId: orgIdToRedirectTo,
+        orgId: firstOrg.orgId,
+      })
+    );
+  }
+
+  let orgIdFromUrl: Auth0OrgID;
+  try {
+    orgIdFromUrl = await auth0Management.getOrganizationIdFromName(orgName);
+  } catch (e) {
+    console.error("Failed to fetch org", e);
+    return <Page404 />;
+  }
+
+  if (session.user.org_id !== orgIdFromUrl) {
+    redirect(
+      getLoginUrl({
+        orgId: orgIdFromUrl,
       })
     );
   }

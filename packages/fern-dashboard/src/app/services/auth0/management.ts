@@ -8,7 +8,12 @@ import {
 
 import { AsyncRedisCache } from "../redis/AsyncRedisCache";
 import { RedisCacheKey, RedisCacheKeyType } from "../redis/cacheKey";
-import { Auth0OrgID, Auth0Organization, Auth0UserID } from "./types";
+import {
+  Auth0OrgID,
+  Auth0OrgName,
+  Auth0Organization,
+  Auth0UserID,
+} from "./types";
 
 /****************************
  * getAuth0ManagementClient *
@@ -46,6 +51,11 @@ export function getAuth0ManagementClient() {
 
 const ORGANIZATIONS_CACHE = new AsyncRedisCache(
   RedisCacheKeyType.ORGANIZATION,
+  { ttlInSeconds: 10 }
+);
+
+const ORGANIZATION_NAME_CACHE = new AsyncRedisCache(
+  RedisCacheKeyType.ORGANIZATION_NAME,
   { ttlInSeconds: 10 }
 );
 
@@ -113,6 +123,20 @@ export async function getOrganization(orgId: Auth0OrgID) {
         });
 
       return organization as Auth0Organization;
+    }
+  );
+}
+
+export async function getOrganizationIdFromName(orgName: Auth0OrgName) {
+  return await ORGANIZATION_NAME_CACHE.get(
+    RedisCacheKey.organizationName(orgName),
+    async () => {
+      const { data: organization } =
+        await getAuth0ManagementClient().organizations.getByName({
+          name: orgName,
+        });
+
+      return Auth0OrgID(organization.id);
     }
   );
 }

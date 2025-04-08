@@ -6,10 +6,14 @@ import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { APIResponse } from "@fern-api/venus-api-sdk/core";
 
 import { getCurrentSessionWithoutRequiringOrgId } from "../services/auth0/getCurrentSession";
-import { Auth0OrgID, Auth0UserID } from "../services/auth0/types";
+import { getOrganizationIdFromName } from "../services/auth0/management";
+import { Auth0OrgID, Auth0OrgName, Auth0UserID } from "../services/auth0/types";
 import { getVenusClient } from "../services/venus/getVenusClient";
 
-export async function createPersonalProject(): Promise<Auth0OrgID> {
+export async function createPersonalProject(): Promise<{
+  orgId: Auth0OrgID;
+  orgName: Auth0OrgName;
+}> {
   const maybeSession = await getCurrentSessionWithoutRequiringOrgId();
   if (maybeSession == null) {
     throw new Error("Not authenticated");
@@ -18,13 +22,16 @@ export async function createPersonalProject(): Promise<Auth0OrgID> {
 
   const venus = getVenusClient({ token: session.tokenSet.accessToken });
 
-  const orgId = await createPersonalProjectInVenus({
+  const orgName = await createPersonalProjectInVenus({
     userId,
     userName: getUserName(session.user),
     venus,
   });
 
-  return Auth0OrgID(orgId);
+  return {
+    orgName,
+    orgId: await getOrganizationIdFromName(orgName),
+  };
 }
 
 async function createPersonalProjectInVenus({
@@ -62,7 +69,7 @@ async function createPersonalProjectInVenus({
     throw new Error("Failed to create organization");
   }
 
-  return createOrgResponse.body.organizationId;
+  return Auth0OrgName(createOrgResponse.body.organizationId);
 }
 
 function getPersonalProjectOrgId({

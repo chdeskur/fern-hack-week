@@ -14,6 +14,7 @@ import {
 import { constructDocsUrlParam } from "@/utils/constructDocsUrlParam";
 import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
 import { DocsUrl } from "@/utils/types";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
 export declare namespace DocsSiteSelect {
   export interface Props {
@@ -26,6 +27,8 @@ export const DocsSiteSelect = ({
   currentDocsUrl,
   docsSites,
 }: DocsSiteSelect.Props) => {
+  const orgName = useOrgNameFromPathname();
+
   const [localValue, setLocalValue] = useState(currentDocsUrl);
   useEffect(() => {
     setLocalValue(currentDocsUrl);
@@ -36,13 +39,15 @@ export const DocsSiteSelect = ({
       return;
     }
     setLocalValue(newUrl);
-    window.location.href = `/docs/${constructDocsUrlParam(newUrl)}`;
+    window.location.href = `/${orgName}/docs/${constructDocsUrlParam(newUrl)}`;
   };
 
   return (
     <Select
       value={localValue}
-      onValueChange={(value) => void onClickUrl(value as DocsUrl)}
+      onValueChange={(value) => {
+        void onClickUrl(value as DocsUrl);
+      }}
       disabled={docsSites.length === 0}
     >
       <SelectTrigger>

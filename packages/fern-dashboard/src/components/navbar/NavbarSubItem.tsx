@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
 
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
+import { usePathnameWithoutOrgName } from "@/utils/usePathnameWithoutOrgName";
 import { cn } from "@/utils/utils";
 
 export declare namespace NavbarSubItem {
@@ -15,7 +16,8 @@ export declare namespace NavbarSubItem {
 }
 
 export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
-  const pathname = usePathname();
+  const orgName = useOrgNameFromPathname();
+  const pathname = usePathnameWithoutOrgName();
   const isSelected = pathname.startsWith(href);
 
   const className = cn(
@@ -44,7 +46,7 @@ export const NavbarSubItem = ({ title, icon, href }: NavbarSubItem.Props) => {
     return <div className={className}>{children}</div>;
   } else {
     return (
-      <Link href={href} className={className}>
+      <Link href={`/${orgName}/${href}`} className={className}>
         {children}
       </Link>
     );

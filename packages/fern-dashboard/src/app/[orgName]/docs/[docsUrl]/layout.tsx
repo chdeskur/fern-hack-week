@@ -11,12 +11,11 @@ export default async function Layout({
   children: React.JSX.Element;
 }>) {
   const docsUrl = parseDocsUrlParam(await params);
-  const { userId, orgId } = await getCurrentSessionOrThrow();
+  const { userId } = await getCurrentSessionOrThrow();
 
   return (
     <DocsSiteLayout
       docsUrl={docsUrl}
-      orgId={orgId}
       featureFlags={await getAllFeatureFlags(userId)}
     >
       {children}

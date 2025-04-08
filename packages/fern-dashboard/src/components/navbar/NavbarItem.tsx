@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
 
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
+import { usePathnameWithoutOrgName } from "@/utils/usePathnameWithoutOrgName";
 import { cn } from "@/utils/utils";
 
 export declare namespace NavbarItem {
@@ -30,7 +31,8 @@ export const NavbarItem = ({
   href,
   hrefForActualLinking = href,
 }: NavbarItem.Props) => {
-  const pathname = usePathname();
+  const orgName = useOrgNameFromPathname();
+  const pathname = usePathnameWithoutOrgName();
 
   const isSelected = pathname.startsWith(href);
   const isClickable = !isSelected;
@@ -50,7 +52,7 @@ export const NavbarItem = ({
 
   if (isClickable) {
     return (
-      <Link className={className} href={hrefForActualLinking}>
+      <Link className={className} href={`/${orgName}/${hrefForActualLinking}`}>
         {children}
       </Link>
     );

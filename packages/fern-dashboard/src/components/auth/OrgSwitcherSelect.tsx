@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Auth0OrgID, Auth0Organization } from "@/app/services/auth0/types";
@@ -12,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getLoginUrl } from "@/utils/getLoginUrl";
+import { usePathnameWithoutOrgName } from "@/utils/usePathnameWithoutOrgName";
 
 import { OrgLogo } from "./org-logo/OrgLogo";
 
@@ -26,29 +26,33 @@ export const OrgSwitcherSelect = ({
   currentOrgId,
   organizations,
 }: OrgSwitcherSelect.Props) => {
-  const [localValue, setLocalValue] = useState(currentOrgId);
+  const [localOrgId, setLocalOrgId] = useState(currentOrgId);
   useEffect(() => {
-    setLocalValue(currentOrgId);
+    setLocalOrgId(currentOrgId);
   }, [currentOrgId]);
 
-  const pathname = usePathname();
+  const pathname = usePathnameWithoutOrgName();
 
   const onClickOrg = async (newOrgId: Auth0OrgID) => {
     if (newOrgId === currentOrgId) {
       return;
     }
+    const newOrg = organizations.find((org) => org.id === newOrgId);
+    if (newOrg == null) {
+      return;
+    }
 
-    setLocalValue(newOrgId);
+    setLocalOrgId(newOrgId);
 
     window.location.href = getLoginUrl({
       orgId: newOrgId,
-      returnTo: getRedirectPathname(pathname),
+      returnTo: `/${newOrg.name}/${getRedirectPathname(pathname)}`,
     });
   };
 
   return (
     <Select
-      value={localValue}
+      value={localOrgId}
       onValueChange={(value) => void onClickOrg(value as Auth0OrgID)}
       disabled={organizations.length === 0}
     >
