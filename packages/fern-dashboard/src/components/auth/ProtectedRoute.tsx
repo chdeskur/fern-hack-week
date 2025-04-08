@@ -3,7 +3,11 @@ import React from "react";
 
 import { getAuth0Client } from "@/app/services/auth0/auth0";
 import * as auth0Management from "@/app/services/auth0/management";
-import { Auth0OrgID, Auth0OrgName } from "@/app/services/auth0/types";
+import {
+  Auth0OrgID,
+  Auth0OrgName,
+  Auth0UserID,
+} from "@/app/services/auth0/types";
 import { getLoginUrl } from "@/utils/getLoginUrl";
 
 import { Page404 } from "../Page404";
@@ -41,6 +45,14 @@ export const ProtectedRoute = async ({
     orgIdFromUrl = await auth0Management.getOrganizationIdFromName(orgName);
   } catch (e) {
     console.error("Failed to fetch org", e);
+    return <Page404 />;
+  }
+
+  const isUserInOrgFromUrl = await auth0Management.doesUserBelongsToOrg(
+    Auth0UserID(session.user.sub),
+    orgIdFromUrl
+  );
+  if (!isUserInOrgFromUrl) {
     return <Page404 />;
   }
 
