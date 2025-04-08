@@ -1,10 +1,8 @@
-import Image from "next/image";
-
 import { User } from "@auth0/nextjs-auth0/types";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-import exampleDocsSite from "../../../public/example-docs-site.avif";
 import { Button } from "../ui/button";
+import { DocsZeroStateImage } from "./DocsZeroStateImage";
 
 export declare namespace DocsZeroState {
   export interface Props {
@@ -28,13 +26,7 @@ export async function DocsZeroState({ user }: DocsZeroState.Props) {
       <div className="mt-12">
         <div className="flex flex-col gap-12">
           <div className="border-border flex h-[300px] justify-center overflow-hidden border-b">
-            <div className="relative mx-[5%] flex max-w-[700px] flex-1 justify-center">
-              <Image
-                className="absolute top-0"
-                src={exampleDocsSite}
-                alt="example doc site"
-              />
-            </div>
+            <DocsZeroStateImage />
           </div>
           <div className="flex justify-center">
             <Button>

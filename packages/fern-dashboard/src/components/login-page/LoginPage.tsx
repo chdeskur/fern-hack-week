@@ -1,11 +1,9 @@
-import Image from "next/image";
-
 import { BookOpen } from "lucide-react";
 
-import loginPreview from "../../../public/login-preview.avif";
 import { LoginButton } from "../auth/LoginButton";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
 import { Button } from "../ui/button";
+import { LoginImage } from "./LoginImage";
 import { CohereLogo } from "./logos/CohereLogo";
 import { IntercomLogo } from "./logos/IntercomLogo";
 import { PineconeLogo } from "./logos/PineconeLogo";
@@ -55,14 +53,7 @@ export const LoginPage = () => {
             </div>
           </div>
           <div className="relative flex flex-1">
-            <div className="perspective-normal absolute bottom-24 left-0 right-16 top-6 flex">
-              <Image
-                src={loginPreview}
-                className="object-fit rotate-y-[-10deg] w-auto min-w-0 object-contain"
-                fill
-                alt="preview of fern docs"
-              />
-            </div>
+            <LoginImage />
           </div>
           <div className="bg-background/75 absolute bottom-0 left-0 right-0 flex flex-col gap-4 p-8">
             <div className="text-gray-1000 text-center text-sm">

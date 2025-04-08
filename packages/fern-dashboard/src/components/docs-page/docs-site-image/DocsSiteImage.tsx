@@ -20,11 +20,11 @@ export declare namespace DocsSiteImage {
 }
 
 export function DocsSiteImage({ docsSite }: DocsSiteImage.Props) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   const imageUrl = useHomepageImageUrl({
     docsSite,
-    theme: theme === "dark" ? theme : "light",
+    theme: resolvedTheme === "dark" ? resolvedTheme : "light",
   });
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
