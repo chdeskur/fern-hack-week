@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
+import { buildErrorPageSearchParams } from "./app/error/searchParams";
 import { getAuth0Client } from "./app/services/auth0/auth0";
 
 export async function middleware(req: NextRequest) {
@@ -8,6 +9,20 @@ export async function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith("/auth/")) {
+    // doing error redirection here, even though the auth0 docs say to do it in
+    // the onCallback handler in the Auth0Client contructor. this is because in
+    // the onCallback handler, the error is always just "An error occured during
+    // the authorization flow" vs. here we get actually useful errors
+    const error = req.nextUrl.searchParams.get("error");
+    if (error != null) {
+      return NextResponse.redirect(
+        new URL(
+          "/error?" +
+            buildErrorPageSearchParams(req.nextUrl.searchParams).toString(),
+          req.nextUrl.origin
+        )
+      );
+    }
     return await applyAuth0Middleware(req);
   }
 
