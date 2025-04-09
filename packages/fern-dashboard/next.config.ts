@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
      */
     "@fern-api/fdr-sdk",
     "@fern-ui/loadable",
+    "@fern-api/ui-core-utils",
   ],
   experimental: {
     optimizePackageImports: [],

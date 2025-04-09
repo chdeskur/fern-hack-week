@@ -40,7 +40,9 @@ export function DocsSiteNavBarItem({ title, href }: DocsSiteNavBarItem.Props) {
   const children = (
     <>
       <div className="flex pb-3">{title}</div>
-      {isSelected && <div className="h-0.5 rounded-full bg-gray-700" />}
+      {isSelected && (
+        <div className="bg-gray-1100 h-0.5 rounded-full dark:bg-gray-700" />
+      )}
     </>
   );
 

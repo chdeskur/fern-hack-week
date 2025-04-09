@@ -1,15 +1,11 @@
-import { PosthogFeatureFlag } from "@/components/posthog/feature-flags/flags";
-import { FeatureFlaggedServerSide } from "@/components/posthog/feature-flags/server-side";
+import { Settings } from "@/components/settings/Settings";
+import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
 
-export default async function Page(_props: {
+export default async function Page({
+  params,
+}: {
   params: Promise<{ docsUrl: string }>;
 }) {
-  return (
-    <FeatureFlaggedServerSide
-      flag={PosthogFeatureFlag.ENABLE_DOCS_SETTINGS_TAB}
-      redirectWhenDisabled
-    >
-      <div>settings</div>
-    </FeatureFlaggedServerSide>
-  );
+  const docsUrl = parseDocsUrlParam(await params);
+  return <Settings docsUrl={docsUrl} />;
 }

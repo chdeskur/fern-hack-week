@@ -6,21 +6,21 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/utils/utils";
 
 const buttonVariants = cva(
-  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-gray-1100 inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm outline-none transition-all focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-gray-1100 inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm outline-none transition-all focus-visible:ring-[3px] disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-primary shadow-xs hover:bg-primary/90 text-white dark:text-black",
+          "bg-primary disabled:bg-primary/50 shadow-xs hover:bg-primary/90 text-white dark:text-black",
         destructive:
-          "bg-destructive shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 text-white",
+          "bg-destructive disabled:bg-destructive/50 shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 text-white",
         outline:
-          "bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 border",
+          "bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 border disabled:opacity-50",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 disabled:opacity-50",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 disabled:opacity-50",
+        link: "text-primary underline-offset-4 hover:underline disabled:opacity-50",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -36,15 +36,35 @@ const buttonVariants = cva(
   }
 );
 
+const spinnerVariants = cva(
+  "absolute inset-0 m-auto size-6 animate-spin rounded-full border-[3px] border-t-transparent",
+  {
+    variants: {
+      variant: {
+        default: "border-primary",
+        destructive: "border-destructive",
+        outline: "border-primary",
+        secondary: "border-primary",
+        ghost: "border-primary",
+        link: "border-primary",
+      },
+    },
+  }
+);
+
 function Button({
   className,
   variant,
   size,
   asChild = false,
+  loading = false,
+  disabled = loading,
+  children,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    loading?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
 
@@ -52,8 +72,18 @@ function Button({
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      disabled={disabled}
       {...props}
-    />
+    >
+      <span
+        className={cn({
+          "relative text-transparent": loading,
+        })}
+      >
+        {children}
+        {loading && <div className={spinnerVariants({ variant })} />}
+      </span>
+    </Comp>
   );
 }
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
+
 import { PylonScript } from "@/components/pylon/PylonScript";
 import { HIDE_PYLON_CLASS_NAME } from "@/components/pylon/constants";
 import { Toaster } from "@/components/ui/sonner";
@@ -46,7 +48,20 @@ export default async function RootLayout({
               <ProgressProvider>{children}</ProgressProvider>
             </PostHogProvider>
           </ReactQueryProvider>
-          <Toaster position="top-center" />
+          <Toaster
+            position="top-center"
+            richColors
+            toastOptions={{
+              classNames: {
+                icon: "!w-auto",
+                success: "!bg-green-300 !border-green-600 !text-primary",
+                content: "min-w-0",
+              },
+            }}
+            icons={{
+              success: <CheckCircleIcon className="text-primary size-6" />,
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>

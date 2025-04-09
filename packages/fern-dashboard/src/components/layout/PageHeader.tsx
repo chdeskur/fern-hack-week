@@ -1,6 +1,6 @@
 export declare namespace PageHeader {
   export interface Props {
-    title: string;
+    title: React.JSX.Element | string;
     titleRightContent?: React.JSX.Element;
     subtitle?: string;
     rightContent?: React.JSX.Element;
