@@ -19,8 +19,8 @@ export async function FeatureFlaggedServerSide({
   redirectWhenDisabled = false,
   children,
 }: FeatureFlaggedServerSide.Props) {
-  const { userId } = await getCurrentSessionOrThrow();
-  const isEnabled = await isFeatureFlagEnabledForUser(flag, userId);
+  const session = await getCurrentSessionOrThrow();
+  const isEnabled = await isFeatureFlagEnabledForUser(flag, session.user.sub);
 
   if (isEnabled) {
     return children;

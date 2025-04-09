@@ -1,33 +1,37 @@
 import { redirect } from "next/navigation";
 
-import { SessionData } from "@auth0/nextjs-auth0/types";
-
-import { getAuth0Client } from "@/app/services/auth0/auth0";
-import { getOrCreateFirstOrgForUser } from "@/components/auth/getOrCreateFirstOrgForUser";
-
-import { getOrganization } from "./services/auth0/management";
-import { Auth0OrgID, Auth0OrgName } from "./services/auth0/types";
+import { createPersonalProject } from "./actions/createPersonalProject";
+import {
+  Auth0SessionData,
+  getCurrentSession,
+} from "./services/auth0/getCurrentSession";
+import { getMyOrganizations } from "./services/auth0/management";
+import { Auth0OrgName } from "./services/auth0/types";
 
 export default async function Page() {
-  const auth0 = await getAuth0Client();
-  const session = await auth0.getSession();
+  const session = await getCurrentSession();
 
   if (session == null) {
     redirect("/login");
   }
 
-  const orgName = await getOrgNameForRedirect(session);
-  redirect(`/${orgName}`);
+  const firstOrg = await getOrCreateFirstOrgForUser(session);
+  redirect(`/${firstOrg.orgName}`);
 }
 
-async function getOrgNameForRedirect(
-  session: SessionData
-): Promise<Auth0OrgName> {
-  if (session.user.org_id != null) {
-    const orgName = await getOrganization(Auth0OrgID(session.user.org_id));
-    return orgName.name;
+async function getOrCreateFirstOrgForUser(
+  session: Auth0SessionData
+): Promise<{ orgName: Auth0OrgName }> {
+  const organizations = await getMyOrganizations(session.user.sub);
+  const firstOrg = organizations[0];
+  if (firstOrg != null) {
+    return {
+      orgName: Auth0OrgName(firstOrg.name),
+    };
   }
 
-  const firstOrg = await getOrCreateFirstOrgForUser(session);
-  return firstOrg.orgName;
+  const personalProject = await createPersonalProject();
+  return {
+    orgName: personalProject.orgName,
+  };
 }

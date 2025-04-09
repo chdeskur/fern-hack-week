@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -34,12 +35,14 @@ export const DocsSiteSelect = ({
     setLocalValue(currentDocsUrl);
   }, [currentDocsUrl]);
 
+  const router = useRouter();
+
   const onClickUrl = async (newUrl: DocsUrl) => {
     if (newUrl === currentDocsUrl) {
       return;
     }
     setLocalValue(newUrl);
-    window.location.href = `/${orgName}/docs/${constructDocsUrlParam(newUrl)}`;
+    router.push(`/${orgName}/docs/${constructDocsUrlParam(newUrl)}`);
   };
 
   return (

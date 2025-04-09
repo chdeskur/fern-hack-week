@@ -11,7 +11,7 @@ export declare namespace AppLayout {
 }
 
 export async function AppLayout({ children }: AppLayout.Props) {
-  const { session } = await getCurrentSessionOrThrow();
+  const session = await getCurrentSessionOrThrow();
 
   return (
     <div className="flex min-w-0 flex-1 flex-col">

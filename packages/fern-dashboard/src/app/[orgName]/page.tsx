@@ -1,18 +1,17 @@
 import { redirect } from "next/navigation";
 
-import { getAuth0Client } from "@/app/services/auth0/auth0";
 import { PosthogFeatureFlag } from "@/components/posthog/feature-flags/flags";
 import { isFeatureFlagEnabledForUser } from "@/components/posthog/feature-flags/server-side";
 
-import { Auth0OrgName, Auth0UserID } from "../services/auth0/types";
+import { getCurrentSession } from "../services/auth0/getCurrentSession";
+import { Auth0OrgName } from "../services/auth0/types";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ orgName: Auth0OrgName }>;
 }) {
-  const auth0 = await getAuth0Client();
-  const session = await auth0.getSession();
+  const session = await getCurrentSession();
 
   if (session == null) {
     redirect("/");
@@ -20,7 +19,7 @@ export default async function Page({
 
   const isDocsPageEnabled = await isFeatureFlagEnabledForUser(
     PosthogFeatureFlag.ENABLE_DOCS_PAGE,
-    Auth0UserID(session.user.sub)
+    session.user.sub
   );
 
   const { orgName } = await params;

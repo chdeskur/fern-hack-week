@@ -15,11 +15,12 @@ export default async function Page({
 }: {
   params: Promise<{ orgName: Auth0OrgName }>;
 }) {
-  const { session, orgId } = await getCurrentSessionOrThrow();
+  const { orgName } = await params;
+  const session = await getCurrentSessionOrThrow();
 
   const { docsSites } = await getMyDocsSites({
-    token: session.tokenSet.accessToken,
-    orgId,
+    orgName,
+    token: session.accessToken,
   });
 
   const firstDocsSite = docsSites[0];

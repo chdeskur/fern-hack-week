@@ -1,19 +1,11 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import React from "react";
 
-import { getAuth0Client } from "@/app/services/auth0/auth0";
+import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import * as auth0Management from "@/app/services/auth0/management";
-import {
-  Auth0OrgID,
-  Auth0OrgName,
-  Auth0UserID,
-} from "@/app/services/auth0/types";
-import { X_PATHNAME_HEADER } from "@/middleware";
-import { getLoginUrl } from "@/utils/getLoginUrl";
+import { Auth0OrgName } from "@/app/services/auth0/types";
 
 import { Page404 } from "../Page404";
-import { getOrCreateFirstOrgForUser } from "./getOrCreateFirstOrgForUser";
 
 export declare namespace ProtectedRoute {
   export interface Props {
@@ -26,52 +18,19 @@ export const ProtectedRoute = async ({
   orgName,
   children,
 }: ProtectedRoute.Props) => {
-  const auth0 = await getAuth0Client();
-  const session = await auth0.getSession();
+  const session = await getCurrentSession();
 
   if (session == null) {
     redirect("/");
   }
 
-  if (session.user.org_id == null) {
-    const firstOrg = await getOrCreateFirstOrgForUser(session);
-    redirect(getLoginUrl({ orgId: firstOrg.orgId }));
-  }
-
-  let orgIdFromUrl: Auth0OrgID;
-  try {
-    orgIdFromUrl = await auth0Management.getOrganizationIdFromName(orgName);
-  } catch (e) {
-    console.error("Failed to fetch org", e);
-    return <Page404 />;
-  }
-
-  const userId = Auth0UserID(session.user.sub);
   const isUserInOrgFromUrl = await auth0Management.doesUserBelongsToOrg(
-    userId,
-    orgIdFromUrl
+    session.user.sub,
+    orgName
   );
 
   if (!isUserInOrgFromUrl) {
-    if (await auth0Management.isFernEmployee(userId)) {
-      await auth0Management.addUserToOrg(userId, orgIdFromUrl);
-      redirect(getLoginUrl({ orgId: orgIdFromUrl }));
-    }
     return <Page404 />;
-  }
-
-  if (session.user.org_id !== orgIdFromUrl) {
-    const requestHeaders = await headers();
-    const currentPathname = requestHeaders.get(X_PATHNAME_HEADER);
-    redirect(
-      getLoginUrl({
-        orgId: orgIdFromUrl,
-        returnTo:
-          currentPathname != null
-            ? currentPathname.replace(new RegExp(`^/${orgIdFromUrl}`), "")
-            : undefined,
-      })
-    );
   }
 
   return children;

@@ -5,32 +5,25 @@ import { User } from "@auth0/nextjs-auth0/types";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { APIResponse } from "@fern-api/venus-api-sdk/core";
 
-import { getCurrentSessionWithoutRequiringOrgId } from "../services/auth0/getCurrentSession";
-import { getOrganizationIdFromName } from "../services/auth0/management";
-import { Auth0OrgID, Auth0OrgName, Auth0UserID } from "../services/auth0/types";
+import { getCurrentSessionOrThrow } from "../services/auth0/getCurrentSession";
+import { Auth0OrgName, Auth0UserID } from "../services/auth0/types";
 import { getVenusClient } from "../services/venus/getVenusClient";
 
 export async function createPersonalProject(): Promise<{
-  orgId: Auth0OrgID;
   orgName: Auth0OrgName;
 }> {
-  const maybeSession = await getCurrentSessionWithoutRequiringOrgId();
-  if (maybeSession == null) {
-    throw new Error("Not authenticated");
-  }
-  const { session, userId } = maybeSession;
+  const session = await getCurrentSessionOrThrow();
 
-  const venus = getVenusClient({ token: session.tokenSet.accessToken });
+  const venus = getVenusClient({ token: session.accessToken });
 
   const orgName = await createPersonalProjectInVenus({
-    userId,
+    userId: session.user.sub,
     userName: getUserName(session.user),
     venus,
   });
 
   return {
     orgName,
-    orgId: await getOrganizationIdFromName(orgName),
   };
 }
 

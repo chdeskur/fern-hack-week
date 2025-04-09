@@ -2,8 +2,6 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { getAuth0Client } from "./app/services/auth0/auth0";
 
-export const X_PATHNAME_HEADER = "x-current-pathname";
-
 export async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith("/ingest")) {
     return applyPosthogMiddleware(req);
@@ -13,10 +11,7 @@ export async function middleware(req: NextRequest) {
     return await applyAuth0Middleware(req);
   }
 
-  // add x-current-pathname to request headers to help with redirecting
-  const headers = new Headers(req.headers);
-  headers.set(X_PATHNAME_HEADER, req.nextUrl.pathname);
-  return NextResponse.next({ headers });
+  return NextResponse.next();
 }
 
 export const config = {

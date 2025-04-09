@@ -1,8 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Auth0OrgID, Auth0Organization } from "@/app/services/auth0/types";
+import { Auth0OrgName, Auth0Organization } from "@/app/services/auth0/types";
 import {
   Select,
   SelectContent,
@@ -10,50 +11,50 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getLoginUrl } from "@/utils/getLoginUrl";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 import { usePathnameWithoutOrgName } from "@/utils/usePathnameWithoutOrgName";
 
 import { OrgLogo } from "./org-logo/OrgLogo";
 
 export declare namespace OrgSwitcherSelect {
   export interface Props {
-    currentOrgId: Auth0OrgID | undefined;
     organizations: Auth0Organization[];
   }
 }
 
 export const OrgSwitcherSelect = ({
-  currentOrgId,
   organizations,
 }: OrgSwitcherSelect.Props) => {
-  const [localOrgId, setLocalOrgId] = useState(currentOrgId);
+  const orgName = useOrgNameFromPathname();
+  const [localOrgName, setLocalOrgName] = useState(orgName);
   useEffect(() => {
-    setLocalOrgId(currentOrgId);
-  }, [currentOrgId]);
+    setLocalOrgName(orgName);
+  }, [orgName]);
 
   const pathname = usePathnameWithoutOrgName();
+  const router = useRouter();
 
-  const onClickOrg = async (newOrgId: Auth0OrgID) => {
-    if (newOrgId === currentOrgId) {
-      return;
+  const getPathnameForOrg = (newOrgName: Auth0OrgName) => {
+    return `/${newOrgName}${getRedirectPathname(pathname)}`;
+  };
+
+  const onClickOrg = (newOrgName: Auth0OrgName) => {
+    if (newOrgName !== orgName) {
+      setLocalOrgName(newOrgName);
+      router.push(getPathnameForOrg(newOrgName));
     }
-    const newOrg = organizations.find((org) => org.id === newOrgId);
-    if (newOrg == null) {
-      return;
-    }
+  };
 
-    setLocalOrgId(newOrgId);
-
-    window.location.href = getLoginUrl({
-      orgId: newOrgId,
-      returnTo: `/${newOrg.name}/${getRedirectPathname(pathname)}`,
-    });
+  const onHoverOrg = (hoveredOrgName: Auth0OrgName) => {
+    router.prefetch(getPathnameForOrg(hoveredOrgName));
   };
 
   return (
     <Select
-      value={localOrgId}
-      onValueChange={(value) => void onClickOrg(value as Auth0OrgID)}
+      value={localOrgName}
+      onValueChange={(value) => {
+        onClickOrg(Auth0OrgName(value));
+      }}
       disabled={organizations.length === 0}
     >
       <SelectTrigger className="shrink-0 md:min-w-[200px]">
@@ -61,7 +62,13 @@ export const OrgSwitcherSelect = ({
       </SelectTrigger>
       <SelectContent>
         {organizations.map((organization) => (
-          <SelectItem key={organization.id} value={organization.id}>
+          <SelectItem
+            key={organization.id}
+            value={organization.name}
+            onMouseOver={() => {
+              onHoverOrg(organization.name);
+            }}
+          >
             <OrgLogo organization={organization} />
             <span className="hidden md:inline">
               {organization.display_name}

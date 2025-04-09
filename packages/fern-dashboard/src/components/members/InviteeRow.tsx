@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { rescindInvitation } from "@/app/actions/rescindInvitation";
 import { ReactQueryKey, inferQueryData } from "@/state/queryKeys";
 import { OrgInvitation } from "@/state/types";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
 import { DropdownMenuItem } from "../ui/dropdown-menu";
 import { MemberOrInviteeRow } from "./MemberOrInviteeRow";
@@ -16,11 +17,15 @@ export declare namespace InviteeRow {
 }
 
 export function InviteeRow({ invitation }: InviteeRow.Props) {
+  const orgName = useOrgNameFromPathname();
+  const queryKey = ReactQueryKey.orgInvitations(orgName);
+
   const queryClient = useQueryClient();
   const rescind = useMutation({
     mutationFn: async () => {
       if (invitation.id != null) {
         return await rescindInvitation({
+          orgName,
           invitationId: invitation.id,
         });
       }
@@ -30,7 +35,6 @@ export function InviteeRow({ invitation }: InviteeRow.Props) {
         return;
       }
 
-      const queryKey = ReactQueryKey.orgInvitations();
       await queryClient.cancelQueries({ queryKey });
 
       const previousInvitations =
@@ -53,7 +57,6 @@ export function InviteeRow({ invitation }: InviteeRow.Props) {
       );
       toast.error(`Failed to rescind invitation to ${invitation.inviteeEmail}`);
       if (context?.previousInvitations != null) {
-        const queryKey = ReactQueryKey.orgInvitations();
         queryClient.setQueryData<inferQueryData<typeof queryKey>>(
           queryKey,
           context.previousInvitations
@@ -62,9 +65,7 @@ export function InviteeRow({ invitation }: InviteeRow.Props) {
 
       // only invalidate on error. if we invalidate on success, we can wipe
       // out other optimsitic writes (if the user is rescinding multiple invites)
-      await queryClient.invalidateQueries({
-        queryKey: ReactQueryKey.orgInvitations(),
-      });
+      await queryClient.invalidateQueries({ queryKey });
     },
   });
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { UserMinusIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetMembers200ResponseOneOfInner } from "auth0";
@@ -6,6 +8,7 @@ import { toast } from "sonner";
 import { removeUserFromOrg } from "@/app/actions/removeUserFromOrg";
 import { Auth0UserID } from "@/app/services/auth0/types";
 import { ReactQueryKey, inferQueryData } from "@/state/queryKeys";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
 import { DropdownMenuItem } from "../ui/dropdown-menu";
 import { MemberOrInviteeRow } from "./MemberOrInviteeRow";
@@ -18,12 +21,17 @@ export declare namespace MemberRow {
 }
 
 export function MemberRow({ member, currentUserId }: MemberRow.Props) {
+  const orgName = useOrgNameFromPathname();
+  const queryKey = ReactQueryKey.orgMembers(orgName);
+
   const queryClient = useQueryClient();
   const removeMember = useMutation({
     mutationFn: () =>
-      removeUserFromOrg({ userIdToRemove: Auth0UserID(member.user_id) }),
+      removeUserFromOrg({
+        orgName,
+        userIdToRemove: Auth0UserID(member.user_id),
+      }),
     onMutate: async () => {
-      const queryKey = ReactQueryKey.orgMembers();
       await queryClient.cancelQueries({ queryKey });
 
       const previousMembers =
@@ -46,7 +54,6 @@ export function MemberRow({ member, currentUserId }: MemberRow.Props) {
       );
       toast.error(`Failed to remove ${member.name}`);
       if (context?.previousMembers != null) {
-        const queryKey = ReactQueryKey.orgMembers();
         queryClient.setQueryData<inferQueryData<typeof queryKey>>(
           queryKey,
           context.previousMembers
@@ -55,9 +62,7 @@ export function MemberRow({ member, currentUserId }: MemberRow.Props) {
 
       // only invalidate on error. if we invalidate on success, we can wipe
       // out other optimsitic writes (if the user is removing multiple members)
-      await queryClient.invalidateQueries({
-        queryKey: ReactQueryKey.orgMembers(),
-      });
+      await queryClient.invalidateQueries({ queryKey });
     },
   });
 

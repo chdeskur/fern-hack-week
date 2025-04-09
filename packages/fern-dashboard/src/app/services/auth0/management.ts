@@ -15,6 +15,8 @@ import {
   Auth0UserID,
 } from "./types";
 
+const FERN_ORG_NAME = Auth0OrgName("fern");
+
 /****************************
  * getAuth0ManagementClient *
  ****************************/
@@ -39,6 +41,7 @@ export function getAuth0ManagementClient() {
       domain: AUTH0_DOMAIN,
       clientId: AUTH0_CLIENT_ID,
       clientSecret: AUTH0_CLIENT_SECRET,
+      timeoutDuration: 60_000,
     });
   }
 
@@ -54,8 +57,8 @@ const ORGANIZATIONS_CACHE = new AsyncRedisCache(
   { ttlInSeconds: 10 }
 );
 
-const ORGANIZATION_NAME_CACHE = new AsyncRedisCache(
-  RedisCacheKeyType.ORGANIZATION_NAME,
+const ORGANIZATION_NAME_TO_ID_CACHE = new AsyncRedisCache(
+  RedisCacheKeyType.ORGANIZATION_NAME_TO_ID,
   { ttlInSeconds: 10 }
 );
 
@@ -74,28 +77,28 @@ const ORGANIZATION_INVITATIONS_CACHE = new AsyncRedisCache(
  **********************/
 
 export async function invalidateCachesAfterAddingOrRemovingOrgMember({
-  orgId,
+  orgName,
 }: {
-  orgId: Auth0OrgID;
+  orgName: Auth0OrgName;
 }) {
   await ORGANIZATION_MEMBERS_CACHE.invalidate(
-    RedisCacheKey.organizationMembers(orgId)
+    RedisCacheKey.organizationMembers(orgName)
   );
 }
 
 export async function invalidateCachesAfterInvitingUserToOrg(
-  orgId: Auth0OrgID
+  orgName: Auth0OrgName
 ) {
   await ORGANIZATION_INVITATIONS_CACHE.invalidate(
-    RedisCacheKey.organizationInvitations(orgId)
+    RedisCacheKey.organizationInvitations(orgName)
   );
 }
 
 export async function invalidateCachesAfterRescindingInvitation(
-  orgId: Auth0OrgID
+  orgName: Auth0OrgName
 ) {
   await ORGANIZATION_INVITATIONS_CACHE.invalidate(
-    RedisCacheKey.organizationInvitations(orgId)
+    RedisCacheKey.organizationInvitations(orgName)
   );
 }
 
@@ -103,13 +106,13 @@ export async function invalidateCachesAfterRescindingInvitation(
  * helpers *
  ***********/
 
-export async function getOrganization(orgId: Auth0OrgID) {
+export async function getOrganization(orgName: Auth0OrgName) {
   return await ORGANIZATIONS_CACHE.get(
-    RedisCacheKey.organization(orgId),
+    RedisCacheKey.organization(orgName),
     async () => {
       const { data: organization } =
-        await getAuth0ManagementClient().organizations.get({
-          id: orgId,
+        await getAuth0ManagementClient().organizations.getByName({
+          name: orgName,
         });
 
       return organization as Auth0Organization;
@@ -117,9 +120,9 @@ export async function getOrganization(orgId: Auth0OrgID) {
   );
 }
 
-export async function getOrganizationIdFromName(orgName: Auth0OrgName) {
-  return await ORGANIZATION_NAME_CACHE.get(
-    RedisCacheKey.organizationName(orgName),
+export async function getOrgIdFromName(orgName: Auth0OrgName) {
+  return await ORGANIZATION_NAME_TO_ID_CACHE.get(
+    RedisCacheKey.organizationNameToId(orgName),
     async () => {
       const { data: organization } =
         await getAuth0ManagementClient().organizations.getByName({
@@ -141,12 +144,15 @@ export async function getMyOrganizations(userId: Auth0UserID) {
 }
 
 export async function getOrgMembers(
-  orgId: Auth0OrgID,
+  orgName: Auth0OrgName,
   { includeFernEmployees }: { includeFernEmployees: boolean }
 ) {
   let members = await ORGANIZATION_MEMBERS_CACHE.get(
-    RedisCacheKey.organizationMembers(orgId),
-    () => getAllOrgMembers(orgId)
+    RedisCacheKey.organizationMembers(orgName),
+    async () => {
+      const orgId = await getOrgIdFromName(orgName);
+      return await getAllOrgMembers(orgId);
+    }
   );
   if (!includeFernEmployees) {
     const isFernEmployee = await createIsFernEmployee();
@@ -187,7 +193,7 @@ async function getAllOrgMembers(orgId: Auth0OrgID) {
 export async function createIsFernEmployee(): Promise<
   (userId: Auth0UserID) => boolean
 > {
-  const fernOrgMembers = await getOrgMembers(getFernAuth0OrgID(), {
+  const fernOrgMembers = await getOrgMembers(FERN_ORG_NAME, {
     includeFernEmployees: true,
   });
   const fernMembers = new Set(
@@ -201,7 +207,7 @@ export async function createIsFernEmployee(): Promise<
  * to avoid loading the fern org members with every check
  */
 export async function isFernEmployee(userId: Auth0UserID): Promise<boolean> {
-  const fernOrgMembers = await getOrgMembers(getFernAuth0OrgID(), {
+  const fernOrgMembers = await getOrgMembers(FERN_ORG_NAME, {
     includeFernEmployees: true,
   });
   const fernMembers = new Set(
@@ -210,17 +216,13 @@ export async function isFernEmployee(userId: Auth0UserID): Promise<boolean> {
   return fernMembers.has(Auth0UserID(userId));
 }
 
-function getFernAuth0OrgID(): Auth0OrgID {
-  if (process.env.FERN_AUTH0_ORG_ID == null) {
-    throw new Error("FERN_AUTH0_ORG_ID is not defined in the environment");
-  }
-  return Auth0OrgID(process.env.FERN_AUTH0_ORG_ID);
-}
-
-export async function getOrgInvitations(orgId: Auth0OrgID) {
+export async function getOrgInvitations(orgName: Auth0OrgName) {
   return await ORGANIZATION_INVITATIONS_CACHE.get(
-    RedisCacheKey.organizationInvitations(orgId),
-    () => getAllOrgInvitations(orgId)
+    RedisCacheKey.organizationInvitations(orgName),
+    async () => {
+      const orgId = await getOrgIdFromName(orgName);
+      return await getAllOrgInvitations(orgId);
+    }
   );
 }
 
@@ -252,23 +254,30 @@ async function getAllOrgInvitations(orgId: Auth0OrgID) {
 
 export async function ensureUserBelongsToOrg(
   userId: Auth0UserID,
-  orgId: Auth0OrgID
+  orgName: Auth0OrgName
 ) {
-  if (!(await doesUserBelongsToOrg(userId, orgId))) {
-    throw new Error(`User ${userId} is not in org ${orgId}`);
+  if (!(await doesUserBelongsToOrg(userId, orgName))) {
+    throw new Error(`User ${userId} is not in org ${orgName}`);
   }
 }
 
 export async function doesUserBelongsToOrg(
   userId: Auth0UserID,
-  orgId: Auth0OrgID
+  orgName: Auth0OrgName
 ) {
+  // a fern employee is considere d to be in every org
+  if (await isFernEmployee(userId)) {
+    return true;
+  }
   const orgs = await getMyOrganizations(userId);
-  return orgs.some((o) => o.id === orgId);
+  return orgs.some((o) => o.name === orgName);
 }
 
-export async function addUserToOrg(userId: Auth0UserID, orgId: Auth0OrgID) {
+export async function addUserToOrg(userId: Auth0UserID, orgName: Auth0OrgName) {
   const auth0 = getAuth0ManagementClient();
-  await auth0.organizations.addMembers({ id: orgId }, { members: [userId] });
-  await invalidateCachesAfterAddingOrRemovingOrgMember({ orgId });
+  await auth0.organizations.addMembers(
+    { id: await getOrgIdFromName(orgName) },
+    { members: [userId] }
+  );
+  await invalidateCachesAfterAddingOrRemovingOrgMember({ orgName });
 }

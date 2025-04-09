@@ -13,7 +13,7 @@ export const RedisCacheKeyType = {
   ORGANIZATION: "ORGANIZATION",
   ORGANIZATION_MEMBERS: "ORGANIZATION_MEMBERS",
   ORGANIZATION_INVITATIONS: "ORGANIZATION_INVITATIONS",
-  ORGANIZATION_NAME: "ORGANIZATION_NAME",
+  ORGANIZATION_NAME_TO_ID: "ORGANIZATION_NAME_TO_ID",
 } as const;
 
 export type RedisCacheKeyType =
@@ -23,20 +23,22 @@ export type RedisCacheDataTypes = {
   [RedisCacheKeyType.ORGANIZATION]: Auth0Organization;
   [RedisCacheKeyType.ORGANIZATION_MEMBERS]: GetMembers200ResponseOneOfInner[];
   [RedisCacheKeyType.ORGANIZATION_INVITATIONS]: GetInvitations200ResponseOneOfInner[];
-  [RedisCacheKeyType.ORGANIZATION_NAME]: Auth0OrgID;
+  [RedisCacheKeyType.ORGANIZATION_NAME_TO_ID]: Auth0OrgID;
 };
 
 export const RedisCacheKey = {
-  organization: (orgId: Auth0OrgID) =>
-    cacheKey(RedisCacheKeyType.ORGANIZATION)(`org-${orgId}`),
-  organizationMembers: (orgId: Auth0OrgID) =>
-    cacheKey(RedisCacheKeyType.ORGANIZATION_MEMBERS)(`org-members-${orgId}`),
-  organizationInvitations: (orgId: Auth0OrgID) =>
+  organization: (orgName: Auth0OrgName) =>
+    cacheKey(RedisCacheKeyType.ORGANIZATION)(`org-${orgName}`),
+  organizationMembers: (orgName: Auth0OrgName) =>
+    cacheKey(RedisCacheKeyType.ORGANIZATION_MEMBERS)(`org-members-${orgName}`),
+  organizationInvitations: (orgName: Auth0OrgName) =>
     cacheKey(RedisCacheKeyType.ORGANIZATION_INVITATIONS)(
-      `org-invitations-${orgId}`
+      `org-invitations-${orgName}`
     ),
-  organizationName: (orgName: Auth0OrgName) =>
-    cacheKey(RedisCacheKeyType.ORGANIZATION_NAME)(`org-name-${orgName}`),
+  organizationNameToId: (orgName: Auth0OrgName) =>
+    cacheKey(RedisCacheKeyType.ORGANIZATION_NAME_TO_ID)(
+      `org-name-to-id-${orgName}`
+    ),
 };
 
 function cacheKey<T extends RedisCacheKeyType>(_type: T) {

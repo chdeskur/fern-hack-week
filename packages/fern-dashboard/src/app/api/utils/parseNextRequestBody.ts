@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { ZodType } from "zod";
+import { ZodType, z } from "zod";
 
 import { MaybeErrorResponse } from "./MaybeErrorResponse";
 
-export async function parseNextRequestBody<T>(
+export async function parseNextRequestBody<T extends ZodType>(
   req: NextRequest,
-  schema: ZodType<T>
-): Promise<MaybeErrorResponse<T>> {
+  schema: T
+): Promise<MaybeErrorResponse<z.infer<T>>> {
   let requestJson: unknown;
   try {
     requestJson = await req.json();

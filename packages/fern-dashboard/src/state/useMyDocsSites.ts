@@ -7,15 +7,17 @@ import { Loadable, mapLoadable } from "@fern-ui/loadable";
 
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
 import { getDocsSiteUrl } from "@/utils/getDocsSiteUrl";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
 import { convertQueryResultToLoadable } from "./convertQueryResultToLoadable";
 import { ReactQueryKey } from "./queryKeys";
 
 export function useMyDocsSites() {
+  const orgName = useOrgNameFromPathname();
   const result = convertQueryResultToLoadable(
     useQuery({
-      queryKey: ReactQueryKey.myDocsSites(),
-      queryFn: () => DashboardApiClient.getMyDocsSites(),
+      queryKey: ReactQueryKey.myDocsSites(orgName),
+      queryFn: () => DashboardApiClient.getMyDocsSites({ orgName }),
     })
   );
   return result;

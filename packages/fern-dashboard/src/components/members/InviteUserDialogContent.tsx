@@ -8,6 +8,7 @@ import { inviteUserToOrg } from "@/app/actions/inviteUserToOrg";
 import { Auth0Organization } from "@/app/services/auth0/types";
 import { ReactQueryKey, inferQueryData } from "@/state/queryKeys";
 import { getOrgDisplayName } from "@/utils/getOrgDisplayName";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
 import { Button } from "../ui/button";
 import {
@@ -32,15 +33,17 @@ export function InviteUserDialogContent({
   org,
   close,
 }: InviteUserDialogContent.Props) {
+  const orgName = useOrgNameFromPathname();
+  const queryKey = ReactQueryKey.orgInvitations(orgName);
+
   const [email, setEmail] = useState("");
 
   const isValidEmail = useMemo(() => EMAIL_REGEX.test(email), [email]);
 
   const queryClient = useQueryClient();
   const inviteUser = useMutation({
-    mutationFn: () => inviteUserToOrg({ inviteeEmail: email }),
+    mutationFn: () => inviteUserToOrg({ orgName, inviteeEmail: email }),
     onMutate: async () => {
-      const queryKey = ReactQueryKey.orgInvitations();
       await queryClient.cancelQueries({ queryKey });
 
       const previousInvitations =
@@ -60,7 +63,6 @@ export function InviteUserDialogContent({
       console.error(`Failed to invite ${email}`, error);
       toast.error(`Failed to invite ${email}`);
       if (context?.previousInvitations != null) {
-        const queryKey = ReactQueryKey.orgInvitations();
         queryClient.setQueryData<inferQueryData<typeof queryKey>>(
           queryKey,
           context.previousInvitations
@@ -69,13 +71,9 @@ export function InviteUserDialogContent({
 
       // only invalidate on error. if we invalidate on success, we can wipe
       // out other optimsitic writes (if the user is removing multiple members)
-      await queryClient.invalidateQueries({
-        queryKey: ReactQueryKey.orgInvitations(),
-      });
+      await queryClient.invalidateQueries({ queryKey });
     },
     onSuccess: ({ invitationId }) => {
-      const queryKey = ReactQueryKey.orgInvitations();
-
       queryClient.setQueryData<inferQueryData<typeof queryKey>>(
         queryKey,
         (oldInvitations) =>

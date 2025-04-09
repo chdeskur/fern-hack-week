@@ -2,8 +2,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { Auth0OrgID } from "@/app/services/auth0/types";
+import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
 import { convertQueryResultToLoadable } from "./convertQueryResultToLoadable";
 import { ReactQueryKey, inferQueryData } from "./queryKeys";
@@ -19,10 +20,15 @@ export function useOrganizations() {
   );
 }
 
-export function useOrganization(orgId: Auth0OrgID) {
+export function useOrganization(orgName: Auth0OrgName) {
   const organizations = useOrganizations();
   if (organizations.type !== "loaded") {
     return undefined;
   }
-  return organizations.value.find((org) => org.id === orgId);
+  return organizations.value.find((org) => org.name === orgName);
+}
+
+export function useCurrentOrganization() {
+  const orgName = useOrgNameFromPathname();
+  return useOrganization(orgName);
 }

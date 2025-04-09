@@ -1,14 +1,14 @@
 import * as auth0Management from "@/app/services/auth0/management";
-import { Auth0OrgID, Auth0UserID } from "@/app/services/auth0/types";
+import { Auth0OrgName, Auth0UserID } from "@/app/services/auth0/types";
 
 export default async function getOrgMembers({
   userId,
-  orgId,
+  orgName,
 }: {
   userId: Auth0UserID;
-  orgId: Auth0OrgID;
+  orgName: Auth0OrgName;
 }) {
-  const members = await auth0Management.getOrgMembers(orgId, {
+  const members = await auth0Management.getOrgMembers(orgName, {
     includeFernEmployees: await auth0Management.isFernEmployee(userId),
   });
   return members;

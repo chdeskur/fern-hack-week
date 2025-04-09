@@ -5,13 +5,13 @@ import React, { useEffect } from "react";
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider } from "posthog-js/react";
 
-import { FullSessionData } from "@/app/services/auth0/getCurrentSession";
+import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
 import { PostHogIdentify } from "@/components/posthog/PostHogIdentify";
 import { PostHogPageView } from "@/components/posthog/PostHogPageView";
 
 export declare namespace PostHogProvider {
   export interface Props {
-    session: FullSessionData | undefined;
+    session: Auth0SessionData | undefined;
     children: React.JSX.Element;
   }
 }
@@ -38,16 +38,16 @@ export function PostHogProvider({ session, children }: PostHogProvider.Props) {
     }
 
     posthog.setPersonPropertiesForFlags({
-      email: session?.session.user.email,
+      email: session?.user.email,
     });
-  }, [isPosthogTrackingEnabled, session?.session.user.email]);
+  }, [isPosthogTrackingEnabled, session?.user.email]);
 
   return (
     <PHProvider client={posthog}>
       {isPosthogTrackingEnabled && (
         <>
           <PostHogPageView />
-          <PostHogIdentify user={session?.session.user} />
+          <PostHogIdentify user={session?.user} />
         </>
       )}
       {children}

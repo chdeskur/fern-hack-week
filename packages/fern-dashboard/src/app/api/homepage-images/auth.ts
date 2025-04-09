@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
-import * as auth0Management from "@/app/services/auth0/management";
-import { Auth0OrgID } from "@/app/services/auth0/types";
+import { Auth0OrgName } from "@/app/services/auth0/types";
 import { getVenusClient } from "@/app/services/venus/getVenusClient";
 
 import { MaybeErrorResponse } from "../utils/MaybeErrorResponse";
@@ -43,23 +42,21 @@ export async function ensureUserOwnsUrl({
 export async function ensureOrgOwnsUrl({
   token,
   url,
-  orgId,
+  orgName,
 }: {
   token: string;
   url: string;
-  orgId: Auth0OrgID;
+  orgName: Auth0OrgName;
 }): Promise<MaybeErrorResponse> {
-  const org = await auth0Management.getOrganization(orgId);
-
   const owner = await getDocsUrlOwner({ url, token });
 
-  if (owner.orgName !== org.name) {
+  if (owner.orgName !== orgName) {
     console.error(
-      `Org ${orgId} does not own URL ${url} (it is owned by ${owner.orgName})`
+      `Org ${orgName} does not own URL ${url} (it is owned by ${owner.orgName})`
     );
     return {
       errorResponse: NextResponse.json(
-        { message: `Org ${org.name} does not own URL ${url}` },
+        { message: `Org ${orgName} does not own URL ${url}` },
         { status: 401 }
       ),
     };

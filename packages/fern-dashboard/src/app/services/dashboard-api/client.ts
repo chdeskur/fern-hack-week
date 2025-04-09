@@ -6,33 +6,31 @@ import { getOrgMembers } from "@/app/api/get-org-members/route";
 import { getHomepageImageUrl } from "@/app/api/homepage-images/get/route";
 
 export const DashboardApiClient = {
-  getMyDocsSites: (): Promise<getMyDocsSites.Response> =>
-    typedFetch<getMyDocsSites.Response>("/api/get-my-docs-sites"),
+  getMyDocsSites: (
+    request: getMyDocsSites.Request
+  ): Promise<getMyDocsSites.Response> =>
+    typedFetch<getMyDocsSites.Response>("/api/get-my-docs-sites", request),
   getMyOrganizations: () =>
     typedFetch<getMyOrganizations.Response>("/api/get-my-organizations"),
-  getOrgInvitations: () =>
-    typedFetch<getOrgInvitations.Response>("/api/get-org-invitations"),
-  getOrgMembers: (): Promise<getOrgMembers.Response> =>
-    typedFetch<getOrgMembers.Response>("/api/get-org-members"),
+  getOrgInvitations: (request: getOrgInvitations.Request) =>
+    typedFetch<getOrgInvitations.Response>("/api/get-org-invitations", request),
+  getOrgMembers: (
+    request: getOrgMembers.Request
+  ): Promise<getOrgMembers.Response> =>
+    typedFetch<getOrgMembers.Response>("/api/get-org-members", request),
   getHomepageImages: (request: getHomepageImageUrl.Request) =>
-    typedFetch<getHomepageImageUrl.Response>("/api/homepage-images/get", {
-      body: request,
-    }),
+    typedFetch<getHomepageImageUrl.Response>(
+      "/api/homepage-images/get",
+      request
+    ),
   getDocsUrlOwner: (request: getDocsUrlOwner.Request) =>
-    typedFetch<getDocsUrlOwner.Response>("/api/get-docs-url-owner", {
-      body: request,
-    }),
+    typedFetch<getDocsUrlOwner.Response>("/api/get-docs-url-owner", request),
 };
 
 async function typedFetch<T>(
   url: string,
-  {
-    body,
-    method = body != null ? "POST" : "GET",
-  }: {
-    method?: "GET" | "POST";
-    body?: unknown;
-  } = {}
+  body?: unknown,
+  { method = body != null ? "POST" : "GET" }: { method?: "GET" | "POST" } = {}
 ): Promise<T> {
   const response = await fetch(url, {
     method: method,

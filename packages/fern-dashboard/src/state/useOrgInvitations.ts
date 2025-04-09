@@ -3,19 +3,23 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
+import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
 import { convertQueryResultToLoadable } from "./convertQueryResultToLoadable";
 import { ReactQueryKey, inferQueryData } from "./queryKeys";
 import { OrgInvitation } from "./types";
 
-const QUERY_KEY = ReactQueryKey.orgInvitations();
-
 export function useOrgInvitations() {
+  const orgName = useOrgNameFromPathname();
+  const queryKey = ReactQueryKey.orgInvitations(orgName);
+
   return convertQueryResultToLoadable(
-    useQuery<inferQueryData<typeof QUERY_KEY>>({
-      queryKey: QUERY_KEY,
+    useQuery<inferQueryData<typeof queryKey>>({
+      queryKey: queryKey,
       queryFn: async () => {
-        const invitations = await DashboardApiClient.getOrgInvitations();
+        const invitations = await DashboardApiClient.getOrgInvitations({
+          orgName,
+        });
         return invitations.map(
           (invitation): OrgInvitation => ({
             id: invitation.id,

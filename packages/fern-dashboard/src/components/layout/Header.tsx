@@ -1,10 +1,9 @@
 import Image from "next/image";
 
-import { SessionData } from "@auth0/nextjs-auth0/types";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { PopoverArrow } from "@radix-ui/react-popover";
 
-import { Auth0OrgID } from "@/app/services/auth0/types";
+import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
 import {
   Popover,
   PopoverContent,
@@ -20,19 +19,18 @@ import { SupportButton } from "./SupportButton";
 
 export declare namespace Header {
   export interface Props {
-    session: SessionData;
+    session: Auth0SessionData;
   }
 }
 
 export async function Header({ session }: Header.Props) {
-  const { name, email, picture, org_id } = session.user;
-  const orgId = org_id != null ? Auth0OrgID(org_id) : undefined;
+  const { name, email, picture } = session.user;
 
   return (
     <div className="flex justify-between gap-4 p-4">
       <div className="flex min-w-0 items-center gap-4">
         <ThemedFernLogo className="w-16" />
-        <OrgSwitcher currentOrgId={orgId} />
+        <OrgSwitcher />
         <MaybeDocsHeaderItems />
       </div>
       <div className="flex shrink-0 gap-4">
@@ -64,7 +62,7 @@ export async function Header({ session }: Header.Props) {
             )}
           </PopoverTrigger>
           <PopoverContent collisionPadding={8}>
-            <PopoverArrow className="fill-white" />
+            <PopoverArrow className="fill-popover" />
             <div className="flex flex-col gap-4">
               <div className="flex flex-col text-xs text-gray-900">
                 <div>{name}</div>

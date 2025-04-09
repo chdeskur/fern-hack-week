@@ -4,7 +4,7 @@ import {
   decodeAccessToken,
   getCurrentSessionOrThrow,
 } from "@/app/services/auth0/getCurrentSession";
-import { Auth0OrgID, Auth0UserID } from "@/app/services/auth0/types";
+import { Auth0UserID } from "@/app/services/auth0/types";
 
 import { MaybeErrorResponse } from "./MaybeErrorResponse";
 import { parseAuthHeader } from "./parseAuthHeader";
@@ -12,7 +12,6 @@ import { parseAuthHeader } from "./parseAuthHeader";
 export interface ApiSessionData {
   token: string;
   userId: Auth0UserID;
-  orgId: Auth0OrgID;
 }
 
 export async function maybeGetCurrentSession(
@@ -21,19 +20,16 @@ export async function maybeGetCurrentSession(
   try {
     if (req.headers.get("authorization") != null) {
       const { token } = parseAuthHeader(req);
-      const { userId, orgId } = decodeAccessToken(token);
-      if (orgId == null) {
-        throw new Error("accessToken is missing orgId");
-      }
-      return { data: { token, userId, orgId } };
+      const { userId } = decodeAccessToken(token);
+      return { data: { token, userId } };
     }
 
+    // I think auth0 uses cookies to get the current session?
     const sessionData = await getCurrentSessionOrThrow();
     return {
       data: {
-        token: sessionData.session.tokenSet.accessToken,
-        userId: sessionData.userId,
-        orgId: sessionData.orgId,
+        token: sessionData.accessToken,
+        userId: sessionData.user.sub,
       },
     };
   } catch (e) {

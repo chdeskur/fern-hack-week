@@ -32,13 +32,13 @@ export async function POST(req: NextRequest) {
   const { url } = parsedBody.data;
 
   let response = await handler({ token, url });
-  if (response.orgId != null) {
+  if (response.orgName != null) {
     const doesUserBelongToOrg = await auth0Management.doesUserBelongsToOrg(
       userId,
-      response.orgId
+      response.orgName
     );
     if (!doesUserBelongToOrg) {
-      response = { orgId: undefined };
+      response = { orgName: undefined };
     }
   }
 

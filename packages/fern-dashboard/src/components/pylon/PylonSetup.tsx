@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { User } from "@auth0/nextjs-auth0/types";
+import { Auth0User } from "@/app/services/auth0/types";
 
 import "./PylonSetup.scss";
 import { HIDE_PYLON_CLASS_NAME } from "./constants";
@@ -10,7 +10,7 @@ import { getPylon } from "./getPylon";
 
 export declare namespace PylonSetup {
   export interface Props {
-    user: User;
+    user: Auth0User;
     emailHash: string | undefined;
   }
 }

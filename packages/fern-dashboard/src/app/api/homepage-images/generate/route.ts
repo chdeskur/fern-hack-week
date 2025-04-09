@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { maybeGetCurrentSession } from "../../utils/maybeGetCurrentSession";
 import { parseNextRequestBody } from "../../utils/parseNextRequestBody";
+import { orgNameValidator } from "../../utils/validators";
 import { ensureOrgOwnsUrl } from "../auth";
 import handler from "./handler";
 
@@ -11,6 +12,7 @@ export const maxDuration = 60;
 
 const GenerateHomepageImagesRequest = z.object({
   url: z.string(),
+  orgName: orgNameValidator,
 });
 
 export async function POST(req: NextRequest) {
@@ -18,7 +20,7 @@ export async function POST(req: NextRequest) {
   if (maybeSessionData.errorResponse != null) {
     return maybeSessionData.errorResponse;
   }
-  const { orgId, token } = maybeSessionData.data;
+  const { token } = maybeSessionData.data;
 
   const parsedBody = await parseNextRequestBody(
     req,
@@ -27,11 +29,11 @@ export async function POST(req: NextRequest) {
   if (parsedBody.errorResponse != null) {
     return parsedBody.errorResponse;
   }
-  const { url } = parsedBody.data;
+  const { url, orgName } = parsedBody.data;
 
   const ensureOrgOwnsUrlResponse = await ensureOrgOwnsUrl({
     url,
-    orgId,
+    orgName,
     token,
   });
   if (ensureOrgOwnsUrlResponse.errorResponse != null) {

@@ -6,6 +6,7 @@ import { ResolvedReturnType } from "@/utils/types";
 
 import { maybeGetCurrentSession } from "../../utils/maybeGetCurrentSession";
 import { parseNextRequestBody } from "../../utils/parseNextRequestBody";
+import { orgNameValidator } from "../../utils/validators";
 import { ensureOrgOwnsUrl } from "../auth";
 import handler from "./handler";
 
@@ -19,6 +20,7 @@ export declare namespace getHomepageImageUrl {
 const GetHomepageImagesRequest = z.object({
   urls: z.array(z.string()),
   theme: z.union([z.literal("dark"), z.literal("light")]),
+  orgName: orgNameValidator,
 });
 
 export async function POST(req: NextRequest) {
@@ -26,18 +28,18 @@ export async function POST(req: NextRequest) {
   if (maybeSessionData.errorResponse != null) {
     return maybeSessionData.errorResponse;
   }
-  const { orgId, token } = maybeSessionData.data;
+  const { token } = maybeSessionData.data;
 
   const parsedBody = await parseNextRequestBody(req, GetHomepageImagesRequest);
   if (parsedBody.errorResponse != null) {
     return parsedBody.errorResponse;
   }
-  const { urls, theme } = parsedBody.data;
+  const { urls, theme, orgName } = parsedBody.data;
 
   for (const url of urls) {
     const ensureOrgOwnsUrlResponse = await ensureOrgOwnsUrl({
       url,
-      orgId,
+      orgName,
       token,
     });
     if (ensureOrgOwnsUrlResponse.errorResponse != null) {

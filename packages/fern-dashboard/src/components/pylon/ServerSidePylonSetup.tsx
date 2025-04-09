@@ -11,12 +11,15 @@ export async function ServerSidePylonSetup() {
   if (session == null) {
     return null;
   }
-  const { user } = session.session;
 
   return (
     <PylonSetup
-      user={user}
-      emailHash={user.email != null ? await hashEmail(user.email) : undefined}
+      user={session.user}
+      emailHash={
+        session.user.email != null
+          ? await hashEmail(session.user.email)
+          : undefined
+      }
     />
   );
 }

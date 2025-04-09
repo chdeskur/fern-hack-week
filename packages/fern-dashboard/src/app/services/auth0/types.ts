@@ -20,3 +20,10 @@ export interface Auth0Organization
   branding?: Partial<GetOrganizations200ResponseOneOfInner["branding"]>;
   metadata?: GetOrganizations200ResponseOneOfInner["metadata"];
 }
+
+export interface Auth0User {
+  sub: Auth0UserID;
+  name?: string;
+  email?: string;
+  picture?: string;
+}

@@ -3,16 +3,20 @@
 import * as auth0Management from "@/app/services/auth0/management";
 
 import { getCurrentSessionOrThrow } from "../services/auth0/getCurrentSession";
-import { Auth0UserID } from "../services/auth0/types";
+import { Auth0OrgName, Auth0UserID } from "../services/auth0/types";
 
 export async function removeUserFromOrg({
   userIdToRemove,
+  orgName,
 }: {
   userIdToRemove: Auth0UserID;
+  orgName: Auth0OrgName;
 }) {
   const auth0 = auth0Management.getAuth0ManagementClient();
-  const { userId, orgId } = await getCurrentSessionOrThrow();
-  await auth0Management.ensureUserBelongsToOrg(userId, orgId);
+  const session = await getCurrentSessionOrThrow();
+  const userId = session.user.sub;
+
+  await auth0Management.ensureUserBelongsToOrg(userId, orgName);
 
   if (userId === userIdToRemove) {
     throw new Error("User cannot remove themself");
@@ -25,11 +29,11 @@ export async function removeUserFromOrg({
   }
 
   await auth0.organizations.deleteMembers(
-    { id: orgId },
+    { id: await auth0Management.getOrgIdFromName(orgName) },
     { members: [userIdToRemove] }
   );
 
   await auth0Management.invalidateCachesAfterAddingOrRemovingOrgMember({
-    orgId,
+    orgName,
   });
 }
