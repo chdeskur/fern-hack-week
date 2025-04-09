@@ -63,6 +63,7 @@ model DocsV2 {
   docsConfigInstanceId String?
   isPreview            Boolean  @default(false)
   hasPublicS3Assets    Boolean  @default(false)
+  isArchived           Boolean  @default(false)
 
   @@id([domain, path])
 }

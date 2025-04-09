@@ -26,7 +26,10 @@ import {
   UnauthorizedError,
 } from "../../../api/generated/api/resources/commons/errors";
 import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
-import { LoadDocsForUrlResponse } from "../../../api/generated/api/resources/docs/resources/v2/resources/read";
+import {
+  DomainNotRegisteredError,
+  LoadDocsForUrlResponse,
+} from "../../../api/generated/api/resources/docs/resources/v2/resources/read";
 import {
   DocsNotFoundError,
   InvalidDomainError,
@@ -446,6 +449,23 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
       });
 
       return res.send();
+    },
+    setIsArchived: async (req, res) => {
+      const url = ParsedBaseUrl.parse(req.body.url).toURL();
+      const orgId = await app.dao.docsV2().getOrgIdForDocsUrl(url);
+      if (orgId == null) {
+        throw new DomainNotRegisteredError();
+      }
+
+      await app.services.auth.checkUserBelongsToOrg({
+        authHeader: req.headers.authorization,
+        orgId,
+      });
+
+      await app.dao.docsV2().setIsDocsDefinitionArchived({
+        url,
+        isArchived: req.body.isArchived,
+      });
     },
   });
 }

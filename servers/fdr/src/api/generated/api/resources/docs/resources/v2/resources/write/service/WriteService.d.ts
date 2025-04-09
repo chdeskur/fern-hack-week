@@ -31,6 +31,11 @@ export interface WriteServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
+    setIsArchived(req: express.Request<never, never, FernRegistry.docs.v2.write.SetIsArchivedRequest, never>, res: {
+        send: () => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }, next: express.NextFunction): void | Promise<void>;
 }
 export declare class WriteService {
     private readonly methods;

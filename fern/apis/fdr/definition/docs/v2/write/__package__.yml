@@ -102,6 +102,20 @@ service:
       errors:
         - DocsNotFoundError
         - rootCommons.UnauthorizedError
+  
+    setIsArchived:
+      auth: true
+      method: POST
+      path: /set-is-archived
+      request:
+        name: SetIsArchivedRequest
+        body:
+          properties:
+            url: rootCommons.Url
+            isArchived: boolean
+      errors:
+        - DocsNotFoundError
+        - rootCommons.UnauthorizedError 
 
 types:
   ImageFilePath:

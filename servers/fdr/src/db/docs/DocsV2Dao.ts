@@ -137,6 +137,14 @@ export interface DocsV2Dao {
   }): Promise<void>;
 
   listDocsSitesForOrg(orgID: string): Promise<ListDocsSitesForOrgResponse>;
+
+  setIsDocsDefinitionArchived({
+    url,
+    isArchived,
+  }: {
+    url: URL;
+    isArchived: boolean;
+  }): Promise<void>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
@@ -155,6 +163,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
       },
       data: {
         orgID: toOrgId,
+        isArchived: false,
       },
     });
   }
@@ -538,7 +547,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 JSONB_BUILD_OBJECT('domain', "domain", 'path', "path")
               ) AS "urls"
         FROM "DocsV2"
-        WHERE "orgID" = ${orgID} AND "isPreview" = false
+        WHERE "orgID" = ${orgID} AND "isPreview" = false AND "isArchived" = false
         GROUP BY "docsConfigInstanceId";
       `;
 
@@ -566,6 +575,26 @@ export class DocsV2DaoImpl implements DocsV2Dao {
           compareDocsSiteUrls(a.mainUrl, b.mainUrl)
         ),
       };
+    });
+  }
+
+  async setIsDocsDefinitionArchived({
+    url,
+    isArchived,
+  }: {
+    url: URL;
+    isArchived: boolean;
+  }): Promise<void> {
+    await this.prisma.docsV2.update({
+      where: {
+        domain_path: {
+          domain: url.hostname,
+          path: url.pathname,
+        },
+      },
+      data: {
+        isArchived,
+      },
     });
   }
 }
@@ -621,6 +650,7 @@ async function createOrUpdateDocsDefinition({
       isPreview,
       authType,
       hasPublicS3Assets: authType === "PUBLIC",
+      isArchived: false,
     },
   });
 }

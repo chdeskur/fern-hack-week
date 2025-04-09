@@ -3,3 +3,4 @@ export { type StartDocsPreviewRegisterRequestV2 } from "./StartDocsPreviewRegist
 export { type RegisterDocsRequest } from "./RegisterDocsRequest";
 export { type ReindexAlgoliaRecordsRequest } from "./ReindexAlgoliaRecordsRequest";
 export { type TransferDomainOwnershipRequest } from "./TransferDomainOwnershipRequest";
+export { type SetIsArchivedRequest } from "./SetIsArchivedRequest";

@@ -381,6 +381,64 @@ export class Write {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v2.write.SetIsArchivedRequest} request
+     * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.docs.v2.write.setIsArchived({
+     *         url: FernRegistry.Url("url"),
+     *         isArchived: true
+     *     })
+     */
+    public async setIsArchived(
+        request: FernRegistry.docs.v2.write.SetIsArchivedRequest,
+        requestOptions?: Write.RequestOptions
+    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.write.setIsArchived.Error>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/set-is-archived"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: undefined,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.docs.v2.write.setIsArchived.Error)?.error) {
+                case "DocsNotFoundError":
+                case "UnauthorizedError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.docs.v2.write.setIsArchived.Error,
+                    };
+            }
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.docs.v2.write.setIsArchived.Error._unknown(_response.error),
+        };
+    }
+
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
