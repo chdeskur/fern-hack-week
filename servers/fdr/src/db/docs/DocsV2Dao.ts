@@ -142,7 +142,7 @@ export interface DocsV2Dao {
     url,
     isArchived,
   }: {
-    url: URL;
+    url: ParsedBaseUrl;
     isArchived: boolean;
   }): Promise<void>;
 }
@@ -582,14 +582,14 @@ export class DocsV2DaoImpl implements DocsV2Dao {
     url,
     isArchived,
   }: {
-    url: URL;
+    url: ParsedBaseUrl;
     isArchived: boolean;
   }): Promise<void> {
     await this.prisma.docsV2.update({
       where: {
         domain_path: {
           domain: url.hostname,
-          path: url.pathname,
+          path: url.path ?? "",
         },
       },
       data: {

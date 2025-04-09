@@ -451,8 +451,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
       return res.send();
     },
     setIsArchived: async (req, res) => {
-      const url = ParsedBaseUrl.parse(req.body.url).toURL();
-      const orgId = await app.dao.docsV2().getOrgIdForDocsUrl(url);
+      const url = ParsedBaseUrl.parse(req.body.url);
+      const orgId = await app.dao.docsV2().getOrgIdForDocsUrl(url.toURL());
       if (orgId == null) {
         throw new DomainNotRegisteredError();
       }

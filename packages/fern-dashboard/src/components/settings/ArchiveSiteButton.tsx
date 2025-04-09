@@ -36,8 +36,8 @@ export function ArchiveSiteButton({ docsUrl }: ArchiveSiteButton.Props) {
     } catch (e) {
       console.error(`Failed to archive ${docsUrl}`, e);
       toast.error("Failed to archive site");
+      setIsArchiving(false);
     }
-    setIsArchiving(false);
   };
 
   return (
