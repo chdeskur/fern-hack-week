@@ -266,10 +266,6 @@ const getColorScaleCss = ({
   surface: string;
   surfaceWideGamut: string;
 }) => {
-  console.log(scale, scaleWideGamut, scaleAlpha, scaleAlphaWideGamut);
-
-  console.log(contrast, surface, surfaceWideGamut);
-
   const selector =
     mode === "dark" ? ".dark" : mode === "light" ? ":root, .light" : ":root";
 
