@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { useRouter } from "@bprogress/next/app";
 
 import { Auth0OrgName, Auth0Organization } from "@/app/services/auth0/types";
 import {
