@@ -5,6 +5,7 @@ import { PylonScript } from "@/components/pylon/PylonScript";
 import { HIDE_PYLON_CLASS_NAME } from "@/components/pylon/constants";
 import { Toaster } from "@/components/ui/sonner";
 import { PostHogProvider } from "@/providers/PosthogProvider";
+import { ProgressProvider } from "@/providers/ProgressProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { cn } from "@/utils/utils";
 
@@ -41,7 +42,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <ReactQueryProvider>
-            <PostHogProvider session={session}>{children}</PostHogProvider>
+            <PostHogProvider session={session}>
+              <ProgressProvider>{children}</ProgressProvider>
+            </PostHogProvider>
           </ReactQueryProvider>
           <Toaster position="top-center" />
         </ThemeProvider>
