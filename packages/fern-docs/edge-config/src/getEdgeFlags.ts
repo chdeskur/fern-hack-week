@@ -41,11 +41,12 @@ const EDGE_FLAGS = [
   "grpc-endpoints" as const,
   "authenticated-pages-discoverable" as const,
   "search-v2" as const,
+  "authed-previews" as const,
 ];
 
 type EdgeFlag = (typeof EDGE_FLAGS)[number];
 
-type EdgeConfigResponse = Record<EdgeFlag, string[]>;
+type EdgeConfigResponse = Record<EdgeFlag, string[] | Record<string, unknown>>;
 
 export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
   try {
@@ -167,7 +168,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain === "buildwithfern.com"
         ? true
         : checkDomainMatchesCustomers(domain, config["search-v2"]);
-    const grpcEndpoints = config["grpc-endpoints"];
+    const isAuthedPreview = checkDomainMatchesCustomers(
+      domain,
+      config["authed-previews"]
+    );
 
     return {
       isApiPlaygroundEnabled: isDevelopment(domain) || isApiPlaygroundEnabled,
@@ -200,7 +204,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isNewSearchExperienceEnabled,
       isAuthenticatedPagesDiscoverable,
       isSearchV2Enabled,
-      grpcEndpoints,
+      isAuthedPreview,
     };
   } catch (e) {
     console.error(e);
@@ -234,14 +238,14 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isNewSearchExperienceEnabled: false,
       isAuthenticatedPagesDiscoverable: false,
       isSearchV2Enabled: domain === "buildwithfern.com",
-      grpcEndpoints: [],
+      isAuthedPreview: false,
     };
   }
 }
 
 function checkDomainMatchesCustomers(
   domain: string,
-  customers: readonly string[]
+  customers: readonly string[] | Record<string, unknown>
 ): boolean {
   if (customers == null) {
     return false;
@@ -254,11 +258,22 @@ function checkDomainMatchesCustomers(
     .replace(".ferndocs.dev", "")
     .replace(".ferndocs.app", "")
     .replace(".ferndocs.com", "");
-  return (
-    customers.some((customer) =>
-      domainWithoutDocs.toLowerCase().includes(customer.toLowerCase())
-    ) ||
-    customers.includes(domain) ||
-    customers.includes(withoutStaging(domain))
-  );
+
+  if (Array.isArray(customers)) {
+    return (
+      customers.some((customer) =>
+        domainWithoutDocs.toLowerCase().includes(customer.toLowerCase())
+      ) ||
+      customers.includes(domain) ||
+      customers.includes(withoutStaging(domain))
+    );
+  } else {
+    return (
+      Object.keys(customers).some((key) =>
+        domainWithoutDocs.toLowerCase().includes(key.toLowerCase())
+      ) ||
+      domain in customers ||
+      withoutStaging(domain) in customers
+    );
+  }
 }

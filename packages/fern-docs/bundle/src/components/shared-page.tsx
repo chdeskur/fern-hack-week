@@ -109,10 +109,10 @@ export default async function SharedPage({
     redirect(prepareRedirect(authState.authorizationUrl));
   }
 
+  const edgeFlags = await edgeFlagsPromise;
+
   if (found.type === "notFound") {
     console.error(`[${loader.domain}] Not found: ${slug}`);
-
-    const edgeFlags = await edgeFlagsPromise;
 
     // TODO: returning "notFound: true" here will render vercel's default 404 page
     // this is better than following redirects, since it will signal a proper 404 status code.
@@ -184,6 +184,17 @@ export default async function SharedPage({
     redirect(prepareRedirect(authState.authorizationUrl));
   }
 
+  const { isPreview } = await baseUrlPromise;
+
+  // handle authed preview pages
+  if (!authState.authed && edgeFlags.isAuthedPreview && isPreview) {
+    if (authState.authorizationUrl == null) {
+      unauthorized();
+    }
+
+    redirect(prepareRedirect(authState.authorizationUrl));
+  }
+
   // TODO: parallelize this with the other edge config calls:
   const [_, flagPredicate] = await withLaunchDarkly(loader, found);
 
@@ -202,8 +213,7 @@ export default async function SharedPage({
   //   found.currentVersion ?? found.node
   // );
 
-  const { isInlineFeedbackEnabled } = await edgeFlagsPromise;
-  const FeedbackPopoverProvider = isInlineFeedbackEnabled
+  const FeedbackPopoverProvider = edgeFlags.isInlineFeedbackEnabled
     ? FeedbackPopover
     : React.Fragment;
 
