@@ -2,7 +2,7 @@ import { LogoutButton } from "@/components/auth/LogoutButton";
 
 import { parseErrorPageSearchParams } from "./searchParams";
 
-export default async function Error({
+export default async function ErrorPage({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[]>>;

@@ -71,18 +71,20 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, className }), {
+        "relative !text-transparent": loading,
+      })}
       disabled={disabled}
       {...props}
     >
-      <span
-        className={cn({
-          "relative text-transparent": loading,
-        })}
-      >
-        {children}
-        {loading && <div className={spinnerVariants({ variant })} />}
-      </span>
+      {asChild ? (
+        children
+      ) : (
+        <>
+          {children}
+          {loading && <div className={spinnerVariants({ variant })} />}
+        </>
+      )}
     </Comp>
   );
 }
