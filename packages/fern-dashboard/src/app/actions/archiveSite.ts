@@ -13,7 +13,7 @@ export async function archiveSite({ url }: { url: string }) {
     isArchived: true,
   });
   if (!response.ok) {
-    console.error("Failed to archive site", response.error);
+    console.error("Failed to archive site", JSON.stringify(response.error));
     throw new Error("Failed to archive site");
   }
 }

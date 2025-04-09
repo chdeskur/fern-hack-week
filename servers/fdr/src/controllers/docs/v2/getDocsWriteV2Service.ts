@@ -466,6 +466,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         url,
         isArchived: req.body.isArchived,
       });
+
+      return res.send();
     },
   });
 }
