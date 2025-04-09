@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 
 import { FernNextResponse } from "@/server/FernNextResponse";
+import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getWorkOSClientId, workos } from "@/server/auth/workos";
@@ -22,6 +23,9 @@ const ERROR_QUERY = "error";
 const ERROR_URI_QUERY = "error_uri";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  const domain = getDocsDomainEdge(req);
+  const domainWithoutStaging = withoutStaging(domain);
+  const host = req.nextUrl.host;
   const errorDescription = req.nextUrl.searchParams.get(
     ERROR_DESCRIPTION_QUERY
   );
@@ -38,7 +42,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   // TODO: this is based on an incorrect implementation of the state param— we need to sign it with a JWT.
   const return_to_param = getReturnToQueryParam();
   const return_to = req.nextUrl.searchParams.get(return_to_param);
-  const url = safeUrl(return_to ?? req.nextUrl.origin);
+  const url =
+    safeUrl(return_to) ??
+    safeUrl(withDefaultProtocol(preferPreview(host, domainWithoutStaging)));
 
   if (url == null) {
     console.error(`Invalid ${return_to_param} param provided:`, return_to);
