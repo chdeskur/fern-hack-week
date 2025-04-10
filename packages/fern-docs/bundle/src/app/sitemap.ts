@@ -4,6 +4,7 @@ import urljoin from "url-join";
 
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getCanonicalUrl } from "@fern-docs/edge-config";
 import { conformTrailingSlash } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -14,6 +15,7 @@ import { getFernToken } from "./fern-token";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const host = await getDocsHostApp();
   const domain = await getDocsDomainApp();
+  const canonicalUrl = await getCanonicalUrl(domain);
   const loader = await createCachedDocsLoader(
     host,
     domain,
@@ -26,7 +28,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // convert slugs to full urls
   const urls = slugs.map((slug) =>
-    conformTrailingSlash(urljoin(withDefaultProtocol(domain), slug))
+    conformTrailingSlash(
+      urljoin(withDefaultProtocol(canonicalUrl ?? domain), slug)
+    )
   );
 
   return [...urls.map((url) => ({ url }))];
