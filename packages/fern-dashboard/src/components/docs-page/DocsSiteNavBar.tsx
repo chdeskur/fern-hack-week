@@ -20,16 +20,8 @@ export function DocsSiteNavBar({ featureFlags }: DocsSiteNavBar.Props) {
     PosthogFeatureFlag.ENABLE_DOCS_AI_SEARCH_TAB,
     featureFlags
   );
-  const isSettingsTabEnabled = useFeatureFlagClientSide(
-    PosthogFeatureFlag.ENABLE_DOCS_SETTINGS_TAB,
-    featureFlags
-  );
 
-  if (
-    !isAnalyticsTabEnabled &&
-    !isAiSearchTabEnabled &&
-    !isSettingsTabEnabled
-  ) {
+  if (!isAnalyticsTabEnabled && !isAiSearchTabEnabled) {
     return null;
   }
 
@@ -42,9 +34,7 @@ export function DocsSiteNavBar({ featureFlags }: DocsSiteNavBar.Props) {
       {isAiSearchTabEnabled && (
         <DocsSiteNavBarItem title="AI Search" href="ai-search" />
       )}
-      {isSettingsTabEnabled && (
-        <DocsSiteNavBarItem title="Settings" href="settings" />
-      )}
+      <DocsSiteNavBarItem title="Settings" href="settings" />
     </div>
   );
 }
