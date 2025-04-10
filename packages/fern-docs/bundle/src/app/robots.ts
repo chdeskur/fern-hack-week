@@ -6,8 +6,10 @@ import urlJoin from "url-join";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getSeoDisabled } from "@fern-docs/edge-config";
 import {
+  FERN_DOCS_ORIGINS,
   HEADER_HOST,
   HEADER_X_FERN_HOST,
+  HEADER_X_FORWARDED_HOST,
   conformTrailingSlash,
 } from "@fern-docs/utils";
 
@@ -17,6 +19,8 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   const headersList = await headers();
   const domain =
     headersList.get(HEADER_X_FERN_HOST) ?? headersList.get(HEADER_HOST);
+  const forwardedHost = headersList.get(HEADER_X_FORWARDED_HOST) ?? "";
+  const foreignForward = !FERN_DOCS_ORIGINS.includes(forwardedHost);
   if (!domain) {
     return {
       rules: {
@@ -32,7 +36,8 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     "/sitemap.xml"
   );
 
-  if (await getSeoDisabled(domain)) {
+  // if we are forwarding to a domain from another location, assume we should index
+  if (foreignForward || (await getSeoDisabled(domain))) {
     return {
       rules: {
         userAgent: "*",
@@ -50,6 +55,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
       disallow: conformTrailingSlash("*/~explorer"),
     },
     sitemap,
-    host: domain,
+    host: foreignForward ? forwardedHost : domain,
   };
 }
