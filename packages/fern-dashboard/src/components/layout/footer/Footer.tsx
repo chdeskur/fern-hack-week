@@ -22,7 +22,7 @@ export function Footer() {
       <FooterExternalLink href="https://buildwithfern.com/learn">
         Docs
       </FooterExternalLink>
-      <FooterExternalLink href="https://jobs.ashbyhq.com/buildwithfern">
+      <FooterExternalLink href="https://buildwithfern.com/careers">
         Careers
       </FooterExternalLink>
       <FooterExternalLink href="https://buildwithfern.com/book-a-demo/demo">
