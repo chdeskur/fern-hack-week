@@ -31,11 +31,6 @@ export function GlobalStyles({
   const root = light ?? dark;
   const hasTheme = !!light && !!dark;
 
-  console.log("root:", root);
-  console.log("light:", light);
-  console.log("dark:", dark);
-  console.log("hasTheme:", hasTheme);
-
   // if no dark theme is provided, add a fallback dark theme for code blocks
   const fallbackDark = {
     appearance: "dark" as const,
