@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
@@ -17,12 +16,9 @@ import {
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
   const { domain, slug } = useParams();
-  const { theme, resolvedTheme } = useTheme();
-
-  const activeTheme = theme === "system" ? resolvedTheme : theme;
 
   const copyOption = CopyPageOption();
-  const viewAsMarkdownOption = ViewAsMarkdownOption(activeTheme ?? "light");
+  const viewAsMarkdownOption = ViewAsMarkdownOption();
 
   const options: FernDropdown.Option[] = [
     copyOption,
@@ -33,10 +29,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
       domain,
       slug,
       llm: "ChatGPT",
-      theme: activeTheme ?? "light",
     }),
-    { type: "separator" } as FernDropdown.SeparatorOption,
-    OpenWithLLM({ domain, slug, llm: "Claude", theme: activeTheme ?? "light" }),
   ];
 
   const handleValueChange = async (value: string) => {
