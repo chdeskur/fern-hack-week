@@ -4,18 +4,18 @@ import { isCustomDomain } from "@fern-docs/utils";
 
 type CanonicalUrl = Record<string, string>;
 
-export async function getSeoDisabled(host: string): Promise<boolean> {
+export async function getSeoDisabled(domain: string): Promise<boolean> {
   const isEnabled = (await get<string[]>("seo-enabled")) ?? [];
-  if (!isCustomDomain(host) && !isEnabled.includes(host)) {
+  if (!isCustomDomain(domain) && !isEnabled.includes(domain)) {
     return true;
   }
   const isDisabled = (await get<string[]>("seo-disabled")) ?? [];
-  return isDisabled.includes(host);
+  return isDisabled.includes(domain);
 }
 
 export async function getCanonicalUrl(
-  host: string
+  domain: string
 ): Promise<string | undefined> {
   const config = await get<CanonicalUrl>("canonical-host");
-  return config?.[host];
+  return config?.[domain];
 }

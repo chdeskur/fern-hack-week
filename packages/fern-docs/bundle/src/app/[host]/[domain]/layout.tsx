@@ -8,6 +8,7 @@ import { getEnv } from "@vercel/functions";
 import { compact } from "es-toolkit/array";
 
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   getCustomerAnalytics as deprecated_getCustomerAnalytics,
@@ -201,10 +202,12 @@ export async function generateMetadata(props: {
     follow = false;
   }
 
-  const canonicalUrl = await getCanonicalUrl(host);
+  const canonicalUrl = await getCanonicalUrl(domain);
 
   return {
-    metadataBase: canonicalUrl ? new URL(canonicalUrl) : undefined,
+    metadataBase: canonicalUrl
+      ? new URL(withDefaultProtocol(canonicalUrl))
+      : undefined,
     applicationName: config.title,
     title: {
       template: config.title ? "%s | " + config.title : "%s",

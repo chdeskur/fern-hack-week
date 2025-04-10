@@ -14,7 +14,7 @@ import { compact } from "es-toolkit/array";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getSeoDisabled } from "@fern-docs/edge-config";
+import { getCanonicalUrl, getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import {
   addLeadingSlash,
@@ -268,6 +268,19 @@ export async function generateMetadata({
   const nofollow =
     node?.hidden || isSeoDisabled || frontmatter?.nofollow || false;
 
+  const canonicalHost = await getCanonicalUrl(loader.domain);
+  const baseUrl = withDefaultProtocol(canonicalHost ?? loader.domain);
+
+  let canonicalUrl: string | undefined;
+
+  if (frontmatter?.["canonical-url"]) {
+    canonicalUrl = frontmatter["canonical-url"];
+  } else if (node != null) {
+    canonicalUrl = `${baseUrl}${slugToHref(node.canonicalSlug ?? node.slug)}`;
+  } else if (canonicalHost) {
+    canonicalUrl = baseUrl;
+  }
+
   return {
     title:
       markdownToString(
@@ -282,13 +295,7 @@ export async function generateMetadata({
       follow: nofollow ? false : undefined,
     },
     alternates: {
-      canonical:
-        frontmatter?.["canonical-url"] ??
-        (node != null
-          ? `${withDefaultProtocol(loader.domain)}${slugToHref(
-              node.canonicalSlug ?? node.slug
-            )}`
-          : undefined),
+      canonical: canonicalUrl,
     },
     openGraph: {
       title: frontmatter?.["og:title"],
