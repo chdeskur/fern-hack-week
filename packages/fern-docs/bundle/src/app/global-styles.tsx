@@ -31,6 +31,11 @@ export function GlobalStyles({
   const root = light ?? dark;
   const hasTheme = !!light && !!dark;
 
+  console.log("root:", root);
+  console.log("light:", light);
+  console.log("dark:", dark);
+  console.log("hasTheme:", hasTheme);
+
   // if no dark theme is provided, add a fallback dark theme for code blocks
   const fallbackDark = {
     appearance: "dark" as const,
@@ -224,7 +229,7 @@ export function GlobalStyles({
           --card-background: ${dark.cardBackground ?? "initial"};
           --theme-color: ${dark.themeColor};
         }`
-          : `.dark { --background: #000;}`}
+          : `.dark { --background: ${dark?.background ?? "#000"}; }`}
 
         ${root?.backgroundGradient || root?.backgroundImage
           ? `.fern-background-image {
