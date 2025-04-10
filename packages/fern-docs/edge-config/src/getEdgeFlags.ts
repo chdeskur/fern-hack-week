@@ -15,6 +15,7 @@ const EDGE_FLAGS = [
   "api-scrolling-disabled" as const,
   "whitelabeled" as const,
   "seo-disabled" as const,
+  "seo-enabled" as const,
   "toc-default-enabled" as const,
   "snippet-template-enabled" as const,
   "http-snippets-enabled" as const,
@@ -67,6 +68,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
     const isSeoDisabled = checkDomainMatchesCustomers(
       domain,
       config["seo-disabled"]
+    );
+    const isSeoEnabled = checkDomainMatchesCustomers(
+      domain,
+      config["seo-enabled"]
     );
     const isTocDefaultEnabled = checkDomainMatchesCustomers(
       domain,
@@ -177,7 +182,8 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isApiPlaygroundEnabled: isDevelopment(domain) || isApiPlaygroundEnabled,
       isApiScrollingDisabled,
       isWhitelabeled,
-      isSeoDisabled: !isCustomDomain(domain) || isSeoDisabled,
+      isSeoDisabled:
+        (!isCustomDomain(domain) && !isSeoEnabled) || isSeoDisabled,
       isTocDefaultEnabled,
       isSnippetTemplatesEnabled:
         isSnippetTemplatesEnabled || isDevelopment(domain),

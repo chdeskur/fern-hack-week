@@ -11,6 +11,7 @@ import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   getCustomerAnalytics as deprecated_getCustomerAnalytics,
+  getCanonicalUrl,
   getEdgeFlags,
   getLaunchDarklySettings,
   getSeoDisabled,
@@ -200,7 +201,10 @@ export async function generateMetadata(props: {
     follow = false;
   }
 
+  const canonicalUrl = await getCanonicalUrl(host);
+
   return {
+    metadataBase: canonicalUrl ? new URL(canonicalUrl) : undefined,
     applicationName: config.title,
     title: {
       template: config.title ? "%s | " + config.title : "%s",
