@@ -1,4 +1,6 @@
-import { useFeatureFlagClientSide } from "../posthog/feature-flags/client-side";
+"use client";
+
+import { FeatureFlaggedClientSide } from "../posthog/feature-flags/client-side";
 import {
   PosthogFeatureFlag,
   PosthogFeatureFlags,
@@ -12,28 +14,21 @@ export declare namespace DocsSiteNavBar {
 }
 
 export function DocsSiteNavBar({ featureFlags }: DocsSiteNavBar.Props) {
-  const isAnalyticsTabEnabled = useFeatureFlagClientSide(
-    PosthogFeatureFlag.ENABLE_DOCS_ANALYTICS_TAB,
-    featureFlags
-  );
-  const isAiSearchTabEnabled = useFeatureFlagClientSide(
-    PosthogFeatureFlag.ENABLE_DOCS_AI_SEARCH_TAB,
-    featureFlags
-  );
-
-  if (!isAnalyticsTabEnabled && !isAiSearchTabEnabled) {
-    return null;
-  }
-
   return (
     <div className="flex">
       <DocsSiteNavBarItem title="Overview" href="" />
-      {isAnalyticsTabEnabled && (
+      <FeatureFlaggedClientSide
+        flag={PosthogFeatureFlag.ENABLE_DOCS_ANALYTICS_TAB}
+        featureFlags={featureFlags}
+      >
         <DocsSiteNavBarItem title="Analytics" href="analytics" />
-      )}
-      {isAiSearchTabEnabled && (
+      </FeatureFlaggedClientSide>
+      <FeatureFlaggedClientSide
+        flag={PosthogFeatureFlag.ENABLE_DOCS_ANALYTICS_TAB}
+        featureFlags={featureFlags}
+      >
         <DocsSiteNavBarItem title="AI Search" href="ai-search" />
-      )}
+      </FeatureFlaggedClientSide>
       <DocsSiteNavBarItem title="Settings" href="settings" />
     </div>
   );
