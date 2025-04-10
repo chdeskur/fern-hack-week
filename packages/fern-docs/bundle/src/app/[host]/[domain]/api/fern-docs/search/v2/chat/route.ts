@@ -260,7 +260,6 @@ async function runQueryTurbopuffer(
           });
           return embedding.embedding;
         },
-        mode: "hybrid",
         authed: opts.authed,
         roles: opts.roles,
         filters: opts.filters,
