@@ -10,6 +10,7 @@ import { delay } from "@/utils/delay";
 import { DocsUrl } from "@/utils/types";
 import { useOrgNameFromPathname } from "@/utils/useOrgNameFromPathname";
 
+import { INVALIDATE_DOCS_QUERY_KEY } from "../docs-page/MaybeInvalidateDocsSiteQuery";
 import { Button } from "../ui/button";
 
 export declare namespace ArchiveSiteButton {
@@ -32,7 +33,7 @@ export function ArchiveSiteButton({ docsUrl }: ArchiveSiteButton.Props) {
         delay(1_000),
       ]);
       toast.success(<div className="truncate">Archived {docsUrl}</div>);
-      router.push(`/${orgName}/docs`);
+      router.push(`/${orgName}/docs?${INVALIDATE_DOCS_QUERY_KEY}=true`);
     } catch (e) {
       console.error(`Failed to archive ${docsUrl}`, e);
       toast.error("Failed to archive site");

@@ -17,7 +17,6 @@ export function ProgressProvider({ children }: ProgressProvider.Props) {
       options={{ showSpinner: false }}
       // only show after loading for > 1s
       delay={1_000}
-      shallowRouting
     >
       {children}
     </BProgressProvider>

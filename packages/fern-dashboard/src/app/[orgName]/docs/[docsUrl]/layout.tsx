@@ -18,7 +18,7 @@ export default async function Layout({
       docsUrl={docsUrl}
       featureFlags={await getAllFeatureFlags(session.user.sub)}
     >
-      {children}
+      <>{children}</>
     </DocsSiteLayout>
   );
 }
