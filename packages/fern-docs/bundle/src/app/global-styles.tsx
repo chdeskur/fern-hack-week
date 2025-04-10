@@ -34,76 +34,88 @@ export function GlobalStyles({
   // if no dark theme is provided, add a fallback dark theme for code blocks
   const fallbackDark = {
     appearance: "dark" as const,
-    accentScale: Array(12).fill("#fff") as ArrayOf12<string>,
-    accentScaleAlpha: Array(12).fill("#fff") as ArrayOf12<string>,
-    accentScaleWideGamut: Array(12).fill(
-      "oklch(100% 0 0)"
-    ) as ArrayOf12<string>,
-    accentScaleAlphaWideGamut: Array(12).fill(
-      "oklch(100% 0 0)"
-    ) as ArrayOf12<string>,
-    accentContrast: "#000",
-    grayScale: [
-      "#000",
-      "#111",
-      "#222",
-      "#333",
-      "#444",
-      "#555",
-      "#666",
-      "#777",
-      "#888",
-      "#999",
-      "#aaa",
-      "#bbb",
-    ] as ArrayOf12<string>,
-    grayScaleAlpha: [
-      "#000",
-      "#111",
-      "#222",
-      "#333",
-      "#444",
-      "#555",
-      "#666",
-      "#777",
-      "#888",
-      "#999",
-      "#aaa",
-      "#bbb",
-    ] as ArrayOf12<string>,
-    grayScaleWideGamut: [
-      "oklch(0% 0 0)",
-      "oklch(10% 0 0)",
-      "oklch(20% 0 0)",
-      "oklch(30% 0 0)",
-      "oklch(40% 0 0)",
-      "oklch(50% 0 0)",
-      "oklch(60% 0 0)",
-      "oklch(70% 0 0)",
-      "oklch(80% 0 0)",
-      "oklch(90% 0 0)",
-      "oklch(95% 0 0)",
-      "oklch(100% 0 0)",
-    ] as ArrayOf12<string>,
-    grayScaleAlphaWideGamut: [
-      "oklch(0% 0 0)",
-      "oklch(10% 0 0)",
-      "oklch(20% 0 0)",
-      "oklch(30% 0 0)",
-      "oklch(40% 0 0)",
-      "oklch(50% 0 0)",
-      "oklch(60% 0 0)",
-      "oklch(70% 0 0)",
-      "oklch(80% 0 0)",
-      "oklch(90% 0 0)",
-      "oklch(95% 0 0)",
-      "oklch(100% 0 0)",
-    ] as ArrayOf12<string>,
-    graySurface: "rgba(0, 0, 0, 0.05)",
-    graySurfaceWideGamut: "color(display-p3 0 0 0 / 5%)",
-    accentSurface: "#ffffff",
-    accentSurfaceWideGamut: "color(display-p3 1 1 1)",
-    background: "#000000",
+    accentScale:
+      dark?.accentScale ?? (Array(12).fill("#fff") as ArrayOf12<string>),
+    accentScaleAlpha:
+      dark?.accentScaleAlpha ?? (Array(12).fill("#fff") as ArrayOf12<string>),
+    accentScaleWideGamut:
+      dark?.accentScaleWideGamut ??
+      (Array(12).fill("oklch(100% 0 0)") as ArrayOf12<string>),
+    accentScaleAlphaWideGamut:
+      dark?.accentScaleAlphaWideGamut ??
+      (Array(12).fill("oklch(100% 0 0)") as ArrayOf12<string>),
+    accentContrast: dark?.accentContrast ?? "#000",
+    grayScale:
+      dark?.grayScale ??
+      ([
+        "#000",
+        "#111",
+        "#222",
+        "#333",
+        "#444",
+        "#555",
+        "#666",
+        "#777",
+        "#888",
+        "#999",
+        "#aaa",
+        "#bbb",
+      ] as ArrayOf12<string>),
+    grayScaleAlpha:
+      dark?.grayScaleAlpha ??
+      ([
+        "#000",
+        "#111",
+        "#222",
+        "#333",
+        "#444",
+        "#555",
+        "#666",
+        "#777",
+        "#888",
+        "#999",
+        "#aaa",
+        "#bbb",
+      ] as ArrayOf12<string>),
+    grayScaleWideGamut:
+      dark?.grayScaleWideGamut ??
+      ([
+        "oklch(0% 0 0)",
+        "oklch(10% 0 0)",
+        "oklch(20% 0 0)",
+        "oklch(30% 0 0)",
+        "oklch(40% 0 0)",
+        "oklch(50% 0 0)",
+        "oklch(60% 0 0)",
+        "oklch(70% 0 0)",
+        "oklch(80% 0 0)",
+        "oklch(90% 0 0)",
+        "oklch(95% 0 0)",
+        "oklch(100% 0 0)",
+      ] as ArrayOf12<string>),
+    grayScaleAlphaWideGamut:
+      dark?.grayScaleAlphaWideGamut ??
+      ([
+        "oklch(0% 0 0)",
+        "oklch(10% 0 0)",
+        "oklch(20% 0 0)",
+        "oklch(30% 0 0)",
+        "oklch(40% 0 0)",
+        "oklch(50% 0 0)",
+        "oklch(60% 0 0)",
+        "oklch(70% 0 0)",
+        "oklch(80% 0 0)",
+        "oklch(90% 0 0)",
+        "oklch(95% 0 0)",
+        "oklch(100% 0 0)",
+      ] as ArrayOf12<string>),
+    graySurface: dark?.graySurface ?? "rgba(0, 0, 0, 0.05)",
+    graySurfaceWideGamut:
+      dark?.graySurfaceWideGamut ?? "color(display-p3 0 0 0 / 5%)",
+    accentSurface: dark?.accentSurface ?? "#ffffff",
+    accentSurfaceWideGamut:
+      dark?.accentSurfaceWideGamut ?? "color(display-p3 1 1 1)",
+    background: dark?.background ?? "#000000",
   };
   return (
     <style jsx global key="__fern-global-styles">
