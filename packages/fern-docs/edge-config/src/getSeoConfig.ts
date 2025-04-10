@@ -8,19 +8,27 @@ import {
   isCustomDomain,
 } from "@fern-docs/utils";
 
-export async function isForwardedDomain(): Promise<boolean> {
+export async function isForwardedDomain(domain: string): Promise<boolean> {
   const headersList = await headers();
-  const forwardedHost = headersList.get(HEADER_X_FORWARDED_HOST) ?? "";
-  console.log("forwardedHost:", forwardedHost);
-  return !FERN_DOCS_ORIGINS.includes(forwardedHost);
+  const forwardedHost = headersList.get(HEADER_X_FORWARDED_HOST);
+  if (forwardedHost) {
+    return (
+      !FERN_DOCS_ORIGINS.includes(forwardedHost) && forwardedHost !== domain
+    );
+  }
+  return false;
 }
 
 type CanonicalUrl = Record<string, string>;
 
 export async function getSeoDisabled(domain: string): Promise<boolean> {
-  // if the domain was forwarded from another location, we default SEO on
-  const forwarded = await isForwardedDomain();
-  if (!isCustomDomain(domain) && !forwarded) {
+  const forwarded = await isForwardedDomain(domain);
+  const isSeoEnabled = (await get<string[]>("seo-enabled")) ?? [];
+  if (isSeoEnabled.includes(domain) && forwarded) {
+    return false;
+  }
+
+  if (!isCustomDomain(domain)) {
     return true;
   }
   const isDisabled = (await get<string[]>("seo-disabled")) ?? [];
