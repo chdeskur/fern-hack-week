@@ -1,30 +1,12 @@
-import { headers } from "next/headers";
-
 import { get } from "@vercel/edge-config";
 
-import {
-  FERN_DOCS_ORIGINS,
-  HEADER_X_FORWARDED_HOST,
-  isCustomDomain,
-} from "@fern-docs/utils";
-
-export async function isForwardedDomain(domain: string): Promise<boolean> {
-  const headersList = await headers();
-  const forwardedHost = headersList.get(HEADER_X_FORWARDED_HOST);
-  if (forwardedHost) {
-    return (
-      !FERN_DOCS_ORIGINS.includes(forwardedHost) && forwardedHost !== domain
-    );
-  }
-  return false;
-}
+import { isCustomDomain } from "@fern-docs/utils";
 
 type CanonicalUrl = Record<string, string>;
 
 export async function getSeoDisabled(domain: string): Promise<boolean> {
-  const forwarded = await isForwardedDomain(domain);
   const isSeoEnabled = (await get<string[]>("seo-enabled")) ?? [];
-  if (isSeoEnabled.includes(domain) && forwarded) {
+  if (isSeoEnabled.includes(domain)) {
     return false;
   }
 
