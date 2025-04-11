@@ -103,6 +103,7 @@ export async function getAuthStateInternal({
             organization: previewAuthConfig.org,
             pathname,
             setFernToken,
+            isPreview: true,
           });
       }
     }

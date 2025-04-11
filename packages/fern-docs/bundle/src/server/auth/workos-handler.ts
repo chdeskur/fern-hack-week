@@ -25,6 +25,7 @@ interface WorkosAuthParams {
     domainHint?: string;
     loginHint?: string;
   };
+  isPreview?: boolean;
 }
 
 export async function handleWorkosAuth({
@@ -35,6 +36,7 @@ export async function handleWorkosAuth({
   pathname,
   setFernToken,
   authorizationUrl,
+  isPreview,
 }: WorkosAuthParams): Promise<AuthState> {
   const state = `${withDefaultProtocol(
     decodeURIComponent(removeTrailingSlash(preferPreview(host, domain)))
@@ -77,7 +79,9 @@ export async function handleWorkosAuth({
   }
 
   const redirectUri = `${withDefaultProtocol(
-    decodeURIComponent(removeTrailingSlash(preferPreview(host, domain)))
+    decodeURIComponent(
+      removeTrailingSlash(isPreview ? host : preferPreview(host, domain))
+    )
   )}/api/fern-docs/auth/sso/callback`;
 
   const authorizationUrlParams = getWorkosSSOAuthorizationUrl({
