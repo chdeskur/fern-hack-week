@@ -1,6 +1,7 @@
-export * from "./getAuthEdgeConfig";
-export * from "./getCustomerAnalytics";
-export * from "./getEdgeFlags";
-export * from "./getLaunchDarklySettings";
-export * from "./getPreviewUrlAuthConfig";
-export * from "./getSeoConfig";
+export { getAuthEdgeConfig } from "./getAuthEdgeConfig";
+export { getCustomerAnalytics } from "./getCustomerAnalytics";
+export { getEdgeFlags } from "./getEdgeFlags";
+export { getLaunchDarklySettings } from "./getLaunchDarklySettings";
+export { getPreviewUrlAuthConfig } from "./getPreviewUrlAuthConfig";
+export { getSeoDisabled } from "./getSeoConfig";
+export { getCanonicalUrl } from "./getCanonicalUrl";

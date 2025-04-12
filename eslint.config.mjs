@@ -31,6 +31,7 @@ export default [
       "**/*.config.ts",
       "**/*.config.mjs",
       "**/scripts/performance.ts",
+      "packages/fern-docs/bundle/server.ts",
     ],
   },
   ...turboConfig,

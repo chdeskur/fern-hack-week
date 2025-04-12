@@ -8,6 +8,7 @@
     "directory": "packages/fern-docs/bundle"
   },
   "sideEffects": false,
+  "type": "module",
   "browser": {
     "crypto": false
   },
@@ -17,10 +18,12 @@
     "chromatic": "pnpx chromatic --project-token=chpt_48b3c560025e978",
     "depcheck": "depcheck",
     "docs:build": "next build",
+    "docs:build:local": "NEXT_PUBLIC_IS_LOCAL=1 next build && pnpm tsc --project tsconfig.local.json",
     "docs:dev": "next dev",
     "docs:dev:inspect": "NODE_OPTIONS='--inspect' next dev",
     "docs:lint": "next lint",
     "docs:start": "next start",
+    "docs:start:local": "pnpm run docs:build:local && NODE_ENV=production node dist/server.js",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint": "pnpm lint:eslint && pnpm lint:style",

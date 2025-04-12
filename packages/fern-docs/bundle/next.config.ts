@@ -11,6 +11,7 @@ const cdnUri =
 const isTrailingSlashEnabled = process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 const isAssetPrefixDisabled =
   process.env.NEXT_PUBLIC_ASSET_PREFIX_DISABLED === "1";
+const isLocal = process.env.NEXT_PUBLIC_IS_LOCAL === "1";
 
 // TODO: move this to a shared location (this is copied in FernImage.tsx)
 const NEXT_IMAGE_HOSTS = [
@@ -238,6 +239,7 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+  output: isLocal ? "standalone" : undefined,
 };
 
 function withVercelEnv(config: NextConfig): NextConfig {

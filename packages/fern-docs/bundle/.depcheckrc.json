@@ -19,7 +19,8 @@
     "glslify-import",
     "glslify-loader",
     "raw-loader",
-    "tailwindcss"
+    "tailwindcss",
+    "express"
   ],
   "ignore-patterns": ["dist"]
 }
