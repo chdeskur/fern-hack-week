@@ -41,22 +41,13 @@ export function PageHeader({
       {(breadcrumb.length > 0 || tags) && (
         <div className="flex justify-between">
           <FernBreadcrumbs breadcrumb={breadcrumb} />
-          {tags}
         </div>
       )}
 
       <WithAction action={action}>
         <div className="flex flex-row items-center justify-between">
-          {titleHref == null ? (
-            <h1 className="fern-page-heading text-balance break-words">
-              <MdxServerComponent
-                serialize={serialize}
-                mdx={title}
-                slug={slug}
-              />
-            </h1>
-          ) : (
-            <FernLink href={titleHref} scroll={true}>
+          <div className="flex flex-row items-center gap-4">
+            {titleHref == null ? (
               <h1 className="fern-page-heading text-balance break-words">
                 <MdxServerComponent
                   serialize={serialize}
@@ -64,8 +55,19 @@ export function PageHeader({
                   slug={slug}
                 />
               </h1>
-            </FernLink>
-          )}
+            ) : (
+              <FernLink href={titleHref} scroll={true}>
+                <h1 className="fern-page-heading text-balance break-words">
+                  <MdxServerComponent
+                    serialize={serialize}
+                    mdx={title}
+                    slug={slug}
+                  />
+                </h1>
+              </FernLink>
+            )}
+            {tags}
+          </div>
           {includeDropdown && (
             <div className="hidden md:flex">
               <PageActionsDropdown markdown={markdown} />
