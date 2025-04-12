@@ -55,8 +55,25 @@ export default async function SidebarPage({
       slug: found.node.slug,
       toc: true, // this is probably already cached with toc: true
     });
-    if (mdx?.frontmatter?.layout === "overview") {
+    if (
+      mdx?.frontmatter?.layout === "page" ||
+      mdx?.frontmatter?.layout === "custom"
+    ) {
       isSingleOverviewPage = true;
+    }
+
+    if (found.sidebar.children.length <= 1) {
+      let current: FernNavigation.NavigationNode | undefined =
+        found.sidebar.children[0];
+      isSingleOverviewPage = true;
+
+      while (current && "children" in current) {
+        if (current.children.length > 1) {
+          isSingleOverviewPage = false;
+          break;
+        }
+        current = current.children[0];
+      }
     }
   }
 
