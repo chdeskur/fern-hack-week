@@ -33,6 +33,10 @@ export async function VersionDropdown({
 
   const versions = root.child.children;
 
+  if (versions.length <= 1) {
+    return null;
+  }
+
   const withInfo = withVersionSwitcherInfo({
     node: currentNode,
     parents: parents,
