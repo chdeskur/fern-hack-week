@@ -28,7 +28,7 @@ export const TableOfContentsItem = memo<TableOfContentsItemProps>(
       <li className="mb-2 last:mb-0" ref={ref} data-depth={depth}>
         <FernLink
           className={cn(
-            "block hyphens-auto break-words text-sm transition-colors hover:transition-none",
+            "block break-words text-sm transition-colors hover:transition-none",
             {
               "text-(color:--grayscale-a11) hover:text-(color:--grayscale-a12)":
                 !active,

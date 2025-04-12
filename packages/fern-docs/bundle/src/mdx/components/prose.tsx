@@ -22,7 +22,7 @@ export const Prose = React.forwardRef<
     <Primitive.div
       ref={ref}
       className={cn(
-        "fern-prose prose max-w-none hyphens-auto break-words",
+        "fern-prose prose max-w-none break-words",
         {
           "whitespace-pre-wrap": typeof children === "string" || pre,
           "text-xs": size === "xs",

@@ -48,7 +48,7 @@ export function PageHeader({
       <WithAction action={action}>
         <div className="flex flex-row items-center justify-between">
           {titleHref == null ? (
-            <h1 className="fern-page-heading hyphens-auto text-balance break-words">
+            <h1 className="fern-page-heading text-balance break-words">
               <MdxServerComponent
                 serialize={serialize}
                 mdx={title}
@@ -57,7 +57,7 @@ export function PageHeader({
             </h1>
           ) : (
             <FernLink href={titleHref} scroll={true}>
-              <h1 className="fern-page-heading hyphens-auto text-balance break-words">
+              <h1 className="fern-page-heading text-balance break-words">
                 <MdxServerComponent
                   serialize={serialize}
                   mdx={title}
@@ -75,7 +75,7 @@ export function PageHeader({
       </WithAction>
 
       {subtitle && (
-        <div className="prose-p:text-(color:--grayscale-a11) mt-2 hyphens-auto break-words leading-7">
+        <div className="prose-p:text-(color:--grayscale-a11) mt-2 break-words leading-7">
           <React.Suspense fallback={subtitle}>
             <MdxServerComponent
               serialize={serialize}
