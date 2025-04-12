@@ -124,7 +124,7 @@ export default async function Layout({
           {children}
         </FeatureFlagProvider>
         <React.Suspense fallback={null}>
-          <SearchV2 domain={domain} />
+          {!edgeFlags.isSearchDisabled && <SearchV2 domain={domain} />}
         </React.Suspense>
         {jsConfig != null && <JavascriptProvider config={jsConfig} />}
         {VERCEL_ENV === "production" && (
