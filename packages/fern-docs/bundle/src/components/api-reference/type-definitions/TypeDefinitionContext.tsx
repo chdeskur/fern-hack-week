@@ -93,9 +93,10 @@ export function TypeDefinitionAnchorPart({
   part: string;
 }) {
   const parent = useTypeDefinitionContext();
+  const anchorPart = part.replaceAll(" ", "-");
   const contextValue = React.useRef(() => ({
     ...parent,
-    anchorIdParts: [...parent.anchorIdParts, part],
+    anchorIdParts: [...parent.anchorIdParts, anchorPart] as const,
   }));
 
   return (
