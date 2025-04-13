@@ -47,6 +47,7 @@ async function createPersonalProjectInVenus({
       organizationId: FernVenusApi.OrganizationId(
         getPersonalProjectOrgId({ userId, userName, attempt: attempt++ })
       ),
+      displayName: `${userName ?? userId}'s Project`,
       enableGithubConnection: true,
     });
   } while (
