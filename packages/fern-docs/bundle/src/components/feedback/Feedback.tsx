@@ -21,6 +21,7 @@ export interface FeedbackProps {
   feedbackQuestion?: string;
   metadata?: Record<string, unknown> | (() => Record<string, unknown>);
   pathname?: string;
+  feedbackPrepend?: string;
 }
 
 export const Feedback: FC<FeedbackProps> = ({
@@ -29,6 +30,7 @@ export const Feedback: FC<FeedbackProps> = ({
   type = "on-page-feedback",
   metadata,
   pathname: pathnameProp,
+  feedbackPrepend = "",
 }) => {
   const [sent, setSent] = useState(false);
   const [isHelpful, setIsHelpful] = useState<"yes" | "no" | undefined>();
@@ -87,7 +89,7 @@ export const Feedback: FC<FeedbackProps> = ({
         satisfied:
           isHelpful === "yes" ? true : isHelpful === "no" ? false : undefined,
         feedback: feedbackId,
-        message: feedbackMessage,
+        message: feedbackPrepend + feedbackMessage,
         email,
         allowFollowUpViaEmail: showEmailInput === true,
         feedbackQuestion,
@@ -97,7 +99,7 @@ export const Feedback: FC<FeedbackProps> = ({
       toast.success("Thank you for submitting feedback!");
       setSent(true);
     },
-    [isHelpful, metadata, feedbackQuestion, type]
+    [isHelpful, metadata, feedbackQuestion, feedbackPrepend, type]
   );
 
   useKeyboardPress({
