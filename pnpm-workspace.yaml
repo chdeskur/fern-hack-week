@@ -6,6 +6,7 @@ packages:
   - "!packages/**/lib"
   - "!packages/**/dist"
   - "!packages/**/generated"
+  - "!packages/**/.next"
   - "!servers/**/lib"
   - "!servers/**/dist"
   - "!servers/**/generated"
