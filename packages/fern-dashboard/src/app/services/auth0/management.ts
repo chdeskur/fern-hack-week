@@ -207,13 +207,8 @@ export async function createIsFernEmployee(): Promise<
  * to avoid loading the fern org members with every check
  */
 export async function isFernEmployee(userId: Auth0UserID): Promise<boolean> {
-  const fernOrgMembers = await getOrgMembers(FERN_ORG_NAME, {
-    includeFernEmployees: true,
-  });
-  const fernMembers = new Set(
-    fernOrgMembers.map((member) => Auth0UserID(member.user_id))
-  );
-  return fernMembers.has(Auth0UserID(userId));
+  const isFernEmployeeFunc = await createIsFernEmployee();
+  return isFernEmployeeFunc(userId);
 }
 
 export async function getOrgInvitations(orgName: Auth0OrgName) {
@@ -265,7 +260,7 @@ export async function doesUserBelongsToOrg(
   userId: Auth0UserID,
   orgName: Auth0OrgName
 ) {
-  // a fern employee is considere d to be in every org
+  // a fern employee is considered to be in every org
   if (await isFernEmployee(userId)) {
     return true;
   }
