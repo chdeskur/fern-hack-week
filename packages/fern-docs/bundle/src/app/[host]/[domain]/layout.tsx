@@ -25,6 +25,7 @@ import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
 import { withJsConfig } from "@/components/with-js-config";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
+import { isLocal } from "@/server/isLocal";
 import { SetColors } from "@/state/colors";
 import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
@@ -51,7 +52,7 @@ export default async function Layout({
   params: Promise<{ host: string; domain: string }>;
 }) {
   const { host, domain } = await params;
-
+  const isLocalEnvironment = isLocal();
   const loader = await createCachedDocsLoader(host, domain);
   const [
     { basePath },
@@ -124,7 +125,9 @@ export default async function Layout({
           {children}
         </FeatureFlagProvider>
         <React.Suspense fallback={null}>
-          {!edgeFlags.isSearchDisabled && <SearchV2 domain={domain} />}
+          {!edgeFlags.isSearchDisabled && !isLocalEnvironment && (
+            <SearchV2 domain={domain} />
+          )}
         </React.Suspense>
         {jsConfig != null && <JavascriptProvider config={jsConfig} />}
         {VERCEL_ENV === "production" && (

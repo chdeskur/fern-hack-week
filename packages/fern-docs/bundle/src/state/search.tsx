@@ -10,6 +10,7 @@ import { DesktopSearchButton } from "@fern-docs/search-ui";
 import { useIsMobile } from "@fern-ui/react-commons";
 
 import { FERN_SEARCH_BUTTON_ID } from "@/components/constants";
+import { isLocal } from "@/server/isLocal";
 
 export const searchDialogOpenAtom = atom(false);
 export const searchInitializedAtom = atom(false);
@@ -35,6 +36,10 @@ searchInitializedAtom.onMount = (setInitialized) => {
     return;
   }
 
+  if (isLocal()) {
+    return;
+  }
+
   const initialize = () => {
     setInitialized(true);
   };
@@ -53,6 +58,7 @@ export const SearchV2Trigger = React.memo(function SearchV2Trigger(
   const toggleSearchDialog = useToggleSearchDialog();
   const isAskAiEnabled = useIsAskAiEnabled();
   const isMobile = useIsMobile();
+  const isLocalEnvironment = isLocal();
   let placeholder = "Search";
 
   if (isAskAiEnabled && !isMobile) {
@@ -70,7 +76,7 @@ export const SearchV2Trigger = React.memo(function SearchV2Trigger(
       id={FERN_SEARCH_BUTTON_ID}
       {...props}
       onClick={composeEventHandlers(props.onClick, toggleSearchDialog)}
-      variant={isInitialized ? "default" : "loading"}
+      variant={isInitialized && !isLocalEnvironment ? "default" : "loading"}
       placeholder={placeholder}
     />
   );

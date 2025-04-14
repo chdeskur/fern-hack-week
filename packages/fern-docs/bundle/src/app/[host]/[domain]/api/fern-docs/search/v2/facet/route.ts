@@ -5,12 +5,20 @@ import { algoliasearch } from "algoliasearch";
 import { fetchFacetValues } from "@fern-docs/search-server/algolia";
 
 import { algoliaAppId } from "@/server/env-variables";
+import { isLocal } from "@/server/isLocal";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { toArray } from "@/server/utils/toArray";
 
 export const maxDuration = 10;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  if (isLocal()) {
+    return NextResponse.json(
+      "search facet is not accessible in local preview mode",
+      { status: 400 }
+    );
+  }
+
   const filters = toArray(req.nextUrl.searchParams.getAll("filters"));
   const apiKey = selectFirst(req.nextUrl.searchParams.get("apiKey"));
 

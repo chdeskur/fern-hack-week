@@ -18,6 +18,7 @@ import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 
 import { track } from "@/server/analytics/posthog";
 import { algoliaAppId } from "@/server/env-variables";
+import { isLocal } from "@/server/isLocal";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 const DEPLOYMENT_ID = getEnv().VERCEL_DEPLOYMENT_ID ?? "development";
@@ -31,6 +32,13 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: NextRequest): Promise<Response> {
+  if (isLocal()) {
+    return NextResponse.json(
+      "ai suggestions are not accessible in local preview mode",
+      { status: 400 }
+    );
+  }
+
   const bedrock = createAmazonBedrock({
     region: "us-east-1",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,

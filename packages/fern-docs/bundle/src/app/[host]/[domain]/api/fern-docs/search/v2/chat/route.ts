@@ -37,6 +37,7 @@ import {
   openaiApiKey,
   turbopufferApiKey,
 } from "@/server/env-variables";
+import { isLocal } from "@/server/isLocal";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 60;
@@ -56,6 +57,13 @@ const modelMap: Record<string, { modelId: string; region: string }> = {
 };
 
 export async function POST(req: NextRequest) {
+  if (isLocal()) {
+    return NextResponse.json(
+      "ai chat is not accessible in local preview mode",
+      { status: 400 }
+    );
+  }
+
   initLogger({
     projectName: "Braintrust Evaluation",
     apiKey: process.env.BRAINTRUST_API_KEY,

@@ -8,6 +8,8 @@ import { getSignedUrl as getUncachedSignedUrl } from "@aws-sdk/s3-request-presig
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 
+import { isLocal } from "./isLocal";
+
 const getSignedUrl = async ({
   Bucket,
   Key,
@@ -17,6 +19,10 @@ const getSignedUrl = async ({
   Key: string;
   expiresIn: number;
 }) => {
+  if (isLocal()) {
+    throw new Error("signed URL is not accessible in local preview mode");
+  }
+
   const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
   const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 

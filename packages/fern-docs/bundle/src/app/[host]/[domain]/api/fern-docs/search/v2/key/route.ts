@@ -12,6 +12,7 @@ import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
 import { getDocsUrlMetadata } from "@/server/getDocsUrlMetadata";
+import { isLocal } from "@/server/isLocal";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -19,6 +20,13 @@ export const runtime = "edge";
 export const maxDuration = 10;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  if (isLocal()) {
+    return NextResponse.json(
+      "search key is not accessible in local preview mode",
+      { status: 400 }
+    );
+  }
+
   const domain = getDocsDomainEdge(req);
 
   const metadata = await getDocsUrlMetadata(domain);
