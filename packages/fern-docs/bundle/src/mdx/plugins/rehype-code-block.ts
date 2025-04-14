@@ -16,13 +16,45 @@ import {
 
 export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
   return (tree) => {
-    visit(tree, (node) => {
+    visit(tree, (node, index, parent) => {
       if (!isMdxJsxElementHast(node)) {
         return;
       }
 
       if (node.name === "CodeBlocks") {
         node.name = "CodeGroup";
+      }
+
+      // code groups are not currently supported for twoslash
+      if (node.name === "CodeGroup") {
+        for (const child of node.children) {
+          if (
+            child == null ||
+            child.type !== "element" ||
+            child.tagName !== "pre"
+          ) {
+            return;
+          }
+
+          const codeNode = child.children[0];
+          if (
+            codeNode == null ||
+            codeNode.type !== "element" ||
+            codeNode.tagName !== "code"
+          ) {
+            return;
+          }
+
+          // for now, rehypeShiki will process twoslash + shiki
+          if (codeNode.data?.meta?.includes("twoslash")) {
+            if (parent && index != null) {
+              parent.children.splice(index, 1, ...node.children);
+              return [SKIP, index];
+            }
+            return;
+          }
+        }
+        return;
       }
     });
 
@@ -40,6 +72,11 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         codeNode.type !== "element" ||
         codeNode.tagName !== "code"
       ) {
+        return;
+      }
+
+      // for now, rehypeShiki will process twoslash + shiki
+      if (codeNode.data?.meta?.includes("twoslash")) {
         return;
       }
 

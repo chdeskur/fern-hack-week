@@ -20,7 +20,23 @@
     "glslify-loader",
     "raw-loader",
     "tailwindcss",
-    "express"
+    "express",
+    "@aa-sdk/core",
+    "@account-kit/core",
+    "@account-kit/infra",
+    "@account-kit/react",
+    "@account-kit/react-native",
+    "@account-kit/smart-contracts",
+    "@account-kit/signer",
+    "@tanstack/react-query",
+    "google",
+    "shiki",
+    "twoslash",
+    "viem",
+    "next/font/google",
+    "qrcode.react",
+    "react-native",
+    "@typescript/vfs"
   ],
   "ignore-patterns": ["dist"]
 }
