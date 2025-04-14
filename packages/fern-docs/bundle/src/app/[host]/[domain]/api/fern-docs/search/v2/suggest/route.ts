@@ -118,7 +118,7 @@ export async function POST(req: NextRequest): Promise<Response> {
       });
       if (e.object && !cookieJar.has(COOKIE_FERN_TOKEN)) {
         await kv.set(cacheKey, e.object);
-        await kv.expire(cacheKey, 60 * 60);
+        await kv.expire(cacheKey, 2 * 86400);
       }
     },
   });
