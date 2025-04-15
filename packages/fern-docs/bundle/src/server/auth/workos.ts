@@ -1,9 +1,15 @@
 import { AuthorizationURLOptions, WorkOS } from "@workos-inc/node";
 import { once } from "es-toolkit/function";
 
+import { isLocal } from "../isLocal";
+
 export const workos = once(() => new WorkOS(getWorkOSApiKey()));
 
 export function getWorkOSApiKey(): string {
+  if (isLocal()) {
+    throw new Error("workOS is not accessible in local preview mode");
+  }
+
   const apiKey = process.env.WORKOS_API_KEY;
 
   if (apiKey != null) {
@@ -14,6 +20,10 @@ export function getWorkOSApiKey(): string {
 }
 
 export function getWorkOSClientId(): string {
+  if (isLocal()) {
+    throw new Error("workOS is not accessible in local preview mode");
+  }
+
   const clientId = process.env.WORKOS_CLIENT_ID;
 
   if (clientId != null) {
@@ -24,6 +34,10 @@ export function getWorkOSClientId(): string {
 }
 
 export function getJwtSecretKey(): string {
+  if (isLocal()) {
+    throw new Error("workOS is not accessible in local preview mode");
+  }
+
   const secret = process.env.JWT_SECRET_KEY;
 
   if (secret != null) {

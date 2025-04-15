@@ -2,6 +2,7 @@ import { once } from "es-toolkit/function";
 import { sealData, unsealData } from "iron-session";
 import { createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
 
+import { isLocal } from "../isLocal";
 import type {
   AccessToken,
   NoWorkOSUserInfo,
@@ -19,6 +20,10 @@ async function encryptSession(session: WorkOSSession): Promise<string> {
 async function refreshSession(
   session: WorkOSSession
 ): Promise<WorkOSSession | undefined> {
+  if (isLocal()) {
+    return undefined;
+  }
+
   try {
     const { org_id: organizationId } = decodeJwt<AccessToken>(
       session.accessToken

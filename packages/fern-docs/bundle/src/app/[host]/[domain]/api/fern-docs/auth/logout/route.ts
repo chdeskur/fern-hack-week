@@ -15,12 +15,22 @@ import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@/server/auth/workos-session";
+import { isLocal } from "@/server/isLocal";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  if (isLocal()) {
+    return new NextResponse(
+      "auth logout is not accessible in local preview mode",
+      {
+        status: 400,
+      }
+    );
+  }
+
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
   const cookieJar = await cookies();

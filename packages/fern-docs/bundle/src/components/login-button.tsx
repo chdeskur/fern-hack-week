@@ -1,5 +1,6 @@
 import "server-only";
 
+import { FernButton } from "@fern-docs/components";
 import { isTrailingSlashEnabled } from "@fern-docs/utils";
 
 import { getReturnToQueryParam } from "@/server/auth/return-to";
@@ -13,12 +14,22 @@ export async function LoginButton({
   size,
   className,
   showIcon,
+  disabled,
 }: {
   loader: DocsLoader;
   size?: "xs" | "sm" | "lg";
   className?: string;
   showIcon?: boolean;
+  disabled?: boolean;
 }) {
+  if (disabled) {
+    return (
+      <FernButton variant="outlined" className={className} disabled>
+        Login
+      </FernButton>
+    );
+  }
+
   const [authConfig, authState, { basePath }] = await Promise.all([
     loader.getAuthConfig(),
     loader.getAuthState(),
@@ -63,6 +74,7 @@ export async function LoginButton({
       className={className}
       showIcon={showIcon}
       id="fern-auth-button"
+      disabled={disabled}
     />
   );
 }

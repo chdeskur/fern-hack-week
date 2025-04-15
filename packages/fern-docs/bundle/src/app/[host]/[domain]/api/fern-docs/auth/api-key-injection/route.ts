@@ -16,6 +16,7 @@ import { OryOAuth2Client, getOryAuthorizationUrl } from "@/server/auth/ory";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { fernToken_admin } from "@/server/env-variables";
+import { isLocal } from "@/server/isLocal";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
@@ -23,6 +24,13 @@ export const runtime = "edge";
 export async function GET(
   req: NextRequest
 ): Promise<NextResponse<APIKeyInjectionConfig>> {
+  if (isLocal()) {
+    return NextResponse.json({
+      enabled: false,
+      returnToQueryParam: "",
+    });
+  }
+
   const domain = getDocsDomainEdge(req);
   const host = req.nextUrl.host;
   const cookieJar = await cookies();

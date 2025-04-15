@@ -11,6 +11,7 @@ import {
 } from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "@fern-docs/utils";
 
+import { isLocal } from "../isLocal";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
 import { preferPreview } from "./origin";
@@ -191,6 +192,19 @@ export async function createGetAuthState(
     getAuthState: (pathname?: string) => AsyncOrSync<AuthState>;
   }
 > {
+  if (isLocal()) {
+    return {
+      domain: domain,
+      allowedDestinations: [],
+      getAuthState: (_pathname?: string) => ({
+        authed: true,
+        ok: true,
+        user: {},
+        partner: "custom",
+      }),
+    };
+  }
+
   authConfig ??= await getAuthEdgeConfig(domain);
   const previewAuthConfig =
     orgMetadata != null

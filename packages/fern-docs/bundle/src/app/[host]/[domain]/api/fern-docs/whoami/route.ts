@@ -5,12 +5,22 @@ import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
+import { isLocal } from "@/server/isLocal";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 /**
  * This endpoint returns the authentication information pertaining to the current user
  */
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  if (isLocal()) {
+    return new NextResponse(
+      "authentication is not accessible in local preview mode",
+      {
+        status: 400,
+      }
+    );
+  }
+
   try {
     const cookieJar = await cookies();
     const fernToken = cookieJar.get(COOKIE_FERN_TOKEN)?.value;

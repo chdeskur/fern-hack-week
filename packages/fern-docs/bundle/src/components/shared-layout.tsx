@@ -9,6 +9,7 @@ import { SidebarContainer } from "@/components/sidebar/SidebarContainer";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { MdxServerComponent } from "@/mdx/components/server-component";
 import { DocsLoader } from "@/server/docs-loader";
+import { isLocal } from "@/server/isLocal";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 import { LoginButton } from "./login-button";
@@ -28,6 +29,7 @@ export default async function SharedLayout({
   loader: DocsLoader;
   logo: React.ReactNode;
 }) {
+  const isLocalEnvironment = isLocal();
   const serialize = createCachedMdxSerializer(loader);
   const [config, edgeFlags, colors, layout] = await Promise.all([
     loader.getConfig(),
@@ -82,7 +84,12 @@ export default async function SharedLayout({
           navbarLinks={<NavbarLinks loader={loader} />}
           loginButton={
             <React.Suspense fallback={null}>
-              <LoginButton loader={loader} size="sm" className="ml-2" />
+              <LoginButton
+                loader={loader}
+                size="sm"
+                className="ml-2"
+                disabled={isLocalEnvironment}
+              />
             </React.Suspense>
           }
         />

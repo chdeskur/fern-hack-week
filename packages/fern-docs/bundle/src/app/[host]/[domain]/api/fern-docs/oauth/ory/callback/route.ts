@@ -17,6 +17,7 @@ import { preferPreview } from "@/server/auth/origin";
 import { OryOAuth2Client } from "@/server/auth/ory";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
+import { isLocal } from "@/server/isLocal";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
@@ -24,6 +25,12 @@ import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  if (isLocal()) {
+    return new NextResponse("ory is not accessible in local preview mode", {
+      status: 400,
+    });
+  }
+
   const domain = getDocsDomainEdge(req);
   const host = req.nextUrl.host;
   const config = await getAuthEdgeConfig(domain);

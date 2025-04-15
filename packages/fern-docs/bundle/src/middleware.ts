@@ -24,6 +24,7 @@ import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createGetAuthStateEdge } from "./server/auth/getAuthStateEdge";
 import { preferPreview } from "./server/auth/origin";
 import { withSecureCookie } from "./server/auth/with-secure-cookie";
+import { isLocal } from "./server/isLocal";
 
 function splitPathname(
   pathname: string,
@@ -187,6 +188,27 @@ export const middleware: NextMiddleware = async (request) => {
   }
 
   let newToken: string | undefined;
+
+  // ignore authentication in local preview
+  if (isLocal()) {
+    const getResponse = () => {
+      if (request.nextUrl.searchParams.has("error")) {
+        return rewrite(
+          withDomain(
+            `/dynamic/${encodeURIComponent(conformTrailingSlash(pathname))}`
+          )
+        );
+      }
+
+      return rewrite(
+        withDomain(
+          `/static/${encodeURIComponent(conformTrailingSlash(pathname))}`
+        )
+      );
+    };
+
+    return getResponse();
+  }
 
   const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
     newToken = token;

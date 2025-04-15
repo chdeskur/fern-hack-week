@@ -14,6 +14,7 @@ import { getFrontmatter } from "@fern-docs/mdx";
 import { COOKIE_FERN_TOKEN, slugToHref } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
+import { isLocal } from "@/server/isLocal";
 import { FileData } from "@/server/types";
 
 const FORMATS = ["rss", "atom", "json"] as const;
@@ -23,6 +24,15 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  if (isLocal()) {
+    return new NextResponse(
+      "changelog is not accessible in local preview mode",
+      {
+        status: 400,
+      }
+    );
+  }
+
   const { host, domain } = await props.params;
 
   const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
