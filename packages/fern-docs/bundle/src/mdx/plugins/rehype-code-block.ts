@@ -25,6 +25,10 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         node.name = "CodeGroup";
       }
 
+      if (node.name === "CodeBlock" && node.children.length > 1) {
+        node.name = "CodeGroup";
+      }
+
       // code groups are not currently supported for twoslash
       if (node.name === "CodeGroup") {
         for (const child of node.children) {
