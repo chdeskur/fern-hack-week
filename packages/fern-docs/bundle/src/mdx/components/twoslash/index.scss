@@ -410,13 +410,6 @@ pre .code-container:hover a {
   opacity: 1;
 }
 
-pre code {
-  font-size: 15px;
-  font-family: var(--twoslash-code-font);
-  white-space: pre;
-  -webkit-overflow-scrolling: touch;
-}
-
 pre code a {
   text-decoration: none;
 }
