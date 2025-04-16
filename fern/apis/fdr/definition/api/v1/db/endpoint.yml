@@ -29,6 +29,7 @@ types:
       errorsV2: optional<list<readEndpoint.ErrorDeclarationV2>>
       examples: list<readEndpoint.ExampleEndpointCall>
       snippetTemplates: optional<readEndpoint.EndpointSnippetTemplates>
+      protocol: optional<commons.Protocol>
 
   DbHttpRequest:
     extends: commons.WithDescription

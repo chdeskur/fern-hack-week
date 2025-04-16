@@ -34,6 +34,7 @@ types:
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
       snippetTemplates: optional<EndpointSnippetTemplates>
+      protocol: optional<commons.Protocol>
 
   EndpointSnippetTemplates:
     properties:

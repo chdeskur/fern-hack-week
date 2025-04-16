@@ -170,6 +170,7 @@ the current organization_id of the authenticated user
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100",
@@ -349,6 +350,7 @@ authenticated user, then response code of 403 will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -442,6 +444,7 @@ the current organization_id of the auathenticated user. Otherwise, response code
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -559,6 +562,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -664,6 +668,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -858,6 +863,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -979,6 +985,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -1089,6 +1096,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -1219,6 +1227,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -1345,6 +1354,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -1512,6 +1522,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -1593,6 +1604,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -2236,6 +2248,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -2507,6 +2520,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -2753,6 +2767,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -3419,6 +3434,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -3575,6 +3591,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -3763,6 +3780,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -4287,6 +4305,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -4507,6 +4526,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -4862,6 +4882,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -5075,6 +5096,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -5540,6 +5562,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -5677,6 +5700,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -5869,6 +5893,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -6315,6 +6340,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -6607,6 +6633,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -6706,6 +6733,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100",
@@ -6937,6 +6965,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -7112,6 +7141,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Number of contracts to offset in the returned result. Defaults to 0.",
@@ -7377,6 +7407,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -7512,6 +7543,7 @@ Max items is 100.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -7690,6 +7722,7 @@ Max items is 100.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -7912,6 +7945,7 @@ value, overriding what was set before.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -8026,6 +8060,7 @@ value, overriding what was set before.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -8142,6 +8177,7 @@ value, overriding what was set before.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -8289,6 +8325,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -8506,6 +8543,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -8743,6 +8781,7 @@ Must obey the ICD-10 format if an ICD-10 code_type is provided, specifically:
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100",
@@ -9392,6 +9431,7 @@ or encounter external id.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -9660,6 +9700,7 @@ or encounter external id.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -9973,6 +10014,7 @@ or encounter external id.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -10161,6 +10203,7 @@ or encounter external id.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -10698,6 +10741,7 @@ or encounter external id.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100",
@@ -11378,6 +11422,7 @@ or encounter external id.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -12499,6 +12544,7 @@ or encounter external id.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -13497,6 +13543,7 @@ in bounds of the diagnoses list field
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -13801,6 +13848,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -13903,6 +13951,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -14095,6 +14144,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -14196,6 +14246,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -14388,6 +14439,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -14519,6 +14571,7 @@ submitted to the payor.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "statuses",
@@ -14718,6 +14771,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -14845,6 +14899,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -15097,6 +15152,7 @@ submitted to the payor.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -15213,6 +15269,7 @@ submitted to the payor.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -15326,6 +15383,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -15428,6 +15486,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -15526,6 +15585,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -15634,6 +15694,7 @@ submitted to the payor.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -15979,6 +16040,7 @@ submitted to the payor.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -16207,6 +16269,7 @@ submitted to the payor.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -16791,6 +16854,7 @@ submitted to the payor.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Beginning date of claim versions returned in the export, ISO 8601 date e.g. 2019-08-24.
@@ -17039,6 +17103,7 @@ Must be within 30 days of start_date.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "procedure_code_search_term",
@@ -17244,6 +17309,7 @@ Must be within 30 days of start_date.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -17446,6 +17512,7 @@ doesn't data wrangle the modeling into the presentation shape.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "The payer",
@@ -17653,6 +17720,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -17909,6 +17977,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -18037,6 +18106,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -18158,6 +18228,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -18432,6 +18503,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -18836,6 +18908,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -19071,6 +19144,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -19267,6 +19341,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -19425,6 +19500,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -19570,6 +19646,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -19779,6 +19856,7 @@ doesn't data wrangle the modeling into the presentation shape.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -19965,6 +20043,7 @@ doesn't data wrangle the modeling into the presentation shape.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -20247,6 +20326,7 @@ identified by the id, then 403 response will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -20362,6 +20442,7 @@ will be limited to only those invoices that belong to the patient_external_id
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "patient_external_id",
@@ -20670,6 +20751,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "If true, invoices will not be created in stripe. Default = False",
@@ -20968,6 +21050,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -21144,6 +21227,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "enabled",
@@ -21369,6 +21453,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -21567,6 +21652,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -21742,6 +21828,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -21859,6 +21946,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "payer_uuid",
@@ -21965,6 +22053,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "limit",
@@ -22091,6 +22180,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -22267,6 +22357,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -22388,6 +22479,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Limit the number of results returned. Defaults to 100.",
@@ -22592,6 +22684,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -22742,6 +22835,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -23011,6 +23105,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -23166,6 +23261,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -23299,6 +23395,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Limit the number of results returned. Defaults to 100.",
@@ -23616,6 +23713,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -23843,6 +23941,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -24038,6 +24137,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "limit",
@@ -24304,6 +24404,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -24550,6 +24651,7 @@ upon creation of the invoice.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -24647,6 +24749,7 @@ upon creation of the invoice.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -24921,6 +25024,7 @@ identified by the id, then 403 response will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -25018,6 +25122,7 @@ identified by the id, then 403 response will be returned
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "limit the PatientPaymentConfig to those belonging to the patient_external_id",
@@ -25247,6 +25352,7 @@ identified by the id, then 403 response will be returned
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -25517,6 +25623,7 @@ If the authenticated user does not have the permission to update the PatientPaym
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -25768,6 +25875,7 @@ by the id, then 403 will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -25984,6 +26092,7 @@ by the id, then 403 will be returned
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100. The value must be greater than 0 and less than 1000.",
@@ -26313,6 +26422,7 @@ by the id, then 403 will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -26409,6 +26519,7 @@ by the id, then 403 will be returned
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -26839,6 +26950,7 @@ by the id, then 403 will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -27214,6 +27326,7 @@ by the id, then 403 will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -27417,6 +27530,7 @@ the current organization_id of the authenticated user.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100. The value must be greater than 0 and less than 1000.",
@@ -27768,6 +27882,7 @@ authenticated user, then response code of 403 will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -28021,6 +28136,7 @@ The order of specificity from the most specific to least specific is \`service_l
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -28457,6 +28573,7 @@ The order of specificity from the most specific to least specific is \`service_l
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -28864,6 +28981,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -28984,6 +29102,7 @@ current organization_id, then a response code of \`403\` will be returned.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100",
@@ -29398,6 +29517,7 @@ current organization_id, then a response code of \`403\` will be returned.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Denotes whether the patient_external_id is base64 encoded. This can be used to
@@ -29539,6 +29659,7 @@ slashes.
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -29632,6 +29753,7 @@ slashes.
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Defaults to 100",
@@ -29953,6 +30075,7 @@ identified by the id, then 403 response will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -30043,6 +30166,7 @@ identified by the id, then 403 response will be returned
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -30390,6 +30514,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -30823,6 +30948,7 @@ If there already exists a PaymentAccountConfig for the organization with the sam
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -31074,6 +31200,7 @@ by the id, then 403 will be returned
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -31242,6 +31369,7 @@ and the third party payment processor's customer can be identified by the patien
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -31334,6 +31462,7 @@ Verification includes that the provided token has all of the appropriate permiss
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -31433,6 +31562,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "PatientExternalId to lookup",
@@ -31649,6 +31779,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -31954,6 +32085,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Retrieve all remits for the given claim_id.",
@@ -32116,6 +32248,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "page_token",
@@ -32555,6 +32688,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -32827,6 +32961,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -33009,6 +33144,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -33188,6 +33324,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -33321,6 +33458,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -33644,6 +33782,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -33883,6 +34022,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -33997,6 +34137,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -34089,6 +34230,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -34257,6 +34399,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -34420,6 +34563,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -34596,6 +34740,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "page_token",
@@ -34795,6 +34940,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "key": "page_token",
@@ -34913,6 +35059,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -35102,6 +35249,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -35329,6 +35477,7 @@ customer page will be returned (this generally is a page listing the existing cu
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -35426,6 +35575,7 @@ customer page will be returned (this generally is a page listing the existing cu
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -76734,6 +76884,7 @@ exports[`transformApiDefinitionToDb > {"name":"cyclical-1"} 1`] = `
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -77204,6 +77355,7 @@ exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -78046,6 +78198,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           ],
           "pathParameters": [],
         },
+        "protocol": undefined,
         "queryParameters": [],
         "request": {
           "contentType": "application/json",
@@ -78456,6 +78609,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           ],
           "pathParameters": [],
         },
+        "protocol": undefined,
         "queryParameters": [],
         "request": {
           "contentType": "application/json",
@@ -78810,6 +78964,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           ],
           "pathParameters": [],
         },
+        "protocol": undefined,
         "queryParameters": [],
         "request": {
           "contentType": "application/json",
@@ -79097,6 +79252,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           ],
           "pathParameters": [],
         },
+        "protocol": undefined,
         "queryParameters": [],
         "request": {
           "contentType": "application/json",
@@ -79378,6 +79534,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           ],
           "pathParameters": [],
         },
+        "protocol": undefined,
         "queryParameters": [],
         "request": {
           "contentType": "application/json",
@@ -79497,6 +79654,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
           ],
           "pathParameters": [],
         },
+        "protocol": undefined,
         "queryParameters": [],
         "request": {
           "contentType": "application/json",
@@ -79804,6 +79962,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -79911,6 +80070,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -80119,6 +80279,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [
             {
               "description": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
@@ -80288,6 +80449,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -80433,6 +80595,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -80639,6 +80802,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "multipart/form-data",
@@ -80818,6 +80982,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": {
@@ -80924,6 +81089,7 @@ exports[`transformApiDefinitionToDb > {"name":"vellum"} 1`] = `
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -81172,6 +81338,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             ],
             "pathParameters": [],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -81408,6 +81575,7 @@ or overwritten with default values.",
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -81573,6 +81741,7 @@ or overwritten with default values.",
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,
@@ -81697,6 +81866,7 @@ or overwritten with default values.",
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": {
             "contentType": "application/json",
@@ -81867,6 +82037,7 @@ or overwritten with default values.",
               },
             ],
           },
+          "protocol": undefined,
           "queryParameters": [],
           "request": undefined,
           "response": undefined,

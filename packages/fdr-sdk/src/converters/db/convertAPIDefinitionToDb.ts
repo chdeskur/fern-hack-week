@@ -257,6 +257,7 @@ function transformEndpoint({
       endpointMethod: writeShape.method,
       endpointId: writeShape.originalEndpointId,
     }),
+    protocol: writeShape.protocol,
   };
 }
 
@@ -594,7 +595,7 @@ function getEndpointPathAsString(
   let endpointPath = "";
   for (const part of endpoint.path.parts) {
     if (part.type === "literal") {
-      endpointPath += `${part.value}`;
+      endpointPath += part.value;
     } else {
       endpointPath += `{${part.value}}`;
     }
@@ -770,7 +771,7 @@ class ApiDefinitionTransformationContext {
     try {
       const parsedBaseUrl = new URL(url);
       return parsedBaseUrl.host;
-    } catch (err) {
+    } catch (_err) {
       return "";
     }
   }

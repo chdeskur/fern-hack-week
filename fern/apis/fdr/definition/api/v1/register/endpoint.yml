@@ -35,6 +35,7 @@ types:
         availability: deprecated
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
+      protocol: optional<commons.Protocol>
 
   EndpointPath:
     properties:

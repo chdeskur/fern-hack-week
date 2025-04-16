@@ -5,3 +5,6 @@ export * from "./WebhookHttpMethod";
 export * from "./WithDescription";
 export * from "./WithAvailability";
 export * from "./Environment";
+export * from "./Protocol";
+export * from "./RestProtocol";
+export * from "./OpenRpcProtocol";

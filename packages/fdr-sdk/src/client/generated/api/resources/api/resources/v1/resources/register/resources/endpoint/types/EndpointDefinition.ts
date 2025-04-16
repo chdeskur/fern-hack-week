@@ -26,4 +26,5 @@ export interface EndpointDefinition extends FernRegistry.api.v1.WithDescription,
     errors: FernRegistry.api.v1.register.ErrorDeclaration[] | undefined;
     errorsV2: FernRegistry.api.v1.register.ErrorDeclarationV2[] | undefined;
     examples: FernRegistry.api.v1.register.ExampleEndpointCall[];
+    protocol: FernRegistry.api.v1.Protocol | undefined;
 }

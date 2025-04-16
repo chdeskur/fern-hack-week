@@ -99,6 +99,7 @@ function transformEndpoint({
     authed: dbShape.authed ?? false,
     // descriptionContainsMarkdown: dbShape.descriptionContainsMarkdown,
     snippetTemplates: dbShape.snippetTemplates,
+    protocol: dbShape.protocol,
   };
 }
 

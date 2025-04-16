@@ -30,3 +30,15 @@ types:
     properties:
       id: rootCommons.EnvironmentId
       baseUrl: string
+
+  Protocol:
+    union:
+      rest: RestProtocol
+      openrpc: OpenRpcProtocol
+
+  RestProtocol:
+    properties: {}
+
+  OpenRpcProtocol:
+    properties:
+      methodName: string
