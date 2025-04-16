@@ -22,14 +22,6 @@ export async function LoginButton({
   showIcon?: boolean;
   disabled?: boolean;
 }) {
-  if (disabled) {
-    return (
-      <FernButton variant="outlined" className={className} disabled>
-        Login
-      </FernButton>
-    );
-  }
-
   const [authConfig, authState, { basePath }] = await Promise.all([
     loader.getAuthConfig(),
     loader.getAuthState(),
@@ -38,6 +30,14 @@ export async function LoginButton({
 
   if (!authConfig) {
     return null;
+  }
+
+  if (disabled) {
+    return (
+      <FernButton variant="outlined" className={className} disabled>
+        Login
+      </FernButton>
+    );
   }
 
   if (authConfig.type === "oauth2") {

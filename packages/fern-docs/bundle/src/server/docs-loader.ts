@@ -57,6 +57,7 @@ import { cacheSeed } from "./cache-seed";
 import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
+import { isLocal } from "./isLocal";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { postToEngineeringNotifs } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
@@ -193,6 +194,10 @@ function assertDocsDomain(domain: string) {
 
 const setMonitor = new Semaphore(10);
 function kvSet(domain: string, key: string, value: unknown) {
+  if (isLocal()) {
+    return;
+  }
+
   after(async () => {
     await setMonitor.acquire();
     try {
@@ -207,7 +212,12 @@ function kvSet(domain: string, key: string, value: unknown) {
 
 const getMonitor = new Semaphore(10);
 async function kvGet<T>(domain: string, key: string): Promise<T | null> {
+  if (isLocal()) {
+    return null;
+  }
+
   await getMonitor.acquire();
+
   try {
     return await kv.hget<T>(domain, key);
   } catch (error) {

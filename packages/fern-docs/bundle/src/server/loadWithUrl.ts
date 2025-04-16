@@ -5,6 +5,7 @@ import { cache } from "react";
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { withoutStaging } from "@fern-docs/utils";
 
+import { isLocal } from "./isLocal";
 import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
 import { provideRegistryService } from "./registry";
 
@@ -26,6 +27,19 @@ export const loadWithUrl = cache(
     return unstable_cache(
       async () => {
         const domainWithoutStaging = withoutStaging(domain);
+
+        if (isLocal()) {
+          const response =
+            await provideRegistryService().docs.v2.read.getDocsForUrl({
+              url: FdrAPI.Url(domainWithoutStaging),
+            });
+          if (response.ok) {
+            return response.body;
+          }
+          console.error("Failed to load docs", {
+            cause: response.error,
+          });
+        }
 
         try {
           const response = await loadDocsDefinitionFromS3(

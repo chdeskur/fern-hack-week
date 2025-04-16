@@ -6,6 +6,7 @@ import { withoutStaging } from "@fern-docs/utils";
 
 import { cacheSeed } from "./cache-seed";
 import { fernToken_admin, getFdrOrigin } from "./env-variables";
+import { isLocal } from "./isLocal";
 
 export const uncachedGetDocsUrlMetadata = async (
   domain: string
@@ -14,6 +15,14 @@ export const uncachedGetDocsUrlMetadata = async (
   org: string;
   isPreview: boolean;
 }> => {
+  if (isLocal()) {
+    return {
+      url: domain,
+      org: domain.split(".")[0] ?? domain,
+      isPreview: true,
+    };
+  }
+
   try {
     const response = await fetch(
       `${getFdrOrigin()}/v2/registry/docs/metadata-for-url`,

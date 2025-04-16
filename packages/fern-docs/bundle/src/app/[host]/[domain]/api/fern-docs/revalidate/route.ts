@@ -30,6 +30,7 @@ import {
   createEndpointCacheKey,
   getMetadataFromResponse,
 } from "@/server/docs-loader";
+import { isLocal } from "@/server/isLocal";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import {
   queueAlgoliaReindex,
@@ -43,6 +44,10 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  if (isLocal()) {
+    throw new Error("revalidation is only available in production");
+  }
+
   const cdnUri = process.env.NEXT_PUBLIC_CDN_URI;
   const start = performance.now();
 

@@ -2,6 +2,8 @@ import { FC, ReactNode } from "react";
 
 import { FernButton, cn } from "@fern-docs/components";
 
+import { isLocal } from "@/server/isLocal";
+
 interface PlaygroundSendRequestButtonProps {
   sendRequest?: () => void;
 
@@ -12,6 +14,8 @@ interface PlaygroundSendRequestButtonProps {
 export const PlaygroundSendRequestButton: FC<
   PlaygroundSendRequestButtonProps
 > = ({ sendRequest, sendRequestButtonLabel, sendRequestIcon }) => {
+  const isLocalEnvironment = isLocal();
+
   return (
     <FernButton
       className={cn("group relative overflow-hidden font-semibold", {
@@ -24,6 +28,7 @@ export const PlaygroundSendRequestButton: FC<
       rounded
       size="large"
       skeleton={!sendRequest}
+      disabled={isLocalEnvironment}
     >
       {sendRequestButtonLabel ?? "Send Request"}
     </FernButton>

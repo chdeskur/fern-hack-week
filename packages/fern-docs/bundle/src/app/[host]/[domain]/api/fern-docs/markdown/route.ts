@@ -8,6 +8,7 @@ import {
   getMarkdownForPath,
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
+import { isLocal } from "@/server/isLocal";
 import { MARKDOWN_PATTERN } from "@/server/patterns";
 
 /**
@@ -18,6 +19,12 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  if (isLocal()) {
+    return new NextResponse(".md preview is not available in local preview", {
+      status: 400,
+    });
+  }
+
   const { host, domain } = await props.params;
 
   const path = req.nextUrl.pathname;

@@ -14,9 +14,14 @@ import {
 } from "@fern-docs/utils";
 
 import { getMetadata } from "@/server/docs-loader";
+import { isLocal } from "@/server/isLocal";
 import { batchQueue } from "@/server/queue";
 
 export async function POST(request: NextRequest) {
+  if (isLocal()) {
+    throw new Error("production deployment is only available in production");
+  }
+
   const cdnUri = process.env.NEXT_PUBLIC_CDN_URI;
 
   if (!cdnUri) {

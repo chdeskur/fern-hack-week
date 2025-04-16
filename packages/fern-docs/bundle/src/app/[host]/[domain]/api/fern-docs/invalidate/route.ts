@@ -4,10 +4,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
 import { escapeRegExp } from "es-toolkit/string";
 
+import { isLocal } from "@/server/isLocal";
+
 export async function GET(
   _req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
+  if (isLocal()) {
+    throw new Error("invalidation is only available in production");
+  }
+
   const start = performance.now();
 
   const { domain } = await props.params;
