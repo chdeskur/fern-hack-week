@@ -4411,6 +4411,9 @@
       "type_:RecurringTransactionTypeEnum",
       "type_:RecurringPaymentTypeSchema"
     ],
-    "subpackages": ["subpackage_paymentWebhooks", "subpackage_disputeChargebacksWebhooks"]
+    "subpackages": [
+      "subpackage_paymentWebhooks",
+      "subpackage_disputeChargebacksWebhooks"
+    ]
   }
 }

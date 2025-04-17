@@ -80136,7 +80136,12 @@
           "authed": true
         }
       ],
-      "types": ["type_Event:EventType", "type_Event:GetEvents", "type_Event:Event", "type_Event:CreateEvent"],
+      "types": [
+        "type_Event:EventType",
+        "type_Event:GetEvents",
+        "type_Event:Event",
+        "type_Event:CreateEvent"
+      ],
       "subpackages": [],
       "urlSlug": "event",
       "description": "An Event is an annotated moment or time range.\nThe Event Service is responsible for creating and retrieving events for a particular data source.\n",
@@ -105653,7 +105658,10 @@
       "subpackageId": "subpackage_chart-api",
       "name": "chart-api",
       "endpoints": [],
-      "types": ["type_chart-api:JsonString", "type_chart-api:DeprecatedDefinitionAndSchemaVersion"],
+      "types": [
+        "type_chart-api:JsonString",
+        "type_chart-api:DeprecatedDefinitionAndSchemaVersion"
+      ],
       "subpackages": [],
       "urlSlug": "chart-api",
       "webhooks": [],
@@ -105866,7 +105874,11 @@
       "subpackageId": "subpackage_pagination-api",
       "name": "pagination-api",
       "endpoints": [],
-      "types": ["type_pagination-api:PageToken", "type_pagination-api:PageRequest", "type_pagination-api:PageResponse"],
+      "types": [
+        "type_pagination-api:PageToken",
+        "type_pagination-api:PageRequest",
+        "type_pagination-api:PageResponse"
+      ],
       "subpackages": [],
       "urlSlug": "pagination-api",
       "webhooks": [],
@@ -106035,7 +106047,10 @@
       "subpackageId": "subpackage_workbook-common",
       "name": "workbook-common",
       "endpoints": [],
-      "types": ["type_workbook-common:WorkbookContent", "type_workbook-common:UnifiedWorkbookContent"],
+      "types": [
+        "type_workbook-common:WorkbookContent",
+        "type_workbook-common:UnifiedWorkbookContent"
+      ],
       "subpackages": [],
       "urlSlug": "workbook-common",
       "webhooks": [],

@@ -6690,7 +6690,11 @@
       "type_:BadRequestErrorResponse",
       "type_:UnprocessableEntityErrorResponse"
     ],
-    "subpackages": ["subpackage_clientSessionApi", "subpackage_paymentsApi", "subpackage_paymentMethodsApi"]
+    "subpackages": [
+      "subpackage_clientSessionApi",
+      "subpackage_paymentsApi",
+      "subpackage_paymentMethodsApi"
+    ]
   },
   "auth": {
     "headerWireValue": "X-API-KEY",

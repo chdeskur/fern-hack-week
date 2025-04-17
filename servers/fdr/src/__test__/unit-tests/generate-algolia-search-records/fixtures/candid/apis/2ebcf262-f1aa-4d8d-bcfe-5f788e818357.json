@@ -9702,7 +9702,10 @@
       "endpoints": [],
       "webhooks": [],
       "types": [],
-      "subpackages": ["subpackage_organization-providers/v2", "subpackage_organization-providers/v3"]
+      "subpackages": [
+        "subpackage_organization-providers/v2",
+        "subpackage_organization-providers/v3"
+      ]
     },
     "subpackage_organization-providers/v2": {
       "subpackageId": "subpackage_organization-providers/v2",
@@ -10187,7 +10190,11 @@
         }
       ],
       "webhooks": [],
-      "types": ["type_tasks/v3:TaskActionExecutionMethod", "type_tasks/v3:TaskActions", "type_tasks/v3:TaskAction"],
+      "types": [
+        "type_tasks/v3:TaskActionExecutionMethod",
+        "type_tasks/v3:TaskActions",
+        "type_tasks/v3:TaskAction"
+      ],
       "subpackages": []
     },
     "subpackage_billing-notes": {
@@ -10496,7 +10503,11 @@
         }
       ],
       "webhooks": [],
-      "types": ["type_payers:PayerUuid", "type_payers:PayerPage", "type_payers:Payer"],
+      "types": [
+        "type_payers:PayerUuid",
+        "type_payers:PayerPage",
+        "type_payers:Payer"
+      ],
       "subpackages": []
     },
     "subpackage_service-facility": {
@@ -10516,7 +10527,12 @@
       "name": "tags",
       "endpoints": [],
       "webhooks": [],
-      "types": ["type_tags:TagId", "type_tags:TagCreate", "type_tags:Tag", "type_tags:TagColorEnum"],
+      "types": [
+        "type_tags:TagId",
+        "type_tags:TagCreate",
+        "type_tags:Tag",
+        "type_tags:TagColorEnum"
+      ],
       "subpackages": []
     }
   },

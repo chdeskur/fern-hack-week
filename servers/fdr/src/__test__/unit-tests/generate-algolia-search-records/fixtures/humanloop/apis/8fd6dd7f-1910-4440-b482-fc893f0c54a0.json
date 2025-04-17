@@ -18749,7 +18749,10 @@
         }
       ],
       "types": [],
-      "subpackages": ["subpackage_projects/activeConfig", "subpackage_projects/deployedConfig"],
+      "subpackages": [
+        "subpackage_projects/activeConfig",
+        "subpackage_projects/deployedConfig"
+      ],
       "urlSlug": "projects",
       "webhooks": [],
       "websockets": []
@@ -24241,7 +24244,10 @@
           "authed": true
         }
       ],
-      "types": ["type_feedback:FeedbackFeedbackRequest", "type_feedback:FeedbackFeedbackResponse"],
+      "types": [
+        "type_feedback:FeedbackFeedbackRequest",
+        "type_feedback:FeedbackFeedbackResponse"
+      ],
       "subpackages": [],
       "urlSlug": "feedback",
       "webhooks": [],
