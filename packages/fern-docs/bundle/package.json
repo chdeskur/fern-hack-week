@@ -45,7 +45,7 @@
     "@account-kit/signer": "^4.25.1",
     "@account-kit/smart-contracts": "^4.24.0",
     "@ai-sdk/amazon-bedrock": "^2.0.5",
-    "@ai-sdk/cohere": "^1.2.4",
+    "@ai-sdk/cohere": "^1.2.9",
     "@ai-sdk/openai": "^1.1.15",
     "@algolia/client-search": "^5.20.3",
     "@aws-sdk/client-s3": "^3.744.0",
