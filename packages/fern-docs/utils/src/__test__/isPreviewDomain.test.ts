@@ -1,7 +1,4 @@
-import {
-  extractOrgFromPreview,
-  isPreviewDomain,
-} from "../getPreviewUrlAuthConfig";
+import { extractOrgFromPreview, isPreviewDomain } from "../isPreviewUrl";
 
 describe("isPreviewDomain", () => {
   it("should return true for valid preview domains", () => {

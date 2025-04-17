@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
-import { withoutStaging } from "@fern-docs/utils";
+import { isPreviewDomain, withoutStaging } from "@fern-docs/utils";
 
 import { isLocal } from "./isLocal";
 import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
@@ -57,6 +57,11 @@ export const loadWithUrl = cache(
           }
         } catch (error) {
           console.error("Failed to load docs definition:", error);
+        }
+
+        if (isPreviewDomain(domain)) {
+          console.error("Failing to load preview link: ", domain);
+          notFound();
         }
 
         const response =
