@@ -2,13 +2,13 @@ import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
+import { Url } from "@fern-api/fdr-sdk/api-definition";
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { isPreviewDomain, withoutStaging } from "@fern-docs/utils";
 
 import { isLocal } from "./isLocal";
 import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
 import { provideRegistryService } from "./registry";
-import { getDocsHostApp } from "./xfernhost/app";
 
 export type LoadWithUrlResponse = APIResponse<
   FdrAPI.docs.v2.read.LoadDocsForUrlResponse,
@@ -28,21 +28,17 @@ export const loadWithUrl = cache(
     return unstable_cache(
       async () => {
         const domainWithoutStaging = withoutStaging(domain);
-        const host = await getDocsHostApp();
 
         if (isLocal()) {
-          const response = await fetch(
-            `${host}/v2/registry/docs/load-with-url`,
-            {
-              method: "POST",
-            }
-          );
+          const response =
+            await provideRegistryService().docs.v2.read.getDocsForUrl({
+              url: Url(""),
+            });
           if (response.ok) {
-            const json = await response.json();
-            return json as FdrAPI.docs.v2.read.LoadDocsForUrlResponse;
+            return response.body;
           }
           console.error("Failed to load docs", {
-            cause: response,
+            cause: response.error,
           });
           notFound();
         }
