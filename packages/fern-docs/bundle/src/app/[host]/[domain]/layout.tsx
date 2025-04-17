@@ -13,7 +13,6 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   getCustomerAnalytics as deprecated_getCustomerAnalytics,
   getCanonicalUrl,
-  getEdgeFlags,
   getLaunchDarklySettings,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
@@ -69,7 +68,7 @@ export default async function Layout({
     loader.getMetadata(),
     loader.getConfig(),
     loader.unsafe_getFullRoot(),
-    getEdgeFlags(domain),
+    loader.getEdgeFlags(),
     loader.getFiles(),
     loader.getColors(),
     loader.getLayout(),

@@ -11,9 +11,20 @@ import {
   conformTrailingSlash,
 } from "@fern-docs/utils";
 
+import { isLocal } from "@/server/isLocal";
+
 export const runtime = "edge";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
+  if (isLocal()) {
+    return {
+      rules: {
+        userAgent: "*",
+        disallow: "/",
+      },
+    };
+  }
+
   const headersList = await headers();
   const domain =
     headersList.get(HEADER_X_FERN_HOST) ?? headersList.get(HEADER_HOST);

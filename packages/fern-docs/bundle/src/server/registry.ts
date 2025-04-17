@@ -3,7 +3,6 @@ import { once } from "es-toolkit/function";
 import { FdrClient } from "@fern-api/fdr-sdk/client";
 
 import { fernToken_admin } from "./env-variables";
-import { isLocal } from "./isLocal";
 
 function getEnvironment() {
   return (
@@ -12,9 +11,8 @@ function getEnvironment() {
 }
 
 export const provideRegistryService = once(() => {
-  const isLocalMode = isLocal();
   return new FdrClient({
     environment: getEnvironment(),
-    token: isLocalMode ? undefined : fernToken_admin(),
+    token: fernToken_admin(),
   });
 });

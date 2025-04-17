@@ -1,9 +1,14 @@
-import { get } from "@vercel/edge-config";
-
 import { isCustomDomain } from "@fern-docs/utils";
 
+import { getEdge } from "./getEdge";
+import { isLocal } from "./isLocal";
+
 export async function getSeoDisabled(domain: string): Promise<boolean> {
-  const isSeoEnabled = (await get<string[]>("seo-enabled")) ?? [];
+  if (isLocal()) {
+    return true;
+  }
+
+  const isSeoEnabled = (await getEdge<string[]>("seo-enabled")) ?? [];
   if (isSeoEnabled.includes(domain)) {
     return false;
   }
@@ -11,6 +16,6 @@ export async function getSeoDisabled(domain: string): Promise<boolean> {
   if (!isCustomDomain(domain)) {
     return true;
   }
-  const isDisabled = (await get<string[]>("seo-disabled")) ?? [];
+  const isDisabled = (await getEdge<string[]>("seo-disabled")) ?? [];
   return isDisabled.includes(domain);
 }

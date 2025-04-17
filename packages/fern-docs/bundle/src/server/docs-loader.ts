@@ -41,6 +41,7 @@ import { HttpMethod } from "@fern-docs/components";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   DEFAULT_CONTENT_WIDTH,
+  DEFAULT_EDGE_FLAGS,
   DEFAULT_GUTTER_WIDTH,
   DEFAULT_HEADER_HEIGHT,
   DEFAULT_LOGO_HEIGHT,
@@ -229,6 +230,10 @@ async function kvGet<T>(domain: string, key: string): Promise<T | null> {
 }
 
 const cachedGetEdgeFlags = cache(async (domain: string) => {
+  if (isLocal()) {
+    return DEFAULT_EDGE_FLAGS;
+  }
+
   return await getEdgeFlags(domain);
 });
 

@@ -1,12 +1,14 @@
-import { getAll } from "@vercel/edge-config";
-
 import type { EdgeFlags } from "@fern-docs/utils";
 import {
+  DEFAULT_EDGE_FLAGS,
   isCustomDomain,
   isDevelopment,
   isFern,
   withoutStaging,
 } from "@fern-docs/utils";
+
+import { getAllEdge } from "./getEdge";
+import { isLocal } from "./isLocal";
 
 export const runtime = "edge";
 
@@ -51,8 +53,15 @@ type EdgeFlag = (typeof EDGE_FLAGS)[number];
 type EdgeConfigResponse = Record<EdgeFlag, string[] | Record<string, unknown>>;
 
 export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
+  if (isLocal()) {
+    return DEFAULT_EDGE_FLAGS;
+  }
+
   try {
-    const config = await getAll<EdgeConfigResponse>(EDGE_FLAGS);
+    const config = await getAllEdge<EdgeConfigResponse>(EDGE_FLAGS);
+    if (config === undefined) {
+      throw new Error("Failed to fetch edge config");
+    }
 
     const isApiPlaygroundEnabled = checkDomainMatchesCustomers(
       domain,
@@ -255,10 +264,9 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
     };
   }
 }
-
 function checkDomainMatchesCustomers(
   domain: string,
-  customers: readonly string[] | Record<string, unknown>
+  customers?: readonly string[] | Record<string, unknown>
 ): boolean {
   if (customers == null) {
     return false;

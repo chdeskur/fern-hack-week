@@ -1,5 +1,7 @@
-import { get } from "@vercel/edge-config";
 import { z } from "zod";
+
+import { getEdge } from "./getEdge";
+import { isLocal } from "./isLocal";
 
 const WorkosAuthSchema = z.object({
   type: z.literal("workos"),
@@ -26,10 +28,10 @@ export interface Metadata {
 export async function getPreviewUrlAuthConfig(
   metadata: Metadata
 ): Promise<PreviewUrlAuth | undefined> {
-  if (!metadata.isPreview) {
+  if (!metadata.isPreview || isLocal()) {
     return undefined;
   }
-  const config = await get<PreviewUrlAuthConfig>("authed-previews");
+  const config = await getEdge<PreviewUrlAuthConfig>("authed-previews");
   return config?.[metadata.org];
 }
 

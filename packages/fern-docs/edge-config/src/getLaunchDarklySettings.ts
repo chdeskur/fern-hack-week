@@ -1,7 +1,9 @@
-import { get } from "@vercel/edge-config";
 import { z } from "zod";
 
 import { withoutStaging } from "@fern-docs/utils";
+
+import { getEdge } from "./getEdge";
+import { isLocal } from "./isLocal";
 
 const LaunchDarklyEdgeConfigSchema = z.object({
   // NOTE: this is client-side visible, so we should be careful about what we expose here if we add more fields
@@ -30,8 +32,12 @@ export async function getLaunchDarklySettings(
   domain: string,
   orgId?: Promise<string | undefined>
 ): Promise<LaunchDarklyEdgeConfig | undefined> {
+  if (isLocal()) {
+    return undefined;
+  }
+
   const allConfigs =
-    await get<Record<string, LaunchDarklyEdgeConfig>>("launchdarkly");
+    await getEdge<Record<string, LaunchDarklyEdgeConfig>>("launchdarkly");
   const config =
     allConfigs?.[domain] ??
     allConfigs?.[withoutStaging(domain)] ??
