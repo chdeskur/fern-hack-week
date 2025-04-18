@@ -51,9 +51,11 @@ groups:
           useBrandedStringAliases: true
           noSerdeLayer: true
           noOptionalProperties: true
-          outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
+          packageJson: 
+            devDependencies: 
+              "typescript": "~5.7.2"
 
   generators-sdk:
     audiences:
