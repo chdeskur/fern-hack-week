@@ -191,6 +191,13 @@ export const middleware: NextMiddleware = async (request) => {
 
   // ignore authentication in local preview
   if (isLocal()) {
+    // serve local files directly
+    if (pathname.startsWith("/_local/")) {
+      return NextResponse.next({
+        request: { headers },
+      });
+    }
+
     const getResponse = () => {
       if (request.nextUrl.searchParams.has("error")) {
         return rewrite(
