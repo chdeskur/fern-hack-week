@@ -30,9 +30,13 @@ export function Strong({ className, ...rest }: React.ComponentProps<"strong">) {
   return <strong {...rest} className={cn(className, "font-semibold")} />;
 }
 
-export function Ol({ className, ...rest }: React.ComponentProps<"ol">) {
+export function Ol({ className, type, ...rest }: React.ComponentProps<"ol">) {
   return (
-    <ol {...rest} className={cn(className, "mb-3 list-outside list-decimal")} />
+    <ol
+      {...rest}
+      type={type}
+      className={cn(className, "mb-3 list-outside", !type && "list-decimal")}
+    />
   );
 }
 
@@ -66,7 +70,7 @@ export function A({
   return (
     <FernLink
       className={cnCombined}
-      href={href ?? {}}
+      href={href ?? ""}
       scroll={true}
       {...rest}
       showExternalLinkIcon={!hideExternalLinkIcon}
