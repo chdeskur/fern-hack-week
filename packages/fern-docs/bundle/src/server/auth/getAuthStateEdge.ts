@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { extractOrgFromPreview } from "@fern-docs/utils";
 
 import { getDocsDomainEdge } from "../xfernhost/edge";
 import { createGetAuthState } from "./getAuthState";
@@ -15,12 +16,17 @@ export async function createGetAuthStateEdge(
 ): ReturnType<typeof createGetAuthState> {
   const domain = getDocsDomainEdge(request);
   const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
+
+  // extract org from preview domain
+  const org = extractOrgFromPreview(domain);
+  const orgMetadata = org ? { org, isPreview: true } : undefined;
+
   return createGetAuthState(
     request.nextUrl.host,
     domain,
     fern_token,
     undefined,
-    undefined,
+    orgMetadata,
     setFernToken
   );
 }
