@@ -1,0 +1,26 @@
+name: Update twoslash Branch
+
+on:
+  push:
+    branches:
+    - app
+    
+permissions: write-all
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase twoslash Branch
+        run: |
+          git config --global user.email "pull-request-bot@buildwithfern.com"
+          git config --global user.name "fern-pr-bot"
+          git checkout twoslash
+          git pull
+          git rebase origin/app
+          git push origin twoslash
