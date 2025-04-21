@@ -12,32 +12,32 @@ export type Snippet =
     | FernRegistry.Snippet.Ruby
     | FernRegistry.Snippet.Csharp;
 
-export declare namespace Snippet {
-    interface Typescript extends FernRegistry.TypeScriptSnippet, _Base {
+export namespace Snippet {
+    export interface Typescript extends FernRegistry.TypeScriptSnippet, _Base {
         type: "typescript";
     }
 
-    interface Python extends FernRegistry.PythonSnippet, _Base {
+    export interface Python extends FernRegistry.PythonSnippet, _Base {
         type: "python";
     }
 
-    interface Java extends FernRegistry.JavaSnippet, _Base {
+    export interface Java extends FernRegistry.JavaSnippet, _Base {
         type: "java";
     }
 
-    interface Go extends FernRegistry.GoSnippet, _Base {
+    export interface Go extends FernRegistry.GoSnippet, _Base {
         type: "go";
     }
 
-    interface Ruby extends FernRegistry.RubySnippet, _Base {
+    export interface Ruby extends FernRegistry.RubySnippet, _Base {
         type: "ruby";
     }
 
-    interface Csharp extends FernRegistry.CsharpSnippet, _Base {
+    export interface Csharp extends FernRegistry.CsharpSnippet, _Base {
         type: "csharp";
     }
 
-    interface _Base {
+    export interface _Base {
         exampleIdentifier: string | undefined;
     }
 }

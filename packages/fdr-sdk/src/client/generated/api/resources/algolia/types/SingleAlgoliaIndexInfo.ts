@@ -8,12 +8,12 @@ export type SingleAlgoliaIndexInfo =
     | FernRegistry.SingleAlgoliaIndexInfo.Unversioned
     | FernRegistry.SingleAlgoliaIndexInfo.Versioned;
 
-export declare namespace SingleAlgoliaIndexInfo {
-    interface Unversioned extends FernRegistry.UnversionedSingleAlgoliaIndexInfo {
+export namespace SingleAlgoliaIndexInfo {
+    export interface Unversioned extends FernRegistry.UnversionedSingleAlgoliaIndexInfo {
         type: "unversioned";
     }
 
-    interface Versioned extends FernRegistry.VersionedSingleAlgoliaIndexInfo {
+    export interface Versioned extends FernRegistry.VersionedSingleAlgoliaIndexInfo {
         type: "versioned";
     }
 }

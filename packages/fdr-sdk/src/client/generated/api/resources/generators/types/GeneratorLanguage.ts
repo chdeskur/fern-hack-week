@@ -3,7 +3,6 @@
  */
 
 export type GeneratorLanguage = "python" | "go" | "java" | "typescript" | "ruby" | "csharp" | "php" | "swift" | "rust";
-
 export const GeneratorLanguage = {
     Python: "python",
     Go: "go",

@@ -6,12 +6,12 @@ import * as FernRegistry from "../../../index";
 
 export type PullRequestReviewer = FernRegistry.PullRequestReviewer.User | FernRegistry.PullRequestReviewer.Team;
 
-export declare namespace PullRequestReviewer {
-    interface User extends FernRegistry.GithubUser {
+export namespace PullRequestReviewer {
+    export interface User extends FernRegistry.GithubUser {
         type: "user";
     }
 
-    interface Team extends FernRegistry.GithubTeam {
+    export interface Team extends FernRegistry.GithubTeam {
         type: "team";
     }
 }

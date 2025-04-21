@@ -6,12 +6,12 @@ import * as FernRegistry from "../../../index";
 
 export type AuthPayload = FernRegistry.AuthPayload.Bearer | FernRegistry.AuthPayload.Basic;
 
-export declare namespace AuthPayload {
-    interface Bearer extends FernRegistry.BearerTokenAuthPayload {
+export namespace AuthPayload {
+    export interface Bearer extends FernRegistry.BearerTokenAuthPayload {
         type: "bearer";
     }
 
-    interface Basic extends FernRegistry.BasicAuthPayload {
+    export interface Basic extends FernRegistry.BasicAuthPayload {
         type: "basic";
     }
 }

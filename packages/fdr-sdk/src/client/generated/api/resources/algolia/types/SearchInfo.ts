@@ -12,12 +12,12 @@ export type SearchInfo =
      * Every docs website is indexed in a global Algolia Index */
     | FernRegistry.SearchInfo.SingleAlgoliaIndex;
 
-export declare namespace SearchInfo {
-    interface LegacyMultiAlgoliaIndex extends FernRegistry.LegacyMultiAlgoliaIndexInfo {
+export namespace SearchInfo {
+    export interface LegacyMultiAlgoliaIndex extends FernRegistry.LegacyMultiAlgoliaIndexInfo {
         type: "legacyMultiAlgoliaIndex";
     }
 
-    interface SingleAlgoliaIndex {
+    export interface SingleAlgoliaIndex {
         type: "singleAlgoliaIndex";
         value: FernRegistry.SingleAlgoliaIndexInfo;
     }

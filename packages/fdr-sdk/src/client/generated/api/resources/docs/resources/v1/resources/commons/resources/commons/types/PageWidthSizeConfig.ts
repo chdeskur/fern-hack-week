@@ -9,18 +9,18 @@ export type PageWidthSizeConfig =
     | FernRegistry.docs.v1.commons.PageWidthSizeConfig.Rem
     | FernRegistry.docs.v1.commons.PageWidthSizeConfig.Full;
 
-export declare namespace PageWidthSizeConfig {
-    interface Px {
+export namespace PageWidthSizeConfig {
+    export interface Px {
         type: "px";
         value: number;
     }
 
-    interface Rem {
+    export interface Rem {
         type: "rem";
         value: number;
     }
 
-    interface Full {
+    export interface Full {
         type: "full";
     }
 }

@@ -11,25 +11,25 @@ export type TypeShape =
     | FernRegistry.api.v1.register.TypeShape.DiscriminatedUnion
     | FernRegistry.api.v1.register.TypeShape.Object_;
 
-export declare namespace TypeShape {
-    interface Alias {
+export namespace TypeShape {
+    export interface Alias {
         type: "alias";
         value: FernRegistry.api.v1.register.TypeReference;
     }
 
-    interface Enum extends FernRegistry.api.v1.register.EnumType {
+    export interface Enum extends FernRegistry.api.v1.register.EnumType {
         type: "enum";
     }
 
-    interface UndiscriminatedUnion extends FernRegistry.api.v1.register.UndiscriminatedUnionType {
+    export interface UndiscriminatedUnion extends FernRegistry.api.v1.register.UndiscriminatedUnionType {
         type: "undiscriminatedUnion";
     }
 
-    interface DiscriminatedUnion extends FernRegistry.api.v1.register.DiscriminatedUnionType {
+    export interface DiscriminatedUnion extends FernRegistry.api.v1.register.DiscriminatedUnionType {
         type: "discriminatedUnion";
     }
 
-    interface Object_ extends FernRegistry.api.v1.register.ObjectType {
+    export interface Object_ extends FernRegistry.api.v1.register.ObjectType {
         type: "object";
     }
 }

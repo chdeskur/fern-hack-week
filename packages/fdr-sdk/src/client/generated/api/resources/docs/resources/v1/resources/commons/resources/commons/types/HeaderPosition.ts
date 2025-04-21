@@ -3,7 +3,6 @@
  */
 
 export type HeaderPosition = "FIXED" | "ABSOLUTE";
-
 export const HeaderPosition = {
     Fixed: "FIXED",
     Absolute: "ABSOLUTE",

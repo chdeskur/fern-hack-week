@@ -13,32 +13,32 @@ export type Template =
     | FernRegistry.Template.Dict
     | FernRegistry.Template.Iterable;
 
-export declare namespace Template {
-    interface Generic extends FernRegistry.GenericTemplate {
+export namespace Template {
+    export interface Generic extends FernRegistry.GenericTemplate {
         type: "generic";
     }
 
-    interface Enum extends FernRegistry.EnumTemplate {
+    export interface Enum extends FernRegistry.EnumTemplate {
         type: "enum";
     }
 
-    interface DiscriminatedUnion extends FernRegistry.DiscriminatedUnionTemplate {
+    export interface DiscriminatedUnion extends FernRegistry.DiscriminatedUnionTemplate {
         type: "discriminatedUnion";
     }
 
-    interface Union extends FernRegistry.UnionTemplate {
+    export interface Union extends FernRegistry.UnionTemplate {
         type: "union";
     }
 
-    interface UnionV2 extends FernRegistry.UnionTemplateV2 {
+    export interface UnionV2 extends FernRegistry.UnionTemplateV2 {
         type: "union_v2";
     }
 
-    interface Dict extends FernRegistry.DictTemplate {
+    export interface Dict extends FernRegistry.DictTemplate {
         type: "dict";
     }
 
-    interface Iterable extends FernRegistry.IterableTemplate {
+    export interface Iterable extends FernRegistry.IterableTemplate {
         type: "iterable";
     }
 }

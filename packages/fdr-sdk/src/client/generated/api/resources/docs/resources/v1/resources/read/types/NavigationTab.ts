@@ -10,20 +10,20 @@ export type NavigationTab =
     | FernRegistry.docs.v1.read.NavigationTab.Changelog
     | FernRegistry.docs.v1.read.NavigationTab.ChangelogV3;
 
-export declare namespace NavigationTab {
-    interface Group extends FernRegistry.docs.v1.read.NavigationTabGroup {
+export namespace NavigationTab {
+    export interface Group extends FernRegistry.docs.v1.read.NavigationTabGroup {
         type: "group";
     }
 
-    interface Link extends FernRegistry.docs.v1.read.NavigationTabLink {
+    export interface Link extends FernRegistry.docs.v1.read.NavigationTabLink {
         type: "link";
     }
 
-    interface Changelog extends FernRegistry.docs.v1.read.ChangelogSection {
+    export interface Changelog extends FernRegistry.docs.v1.read.ChangelogSection {
         type: "changelog";
     }
 
-    interface ChangelogV3 extends FernRegistry.docs.v1.read.ChangelogSectionV3 {
+    export interface ChangelogV3 extends FernRegistry.docs.v1.read.ChangelogSectionV3 {
         type: "changelogV3";
     }
 }

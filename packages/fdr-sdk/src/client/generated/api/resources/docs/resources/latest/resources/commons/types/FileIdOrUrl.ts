@@ -6,13 +6,13 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type FileIdOrUrl = FernRegistry.docs.latest.FileIdOrUrl.FileId | FernRegistry.docs.latest.FileIdOrUrl.Url;
 
-export declare namespace FileIdOrUrl {
-    interface FileId {
+export namespace FileIdOrUrl {
+    export interface FileId {
         type: "fileId";
         value: FernRegistry.FileId;
     }
 
-    interface Url {
+    export interface Url {
         type: "url";
         value: FernRegistry.Url;
     }

@@ -10,22 +10,22 @@ export type Error =
     | FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error.UnauthorizedError
     | FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error._Unknown;
 
-export declare namespace Error {
-    interface DocsNotFoundError {
+export namespace Error {
+    export interface DocsNotFoundError {
         error: "DocsNotFoundError";
     }
 
-    interface UnauthorizedError {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         docsNotFoundError: () => _Result;
         unauthorizedError: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -40,7 +40,7 @@ export const Error = {
     },
 
     unauthorizedError: (
-        value: string
+        value: string,
     ): FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error.UnauthorizedError => {
         return {
             content: value,
@@ -49,7 +49,7 @@ export const Error = {
     },
 
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error._Unknown => {
         return {
             error: undefined,
@@ -59,7 +59,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error,
-        visitor: FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error._Visitor<_Result>
+        visitor: FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "DocsNotFoundError":

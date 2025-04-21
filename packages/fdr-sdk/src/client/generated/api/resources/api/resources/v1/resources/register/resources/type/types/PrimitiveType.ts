@@ -18,52 +18,52 @@ export type PrimitiveType =
     | FernRegistry.api.v1.register.PrimitiveType.Uint
     | FernRegistry.api.v1.register.PrimitiveType.Uint64;
 
-export declare namespace PrimitiveType {
-    interface Integer extends FernRegistry.api.v1.register.IntegerType {
+export namespace PrimitiveType {
+    export interface Integer extends FernRegistry.api.v1.register.IntegerType {
         type: "integer";
     }
 
-    interface Double extends FernRegistry.api.v1.register.DoubleType {
+    export interface Double extends FernRegistry.api.v1.register.DoubleType {
         type: "double";
     }
 
-    interface String extends FernRegistry.api.v1.register.StringType {
+    export interface String extends FernRegistry.api.v1.register.StringType {
         type: "string";
     }
 
-    interface Long extends FernRegistry.api.v1.register.LongType {
+    export interface Long extends FernRegistry.api.v1.register.LongType {
         type: "long";
     }
 
-    interface Boolean extends FernRegistry.api.v1.register.BooleanType {
+    export interface Boolean extends FernRegistry.api.v1.register.BooleanType {
         type: "boolean";
     }
 
-    interface Datetime extends FernRegistry.api.v1.register.DatetimeType {
+    export interface Datetime extends FernRegistry.api.v1.register.DatetimeType {
         type: "datetime";
     }
 
-    interface Uuid extends FernRegistry.api.v1.register.UuidType {
+    export interface Uuid extends FernRegistry.api.v1.register.UuidType {
         type: "uuid";
     }
 
-    interface Base64 extends FernRegistry.api.v1.register.Base64Type {
+    export interface Base64 extends FernRegistry.api.v1.register.Base64Type {
         type: "base64";
     }
 
-    interface Date_ extends FernRegistry.api.v1.register.DateType {
+    export interface Date_ extends FernRegistry.api.v1.register.DateType {
         type: "date";
     }
 
-    interface BigInteger extends FernRegistry.api.v1.register.BigIntegerType {
+    export interface BigInteger extends FernRegistry.api.v1.register.BigIntegerType {
         type: "bigInteger";
     }
 
-    interface Uint {
+    export interface Uint {
         type: "uint";
     }
 
-    interface Uint64 {
+    export interface Uint64 {
         type: "uint64";
     }
 }

@@ -6,12 +6,12 @@ import * as FernRegistry from "../../../index";
 
 export type FernRepository = FernRegistry.FernRepository.Sdk | FernRegistry.FernRepository.Config;
 
-export declare namespace FernRepository {
-    interface Sdk extends FernRegistry.SdkRepository {
+export namespace FernRepository {
+    export interface Sdk extends FernRegistry.SdkRepository {
         type: "sdk";
     }
 
-    interface Config extends FernRegistry.FernConfigRepository {
+    export interface Config extends FernRegistry.FernConfigRepository {
         type: "config";
     }
 }

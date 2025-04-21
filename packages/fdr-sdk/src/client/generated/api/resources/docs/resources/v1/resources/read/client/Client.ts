@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Read {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -35,19 +37,35 @@ export class Read {
      * @example
      *     await client.docs.v1.read.getDocsForDomainLegacy("domain")
      */
-    public async getDocsForDomainLegacy(
+    public getDocsForDomainLegacy(
         domain: string,
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v1.read.DocsDefinition,
             FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getDocsForDomainLegacy(domain, requestOptions));
+    }
+
+    private async __getDocsForDomainLegacy(
+        domain: string,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v1.read.DocsDefinition,
+                FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/registry/docs/load/${encodeURIComponent(domain)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/registry/docs/load/${encodeURIComponent(domain)}`,
             ),
             method: "GET",
             headers: {
@@ -65,8 +83,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v1.read.DocsDefinition,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v1.read.DocsDefinition,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -74,15 +97,23 @@ export class Read {
             switch ((_response.error.body as FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error)?.error) {
                 case "DomainNotRegisteredError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -95,16 +126,29 @@ export class Read {
      *         domain: "domain"
      *     })
      */
-    public async getDocsForDomain(
+    public getDocsForDomain(
         request: FernRegistry.docs.v1.read.LoadDocsForDomainRequest,
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<FernRegistry.docs.v1.read.DocsDefinition, FernRegistry.docs.v1.read.getDocsForDomain.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getDocsForDomain(request, requestOptions));
+    }
+
+    private async __getDocsForDomain(
+        request: FernRegistry.docs.v1.read.LoadDocsForDomainRequest,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.docs.v1.read.DocsDefinition, FernRegistry.docs.v1.read.getDocsForDomain.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/registry/docs/load"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/registry/docs/load",
             ),
             method: "POST",
             headers: {
@@ -123,8 +167,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v1.read.DocsDefinition,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v1.read.DocsDefinition,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -132,15 +181,23 @@ export class Read {
             switch ((_response.error.body as FernRegistry.docs.v1.read.getDocsForDomain.Error)?.error) {
                 case "DomainNotRegisteredError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v1.read.getDocsForDomain.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v1.read.getDocsForDomain.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v1.read.getDocsForDomain.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v1.read.getDocsForDomain.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

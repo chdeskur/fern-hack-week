@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Read {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -35,14 +37,29 @@ export class Read {
      * @example
      *     await client.api.v1.read.getApi(FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
      */
-    public async getApi(
+    public getApi(
         apiDefinitionId: FernRegistry.ApiDefinitionId,
-        requestOptions?: Read.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.api.v1.read.ApiDefinition, FernRegistry.api.v1.read.getApi.Error>> {
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.api.v1.read.ApiDefinition, FernRegistry.api.v1.read.getApi.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getApi(apiDefinitionId, requestOptions));
+    }
+
+    private async __getApi(
+        apiDefinitionId: FernRegistry.ApiDefinitionId,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.api.v1.read.ApiDefinition, FernRegistry.api.v1.read.getApi.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/registry/api/load/${encodeURIComponent(apiDefinitionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/registry/api/load/${encodeURIComponent(apiDefinitionId)}`,
             ),
             method: "GET",
             headers: {
@@ -60,8 +77,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.api.v1.read.ApiDefinition,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.api.v1.read.ApiDefinition,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -69,15 +91,23 @@ export class Read {
             switch ((_response.error.body as FernRegistry.api.v1.read.getApi.Error)?.error) {
                 case "ApiDoesNotExistError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.api.v1.read.getApi.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.api.v1.read.getApi.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.api.v1.read.getApi.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.api.v1.read.getApi.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

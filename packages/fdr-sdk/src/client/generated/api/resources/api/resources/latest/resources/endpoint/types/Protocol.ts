@@ -6,12 +6,12 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type Protocol = FernRegistry.api.latest.Protocol.Rest | FernRegistry.api.latest.Protocol.Openrpc;
 
-export declare namespace Protocol {
-    interface Rest extends FernRegistry.api.latest.RestProtocol {
+export namespace Protocol {
+    export interface Rest extends FernRegistry.api.latest.RestProtocol {
         type: "rest";
     }
 
-    interface Openrpc extends FernRegistry.api.latest.OpenRpcProtocol {
+    export interface Openrpc extends FernRegistry.api.latest.OpenRpcProtocol {
         type: "openrpc";
     }
 }

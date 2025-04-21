@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../index";
 
 export type VersionedSnippetTemplate = FernRegistry.VersionedSnippetTemplate.V1;
 
-export declare namespace VersionedSnippetTemplate {
-    interface V1 extends FernRegistry.SnippetTemplate {
+export namespace VersionedSnippetTemplate {
+    export interface V1 extends FernRegistry.SnippetTemplate {
         type: "v1";
     }
 }

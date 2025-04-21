@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../../../../../../../index";
 
 export type BytesValue = FernRegistry.api.v1.read.BytesValue.Base64;
 
-export declare namespace BytesValue {
-    interface Base64 {
+export namespace BytesValue {
+    export interface Base64 {
         type: "base64";
         value: string;
     }

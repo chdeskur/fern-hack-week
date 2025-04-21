@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Dashboard {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,19 +44,35 @@ export class Dashboard {
      *         orgId: FernRegistry.OrgId("orgId")
      *     })
      */
-    public async getDocsSitesForOrg(
+    public getDocsSitesForOrg(
         request: FernRegistry.dashboard.GetDocsSitesForOrgRequest,
-        requestOptions?: Dashboard.RequestOptions
-    ): Promise<
+        requestOptions?: Dashboard.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.dashboard.GetDocsSitesForOrgResponse,
             FernRegistry.dashboard.getDocsSitesForOrg.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getDocsSitesForOrg(request, requestOptions));
+    }
+
+    private async __getDocsSitesForOrg(
+        request: FernRegistry.dashboard.GetDocsSitesForOrgRequest,
+        requestOptions?: Dashboard.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.dashboard.GetDocsSitesForOrgResponse,
+                FernRegistry.dashboard.getDocsSitesForOrg.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/dashboard/get-docs-sites-for-org"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/dashboard/get-docs-sites-for-org",
             ),
             method: "POST",
             headers: {
@@ -73,8 +91,13 @@ export class Dashboard {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.dashboard.GetDocsSitesForOrgResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.dashboard.GetDocsSitesForOrgResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -83,15 +106,23 @@ export class Dashboard {
                 case "UnauthorizedError":
                 case "UserNotInOrgError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.dashboard.getDocsSitesForOrg.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.dashboard.getDocsSitesForOrg.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.dashboard.getDocsSitesForOrg.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.dashboard.getDocsSitesForOrg.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

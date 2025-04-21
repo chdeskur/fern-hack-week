@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Read {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,14 +39,29 @@ export class Read {
      *         url: FernRegistry.Url("url")
      *     })
      */
-    public async getOrganizationForUrl(
+    public getOrganizationForUrl(
         request: FernRegistry.docs.v2.read.GetOrganizationForUrlRequest,
-        requestOptions?: Read.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.OrgId, FernRegistry.docs.v2.read.getOrganizationForUrl.Error>> {
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.OrgId, FernRegistry.docs.v2.read.getOrganizationForUrl.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganizationForUrl(request, requestOptions));
+    }
+
+    private async __getOrganizationForUrl(
+        request: FernRegistry.docs.v2.read.GetOrganizationForUrlRequest,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.OrgId, FernRegistry.docs.v2.read.getOrganizationForUrl.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/organization-for-url"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/organization-for-url",
             ),
             method: "POST",
             headers: {
@@ -63,8 +80,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.OrgId,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.OrgId,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -72,15 +94,23 @@ export class Read {
             switch ((_response.error.body as FernRegistry.docs.v2.read.getOrganizationForUrl.Error)?.error) {
                 case "DomainNotRegisteredError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.read.getOrganizationForUrl.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.read.getOrganizationForUrl.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.getOrganizationForUrl.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.getOrganizationForUrl.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -93,16 +123,32 @@ export class Read {
      *         url: FernRegistry.Url("url")
      *     })
      */
-    public async getDocsUrlMetadata(
+    public getDocsUrlMetadata(
         request: FernRegistry.docs.v2.read.GetMetadataForUrlRequest,
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<FernRegistry.docs.v2.read.DocsUrlMetadata, FernRegistry.docs.v2.read.getDocsUrlMetadata.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getDocsUrlMetadata(request, requestOptions));
+    }
+
+    private async __getDocsUrlMetadata(
+        request: FernRegistry.docs.v2.read.GetMetadataForUrlRequest,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v2.read.DocsUrlMetadata,
+                FernRegistry.docs.v2.read.getDocsUrlMetadata.Error
+            >
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/metadata-for-url"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/metadata-for-url",
             ),
             method: "POST",
             headers: {
@@ -121,8 +167,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.read.DocsUrlMetadata,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v2.read.DocsUrlMetadata,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -130,15 +181,23 @@ export class Read {
             switch ((_response.error.body as FernRegistry.docs.v2.read.getDocsUrlMetadata.Error)?.error) {
                 case "DomainNotRegisteredError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.read.getDocsUrlMetadata.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.read.getDocsUrlMetadata.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.getDocsUrlMetadata.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.getDocsUrlMetadata.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -151,19 +210,35 @@ export class Read {
      *         url: FernRegistry.Url("url")
      *     })
      */
-    public async getDocsForUrl(
+    public getDocsForUrl(
         request: FernRegistry.docs.v2.read.LoadDocsForUrlRequest,
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
             FernRegistry.docs.v2.read.getDocsForUrl.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getDocsForUrl(request, requestOptions));
+    }
+
+    private async __getDocsForUrl(
+        request: FernRegistry.docs.v2.read.LoadDocsForUrlRequest,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
+                FernRegistry.docs.v2.read.getDocsForUrl.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/load-with-url"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/load-with-url",
             ),
             method: "POST",
             headers: {
@@ -182,8 +257,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -192,15 +272,23 @@ export class Read {
                 case "DomainNotRegisteredError":
                 case "UnauthorizedError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.read.getDocsForUrl.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.read.getDocsForUrl.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.getDocsForUrl.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.getDocsForUrl.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -213,19 +301,35 @@ export class Read {
      *         url: FernRegistry.Url("url")
      *     })
      */
-    public async getPrivateDocsForUrl(
+    public getPrivateDocsForUrl(
         request: FernRegistry.docs.v2.read.LoadPrivateDocsForUrlRequest,
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
             FernRegistry.docs.v2.read.getPrivateDocsForUrl.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getPrivateDocsForUrl(request, requestOptions));
+    }
+
+    private async __getPrivateDocsForUrl(
+        request: FernRegistry.docs.v2.read.LoadPrivateDocsForUrlRequest,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
+                FernRegistry.docs.v2.read.getPrivateDocsForUrl.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/private/load-with-url"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/private/load-with-url",
             ),
             method: "POST",
             headers: {
@@ -244,8 +348,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v2.read.LoadDocsForUrlResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -254,15 +363,23 @@ export class Read {
                 case "DomainNotRegisteredError":
                 case "UnauthorizedError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.read.getPrivateDocsForUrl.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.read.getPrivateDocsForUrl.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.getPrivateDocsForUrl.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.getPrivateDocsForUrl.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -275,17 +392,31 @@ export class Read {
      * @example
      *     await client.docs.v2.read.listAllDocsUrls()
      */
-    public async listAllDocsUrls(
+    public listAllDocsUrls(
         request: FernRegistry.docs.v2.read.ListAllDocsUrlsRequest = {},
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
             FernRegistry.docs.v2.read.listAllDocsUrls.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__listAllDocsUrls(request, requestOptions));
+    }
+
+    private async __listAllDocsUrls(
+        request: FernRegistry.docs.v2.read.ListAllDocsUrlsRequest = {},
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
+                FernRegistry.docs.v2.read.listAllDocsUrls.Error
+            >
+        >
+    > {
         const { page, limit, custom } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
@@ -300,8 +431,10 @@ export class Read {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/urls/list"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/urls/list",
             ),
             method: "GET",
             headers: {
@@ -320,8 +453,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -329,15 +467,23 @@ export class Read {
             switch ((_response.error.body as FernRegistry.docs.v2.read.listAllDocsUrls.Error)?.error) {
                 case "UnauthorizedError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.read.listAllDocsUrls.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.read.listAllDocsUrls.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.listAllDocsUrls.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.listAllDocsUrls.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -350,19 +496,35 @@ export class Read {
      * @example
      *     await client.docs.v2.read.getDocsConfigById(FernRegistry.DocsConfigId("docsConfigId"))
      */
-    public async getDocsConfigById(
+    public getDocsConfigById(
         docsConfigId: FernRegistry.DocsConfigId,
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v2.read.GetDocsConfigByIdResponse,
             FernRegistry.docs.v2.read.getDocsConfigById.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getDocsConfigById(docsConfigId, requestOptions));
+    }
+
+    private async __getDocsConfigById(
+        docsConfigId: FernRegistry.DocsConfigId,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v2.read.GetDocsConfigByIdResponse,
+                FernRegistry.docs.v2.read.getDocsConfigById.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/v2/registry/docs/${encodeURIComponent(docsConfigId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/v2/registry/docs/${encodeURIComponent(docsConfigId)}`,
             ),
             method: "GET",
             headers: {
@@ -380,8 +542,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.read.GetDocsConfigByIdResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v2.read.GetDocsConfigByIdResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -389,15 +556,23 @@ export class Read {
             switch ((_response.error.body as FernRegistry.docs.v2.read.getDocsConfigById.Error)?.error) {
                 case "DocsDefinitionNotFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.read.getDocsConfigById.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.read.getDocsConfigById.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.getDocsConfigById.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.getDocsConfigById.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -410,19 +585,35 @@ export class Read {
      *         indexSegmentId: "indexSegmentId"
      *     })
      */
-    public async getSearchApiKeyForIndexSegment(
+    public getSearchApiKeyForIndexSegment(
         request: FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentRequest,
-        requestOptions?: Read.RequestOptions
-    ): Promise<
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentResponse,
             FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getSearchApiKeyForIndexSegment(request, requestOptions));
+    }
+
+    private async __getSearchApiKeyForIndexSegment(
+        request: FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentRequest,
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentResponse,
+                FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/search-api-key-with-index-segment"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/search-api-key-with-index-segment",
             ),
             method: "POST",
             headers: {
@@ -441,8 +632,13 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -450,15 +646,24 @@ export class Read {
             switch ((_response.error.body as FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error)?.error) {
                 case "IndexSegmentNotFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error
+                                .body as FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -470,13 +675,23 @@ export class Read {
      * @example
      *     await client.docs.v2.read.prepopulateFdrReadS3Bucket()
      */
-    public async prepopulateFdrReadS3Bucket(
-        requestOptions?: Read.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.read.prepopulateFdrReadS3Bucket.Error>> {
+    public prepopulateFdrReadS3Bucket(
+        requestOptions?: Read.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docs.v2.read.prepopulateFdrReadS3Bucket.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__prepopulateFdrReadS3Bucket(requestOptions));
+    }
+
+    private async __prepopulateFdrReadS3Bucket(
+        requestOptions?: Read.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<void, FernRegistry.docs.v2.read.prepopulateFdrReadS3Bucket.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/prepopulate-s3-bucket"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/prepopulate-s3-bucket",
             ),
             method: "POST",
             headers: {
@@ -494,14 +709,23 @@ export class Read {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.prepopulateFdrReadS3Bucket.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.read.prepopulateFdrReadS3Bucket.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

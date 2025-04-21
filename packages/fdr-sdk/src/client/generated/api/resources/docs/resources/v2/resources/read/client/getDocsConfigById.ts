@@ -9,17 +9,17 @@ export type Error =
     | FernRegistry.docs.v2.read.getDocsConfigById.Error.DocsDefinitionNotFoundError
     | FernRegistry.docs.v2.read.getDocsConfigById.Error._Unknown;
 
-export declare namespace Error {
-    interface DocsDefinitionNotFoundError {
+export namespace Error {
+    export interface DocsDefinitionNotFoundError {
         error: "DocsDefinitionNotFoundError";
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         docsDefinitionNotFoundError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -41,7 +41,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.docs.v2.read.getDocsConfigById.Error,
-        visitor: FernRegistry.docs.v2.read.getDocsConfigById.Error._Visitor<_Result>
+        visitor: FernRegistry.docs.v2.read.getDocsConfigById.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "DocsDefinitionNotFoundError":

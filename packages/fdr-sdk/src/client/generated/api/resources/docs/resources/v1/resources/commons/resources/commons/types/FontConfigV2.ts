@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../../../../../../../index";
 
 export type FontConfigV2 = FernRegistry.docs.v1.commons.FontConfigV2.Custom;
 
-export declare namespace FontConfigV2 {
-    interface Custom extends FernRegistry.docs.v1.commons.CustomFontConfig {
+export namespace FontConfigV2 {
+    export interface Custom extends FernRegistry.docs.v1.commons.CustomFontConfig {
         type: "custom";
     }
 }

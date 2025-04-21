@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Tokens {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -40,14 +42,27 @@ export class Tokens {
      *         scope: "scope"
      *     })
      */
-    public async generate(
+    public generate(
         request: FernRegistry.GenerateTokenRequest,
-        requestOptions?: Tokens.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.GenerateTokenResponse, FernRegistry.tokens.generate.Error>> {
+        requestOptions?: Tokens.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.GenerateTokenResponse, FernRegistry.tokens.generate.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
+    }
+
+    private async __generate(
+        request: FernRegistry.GenerateTokenRequest,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<FernRegistry.GenerateTokenResponse, FernRegistry.tokens.generate.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/tokens/generate"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/tokens/generate",
             ),
             method: "POST",
             headers: {
@@ -66,14 +81,23 @@ export class Tokens {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.GenerateTokenResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.GenerateTokenResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.tokens.generate.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.tokens.generate.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -89,14 +113,23 @@ export class Tokens {
      *         tokenId: FernRegistry.TokenId("tokenId")
      *     })
      */
-    public async revoke(
+    public revoke(
         request: FernRegistry.RevokeTokenRequest,
-        requestOptions?: Tokens.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.tokens.revoke.Error>> {
+        requestOptions?: Tokens.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.tokens.revoke.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__revoke(request, requestOptions));
+    }
+
+    private async __revoke(
+        request: FernRegistry.RevokeTokenRequest,
+        requestOptions?: Tokens.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.tokens.revoke.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/tokens/revoke"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/tokens/revoke",
             ),
             method: "POST",
             headers: {
@@ -115,14 +148,23 @@ export class Tokens {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.tokens.revoke.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.tokens.revoke.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

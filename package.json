@@ -55,7 +55,7 @@
     "webpack": "5.94.0"
   },
   "dependencies": {
-    "fern-api": "0.41.16"
+    "fern-api": "0.57.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
@@ -126,7 +126,7 @@
       "unplugged": true
     }
   },
-  "packageManager": "pnpm@9.15.5",
+  "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": ">=18.18.0",
     "pnpm": "^9"

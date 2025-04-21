@@ -3,7 +3,6 @@
  */
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-
 export const HttpMethod = {
     Get: "GET",
     Post: "POST",

@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../index";
 
 export type RepositoryId = FernRegistry.RepositoryId.Github;
 
-export declare namespace RepositoryId {
-    interface Github extends FernRegistry.GithubRepositoryId {
+export namespace RepositoryId {
+    export interface Github extends FernRegistry.GithubRepositoryId {
         type: "github";
     }
 }

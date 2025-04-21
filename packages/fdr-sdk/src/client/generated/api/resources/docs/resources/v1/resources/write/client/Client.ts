@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Write {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -39,19 +41,35 @@ export class Write {
      *         filepaths: [FernRegistry.docs.v1.write.FilePath("filepaths"), FernRegistry.docs.v1.write.FilePath("filepaths")]
      *     })
      */
-    public async startDocsRegister(
+    public startDocsRegister(
         request: FernRegistry.docs.v1.write.StartDocsRegisterRequest,
-        requestOptions?: Write.RequestOptions
-    ): Promise<
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v1.write.StartDocsRegisterResponse,
             FernRegistry.docs.v1.write.startDocsRegister.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__startDocsRegister(request, requestOptions));
+    }
+
+    private async __startDocsRegister(
+        request: FernRegistry.docs.v1.write.StartDocsRegisterRequest,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v1.write.StartDocsRegisterResponse,
+                FernRegistry.docs.v1.write.startDocsRegister.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/registry/docs/init"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/registry/docs/init",
             ),
             method: "POST",
             headers: {
@@ -70,14 +88,23 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v1.write.StartDocsRegisterResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v1.write.StartDocsRegisterResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v1.write.startDocsRegister.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v1.write.startDocsRegister.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -128,15 +155,27 @@ export class Write {
      *         }
      *     })
      */
-    public async finishDocsRegister(
+    public finishDocsRegister(
         docsRegistrationId: FernRegistry.docs.v1.write.DocsRegistrationId,
         request: FernRegistry.docs.v1.write.RegisterDocsRequest,
-        requestOptions?: Write.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.docs.v1.write.finishDocsRegister.Error>> {
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docs.v1.write.finishDocsRegister.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__finishDocsRegister(docsRegistrationId, request, requestOptions),
+        );
+    }
+
+    private async __finishDocsRegister(
+        docsRegistrationId: FernRegistry.docs.v1.write.DocsRegistrationId,
+        request: FernRegistry.docs.v1.write.RegisterDocsRequest,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.docs.v1.write.finishDocsRegister.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/registry/docs/register/${encodeURIComponent(docsRegistrationId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/registry/docs/register/${encodeURIComponent(docsRegistrationId)}`,
             ),
             method: "POST",
             headers: {
@@ -155,8 +194,13 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -166,15 +210,23 @@ export class Write {
                 case "UserNotInOrgError":
                 case "DocsRegistrationIdNotFound":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v1.write.finishDocsRegister.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v1.write.finishDocsRegister.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v1.write.finishDocsRegister.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v1.write.finishDocsRegister.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

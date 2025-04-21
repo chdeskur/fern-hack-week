@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Versions {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -44,19 +46,35 @@ export class Versions {
      *         githubRepository: undefined
      *     })
      */
-    public async computeSemanticVersion(
+    public computeSemanticVersion(
         request: FernRegistry.sdks.ComputeSemanticVersionRequest,
-        requestOptions?: Versions.RequestOptions
-    ): Promise<
+        requestOptions?: Versions.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.sdks.ComputedSemanticVersionResponse,
             FernRegistry.sdks.versions.computeSemanticVersion.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__computeSemanticVersion(request, requestOptions));
+    }
+
+    private async __computeSemanticVersion(
+        request: FernRegistry.sdks.ComputeSemanticVersionRequest,
+        requestOptions?: Versions.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.sdks.ComputedSemanticVersionResponse,
+                FernRegistry.sdks.versions.computeSemanticVersion.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/sdks/semantic-version/compute"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/sdks/semantic-version/compute",
             ),
             method: "POST",
             headers: {
@@ -75,8 +93,13 @@ export class Versions {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.sdks.ComputedSemanticVersionResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.sdks.ComputedSemanticVersionResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -85,15 +108,23 @@ export class Versions {
                 case "FailedToComputeExistingVersion":
                 case "FailedToIncrementVersion":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.sdks.versions.computeSemanticVersion.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.sdks.versions.computeSemanticVersion.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.sdks.versions.computeSemanticVersion.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.sdks.versions.computeSemanticVersion.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

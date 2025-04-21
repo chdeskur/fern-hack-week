@@ -8,12 +8,12 @@ export type WebSocketMessageBodyShape =
     | FernRegistry.api.v1.register.WebSocketMessageBodyShape.Object_
     | FernRegistry.api.v1.register.WebSocketMessageBodyShape.Reference;
 
-export declare namespace WebSocketMessageBodyShape {
-    interface Object_ extends FernRegistry.api.v1.register.ObjectType {
+export namespace WebSocketMessageBodyShape {
+    export interface Object_ extends FernRegistry.api.v1.register.ObjectType {
         type: "object";
     }
 
-    interface Reference {
+    export interface Reference {
         type: "reference";
         value: FernRegistry.api.v1.register.TypeReference;
     }

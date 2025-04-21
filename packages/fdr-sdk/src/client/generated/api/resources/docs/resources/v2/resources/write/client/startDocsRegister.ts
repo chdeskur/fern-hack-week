@@ -15,46 +15,46 @@ export type Error =
     | FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidUrlError
     | FernRegistry.docs.v2.write.startDocsRegister.Error._Unknown;
 
-export declare namespace Error {
-    interface UnauthorizedError {
+export namespace Error {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface UnavailableError {
+    export interface UnavailableError {
         error: "UnavailableError";
         content: string;
     }
 
-    interface UserNotInOrgError {
+    export interface UserNotInOrgError {
         error: "UserNotInOrgError";
         content: string;
     }
 
-    interface InvalidDomainError {
+    export interface InvalidDomainError {
         error: "InvalidDomainError";
     }
 
-    interface InvalidCustomDomainError {
+    export interface InvalidCustomDomainError {
         error: "InvalidCustomDomainError";
     }
 
-    interface DomainBelongsToAnotherOrgError {
+    export interface DomainBelongsToAnotherOrgError {
         error: "DomainBelongsToAnotherOrgError";
         content: string;
     }
 
-    interface InvalidUrlError {
+    export interface InvalidUrlError {
         error: "InvalidURLError";
         content: string;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         unavailableError: (value: string) => _Result;
         userNotInOrgError: (value: string) => _Result;
@@ -101,7 +101,7 @@ export const Error = {
     },
 
     domainBelongsToAnotherOrgError: (
-        value: string
+        value: string,
     ): FernRegistry.docs.v2.write.startDocsRegister.Error.DomainBelongsToAnotherOrgError => {
         return {
             content: value,
@@ -125,7 +125,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.docs.v2.write.startDocsRegister.Error,
-        visitor: FernRegistry.docs.v2.write.startDocsRegister.Error._Visitor<_Result>
+        visitor: FernRegistry.docs.v2.write.startDocsRegister.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "UnauthorizedError":

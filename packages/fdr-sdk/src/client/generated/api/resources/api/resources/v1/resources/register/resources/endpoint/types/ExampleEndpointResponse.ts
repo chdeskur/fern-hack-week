@@ -10,23 +10,23 @@ export type ExampleEndpointResponse =
     | FernRegistry.api.v1.register.ExampleEndpointResponse.Stream
     | FernRegistry.api.v1.register.ExampleEndpointResponse.Sse;
 
-export declare namespace ExampleEndpointResponse {
-    interface Json {
+export namespace ExampleEndpointResponse {
+    export interface Json {
         type: "json";
         value: unknown;
     }
 
-    interface Filename {
+    export interface Filename {
         type: "filename";
         value: string;
     }
 
-    interface Stream {
+    export interface Stream {
         type: "stream";
         value: unknown[];
     }
 
-    interface Sse {
+    export interface Sse {
         type: "sse";
         value: FernRegistry.api.v1.register.ExampleServerSentEvent[];
     }

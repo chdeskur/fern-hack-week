@@ -10,23 +10,23 @@ export type Error =
     | FernRegistry.templates.get.Error.SnippetNotFound
     | FernRegistry.templates.get.Error._Unknown;
 
-export declare namespace Error {
-    interface UnauthorizedError {
+export namespace Error {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface SnippetNotFound {
+    export interface SnippetNotFound {
         error: "SnippetNotFound";
         content: string;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         snippetNotFound: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -57,7 +57,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.templates.get.Error,
-        visitor: FernRegistry.templates.get.Error._Visitor<_Result>
+        visitor: FernRegistry.templates.get.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "UnauthorizedError":

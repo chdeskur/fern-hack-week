@@ -9,16 +9,16 @@ export type Source =
     | FernRegistry.api.v1.register.Source.Asyncapi
     | FernRegistry.api.v1.register.Source.Proto;
 
-export declare namespace Source {
-    interface Openapi {
+export namespace Source {
+    export interface Openapi {
         type: "openapi";
     }
 
-    interface Asyncapi {
+    export interface Asyncapi {
         type: "asyncapi";
     }
 
-    interface Proto {
+    export interface Proto {
         type: "proto";
     }
 }

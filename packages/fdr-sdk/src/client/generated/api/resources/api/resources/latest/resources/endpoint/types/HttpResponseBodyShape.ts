@@ -12,29 +12,29 @@ export type HttpResponseBodyShape =
     | FernRegistry.api.latest.HttpResponseBodyShape.StreamingText
     | FernRegistry.api.latest.HttpResponseBodyShape.Stream;
 
-export declare namespace HttpResponseBodyShape {
-    interface Empty {
+export namespace HttpResponseBodyShape {
+    export interface Empty {
         type: "empty";
     }
 
-    interface Object_ extends FernRegistry.api.latest.ObjectType {
+    export interface Object_ extends FernRegistry.api.latest.ObjectType {
         type: "object";
     }
 
-    interface Alias {
+    export interface Alias {
         type: "alias";
         value: FernRegistry.api.latest.TypeReference;
     }
 
-    interface FileDownload extends FernRegistry.api.latest.FileDownloadResponseBodyShape {
+    export interface FileDownload extends FernRegistry.api.latest.FileDownloadResponseBodyShape {
         type: "fileDownload";
     }
 
-    interface StreamingText {
+    export interface StreamingText {
         type: "streamingText";
     }
 
-    interface Stream extends FernRegistry.api.latest.StreamResponse {
+    export interface Stream extends FernRegistry.api.latest.StreamResponse {
         type: "stream";
     }
 }

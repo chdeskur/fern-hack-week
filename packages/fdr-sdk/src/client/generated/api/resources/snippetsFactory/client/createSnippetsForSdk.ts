@@ -12,33 +12,33 @@ export type Error =
     | FernRegistry.snippetsFactory.createSnippetsForSdk.Error.SdkNotFound
     | FernRegistry.snippetsFactory.createSnippetsForSdk.Error._Unknown;
 
-export declare namespace Error {
-    interface UnauthorizedError {
+export namespace Error {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface UserNotInOrgError {
+    export interface UserNotInOrgError {
         error: "UserNotInOrgError";
         content: string;
     }
 
-    interface OrgIdNotFound {
+    export interface OrgIdNotFound {
         error: "OrgIdNotFound";
         content: string;
     }
 
-    interface SdkNotFound {
+    export interface SdkNotFound {
         error: "SDKNotFound";
         content: string;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         userNotInOrgError: (value: string) => _Result;
         orgIdNotFound: (value: string) => _Result;
@@ -85,7 +85,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.snippetsFactory.createSnippetsForSdk.Error,
-        visitor: FernRegistry.snippetsFactory.createSnippetsForSdk.Error._Visitor<_Result>
+        visitor: FernRegistry.snippetsFactory.createSnippetsForSdk.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "UnauthorizedError":

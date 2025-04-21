@@ -3,7 +3,6 @@
  */
 
 export type PullRequestState = "open" | "closed" | "merged";
-
 export const PullRequestState = {
     Open: "open",
     Closed: "closed",

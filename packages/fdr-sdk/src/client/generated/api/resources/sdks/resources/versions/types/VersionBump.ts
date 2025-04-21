@@ -3,7 +3,6 @@
  */
 
 export type VersionBump = "MAJOR" | "MINOR" | "PATCH";
-
 export const VersionBump = {
     Major: "MAJOR",
     Minor: "MINOR",

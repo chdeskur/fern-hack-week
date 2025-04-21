@@ -10,12 +10,14 @@ import { Cli } from "../resources/cli/client/Client";
 import { Versions } from "../resources/versions/client/Client";
 
 export declare namespace Generators {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -31,7 +33,18 @@ export declare namespace Generators {
  * CRUD API for managing the generator entity itself.
  */
 export class Generators {
+    protected _cli: Cli | undefined;
+    protected _versions: Versions | undefined;
+
     constructor(protected readonly _options: Generators.Options = {}) {}
+
+    public get cli(): Cli {
+        return (this._cli ??= new Cli(this._options));
+    }
+
+    public get versions(): Versions {
+        return (this._versions ??= new Versions(this._options));
+    }
 
     /**
      * Update or create the specified generator.
@@ -51,14 +64,23 @@ export class Generators {
      *         scripts: undefined
      *     })
      */
-    public async upsertGenerator(
+    public upsertGenerator(
         request: FernRegistry.generators.Generator,
-        requestOptions?: Generators.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.generators.upsertGenerator.Error>> {
+        requestOptions?: Generators.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.generators.upsertGenerator.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__upsertGenerator(request, requestOptions));
+    }
+
+    private async __upsertGenerator(
+        request: FernRegistry.generators.Generator,
+        requestOptions?: Generators.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.generators.upsertGenerator.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators",
             ),
             method: "PUT",
             headers: {
@@ -77,14 +99,23 @@ export class Generators {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.upsertGenerator.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.upsertGenerator.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -99,19 +130,35 @@ export class Generators {
      *         dockerImage: "dockerImage"
      *     })
      */
-    public async getGeneratorByImage(
+    public getGeneratorByImage(
         request: FernRegistry.generators.GetGeneratorByImageRequest,
-        requestOptions?: Generators.RequestOptions
-    ): Promise<
+        requestOptions?: Generators.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.generators.Generator | undefined,
             FernRegistry.generators.getGeneratorByImage.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getGeneratorByImage(request, requestOptions));
+    }
+
+    private async __getGeneratorByImage(
+        request: FernRegistry.generators.GetGeneratorByImageRequest,
+        requestOptions?: Generators.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.generators.Generator | undefined,
+                FernRegistry.generators.getGeneratorByImage.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/by-image"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/by-image",
             ),
             method: "POST",
             headers: {
@@ -130,14 +177,23 @@ export class Generators {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.Generator | undefined,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.Generator | undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.getGeneratorByImage.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.getGeneratorByImage.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -150,16 +206,29 @@ export class Generators {
      * @example
      *     await client.generators.getGenerator(FernRegistry.generators.GeneratorId("generatorId"))
      */
-    public async getGenerator(
+    public getGenerator(
         generatorId: FernRegistry.generators.GeneratorId,
-        requestOptions?: Generators.RequestOptions
-    ): Promise<
+        requestOptions?: Generators.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<FernRegistry.generators.Generator | undefined, FernRegistry.generators.getGenerator.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getGenerator(generatorId, requestOptions));
+    }
+
+    private async __getGenerator(
+        generatorId: FernRegistry.generators.GeneratorId,
+        requestOptions?: Generators.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.generators.Generator | undefined, FernRegistry.generators.getGenerator.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/${encodeURIComponent(generatorId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/${encodeURIComponent(generatorId)}`,
             ),
             method: "GET",
             headers: {
@@ -177,14 +246,23 @@ export class Generators {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.Generator | undefined,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.Generator | undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.getGenerator.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.getGenerator.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -196,13 +274,27 @@ export class Generators {
      * @example
      *     await client.generators.listGenerators()
      */
-    public async listGenerators(
-        requestOptions?: Generators.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.generators.Generator[], FernRegistry.generators.listGenerators.Error>> {
+    public listGenerators(
+        requestOptions?: Generators.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.generators.Generator[], FernRegistry.generators.listGenerators.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__listGenerators(requestOptions));
+    }
+
+    private async __listGenerators(
+        requestOptions?: Generators.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.generators.Generator[], FernRegistry.generators.listGenerators.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators",
             ),
             method: "GET",
             headers: {
@@ -220,27 +312,24 @@ export class Generators {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.Generator[],
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.Generator[],
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.listGenerators.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.listGenerators.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
-    }
-
-    protected _cli: Cli | undefined;
-
-    public get cli(): Cli {
-        return (this._cli ??= new Cli(this._options));
-    }
-
-    protected _versions: Versions | undefined;
-
-    public get versions(): Versions {
-        return (this._versions ??= new Versions(this._options));
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

@@ -8,33 +8,23 @@ import { V1 } from "../resources/v1/client/Client";
 import { V2 } from "../resources/v2/client/Client";
 
 export declare namespace Docs {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
-    }
-
-    interface RequestOptions {
-        /** The maximum time to wait for a response in seconds. */
-        timeoutInSeconds?: number;
-        /** The number of times to retry the request. Defaults to 2. */
-        maxRetries?: number;
-        /** A hook to abort the request. */
-        abortSignal?: AbortSignal;
-        /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
     }
 }
 
 export class Docs {
-    constructor(protected readonly _options: Docs.Options = {}) {}
-
     protected _v1: V1 | undefined;
+    protected _v2: V2 | undefined;
+
+    constructor(protected readonly _options: Docs.Options = {}) {}
 
     public get v1(): V1 {
         return (this._v1 ??= new V1(this._options));
     }
-
-    protected _v2: V2 | undefined;
 
     public get v2(): V2 {
         return (this._v2 ??= new V2(this._options));

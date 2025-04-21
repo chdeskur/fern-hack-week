@@ -9,16 +9,16 @@ export type PublishedSdk =
     | FernRegistry.docs.v1.write.PublishedSdk.Maven
     | FernRegistry.docs.v1.write.PublishedSdk.Pypi;
 
-export declare namespace PublishedSdk {
-    interface Npm extends FernRegistry.docs.v1.write.NpmPackage {
+export namespace PublishedSdk {
+    export interface Npm extends FernRegistry.docs.v1.write.NpmPackage {
         type: "npm";
     }
 
-    interface Maven extends FernRegistry.docs.v1.write.MavenPackage {
+    export interface Maven extends FernRegistry.docs.v1.write.MavenPackage {
         type: "maven";
     }
 
-    interface Pypi extends FernRegistry.docs.v1.write.PypiPackage {
+    export interface Pypi extends FernRegistry.docs.v1.write.PypiPackage {
         type: "pypi";
     }
 }

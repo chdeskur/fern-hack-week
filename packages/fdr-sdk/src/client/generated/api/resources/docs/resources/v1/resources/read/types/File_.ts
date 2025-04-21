@@ -6,12 +6,12 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type File_ = FernRegistry.docs.v1.read.File_.Url | FernRegistry.docs.v1.read.File_.Image;
 
-export declare namespace File_ {
-    interface Url extends FernRegistry.docs.v1.read.UrlFile {
+export namespace File_ {
+    export interface Url extends FernRegistry.docs.v1.read.UrlFile {
         type: "url";
     }
 
-    interface Image extends FernRegistry.docs.v1.read.ImageFile {
+    export interface Image extends FernRegistry.docs.v1.read.ImageFile {
         type: "image";
     }
 }

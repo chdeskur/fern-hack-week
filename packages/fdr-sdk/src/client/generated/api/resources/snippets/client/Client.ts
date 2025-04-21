@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Snippets {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -42,14 +44,23 @@ export class Snippets {
      *         }
      *     })
      */
-    public async get(
+    public get(
         request: FernRegistry.GetSnippetRequest,
-        requestOptions?: Snippets.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.Snippet[], FernRegistry.snippets.get.Error>> {
+        requestOptions?: Snippets.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<FernRegistry.Snippet[], FernRegistry.snippets.get.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    }
+
+    private async __get(
+        request: FernRegistry.GetSnippetRequest,
+        requestOptions?: Snippets.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<FernRegistry.Snippet[], FernRegistry.snippets.get.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/snippets"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/snippets",
             ),
             method: "POST",
             headers: {
@@ -68,8 +79,13 @@ export class Snippets {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.Snippet[],
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.Snippet[],
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -85,15 +101,23 @@ export class Snippets {
                 case "EndpointNotFound":
                 case "SDKNotFound":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.snippets.get.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.snippets.get.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.snippets.get.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.snippets.get.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -112,20 +136,29 @@ export class Snippets {
      *             }]
      *     })
      */
-    public async load(
+    public load(
         request: FernRegistry.ListSnippetsRequest = {},
-        requestOptions?: Snippets.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.SnippetsPage, FernRegistry.snippets.load.Error>> {
+        requestOptions?: Snippets.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<FernRegistry.SnippetsPage, FernRegistry.snippets.load.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__load(request, requestOptions));
+    }
+
+    private async __load(
+        request: FernRegistry.ListSnippetsRequest = {},
+        requestOptions?: Snippets.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<FernRegistry.SnippetsPage, FernRegistry.snippets.load.Error>>> {
         const { page, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/snippets/load"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/snippets/load",
             ),
             method: "POST",
             headers: {
@@ -145,8 +178,13 @@ export class Snippets {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.SnippetsPage,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.SnippetsPage,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -162,15 +200,23 @@ export class Snippets {
                 case "OrgIdNotFound":
                 case "SDKNotFound":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.snippets.load.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.snippets.load.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.snippets.load.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.snippets.load.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

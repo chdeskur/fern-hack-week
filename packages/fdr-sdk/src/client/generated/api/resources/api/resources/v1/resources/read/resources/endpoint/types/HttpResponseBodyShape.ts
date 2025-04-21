@@ -14,29 +14,29 @@ export type HttpResponseBodyShape =
      * A response that can either be streaming or REST */
     | FernRegistry.api.v1.read.HttpResponseBodyShape.StreamCondition;
 
-export declare namespace HttpResponseBodyShape {
-    interface Object_ extends FernRegistry.api.v1.read.ObjectType {
+export namespace HttpResponseBodyShape {
+    export interface Object_ extends FernRegistry.api.v1.read.ObjectType {
         type: "object";
     }
 
-    interface Reference {
+    export interface Reference {
         type: "reference";
         value: FernRegistry.api.v1.read.TypeReference;
     }
 
-    interface FileDownload extends FernRegistry.api.v1.read.FileDownloadResponseBodyShape {
+    export interface FileDownload extends FernRegistry.api.v1.read.FileDownloadResponseBodyShape {
         type: "fileDownload";
     }
 
-    interface StreamingText {
+    export interface StreamingText {
         type: "streamingText";
     }
 
-    interface Stream extends FernRegistry.api.v1.read.StreamResponseV2 {
+    export interface Stream extends FernRegistry.api.v1.read.StreamResponseV2 {
         type: "stream";
     }
 
-    interface StreamCondition extends FernRegistry.api.v1.read.StreamConditionResponse {
+    export interface StreamCondition extends FernRegistry.api.v1.read.StreamConditionResponse {
         type: "streamCondition";
     }
 }

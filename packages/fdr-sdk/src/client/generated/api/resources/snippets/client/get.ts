@@ -17,58 +17,58 @@ export type Error =
     | FernRegistry.snippets.get.Error.SdkNotFound
     | FernRegistry.snippets.get.Error._Unknown;
 
-export declare namespace Error {
-    interface UnauthorizedError {
+export namespace Error {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface UserNotInOrgError {
+    export interface UserNotInOrgError {
         error: "UserNotInOrgError";
         content: string;
     }
 
-    interface UnavailableError {
+    export interface UnavailableError {
         error: "UnavailableError";
         content: string;
     }
 
-    interface ApiIdRequiredError {
+    export interface ApiIdRequiredError {
         error: "ApiIdRequiredError";
         content: string;
     }
 
-    interface OrgIdRequiredError {
+    export interface OrgIdRequiredError {
         error: "OrgIdRequiredError";
         content: string;
     }
 
-    interface OrgIdAndApiIdNotFound {
+    export interface OrgIdAndApiIdNotFound {
         error: "OrgIdAndApiIdNotFound";
         content: string;
     }
 
-    interface OrgIdNotFound {
+    export interface OrgIdNotFound {
         error: "OrgIdNotFound";
         content: string;
     }
 
-    interface EndpointNotFound {
+    export interface EndpointNotFound {
         error: "EndpointNotFound";
         content: string;
     }
 
-    interface SdkNotFound {
+    export interface SdkNotFound {
         error: "SDKNotFound";
         content: string;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         userNotInOrgError: (value: string) => _Result;
         unavailableError: (value: string) => _Result;
@@ -155,7 +155,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.snippets.get.Error,
-        visitor: FernRegistry.snippets.get.Error._Visitor<_Result>
+        visitor: FernRegistry.snippets.get.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "UnauthorizedError":

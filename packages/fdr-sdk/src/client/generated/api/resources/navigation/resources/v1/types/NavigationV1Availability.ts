@@ -9,7 +9,6 @@ export type NavigationV1Availability =
     | "pre-release"
     | "beta"
     | "deprecated";
-
 export const NavigationV1Availability = {
     Stable: "stable",
     GenerallyAvailable: "generally-available",

@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Git {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,17 +43,29 @@ export class Git {
      * @example
      *     await client.git.getRepository("repositoryOwner", "repositoryName")
      */
-    public async getRepository(
+    public getRepository(
         repositoryOwner: string,
         repositoryName: string,
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.FernRepository, FernRegistry.git.getRepository.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<FernRegistry.FernRepository, FernRegistry.git.getRepository.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getRepository(repositoryOwner, repositoryName, requestOptions),
+        );
+    }
+
+    private async __getRepository(
+        repositoryOwner: string,
+        repositoryName: string,
+        requestOptions?: Git.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<FernRegistry.FernRepository, FernRegistry.git.getRepository.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/github/repository/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(
-                    repositoryName
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/github/repository/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(repositoryName)}`,
             ),
             method: "GET",
             headers: {
@@ -69,14 +83,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.FernRepository,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.FernRepository,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.getRepository.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.getRepository.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -95,14 +118,29 @@ export class Git {
      *         repositoryOwner: undefined
      *     })
      */
-    public async listRepositories(
+    public listRepositories(
         request: FernRegistry.ListRepositoriesRequest = {},
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.ListRepositoriesResponse, FernRegistry.git.listRepositories.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.ListRepositoriesResponse, FernRegistry.git.listRepositories.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__listRepositories(request, requestOptions));
+    }
+
+    private async __listRepositories(
+        request: FernRegistry.ListRepositoriesRequest = {},
+        requestOptions?: Git.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.ListRepositoriesResponse, FernRegistry.git.listRepositories.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/repository/list"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/github/repository/list",
             ),
             method: "POST",
             headers: {
@@ -121,14 +159,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.ListRepositoriesResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.ListRepositoriesResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.listRepositories.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.listRepositories.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -182,14 +229,23 @@ export class Git {
      *         sdkLanguage: "sdkLanguage"
      *     })
      */
-    public async upsertRepository(
+    public upsertRepository(
         request: FernRegistry.FernRepository,
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.git.upsertRepository.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.git.upsertRepository.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__upsertRepository(request, requestOptions));
+    }
+
+    private async __upsertRepository(
+        request: FernRegistry.FernRepository,
+        requestOptions?: Git.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.git.upsertRepository.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/repository/upsert"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/github/repository/upsert",
             ),
             method: "PUT",
             headers: {
@@ -208,14 +264,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.upsertRepository.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.upsertRepository.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -229,17 +294,27 @@ export class Git {
      * @example
      *     await client.git.deleteRepository("repositoryOwner", "repositoryName")
      */
-    public async deleteRepository(
+    public deleteRepository(
         repositoryOwner: string,
         repositoryName: string,
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.git.deleteRepository.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.git.deleteRepository.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__deleteRepository(repositoryOwner, repositoryName, requestOptions),
+        );
+    }
+
+    private async __deleteRepository(
+        repositoryOwner: string,
+        repositoryName: string,
+        requestOptions?: Git.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.git.deleteRepository.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/github/repository/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(
-                    repositoryName
-                )}/delete`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/github/repository/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(repositoryName)}/delete`,
             ),
             method: "DELETE",
             headers: {
@@ -257,14 +332,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.deleteRepository.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.deleteRepository.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -279,18 +363,31 @@ export class Git {
      * @example
      *     await client.git.getPullRequest("repositoryOwner", "repositoryName", 1)
      */
-    public async getPullRequest(
+    public getPullRequest(
         repositoryOwner: string,
         repositoryName: string,
         pullRequestNumber: number,
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.PullRequest, FernRegistry.git.getPullRequest.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<FernRegistry.PullRequest, FernRegistry.git.getPullRequest.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getPullRequest(repositoryOwner, repositoryName, pullRequestNumber, requestOptions),
+        );
+    }
+
+    private async __getPullRequest(
+        repositoryOwner: string,
+        repositoryName: string,
+        pullRequestNumber: number,
+        requestOptions?: Git.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<FernRegistry.PullRequest, FernRegistry.git.getPullRequest.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/github/pull-request/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(
-                    repositoryName
-                )}/${encodeURIComponent(pullRequestNumber)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/github/pull-request/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(repositoryName)}/${encodeURIComponent(pullRequestNumber)}`,
             ),
             method: "GET",
             headers: {
@@ -308,14 +405,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.PullRequest,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.PullRequest,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.getPullRequest.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.getPullRequest.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -336,14 +442,29 @@ export class Git {
      *         author: undefined
      *     })
      */
-    public async listPullRequests(
+    public listPullRequests(
         request: FernRegistry.ListPullRequestsRequest = {},
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.ListPullRequestsResponse, FernRegistry.git.listPullRequests.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.ListPullRequestsResponse, FernRegistry.git.listPullRequests.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__listPullRequests(request, requestOptions));
+    }
+
+    private async __listPullRequests(
+        request: FernRegistry.ListPullRequestsRequest = {},
+        requestOptions?: Git.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.ListPullRequestsResponse, FernRegistry.git.listPullRequests.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/pull-request/list"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/github/pull-request/list",
             ),
             method: "POST",
             headers: {
@@ -362,14 +483,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.ListPullRequestsResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.ListPullRequestsResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.listPullRequests.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.listPullRequests.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -434,14 +564,23 @@ export class Git {
      *         closedAt: undefined
      *     })
      */
-    public async upsertPullRequest(
+    public upsertPullRequest(
         request: FernRegistry.PullRequest,
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.git.upsertPullRequest.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.git.upsertPullRequest.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__upsertPullRequest(request, requestOptions));
+    }
+
+    private async __upsertPullRequest(
+        request: FernRegistry.PullRequest,
+        requestOptions?: Git.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.git.upsertPullRequest.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/pull-request/upsert"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/github/pull-request/upsert",
             ),
             method: "PUT",
             headers: {
@@ -460,14 +599,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.upsertPullRequest.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.upsertPullRequest.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -482,18 +630,29 @@ export class Git {
      * @example
      *     await client.git.deletePullRequest("repositoryOwner", "repositoryName", 1)
      */
-    public async deletePullRequest(
+    public deletePullRequest(
         repositoryOwner: string,
         repositoryName: string,
         pullRequestNumber: number,
-        requestOptions?: Git.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.git.deletePullRequest.Error>> {
+        requestOptions?: Git.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.git.deletePullRequest.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__deletePullRequest(repositoryOwner, repositoryName, pullRequestNumber, requestOptions),
+        );
+    }
+
+    private async __deletePullRequest(
+        repositoryOwner: string,
+        repositoryName: string,
+        pullRequestNumber: number,
+        requestOptions?: Git.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.git.deletePullRequest.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/github/pull-request/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(
-                    repositoryName
-                )}/${encodeURIComponent(pullRequestNumber)}/delete`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/github/pull-request/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(repositoryName)}/${encodeURIComponent(pullRequestNumber)}/delete`,
             ),
             method: "DELETE",
             headers: {
@@ -511,14 +670,23 @@ export class Git {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.git.deletePullRequest.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.git.deletePullRequest.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

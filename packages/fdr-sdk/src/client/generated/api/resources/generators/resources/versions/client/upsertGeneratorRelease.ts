@@ -9,18 +9,18 @@ export type Error =
     | FernRegistry.generators.versions.upsertGeneratorRelease.Error.InvalidVersionError
     | FernRegistry.generators.versions.upsertGeneratorRelease.Error._Unknown;
 
-export declare namespace Error {
-    interface InvalidVersionError {
+export namespace Error {
+    export interface InvalidVersionError {
         error: "InvalidVersionError";
         content: FernRegistry.generators.InvalidVersionErrorMessage;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         invalidVersionError: (value: FernRegistry.generators.InvalidVersionErrorMessage) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -28,7 +28,7 @@ export declare namespace Error {
 
 export const Error = {
     invalidVersionError: (
-        value: FernRegistry.generators.InvalidVersionErrorMessage
+        value: FernRegistry.generators.InvalidVersionErrorMessage,
     ): FernRegistry.generators.versions.upsertGeneratorRelease.Error.InvalidVersionError => {
         return {
             content: value,
@@ -37,7 +37,7 @@ export const Error = {
     },
 
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): FernRegistry.generators.versions.upsertGeneratorRelease.Error._Unknown => {
         return {
             error: undefined,
@@ -47,7 +47,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.generators.versions.upsertGeneratorRelease.Error,
-        visitor: FernRegistry.generators.versions.upsertGeneratorRelease.Error._Visitor<_Result>
+        visitor: FernRegistry.generators.versions.upsertGeneratorRelease.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "InvalidVersionError":

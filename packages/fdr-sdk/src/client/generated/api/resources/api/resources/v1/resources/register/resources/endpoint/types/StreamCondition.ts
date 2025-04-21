@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../../../../../../../index";
 
 export type StreamCondition = FernRegistry.api.v1.register.StreamCondition.BooleanRequestProperty;
 
-export declare namespace StreamCondition {
-    interface BooleanRequestProperty {
+export namespace StreamCondition {
+    export interface BooleanRequestProperty {
         type: "booleanRequestProperty";
         value: FernRegistry.PropertyKey;
     }

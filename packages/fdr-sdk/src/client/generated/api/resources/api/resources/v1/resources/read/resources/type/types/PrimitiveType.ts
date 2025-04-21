@@ -18,52 +18,52 @@ export type PrimitiveType =
     | FernRegistry.api.v1.read.PrimitiveType.Uint
     | FernRegistry.api.v1.read.PrimitiveType.Uint64;
 
-export declare namespace PrimitiveType {
-    interface Integer extends FernRegistry.api.v1.read.IntegerType {
+export namespace PrimitiveType {
+    export interface Integer extends FernRegistry.api.v1.read.IntegerType {
         type: "integer";
     }
 
-    interface Double extends FernRegistry.api.v1.read.DoubleType {
+    export interface Double extends FernRegistry.api.v1.read.DoubleType {
         type: "double";
     }
 
-    interface String extends FernRegistry.api.v1.read.StringType {
+    export interface String extends FernRegistry.api.v1.read.StringType {
         type: "string";
     }
 
-    interface Long extends FernRegistry.api.v1.read.LongType {
+    export interface Long extends FernRegistry.api.v1.read.LongType {
         type: "long";
     }
 
-    interface Boolean extends FernRegistry.api.v1.read.BooleanType {
+    export interface Boolean extends FernRegistry.api.v1.read.BooleanType {
         type: "boolean";
     }
 
-    interface Datetime extends FernRegistry.api.v1.read.DatetimeType {
+    export interface Datetime extends FernRegistry.api.v1.read.DatetimeType {
         type: "datetime";
     }
 
-    interface Uuid extends FernRegistry.api.v1.read.UuidType {
+    export interface Uuid extends FernRegistry.api.v1.read.UuidType {
         type: "uuid";
     }
 
-    interface Base64 extends FernRegistry.api.v1.read.Base64Type {
+    export interface Base64 extends FernRegistry.api.v1.read.Base64Type {
         type: "base64";
     }
 
-    interface Date_ extends FernRegistry.api.v1.read.DateType {
+    export interface Date_ extends FernRegistry.api.v1.read.DateType {
         type: "date";
     }
 
-    interface BigInteger extends FernRegistry.api.v1.read.BigIntegerType {
+    export interface BigInteger extends FernRegistry.api.v1.read.BigIntegerType {
         type: "bigInteger";
     }
 
-    interface Uint {
+    export interface Uint {
         type: "uint";
     }
 
-    interface Uint64 {
+    export interface Uint64 {
         type: "uint64";
     }
 }

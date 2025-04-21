@@ -6,12 +6,12 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type DbFileInfoV2 = FernRegistry.docs.v1.db.DbFileInfoV2.S3Key | FernRegistry.docs.v1.db.DbFileInfoV2.Image;
 
-export declare namespace DbFileInfoV2 {
-    interface S3Key extends FernRegistry.docs.v1.db.DbFileInfo {
+export namespace DbFileInfoV2 {
+    export interface S3Key extends FernRegistry.docs.v1.db.DbFileInfo {
         type: "s3Key";
     }
 
-    interface Image extends FernRegistry.docs.v1.db.DbImageFileInfo {
+    export interface Image extends FernRegistry.docs.v1.db.DbImageFileInfo {
         type: "image";
     }
 }

@@ -10,21 +10,21 @@ export type Error =
     | FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error.ReindexNotAllowedError
     | FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._Unknown;
 
-export declare namespace Error {
-    interface DocsNotFoundError {
+export namespace Error {
+    export interface DocsNotFoundError {
         error: "DocsNotFoundError";
     }
 
-    interface ReindexNotAllowedError {
+    export interface ReindexNotAllowedError {
         error: "ReindexNotAllowedError";
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         docsNotFoundError: () => _Result;
         reindexNotAllowedError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -45,7 +45,7 @@ export const Error = {
     },
 
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._Unknown => {
         return {
             error: undefined,
@@ -55,7 +55,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error,
-        visitor: FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._Visitor<_Result>
+        visitor: FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "DocsNotFoundError":

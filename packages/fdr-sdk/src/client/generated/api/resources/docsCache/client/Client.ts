@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace DocsCache {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -37,14 +39,23 @@ export class DocsCache {
      *         url: FernRegistry.Url("url")
      *     })
      */
-    public async invalidate(
+    public invalidate(
         request: FernRegistry.InvalidateCachedDocsRequest,
-        requestOptions?: DocsCache.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.docsCache.invalidate.Error>> {
+        requestOptions?: DocsCache.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docsCache.invalidate.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__invalidate(request, requestOptions));
+    }
+
+    private async __invalidate(
+        request: FernRegistry.InvalidateCachedDocsRequest,
+        requestOptions?: DocsCache.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.docsCache.invalidate.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/docs-cache/invalidate"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/docs-cache/invalidate",
             ),
             method: "POST",
             headers: {
@@ -63,14 +74,23 @@ export class DocsCache {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docsCache.invalidate.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docsCache.invalidate.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

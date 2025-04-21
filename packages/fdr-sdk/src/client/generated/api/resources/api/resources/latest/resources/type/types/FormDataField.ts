@@ -9,16 +9,16 @@ export type FormDataField =
     | FernRegistry.api.latest.FormDataField.Files
     | FernRegistry.api.latest.FormDataField.Property;
 
-export declare namespace FormDataField {
-    interface File_ extends FernRegistry.api.latest.FormDataFile {
+export namespace FormDataField {
+    export interface File_ extends FernRegistry.api.latest.FormDataFile {
         type: "file";
     }
 
-    interface Files extends FernRegistry.api.latest.FormDataFiles {
+    export interface Files extends FernRegistry.api.latest.FormDataFiles {
         type: "files";
     }
 
-    interface Property extends FernRegistry.api.latest.FormDataProperty {
+    export interface Property extends FernRegistry.api.latest.FormDataProperty {
         type: "property";
     }
 }

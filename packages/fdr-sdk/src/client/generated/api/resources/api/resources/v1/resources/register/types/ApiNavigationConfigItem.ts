@@ -10,22 +10,22 @@ export type ApiNavigationConfigItem =
     | FernRegistry.api.v1.register.ApiNavigationConfigItem.WebsocketId
     | FernRegistry.api.v1.register.ApiNavigationConfigItem.WebhookId;
 
-export declare namespace ApiNavigationConfigItem {
-    interface Subpackage extends FernRegistry.api.v1.register.ApiNavigationConfigSubpackage {
+export namespace ApiNavigationConfigItem {
+    export interface Subpackage extends FernRegistry.api.v1.register.ApiNavigationConfigSubpackage {
         type: "subpackage";
     }
 
-    interface EndpointId {
+    export interface EndpointId {
         type: "endpointId";
         value: FernRegistry.EndpointId;
     }
 
-    interface WebsocketId {
+    export interface WebsocketId {
         type: "websocketId";
         value: FernRegistry.WebSocketId;
     }
 
-    interface WebhookId {
+    export interface WebhookId {
         type: "webhookId";
         value: FernRegistry.WebhookId;
     }

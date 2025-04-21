@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Cli {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -43,16 +45,29 @@ export class Cli {
      *         irVersion: undefined
      *     })
      */
-    public async getLatestCliRelease(
+    public getLatestCliRelease(
         request: FernRegistry.generators.GetLatestCliReleaseRequest = {},
-        requestOptions?: Cli.RequestOptions
-    ): Promise<
+        requestOptions?: Cli.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getLatestCliRelease.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getLatestCliRelease(request, requestOptions));
+    }
+
+    private async __getLatestCliRelease(
+        request: FernRegistry.generators.GetLatestCliReleaseRequest = {},
+        requestOptions?: Cli.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getLatestCliRelease.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/cli/latest"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/cli/latest",
             ),
             method: "POST",
             headers: {
@@ -71,8 +86,13 @@ export class Cli {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.CliRelease,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.CliRelease,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -80,15 +100,23 @@ export class Cli {
             switch ((_response.error.body as FernRegistry.generators.cli.getLatestCliRelease.Error)?.error) {
                 case "NoValidClisFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.generators.cli.getLatestCliRelease.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.generators.cli.getLatestCliRelease.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.cli.getLatestCliRelease.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.cli.getLatestCliRelease.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -110,16 +138,32 @@ export class Cli {
      *         }
      *     })
      */
-    public async getChangelog(
+    public getChangelog(
         request: FernRegistry.generators.GetChangelogRequest,
-        requestOptions?: Cli.RequestOptions
-    ): Promise<
+        requestOptions?: Cli.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<FernRegistry.generators.GetChangelogResponse, FernRegistry.generators.cli.getChangelog.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getChangelog(request, requestOptions));
+    }
+
+    private async __getChangelog(
+        request: FernRegistry.generators.GetChangelogRequest,
+        requestOptions?: Cli.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.generators.GetChangelogResponse,
+                FernRegistry.generators.cli.getChangelog.Error
+            >
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/cli/changelog"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/cli/changelog",
             ),
             method: "POST",
             headers: {
@@ -138,14 +182,23 @@ export class Cli {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.GetChangelogResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.GetChangelogResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.cli.getChangelog.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.cli.getChangelog.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -158,14 +211,29 @@ export class Cli {
      * @example
      *     await client.generators.cli.getMinCliForIr(1)
      */
-    public async getMinCliForIr(
+    public getMinCliForIr(
         irVersion: number,
-        requestOptions?: Cli.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getMinCliForIr.Error>> {
+        requestOptions?: Cli.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getMinCliForIr.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getMinCliForIr(irVersion, requestOptions));
+    }
+
+    private async __getMinCliForIr(
+        irVersion: number,
+        requestOptions?: Cli.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getMinCliForIr.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/cli/for-ir/${encodeURIComponent(irVersion)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/cli/for-ir/${encodeURIComponent(irVersion)}`,
             ),
             method: "GET",
             headers: {
@@ -183,8 +251,13 @@ export class Cli {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.CliRelease,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.CliRelease,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -192,15 +265,23 @@ export class Cli {
             switch ((_response.error.body as FernRegistry.generators.cli.getMinCliForIr.Error)?.error) {
                 case "NoValidClisFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.generators.cli.getMinCliForIr.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.generators.cli.getMinCliForIr.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.cli.getMinCliForIr.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.cli.getMinCliForIr.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -220,14 +301,23 @@ export class Cli {
      *         tags: undefined
      *     })
      */
-    public async upsertCliRelease(
+    public upsertCliRelease(
         request: FernRegistry.generators.CliReleaseRequest,
-        requestOptions?: Cli.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.generators.cli.upsertCliRelease.Error>> {
+        requestOptions?: Cli.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.generators.cli.upsertCliRelease.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__upsertCliRelease(request, requestOptions));
+    }
+
+    private async __upsertCliRelease(
+        request: FernRegistry.generators.CliReleaseRequest,
+        requestOptions?: Cli.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.generators.cli.upsertCliRelease.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/cli"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/cli",
             ),
             method: "PUT",
             headers: {
@@ -246,14 +336,23 @@ export class Cli {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.cli.upsertCliRelease.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.cli.upsertCliRelease.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -266,14 +365,29 @@ export class Cli {
      * @example
      *     await client.generators.cli.getCliRelease("cliVersion")
      */
-    public async getCliRelease(
+    public getCliRelease(
         cliVersion: string,
-        requestOptions?: Cli.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getCliRelease.Error>> {
+        requestOptions?: Cli.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getCliRelease.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getCliRelease(cliVersion, requestOptions));
+    }
+
+    private async __getCliRelease(
+        cliVersion: string,
+        requestOptions?: Cli.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getCliRelease.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/cli/${encodeURIComponent(cliVersion)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/cli/${encodeURIComponent(cliVersion)}`,
             ),
             method: "GET",
             headers: {
@@ -291,8 +405,13 @@ export class Cli {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.CliRelease,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.CliRelease,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -300,15 +419,23 @@ export class Cli {
             switch ((_response.error.body as FernRegistry.generators.cli.getCliRelease.Error)?.error) {
                 case "CliVersionNotFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.generators.cli.getCliRelease.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.generators.cli.getCliRelease.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.cli.getCliRelease.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.cli.getCliRelease.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -321,17 +448,31 @@ export class Cli {
      * @example
      *     await client.generators.cli.listCliReleases()
      */
-    public async listCliReleases(
+    public listCliReleases(
         request: FernRegistry.generators.ListCliReleasesRequest = {},
-        requestOptions?: Cli.RequestOptions
-    ): Promise<
+        requestOptions?: Cli.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.generators.ListCliReleasesResponse,
             FernRegistry.generators.cli.listCliReleases.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__listCliReleases(request, requestOptions));
+    }
+
+    private async __listCliReleases(
+        request: FernRegistry.generators.ListCliReleasesRequest = {},
+        requestOptions?: Cli.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.generators.ListCliReleasesResponse,
+                FernRegistry.generators.cli.listCliReleases.Error
+            >
+        >
+    > {
         const { page, pageSize } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
@@ -342,8 +483,10 @@ export class Cli {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/cli"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/cli",
             ),
             method: "GET",
             headers: {
@@ -362,14 +505,23 @@ export class Cli {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.ListCliReleasesResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.ListCliReleasesResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.cli.listCliReleases.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.cli.listCliReleases.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -13,32 +13,32 @@ export type NavigationItem =
     | FernRegistry.docs.v1.write.NavigationItem.Changelog
     | FernRegistry.docs.v1.write.NavigationItem.ChangelogV3;
 
-export declare namespace NavigationItem {
-    interface Page extends FernRegistry.docs.v1.write.PageMetadata {
+export namespace NavigationItem {
+    export interface Page extends FernRegistry.docs.v1.write.PageMetadata {
         type: "page";
     }
 
-    interface Api extends FernRegistry.docs.v1.write.ApiSection {
+    export interface Api extends FernRegistry.docs.v1.write.ApiSection {
         type: "api";
     }
 
-    interface ApiV2 extends FernRegistry.docs.v1.write.ApiSectionV2 {
+    export interface ApiV2 extends FernRegistry.docs.v1.write.ApiSectionV2 {
         type: "apiV2";
     }
 
-    interface Section extends FernRegistry.docs.v1.write.DocsSection {
+    export interface Section extends FernRegistry.docs.v1.write.DocsSection {
         type: "section";
     }
 
-    interface Link extends FernRegistry.docs.v1.write.LinkMetadata {
+    export interface Link extends FernRegistry.docs.v1.write.LinkMetadata {
         type: "link";
     }
 
-    interface Changelog extends FernRegistry.docs.v1.write.ChangelogSectionV2 {
+    export interface Changelog extends FernRegistry.docs.v1.write.ChangelogSectionV2 {
         type: "changelog";
     }
 
-    interface ChangelogV3 extends FernRegistry.docs.v1.write.ChangelogSectionV3 {
+    export interface ChangelogV3 extends FernRegistry.docs.v1.write.ChangelogSectionV3 {
         type: "changelogV3";
     }
 }

@@ -26,7 +26,6 @@ export type Layout =
      * This layout takes over 100% of the viewport width, below the header.
      * Unlike PageLayout, the content will not be constrained to the page-width container, and does not render any padding. */
     | "custom";
-
 export const Layout = {
     Guide: "guide",
     Overview: "overview",

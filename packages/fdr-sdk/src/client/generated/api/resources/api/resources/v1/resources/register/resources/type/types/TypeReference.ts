@@ -14,38 +14,38 @@ export type TypeReference =
     | FernRegistry.api.v1.register.TypeReference.Literal
     | FernRegistry.api.v1.register.TypeReference.Unknown;
 
-export declare namespace TypeReference {
-    interface Id extends FernRegistry.api.v1.register.TypeReferenceId {
+export namespace TypeReference {
+    export interface Id extends FernRegistry.api.v1.register.TypeReferenceId {
         type: "id";
     }
 
-    interface Primitive {
+    export interface Primitive {
         type: "primitive";
         value: FernRegistry.api.v1.register.PrimitiveType;
     }
 
-    interface Optional extends FernRegistry.api.v1.register.OptionalType {
+    export interface Optional extends FernRegistry.api.v1.register.OptionalType {
         type: "optional";
     }
 
-    interface List extends FernRegistry.api.v1.register.ListType {
+    export interface List extends FernRegistry.api.v1.register.ListType {
         type: "list";
     }
 
-    interface Set extends FernRegistry.api.v1.register.SetType {
+    export interface Set extends FernRegistry.api.v1.register.SetType {
         type: "set";
     }
 
-    interface Map extends FernRegistry.api.v1.register.MapType {
+    export interface Map extends FernRegistry.api.v1.register.MapType {
         type: "map";
     }
 
-    interface Literal {
+    export interface Literal {
         type: "literal";
         value: FernRegistry.api.v1.register.LiteralType;
     }
 
-    interface Unknown {
+    export interface Unknown {
         type: "unknown";
     }
 }

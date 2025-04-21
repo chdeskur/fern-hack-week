@@ -8,7 +8,6 @@
  * able to specify the path to the field relative to the iterated on object
  */
 export type PayloadLocation = "BODY" | "QUERY" | "PATH" | "HEADERS" | "RELATIVE" | "AUTH";
-
 export const PayloadLocation = {
     Body: "BODY",
     Query: "QUERY",

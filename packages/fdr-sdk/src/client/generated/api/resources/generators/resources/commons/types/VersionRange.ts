@@ -8,13 +8,13 @@ export type VersionRange =
     | FernRegistry.generators.VersionRange.Inclusive
     | FernRegistry.generators.VersionRange.Exclusive;
 
-export declare namespace VersionRange {
-    interface Inclusive {
+export namespace VersionRange {
+    export interface Inclusive {
         type: "inclusive";
         value: string;
     }
 
-    interface Exclusive {
+    export interface Exclusive {
         type: "exclusive";
         value: string;
     }

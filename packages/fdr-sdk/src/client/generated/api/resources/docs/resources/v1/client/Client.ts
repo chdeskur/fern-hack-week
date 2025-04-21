@@ -8,33 +8,23 @@ import { Read } from "../resources/read/client/Client";
 import { Write } from "../resources/write/client/Client";
 
 export declare namespace V1 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
-    }
-
-    interface RequestOptions {
-        /** The maximum time to wait for a response in seconds. */
-        timeoutInSeconds?: number;
-        /** The number of times to retry the request. Defaults to 2. */
-        maxRetries?: number;
-        /** A hook to abort the request. */
-        abortSignal?: AbortSignal;
-        /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
     }
 }
 
 export class V1 {
-    constructor(protected readonly _options: V1.Options = {}) {}
-
     protected _read: Read | undefined;
+    protected _write: Write | undefined;
+
+    constructor(protected readonly _options: V1.Options = {}) {}
 
     public get read(): Read {
         return (this._read ??= new Read(this._options));
     }
-
-    protected _write: Write | undefined;
 
     public get write(): Write {
         return (this._write ??= new Write(this._options));

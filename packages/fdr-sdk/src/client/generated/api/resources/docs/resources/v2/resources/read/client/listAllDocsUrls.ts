@@ -9,18 +9,18 @@ export type Error =
     | FernRegistry.docs.v2.read.listAllDocsUrls.Error.UnauthorizedError
     | FernRegistry.docs.v2.read.listAllDocsUrls.Error._Unknown;
 
-export declare namespace Error {
-    interface UnauthorizedError {
+export namespace Error {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -43,7 +43,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.docs.v2.read.listAllDocsUrls.Error,
-        visitor: FernRegistry.docs.v2.read.listAllDocsUrls.Error._Visitor<_Result>
+        visitor: FernRegistry.docs.v2.read.listAllDocsUrls.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "UnauthorizedError":

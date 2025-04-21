@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Write {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -43,19 +45,35 @@ export class Write {
      *         images: undefined
      *     })
      */
-    public async startDocsRegister(
+    public startDocsRegister(
         request: FernRegistry.docs.v2.write.StartDocsRegisterRequestV2,
-        requestOptions?: Write.RequestOptions
-    ): Promise<
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v1.write.StartDocsRegisterResponse,
             FernRegistry.docs.v2.write.startDocsRegister.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__startDocsRegister(request, requestOptions));
+    }
+
+    private async __startDocsRegister(
+        request: FernRegistry.docs.v2.write.StartDocsRegisterRequestV2,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v1.write.StartDocsRegisterResponse,
+                FernRegistry.docs.v2.write.startDocsRegister.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/v2/init"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/v2/init",
             ),
             method: "POST",
             headers: {
@@ -74,8 +92,13 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v1.write.StartDocsRegisterResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v1.write.StartDocsRegisterResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -89,15 +112,23 @@ export class Write {
                 case "DomainBelongsToAnotherOrgError":
                 case "InvalidURLError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.write.startDocsRegister.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.write.startDocsRegister.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.write.startDocsRegister.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.write.startDocsRegister.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -114,19 +145,35 @@ export class Write {
      *         images: undefined
      *     })
      */
-    public async startDocsPreviewRegister(
+    public startDocsPreviewRegister(
         request: FernRegistry.docs.v2.write.StartDocsPreviewRegisterRequestV2,
-        requestOptions?: Write.RequestOptions
-    ): Promise<
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.docs.v2.write.StartDocsPreviewRegisterResponse,
             FernRegistry.docs.v2.write.startDocsPreviewRegister.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__startDocsPreviewRegister(request, requestOptions));
+    }
+
+    private async __startDocsPreviewRegister(
+        request: FernRegistry.docs.v2.write.StartDocsPreviewRegisterRequestV2,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.docs.v2.write.StartDocsPreviewRegisterResponse,
+                FernRegistry.docs.v2.write.startDocsPreviewRegister.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/preview/init"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/preview/init",
             ),
             method: "POST",
             headers: {
@@ -145,8 +192,13 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.write.StartDocsPreviewRegisterResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.docs.v2.write.StartDocsPreviewRegisterResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -157,15 +209,23 @@ export class Write {
                 case "UserNotInOrgError":
                 case "InvalidDomainError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.write.startDocsPreviewRegister.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.write.startDocsPreviewRegister.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.write.startDocsPreviewRegister.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.write.startDocsPreviewRegister.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -216,15 +276,27 @@ export class Write {
      *         }
      *     })
      */
-    public async finishDocsRegister(
+    public finishDocsRegister(
         docsRegistrationId: FernRegistry.docs.v1.write.DocsRegistrationId,
         request: FernRegistry.docs.v2.write.RegisterDocsRequest,
-        requestOptions?: Write.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.write.finishDocsRegister.Error>> {
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docs.v2.write.finishDocsRegister.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__finishDocsRegister(docsRegistrationId, request, requestOptions),
+        );
+    }
+
+    private async __finishDocsRegister(
+        docsRegistrationId: FernRegistry.docs.v1.write.DocsRegistrationId,
+        request: FernRegistry.docs.v2.write.RegisterDocsRequest,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.docs.v2.write.finishDocsRegister.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/v2/registry/docs/register/${encodeURIComponent(docsRegistrationId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/v2/registry/docs/register/${encodeURIComponent(docsRegistrationId)}`,
             ),
             method: "POST",
             headers: {
@@ -243,8 +315,13 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -254,15 +331,23 @@ export class Write {
                 case "UserNotInOrgError":
                 case "DocsRegistrationIdNotFound":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.write.finishDocsRegister.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.write.finishDocsRegister.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.write.finishDocsRegister.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.write.finishDocsRegister.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -275,14 +360,25 @@ export class Write {
      *         url: FernRegistry.Url("url")
      *     })
      */
-    public async reindexAlgoliaSearchRecords(
+    public reindexAlgoliaSearchRecords(
         request: FernRegistry.docs.v2.write.ReindexAlgoliaRecordsRequest,
-        requestOptions?: Write.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error>> {
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__reindexAlgoliaSearchRecords(request, requestOptions));
+    }
+
+    private async __reindexAlgoliaSearchRecords(
+        request: FernRegistry.docs.v2.write.ReindexAlgoliaRecordsRequest,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<void, FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/algolia/reindex"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/algolia/reindex",
             ),
             method: "POST",
             headers: {
@@ -301,8 +397,13 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -311,15 +412,23 @@ export class Write {
                 case "DocsNotFoundError":
                 case "ReindexNotAllowedError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -333,14 +442,25 @@ export class Write {
      *         toOrgId: "toOrgId"
      *     })
      */
-    public async transferOwnershipOfDomain(
+    public transferOwnershipOfDomain(
         request: FernRegistry.docs.v2.write.TransferDomainOwnershipRequest,
-        requestOptions?: Write.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error>> {
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__transferOwnershipOfDomain(request, requestOptions));
+    }
+
+    private async __transferOwnershipOfDomain(
+        request: FernRegistry.docs.v2.write.TransferDomainOwnershipRequest,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<void, FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/transfer-ownership"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/transfer-ownership",
             ),
             method: "POST",
             headers: {
@@ -359,8 +479,13 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -369,15 +494,23 @@ export class Write {
                 case "DocsNotFoundError":
                 case "UnauthorizedError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -391,14 +524,23 @@ export class Write {
      *         isArchived: true
      *     })
      */
-    public async setIsArchived(
+    public setIsArchived(
         request: FernRegistry.docs.v2.write.SetIsArchivedRequest,
-        requestOptions?: Write.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.write.setIsArchived.Error>> {
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docs.v2.write.setIsArchived.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__setIsArchived(request, requestOptions));
+    }
+
+    private async __setIsArchived(
+        request: FernRegistry.docs.v2.write.SetIsArchivedRequest,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.docs.v2.write.setIsArchived.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/set-is-archived"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/set-is-archived",
             ),
             method: "POST",
             headers: {
@@ -417,8 +559,13 @@ export class Write {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -427,15 +574,23 @@ export class Write {
                 case "DocsNotFoundError":
                 case "UnauthorizedError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.docs.v2.write.setIsArchived.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.write.setIsArchived.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.docs.v2.write.setIsArchived.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.write.setIsArchived.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

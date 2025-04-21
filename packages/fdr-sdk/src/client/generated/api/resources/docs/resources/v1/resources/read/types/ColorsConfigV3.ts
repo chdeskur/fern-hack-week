@@ -9,16 +9,16 @@ export type ColorsConfigV3 =
     | FernRegistry.docs.v1.read.ColorsConfigV3.Light
     | FernRegistry.docs.v1.read.ColorsConfigV3.DarkAndLight;
 
-export declare namespace ColorsConfigV3 {
-    interface Dark extends FernRegistry.docs.v1.read.ThemeConfig {
+export namespace ColorsConfigV3 {
+    export interface Dark extends FernRegistry.docs.v1.read.ThemeConfig {
         type: "dark";
     }
 
-    interface Light extends FernRegistry.docs.v1.read.ThemeConfig {
+    export interface Light extends FernRegistry.docs.v1.read.ThemeConfig {
         type: "light";
     }
 
-    interface DarkAndLight extends FernRegistry.docs.v1.read.DarkAndLightModeConfig {
+    export interface DarkAndLight extends FernRegistry.docs.v1.read.DarkAndLightModeConfig {
         type: "darkAndLight";
     }
 }

@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../../../../../../../index";
 
 export type ExampleErrorResponse = FernRegistry.api.v1.read.ExampleErrorResponse.Json;
 
-export declare namespace ExampleErrorResponse {
-    interface Json {
+export namespace ExampleErrorResponse {
+    export interface Json {
         type: "json";
         value: unknown;
     }

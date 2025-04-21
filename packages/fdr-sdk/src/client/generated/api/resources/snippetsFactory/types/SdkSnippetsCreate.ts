@@ -12,28 +12,28 @@ export type SdkSnippetsCreate =
     | FernRegistry.SdkSnippetsCreate.Ruby
     | FernRegistry.SdkSnippetsCreate.Csharp;
 
-export declare namespace SdkSnippetsCreate {
-    interface Typescript extends FernRegistry.TypescriptSdkSnippetsCreate {
+export namespace SdkSnippetsCreate {
+    export interface Typescript extends FernRegistry.TypescriptSdkSnippetsCreate {
         type: "typescript";
     }
 
-    interface Python extends FernRegistry.PythonSdkSnippetCreate {
+    export interface Python extends FernRegistry.PythonSdkSnippetCreate {
         type: "python";
     }
 
-    interface Go extends FernRegistry.GoSdkSnippetsCreate {
+    export interface Go extends FernRegistry.GoSdkSnippetsCreate {
         type: "go";
     }
 
-    interface Java extends FernRegistry.JavaSdkSnippetsCreate {
+    export interface Java extends FernRegistry.JavaSdkSnippetsCreate {
         type: "java";
     }
 
-    interface Ruby extends FernRegistry.RubySdkSnippetsCreate {
+    export interface Ruby extends FernRegistry.RubySdkSnippetsCreate {
         type: "ruby";
     }
 
-    interface Csharp extends FernRegistry.CsharpSdkSnippetsCreate {
+    export interface Csharp extends FernRegistry.CsharpSdkSnippetsCreate {
         type: "csharp";
     }
 }

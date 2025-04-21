@@ -18,63 +18,63 @@ export type FooterLink =
     | FernRegistry.docs.v1.commons.FooterLink.Medium
     | FernRegistry.docs.v1.commons.FooterLink.Website;
 
-export declare namespace FooterLink {
-    interface Github {
+export namespace FooterLink {
+    export interface Github {
         type: "github";
         value: FernRegistry.Url;
     }
 
-    interface Twitter {
+    export interface Twitter {
         type: "twitter";
         value: FernRegistry.Url;
     }
 
-    interface X {
+    export interface X {
         type: "x";
         value: FernRegistry.Url;
     }
 
-    interface Linkedin {
+    export interface Linkedin {
         type: "linkedin";
         value: FernRegistry.Url;
     }
 
-    interface Youtube {
+    export interface Youtube {
         type: "youtube";
         value: FernRegistry.Url;
     }
 
-    interface Instagram {
+    export interface Instagram {
         type: "instagram";
         value: FernRegistry.Url;
     }
 
-    interface Facebook {
+    export interface Facebook {
         type: "facebook";
         value: FernRegistry.Url;
     }
 
-    interface Discord {
+    export interface Discord {
         type: "discord";
         value: FernRegistry.Url;
     }
 
-    interface Slack {
+    export interface Slack {
         type: "slack";
         value: FernRegistry.Url;
     }
 
-    interface Hackernews {
+    export interface Hackernews {
         type: "hackernews";
         value: FernRegistry.Url;
     }
 
-    interface Medium {
+    export interface Medium {
         type: "medium";
         value: FernRegistry.Url;
     }
 
-    interface Website {
+    export interface Website {
         type: "website";
         value: FernRegistry.Url;
     }

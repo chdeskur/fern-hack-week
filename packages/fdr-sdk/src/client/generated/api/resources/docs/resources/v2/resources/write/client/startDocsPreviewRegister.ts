@@ -12,32 +12,32 @@ export type Error =
     | FernRegistry.docs.v2.write.startDocsPreviewRegister.Error.InvalidDomainError
     | FernRegistry.docs.v2.write.startDocsPreviewRegister.Error._Unknown;
 
-export declare namespace Error {
-    interface UnauthorizedError {
+export namespace Error {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface UnavailableError {
+    export interface UnavailableError {
         error: "UnavailableError";
         content: string;
     }
 
-    interface UserNotInOrgError {
+    export interface UserNotInOrgError {
         error: "UserNotInOrgError";
         content: string;
     }
 
-    interface InvalidDomainError {
+    export interface InvalidDomainError {
         error: "InvalidDomainError";
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         unavailableError: (value: string) => _Result;
         userNotInOrgError: (value: string) => _Result;
@@ -75,7 +75,7 @@ export const Error = {
     },
 
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): FernRegistry.docs.v2.write.startDocsPreviewRegister.Error._Unknown => {
         return {
             error: undefined,
@@ -85,7 +85,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.docs.v2.write.startDocsPreviewRegister.Error,
-        visitor: FernRegistry.docs.v2.write.startDocsPreviewRegister.Error._Visitor<_Result>
+        visitor: FernRegistry.docs.v2.write.startDocsPreviewRegister.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "UnauthorizedError":

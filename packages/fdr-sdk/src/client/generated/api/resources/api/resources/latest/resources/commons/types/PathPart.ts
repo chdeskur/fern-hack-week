@@ -6,13 +6,13 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type PathPart = FernRegistry.api.latest.PathPart.Literal | FernRegistry.api.latest.PathPart.PathParameter;
 
-export declare namespace PathPart {
-    interface Literal {
+export namespace PathPart {
+    export interface Literal {
         type: "literal";
         value: string;
     }
 
-    interface PathParameter {
+    export interface PathParameter {
         type: "pathParameter";
         value: FernRegistry.PropertyKey;
     }

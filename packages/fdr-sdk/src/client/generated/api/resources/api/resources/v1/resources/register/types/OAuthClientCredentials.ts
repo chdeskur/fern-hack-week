@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type OAuthClientCredentials = FernRegistry.api.v1.register.OAuthClientCredentials.ReferencedEndpoint;
 
-export declare namespace OAuthClientCredentials {
-    interface ReferencedEndpoint extends FernRegistry.api.v1.register.OAuthClientCredentialsReferencedEndpoint {
+export namespace OAuthClientCredentials {
+    export interface ReferencedEndpoint extends FernRegistry.api.v1.register.OAuthClientCredentialsReferencedEndpoint {
         type: "referencedEndpoint";
     }
 }

@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace SnippetsFactory {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -68,14 +70,23 @@ export class SnippetsFactory {
      *         }
      *     })
      */
-    public async createSnippetsForSdk(
+    public createSnippetsForSdk(
         request: FernRegistry.CreateSnippetRequest,
-        requestOptions?: SnippetsFactory.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.snippetsFactory.createSnippetsForSdk.Error>> {
+        requestOptions?: SnippetsFactory.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.snippetsFactory.createSnippetsForSdk.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__createSnippetsForSdk(request, requestOptions));
+    }
+
+    private async __createSnippetsForSdk(
+        request: FernRegistry.CreateSnippetRequest,
+        requestOptions?: SnippetsFactory.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.snippetsFactory.createSnippetsForSdk.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/snippets/create"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/snippets/create",
             ),
             method: "POST",
             headers: {
@@ -94,8 +105,13 @@ export class SnippetsFactory {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -106,15 +122,23 @@ export class SnippetsFactory {
                 case "OrgIdNotFound":
                 case "SDKNotFound":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.snippetsFactory.createSnippetsForSdk.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.snippetsFactory.createSnippetsForSdk.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.snippetsFactory.createSnippetsForSdk.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.snippetsFactory.createSnippetsForSdk.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -8,12 +8,12 @@ export type WebhookPayloadShape =
     | FernRegistry.api.v1.register.WebhookPayloadShape.Object_
     | FernRegistry.api.v1.register.WebhookPayloadShape.Reference;
 
-export declare namespace WebhookPayloadShape {
-    interface Object_ extends FernRegistry.api.v1.register.ObjectType {
+export namespace WebhookPayloadShape {
+    export interface Object_ extends FernRegistry.api.v1.register.ObjectType {
         type: "object";
     }
 
-    interface Reference {
+    export interface Reference {
         type: "reference";
         value: FernRegistry.api.v1.register.TypeReference;
     }

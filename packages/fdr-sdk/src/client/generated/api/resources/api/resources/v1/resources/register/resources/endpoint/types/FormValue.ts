@@ -12,32 +12,32 @@ export type FormValue =
     | FernRegistry.api.v1.register.FormValue.FilenamesWithData
     | FernRegistry.api.v1.register.FormValue.Exploded;
 
-export declare namespace FormValue {
-    interface Json {
+export namespace FormValue {
+    export interface Json {
         type: "json";
         value: unknown;
     }
 
-    interface Filename {
+    export interface Filename {
         type: "filename";
         value: string;
     }
 
-    interface Filenames {
+    export interface Filenames {
         type: "filenames";
         value: string[];
     }
 
-    interface FilenameWithData extends FernRegistry.api.v1.register.FilenameWithData {
+    export interface FilenameWithData extends FernRegistry.api.v1.register.FilenameWithData {
         type: "filenameWithData";
     }
 
-    interface FilenamesWithData {
+    export interface FilenamesWithData {
         type: "filenamesWithData";
         value: FernRegistry.api.v1.register.FilenameWithData[];
     }
 
-    interface Exploded {
+    export interface Exploded {
         type: "exploded";
         value: unknown[];
     }

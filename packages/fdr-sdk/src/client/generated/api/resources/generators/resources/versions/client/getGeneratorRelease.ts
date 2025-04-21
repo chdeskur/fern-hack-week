@@ -9,18 +9,18 @@ export type Error =
     | FernRegistry.generators.versions.getGeneratorRelease.Error.GeneratorVersionNotFoundError
     | FernRegistry.generators.versions.getGeneratorRelease.Error._Unknown;
 
-export declare namespace Error {
-    interface GeneratorVersionNotFoundError {
+export namespace Error {
+    export interface GeneratorVersionNotFoundError {
         error: "GeneratorVersionNotFoundError";
         content: FernRegistry.generators.InvalidVersionErrorMessage;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         generatorVersionNotFoundError: (value: FernRegistry.generators.InvalidVersionErrorMessage) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -28,7 +28,7 @@ export declare namespace Error {
 
 export const Error = {
     generatorVersionNotFoundError: (
-        value: FernRegistry.generators.InvalidVersionErrorMessage
+        value: FernRegistry.generators.InvalidVersionErrorMessage,
     ): FernRegistry.generators.versions.getGeneratorRelease.Error.GeneratorVersionNotFoundError => {
         return {
             content: value,
@@ -37,7 +37,7 @@ export const Error = {
     },
 
     _unknown: (
-        fetcherError: core.Fetcher.Error
+        fetcherError: core.Fetcher.Error,
     ): FernRegistry.generators.versions.getGeneratorRelease.Error._Unknown => {
         return {
             error: undefined,
@@ -47,7 +47,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.generators.versions.getGeneratorRelease.Error,
-        visitor: FernRegistry.generators.versions.getGeneratorRelease.Error._Visitor<_Result>
+        visitor: FernRegistry.generators.versions.getGeneratorRelease.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "GeneratorVersionNotFoundError":

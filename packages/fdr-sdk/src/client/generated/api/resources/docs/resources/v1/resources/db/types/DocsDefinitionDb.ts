@@ -9,16 +9,16 @@ export type DocsDefinitionDb =
     | FernRegistry.docs.v1.db.DocsDefinitionDb.V2
     | FernRegistry.docs.v1.db.DocsDefinitionDb.V3;
 
-export declare namespace DocsDefinitionDb {
-    interface V1 extends FernRegistry.docs.v1.db.DocsDefinitionDbV1 {
+export namespace DocsDefinitionDb {
+    export interface V1 extends FernRegistry.docs.v1.db.DocsDefinitionDbV1 {
         type: "v1";
     }
 
-    interface V2 extends FernRegistry.docs.v1.db.DocsDefinitionDbV2 {
+    export interface V2 extends FernRegistry.docs.v1.db.DocsDefinitionDbV2 {
         type: "v2";
     }
 
-    interface V3 extends FernRegistry.docs.v1.db.DocsDefinitionDbV3 {
+    export interface V3 extends FernRegistry.docs.v1.db.DocsDefinitionDbV3 {
         type: "v3";
     }
 }

@@ -6,13 +6,13 @@ import * as FernRegistry from "../../../../../../../../../index";
 
 export type SizeConfig = FernRegistry.docs.v1.commons.SizeConfig.Px | FernRegistry.docs.v1.commons.SizeConfig.Rem;
 
-export declare namespace SizeConfig {
-    interface Px {
+export namespace SizeConfig {
+    export interface Px {
         type: "px";
         value: number;
     }
 
-    interface Rem {
+    export interface Rem {
         type: "rem";
         value: number;
     }

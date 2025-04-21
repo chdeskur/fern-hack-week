@@ -12,28 +12,28 @@ export type NavbarLink =
     | FernRegistry.docs.v1.commons.NavbarLink.Primary
     | FernRegistry.docs.v1.commons.NavbarLink.Secondary;
 
-export declare namespace NavbarLink {
-    interface Filled extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
+export namespace NavbarLink {
+    export interface Filled extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
         type: "filled";
     }
 
-    interface Outlined extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
+    export interface Outlined extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
         type: "outlined";
     }
 
-    interface Minimal extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
+    export interface Minimal extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
         type: "minimal";
     }
 
-    interface Github extends FernRegistry.docs.v1.commons.NavbarGithubMetadata {
+    export interface Github extends FernRegistry.docs.v1.commons.NavbarGithubMetadata {
         type: "github";
     }
 
-    interface Primary extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
+    export interface Primary extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
         type: "primary";
     }
 
-    interface Secondary extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
+    export interface Secondary extends FernRegistry.docs.v1.commons.NavbarLinkMetadata {
         type: "secondary";
     }
 }

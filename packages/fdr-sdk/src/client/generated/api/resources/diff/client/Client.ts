@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Diff {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -38,18 +40,27 @@ export class Diff {
      *         currentApiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      *     })
      */
-    public async diff(
+    public diff(
         request: FernRegistry.ApiDiffRequest,
-        requestOptions?: Diff.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.ApiDiff, FernRegistry.diff.diff.Error>> {
+        requestOptions?: Diff.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<FernRegistry.ApiDiff, FernRegistry.diff.diff.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__diff(request, requestOptions));
+    }
+
+    private async __diff(
+        request: FernRegistry.ApiDiffRequest,
+        requestOptions?: Diff.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<FernRegistry.ApiDiff, FernRegistry.diff.diff.Error>>> {
         const { previousApiDefinitionId, currentApiDefinitionId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["previousApiDefinitionId"] = previousApiDefinitionId;
         _queryParams["currentApiDefinitionId"] = currentApiDefinitionId;
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/registry/diff"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/registry/diff",
             ),
             method: "GET",
             headers: {
@@ -68,14 +79,23 @@ export class Diff {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.ApiDiff,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.ApiDiff,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.diff.diff.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.diff.diff.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

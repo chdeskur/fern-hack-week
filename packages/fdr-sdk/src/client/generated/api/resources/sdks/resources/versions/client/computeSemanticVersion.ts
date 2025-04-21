@@ -10,21 +10,21 @@ export type Error =
     | FernRegistry.sdks.versions.computeSemanticVersion.Error.FailedToIncrementVersion
     | FernRegistry.sdks.versions.computeSemanticVersion.Error._Unknown;
 
-export declare namespace Error {
-    interface FailedToComputeExistingVersion {
+export namespace Error {
+    export interface FailedToComputeExistingVersion {
         error: "FailedToComputeExistingVersion";
     }
 
-    interface FailedToIncrementVersion {
+    export interface FailedToIncrementVersion {
         error: "FailedToIncrementVersion";
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         failedToComputeExistingVersion: () => _Result;
         failedToIncrementVersion: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -54,7 +54,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.sdks.versions.computeSemanticVersion.Error,
-        visitor: FernRegistry.sdks.versions.computeSemanticVersion.Error._Visitor<_Result>
+        visitor: FernRegistry.sdks.versions.computeSemanticVersion.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "FailedToComputeExistingVersion":

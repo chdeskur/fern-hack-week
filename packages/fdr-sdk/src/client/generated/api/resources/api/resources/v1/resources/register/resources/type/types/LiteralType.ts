@@ -8,13 +8,13 @@ export type LiteralType =
     | FernRegistry.api.v1.register.LiteralType.BooleanLiteral
     | FernRegistry.api.v1.register.LiteralType.StringLiteral;
 
-export declare namespace LiteralType {
-    interface BooleanLiteral {
+export namespace LiteralType {
+    export interface BooleanLiteral {
         type: "booleanLiteral";
         value: boolean;
     }
 
-    interface StringLiteral {
+    export interface StringLiteral {
         type: "stringLiteral";
         value: string;
     }

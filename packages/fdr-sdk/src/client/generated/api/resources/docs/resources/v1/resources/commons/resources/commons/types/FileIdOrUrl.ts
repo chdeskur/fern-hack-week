@@ -8,13 +8,13 @@ export type FileIdOrUrl =
     | FernRegistry.docs.v1.commons.FileIdOrUrl.FileId
     | FernRegistry.docs.v1.commons.FileIdOrUrl.Url;
 
-export declare namespace FileIdOrUrl {
-    interface FileId {
+export namespace FileIdOrUrl {
+    export interface FileId {
         type: "fileId";
         value: FernRegistry.FileId;
     }
 
-    interface Url {
+    export interface Url {
         type: "url";
         value: FernRegistry.Url;
     }

@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Latest {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -35,14 +37,29 @@ export class Latest {
      * @example
      *     await client.api.latest.getApiLatest(FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
      */
-    public async getApiLatest(
+    public getApiLatest(
         apiDefinitionId: FernRegistry.ApiDefinitionId,
-        requestOptions?: Latest.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.api.latest.ApiDefinition, FernRegistry.api.latest.getApiLatest.Error>> {
+        requestOptions?: Latest.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.api.latest.ApiDefinition, FernRegistry.api.latest.getApiLatest.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getApiLatest(apiDefinitionId, requestOptions));
+    }
+
+    private async __getApiLatest(
+        apiDefinitionId: FernRegistry.ApiDefinitionId,
+        requestOptions?: Latest.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<FernRegistry.api.latest.ApiDefinition, FernRegistry.api.latest.getApiLatest.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/registry/api/latest/load/${encodeURIComponent(apiDefinitionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/registry/api/latest/load/${encodeURIComponent(apiDefinitionId)}`,
             ),
             method: "GET",
             headers: {
@@ -60,8 +77,13 @@ export class Latest {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.api.latest.ApiDefinition,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.api.latest.ApiDefinition,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -69,15 +91,23 @@ export class Latest {
             switch ((_response.error.body as FernRegistry.api.latest.getApiLatest.Error)?.error) {
                 case "ApiDoesNotExistError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.api.latest.getApiLatest.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.api.latest.getApiLatest.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.api.latest.getApiLatest.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.api.latest.getApiLatest.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -13,25 +13,25 @@ export type HttpRequestBodyShape =
      * `fileUpload` is optional only to be backwards compatible. It should be required. */
     | FernRegistry.api.v1.read.HttpRequestBodyShape.FileUpload;
 
-export declare namespace HttpRequestBodyShape {
-    interface Object_ extends FernRegistry.api.v1.read.ObjectType {
+export namespace HttpRequestBodyShape {
+    export interface Object_ extends FernRegistry.api.v1.read.ObjectType {
         type: "object";
     }
 
-    interface Reference {
+    export interface Reference {
         type: "reference";
         value: FernRegistry.api.v1.read.TypeReference;
     }
 
-    interface Bytes extends FernRegistry.api.v1.read.BytesRequest {
+    export interface Bytes extends FernRegistry.api.v1.read.BytesRequest {
         type: "bytes";
     }
 
-    interface FormData extends FernRegistry.api.v1.read.FormDataRequest {
+    export interface FormData extends FernRegistry.api.v1.read.FormDataRequest {
         type: "formData";
     }
 
-    interface FileUpload {
+    export interface FileUpload {
         type: "fileUpload";
         value: FernRegistry.api.v1.read.FormDataRequest | undefined;
     }

@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Templates {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -66,14 +68,23 @@ export class Templates {
      *         }
      *     })
      */
-    public async register(
+    public register(
         request: FernRegistry.RegisterSnippetTemplateRequest,
-        requestOptions?: Templates.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.templates.register.Error>> {
+        requestOptions?: Templates.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.templates.register.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__register(request, requestOptions));
+    }
+
+    private async __register(
+        request: FernRegistry.RegisterSnippetTemplateRequest,
+        requestOptions?: Templates.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.templates.register.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/snippet-template/register"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/snippet-template/register",
             ),
             method: "POST",
             headers: {
@@ -92,14 +103,23 @@ export class Templates {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.templates.register.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.templates.register.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -165,14 +185,23 @@ export class Templates {
      *             }]
      *     })
      */
-    public async registerBatch(
+    public registerBatch(
         request: FernRegistry.RegisterSnippetTemplateBatchRequest,
-        requestOptions?: Templates.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.templates.registerBatch.Error>> {
+        requestOptions?: Templates.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.templates.registerBatch.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__registerBatch(request, requestOptions));
+    }
+
+    private async __registerBatch(
+        request: FernRegistry.RegisterSnippetTemplateBatchRequest,
+        requestOptions?: Templates.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.templates.registerBatch.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/snippet-template/register/batch"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/snippet-template/register/batch",
             ),
             method: "POST",
             headers: {
@@ -191,14 +220,23 @@ export class Templates {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.templates.registerBatch.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.templates.registerBatch.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -224,14 +262,27 @@ export class Templates {
      *         }
      *     })
      */
-    public async get(
+    public get(
         request: FernRegistry.GetSnippetTemplate,
-        requestOptions?: Templates.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.EndpointSnippetTemplate, FernRegistry.templates.get.Error>> {
+        requestOptions?: Templates.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<FernRegistry.EndpointSnippetTemplate, FernRegistry.templates.get.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    }
+
+    private async __get(
+        request: FernRegistry.GetSnippetTemplate,
+        requestOptions?: Templates.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<FernRegistry.EndpointSnippetTemplate, FernRegistry.templates.get.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/snippet-template/get"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/snippet-template/get",
             ),
             method: "POST",
             headers: {
@@ -250,8 +301,13 @@ export class Templates {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.EndpointSnippetTemplate,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.EndpointSnippetTemplate,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -260,15 +316,23 @@ export class Templates {
                 case "UnauthorizedError":
                 case "SnippetNotFound":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.templates.get.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.templates.get.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.templates.get.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.templates.get.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

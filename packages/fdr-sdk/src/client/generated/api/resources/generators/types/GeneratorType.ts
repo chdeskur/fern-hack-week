@@ -10,20 +10,20 @@ export type GeneratorType =
     | FernRegistry.generators.GeneratorType.Server
     | FernRegistry.generators.GeneratorType.Other;
 
-export declare namespace GeneratorType {
-    interface Sdk extends FernRegistry.generators.SdkGenerator {
+export namespace GeneratorType {
+    export interface Sdk extends FernRegistry.generators.SdkGenerator {
         type: "sdk";
     }
 
-    interface Model extends FernRegistry.generators.ModelGenerator {
+    export interface Model extends FernRegistry.generators.ModelGenerator {
         type: "model";
     }
 
-    interface Server extends FernRegistry.generators.ServerGenerator {
+    export interface Server extends FernRegistry.generators.ServerGenerator {
         type: "server";
     }
 
-    interface Other extends FernRegistry.generators.OtherGenerator {
+    export interface Other extends FernRegistry.generators.OtherGenerator {
         type: "other";
     }
 }

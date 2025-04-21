@@ -3,7 +3,6 @@
  */
 
 export type AiModel = "claude-3.5" | "claude-3.7" | "command-a";
-
 export const AiModel = {
     Claude35: "claude-3.5",
     Claude37: "claude-3.7",

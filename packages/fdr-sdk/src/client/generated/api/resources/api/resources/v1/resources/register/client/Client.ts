@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Register {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,19 +43,35 @@ export class Register {
      *         sources: undefined
      *     })
      */
-    public async registerApiDefinition(
+    public registerApiDefinition(
         request: FernRegistry.api.v1.register.RegisterApiDefinitionRequest,
-        requestOptions?: Register.RequestOptions
-    ): Promise<
+        requestOptions?: Register.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.api.v1.register.RegisterApiDefinitionResponse,
             FernRegistry.api.v1.register.registerApiDefinition.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__registerApiDefinition(request, requestOptions));
+    }
+
+    private async __registerApiDefinition(
+        request: FernRegistry.api.v1.register.RegisterApiDefinitionRequest,
+        requestOptions?: Register.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.api.v1.register.RegisterApiDefinitionResponse,
+                FernRegistry.api.v1.register.registerApiDefinition.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/registry/api/register"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/registry/api/register",
             ),
             method: "POST",
             headers: {
@@ -72,8 +90,13 @@ export class Register {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.api.v1.register.RegisterApiDefinitionResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.api.v1.register.RegisterApiDefinitionResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -82,15 +105,23 @@ export class Register {
                 case "UnauthorizedError":
                 case "UserNotInOrgError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.api.v1.register.registerApiDefinition.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.api.v1.register.registerApiDefinition.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.api.v1.register.registerApiDefinition.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.api.v1.register.registerApiDefinition.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

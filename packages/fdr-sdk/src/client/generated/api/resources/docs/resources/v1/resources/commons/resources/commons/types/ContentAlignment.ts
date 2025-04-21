@@ -3,7 +3,6 @@
  */
 
 export type ContentAlignment = "CENTER" | "LEFT";
-
 export const ContentAlignment = {
     Center: "CENTER",
     Left: "LEFT",

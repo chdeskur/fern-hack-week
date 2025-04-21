@@ -9,17 +9,17 @@ export type Error =
     | FernRegistry.generators.cli.getLatestCliRelease.Error.NoValidClisFoundError
     | FernRegistry.generators.cli.getLatestCliRelease.Error._Unknown;
 
-export declare namespace Error {
-    interface NoValidClisFoundError {
+export namespace Error {
+    export interface NoValidClisFoundError {
         error: "NoValidClisFoundError";
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         noValidClisFoundError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -41,7 +41,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.generators.cli.getLatestCliRelease.Error,
-        visitor: FernRegistry.generators.cli.getLatestCliRelease.Error._Visitor<_Result>
+        visitor: FernRegistry.generators.cli.getLatestCliRelease.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "NoValidClisFoundError":

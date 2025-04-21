@@ -10,20 +10,20 @@ export type ApiAuth =
     | FernRegistry.api.v1.register.ApiAuth.Header
     | FernRegistry.api.v1.register.ApiAuth.OAuth;
 
-export declare namespace ApiAuth {
-    interface BearerAuth extends FernRegistry.api.v1.register.BearerAuth {
+export namespace ApiAuth {
+    export interface BearerAuth extends FernRegistry.api.v1.register.BearerAuth {
         type: "bearerAuth";
     }
 
-    interface BasicAuth extends FernRegistry.api.v1.register.BasicAuth {
+    export interface BasicAuth extends FernRegistry.api.v1.register.BasicAuth {
         type: "basicAuth";
     }
 
-    interface Header extends FernRegistry.api.v1.register.HeaderAuth {
+    export interface Header extends FernRegistry.api.v1.register.HeaderAuth {
         type: "header";
     }
 
-    interface OAuth {
+    export interface OAuth {
         type: "oAuth";
         value: FernRegistry.api.v1.register.OAuth;
     }

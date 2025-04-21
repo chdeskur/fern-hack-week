@@ -8,13 +8,13 @@ export type FormDataProperty =
     | FernRegistry.api.v1.register.FormDataProperty.File_
     | FernRegistry.api.v1.register.FormDataProperty.BodyProperty;
 
-export declare namespace FormDataProperty {
-    interface File_ {
+export namespace FormDataProperty {
+    export interface File_ {
         type: "file";
         value: FernRegistry.api.v1.register.FormDataFileProperty;
     }
 
-    interface BodyProperty extends FernRegistry.api.v1.register.FormDataBodyProperty {
+    export interface BodyProperty extends FernRegistry.api.v1.register.FormDataBodyProperty {
         type: "bodyProperty";
     }
 }

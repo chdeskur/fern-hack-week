@@ -8,12 +8,14 @@ import * as FernRegistry from "../../../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Versions {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FernRegistryEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -46,19 +48,35 @@ export class Versions {
      *         releaseTypes: undefined
      *     })
      */
-    public async getLatestGeneratorRelease(
+    public getLatestGeneratorRelease(
         request: FernRegistry.generators.GetLatestGeneratorReleaseRequest,
-        requestOptions?: Versions.RequestOptions
-    ): Promise<
+        requestOptions?: Versions.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.generators.GeneratorRelease,
             FernRegistry.generators.versions.getLatestGeneratorRelease.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getLatestGeneratorRelease(request, requestOptions));
+    }
+
+    private async __getLatestGeneratorRelease(
+        request: FernRegistry.generators.GetLatestGeneratorReleaseRequest,
+        requestOptions?: Versions.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.generators.GeneratorRelease,
+                FernRegistry.generators.versions.getLatestGeneratorRelease.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/versions/latest"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/versions/latest",
             ),
             method: "POST",
             headers: {
@@ -77,8 +95,13 @@ export class Versions {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.GeneratorRelease,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.GeneratorRelease,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -86,15 +109,24 @@ export class Versions {
             switch ((_response.error.body as FernRegistry.generators.versions.getLatestGeneratorRelease.Error)?.error) {
                 case "NoValidGeneratorsFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.generators.versions.getLatestGeneratorRelease.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error
+                                .body as FernRegistry.generators.versions.getLatestGeneratorRelease.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.versions.getLatestGeneratorRelease.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.versions.getLatestGeneratorRelease.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -117,20 +149,37 @@ export class Versions {
      *         }
      *     })
      */
-    public async getChangelog(
+    public getChangelog(
         generator: FernRegistry.generators.GeneratorId,
         request: FernRegistry.generators.GetChangelogRequest,
-        requestOptions?: Versions.RequestOptions
-    ): Promise<
+        requestOptions?: Versions.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.generators.GetChangelogResponse,
             FernRegistry.generators.versions.getChangelog.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getChangelog(generator, request, requestOptions));
+    }
+
+    private async __getChangelog(
+        generator: FernRegistry.generators.GeneratorId,
+        request: FernRegistry.generators.GetChangelogRequest,
+        requestOptions?: Versions.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.generators.GetChangelogResponse,
+                FernRegistry.generators.versions.getChangelog.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/versions/${encodeURIComponent(generator)}/changelog`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/versions/${encodeURIComponent(generator)}/changelog`,
             ),
             method: "POST",
             headers: {
@@ -149,14 +198,23 @@ export class Versions {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.GetChangelogResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.GetChangelogResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.versions.getChangelog.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.versions.getChangelog.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -179,14 +237,25 @@ export class Versions {
      *         tags: undefined
      *     })
      */
-    public async upsertGeneratorRelease(
+    public upsertGeneratorRelease(
         request: FernRegistry.generators.GeneratorReleaseRequest,
-        requestOptions?: Versions.RequestOptions
-    ): Promise<core.APIResponse<void, FernRegistry.generators.versions.upsertGeneratorRelease.Error>> {
+        requestOptions?: Versions.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.generators.versions.upsertGeneratorRelease.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__upsertGeneratorRelease(request, requestOptions));
+    }
+
+    private async __upsertGeneratorRelease(
+        request: FernRegistry.generators.GeneratorReleaseRequest,
+        requestOptions?: Versions.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<void, FernRegistry.generators.versions.upsertGeneratorRelease.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/versions"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/generators/versions",
             ),
             method: "PUT",
             headers: {
@@ -205,8 +274,13 @@ export class Versions {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -214,15 +288,24 @@ export class Versions {
             switch ((_response.error.body as FernRegistry.generators.versions.upsertGeneratorRelease.Error)?.error) {
                 case "InvalidVersionError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.generators.versions.upsertGeneratorRelease.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error
+                                .body as FernRegistry.generators.versions.upsertGeneratorRelease.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.versions.upsertGeneratorRelease.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.versions.upsertGeneratorRelease.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -236,20 +319,37 @@ export class Versions {
      * @example
      *     await client.generators.versions.getGeneratorRelease(FernRegistry.generators.GeneratorId("generator"), "version")
      */
-    public async getGeneratorRelease(
+    public getGeneratorRelease(
         generator: FernRegistry.generators.GeneratorId,
         version: string,
-        requestOptions?: Versions.RequestOptions
-    ): Promise<
+        requestOptions?: Versions.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.generators.GeneratorRelease,
             FernRegistry.generators.versions.getGeneratorRelease.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getGeneratorRelease(generator, version, requestOptions));
+    }
+
+    private async __getGeneratorRelease(
+        generator: FernRegistry.generators.GeneratorId,
+        version: string,
+        requestOptions?: Versions.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.generators.GeneratorRelease,
+                FernRegistry.generators.versions.getGeneratorRelease.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/versions/${encodeURIComponent(generator)}/${encodeURIComponent(version)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/versions/${encodeURIComponent(generator)}/${encodeURIComponent(version)}`,
             ),
             method: "GET",
             headers: {
@@ -267,8 +367,13 @@ export class Versions {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.GeneratorRelease,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.GeneratorRelease,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -276,15 +381,23 @@ export class Versions {
             switch ((_response.error.body as FernRegistry.generators.versions.getGeneratorRelease.Error)?.error) {
                 case "GeneratorVersionNotFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as FernRegistry.generators.versions.getGeneratorRelease.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.generators.versions.getGeneratorRelease.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.versions.getGeneratorRelease.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.versions.getGeneratorRelease.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -298,18 +411,33 @@ export class Versions {
      * @example
      *     await client.generators.versions.listGeneratorReleases(FernRegistry.generators.GeneratorId("generator"))
      */
-    public async listGeneratorReleases(
+    public listGeneratorReleases(
         generator: FernRegistry.generators.GeneratorId,
         request: FernRegistry.generators.ListGeneratorReleasesRequest = {},
-        requestOptions?: Versions.RequestOptions
-    ): Promise<
+        requestOptions?: Versions.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             FernRegistry.generators.ListGeneratorReleasesResponse,
             FernRegistry.generators.versions.listGeneratorReleases.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__listGeneratorReleases(generator, request, requestOptions));
+    }
+
+    private async __listGeneratorReleases(
+        generator: FernRegistry.generators.GeneratorId,
+        request: FernRegistry.generators.ListGeneratorReleasesRequest = {},
+        requestOptions?: Versions.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                FernRegistry.generators.ListGeneratorReleasesResponse,
+                FernRegistry.generators.versions.listGeneratorReleases.Error
+            >
+        >
+    > {
         const { page, pageSize } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
@@ -320,8 +448,10 @@ export class Versions {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/versions/${encodeURIComponent(generator)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                `/generators/versions/${encodeURIComponent(generator)}`,
             ),
             method: "GET",
             headers: {
@@ -340,14 +470,23 @@ export class Versions {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as FernRegistry.generators.ListGeneratorReleasesResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as FernRegistry.generators.ListGeneratorReleasesResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: FernRegistry.generators.versions.listGeneratorReleases.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: FernRegistry.generators.versions.listGeneratorReleases.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

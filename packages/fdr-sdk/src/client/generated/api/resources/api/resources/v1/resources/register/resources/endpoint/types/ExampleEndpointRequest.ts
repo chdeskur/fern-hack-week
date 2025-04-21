@@ -9,18 +9,18 @@ export type ExampleEndpointRequest =
     | FernRegistry.api.v1.register.ExampleEndpointRequest.Form
     | FernRegistry.api.v1.register.ExampleEndpointRequest.Bytes;
 
-export declare namespace ExampleEndpointRequest {
-    interface Json {
+export namespace ExampleEndpointRequest {
+    export interface Json {
         type: "json";
         value: unknown;
     }
 
-    interface Form {
+    export interface Form {
         type: "form";
         value: Record<string, FernRegistry.api.v1.register.FormValue>;
     }
 
-    interface Bytes {
+    export interface Bytes {
         type: "bytes";
         value: FernRegistry.api.v1.register.BytesValue;
     }

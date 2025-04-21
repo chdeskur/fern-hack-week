@@ -3,7 +3,6 @@
  */
 
 export type Language = "Go" | "TypeScript" | "Java" | "Python" | "Csharp" | "Ruby";
-
 export const Language = {
     Go: "Go",
     TypeScript: "TypeScript",

@@ -3,7 +3,6 @@
  */
 
 export type Availability = "Stable" | "GenerallyAvailable" | "InDevelopment" | "PreRelease" | "Deprecated" | "Beta";
-
 export const Availability = {
     Stable: "Stable",
     GenerallyAvailable: "GenerallyAvailable",

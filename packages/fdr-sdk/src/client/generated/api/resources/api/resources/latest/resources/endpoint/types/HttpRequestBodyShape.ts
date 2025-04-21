@@ -10,21 +10,21 @@ export type HttpRequestBodyShape =
     | FernRegistry.api.latest.HttpRequestBodyShape.Bytes
     | FernRegistry.api.latest.HttpRequestBodyShape.FormData;
 
-export declare namespace HttpRequestBodyShape {
-    interface Object_ extends FernRegistry.api.latest.ObjectType {
+export namespace HttpRequestBodyShape {
+    export interface Object_ extends FernRegistry.api.latest.ObjectType {
         type: "object";
     }
 
-    interface Alias {
+    export interface Alias {
         type: "alias";
         value: FernRegistry.api.latest.TypeReference;
     }
 
-    interface Bytes extends FernRegistry.api.v1.read.BytesRequest {
+    export interface Bytes extends FernRegistry.api.v1.read.BytesRequest {
         type: "bytes";
     }
 
-    interface FormData extends FernRegistry.api.latest.FormDataRequest {
+    export interface FormData extends FernRegistry.api.latest.FormDataRequest {
         type: "formData";
     }
 }

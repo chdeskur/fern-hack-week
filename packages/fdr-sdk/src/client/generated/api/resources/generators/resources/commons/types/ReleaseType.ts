@@ -3,7 +3,6 @@
  */
 
 export type ReleaseType = "GA" | "RC";
-
 export const ReleaseType = {
     Ga: "GA",
     Rc: "RC",

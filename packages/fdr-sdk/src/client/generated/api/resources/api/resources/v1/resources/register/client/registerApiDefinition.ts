@@ -10,23 +10,23 @@ export type Error =
     | FernRegistry.api.v1.register.registerApiDefinition.Error.UserNotInOrgError
     | FernRegistry.api.v1.register.registerApiDefinition.Error._Unknown;
 
-export declare namespace Error {
-    interface UnauthorizedError {
+export namespace Error {
+    export interface UnauthorizedError {
         error: "UnauthorizedError";
         content: string;
     }
 
-    interface UserNotInOrgError {
+    export interface UserNotInOrgError {
         error: "UserNotInOrgError";
         content: string;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         userNotInOrgError: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -57,7 +57,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: FernRegistry.api.v1.register.registerApiDefinition.Error,
-        visitor: FernRegistry.api.v1.register.registerApiDefinition.Error._Visitor<_Result>
+        visitor: FernRegistry.api.v1.register.registerApiDefinition.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
             case "UnauthorizedError":

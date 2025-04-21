@@ -8,12 +8,12 @@ export type ColorConfig =
     | FernRegistry.docs.v1.commons.ColorConfig.Unthemed
     | FernRegistry.docs.v1.commons.ColorConfig.Themed;
 
-export declare namespace ColorConfig {
-    interface Unthemed extends FernRegistry.docs.v1.commons.ColorUnthemedConfig {
+export namespace ColorConfig {
+    export interface Unthemed extends FernRegistry.docs.v1.commons.ColorUnthemedConfig {
         type: "unthemed";
     }
 
-    interface Themed extends FernRegistry.docs.v1.commons.ColorThemedConfig {
+    export interface Themed extends FernRegistry.docs.v1.commons.ColorThemedConfig {
         type: "themed";
     }
 }

@@ -6,12 +6,12 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type AuthConfig = FernRegistry.docs.v2.write.AuthConfig.Public | FernRegistry.docs.v2.write.AuthConfig.Private;
 
-export declare namespace AuthConfig {
-    interface Public extends FernRegistry.docs.v2.write.PublicAuthConfig {
+export namespace AuthConfig {
+    export interface Public extends FernRegistry.docs.v2.write.PublicAuthConfig {
         type: "public";
     }
 
-    interface Private extends FernRegistry.docs.v2.write.PrivateAuthConfig {
+    export interface Private extends FernRegistry.docs.v2.write.PrivateAuthConfig {
         type: "private";
     }
 }

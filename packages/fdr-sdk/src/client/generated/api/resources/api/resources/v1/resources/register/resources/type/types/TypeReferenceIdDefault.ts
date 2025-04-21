@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../../../../../../../index";
 
 export type TypeReferenceIdDefault = FernRegistry.api.v1.register.TypeReferenceIdDefault.Enum;
 
-export declare namespace TypeReferenceIdDefault {
-    interface Enum {
+export namespace TypeReferenceIdDefault {
+    export interface Enum {
         type: "enum";
         value: string;
     }

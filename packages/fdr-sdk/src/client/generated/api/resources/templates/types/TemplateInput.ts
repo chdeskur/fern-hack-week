@@ -6,13 +6,13 @@ import * as FernRegistry from "../../../index";
 
 export type TemplateInput = FernRegistry.TemplateInput.Template | FernRegistry.TemplateInput.Payload;
 
-export declare namespace TemplateInput {
-    interface Template {
+export namespace TemplateInput {
+    export interface Template {
         type: "template";
         value: FernRegistry.Template;
     }
 
-    interface Payload extends FernRegistry.PayloadInput {
+    export interface Payload extends FernRegistry.PayloadInput {
         type: "payload";
     }
 }
