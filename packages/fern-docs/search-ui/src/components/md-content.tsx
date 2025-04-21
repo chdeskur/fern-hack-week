@@ -11,13 +11,35 @@ export function MarkdownContent({
   children: string;
   components?: Components;
 }) {
+  /*
+    Claude 3.5 sometimes doesn't create footnote definitions correctly
+    remark-gfm requires that footnotes look like [^1] in the text
+    and then [^1]: link in the footnote, whereas Claude 3.5 will sometimes
+    create [^1]: link in the main text, which breaks the markdown rendering.
+
+    This code will regex for improperly placed links, and then move them to the end
+  */
+  let cleanedContent = children;
+  const footnoteDefinitions: string[] = [];
+  cleanedContent = cleanedContent.replace(
+    /\[\^(\d+)\]:\s+(.*?)(?=\n\n|\n[^\n]|$)/g,
+    (match, footnoteNumber, link) => {
+      footnoteDefinitions.push(`[^${footnoteNumber}]: ${link.trim()}`);
+      return `[^${footnoteNumber}]\n`;
+    }
+  );
+  if (footnoteDefinitions.length > 0) {
+    cleanedContent =
+      cleanedContent.trim() + "\n\n" + footnoteDefinitions.join("\n");
+  }
+
   return (
     <Markdown
       components={components}
       remarkPlugins={[remarkGfm, remarkTest]}
       remarkRehypeOptions={{}}
     >
-      {children.replaceAll("```[^", "```\n[^")}
+      {cleanedContent.replaceAll("```[^", "```\n[^")}
     </Markdown>
   );
 }
