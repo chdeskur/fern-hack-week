@@ -217,7 +217,7 @@ function getBodyDataString(
 
   if (body == null) {
     if (protocol?.type === "openrpc") {
-      getBodyJsonString(undefined, protocol);
+      return getBodyJsonString(undefined, protocol);
     }
     return [];
   }
