@@ -90,10 +90,6 @@ function getBodyJsonString(
   value: unknown | null | undefined,
   protocol?: Latest.Protocol
 ): string[] {
-  if (value == null) {
-    return [];
-  }
-
   if (protocol?.type === "openrpc") {
     const payload = {
       id: 1,
@@ -106,6 +102,10 @@ function getBodyJsonString(
       "\\'"
     );
     return [`-d '${stringifiedValue}'`];
+  }
+
+  if (value == null) {
+    return [];
   }
 
   if (typeof value === "string") {
@@ -211,7 +211,14 @@ function getBodyDataString(
   usesApplicationJsonInFormDataValue: boolean,
   protocol: Latest.Protocol | undefined
 ): string[] {
-  if (method === "GET" || body == null) {
+  if (method === "GET") {
+    return [];
+  }
+
+  if (body == null) {
+    if (protocol?.type === "openrpc") {
+      getBodyJsonString(undefined, protocol);
+    }
     return [];
   }
 
