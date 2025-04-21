@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - app
+  workflow_dispatch:
     
 permissions: write-all
 
@@ -22,5 +23,5 @@ jobs:
           git config --global user.name "fern-pr-bot"
           git checkout twoslash
           git pull
-          git rebase origin/app
+          git merge origin/app
           git push origin twoslash
