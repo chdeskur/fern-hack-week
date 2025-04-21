@@ -43,7 +43,7 @@
     "@fern-platform/configs": "workspace:*",
     "@octokit/types": "^13.4.1",
     "@serverless/typescript": "^3.0.0",
-    "@types/adm-zip": "^0.5.5",
+    "@types/adm-zip": "^0.5.7",
     "@types/aws-lambda": "^8.10.71",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^18.11.9",
