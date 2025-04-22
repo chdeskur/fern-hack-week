@@ -15,8 +15,6 @@ import { isLocal } from "@/server/isLocal";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
-export const runtime = "edge";
-
 const FORWARDED_HOST_QUERY = "forwarded_host";
 const CODE_QUERY = "code";
 const ERROR_DESCRIPTION_QUERY = "error_description";
