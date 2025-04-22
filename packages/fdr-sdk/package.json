@@ -60,7 +60,7 @@
     "node-fetch": "2.7.0",
     "qs": "6.12.0",
     "tinycolor2": "^1.6.0",
-    "ts-essentials": "^10.0.1",
+    "ts-essentials": "^10.0.4",
     "url-join": "5.0.0"
   },
   "devDependencies": {
