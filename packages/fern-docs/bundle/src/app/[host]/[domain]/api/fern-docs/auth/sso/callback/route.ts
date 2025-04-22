@@ -15,6 +15,8 @@ import { isLocal } from "@/server/isLocal";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
+export const runtime = "edge";
+
 const FORWARDED_HOST_QUERY = "forwarded_host";
 const CODE_QUERY = "code";
 const ERROR_DESCRIPTION_QUERY = "error_description";
@@ -70,10 +72,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     // TODO: need to support docs instances with subpaths (forward-proxied from the origin).
-    const destination = new URL(
-      `${req.nextUrl.pathname}${req.nextUrl.search}`,
-      url.origin
-    );
+    const destination = new URL(domain, url.origin);
     destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
     const allowedDestinations = [withDefaultProtocol(getDocsDomainEdge(req))];
 
