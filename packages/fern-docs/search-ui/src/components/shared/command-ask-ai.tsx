@@ -18,9 +18,7 @@ export const CommandAskAIGroup = forwardRef<
     <Command.Group ref={ref} {...props}>
       <Command.Item onSelect={() => onAskAI(query)}>
         <Sparkles />
-        <AskAIText
-          query={query.trim().split(/\s+/).length < 2 ? "" : query.trim()}
-        />
+        <AskAIText query={query.trim().length > 0 ? query.trim() : ""} />
         <Badge rounded className="ml-auto" size="sm">
           Experimental
         </Badge>

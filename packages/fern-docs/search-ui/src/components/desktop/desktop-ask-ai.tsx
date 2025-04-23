@@ -328,15 +328,6 @@ const DesktopAskAIChat = ({
 
   const askAI = useDebouncedCallback(
     (message: string): void => {
-      if (message.trim().split(/\s+/).length < 2) {
-        chat.setInput(message);
-        inputRef.current?.focus();
-        inputRef.current?.setSelectionRange(
-          chat.input.length,
-          chat.input.length
-        );
-        return;
-      }
       void chat.append(
         { role: "user", content: message },
         {
@@ -523,7 +514,7 @@ const AskAIComposer = forwardRef<
     forwardedRef
   ) => {
     const value = typeof props.value === "string" ? props.value : "";
-    const canSubmit = value.trim().split(/\s+/).length >= 2;
+    const canSubmit = value.trim().split(/\s+/).length >= 1;
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
