@@ -215,7 +215,7 @@ function transformEndpoint({
     availability: writeShape.availability,
     environments: writeShape.environments,
     defaultEnvironment: writeShape.defaultEnvironment,
-    urlSlug,
+    urlSlug: writeShape.slug ?? urlSlug,
     // id is more unique than name, so we use that as the url slug
     // keep name as a fallback for backwards compatibility (via redirects)
     migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug)

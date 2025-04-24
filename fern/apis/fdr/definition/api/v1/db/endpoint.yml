@@ -10,7 +10,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
-    properties:
+    properties:  
       authed: optional<boolean>
       defaultEnvironment: optional<rootCommons.EnvironmentId>
       environments: optional<list<commons.Environment>>

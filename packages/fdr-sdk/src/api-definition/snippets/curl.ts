@@ -92,7 +92,7 @@ function getBodyJsonString(
 ): string[] {
   if (protocol?.type === "openrpc") {
     let params = [];
-    if (value && typeof value === 'object') {
+    if (value && typeof value === "object") {
       params = Object.values(value);
     }
     const payload = {
