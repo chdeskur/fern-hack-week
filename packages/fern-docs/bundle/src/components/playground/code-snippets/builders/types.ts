@@ -26,10 +26,14 @@ export abstract class PlaygroundCodeSnippetBuilder {
 
   protected maybeWrapJsonBody(body: unknown): unknown {
     if (this.context.endpoint.protocol?.type === "openrpc") {
+      let params = [];
+      if (body && typeof body === "object") {
+        params = Object.values(body);
+      }
       return {
         jsonrpc: "2.0",
         method: this.context.endpoint.protocol.methodName,
-        params: body,
+        params,
         id: 1,
       };
     }
