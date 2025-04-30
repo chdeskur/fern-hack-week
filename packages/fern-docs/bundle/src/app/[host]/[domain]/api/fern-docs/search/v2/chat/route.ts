@@ -17,10 +17,7 @@ import { initLogger, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import {
-  createDefaultSystemPrompt,
-  createWebflowSystemPrompt,
-} from "@fern-docs/search-server";
+import { createDefaultSystemPrompt } from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
   toDocuments,
@@ -145,18 +142,12 @@ export async function POST(req: NextRequest) {
     filters,
   });
   const documents = toDocuments(searchResults).join("\n\n");
-  const system = isWebflow
-    ? createWebflowSystemPrompt({
-        domain,
-        date: new Date().toDateString(),
-        documents,
-      })
-    : createDefaultSystemPrompt({
-        domain,
-        date: new Date().toDateString(),
-        documents,
-        promptTemplate,
-      });
+  const system = createDefaultSystemPrompt({
+    domain,
+    date: new Date().toDateString(),
+    documents,
+    promptTemplate,
+  });
   const result = streamText({
     model: languageModel,
     system,
