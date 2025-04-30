@@ -7,7 +7,7 @@ import { isLocal } from "@/server/isLocal";
 export function WebSocketRefresh() {
   useEffect(() => {
     let ws: WebSocket | null = null;
-    let timeout: NodeJS.Timeout | null = null;
+    let connectionTimeout: NodeJS.Timeout | null = null;
 
     const setupWebSocket = async (): Promise<void> => {
       if (!isLocal()) {
@@ -15,7 +15,6 @@ export function WebSocketRefresh() {
         return;
       }
 
-      // Ensure we're in a browser environment
       if (typeof window === "undefined") {
         console.log(
           "Not in browser environment, skipping WebSocket connection"
@@ -23,17 +22,23 @@ export function WebSocketRefresh() {
         return;
       }
 
-      // Ensure WebSocket is available
       if (typeof WebSocket === "undefined") {
         console.error("WebSocket is not available in this environment");
         return;
       }
 
-      const response = await fetch("/api/fern-docs/env-local");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      // revalidate the page first to clear any cached content
+      const revalidateResponse = await fetch("/api/fern-docs/revalidate-local");
+      if (!revalidateResponse.ok) {
+        throw new Error(`HTTP error! status: ${revalidateResponse.status}`);
       }
-      const data = await response.json();
+      console.log("Client: Successfully revalidated");
+
+      const envResponse = await fetch("/api/fern-docs/env-local");
+      if (!envResponse.ok) {
+        throw new Error(`HTTP error! status: ${envResponse.status}`);
+      }
+      const data = await envResponse.json();
 
       if (!data.backendPort) {
         console.error("No port found in env-local response");
@@ -58,6 +63,8 @@ export function WebSocketRefresh() {
             const message = JSON.parse(event.data);
             console.log("Client: Parsed message:", message);
 
+            // revalidate the docs when a change has been detected
+            // todo: only revalidate the relevant part of the docs (e.g. the page that changed)
             if (message.type === "finishReload") {
               console.log(
                 "Client: Received finishReload message, calling revalidate-local endpoint"
@@ -68,11 +75,15 @@ export function WebSocketRefresh() {
                   throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 console.log("Client: Successfully revalidated");
-                // Reload the page after revalidation
                 window.location.reload();
               } catch (error) {
                 console.error("Client: Failed to revalidate:", error);
               }
+            }
+
+            if (message.type === "ping" && ws?.readyState === WebSocket.OPEN) {
+              console.log("Client: Received ping, sending pong");
+              ws.send(JSON.stringify({ type: "pong" }));
             }
           } catch (error) {
             console.error("Client: Failed to parse WebSocket message:", error);
@@ -89,8 +100,7 @@ export function WebSocketRefresh() {
           );
         };
 
-        // Add connection timeout check
-        timeout = setTimeout(() => {
+        connectionTimeout = setTimeout(() => {
           if (ws?.readyState !== WebSocket.OPEN) {
             console.error(
               "Client: WebSocket connection failed to establish within 5 seconds"
@@ -106,8 +116,8 @@ export function WebSocketRefresh() {
 
     return () => {
       console.log("Client: Cleaning up WebSocket connection");
-      if (timeout) {
-        clearTimeout(timeout);
+      if (connectionTimeout) {
+        clearTimeout(connectionTimeout);
       }
       if (ws) {
         ws.close();
