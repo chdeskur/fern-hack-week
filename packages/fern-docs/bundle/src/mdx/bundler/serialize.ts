@@ -1,16 +1,16 @@
 import "server-only";
 
-import { RehypeShikiOptions } from "@shikijs/rehype";
-import {
-  transformerNotationDiff,
-  transformerNotationFocus,
-  transformerNotationHighlight,
-} from "@shikijs/transformers";
-import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
+// import { RehypeShikiOptions } from "@shikijs/rehype";
+// import {
+//   transformerNotationDiff,
+//   transformerNotationFocus,
+//   transformerNotationHighlight,
+// } from "@shikijs/transformers";
+// import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
 import { mapKeys } from "es-toolkit/object";
 import fs from "fs";
 import { gracefulify } from "graceful-fs";
-import { ElementContent } from "hast";
+// import { ElementContent } from "hast";
 import { bundleMDX } from "mdx-bundler";
 import path from "path";
 import rehypeKatex from "rehype-katex";
@@ -30,7 +30,7 @@ import {
   customHeadingHandler,
   sanitizeBreaks,
   sanitizeMdxExpression,
-  toTree,
+  // toTree,
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
@@ -57,7 +57,7 @@ import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
-import { conditionalRehypeShiki } from "../plugins/rehype-shiki-twoslash";
+// import { conditionalRehypeShiki } from "../plugins/rehype-shiki-twoslash";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
@@ -166,32 +166,32 @@ async function serializeMdxImpl(
         [rehypeFiles, { files: remoteFiles }],
         rehypeMdxClassStyle,
         rehypeCodeBlock,
-        [
-          conditionalRehypeShiki,
-          {
-            themes: {
-              light: "min-light",
-              dark: "material-theme-darker",
-            },
-            transformers: [
-              transformerNotationDiff(),
-              transformerNotationFocus(),
-              transformerNotationHighlight(),
-              transformerTwoslash({
-                explicitTrigger: true,
-                renderer: rendererRich({
-                  renderMarkdown: function (markdown) {
-                    const { hast } = toTree(markdown, {
-                      format: "md",
-                      sanitize: false,
-                    });
-                    return hast.children as ElementContent[];
-                  },
-                }),
-              }),
-            ],
-          } satisfies RehypeShikiOptions,
-        ],
+        // [
+        //   conditionalRehypeShiki,
+        //   {
+        //     themes: {
+        //       light: "min-light",
+        //       dark: "material-theme-darker",
+        //     },
+        //     transformers: [
+        //       transformerNotationDiff(),
+        //       transformerNotationFocus(),
+        //       transformerNotationHighlight(),
+        //       transformerTwoslash({
+        //         explicitTrigger: true,
+        //         renderer: rendererRich({
+        //           renderMarkdown: function (markdown) {
+        //             const { hast } = toTree(markdown, {
+        //               format: "md",
+        //               sanitize: false,
+        //             });
+        //             return hast.children as ElementContent[];
+        //           },
+        //         }),
+        //       }),
+        //     ],
+        //   } satisfies RehypeShikiOptions,
+        // ],
         rehypeSteps,
         rehypeAccordions,
         rehypeTabs,
