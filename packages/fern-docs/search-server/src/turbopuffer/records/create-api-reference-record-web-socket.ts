@@ -1,12 +1,12 @@
-import { FernTurbopufferRecord } from "../types";
+import { TurbopufferRecord } from "../types";
 
 interface CreateApiReferenceRecordWebSocketOptions {
-  endpointBase: FernTurbopufferRecord;
+  endpointBase: TurbopufferRecord;
 }
 
 export function createApiReferenceRecordWebSocket({
   endpointBase,
-}: CreateApiReferenceRecordWebSocketOptions): FernTurbopufferRecord {
+}: CreateApiReferenceRecordWebSocketOptions): TurbopufferRecord {
   return {
     ...endpointBase,
     attributes: {

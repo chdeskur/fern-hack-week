@@ -1,42 +1,23 @@
-import { uniqBy, zipWith } from "es-toolkit/array";
+import { uniqBy } from "es-toolkit/array";
 
-import { FernTurbopufferRecord } from "./types";
+import { TurbopufferRecord } from "./types";
 
-export function toDocuments(results: FernTurbopufferRecord[]): string[] {
+export function toDocuments(results: TurbopufferRecord[]): string[] {
   return uniqBy(
     results.map((result) => {
-      const code_snippets = zipWith(
-        result.attributes.code_snippets?.filter(
-          (snippet) => snippet.length < 1000
-        ) ?? [],
-        result.attributes.code_snippet_langs?.filter(
-          (lang) => lang.length < 1000
-        ) ?? [],
-        (snippet, lang) => {
-          const lang_str: string = lang ?? "";
-          return `\`\`\`${lang_str}\n${snippet}\n\`\`\``;
-        }
-      ).join("\n\n");
       return {
-        canonicalPathname: result.attributes.canonicalPathname,
         chunk: result.attributes.chunk,
-        domain: result.attributes.domain,
+        title: result.attributes.title,
         pathname: result.attributes.pathname,
         hash: result.attributes.hash,
-        title: result.attributes.title,
-        description: result.attributes.description
-          ? result.attributes.description + "\n\n"
-          : "",
-        content: result.attributes.content
-          ? result.attributes.content + "\n\n"
-          : "",
-        code_snippets: code_snippets ? code_snippets + "\n\n" : "",
+        description: result.attributes.description,
         page_position: result.attributes.page_position,
+        domain: result.attributes.domain,
       };
     }),
     (result) => `${result.pathname}${result.hash} - ${result.page_position}`
   ).map(
     (result) =>
-      `# ${result.title}\n Source: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.chunk}${result.description}${result.content}${result.code_snippets}`
+      `# ${result.title}\n Citation URL: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.chunk}${result.description}`
   );
 }

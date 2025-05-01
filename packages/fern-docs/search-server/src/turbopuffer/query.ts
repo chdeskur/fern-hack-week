@@ -10,7 +10,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { createRoleFacet } from "../shared/roles/create-role-facet";
 import { createPermutations } from "../shared/roles/role-utils";
 import { EVERYONE_ROLE } from "../utils/constants";
-import { FernTurbopufferRecord } from "./types";
+import { TurbopufferRecord } from "./types";
 
 interface SemanticSearchOptions {
   vectorizer: (text: string) => Promise<number[]>;
@@ -41,7 +41,7 @@ export async function queryTurbopuffer(
     authed = false,
     roles = [],
   }: SemanticSearchOptions
-): Promise<FernTurbopufferRecord[]> {
+): Promise<TurbopufferRecord[]> {
   const tpuf = new Turbopuffer({
     apiKey,
     baseUrl: "https://gcp-us-east4.turbopuffer.com",
@@ -113,7 +113,7 @@ export async function queryTurbopuffer(
   return reciprocalRankFusion(
     semanticResults,
     bm25Results
-  ) as unknown as FernTurbopufferRecord[];
+  ) as unknown as TurbopufferRecord[];
 }
 
 type ResultItem = QueryResults[number];

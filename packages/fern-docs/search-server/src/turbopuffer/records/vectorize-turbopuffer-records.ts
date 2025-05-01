@@ -1,15 +1,12 @@
 import { zipWith } from "es-toolkit/array";
 import { encode } from "gpt-tokenizer";
 
-import {
-  FernTurbopufferRecord,
-  FernTurbopufferRecordWithoutVector,
-} from "../types";
+import { TurbopufferRecord, TurbopufferRecordWithoutVector } from "../types";
 
 export async function vectorizeTurbopufferRecords(
-  records: FernTurbopufferRecordWithoutVector[],
+  records: TurbopufferRecordWithoutVector[],
   vectorizer: (chunk: string[]) => Promise<number[][]>
-): Promise<FernTurbopufferRecord[]> {
+): Promise<TurbopufferRecord[]> {
   let chunks = records.map((record) => record.attributes.chunk);
   chunks = chunks.filter(
     (c) => encode(c).length <= 8190 && encode(c).length > 0

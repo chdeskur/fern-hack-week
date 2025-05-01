@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
     namespace,
     authed: user != null,
     roles: user?.roles ?? [],
-    topK: 5,
+    topK: 3,
     filters,
   });
   const documents = toDocuments(searchResults).join("\n\n");
@@ -152,7 +152,7 @@ export async function POST(req: NextRequest) {
     model: languageModel,
     system,
     messages,
-    maxSteps: 10,
+    maxSteps: 5,
     maxRetries: 3,
     tools: {
       search: tool({
@@ -168,10 +168,18 @@ export async function POST(req: NextRequest) {
             authed: user != null,
             roles: user?.roles ?? [],
             filters,
+            topK: 5,
           });
           return response.map((hit) => {
-            const { domain, pathname, hash } = hit.attributes;
+            const { domain, pathname, hash, chunk } = hit.attributes;
             const url = `https://${domain}${pathname}${hash ?? ""}`;
+            if (chunk.length > 20000) {
+              return {
+                url,
+                chunk: chunk.slice(0, 20000),
+                ...(hit.attributes as Omit<typeof hit.attributes, "chunk">),
+              };
+            }
             return { url, ...hit.attributes };
           });
         },
@@ -251,7 +259,7 @@ async function runQueryTurbopuffer(
     : await queryTurbopuffer(query, {
         namespace: opts.namespace,
         apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 10,
+        topK: opts.topK ?? 5,
         vectorizer: async (text) => {
           const embedding = await embed({
             model: opts.embeddingModel,

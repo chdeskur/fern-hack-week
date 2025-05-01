@@ -12,7 +12,7 @@ import {
   isApiLeaf,
 } from "@fern-api/fdr-sdk/navigation";
 
-import { FernTurbopufferRecordWithoutVector } from "../types";
+import { TurbopufferRecordWithoutVector } from "../types";
 import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
 import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
 import { createApiReferenceRecordWebhook } from "./create-api-reference-record-webhook";
@@ -39,10 +39,7 @@ export async function createTurbopufferRecords({
   domain,
   org_id,
   authed,
-  splitText,
-}: CreateTurbopufferRecordsOptions): Promise<
-  FernTurbopufferRecordWithoutVector[]
-> {
+}: CreateTurbopufferRecordsOptions): Promise<TurbopufferRecordWithoutVector[]> {
   const collector = NodeCollector.collect(root);
 
   const pageNodes = collector.indexablePageNodesWithAuth;
@@ -55,7 +52,7 @@ export async function createTurbopufferRecords({
   const markdownRecords = flatten(
     await Promise.all(
       markdownNodes.map(
-        async (node): Promise<FernTurbopufferRecordWithoutVector[]> => {
+        async (node): Promise<TurbopufferRecordWithoutVector[]> => {
           const pageId = getPageId(node);
           if (!pageId) {
             console.error(`Page node ${node.slug} has no page id`);
@@ -79,13 +76,13 @@ export async function createTurbopufferRecords({
             type: "markdown",
           });
 
-          return createMarkdownRecords({ base, markdown, splitText });
+          return createMarkdownRecords({ base, markdown });
         }
       )
     )
   );
 
-  const apiReferenceRecords: FernTurbopufferRecordWithoutVector[] = [];
+  const apiReferenceRecords: TurbopufferRecordWithoutVector[] = [];
   apiLeafNodes.forEach((node) => {
     const apiDefinition = apis[node.apiDefinitionId];
 
@@ -178,11 +175,5 @@ export async function createTurbopufferRecords({
       nodeIds.add(r.id);
     }
   });
-  // const records = [...markdownRecords];
-  console.log(
-    "Total chunk length:",
-    records.reduce((sum, r) => sum + r.attributes.chunk.length, 0)
-  );
-  console.log("records.length", records.length);
   return records;
 }

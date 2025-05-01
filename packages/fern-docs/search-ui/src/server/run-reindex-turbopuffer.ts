@@ -4,7 +4,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { embed, embedMany } from "ai";
 
 import {
-  FernTurbopufferRecord,
+  TurbopufferRecord,
   queryTurbopuffer,
   turbopufferUpsertTask,
 } from "@fern-docs/search-server/turbopuffer";
@@ -46,7 +46,7 @@ export const runSemanticSearchTurbopuffer = async (
   query: string,
   domain: string,
   topK: number = 10
-): Promise<FernTurbopufferRecord[]> => {
+): Promise<TurbopufferRecord[]> => {
   return queryTurbopuffer(query, {
     namespace: `${domain}_${model.modelId}`,
     apiKey: turbopufferApiKey(),

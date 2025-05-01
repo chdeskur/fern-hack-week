@@ -6,18 +6,18 @@ import { truncateToBytes } from "@fern-api/ui-core-utils";
 
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
-import { FernTurbopufferRecord } from "../types";
+import { TurbopufferRecord } from "../types";
 
 interface CreateApiReferenceRecordWebhookOptions {
-  endpointBase: FernTurbopufferRecord;
+  endpointBase: TurbopufferRecord;
   endpoint: ApiDefinition.WebhookDefinition;
 }
 
 export function createApiReferenceRecordWebhook({
   endpointBase,
   endpoint,
-}: CreateApiReferenceRecordWebhookOptions): FernTurbopufferRecord[] {
-  const base: FernTurbopufferRecord = {
+}: CreateApiReferenceRecordWebhookOptions): TurbopufferRecord[] {
+  const base: TurbopufferRecord = {
     ...endpointBase,
     attributes: {
       ...endpointBase.attributes,
@@ -25,7 +25,7 @@ export function createApiReferenceRecordWebhook({
     },
   };
 
-  const records: FernTurbopufferRecord[] = [base];
+  const records: TurbopufferRecord[] = [base];
 
   const {
     content: payload_description,
@@ -60,18 +60,12 @@ export function createApiReferenceRecordWebhook({
         .digest("hex"),
       attributes: {
         ...base.attributes,
-        breadcrumb: [
-          ...(base.attributes.breadcrumb ?? []),
-          base.attributes.title,
-          base.attributes.pathname,
-        ],
         title: `${base.attributes.title} - Payload`,
         hash: "#payload",
         description:
           payload_description != null
             ? truncateToBytes(payload_description, 50 * 1000)
             : undefined,
-        code_snippets: code_snippets?.length ? code_snippets : undefined,
         page_position: 1,
       },
     });

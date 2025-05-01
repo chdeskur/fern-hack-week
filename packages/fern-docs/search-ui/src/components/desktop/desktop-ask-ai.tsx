@@ -17,11 +17,11 @@ import {
 } from "react";
 import { Components } from "react-markdown";
 
+import { Message, useChat } from "@ai-sdk/react";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
-import { Message, useChat } from "ai/react";
 import type { Element as HastElement } from "hast";
 import { atom, useAtom, useAtomValue } from "jotai";
 import {
@@ -321,10 +321,10 @@ const DesktopAskAIChat = ({
 
   // Reset userScrolled when the chat is loading
   useIsomorphicLayoutEffect(() => {
-    if (chat.isLoading) {
+    if (chat.status !== "ready") {
       setUserScrolled(false);
     }
-  }, [chat.isLoading]);
+  }, [chat.status]);
 
   const askAI = useDebouncedCallback(
     (message: string): void => {
@@ -383,10 +383,10 @@ const DesktopAskAIChat = ({
         }}
         tabIndex={-1}
         className={cn(isScrolled && "mask-grad-top-3")}
-        data-disable-animation={chat.isLoading ? "" : undefined}
+        data-disable-animation={chat.status !== "ready" ? "" : undefined}
       >
         <headerActions.In>
-          {chat.messages.length > 0 && (
+          {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -408,7 +408,7 @@ const DesktopAskAIChat = ({
                 </TooltipPortal>
               </Tooltip>
             </TooltipProvider>
-          )}
+          }
         </headerActions.In>
 
         <AskAICommandItems
@@ -465,7 +465,7 @@ const DesktopAskAIChat = ({
             }),
             [darkCodeEnabled]
           )}
-          isLoading={chat.isLoading}
+          isLoading={chat.status !== "ready"}
           userScrolled={userScrolled}
           domain={domain}
           renderActions={renderActions}
@@ -484,7 +484,7 @@ const DesktopAskAIChat = ({
         ref={inputRef}
         value={chat.input}
         onValueChange={chat.setInput}
-        isLoading={chat.isLoading}
+        isLoading={chat.status !== "ready"}
         stop={chat.stop}
         onSend={askAI}
         onKeyDown={useEventCallback((e) => {
@@ -789,7 +789,7 @@ function FootnoteCommands({
           prefetch={prefetch}
           domain={domain}
         >
-          <Badge color="grayWithAccent" variant="subtleSolidHover">
+          <Badge color="gray" variant="subtleSolidHover">
             {String(idx + 1)}
           </Badge>
           <div>
@@ -803,27 +803,3 @@ function FootnoteCommands({
     </>
   );
 }
-
-const AnimatedSparkles = ({ className }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path
-      className="sparkle-center"
-      d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"
-    />
-    <g className="sparkle-outer">
-      <path d="M20 3v4" />
-      <path d="M22 5h-4" />
-      <path d="M4 17v2" />
-      <path d="M5 18H3" />
-    </g>
-  </svg>
-);
