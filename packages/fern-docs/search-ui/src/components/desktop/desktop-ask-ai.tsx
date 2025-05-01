@@ -357,7 +357,7 @@ const DesktopAskAIChat = ({
 
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const messages = useDeferredValue(chat.messages);
+  let messages = useDeferredValue(chat.messages);
 
   return (
     <>
@@ -396,6 +396,7 @@ const DesktopAskAIChat = ({
                     onClick={() => {
                       chat.setMessages([]);
                       setInitialConversation([]);
+                      messages = chat.messages;
                     }}
                   >
                     <SquarePen />
