@@ -46,7 +46,7 @@ jobs:
         
   prod:
     if: github.event_name == 'release' && startsWith(github.event.release.tag_name, 'docs@')
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: aws-actions/configure-aws-credentials@v4
@@ -66,5 +66,8 @@ jobs:
       - name: Remove unnecessary files
         working-directory: packages/fern-docs/bundle
         run: find .next -depth -mindepth 1 -not -path ".next/standalone*" -exec rm -rf {} \;
+      - name: Remove esbuild dependency
+        working-directory: packages/fern-docs/bundle
+        run: rm -rf .next/standalone/node_modules/.pnpm/esbuild@0.25.0 && rm -rf .next/standalone/node_modules/.pnpm/@esbuild+linux-x64@0.25.0
       - name: Synthesize local preview bundle
         run: pnpm --filter=@fern-platform/cdk run deploy-app:prod
