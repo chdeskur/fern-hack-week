@@ -56,20 +56,22 @@ export async function EndpointContentLeft({
     authHeader = visitDiscriminatedUnion(
       auth
     )._visit<ApiDefinition.ObjectProperty>({
-      basicAuth: () => {
+      basicAuth: (basicAuth) => {
         return {
           key: ApiDefinition.PropertyKey("Authorization"),
           description:
+            basicAuth.description ??
             "Basic authentication of the form Basic <username:password>.",
           hidden: false,
           valueShape: stringShape,
           availability: undefined,
         };
       },
-      bearerAuth: () => {
+      bearerAuth: (bearerAuth) => {
         return {
           key: ApiDefinition.PropertyKey("Authorization"),
           description:
+            bearerAuth.description ??
             "Bearer authentication of the form Bearer <token>, where token is your auth token.",
           hidden: false,
           valueShape: stringShape,
@@ -80,7 +82,7 @@ export async function EndpointContentLeft({
         return {
           key: ApiDefinition.PropertyKey(value.headerWireValue),
           description:
-            value.prefix != null
+            (value.description ?? value.prefix != null)
               ? `Header authentication of the form ${value.prefix} <token>`
               : undefined,
           hidden: false,
@@ -95,11 +97,13 @@ export async function EndpointContentLeft({
               clientCredentialsValue.value,
               "type"
             )._visit({
-              referencedEndpoint: () => ({
+              referencedEndpoint: (oauth) => ({
                 key: ApiDefinition.PropertyKey(
                   clientCredentialsValue.value.headerName || "Authorization"
                 ),
-                description: `OAuth authentication of the form ${clientCredentialsValue.value.tokenPrefix ? `${clientCredentialsValue.value.tokenPrefix ?? "Bearer"} ` : ""}<token>.`,
+                description:
+                  oauth.description ??
+                  `OAuth authentication of the form ${clientCredentialsValue.value.tokenPrefix ? `${clientCredentialsValue.value.tokenPrefix ?? "Bearer"} ` : ""}<token>.`,
                 hidden: false,
                 valueShape: stringShape,
                 availability: undefined,

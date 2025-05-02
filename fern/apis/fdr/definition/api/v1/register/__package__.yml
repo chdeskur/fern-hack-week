@@ -153,15 +153,21 @@ types:
       oAuth: OAuth
 
   BasicAuth:
+    extends:
+      - commons.WithDescription
     properties:
       usernameName: optional<string>
       passwordName: optional<string>
 
   BearerAuth:
+    extends:
+      - commons.WithDescription
     properties:
       tokenName: optional<string>
 
   HeaderAuth:
+    extends:
+      - commons.WithDescription
     properties:
       nameOverride: optional<string>
       headerWireValue: string
@@ -178,6 +184,8 @@ types:
       referencedEndpoint: OAuthClientCredentialsReferencedEndpoint
 
   OAuthClientCredentialsReferencedEndpoint:
+    extends:
+      - commons.WithDescription
     properties:
       endpointId: rootCommons.EndpointId
       accessTokenLocator: rootCommons.JqString

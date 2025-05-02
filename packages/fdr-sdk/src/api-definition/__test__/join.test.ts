@@ -189,6 +189,7 @@ const type4: Latest.TypeDefinition = {
 const authScheme: Latest.AuthScheme = {
   type: "bearerAuth",
   tokenName: "API Token",
+  description: undefined,
 };
 
 const api1: Latest.ApiDefinition = {
