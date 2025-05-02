@@ -1,9 +1,12 @@
-import { PropsWithChildren, ReactNode, memo, useEffect } from "react";
+import { PropsWithChildren, ReactNode, memo, useEffect, useRef } from "react";
 import { Snippet } from "react-instantsearch";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 
-import { useSearchHits, useSendEvent } from "../../hooks/use-search-hits";
+import {
+  useInfiniteSearchHits,
+  useSendEvent,
+} from "../../hooks/use-search-hits";
 import { AlgoliaRecordHit } from "../../types";
 import * as Command from "../cmdk";
 import { PageIcon } from "../icons/page";
@@ -30,12 +33,29 @@ export const CommandSearchHits = ({
   const isQueryEmpty = Command.useCommandState(
     (state) => state.search.trimStart().length === 0
   );
-  const items = useSearchHits();
+  const { items, isLastPage, showMore } = useInfiniteSearchHits();
+  const sentinelRef = useRef<HTMLLIElement>(null);
   const triggerSelection = Command.useTriggerSelection();
   useEffect(() => {
+    if (sentinelRef.current != null) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isLastPage) {
+            showMore();
+          }
+        });
+      });
+
+      observer.observe(sentinelRef.current);
+
+      return () => {
+        observer.disconnect();
+      };
+    }
+
     triggerSelection();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  }, [items, isLastPage, showMore]);
 
   const { filters } = useFacetFilters();
 
@@ -49,6 +69,7 @@ export const CommandSearchHits = ({
       onSelect={onSelect}
       prefetch={prefetch}
       domain={domain}
+      sentinelRef={sentinelRef}
     />
   );
 };
@@ -59,11 +80,13 @@ const MemoizedCommandSearchHits = memo(
     items,
     onSelect,
     prefetch,
+    sentinelRef,
   }: {
     domain: string;
     items: AlgoliaRecordHit[];
     onSelect: (path: string) => void;
     prefetch?: (path: string) => void | Promise<void>;
+    sentinelRef: React.RefObject<HTMLLIElement | null>;
   }) => {
     const groups = generateHits(items);
 
@@ -86,6 +109,7 @@ const MemoizedCommandSearchHits = memo(
             ))}
           </Command.Group>
         ))}
+        <li ref={sentinelRef} aria-hidden="true" className="list-none" />
       </TooltipProvider>
     );
   }

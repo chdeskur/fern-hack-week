@@ -1,5 +1,5 @@
 import { useDeferredValue } from "react";
-import { useHits } from "react-instantsearch";
+import { useHits, useInfiniteHits } from "react-instantsearch";
 
 import type { SendEventForHits } from "instantsearch.js/es/lib/utils";
 
@@ -15,4 +15,8 @@ export function useSearchHits(): AlgoliaRecordHit[] {
 export function useSendEvent(): SendEventForHits {
   const { sendEvent } = useHits();
   return sendEvent;
+}
+
+export function useInfiniteSearchHits() {
+  return useInfiniteHits<AlgoliaRecord>();
 }
