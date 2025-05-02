@@ -19,6 +19,7 @@ export const SEARCHABLE_ATTRIBUTES = [
   "status_code",
   "parameter_type",
 
+  "breadcrumb",
   "description",
   "unordered(content)",
 
