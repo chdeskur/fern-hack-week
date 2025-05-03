@@ -564,7 +564,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         return {
           // sortedUrls is guaranteed to be non-empty since `domains` is a
           // groupBy aggegation (and each group in a sql groupBy has at least one row)
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion @typescript-eslint/no-non-null-assertion
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           mainUrl: sortedUrls[0]!,
           urls: sortedUrls,
         };
