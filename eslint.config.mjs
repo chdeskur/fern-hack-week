@@ -159,6 +159,7 @@ export default [
     {
       rules: {
         // TODO: remove these:
+        "@typescript-eslint/no-unnecessary-type-assertion": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
         "@typescript-eslint/no-confusing-void-expression": "off",
         "@typescript-eslint/no-duplicate-type-constituents": "off",
