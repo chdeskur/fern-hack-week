@@ -24,6 +24,7 @@ import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 
 import { MaybeEnvironmentDropdown } from "@/components/MaybeEnvironmentDropdown";
+import { isLocal } from "@/server/isLocal";
 import { useAllEnvironmentIds } from "@/state/environment";
 
 import { closeButton } from "../PlaygroundCloseButton";
@@ -59,6 +60,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 }) => {
   const environmentIds = useAllEnvironmentIds();
   const isEditingEnvironment = useBooleanState(false);
+  const requestDisabled = isLocal() || baseUrl?.includes("localhost");
 
   return (
     <div className="playground-endpoint">
@@ -168,6 +170,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
           sendRequest={sendRequest}
           sendRequestButtonLabel={sendRequestButtonLabel}
           sendRequestIcon={sendRequestIcon}
+          disabled={requestDisabled}
         />
       </div>
 

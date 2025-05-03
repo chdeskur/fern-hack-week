@@ -21,7 +21,7 @@ function PlaygroundEndpointPath() {
       </div>
 
       <div className="max-sm:hidden">
-        <PlaygroundSendRequestButton />
+        <PlaygroundSendRequestButton disabled={true} />
       </div>
 
       {/* <Dialog.Close asChild className="max-sm:hidden">
@@ -51,6 +51,7 @@ export function PlaygroundEndpointSkeleton(): ReactElement<any> {
           form={form}
           requestCard={<PlaygroundCardSkeleton className="flex-1" />}
           responseCard={<PlaygroundCardSkeleton className="flex-1" />}
+          requestDisabled={true}
         />
       </div>
     </div>

@@ -26,11 +26,13 @@ import { ProxyResponse } from "../types/proxy";
 interface PlaygroundResponseCard {
   response: Loadable<PlaygroundResponse>;
   sendRequest: () => void;
+  requestDisabled: boolean;
 }
 
 export function PlaygroundResponseCard({
   response,
   sendRequest,
+  requestDisabled,
 }: PlaygroundResponseCard): ReactElement<any> {
   const isBinaryOctetStreamAudioPlayer = useAtomValue(
     isBinaryOctetStreamAudioPlayerAtom
@@ -124,7 +126,10 @@ export function PlaygroundResponseCard({
         loading: () =>
           response.type === "notStartedLoading" ? (
             <div className="flex flex-1 items-center justify-center">
-              <PlaygroundSendRequestButton sendRequest={sendRequest} />
+              <PlaygroundSendRequestButton
+                sendRequest={sendRequest}
+                disabled={requestDisabled}
+              />
             </div>
           ) : (
             <div className="flex flex-1 items-center justify-center">
