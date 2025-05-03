@@ -1,9 +1,0 @@
-{
-  "extends": "@fern-platform/configs/tsconfig/library.json",
-  "compilerOptions": {
-    "isolatedModules": false,
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
-  "include": ["./src/**/*"]
-}

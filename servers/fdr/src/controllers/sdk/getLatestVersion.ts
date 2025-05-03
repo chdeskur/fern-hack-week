@@ -13,6 +13,7 @@ export async function getLatestVersionFromPypi(
 
   if (response.ok) {
     // Extract the latest version from the response data
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const packageData = (await response.json()) as any;
     return packageData.info.version;
   }

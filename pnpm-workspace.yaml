@@ -2,7 +2,6 @@ packages:
   - "servers/**"
   - "clis/**"
   - "packages/**"
-  - "playwright/**"
   - "!packages/**/lib"
   - "!packages/**/dist"
   - "!packages/**/generated"

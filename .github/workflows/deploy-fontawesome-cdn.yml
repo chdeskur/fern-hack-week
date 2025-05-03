@@ -14,37 +14,37 @@ jobs:
   ignore:
     runs-on: ubuntu-latest
     outputs:
-      continue: ${{ steps.ignore.outputs.continue }}
+      continue: ${{ steps.has-changed.outputs.RESULT == 'true' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Ignore unchanged files
-        id: ignore
-        uses: ./.github/actions/turbo-ignore
-        with:
-          token: ${{ secrets.VERCEL_TOKEN }}
-          project: "icons.ferndocs.com"
-          package: "@fern-docs/icons-cdn"
-          environment: "production"
-          branch: main
+
+      - name: 🔎 Has changed
+        id: has-changed
+        # if there are changes, npx turbo-ignore returns a failure exit code
+        # which makes steps.has-changed.outputs.RESULT = 'true'
+        run: npx turbo-ignore @fern-docs/icons-cdn || echo "RESULT=true" >> $GITHUB_OUTPUT
 
   deploy:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1
+    if: needs.ignore.outputs.continue == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: Production - icons.ferndocs.com
-      url: ${{ steps.deploy.outputs.deployment_url }}
+    env:
+      VERCEL_PROJECT_ID: prj_MO0ayWSAeIoBYh8Cd13oigkd9knl
     steps:
-      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - uses: ./.github/actions/install
-
-      - name: Build & Deploy to Vercel
+      - name: Install
+        uses: ./.github/actions/install
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy icons.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
-          echo "Deployed to $(cat deployment-url.txt) but NOT promoted. Please promote manually."
-          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
+      - name: Promote Deployment
+        run: |
+          url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+          vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}             

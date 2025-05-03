@@ -2,37 +2,21 @@
 
 Thanks for being here! Fern gives a lot of importance to being a community project, and we rely on your help as much as you rely on ours. If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!
 
-## Opening an issue
-
-All contributions start with [an issue](https://github.com/fern-api/fern/issues/new). Even if you have a good idea of what the problem is and what the solution looks like, please open an issue. This will give us an opportunity to align on the problem and solution, and to deconflict in the case that somebody else is already working on it.
-
-## How can you help?
-
-Review [our documentation](https://buildwithfern.com/docs)! We appreciate any help we can get that makes our documentation more digestible.
-
-Talk about Fern in your local meetups! Even our users aren't always aware of some of our features. Learn, then share your knowledge with your own circles.
-
-Write code! We've got lots of open issues - feel free to volunteer for one by commenting on the issue.
-
 ## Local development
 
 Our repo uses [pnpm](https://pnpm.io/) to manage dependencies.
 
 To get started:
 
-**Step 1: Fork this repo**
-
-Fork by clicking [here](https://github.com/fern-api/fern/fork).
-
-**Step 2: Clone your fork and open in VSCode**
+**Step 1: Clone this repo**
 
 ```
-git clone <your fork>
-cd fern
+git clone <...>
+cd fern-platform
 code .
 ```
 
-**Step 3: Install dependencies**
+**Step 2: Install dependencies**
 
 ```
 pnpm install
@@ -50,34 +34,9 @@ This repo contains both unit tests and integration (end-to-end) tests.
 
 To run the unit tests: `pnpm test`.
 
-To run the integration tests: `pnpm test:ete`.
-
-Many of our tests rely on [Vite](https://vitejs.dev/) snapshots. To rewrite snapshots, use `-u`: `pnpm test -u` and `pnpm test:ete -u`.
-
 ### Docs UI
 
-To build and run the NextJS docs UI, run:
-
-- `vercel pull`. This pulls the latest development environment variables from Vercel.
-- `vercel dev`. This compiles and runs a NextJS app that communicates with our cloud production environment.
-
-The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
-
-```bash
-# packages/fern-docs/bundle/.env.local
-
-# uncomment the next line when targeting the production cloud environment
-# NEXT_PUBLIC_DOCS_DOMAIN=proficientai.docs.buildwithfern.com
-
-# uncomment the next line when targeting the dev cloud environment
-# NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com
-
-# paste all environment variables found in .vercel/.env.development.local here
-```
-
-### Docs Dev Environment
-
-To run the docs dev environment, first make sure vercel is installed:
+To build and run the NextJS docs UI, first make sure vercel is installed:
 
 - `npm install -g vercel`
 
@@ -96,6 +55,8 @@ To set a dev docs domain, add a `NEXT_PUBLIC_DOCS_DOMAIN` to `.env.local`. For i
 
 - `NEXT_PUBLIC_DOCS_DOMAIN=customer.docs.buildwithfern.com`
 
+Finally, run `pnpm docs:dev`. This compiles and runs a NextJS app that communicates with our cloud production environment.
+
 ## Testing in Staging
 
 ### PR previews
@@ -107,12 +68,6 @@ fern-prod-it1bn6vh9-buildwithfern.vercel.app
 ```
 
 To access the preview for a given customer site, use the following pattern:
-
-```
-https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs/preview?site=proficientai
-```
-
-Or,
 
 ```
 https://fern-prod-it1bn6vh9-buildwithfern.vercel.app/api/fern-docs/preview?host=proficientai.docs.buildwithfern.com
@@ -127,7 +82,3 @@ https://vellum.docs.buildwithfern.com -> https://vellum.docs.staging.buildwithfe
 https://docs.buildwithfern.com -> https://fern.docs.staging.buildwithfern.com
 https://documentation.sayari.com -> https://sayari.docs.staging.buildwithfern.com
 ```
-
-### Create preview link
-
-When in a demo or customer repo can run `fern generate --docs --preview` which will generate a preview URL that can be used in .env.local for developing against a specific commit or branch within the customer's repo. You need access to the customer's organization in order to run this command. If the command is failing you can run `fern generate --docs --preview --log-level debug` to get a verbose output to see why it's failing.
