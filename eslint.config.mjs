@@ -34,6 +34,7 @@ export default [
       "packages/fern-docs/bundle/server.ts",
       "packages/template-resolver/preparePackageJson.cjs",
       "servers/fdr/ts-loader.js",
+      "servers/fdr/**",
     ],
   },
   ...turboConfig,
