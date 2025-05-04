@@ -13,10 +13,9 @@ export interface EndpointReference {
     description?: string;
     /**
      * A "full" snippet, showing all the parameters, with a full example.
-     *
      * ```typescript
      * await client.subpackage.method({
-     *   expiresIn: 300,
+     *     expiresIn: 300,
      * });
      * ```
      */

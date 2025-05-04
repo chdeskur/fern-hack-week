@@ -27,5 +27,6 @@ export async function cloneRepository({
 
   return new ClonedRepository({
     clonePath,
+    git,
   });
 }

@@ -11,8 +11,10 @@ import {
   resolve,
 } from "@fern-api/fs-utils";
 
+import { loadGitHubConfig } from "./configuration/loadGitHubConfig";
 import { loadReadmeConfig } from "./configuration/loadReadmeConfig";
 import { loadReferenceConfig } from "./configuration/loadReferenceConfig";
+import { GitHub } from "./github/GitHub";
 import { ReadmeGenerator } from "./readme/ReadmeGenerator";
 import { ReadmeParser } from "./readme/ReadmeParser";
 import { ReferenceGenerator } from "./reference/ReferenceGenerator";
@@ -96,6 +98,103 @@ void yargs(hideBin(process.argv))
       process.exit(0);
     }
   )
+  .command("github", "GitHub operations", (yargs) => {
+    return yargs
+      .command(
+        "push",
+        "Push changes to GitHub",
+        (subYargs) => {
+          return subYargs.option("config", {
+            string: true,
+            required: true,
+            description: "Path to configuration file",
+          });
+        },
+        async (argv) => {
+          if (argv.config == null) {
+            process.stderr.write(
+              "missing required arguments; please specify the --config flag\n"
+            );
+            process.exit(1);
+          }
+          const wd = cwd();
+          const githubConfig = await loadGitHubConfig({
+            absolutePathToConfig: resolve(wd, argv.config),
+          });
+          const github = new GitHub({
+            githubConfig,
+          });
+          await github.push();
+          process.exit(0);
+        }
+      )
+      .command(
+        "pr",
+        "Create a pull request on GitHub",
+        (subYargs) => {
+          return subYargs.option("config", {
+            string: true,
+            required: true,
+            description: "Path to configuration file",
+          });
+        },
+        async (argv) => {
+          if (argv.config == null) {
+            process.stderr.write(
+              "missing required arguments; please specify the --config flag\n"
+            );
+            process.exit(1);
+          }
+          const wd = cwd();
+          const githubConfig = await loadGitHubConfig({
+            absolutePathToConfig: resolve(wd, argv.config),
+          });
+          const github = new GitHub({
+            githubConfig,
+          });
+          await github.pr();
+          // Implementation for github pr command
+          process.stderr.write(
+            `Creating PR on GitHub with config: ${resolve(wd, argv.config)}\n`
+          );
+          process.exit(0);
+        }
+      )
+      .command(
+        "release",
+        "Create a release on GitHub",
+        (subYargs) => {
+          return subYargs.option("config", {
+            string: true,
+            required: true,
+            description: "Path to configuration file",
+          });
+        },
+        async (argv) => {
+          if (argv.config == null) {
+            process.stderr.write(
+              "missing required arguments; please specify the --config flag\n"
+            );
+            const wd = cwd();
+            const githubConfig = await loadGitHubConfig({
+              absolutePathToConfig: resolve(wd, argv.config),
+            });
+            const github = new GitHub({
+              githubConfig,
+            });
+            await github.release();
+            process.exit(1);
+          }
+          const wd = cwd();
+          // Implementation for github release command
+          process.stderr.write(
+            `Creating release on GitHub with config: ${resolve(wd, argv.config)}\n`
+          );
+          process.exit(0);
+        }
+      )
+      .demandCommand();
+  })
   .demandCommand()
   .showHelpOnFail(true)
   .parse();
