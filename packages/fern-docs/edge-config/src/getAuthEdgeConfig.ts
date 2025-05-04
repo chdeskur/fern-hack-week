@@ -4,7 +4,6 @@ import { withoutStaging } from "@fern-docs/utils";
 import { getEdge } from "./getEdge";
 import { isLocal } from "./isLocal";
 
-const KEY = "authentication";
 export async function getAuthEdgeConfig(
   currentDomain: string
 ): Promise<AuthEdgeConfig | undefined> {
@@ -12,7 +11,24 @@ export async function getAuthEdgeConfig(
     return undefined;
   }
 
-  const domainToTokenConfigMap = await getEdge<Record<string, any>>(KEY);
+  return getRecord(currentDomain, "authentication");
+}
+
+export async function getApiKeyInjectionEdgeConfig(
+  currentDomain: string
+): Promise<AuthEdgeConfig | undefined> {
+  if (isLocal()) {
+    return undefined;
+  }
+
+  return getRecord(currentDomain, "api-key-injection");
+}
+
+async function getRecord(
+  currentDomain: string,
+  key: string
+): Promise<AuthEdgeConfig | undefined> {
+  const domainToTokenConfigMap = await getEdge<Record<string, any>>(key);
   const toRet =
     domainToTokenConfigMap?.[currentDomain] ??
     domainToTokenConfigMap?.[withoutStaging(currentDomain)];

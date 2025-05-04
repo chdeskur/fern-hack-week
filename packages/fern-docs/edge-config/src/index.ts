@@ -1,4 +1,7 @@
-export { getAuthEdgeConfig } from "./getAuthEdgeConfig";
+export {
+  getAuthEdgeConfig,
+  getApiKeyInjectionEdgeConfig,
+} from "./getAuthEdgeConfig";
 export { getCustomerAnalytics } from "./getCustomerAnalytics";
 export { getEdgeFlags } from "./getEdgeFlags";
 export { getLaunchDarklySettings } from "./getLaunchDarklySettings";

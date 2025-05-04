@@ -7,7 +7,10 @@ import type { OauthScope } from "webflow-api/api/types/OAuthScope";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-docs/auth";
-import { getAuthEdgeConfig } from "@fern-docs/edge-config";
+import {
+  getApiKeyInjectionEdgeConfig,
+  getAuthEdgeConfig,
+} from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
@@ -35,7 +38,9 @@ export async function GET(
   const host = req.nextUrl.host;
   const cookieJar = await cookies();
 
-  const edgeConfig = await getAuthEdgeConfig(domain);
+  const edgeConfig =
+    (await getAuthEdgeConfig(domain)) ||
+    (await getApiKeyInjectionEdgeConfig(domain));
 
   const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
@@ -61,16 +66,6 @@ export async function GET(
     });
   }
 
-  if (
-    edgeConfig.type === "sso" ||
-    edgeConfig["api-key-injection-enabled"] !== true
-  ) {
-    return NextResponse.json({
-      enabled: false,
-      returnToQueryParam,
-    });
-  }
-
   if (edgeConfig.type === "basic_token_verification") {
     if (!edgeConfig.redirect) {
       return NextResponse.json({
@@ -83,6 +78,16 @@ export async function GET(
       enabled: true,
       authenticated: false,
       authorizationUrl: edgeConfig.redirect,
+      returnToQueryParam,
+    });
+  }
+
+  if (
+    edgeConfig.type === "sso" ||
+    edgeConfig["api-key-injection-enabled"] !== true
+  ) {
+    return NextResponse.json({
+      enabled: false,
       returnToQueryParam,
     });
   }
