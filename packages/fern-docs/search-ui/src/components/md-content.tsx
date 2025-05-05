@@ -22,7 +22,7 @@ export function MarkdownContent({
   let cleanedContent = children;
   const footnoteDefinitions: string[] = [];
   cleanedContent = cleanedContent.replace(
-    /\[\^(\d+)\]:\s+(.*?)(?=\n\n|\n[^\n]|$)/g,
+    /\[\^(\d+)\]:\s+([a-zA-Z].*?)(?=\n\n|\n[^\n]|$)/g,
     (match, footnoteNumber, link) => {
       footnoteDefinitions.push(
         `[^${footnoteNumber}]: ${link.startsWith("http") ? link.trim() : `https://${link.trim()}`}`
