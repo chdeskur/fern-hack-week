@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": ".",
+    "isolatedModules": false,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "allowJs": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "jsx": "preserve",
+    "lib": ["esnext", "dom", "dom.iterable", "webworker"],
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "react", "react-dom"],
+    "target": "es2020",
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*", "./api/**/*"]
+}

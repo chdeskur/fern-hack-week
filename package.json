@@ -37,6 +37,7 @@
     "vercel:up": "pnpm up -r \"@vercel/*\""
   },
   "resolutions": {
+    "@types/estree": "1.0.6",
     "clipboardy": "4.0.0",
     "colorjs.io": "^0.5.2",
     "cookie": "0.7.0",
