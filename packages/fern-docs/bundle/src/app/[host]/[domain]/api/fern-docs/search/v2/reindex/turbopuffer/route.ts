@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createOpenAI } from "@ai-sdk/openai";
-import { embedMany } from "ai";
+import { Embedding, embedMany } from "ai";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
@@ -79,11 +79,24 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         ...edgeFlags,
       },
       vectorizer: async (chunks) => {
-        const embeddings = await embedMany({
-          model: embeddingModel,
-          values: chunks,
-        });
-        return embeddings.embeddings;
+        // max 300k tokens per request, handle this manually
+        let payload = [];
+        let payloadLength = 0;
+        let embeddings: Embedding[] = [];
+        for (const chunk of chunks) {
+          payloadLength += chunk.length;
+          payload.push(chunk);
+          if (payloadLength >= 100000) {
+            const embeddingOutput = await embedMany({
+              model: embeddingModel,
+              values: payload,
+            });
+            embeddings = embeddings.concat(embeddingOutput.embeddings);
+            payload = [];
+            payloadLength = 0;
+          }
+        }
+        return embeddings;
       },
       authed: (node) => {
         if (authEdgeConfig == null) {
