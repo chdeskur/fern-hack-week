@@ -17,7 +17,10 @@ import { initLogger, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { createDefaultSystemPrompt } from "@fern-docs/search-server";
+import {
+  createDefaultSystemPrompt,
+  createWebflowSystemPrompt,
+} from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
   toDocuments,
@@ -75,7 +78,7 @@ export async function POST(req: NextRequest) {
   const { messages, url, filters } = await req.json();
 
   // TODO: remove this once webflow adds model/system-prompt to docs.yml
-  const isWebflow = url.includes("webflow-ai");
+  const isWebflow = url.includes("webflow");
 
   const model: string = config.aiChatConfig?.model || "claude-3.5";
   let languageModel;
@@ -142,12 +145,18 @@ export async function POST(req: NextRequest) {
     filters,
   });
   const documents = toDocuments(searchResults).join("\n\n");
-  const system = createDefaultSystemPrompt({
-    domain,
-    date: new Date().toDateString(),
-    documents,
-    promptTemplate,
-  });
+  const system = isWebflow
+    ? createWebflowSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+      })
+    : createDefaultSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+        promptTemplate,
+      });
   const result = streamText({
     model: languageModel,
     system,
