@@ -58,7 +58,7 @@ export async function WebhookContent({
       aside={webhookExample}
       reference={
         <TypeDefinitionRoot types={types} slug={node.slug}>
-          <TypeDefinitionSlotsServer types={types} serialize={serialize}>
+          <TypeDefinitionSlotsServer types={types}>
             <TypeDefinitionAnchorPart part="payload">
               {webhook.headers && webhook.headers.length > 0 && (
                 <TypeDefinitionAnchorPart part="header">
@@ -69,11 +69,7 @@ export async function WebhookContent({
                           key={parameter.key}
                           part={parameter.key}
                         >
-                          <ObjectProperty
-                            serialize={serialize}
-                            property={parameter}
-                            types={types}
-                          />
+                          <ObjectProperty property={parameter} types={types} />
                         </TypeDefinitionAnchorPart>
                       ))}
                     </WithSeparator>
@@ -95,7 +91,6 @@ export async function WebhookContent({
                     }
                   >
                     <TypeReferenceDefinitions
-                      serialize={serialize}
                       shape={webhook.payloads?.[0].shape}
                       types={types}
                     />
@@ -114,10 +109,7 @@ export async function WebhookContent({
       }
       footer={<FooterLayout bottomNavigation={bottomNavigation} />}
     >
-      <MdxServerComponentProseSuspense
-        serialize={serialize}
-        mdx={webhook.description}
-      />
+      <MdxServerComponentProseSuspense mdx={webhook.description} />
     </ReferenceLayout>
   );
 }

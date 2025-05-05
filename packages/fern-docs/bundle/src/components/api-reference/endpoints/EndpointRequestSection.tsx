@@ -1,13 +1,9 @@
-import "server-only";
-
 import { ReactNode } from "react";
 
 import { compact } from "es-toolkit/array";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-
-import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { renderTypeShorthand } from "../../type-shorthand";
 import {
@@ -19,11 +15,9 @@ import { WithSeparator } from "../type-definitions/TypeDefinitionDetails";
 import { TypeReferenceDefinitions } from "../type-definitions/TypeReferenceDefinitions";
 
 export function EndpointRequestSection({
-  serialize,
   request,
   types,
 }: {
-  serialize: MdxSerializer;
   request: ApiDefinition.HttpRequest;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
@@ -35,7 +29,6 @@ export function EndpointRequestSection({
             file: (file) => (
               <TypeDefinitionAnchorPart part={file.key} key={file.key}>
                 <PropertyRenderer
-                  serialize={serialize}
                   name={file.key}
                   description={file.description}
                   typeShorthand={renderTypeShorthandFormDataField(file)}
@@ -46,7 +39,6 @@ export function EndpointRequestSection({
             files: (files) => (
               <TypeDefinitionAnchorPart part={files.key} key={files.key}>
                 <PropertyRenderer
-                  serialize={serialize}
                   name={files.key}
                   description={files.description}
                   typeShorthand={renderTypeShorthandFormDataField(files)}
@@ -57,7 +49,6 @@ export function EndpointRequestSection({
             property: (property) => (
               <TypeDefinitionAnchorPart part={property.key} key={property.key}>
                 <PropertyWithShape
-                  serialize={serialize}
                   name={property.key}
                   description={
                     compact([
@@ -80,20 +71,8 @@ export function EndpointRequestSection({
       </WithSeparator>
     ),
     bytes: () => null,
-    object: (obj) => (
-      <TypeReferenceDefinitions
-        serialize={serialize}
-        shape={obj}
-        types={types}
-      />
-    ),
-    alias: (obj) => (
-      <TypeReferenceDefinitions
-        serialize={serialize}
-        shape={obj}
-        types={types}
-      />
-    ),
+    object: (obj) => <TypeReferenceDefinitions shape={obj} types={types} />,
+    alias: (obj) => <TypeReferenceDefinitions shape={obj} types={types} />,
   });
 }
 

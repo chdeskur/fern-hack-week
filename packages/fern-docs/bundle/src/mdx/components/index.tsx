@@ -45,6 +45,7 @@ import { Json } from "./json";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
+import { EndpointSchemaSnippet } from "./snippets/EndpointSchemaSnippet";
 import { Step, StepGroup } from "./steps";
 import { Tab, TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
@@ -73,6 +74,7 @@ const FERN_COMPONENTS = {
   Download,
   EndpointRequestSnippet,
   EndpointResponseSnippet,
+  EndpointSchemaSnippet,
   Feature,
   Frame,
   Icon,

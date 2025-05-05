@@ -73,9 +73,8 @@ export async function EndpointContent({
         }
         reference={
           <TypeDefinitionRoot types={types} slug={node.slug}>
-            <TypeDefinitionSlotsServer types={types} serialize={serialize}>
+            <TypeDefinitionSlotsServer types={types}>
               <EndpointContentLeft
-                serialize={serialize}
                 context={context}
                 showAuth={showAuth}
                 showErrors={showErrors}
@@ -86,10 +85,7 @@ export async function EndpointContent({
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
         <PlaygroundKeyboardTrigger />
-        <MdxServerComponentProseSuspense
-          serialize={serialize}
-          mdx={endpoint.description}
-        />
+        <MdxServerComponentProseSuspense mdx={endpoint.description} />
       </ReferenceLayout>
     </EndpointContextProvider>
   );

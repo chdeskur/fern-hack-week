@@ -5,7 +5,6 @@ import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
-import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { ObjectProperty } from "../type-definitions/ObjectProperty";
 import {
@@ -27,12 +26,10 @@ export interface HoveringProps {
 }
 
 export async function EndpointContentLeft({
-  serialize,
   context: { endpoint, types, auth, globalHeaders },
   showAuth,
   showErrors,
 }: {
-  serialize: MdxSerializer;
   context: EndpointContext;
   showAuth: boolean;
   showErrors: boolean;
@@ -132,11 +129,7 @@ export async function EndpointContentLeft({
                     key={parameter.key}
                     part={parameter.key}
                   >
-                    <ObjectProperty
-                      serialize={serialize}
-                      property={parameter}
-                      types={types}
-                    />
+                    <ObjectProperty property={parameter} types={types} />
                   </TypeDefinitionAnchorPart>
                 ))}
               </WithSeparator>
@@ -170,11 +163,7 @@ export async function EndpointContentLeft({
                       key={parameter.key}
                       part={parameter.key}
                     >
-                      <ObjectProperty
-                        serialize={serialize}
-                        property={parameter}
-                        types={types}
-                      />
+                      <ObjectProperty property={parameter} types={types} />
                     </TypeDefinitionAnchorPart>
                   );
                 })}
@@ -191,11 +180,7 @@ export async function EndpointContentLeft({
                     key={parameter.key}
                     part={parameter.key}
                   >
-                    <ObjectProperty
-                      serialize={serialize}
-                      property={parameter}
-                      types={types}
-                    />
+                    <ObjectProperty property={parameter} types={types} />
                   </TypeDefinitionAnchorPart>
                 ))}
               </WithSeparator>
@@ -207,7 +192,6 @@ export async function EndpointContentLeft({
             title="Request"
             description={
               <MdxServerComponentProseSuspense
-                serialize={serialize}
                 size="sm"
                 className="text-(color:--grayscale-a11)"
                 mdx={endpoint.requests[0].description}
@@ -220,7 +204,6 @@ export async function EndpointContentLeft({
           >
             <TypeDefinitionAnchorPart part="body">
               <EndpointRequestSection
-                serialize={serialize}
                 request={endpoint.requests[0]}
                 types={types}
               />
@@ -235,7 +218,6 @@ export async function EndpointContentLeft({
               title="Response"
               description={
                 <MdxServerComponentProseSuspense
-                  serialize={serialize}
                   size="sm"
                   className="text-(color:--grayscale-a11)"
                   mdx={endpoint.responses[0].description}
@@ -250,7 +232,6 @@ export async function EndpointContentLeft({
             >
               <TypeDefinitionAnchorPart part="body">
                 <EndpointResponseSection
-                  serialize={serialize}
                   body={endpoint.responses[0].body}
                   types={types}
                 />
@@ -260,11 +241,7 @@ export async function EndpointContentLeft({
           {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
             <TypeDefinitionAnchorPart part="error">
               <EndpointSection title="Errors" hideSeparator>
-                <EndpointErrorGroup
-                  serialize={serialize}
-                  errors={endpoint.errors}
-                  types={types}
-                />
+                <EndpointErrorGroup errors={endpoint.errors} types={types} />
               </EndpointSection>
             </TypeDefinitionAnchorPart>
           )}

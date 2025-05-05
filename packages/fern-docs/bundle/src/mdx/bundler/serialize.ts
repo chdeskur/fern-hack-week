@@ -52,7 +52,8 @@ import { rehypeButtons } from "../plugins/rehype-buttons";
 import { rehypeCards } from "../plugins/rehype-cards";
 import { rehypeCodeBlock } from "../plugins/rehype-code-block";
 import { rehypeCollectJsx } from "../plugins/rehype-collect-jsx";
-import { rehypeEndpointSnippets } from "../plugins/rehype-endpoint-snippets";
+import { rehypeEndpointExampleSnippets } from "../plugins/rehype-endpoint-example-snippets";
+import { rehypeEndpointSchemaSnippets } from "../plugins/rehype-endpoint-schema-snippet";
 import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
@@ -213,7 +214,8 @@ async function serializeMdxImpl(
           },
         ],
         rehypeButtons,
-        [rehypeEndpointSnippets, { loader }],
+        [rehypeEndpointSchemaSnippets, { loader }],
+        [rehypeEndpointExampleSnippets, { loader }],
         [
           rehypeMigrateJsx,
           {

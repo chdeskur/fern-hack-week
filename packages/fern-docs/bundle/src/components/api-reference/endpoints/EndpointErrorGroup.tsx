@@ -7,17 +7,13 @@ import { sortBy } from "es-toolkit/array";
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { ErrorResponse } from "@fern-api/fdr-sdk/api-definition";
 
-import { MdxSerializer } from "@/server/mdx-serializer";
-
 import { EndpointError } from "./EndpointError";
 import { EndpointErrorGroupClient } from "./EndpointErrorGroupClient";
 
 export function EndpointErrorGroup({
-  serialize,
   errors,
   types,
 }: {
-  serialize: MdxSerializer;
   errors: ErrorResponse[];
   types: Record<string, ApiDefinition.TypeDefinition>;
 }) {
@@ -27,7 +23,6 @@ export function EndpointErrorGroup({
         (error) => ({
           children: (
             <EndpointError
-              serialize={serialize}
               error={error}
               availability={error.availability}
               types={types}

@@ -25,11 +25,11 @@ export function EndpointRequestSnippet({
    */
   example?: string | undefined;
   /**
-   * @internal the rehype-endpoint-snippets plugin will set this
+   * @internal the rehype-endpoint--examples-snippets plugin will set this
    */
   endpointDefinition?: ApiDefinition.EndpointDefinition;
   /**
-   * @internal the rehype-endpoint-snippets plugin will set this
+   * @internal the rehype-endpoint-examples-snippets plugin will set this
    */
   slugs?: string[];
 }) {

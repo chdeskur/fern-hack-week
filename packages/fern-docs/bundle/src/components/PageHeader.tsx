@@ -33,8 +33,8 @@ export function PageHeader({
   subtitle?: string;
   tags?: React.ReactNode;
   children?: React.ReactNode;
-  markdown: string;
-  includeDropdown: boolean;
+  markdown?: string;
+  includeDropdown?: boolean;
 }) {
   return (
     <header className="my-8 space-y-2">
@@ -68,7 +68,7 @@ export function PageHeader({
             )}
             {tags}
           </div>
-          {includeDropdown && (
+          {includeDropdown && markdown && (
             <div className="hidden md:flex">
               <PageActionsDropdown markdown={markdown} />
             </div>

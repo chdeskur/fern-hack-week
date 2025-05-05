@@ -1,4 +1,3 @@
-import { HttpMethod } from "@fern-docs/components";
 import {
   CONTINUE,
   Hast,
@@ -11,6 +10,7 @@ import {
   visit,
 } from "@fern-docs/mdx";
 
+import { extractMethodAndPath } from "@/components/api-reference/endpoints/utils";
 import { DocsLoader } from "@/server/docs-loader";
 
 /**
@@ -23,7 +23,7 @@ import { DocsLoader } from "@/server/docs-loader";
  * - The `EndpointResponseSnippet` must have the same `path` and
  * `method` props as the `EndpointRequestSnippet`.
  */
-export const rehypeEndpointSnippets: Unified.Plugin<
+export const rehypeEndpointExampleSnippets: Unified.Plugin<
   [{ loader: DocsLoader }?],
   Hast.Root
 > = (opts) => {
@@ -132,23 +132,3 @@ export const rehypeEndpointSnippets: Unified.Plugin<
     }
   };
 };
-
-function extractMethodAndPath(
-  endpoint: string
-): { method: HttpMethod; path: string } | undefined {
-  const [maybeMethod, path] = endpoint.trim().split(" ");
-
-  // parse method into APIV1Read.HttpMethod
-  let method: HttpMethod | undefined;
-
-  if (maybeMethod != null) {
-    method = maybeMethod.toUpperCase() as HttpMethod;
-  }
-
-  // ensure that method is a valid HTTP method
-  if (method == null || !HttpMethod[method] || path == null) {
-    return undefined;
-  }
-
-  return { method, path };
-}

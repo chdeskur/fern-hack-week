@@ -1,5 +1,3 @@
-import "server-only";
-
 import React from "react";
 
 import { compact } from "es-toolkit/array";
@@ -8,7 +6,6 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
-import { MdxSerializer } from "@/server/mdx-serializer";
 
 import {
   PropertyContainer,
@@ -22,12 +19,10 @@ import {
 import { TypeReferenceDefinitions } from "./TypeReferenceDefinitions";
 import { TypeShorthand } from "./TypeShorthand";
 
-export function ObjectProperty({
-  serialize,
+export const ObjectProperty = React.memo(function ObjectProperty({
   property,
   types,
 }: {
-  serialize: MdxSerializer;
   property: ApiDefinition.ObjectProperty;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
@@ -39,7 +34,6 @@ export function ObjectProperty({
 
   return (
     <PropertyWithShape
-      serialize={serialize}
       name={property.key}
       availability={property.availability}
       description={description}
@@ -47,17 +41,15 @@ export function ObjectProperty({
       types={types}
     />
   );
-}
+});
 
-export function PropertyWithShape({
-  serialize,
+export const PropertyWithShape = React.memo(function PropertyWithShape({
   name,
   description,
   shape,
   availability,
   types,
 }: {
-  serialize: MdxSerializer;
   icon?: React.ReactNode;
   name?: string;
   description: string | undefined;
@@ -67,23 +59,17 @@ export function PropertyWithShape({
 }) {
   return (
     <PropertyRenderer
-      serialize={serialize}
       name={name}
       description={description}
       typeShorthand={<TypeShorthand shape={shape} />}
       availability={availability}
     >
-      <TypeReferenceDefinitions
-        serialize={serialize}
-        shape={shape}
-        types={types}
-      />
+      <TypeReferenceDefinitions shape={shape} types={types} />
     </PropertyRenderer>
   );
-}
+});
 
-export function PropertyRenderer({
-  serialize,
+export const PropertyRenderer = React.memo(function PropertyRenderer({
   icon,
   name,
   availability,
@@ -96,7 +82,6 @@ export function PropertyRenderer({
   description: string | undefined;
   typeShorthand: React.ReactNode;
   availability: ApiDefinition.Availability | null | undefined;
-  serialize: MdxSerializer;
   children?: React.ReactNode;
 }) {
   const child = (
@@ -113,7 +98,6 @@ export function PropertyRenderer({
       </TypeDefinitionAnchor>
 
       <MdxServerComponentProseSuspense
-        serialize={serialize}
         mdx={description}
         size="sm"
         className="text-(color:--grayscale-a11)"
@@ -130,4 +114,4 @@ export function PropertyRenderer({
   }
 
   return child;
-}
+});

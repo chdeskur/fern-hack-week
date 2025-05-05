@@ -18,7 +18,7 @@ export function EndpointResponseSnippet({
    */
   example?: string | undefined;
   /**
-   * @internal the rehype-endpoint-snippets plugin will set this
+   * @internal the rehype-endpoint-examples-snippets plugin will set this
    */
   endpointDefinition?: ApiDefinition.EndpointDefinition;
   /**

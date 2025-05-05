@@ -1,10 +1,8 @@
-import "server-only";
+import { memo } from "react";
 
 import { UnreachableCaseError } from "ts-essentials";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-
-import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { DiscriminatedUnionVariant } from "./DiscriminatedUnionVariant";
 import { EnumTypeDefinition } from "./EnumTypeDefinition";
@@ -22,12 +20,10 @@ export declare namespace InternalTypeDefinition {
   }
 }
 
-export function InternalTypeDefinition({
-  serialize,
+export const InternalTypeDefinition = memo(function InternalTypeDefinition({
   shape,
   types,
 }: {
-  serialize: MdxSerializer;
   shape:
     | ApiDefinition.TypeShape.Enum
     | ApiDefinition.TypeShape.UndiscriminatedUnion
@@ -41,13 +37,7 @@ export function InternalTypeDefinition({
       return (
         <EnumTypeDefinition
           elements={shape.values.map((value) => ({
-            element: (
-              <EnumValue
-                key={value.value}
-                serialize={serialize}
-                enumValue={value}
-              />
-            ),
+            element: <EnumValue key={value.value} enumValue={value} />,
             searchableString: `${value.value} ${value.description ?? ""}`,
           }))}
         />
@@ -62,7 +52,6 @@ export function InternalTypeDefinition({
           <WithSeparator separatorText="OR">
             {shape.variants.map((variant, idx) => (
               <UndiscriminatedUnionVariant
-                serialize={serialize}
                 key={variant.displayName}
                 unionVariant={variant}
                 idx={idx}
@@ -82,7 +71,6 @@ export function InternalTypeDefinition({
             {shape.variants.map((variant) => (
               <DiscriminatedUnionVariant
                 discriminant={shape.discriminant}
-                serialize={serialize}
                 key={variant.displayName}
                 unionVariant={variant}
                 types={types}
@@ -107,11 +95,7 @@ export function InternalTypeDefinition({
                 key={property.key}
                 part={{ type: "objectProperty", propertyName: property.key }}
               >
-                <ObjectProperty
-                  property={property}
-                  types={types}
-                  serialize={serialize}
-                />
+                <ObjectProperty property={property} types={types} />
               </TypeDefinitionPathPart>
             ))}
           </WithSeparator>
@@ -123,4 +107,4 @@ export function InternalTypeDefinition({
     default:
       throw new UnreachableCaseError(shape);
   }
-}
+});

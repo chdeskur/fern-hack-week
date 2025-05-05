@@ -1,8 +1,7 @@
-import "server-only";
-
 import React from "react";
 
 import { ErrorBoundary } from "@/components/error-boundary";
+import { getMdxSerializer } from "@/context/MdxSerializerContext";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { MdxContent } from "./MdxContent";
@@ -32,7 +31,6 @@ export async function MdxServerComponent({
 }
 
 export function MdxServerComponentProse({
-  serialize,
   mdx,
   size,
   className,
@@ -40,7 +38,6 @@ export function MdxServerComponentProse({
   slug,
   fallback,
 }: {
-  serialize: MdxSerializer;
   mdx: string | null | undefined;
   size?: "xs" | "sm" | "base" | "lg";
   className?: string;
@@ -48,7 +45,10 @@ export function MdxServerComponentProse({
   slug?: string;
   fallback?: React.ReactNode;
 }) {
-  if (!mdx) {
+  const serialize = getMdxSerializer();
+
+  // Handle the case where the mdx is not found, or serializer is not available yet
+  if (!mdx || !serialize) {
     return (
       <Prose size={size} className={className}>
         {mdx ?? fallback}
@@ -69,7 +69,6 @@ export function MdxServerComponentProse({
 }
 
 export function MdxServerComponentProseSuspense({
-  serialize,
   mdx,
   size,
   className,
@@ -77,7 +76,6 @@ export function MdxServerComponentProseSuspense({
   filename,
   slug,
 }: {
-  serialize: MdxSerializer;
   mdx: string | null | undefined;
   size?: "xs" | "sm" | "base" | "lg";
   className?: string;
@@ -101,7 +99,6 @@ export function MdxServerComponentProseSuspense({
         }
       >
         <MdxServerComponentProse
-          serialize={serialize}
           mdx={mdx}
           size={size}
           className={className}

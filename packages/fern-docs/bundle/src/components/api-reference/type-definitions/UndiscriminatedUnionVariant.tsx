@@ -1,13 +1,9 @@
-import "server-only";
-
 import { ReactElement } from "react";
 import React from "react";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-
-import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { PropertyWithShape } from "./ObjectProperty";
 
@@ -82,18 +78,15 @@ export declare namespace UndiscriminatedUnionVariant {
 }
 
 export function UndiscriminatedUnionVariant({
-  serialize,
   unionVariant,
   types,
 }: {
-  serialize: MdxSerializer;
   unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
   idx: number;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
   return (
     <PropertyWithShape
-      serialize={serialize}
       icon={getIconForTypeReference(unionVariant.shape, types)}
       name={unionVariant.displayName}
       availability={unionVariant.availability}

@@ -1,5 +1,3 @@
-import "server-only";
-
 import React from "react";
 
 import { compact } from "es-toolkit/array";
@@ -7,18 +5,14 @@ import { compact } from "es-toolkit/array";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 
-import { MdxSerializer } from "@/server/mdx-serializer";
-
 import { PropertyWithShape } from "./ObjectProperty";
 import { TypeDefinitionPathPart } from "./TypeDefinitionContext";
 
 export function DiscriminatedUnionVariant({
-  serialize,
   discriminant,
   unionVariant,
   types,
 }: {
-  serialize: MdxSerializer;
   discriminant: ApiDefinition.PropertyKey;
   unionVariant: ApiDefinition.DiscriminatedUnionVariant;
   types: Record<string, ApiDefinition.TypeDefinition>;
@@ -43,7 +37,6 @@ export function DiscriminatedUnionVariant({
       }}
     >
       <PropertyWithShape
-        serialize={serialize}
         name={
           unionVariant.discriminantValue ??
           titleCase(unionVariant.discriminantValue)

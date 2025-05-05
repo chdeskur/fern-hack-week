@@ -7,6 +7,7 @@ import { HeaderContent } from "@/components/header/HeaderContent";
 import { NavbarLinks } from "@/components/header/NavbarLinks";
 import { SidebarContainer } from "@/components/sidebar/SidebarContainer";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
+import { setMdxSerializer } from "@/context/MdxSerializerContext";
 import { MdxServerComponent } from "@/mdx/components/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
@@ -31,6 +32,8 @@ export default async function SharedLayout({
 }) {
   const isLocalEnvironment = isLocal();
   const serialize = createCachedMdxSerializer(loader);
+  setMdxSerializer(serialize);
+
   const [config, edgeFlags, colors, layout] = await Promise.all([
     loader.getConfig(),
     loader.getEdgeFlags(),
