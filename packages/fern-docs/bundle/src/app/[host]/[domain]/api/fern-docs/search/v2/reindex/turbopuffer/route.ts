@@ -79,11 +79,12 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         ...edgeFlags,
       },
       vectorizer: async (chunks) => {
-        // max 300k tokens per request, handle this manually
+        // openai embedding model has max 300k tokens per request, batch manually
         let payload = [];
         let payloadLength = 0;
         let embeddings: Embedding[] = [];
         for (const chunk of chunks) {
+          // batch vectorization in chunks of size 100k
           payloadLength += chunk.length;
           payload.push(chunk);
           if (payloadLength >= 100000) {
@@ -95,6 +96,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             payload = [];
             payloadLength = 0;
           }
+        }
+        if (payload.length > 0) {
+          // final cleanup
+          const embeddingOutput = await embedMany({
+            model: embeddingModel,
+            values: payload,
+          });
+          embeddings = embeddings.concat(embeddingOutput.embeddings);
         }
         return embeddings;
       },
