@@ -2,7 +2,9 @@ import { cp, lstat, readFile, readdir, rm } from "fs/promises";
 import path, { resolve } from "path";
 import { SimpleGit } from "simple-git";
 
-import { README_FILEPATH } from "./constants";
+import { FERNIGNORE, GITIGNORE, GIT_DIR, README_FILEPATH } from "./constants";
+
+const DEFAULT_IGNORED_FILES = [FERNIGNORE, GITIGNORE, GIT_DIR];
 
 // ClonedRepository is a repository that has been successfully cloned to the local file system
 // and is ready to be used.
@@ -32,16 +34,33 @@ export class ClonedRepository {
     return await this.readFile({ relativeFilePath: README_FILEPATH });
   }
 
+  public async getFernignore(): Promise<string | undefined> {
+    return await this.readFile({ relativeFilePath: FERNIGNORE });
+  }
+
   public async add(files: string | string[]): Promise<void> {
     await this.git.cwd(this.clonePath);
     await this.git.add(files);
   }
 
+  public async restoreFiles({
+    files,
+    staged,
+  }: {
+    files: string | string[];
+    staged?: boolean;
+  }): Promise<void> {
+    await this.git.cwd(this.clonePath);
+    const args = ["restore"];
+    if (staged) {
+      args.push("--staged");
+    }
+    await this.git.raw([...args, ...(Array.isArray(files) ? files : [files])]);
+  }
+
   public async commit(message?: string): Promise<void> {
     await this.git.cwd(this.clonePath);
-    await this.git.commit(
-      message ?? `Automated commit message at ${new Date().toISOString()}`
-    );
+    await this.git.commit(message ?? `Automated commit`);
   }
 
   public async checkout(branch: string): Promise<void> {
@@ -77,7 +96,7 @@ export class ClonedRepository {
 
     await Promise.all(
       destContents
-        .filter((content) => content !== ".git")
+        .filter((content) => !DEFAULT_IGNORED_FILES.includes(content))
         .map(async (content) => {
           await rm(resolve(this.clonePath, content), {
             recursive: true,
@@ -88,7 +107,7 @@ export class ClonedRepository {
 
     await Promise.all(
       sourceContents
-        .filter((content) => content !== ".git")
+        .filter((content) => !DEFAULT_IGNORED_FILES.includes(content))
         .map(async (content) => {
           const path = resolve(sourceDirectoryPath, content);
           await cp(path, resolve(this.clonePath, content), { recursive: true });
