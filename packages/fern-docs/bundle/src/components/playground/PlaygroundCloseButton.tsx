@@ -23,7 +23,7 @@ export function PlaygroundCloseButton() {
         size="large"
         rounded
         variant="outlined"
-        href={pathname.replace("/~explorer", "")}
+        href={pathname.replace("explorer=true", "")} // TODO: Use URL param manager to remove param
         replace
         scroll={false}
       />

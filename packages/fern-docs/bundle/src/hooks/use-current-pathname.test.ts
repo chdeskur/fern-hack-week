@@ -15,11 +15,11 @@ describe("parseServerSidePathname", () => {
     );
   });
 
-  it("should return /~explorer if the pathname is an explorer route", () => {
+  it("should return /?explorer=true if the pathname is an explorer route", () => {
     expect(
       parseServerSidePathname(
         "/canary.ferndocs.com/buildwithfern.com/explorer/%2Fapi%2Ftest"
       )
-    ).toEqual("/api/test/~explorer");
+    ).toEqual("/api/test?explorer=true");
   });
 });

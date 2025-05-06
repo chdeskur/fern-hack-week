@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -11,12 +12,16 @@ import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 import { useHeaderHeight, useViewportSize } from "../hooks/useViewportSize";
-import { isExplorerRoute, withoutExplorerRoute } from "./utils/explorer-route";
+import {
+  hasExplorerRouteParam,
+  withoutExplorerRoute,
+} from "./utils/explorer-route";
 
 export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
-  const [snap, setSnap] = React.useState<number | string | null>(1);
+  const [snap, setSnap] = React.useState<number | string | null>(null);
   const pathname = useCurrentPathname();
-  const open = isExplorerRoute(pathname);
+  const searchParams = useSearchParams();
+  const open = hasExplorerRouteParam(searchParams);
 
   const viewport = useViewportSize();
   const headerHeight = useHeaderHeight();
@@ -31,6 +36,9 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
         // transition takes 500ms to complete
       }, 500);
     }
+    return () => {
+      setSnap(null);
+    };
   }, [open]);
 
   return (
@@ -67,7 +75,7 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
           className="api-explorer width-before-scroll-bar"
         >
           <Drawer.Handle
-            className="bg-(color:--grayscale-a4) absolute mx-auto -mb-1.5 h-1.5 w-12 flex-shrink-0 -translate-y-4 rounded-full"
+            className="bg-(color:--grayscale-a4) absolute mx-auto -mb-1.5 h-1.5 w-12 flex-shrink-0 -translate-y-3 cursor-pointer rounded-full"
             preventCycle
           />
           <VisuallyHidden>

@@ -16,9 +16,9 @@ export function PlaygroundKeyboardTrigger() {
       if (e.ctrlKey && e.key === "`") {
         e.preventDefault();
         router.replace(
-          pathname.endsWith("/~explorer")
-            ? pathname.slice(0, -10)
-            : `${pathname}/~explorer`,
+          pathname.endsWith("/?explorer=true")
+            ? pathname.slice(0, -9)
+            : `${pathname}/?explorer=true`,
           { scroll: false }
         );
       }

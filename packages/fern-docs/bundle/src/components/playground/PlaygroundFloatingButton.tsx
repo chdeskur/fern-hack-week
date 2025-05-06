@@ -30,7 +30,7 @@ export const PlaygroundFloatingButton = () => {
           // TODO: ensure this button does not render multiple times, otherwise
           // remove this ID.
           id={FERN_PLAYGROUND_FLOATING_BUTTON_ID}
-          href={slug ? conformExplorerRoute(slug) : "/~explorer"}
+          href={slug ? conformExplorerRoute(slug) : "?explorer=true"}
         >
           <SquareTerminal height={16} width={16} />
 

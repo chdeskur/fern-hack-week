@@ -176,15 +176,14 @@ export const middleware: NextMiddleware = async (request) => {
   }
 
   /**
-   * Rewrite .../~explorer to /[domain]/explorer/...
+   * Redirect .../~explorer to ?explorer=true to avoid 404s
    */
   if (pathname.endsWith("/~explorer")) {
-    const pathname = withoutEnding("/~explorer");
-    return rewrite(
-      withDomain(
-        `/explorer/${encodeURIComponent(conformTrailingSlash(pathname))}`
-      )
-    );
+    const newPath = conformTrailingSlash(withoutEnding("/~explorer"));
+    const url = request.nextUrl.clone();
+    url.pathname = newPath;
+    url.searchParams.set("explorer", "true");
+    return NextResponse.redirect(url);
   }
 
   let newToken: string | undefined;
