@@ -95,6 +95,7 @@ export function HideAsides({ force }: { force?: boolean }) {
         visibility: hidden;
         width: 0;
         overflow: hidden;
+        display: none;
       }
     `}</style>
   ) : null;
