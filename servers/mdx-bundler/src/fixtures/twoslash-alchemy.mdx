@@ -1,9 +1,42 @@
 ```ts twoslash
-// @noErrors
-// alchemy-specific twoslash code block
-import { createAlchemySmartAccountClient } from "@account-kit/infra";
+import { LocalAccountSigner } from "@aa-sdk/core";
+import {
+  alchemy,
+  createAlchemySmartAccountClient,
+  sepolia,
+} from "@account-kit/infra";
+import { createLightAccount } from "@account-kit/smart-contracts";
+import { http } from "viem";
+import { generatePrivateKey } from "viem/accounts";
 
-const client = createAlchemySmartAccountClient({
-  // configuration
+// with account hoisting
+const transport = alchemy({ apiKey: "your-api-key" });
+const hoistedClient = createAlchemySmartAccountClient({
+  transport,
+  chain: sepolia,
+  account: await createLightAccount({
+    signer: LocalAccountSigner.privateKeyToAccountSigner(generatePrivateKey()),
+    chain: sepolia,
+    transport,
+  }),
+});
+
+const signature = await hoistedClient.signMessage({ message: "Hello world! " });
+
+// without account hoisting
+const nonHoistedClient = createAlchemySmartAccountClient({
+  transport,
+  chain: sepolia,
+});
+
+const lightAccount = await createLightAccount({
+  signer: LocalAccountSigner.privateKeyToAccountSigner(generatePrivateKey()),
+  chain: sepolia,
+  transport,
+});
+
+const signature2 = await nonHoistedClient.signMessage({
+  message: "Hello world! ",
+  account: lightAccount,
 });
 ```

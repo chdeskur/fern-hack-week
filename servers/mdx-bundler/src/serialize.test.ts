@@ -20,7 +20,7 @@ it("should serialize twoslash-alchemy.mdx", async () => {
   await expect(deterministic(result?.code)).toMatchFileSnapshot(
     join(__dirname, "__snapshots__", "twoslash-alchemy.js")
   );
-}, 10000);
+}, 30000);
 
 it("should serialize twoslash-cut.mdx", async () => {
   const result = await serializeTwoslash(
@@ -29,7 +29,7 @@ it("should serialize twoslash-cut.mdx", async () => {
   await expect(deterministic(result?.code)).toMatchFileSnapshot(
     join(__dirname, "__snapshots__", "twoslash-cut.js")
   );
-});
+}, 20000);
 
 it("should serialize twoslash-emit.mdx", async () => {
   const result = await serializeTwoslash(

@@ -111,64 +111,77 @@ async function serializeTwoslashImpl(
   if (hasTwoslash && !fs.existsSync("/tmp/node_modules")) {
     try {
       const dependencies: Record<string, string> = {
-        "@aa-sdk/core": "^4.31.0",
-        "@account-kit/core": "^4.31.0",
-        "@account-kit/infra": "^4.31.0",
-        "@account-kit/react": "^4.31.0",
-        "@account-kit/react-native": "^4.31.0",
-        "@account-kit/signer": "^4.31.0",
-        "@account-kit/smart-contracts": "^4.31.0",
+        "@aa-sdk/core": "^4.31.2",
+        "@account-kit/core": "^4.31.2",
+        "@account-kit/infra": "^4.31.2",
+        "@account-kit/react": "^4.31.2",
+        "@account-kit/react-native": "^4.31.2",
+        "@account-kit/signer": "^4.31.2",
+        "@account-kit/smart-contracts": "^4.31.2",
         "@account-kit/react-native-signer": "^4.31.0",
+        google: "link:next/font/google",
+        "qrcode.react": "^4.2.0",
         react: "^19.0.0",
         "react-dom": "^19.0.0",
+        "react-native": "^0.79.2",
+        "ts-essentials": "^10.0.4",
         viem: "2.22.6",
       };
       const devDependencies: Record<string, string> = {
+        "@types/node": "^20.17.32",
         "@types/react": "^19.0.10",
         "@types/react-dom": "^19.0.4",
+        tsx: "^4.7.1",
         typescript: "^5.0.0",
       };
 
-      // Filter dependencies to only include those mentioned in the content
-      const filteredDependencies: Record<string, string> = {};
-      for (const [key, value] of Object.entries(dependencies)) {
-        if (content.includes(key)) {
-          filteredDependencies[key] = value;
-        }
-      }
+      // // Filter dependencies to only include those mentioned in the content
+      // const filteredDependencies: Record<string, string> = {};
+      // for (const [key, value] of Object.entries(dependencies)) {
+      //   if (content.includes(key)) {
+      //     filteredDependencies[key] = value;
+      //   }
+      // }
 
-      console.log("Attempting to create package.json for twoslash...");
+      // console.log("Dependency analysis:", {
+      //   totalDependencies: Object.keys(dependencies).length,
+      //   filteredDependencies: Object.keys(filteredDependencies),
+      //   contentContainsDependencies: Object.keys(dependencies).filter((dep) =>
+      //     content.includes(dep)
+      //   ),
+      // });
 
       const packageJsonPath = path.join("/tmp", "package.json");
 
       // Write the package.json file directly
+      const packageJson = {
+        name: "docs",
+        private: true,
+        version: "3.8.2-alpha.1",
+        type: "module",
+        dependencies: dependencies,
+        devDependencies,
+      };
+
       await fs.promises.writeFile(
         packageJsonPath,
-        JSON.stringify(
-          {
-            name: "docs",
-            private: true,
-            version: "3.8.2-alpha.1",
-            type: "module",
-            dependencies: filteredDependencies,
-            devDependencies,
-          },
-          null,
-          2
-        )
+        JSON.stringify(packageJson, null, 2)
       );
 
-      console.log(`Created package.json at ${packageJsonPath}`);
       // Run npm install in the tmp directory
-      console.log("Running npm install in /tmp...");
       await execPromise("pnpm install", {
         cwd: "/tmp",
       });
-      console.log("Successfully installed dependencies in /tmp");
     } catch (error) {
       console.error(
         "Error creating package.json or installing dependencies:",
-        error
+        error instanceof Error
+          ? {
+              message: error.message,
+              stack: error.stack,
+              name: error.name,
+            }
+          : error
       );
     }
   }

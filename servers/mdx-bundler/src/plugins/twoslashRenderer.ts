@@ -13,8 +13,6 @@ export function twoslashRenderer(): TwoslashRenderer {
     shikiOptions: ShikiTransformerContextCommon["options"],
     info: { text?: string; docs?: string }
   ) {
-    console.log("RENDERER!");
-
     if (!info.text) return [];
 
     const text = processHoverInfo(info.text) ?? info.text;
@@ -30,7 +28,6 @@ export function twoslashRenderer(): TwoslashRenderer {
     ).children;
 
     if (info.docs) {
-      console.log("IN INFO DOCS");
       const santized = info.docs
         .replace(/\n?{(@.*)?\s*\n?/g, "")
         .replace(/\s*}\n?/g, "")
@@ -43,7 +40,6 @@ export function twoslashRenderer(): TwoslashRenderer {
         handlers: {
           code: (state, node) => {
             const lang = node.lang || "";
-            console.log("lang: ", lang);
             if (lang) {
               return codeToHast(node.value, {
                 ...shikiOptions,

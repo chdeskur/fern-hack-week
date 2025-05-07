@@ -8,7 +8,6 @@ export function twoslasher() {
   return (
     ...parameters: Parameters<typeof twoslasher_>
   ): ReturnType<typeof twoslasher_> => {
-    console.log("parameters: ", parameters);
     try {
       return twoslasher_(...parameters);
     } catch (e) {

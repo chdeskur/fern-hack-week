@@ -16,7 +16,7 @@ import {
 
 export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
   return (tree) => {
-    visit(tree, (node, index, parent) => {
+    visit(tree, (node) => {
       if (!isMdxJsxElementHast(node)) {
         return;
       }
@@ -27,38 +27,6 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
 
       if (node.name === "CodeBlock" && node.children.length > 1) {
         node.name = "CodeGroup";
-      }
-
-      // code groups are not currently supported for twoslash
-      if (node.name === "CodeGroup") {
-        for (const child of node.children) {
-          if (
-            child == null ||
-            child.type !== "element" ||
-            child.tagName !== "pre"
-          ) {
-            return;
-          }
-
-          const codeNode = child.children[0];
-          if (
-            codeNode == null ||
-            codeNode.type !== "element" ||
-            codeNode.tagName !== "code"
-          ) {
-            return;
-          }
-
-          // for now, rehypeShiki will process twoslash + shiki
-          if (codeNode.data?.meta?.includes("twoslash")) {
-            if (parent && index != null) {
-              parent.children.splice(index, 1, ...node.children);
-              return [SKIP, index];
-            }
-            return;
-          }
-        }
-        return;
       }
     });
 
@@ -76,11 +44,6 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         codeNode.type !== "element" ||
         codeNode.tagName !== "code"
       ) {
-        return;
-      }
-
-      // for now, rehypeShiki will process twoslash + shiki
-      if (codeNode.data?.meta?.includes("twoslash")) {
         return;
       }
 
@@ -224,6 +187,7 @@ export function migrateMeta(metastring: string): string {
 
   function createMetaWithTitleAttribute(text: string): string {
     const strippedMeta = text
+      .replaceAll(/(twoslash)/g, "")
       .replaceAll(/(wordWrap)/g, "")
       .replaceAll(/(for="(.*?)")/g, "")
       .trim();
@@ -263,6 +227,7 @@ export function migrateMeta(metastring: string): string {
   if (!metastring.includes("title=")) {
     // ignore special words, anything in curly braces
     const parseForTitle = metastring
+      .replaceAll(/(twoslash)/g, "")
       .replaceAll(/(wordWrap)/g, "")
       .replaceAll(/(for="(.*?)")/g, "")
       .replaceAll(/([^=]+)={(.*?)}/g, "")

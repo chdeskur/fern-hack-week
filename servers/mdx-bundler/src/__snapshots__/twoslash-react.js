@@ -567,6 +567,18 @@ var Component = (() => {
                           color: "#1976D2",
                           "--shiki-dark": "#EEFFFF"
                         },
+                        children: "React"
+                      }), (0, import_jsx_runtime.jsx)(_components.span, {
+                        style: {
+                          color: "#24292EFF",
+                          "--shiki-dark": "#89DDFF"
+                        },
+                        children: "."
+                      }), (0, import_jsx_runtime.jsx)(_components.span, {
+                        style: {
+                          color: "#1976D2",
+                          "--shiki-dark": "#EEFFFF"
+                        },
                         children: "JSX"
                       }), (0, import_jsx_runtime.jsx)(_components.span, {
                         style: {
@@ -1081,6 +1093,18 @@ var Component = (() => {
                     children: (0, import_jsx_runtime.jsxs)(_components.span, {
                       className: "line",
                       children: [(0, import_jsx_runtime.jsx)(_components.span, {
+                        style: {
+                          color: "#1976D2",
+                          "--shiki-dark": "#EEFFFF"
+                        },
+                        children: "React"
+                      }), (0, import_jsx_runtime.jsx)(_components.span, {
+                        style: {
+                          color: "#24292EFF",
+                          "--shiki-dark": "#89DDFF"
+                        },
+                        children: "."
+                      }), (0, import_jsx_runtime.jsx)(_components.span, {
                         style: {
                           color: "#1976D2",
                           "--shiki-dark": "#EEFFFF"
