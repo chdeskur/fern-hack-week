@@ -1,0 +1,8 @@
+```ts twoslash
+// @noImplicitAny: false
+// @target: esnext
+// @lib: esnext
+// This suppose to throw an error,
+// but it won't because we disabled noImplicitAny.
+const fn = (a) => a + 1;
+```

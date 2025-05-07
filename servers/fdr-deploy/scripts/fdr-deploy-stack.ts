@@ -53,6 +53,8 @@ import {
 
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
+const MDX_BUNDLER_CONTAINER_NAME = "mdx-bundler";
+const MDX_BUNDLER_SERVICE_NAME = "mdx-bundler";
 
 interface ElastiCacheProps {
   readonly cacheName: string;
@@ -484,6 +486,124 @@ export class FdrDeployStack extends Stack {
     const vercelUser = User.fromUserName(this, "VercelUser", "vercel");
 
     docsHomepageImagesBucket.grantReadWrite(vercelUser);
+
+    const mdxBundlerSg = new SecurityGroup(this, "mdx-bundler-sg", {
+      securityGroupName: `mdx-bundler-${environmentType.toLowerCase()}`,
+      vpc,
+      allowAllOutbound: true,
+    });
+    mdxBundlerSg.addIngressRule(
+      Peer.anyIpv4(),
+      Port.tcp(8080),
+      "allow HTTP traffic from anywhere"
+    );
+    mdxBundlerSg.addIngressRule(
+      Peer.ipv4(environmentInfo.vpcIpv4Cidr),
+      Port.allTcp()
+    );
+
+    const mdxBundlerService = new ApplicationLoadBalancedFargateService(
+      this,
+      MDX_BUNDLER_SERVICE_NAME,
+      {
+        serviceName: MDX_BUNDLER_SERVICE_NAME,
+        cluster,
+        cpu: 512,
+        memoryLimitMiB: 1024,
+        desiredCount: 1,
+        securityGroups: [mdxBundlerSg],
+        taskImageOptions: {
+          image: ContainerImage.fromTarball(
+            `../../docker/build/tar/mdx-bundler:${version}.tar`
+          ),
+          environment: {
+            NODE_ENV: "production",
+          },
+          containerName: MDX_BUNDLER_CONTAINER_NAME,
+          containerPort: 8080,
+          enableLogging: true,
+          logDriver: LogDriver.awsLogs({
+            logGroup,
+            streamPrefix: MDX_BUNDLER_SERVICE_NAME,
+          }),
+        },
+        assignPublicIp: true,
+        publicLoadBalancer: true,
+        enableECSManagedTags: true,
+        protocol: ApplicationProtocol.HTTPS,
+        certificate,
+        domainZone: hostedZone,
+        domainName: getMdxBundlerDomainName(environmentType, environmentInfo),
+        cloudMapOptions:
+          cloudMapNamespace != null
+            ? {
+                cloudMapNamespace,
+                name: MDX_BUNDLER_SERVICE_NAME,
+              }
+            : undefined,
+      }
+    );
+
+    mdxBundlerService.targetGroup.setAttribute(
+      "deregistration_delay.timeout_seconds",
+      "30"
+    );
+
+    mdxBundlerService.loadBalancer.setAttribute(
+      "idle_timeout.timeout_seconds",
+      "900"
+    );
+
+    mdxBundlerService.targetGroup.configureHealthCheck({
+      healthyHttpCodes: "200",
+      path: "/",
+      port: "8080",
+      timeout: Duration.seconds(120),
+      interval: Duration.seconds(150),
+      unhealthyThresholdCount: 5,
+    });
+
+    const mdxBundlerLbResponseTimeAlarm = new Alarm(
+      this,
+      "mdx-bundler-lb-target-respones-time-alarm",
+      {
+        alarmName: `${id} MDX Bundler Load Balancer Target Response Time Threshold`,
+        metric: mdxBundlerService.loadBalancer.metrics.targetResponseTime(),
+        threshold: 1,
+        evaluationPeriods: 5,
+      }
+    );
+    mdxBundlerLbResponseTimeAlarm.addAlarmAction(
+      new actions.SnsAction(snsTopic)
+    );
+
+    const mdxBundlerLbUnhealthyHostCountAlarm = new Alarm(
+      this,
+      "mdx-bundler-lb-unhealthy-host-count-alarm",
+      {
+        alarmName: `${id} MDX Bundler Load Balancer Unhealthy Host Count Alarm`,
+        metric: mdxBundlerService.targetGroup.metrics.unhealthyHostCount(),
+        threshold: 1,
+        evaluationPeriods: 5,
+      }
+    );
+    mdxBundlerLbUnhealthyHostCountAlarm.addAlarmAction(
+      new actions.SnsAction(snsTopic)
+    );
+
+    const mdxBundlerLb500CountAlarm = new Alarm(
+      this,
+      "mdx-bundler-lb-5XX-count",
+      {
+        alarmName: `${id} MDX Bundler Load Balancer 500 Error Alarm`,
+        metric: mdxBundlerService.loadBalancer.metrics.httpCodeElb(
+          HttpCodeElb.ELB_5XX_COUNT
+        ),
+        threshold: 2,
+        evaluationPeriods: 5,
+      }
+    );
+    mdxBundlerLb500CountAlarm.addAlarmAction(new actions.SnsAction(snsTopic));
   }
 
   private constructElastiCacheInstance(
@@ -621,6 +741,22 @@ function getDomainSuffix(environmentType: EnvironmentType): string {
     default:
       assertNever(environmentType);
   }
+}
+
+function getMdxBundlerDomainName(
+  environmentType: EnvironmentType,
+  environmentInfo: EnvironmentInfo
+) {
+  if (environmentType === EnvironmentType.Prod) {
+    return "mdx-bundler" + "." + environmentInfo.route53Info.hostedZoneName;
+  }
+  return (
+    "mdx-bundler" +
+    "-" +
+    environmentType.toLowerCase() +
+    "." +
+    environmentInfo.route53Info.hostedZoneName
+  );
 }
 
 function assertNever(x: never): never {

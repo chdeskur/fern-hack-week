@@ -9,6 +9,7 @@ on:
       - "fern/fern.config.json"
       - "servers/fdr-deploy/**"
       - "servers/fdr/**"
+      - "servers/mdx-bundler/**"
       - ".github/workflows/deploy-fdr-dev.yml"
       - ".github/workflows/publish-fdr-sdk.yml"
       - "packages/fdr-sdk/**"
@@ -34,7 +35,7 @@ jobs:
     secrets: inherit
 
   deploy_dev:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     environment: Fern Dev
     strategy:
       matrix:
@@ -82,6 +83,7 @@ jobs:
         run: |
           git_version="$(scripts/git-version.sh)"
           pnpm --filter=@fern-platform/fdr run docker:dev "${git_version}"
+          pnpm --filter=@fern-platform/mdx-bundler docker "${git_version}"
           npm install -g aws-cdk
           cd servers/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev

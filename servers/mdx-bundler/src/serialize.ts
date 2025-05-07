@@ -4,11 +4,15 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight,
 } from "@shikijs/transformers";
-import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
-import { ElementContent } from "hast";
+import { transformerTwoslash } from "@shikijs/twoslash";
+import { exec } from "child_process";
+import fs from "fs";
 import { bundleMDX } from "mdx-bundler";
 import path from "path";
+import ts from "typescript";
+import { promisify } from "util";
 
+import { isNonNullish } from "@fern-api/ui-core-utils";
 // import rehypeKatex from "rehype-katex";
 // import remarkFrontmatter from "remark-frontmatter";
 // import remarkGemoji from "remark-gemoji";
@@ -23,10 +27,10 @@ import {
   type PluggableList,
   sanitizeBreaks,
   sanitizeMdxExpression,
-  toTree,
   // toTree,
 } from "@fern-docs/mdx";
 
+import { rehypeShikiDisplayNotation } from "./plugins/display-shiki-notation";
 // import {
 //   rehypeAcornErrorBoundary,
 //   rehypeExpressionToMd,
@@ -54,6 +58,8 @@ import {
 // import { rehypeTabs } from "./plugins/rehype-tabs";
 // import { remarkExtractTitle } from "./plugins/remark-extract-title";
 import { conditionalRehypeShiki } from "./plugins/rehype-shiki-twoslash";
+import { twoslashRenderer } from "./plugins/twoslashRenderer";
+import { twoslasher } from "./plugins/twoslasher";
 
 // import { FileData } from "./types";
 
@@ -64,6 +70,8 @@ export interface SerializeMdxResponse {
   code: string;
   jsxElements: string[];
 }
+
+const execPromise = promisify(exec);
 
 async function serializeTwoslashImpl(
   content: string
@@ -95,6 +103,74 @@ async function serializeTwoslashImpl(
       "bin",
       "esbuild"
     );
+  }
+
+  const hasTwoslash = content.includes("twoslash");
+
+  // Try to download package.json and install dependencies if twoslash is used and node_modules doesn't exist
+  if (hasTwoslash && !fs.existsSync("/tmp/node_modules")) {
+    try {
+      const dependencies: Record<string, string> = {
+        "@aa-sdk/core": "^4.31.0",
+        "@account-kit/core": "^4.31.0",
+        "@account-kit/infra": "^4.31.0",
+        "@account-kit/react": "^4.31.0",
+        "@account-kit/react-native": "^4.31.0",
+        "@account-kit/signer": "^4.31.0",
+        "@account-kit/smart-contracts": "^4.31.0",
+        "@account-kit/react-native-signer": "^4.31.0",
+        react: "^19.0.0",
+        "react-dom": "^19.0.0",
+        viem: "2.22.6",
+      };
+      const devDependencies: Record<string, string> = {
+        "@types/react": "^19.0.10",
+        "@types/react-dom": "^19.0.4",
+        typescript: "^5.0.0",
+      };
+
+      // Filter dependencies to only include those mentioned in the content
+      const filteredDependencies: Record<string, string> = {};
+      for (const [key, value] of Object.entries(dependencies)) {
+        if (content.includes(key)) {
+          filteredDependencies[key] = value;
+        }
+      }
+
+      console.log("Attempting to create package.json for twoslash...");
+
+      const packageJsonPath = path.join("/tmp", "package.json");
+
+      // Write the package.json file directly
+      await fs.promises.writeFile(
+        packageJsonPath,
+        JSON.stringify(
+          {
+            name: "docs",
+            private: true,
+            version: "3.8.2-alpha.1",
+            type: "module",
+            dependencies: filteredDependencies,
+            devDependencies,
+          },
+          null,
+          2
+        )
+      );
+
+      console.log(`Created package.json at ${packageJsonPath}`);
+      // Run npm install in the tmp directory
+      console.log("Running npm install in /tmp...");
+      await execPromise("pnpm install", {
+        cwd: "/tmp",
+      });
+      console.log("Successfully installed dependencies in /tmp");
+    } catch (error) {
+      console.error(
+        "Error creating package.json or installing dependencies:",
+        error
+      );
+    }
   }
 
   // let files: Record<string, string> = {};
@@ -141,20 +217,38 @@ async function serializeTwoslashImpl(
               transformerNotationDiff(),
               transformerNotationFocus(),
               transformerNotationHighlight(),
-              transformerTwoslash({
-                explicitTrigger: true,
-                renderer: rendererRich({
-                  renderMarkdown: function (markdown) {
-                    const { hast } = toTree(markdown, {
-                      format: "md",
-                      sanitize: false,
-                    });
-                    return hast.children as ElementContent[];
-                  },
-                }),
-              }),
-            ],
+              hasTwoslash
+                ? transformerTwoslash({
+                    onTwoslashError: (
+                      error: unknown,
+                      code: string,
+                      lang: string
+                    ) => {
+                      console.error("Twoslash error occurred:", error);
+                      console.error("Code:", code);
+                      console.error("Language:", lang);
+                    },
+                    explicitTrigger: true,
+                    throws: false,
+                    twoslasher: twoslasher(),
+                    renderer: twoslashRenderer(),
+                    twoslashOptions: {
+                      customTags: ["allowErrors"],
+                      compilerOptions: {
+                        jsx: ts.JsxEmit.ReactJSX,
+                        //   module: ts.ModuleKind.NodeNext,
+                        //   moduleResolution: ts.ModuleResolutionKind.NodeNext,
+                        //   esModuleInterop: true,
+                        //   lib: ["dom", "esnext"],
+                        //   skipLibCheck: true,
+                      },
+                      vfsRoot: "/tmp",
+                    },
+                  })
+                : null,
+            ].filter(isNonNullish),
           } satisfies RehypeShikiOptions,
+          rehypeShikiDisplayNotation,
         ],
       ];
 

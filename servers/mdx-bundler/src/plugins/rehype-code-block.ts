@@ -49,7 +49,7 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
             return;
           }
 
-          // for now, rehypeShiki will process twoslash + shiki
+          // unnest code blocks if twoslash highlighting is enabled
           if (codeNode.data?.meta?.includes("twoslash")) {
             if (parent && index != null) {
               parent.children.splice(index, 1, ...node.children);
