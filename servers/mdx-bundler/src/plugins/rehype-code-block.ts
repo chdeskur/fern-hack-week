@@ -16,7 +16,7 @@ import {
 
 export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
   return (tree) => {
-    visit(tree, (node, index, parent) => {
+    visit(tree, (node) => {
       if (!isMdxJsxElementHast(node)) {
         return;
       }
@@ -48,15 +48,6 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
           ) {
             return;
           }
-
-          // unnest code blocks if twoslash highlighting is enabled
-          if (codeNode.data?.meta?.includes("twoslash")) {
-            if (parent && index != null) {
-              parent.children.splice(index, 1, ...node.children);
-              return [SKIP, index];
-            }
-            return;
-          }
         }
         return;
       }
@@ -76,11 +67,6 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
         codeNode.type !== "element" ||
         codeNode.tagName !== "code"
       ) {
-        return;
-      }
-
-      // for now, rehypeShiki will process twoslash + shiki
-      if (codeNode.data?.meta?.includes("twoslash")) {
         return;
       }
 
