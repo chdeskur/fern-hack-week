@@ -205,7 +205,7 @@ describe("curl", () => {
         { usesApplicationJsonInFormDataValue: false }
       )
     ).toMatchInlineSnapshot(
-      '"curl -X POST "https://api.example.com/form?name=John%20Doe&email=john%40example.com&items[]=item1&items[]=item2""'
+      `"curl -X POST "https://api.example.com/form?name=John%20Doe&email=john%40example.com&items=item1&items=item2""`
     );
   });
 
@@ -231,13 +231,13 @@ describe("curl", () => {
         { usesApplicationJsonInFormDataValue: false }
       )
     ).toMatchInlineSnapshot(`
-          "curl -X POST https://api.example.com/form \\
-               -H "Content-Type: application/x-www-form-urlencoded" \\
-               --data-urlencode name="John Doe" \\
-               --data-urlencode email=john@example.com \\
-               -d "items[]"=item1 \\
-               -d "items[]"=item2"
-        `);
+      "curl -X POST https://api.example.com/form \\
+           -H "Content-Type: application/x-www-form-urlencoded" \\
+           --data-urlencode name="John Doe" \\
+           --data-urlencode email=john@example.com \\
+           -d items=item1 \\
+           -d items=item2"
+    `);
   });
 
   it("generates GET request with urlencoded parameters", () => {
@@ -258,12 +258,12 @@ describe("curl", () => {
       )
     ).toMatchInlineSnapshot(
       `
-          "curl -G https://api.example.com/search \\
-               --data-urlencode q="search term with spaces" \\
-               -d "filter[]"=category1 \\
-               -d "filter[]"=category2 \\
-               --data-urlencode sort="date desc""
-        `
+      "curl -G https://api.example.com/search \\
+           --data-urlencode q="search term with spaces" \\
+           -d filter=category1 \\
+           -d filter=category2 \\
+           --data-urlencode sort="date desc""
+    `
     );
   });
 
@@ -276,11 +276,11 @@ describe("curl", () => {
 
     expect(getUrlQueriesGetString({ a: ["b1", null, "b2"] }))
       .toMatchInlineSnapshot(`
-          [
-            "-d "a[]"=b1",
-            "-d "a[]"=b2",
-          ]
-        `);
+        [
+          "-d a=b1",
+          "-d a=b2",
+        ]
+      `);
   });
 
   it("generates POST request with openrpc protocol", () => {

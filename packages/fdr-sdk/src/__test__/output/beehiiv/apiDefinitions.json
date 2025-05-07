@@ -5883,7 +5883,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d audience=free",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d audience=free",
                   "generated": true
                 }
               ],
@@ -5926,7 +5926,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d audience=free",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d audience=free",
                   "generated": true
                 }
               ],
@@ -5969,7 +5969,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d audience=free",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d audience=free",
                   "generated": true
                 }
               ],
@@ -6012,7 +6012,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d audience=free",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d audience=free",
                   "generated": true
                 }
               ],
@@ -6301,7 +6301,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],
@@ -6344,7 +6344,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],
@@ -6387,7 +6387,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],
@@ -6430,7 +6430,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId/posts/:postId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],
@@ -7031,7 +7031,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d limit=0",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d limit=0",
                   "generated": true
                 }
               ],
@@ -7072,7 +7072,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d limit=0",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d limit=0",
                   "generated": true
                 }
               ],
@@ -7113,7 +7113,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d limit=0",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d limit=0",
                   "generated": true
                 }
               ],
@@ -7154,7 +7154,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats \\\n     -d limit=0",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats \\\n     -d limit=0",
                   "generated": true
                 }
               ],
@@ -7380,7 +7380,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],
@@ -7422,7 +7422,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],
@@ -7464,7 +7464,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],
@@ -7506,7 +7506,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d \"expand[]\"=stats",
+                  "code": "curl -G https://api.beehiiv.com/v2/publications/:publicationId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -d expand=stats",
                   "generated": true
                 }
               ],

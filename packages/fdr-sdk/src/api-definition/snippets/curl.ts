@@ -302,9 +302,7 @@ function toUrlEncoded(urlQueries: Record<string, unknown>): [string, string][] {
   return Object.entries(urlQueries).flatMap(
     ([key, value]): [string, string][] => {
       if (Array.isArray(value)) {
-        return value
-          .filter(isNonNullish)
-          .map((v) => [`${key}[]`, unknownToString(v)]);
+        return value.filter(isNonNullish).map((v) => [key, unknownToString(v)]);
       }
 
       if (value == null) {
