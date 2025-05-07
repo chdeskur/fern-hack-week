@@ -807,9 +807,6 @@ importers:
       '@segment/snippet':
         specifier: ^5.2.1
         version: 5.2.1
-      '@shikijs/rehype':
-        specifier: ^3.2.1
-        version: 3.4.0
       '@slack/web-api':
         specifier: ^6.9.0
         version: 6.12.0
@@ -9589,10 +9586,6 @@ packages:
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
-
-  chokidar@4.0.1:
-    resolution: {integrity: sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==}
-    engines: {node: '>= 14.16.0'}
 
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
@@ -22300,7 +22293,7 @@ snapshots:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
       '@types/yargs': 15.0.19
       chalk: 4.1.2
 
@@ -24874,7 +24867,7 @@ snapshots:
       '@slack/logger': 3.0.0
       '@slack/types': 2.11.0
       '@types/is-stream': 1.1.0
-      '@types/node': 18.19.76
+      '@types/node': 18.19.87
       axios: 1.9.0
       eventemitter3: 3.1.2
       form-data: 2.5.1
@@ -26472,7 +26465,7 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
 
   '@types/cacheable-request@6.0.3':
     dependencies:
@@ -26487,7 +26480,7 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
 
   '@types/content-disposition@0.5.8': {}
 
@@ -26504,7 +26497,7 @@ snapshots:
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
 
   '@types/d3-array@3.2.1': {}
 
@@ -26663,7 +26656,7 @@ snapshots:
 
   '@types/graceful-fs@4.1.9':
     dependencies:
-      '@types/node': 18.19.76
+      '@types/node': 18.19.87
 
   '@types/har-format@1.2.15': {}
 
@@ -26732,7 +26725,7 @@ snapshots:
   '@types/jsonwebtoken@9.0.9':
     dependencies:
       '@types/ms': 0.7.34
-      '@types/node': 18.19.76
+      '@types/node': 18.19.87
 
   '@types/katex@0.16.7': {}
 
@@ -26794,7 +26787,7 @@ snapshots:
 
   '@types/node-fetch@2.6.9':
     dependencies:
-      '@types/node': 18.19.76
+      '@types/node': 18.19.87
       form-data: 4.0.0
 
   '@types/node-forge@1.3.11':
@@ -26884,7 +26877,7 @@ snapshots:
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
       '@types/send': 0.17.4
 
   '@types/shimmer@1.2.0': {}
@@ -26938,7 +26931,7 @@ snapshots:
 
   '@types/xml2js@0.4.14':
     dependencies:
-      '@types/node': 18.19.76
+      '@types/node': 18.19.87
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -29472,10 +29465,6 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chokidar@4.0.1:
-    dependencies:
-      readdirp: 4.0.2
-
   chokidar@4.0.3:
     dependencies:
       readdirp: 4.0.2
@@ -29486,7 +29475,7 @@ snapshots:
 
   chrome-launcher@0.15.2:
     dependencies:
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -29503,7 +29492,7 @@ snapshots:
 
   chromium-edge-launcher@0.2.0:
     dependencies:
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -33535,7 +33524,7 @@ snapshots:
       '@jest/environment': 29.7.0
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 20.17.43
+      '@types/node': 18.19.87
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
@@ -36280,8 +36269,8 @@ snapshots:
   ox@0.6.7(typescript@5.7.3)(zod@3.24.2):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.8.1
-      '@noble/hashes': 1.7.1
+      '@noble/curves': 1.9.0
+      '@noble/hashes': 1.8.0
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
       abitype: 1.0.8(typescript@5.7.3)(zod@3.24.2)
@@ -39558,7 +39547,7 @@ snapshots:
     dependencies:
       bundle-require: 5.0.0(esbuild@0.25.0)
       cac: 6.7.14
-      chokidar: 4.0.1
+      chokidar: 4.0.3
       consola: 3.2.3
       debug: 4.4.0
       esbuild: 0.25.0
@@ -39570,7 +39559,7 @@ snapshots:
       source-map: 0.8.0-beta.0
       sucrase: 3.35.0
       tinyexec: 0.3.2
-      tinyglobby: 0.2.10
+      tinyglobby: 0.2.13
       tree-kill: 1.2.2
     optionalDependencies:
       '@swc/core': 1.5.7(@swc/helpers@0.5.15)
