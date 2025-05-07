@@ -166,13 +166,15 @@ export async function createTurbopufferRecords({
     }
   });
 
-  const records = [...markdownRecords, ...apiReferenceRecords];
+  let records = [...markdownRecords, ...apiReferenceRecords];
   const nodeIds = new Set<string>();
-  records.forEach((r) => {
+  records = records.filter((r) => {
     if (nodeIds.has(r.id)) {
-      console.log("Duplicate node id", r.id);
+      console.log("Warning: duplicate node id, filtering out manually", r.id);
+      return false;
     } else {
       nodeIds.add(r.id);
+      return true;
     }
   });
   return records;

@@ -76,7 +76,7 @@ export function createEndpointBaseRecordHttp({
 
   return {
     ...base,
-    id: createHash("sha256").update(node.endpointId).digest("hex"),
+    id: createHash("sha256").update(node.id).digest("hex"),
     attributes: {
       ...base.attributes,
       chunk: prepared.content ?? "",

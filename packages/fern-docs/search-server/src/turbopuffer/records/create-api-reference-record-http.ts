@@ -24,7 +24,7 @@ export function createApiReferenceRecordHttp({
     },
   };
 
-  const records: TurbopufferRecord[] = [base];
+  const records: TurbopufferRecord[] = [];
   const {
     content: request_description,
     code_snippets: request_description_code_snippets,
@@ -39,7 +39,7 @@ export function createApiReferenceRecordHttp({
     records.push({
       ...base,
       id: createHash("sha256")
-        .update(base.id + request_description)
+        .update(base.id + "-request-" + request_description)
         .digest("hex"),
       attributes: {
         ...base.attributes,
@@ -68,7 +68,7 @@ export function createApiReferenceRecordHttp({
     records.push({
       ...base,
       id: createHash("sha256")
-        .update(base.id + response_description)
+        .update(base.id + "-response-" + response_description)
         .digest("hex"),
       attributes: {
         ...base.attributes,
@@ -83,5 +83,9 @@ export function createApiReferenceRecordHttp({
     });
   }
 
-  return records;
+  if (records.length === 0) {
+    return [base];
+  } else {
+    return records;
+  }
 }
