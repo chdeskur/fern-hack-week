@@ -5,6 +5,7 @@ export * from "./TypeReferenceId";
 export * from "./TypeReferenceIdDefault";
 export * from "./ObjectType";
 export * from "./ObjectProperty";
+export * from "./ObjectPropertyAccess";
 export * from "./PrimitiveType";
 export * from "./IntegerType";
 export * from "./DoubleType";

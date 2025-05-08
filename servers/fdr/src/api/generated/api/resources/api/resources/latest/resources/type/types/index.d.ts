@@ -10,6 +10,7 @@ export * from "./UnknownType";
 export * from "./TypeShape";
 export * from "./ObjectType";
 export * from "./ObjectProperty";
+export * from "./ObjectPropertyAccess";
 export * from "./EnumType";
 export * from "./EnumValue";
 export * from "./UndiscriminatedUnionType";

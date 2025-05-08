@@ -5,4 +5,5 @@ import * as FernRegistry from "../../../../../../../index";
 export interface ObjectProperty extends FernRegistry.api.latest.WithDescription, FernRegistry.api.latest.WithAvailability {
     key: FernRegistry.PropertyKey;
     valueShape: FernRegistry.api.latest.TypeShape;
+    propertyAccess: FernRegistry.api.latest.ObjectPropertyAccess | undefined;
 }

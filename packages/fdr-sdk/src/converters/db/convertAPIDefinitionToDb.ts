@@ -679,6 +679,7 @@ function transformProperty({
     // htmlDescription,
     key: writeShape.key,
     valueType: writeShape.valueType,
+    propertyAccess: writeShape.propertyAccess,
     // descriptionContainsMarkdown: true,
   };
 }

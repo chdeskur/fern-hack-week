@@ -389,7 +389,7 @@ export function unwrapDiscriminatedUnionVariant(
             },
           },
         },
-
+        propertyAccess: undefined,
         // the description and availability of the discriminant should not be included here
         // because they are already included in the union variant itself
         description: undefined,

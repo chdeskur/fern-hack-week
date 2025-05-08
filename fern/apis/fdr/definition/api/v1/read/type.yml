@@ -54,6 +54,12 @@ types:
     properties:
       key: rootCommons.PropertyKey
       valueType: TypeReference
+      propertyAccess: optional<ObjectPropertyAccess>
+
+  ObjectPropertyAccess:
+    enum:
+      - READ_ONLY
+      - WRITE_ONLY
 
   PrimitiveType:
     union:

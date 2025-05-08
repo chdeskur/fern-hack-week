@@ -9,4 +9,5 @@ export interface ObjectProperty
         FernRegistry.api.latest.WithAvailability {
     key: FernRegistry.PropertyKey;
     valueShape: FernRegistry.api.latest.TypeShape;
+    propertyAccess: FernRegistry.api.latest.ObjectPropertyAccess | undefined;
 }

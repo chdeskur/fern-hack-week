@@ -285,6 +285,7 @@ export class ApiDefinitionV1ToLatest {
         type: "alias",
         value: this.migrateTypeReference(parameter.type),
       },
+      propertyAccess: undefined,
       description: parameter.description,
       availability: parameter.availability,
     }));
@@ -396,6 +397,7 @@ export class ApiDefinitionV1ToLatest {
         type: "alias",
         value: this.migrateTypeReference(value.valueType),
       },
+      propertyAccess: value.propertyAccess,
       description: value.description,
       availability: value.availability,
     }));
@@ -696,6 +698,7 @@ export class ApiDefinitionV1ToLatest {
             type: "alias",
             value: this.migrateTypeReference(bodyProp.valueType),
           },
+          propertyAccess: bodyProp.propertyAccess,
         }),
       })
     );

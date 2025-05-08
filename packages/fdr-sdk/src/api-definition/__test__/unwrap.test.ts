@@ -356,6 +356,7 @@ describe("unwrapObjectType", () => {
           },
           description: undefined,
           availability: undefined,
+          propertyAccess: undefined,
         },
         {
           key: PropertyKey("a"),
@@ -369,18 +370,21 @@ describe("unwrapObjectType", () => {
           },
           description: undefined,
           availability: undefined,
+          propertyAccess: undefined,
         },
         {
           key: PropertyKey("c"),
           valueShape: PRIMITIVE_SHAPE,
           description: undefined,
           availability: undefined,
+          propertyAccess: undefined,
         },
         {
           key: PropertyKey("b"),
           valueShape: PRIMITIVE_SHAPE,
           description: undefined,
           availability: undefined,
+          propertyAccess: undefined,
         },
       ],
       extraProperties: undefined,
@@ -406,6 +410,7 @@ describe("unwrapObjectType", () => {
           valueShape: PRIMITIVE_SHAPE,
           description: undefined,
           availability: undefined,
+          propertyAccess: undefined,
         },
         {
           key: PropertyKey("d"),
@@ -419,6 +424,7 @@ describe("unwrapObjectType", () => {
           },
           description: undefined,
           availability: undefined,
+          propertyAccess: undefined,
         },
       ],
       extraProperties: undefined,
@@ -435,6 +441,7 @@ describe("unwrapObjectType", () => {
               valueShape: PRIMITIVE_SHAPE,
               description: undefined,
               availability: undefined,
+              propertyAccess: undefined,
             },
           ],
           extraProperties: undefined,
@@ -453,6 +460,7 @@ describe("unwrapObjectType", () => {
               valueShape: PRIMITIVE_SHAPE,
               description: undefined,
               availability: undefined,
+              propertyAccess: undefined,
             },
           ],
           extraProperties: undefined,
@@ -481,6 +489,7 @@ describe("unwrapObjectType", () => {
           valueShape: PRIMITIVE_SHAPE,
           description: undefined,
           availability: undefined,
+          propertyAccess: undefined,
         },
       ],
       extraProperties: undefined,
@@ -524,12 +533,14 @@ describe("unwrapObjectType", () => {
               },
               description: undefined,
               availability: "Deprecated",
+              propertyAccess: undefined,
             },
             {
               key: PropertyKey("c"),
               valueShape: PRIMITIVE_SHAPE,
               description: undefined,
               availability: undefined,
+              propertyAccess: undefined,
             },
           ],
           extraProperties: undefined,
@@ -547,6 +558,7 @@ describe("unwrapObjectType", () => {
         valueShape: PRIMITIVE_SHAPE,
         description: undefined,
         availability: undefined,
+        propertyAccess: undefined,
       },
       {
         key: PropertyKey("c"),
@@ -561,6 +573,7 @@ describe("unwrapObjectType", () => {
         description: undefined,
         // availability is the least stable of the extended object
         availability: "GenerallyAvailable",
+        propertyAccess: undefined,
       },
       {
         key: PropertyKey("b"),
@@ -576,6 +589,7 @@ describe("unwrapObjectType", () => {
         // availability is the least stable of the extended object
         // and Deprecated is sorted after GenerallyAvailable
         availability: "Deprecated",
+        propertyAccess: undefined,
       },
     ]);
 

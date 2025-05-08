@@ -62,6 +62,12 @@ types:
     properties:
       key: rootCommons.PropertyKey
       valueShape: TypeShape
+      propertyAccess: optional<ObjectPropertyAccess>
+
+  ObjectPropertyAccess:
+    enum:
+      - READ_ONLY
+      - WRITE_ONLY
 
   EnumType:
     properties:
