@@ -105,84 +105,110 @@ async function serializeTwoslashImpl(
     );
   }
 
+  const dependencies: Record<string, string> = {
+    "@aa-sdk/core": "^4.31.2",
+    "@account-kit/core": "^4.31.2",
+    "@account-kit/infra": "^4.31.2",
+    "@account-kit/react": "^4.31.2",
+    "@account-kit/react-native": "^4.31.2",
+    "@account-kit/signer": "^4.31.2",
+    "@account-kit/smart-contracts": "^4.31.2",
+    "@account-kit/react-native-signer": "^4.31.0",
+    "@tanstack/react-query": "^5.71.1",
+    google: "link:next/font/google",
+    "qrcode.react": "^4.2.0",
+    react: "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native": "^0.79.2",
+    "ts-essentials": "^10.0.4",
+    viem: "2.22.6",
+  };
+  const devDependencies: Record<string, string> = {
+    "@types/node": "^20.17.32",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    tsx: "^4.7.1",
+    typescript: "^5.0.0",
+  };
+
   const hasTwoslash = content.includes("twoslash");
 
   // Try to download package.json and install dependencies if twoslash is used and node_modules doesn't exist
-  if (hasTwoslash && !fs.existsSync("/tmp/node_modules")) {
-    try {
-      const dependencies: Record<string, string> = {
-        "@aa-sdk/core": "^4.31.2",
-        "@account-kit/core": "^4.31.2",
-        "@account-kit/infra": "^4.31.2",
-        "@account-kit/react": "^4.31.2",
-        "@account-kit/react-native": "^4.31.2",
-        "@account-kit/signer": "^4.31.2",
-        "@account-kit/smart-contracts": "^4.31.2",
-        "@account-kit/react-native-signer": "^4.31.0",
-        google: "link:next/font/google",
-        "qrcode.react": "^4.2.0",
-        react: "^19.0.0",
-        "react-dom": "^19.0.0",
-        "react-native": "^0.79.2",
-        "ts-essentials": "^10.0.4",
-        viem: "2.22.6",
-      };
-      const devDependencies: Record<string, string> = {
-        "@types/node": "^20.17.32",
-        "@types/react": "^19.0.10",
-        "@types/react-dom": "^19.0.4",
-        tsx: "^4.7.1",
-        typescript: "^5.0.0",
-      };
+  if (hasTwoslash) {
+    console.log("[MDX Bundler] Starting dependency check for twoslash...");
+    const requiredPackages = ["@aa-sdk", "@account-kit", "viem", "react"];
+    const nodeModulesPath = "/tmp/node_modules";
+    const hasNodeModules = fs.existsSync(nodeModulesPath);
+    console.log(
+      `[MDX Bundler] Node modules exists at ${nodeModulesPath}: ${hasNodeModules}`
+    );
 
-      // // Filter dependencies to only include those mentioned in the content
-      // const filteredDependencies: Record<string, string> = {};
-      // for (const [key, value] of Object.entries(dependencies)) {
-      //   if (content.includes(key)) {
-      //     filteredDependencies[key] = value;
-      //   }
-      // }
-
-      // console.log("Dependency analysis:", {
-      //   totalDependencies: Object.keys(dependencies).length,
-      //   filteredDependencies: Object.keys(filteredDependencies),
-      //   contentContainsDependencies: Object.keys(dependencies).filter((dep) =>
-      //     content.includes(dep)
-      //   ),
-      // });
-
-      const packageJsonPath = path.join("/tmp", "package.json");
-
-      // Write the package.json file directly
-      const packageJson = {
-        name: "docs",
-        private: true,
-        version: "3.8.2-alpha.1",
-        type: "module",
-        dependencies: dependencies,
-        devDependencies,
-      };
-
-      await fs.promises.writeFile(
-        packageJsonPath,
-        JSON.stringify(packageJson, null, 2)
-      );
-
-      // Run npm install in the tmp directory
-      await execPromise("pnpm install", {
-        cwd: "/tmp",
+    if (hasNodeModules) {
+      // Check if required packages exist
+      const missingPackages = requiredPackages.filter((pkg) => {
+        const pkgPath = path.join(nodeModulesPath, pkg);
+        const exists = fs.existsSync(pkgPath);
+        console.log(
+          `[MDX Bundler] Checking package ${pkg}: ${exists ? "found" : "missing"}`
+        );
+        return !exists;
       });
-    } catch (error) {
-      console.error(
-        "Error creating package.json or installing dependencies:",
-        error instanceof Error
-          ? {
-              message: error.message,
-              stack: error.stack,
-              name: error.name,
-            }
-          : error
-      );
+
+      if (missingPackages.length > 0) {
+        console.log(
+          `[MDX Bundler] Missing packages detected: ${missingPackages.join(", ")}`
+        );
+        console.log("[MDX Bundler] Removing existing node_modules...");
+        fs.rmSync(nodeModulesPath, { recursive: true, force: true });
+      }
+    }
+
+    if (!fs.existsSync(nodeModulesPath)) {
+      console.log("[MDX Bundler] Installing dependencies...");
+      try {
+        const packageJsonPath = path.join("/tmp", "package.json");
+        console.log(
+          `[MDX Bundler] Creating package.json at ${packageJsonPath}`
+        );
+
+        // Write the package.json file directly
+        const packageJson = {
+          name: "docs",
+          private: true,
+          version: "3.8.2-alpha.1",
+          type: "module",
+          dependencies: dependencies,
+          devDependencies,
+        };
+
+        console.log(
+          "[MDX Bundler] Package.json contents:",
+          JSON.stringify(packageJson, null, 2)
+        );
+
+        await fs.promises.writeFile(
+          packageJsonPath,
+          JSON.stringify(packageJson, null, 2)
+        );
+
+        console.log("[MDX Bundler] Running pnpm install...");
+        // Run npm install in the tmp directory
+        await execPromise("pnpm install", {
+          cwd: "/tmp",
+        });
+        console.log("[MDX Bundler] Dependencies installed successfully");
+      } catch (error) {
+        console.error(
+          "[MDX Bundler] Error creating package.json or installing dependencies:",
+          error instanceof Error
+            ? {
+                message: error.message,
+                stack: error.stack,
+                name: error.name,
+              }
+            : error
+        );
+      }
     }
   }
 

@@ -4,6 +4,9 @@ FROM node:20.18-alpine3.20
 RUN apk add --no-cache libc6-compat
 RUN npm install -g pnpm@v9.4.0
 
+# Create and set permissions for /tmp directory
+RUN mkdir -p /tmp && chmod 777 /tmp
+
 WORKDIR /app
 
 # Copy the entire monorepo structure

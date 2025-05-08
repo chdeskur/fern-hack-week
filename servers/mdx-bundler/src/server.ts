@@ -34,18 +34,5 @@ expressApp.all("*", (_req: Request, res: Response) => {
 expressApp.listen(8080);
 
 /*
-curl -X POST \
-  http://localhost:8080/serialize \
-  -H "Content-Type: application/json" \
-  -d '{"code":"```ts twoslash\nconst hi = \"Hello\";\nconst msg = `${hi}, world`;\n//    ^?\n```"}'
-  
-curl -X POST \
-  https://mdx-bundler-dev2.buildwithfern.com/serialize \
-  -H "Content-Type: application/json" \
-  -d '{"code":"```ts twoslash\n// alchemy-specific twoslash code block\nimport { createAlchemySmartAccountClient } from \"@account-kit/infra\";\nconst client = createAlchemySmartAccountClient({\n// configuration\n});\n```"}'
-  
-curl -X POST \
-  http://localhost:8080/serialize \
-  -H "Content-Type: application/json" \
-  -d '{"code":"```ts twoslash\n// alchemy-specific twoslash code block\nimport { createAlchemySmartAccountClient } from \"@account-kit/infra\";\nconst client = createAlchemySmartAccountClient({\n// configuration\n});\n```"}'
+curl -X POST http://localhost:8080/serialize -H "Content-Type: application/json" -d '{"code":"```ts twoslash\nimport { LocalAccountSigner } from \"@aa-sdk/core\";\nimport {\n  alchemy,\n  createAlchemySmartAccountClient,\n  sepolia,\n} from \"@account-kit/infra\";\nimport { createLightAccount } from \"@account-kit/smart-contracts\";\nimport { http } from \"viem\";\nimport { generatePrivateKey } from \"viem/accounts\";\n\n// with account hoisting\nconst transport = alchemy({ apiKey: \"your-api-key\" });\nconst hoistedClient = createAlchemySmartAccountClient({\n  transport,\n  chain: sepolia,\n  account: await createLightAccount({\n    signer: LocalAccountSigner.privateKeyToAccountSigner(generatePrivateKey()),\n    chain: sepolia,\n    transport,\n  }),\n});\n\nconst signature = await hoistedClient.signMessage({ message: \"Hello world! \" });\n\n// without account hoisting\nconst nonHoistedClient = createAlchemySmartAccountClient({\n  transport,\n  chain: sepolia,\n});\n\nconst lightAccount = await createLightAccount({\n  signer: LocalAccountSigner.privateKeyToAccountSigner(generatePrivateKey()),\n  chain: sepolia,\n  transport,\n});\n\nconst signature2 = await nonHoistedClient.signMessage({\n  message: \"Hello world! \",\n  account: lightAccount,\n});\n```"}'
 */
