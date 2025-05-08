@@ -44,7 +44,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
-  const languageModel = bedrock("us.anthropic.claude-3-5-haiku-20241022-v1:0");
+  const languageModel = bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0");
 
   const start = Date.now();
   const domain = getDocsDomainEdge(req);
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     indexName: SEARCH_INDEX,
     searchParams: {
       query: "",
-      hitsPerPage: 50,
+      hitsPerPage: 20,
       attributesToSnippet: [],
       attributesToHighlight: [],
     },
@@ -83,8 +83,9 @@ export async function POST(req: NextRequest): Promise<Response> {
 
   const result = streamObject({
     model: languageModel,
-    system:
-      "You are a helpful assistant that suggestions of questions for the user to ask about the documentation. Generate 5 questions based on the following search results.",
+    system: `You are a helpful assistant that makes suggestions of questions for the user to ask about the documentation.
+The prompt will be a an array of separate search results that are JSON objects.
+Generate 5 questions based on the following search results.`,
     prompt: response.hits
       .map(
         (hit) =>
