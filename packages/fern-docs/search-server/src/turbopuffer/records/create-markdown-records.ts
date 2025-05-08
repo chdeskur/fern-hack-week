@@ -1,4 +1,5 @@
 import { createHash } from "crypto";
+import matter from "gray-matter";
 
 import { TurbopufferRecordWithoutVector } from "../types";
 import { BaseRecord } from "./create-base-record";
@@ -30,12 +31,23 @@ export async function createMarkdownRecords({
   }
 
   return chunked_content.map((chunk, i) => {
+    const mattered_chunk = matter(chunk);
+    const attributes = ["title", "description", "pathname", "keywords"];
+    for (const attribute of attributes) {
+      if (!mattered_chunk.data[attribute]) {
+        if (attribute in base.attributes) {
+          mattered_chunk.data[attribute] =
+            base.attributes[attribute as keyof typeof base.attributes];
+        }
+      }
+    }
+
     return {
       ...base,
       id: createHash("sha256").update(`${base.id}-${i}`).digest("hex"),
       attributes: {
         ...base.attributes,
-        chunk,
+        chunk: matter.stringify(mattered_chunk.content, mattered_chunk.data),
         title: base.attributes.title,
       },
     };
