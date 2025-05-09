@@ -6,7 +6,7 @@ import { DEFAULT_REMOTE } from "./constants";
  * @param githubRepository a string in a variety of formats (e.g. `owner/repo`, `github.com/owner/repo`)
  */
 export function parseRepository(githubRepository: string): RepositoryReference {
-  const remote = DEFAULT_REMOTE;
+  let remote = DEFAULT_REMOTE;
   let owner: string;
   let repo: string;
 
@@ -19,17 +19,18 @@ export function parseRepository(githubRepository: string): RepositoryReference {
   }
 
   const parts = githubRepository.split("/");
+
   if (parts.length === 2 && parts[0] != null && parts[1] != null) {
     // Format: owner/repo
     [owner, repo] = parts;
   } else if (
     parts.length === 3 &&
-    parts[0] === DEFAULT_REMOTE &&
+    parts[0] != null &&
     parts[1] != null &&
     parts[2] != null
   ) {
     // Format: github.com/owner/repo
-    [, owner, repo] = parts;
+    [remote, owner, repo] = parts;
   } else {
     throw new Error(`Failed to parse GitHub repostiory ${githubRepository}`);
   }

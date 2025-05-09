@@ -20,11 +20,6 @@ describe("getLatestTag", () => {
       );
     }
   });
-  it("invalid remote", async () => {
-    expect(() => {
-      parseRepository("https://gitlab.com/inkscape/inkscape");
-    }).toThrow(Error);
-  });
   it("invalid structure", async () => {
     expect(() => {
       parseRepository("fern");
@@ -34,5 +29,22 @@ describe("getLatestTag", () => {
     expect(() => {
       parseRepository("github.com/fern-api//fern");
     }).toThrow(Error);
+  });
+
+  it("custom github domain", async () => {
+    const test = "https://github.acme.com/engineering/api-client-sdk.git";
+    const reference = parseRepository(test);
+    expect(reference.remote).toBe("github.acme.com");
+    expect(reference.owner).toBe("engineering");
+    expect(reference.repo).toBe("api-client-sdk");
+    expect(reference.repoUrl).toBe(
+      "https://github.acme.com/engineering/api-client-sdk"
+    );
+    expect(reference.cloneUrl).toBe(
+      "https://github.acme.com/engineering/api-client-sdk.git"
+    );
+    expect(reference.getAuthedCloneUrl("xyz")).toBe(
+      "https://x-access-token:xyz@github.acme.com/engineering/api-client-sdk.git"
+    );
   });
 });
