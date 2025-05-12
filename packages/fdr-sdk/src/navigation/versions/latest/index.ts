@@ -7,6 +7,8 @@ export * from "./isSidebarRootNode";
 export * from "./isTabbedNode";
 export * from "./isUnversionedNode";
 export * from "./isVersionNode";
+export * from "./isProductNode";
+export * from "./isProductGroupNode";
 export * from "./NavigationNode";
 export * from "./NavigationNodeApiLeaf";
 export * from "./NavigationNodeLeaf";

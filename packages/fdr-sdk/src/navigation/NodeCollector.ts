@@ -4,7 +4,7 @@ import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 
 import { FernNavigation } from "./..";
 import { pruneVersionNode } from "./utils/pruneVersionNode";
-import { NavigationNodeWithMetadata } from "./versions";
+import { NavigationNodeWithMetadata, isProductNode } from "./versions";
 
 interface NavigationNodeWithMetadataAndParents {
   node: FernNavigation.NavigationNodeWithMetadata;
@@ -74,23 +74,37 @@ export class NodeCollector {
     }
   }
 
-  private defaultVersion: FernNavigation.VersionNode | undefined;
   private versionNodes: FernNavigation.VersionNode[] = [];
+  private defaultVersion: FernNavigation.VersionNode | undefined;
+
+  private productNodes: FernNavigation.ProductNode[] = [];
+  private defaultProduct: FernNavigation.ProductNode | undefined;
+
   constructor(rootNode: FernNavigation.NavigationNode | undefined) {
     if (rootNode == null) {
       return;
     }
     FernNavigation.traverseDF(rootNode, (node, parents) => {
+      if (node.type === "product") {
+        this.productNodes.push(node);
+      }
+
       // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
       if (node.type === "version") {
         this.versionNodes.push(node);
       }
 
       if (node.type === "version" && node.default && rootNode.type === "root") {
+        // if the node is the default version OF a product, we want to prune using the product slug, not the root slug.
+        const productNode = parents.find(isProductNode);
         const copy = JSON.parse(
           JSON.stringify(node)
         ) as FernNavigation.VersionNode;
-        this.defaultVersion = pruneVersionNode(copy, rootNode.slug, node.slug);
+        this.defaultVersion = pruneVersionNode(
+          copy,
+          productNode?.slug ?? rootNode.slug,
+          node.slug
+        );
         FernNavigation.traverseDF(this.defaultVersion, (node, innerParents) => {
           this.visitNode(node, [...parents, ...innerParents], true);
         });
@@ -164,6 +178,10 @@ export class NodeCollector {
 
   get defaultVersionNode(): FernNavigation.VersionNode | undefined {
     return this.defaultVersion;
+  }
+
+  get defaultProductNode(): FernNavigation.ProductNode | undefined {
+    return this.defaultProduct;
   }
 
   public get(
@@ -257,6 +275,10 @@ export class NodeCollector {
   get indexablePageNodesWithAuth(): NavigationNodeWithMetadata[] {
     return this.#getIndexablePageNodesWithAuth();
   }
+
+  public getProductNodes = (): FernNavigation.ProductNode[] => {
+    return this.productNodes;
+  };
 
   public getVersionNodes = (): FernNavigation.VersionNode[] => {
     return this.versionNodes;

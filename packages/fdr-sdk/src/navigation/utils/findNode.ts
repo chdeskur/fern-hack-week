@@ -3,6 +3,8 @@ import { escapeRegExp } from "es-toolkit/string";
 import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
 import { isApiReferenceNode } from "../versions/latest/isApiReferenceNode";
+import { isProductGroupNode } from "../versions/latest/isProductGroupNode";
+import { isProductNode } from "../versions/latest/isProductNode";
 import { isSidebarRootNode } from "../versions/latest/isSidebarRootNode";
 import { isTabbedNode } from "../versions/latest/isTabbedNode";
 import { isUnversionedNode } from "../versions/latest/isUnversionedNode";
@@ -18,6 +20,12 @@ export declare namespace Node {
     parents: readonly FernNavigation.NavigationNodeParent[];
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     root: FernNavigation.RootNode;
+    products: readonly FernNavigation.ProductNode[];
+    currentProduct: FernNavigation.ProductNode | undefined;
+    /**
+     * This is true if the current product is the default product node (without the product slug prefix)
+     */
+    isCurrentProductDefault: boolean;
     versions: readonly FernNavigation.VersionNode[];
     currentVersion: FernNavigation.VersionNode | undefined;
     /**
@@ -65,29 +73,55 @@ export function findNode(
 
   // if the slug points to a node that doesn't exist, we should redirect to the first likely node
   if (found == null) {
-    let maybeVersionNode: FernNavigation.RootNode | FernNavigation.VersionNode =
-      root;
+    let maybeProductOrVersionNode:
+      | FernNavigation.RootNode
+      | FernNavigation.ProductNode
+      | FernNavigation.VersionNode = root;
+    let foundProductNode = false;
 
-    // the 404 behavior should be version-aware
-    for (const versionNode of collector.getVersionNodes()) {
-      if (slug.startsWith(versionNode.slug)) {
-        maybeVersionNode = versionNode;
+    // the 404 behavior should be product-aware
+    for (const productNode of collector.getProductNodes()) {
+      if (slug.startsWith(productNode.slug)) {
+        maybeProductOrVersionNode = productNode;
+        foundProductNode = true;
         break;
+      }
+    }
+
+    // if we didn't find a product node, try to find a version node
+    if (!foundProductNode) {
+      // the 404 behavior should be version-aware
+      for (const versionNode of collector.getVersionNodes()) {
+        if (slug.startsWith(versionNode.slug)) {
+          maybeProductOrVersionNode = versionNode;
+          break;
+        }
       }
     }
 
     return {
       type: "notFound",
-      redirect: maybeVersionNode.pointsTo,
-      authed: maybeVersionNode.authed,
+      redirect: maybeProductOrVersionNode.pointsTo,
+      authed: maybeProductOrVersionNode.authed,
     };
   }
 
-  const sidebar = found.parents.find(isSidebarRootNode);
+  let sidebar = found.parents.find(isSidebarRootNode);
+  const currentProductGroup = found.parents.find(isProductGroupNode);
+  const currentProduct = found.parents.find(isProductNode);
+
   const currentVersion = found.parents.find(isVersionNode);
   const unversionedNode = found.parents.find(isUnversionedNode);
   const versionChild = (currentVersion ?? unversionedNode)?.child;
-  const landingPage = (currentVersion ?? unversionedNode)?.landingPage;
+
+  if (!sidebar && currentVersion != null) {
+    if (isSidebarRootNode(currentVersion.child)) {
+      sidebar = currentVersion.child;
+    }
+  }
+
+  const landingPage = (currentProductGroup ?? currentVersion ?? unversionedNode)
+    ?.landingPage;
 
   const tabbedNode =
     found.parents.find(isTabbedNode) ??
@@ -100,7 +134,7 @@ export function findNode(
     found.parents.find(isApiReferenceNode) ??
     (found.node.type === "apiReference" ? found.node : undefined);
 
-  // if the node is visible (becaues it's a page), return it as "found"
+  // if the node is visible (because it's a page), return it as "found"
   if (FernNavigation.isPage(found.node)) {
     const parentsAndNode = [...found.parents, found.node];
     const tabbedNodeIndex = parentsAndNode.findIndex(
@@ -108,6 +142,19 @@ export function findNode(
     );
     const currentTabNode =
       tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
+
+    const products = collector.getProductNodes().map((node) => {
+      if (node.default) {
+        // if we're currently viewing the default product, we may be viewing the non-pruned product node
+        if (node.id === currentProduct?.id) {
+          return currentProduct;
+        }
+        // otherwise, we should always use the pruned product node
+        return collector.defaultProductNode ?? node;
+      }
+      return node;
+    });
+
     const versions = collector.getVersionNodes().map((node) => {
       if (node.default) {
         // if we're currently viewing the default version, we may be viewing the non-pruned version
@@ -123,7 +170,8 @@ export function findNode(
       currentTabNode?.type === "tab" || currentTabNode?.type === "changelog"
         ? currentTabNode
         : undefined;
-    const slugPrefix = currentVersion?.slug ?? root.slug;
+    const slugPrefix =
+      currentProduct?.slug ?? currentVersion?.slug ?? root.slug;
     const unversionedSlug = FernNavigation.Slug(
       found.node.slug.replace(new RegExp(`^${escapeRegExp(slugPrefix)}/`), "")
     );
@@ -135,10 +183,16 @@ export function findNode(
       root,
       versions, // this is used to render the version switcher
       tabs: tabbedNode?.children ?? [],
+      products,
+      currentProduct,
       currentVersion,
+      isCurrentProductDefault: currentProduct?.default
+        ? currentProduct === collector.defaultProductNode
+        : false,
       isCurrentVersionDefault: currentVersion?.default
         ? currentVersion === collector.defaultVersionNode
         : false,
+
       currentTab,
       sidebar,
       apiReference,
