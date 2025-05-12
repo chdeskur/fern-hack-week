@@ -15,7 +15,7 @@
   "dependencies": {
     "@aa-sdk/core": "^4.31.2",
     "@account-kit/core": "^4.31.2",
-    "@account-kit/infra": "^4.31.2",
+    "@account-kit/infra": "^4.32.0",
     "@account-kit/react": "^4.31.2",
     "@account-kit/react-native": "^4.31.2",
     "@account-kit/react-native-signer": "^4.31.2",
