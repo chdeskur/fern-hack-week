@@ -26,21 +26,18 @@ export function SidebarNav({
 }) {
   const isDesktop = useIsDesktop();
 
-  return (
-    <>
-      <MobileMenu
-        className={cn(className, mobileClassName, { hidden: isDesktop })}
-        {...props}
-      >
+  if (!isDesktop) {
+    return (
+      <MobileMenu className={cn(className, mobileClassName)} {...props}>
         {children}
       </MobileMenu>
-      <DesktopMenu
-        className={cn(className, desktopClassName, { hidden: !isDesktop })}
-        {...props}
-      >
-        {children}
-      </DesktopMenu>
-    </>
+    );
+  }
+
+  return (
+    <DesktopMenu className={cn(className, desktopClassName)} {...props}>
+      {children}
+    </DesktopMenu>
   );
 }
 
