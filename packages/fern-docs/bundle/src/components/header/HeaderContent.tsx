@@ -46,7 +46,7 @@ export function HeaderContent({
         style={style}
       >
         <div className="fern-header-logo-container">
-          <div className="flex items-center gap-2 lg:items-end">
+          <div className="flex items-center gap-2">
             <div className="flex items-center lg:items-start">{logo}</div>
             <div className="hidden items-baseline lg:flex">
               {productSelect}
