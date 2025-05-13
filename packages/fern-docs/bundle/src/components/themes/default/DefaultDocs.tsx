@@ -83,7 +83,7 @@ export default function DefaultDocs({
             <div
               ref={headerSwitchersRef}
               className={cn("fern-header-switchers px-2 py-4 lg:hidden", {
-                hidden: !headerSwitchersRef.current?.innerHTML,
+                hidden: !headerSwitchersRef.current?.children.length,
               })}
             >
               {productSelect}
@@ -91,7 +91,7 @@ export default function DefaultDocs({
             </div>
             <Separator
               className={cn("bg-border-concealed lg:hidden", {
-                hidden: !headerSwitchersRef.current?.innerHTML,
+                hidden: !headerSwitchersRef.current?.children.length,
               })}
             />
 
