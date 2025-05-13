@@ -1,10 +1,11 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import React from "react";
+import React, { Fragment } from "react";
 
 import { cn } from "@fern-docs/components";
 
+import { Separator } from "@/components/Separator";
 import { FERN_FOOTER_ID } from "@/components/constants";
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
 import { SetIsSidebarFixed } from "@/state/layout";
@@ -15,6 +16,8 @@ import { SidebarNav } from "./side-nav";
 
 export default function DefaultDocs({
   header,
+  versionSelect,
+  productSelect,
   sidebar,
   children,
   announcement,
@@ -28,6 +31,8 @@ export default function DefaultDocs({
   darkSidebarClassName,
 }: {
   header: React.ReactNode;
+  versionSelect?: React.ReactNode;
+  productSelect?: React.ReactNode;
   sidebar: React.ReactNode;
   children: React.ReactNode;
   announcement?: React.ReactNode;
@@ -46,6 +51,7 @@ export default function DefaultDocs({
   const sidebarClassName =
     resolvedTheme === "dark" ? darkSidebarClassName : lightSidebarClassName;
   const mainRef = React.useRef<HTMLDivElement>(null);
+  const headerSwitchersRef = React.useRef<HTMLDivElement>(null);
   return (
     <>
       <SetIsSidebarFixed value={isSidebarFixed} />
@@ -74,6 +80,21 @@ export default function DefaultDocs({
           data-theme="default"
         >
           <SidebarNav className={sidebarClassName} data-theme="default">
+            <div
+              ref={headerSwitchersRef}
+              className={cn("fern-header-switchers px-2 py-4 lg:hidden", {
+                hidden: !headerSwitchersRef.current?.innerHTML,
+              })}
+            >
+              {productSelect}
+              {versionSelect}
+            </div>
+            <Separator
+              className={cn("bg-border-concealed lg:hidden", {
+                hidden: !headerSwitchersRef.current?.innerHTML,
+              })}
+            />
+
             {sidebar}
           </SidebarNav>
           {children}

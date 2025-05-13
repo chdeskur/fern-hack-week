@@ -10,6 +10,7 @@ export default async function Layout({
   headertabs,
   sidebar,
   versionSelect,
+  productSelect,
   logo,
   explorer,
 }: {
@@ -18,6 +19,7 @@ export default async function Layout({
   headertabs: React.ReactNode;
   sidebar: React.ReactNode;
   versionSelect: React.ReactNode;
+  productSelect: React.ReactNode;
   logo: React.ReactNode;
   explorer: React.ReactNode;
 }) {
@@ -30,6 +32,7 @@ export default async function Layout({
       loader={loader}
       headertabs={headertabs}
       versionSelect={versionSelect}
+      productSelect={productSelect}
       sidebar={sidebar}
       logo={logo}
     >

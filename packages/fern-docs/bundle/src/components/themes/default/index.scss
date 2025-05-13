@@ -7,6 +7,10 @@
         @apply h-(--mobile-header-height-real) md:h-(--header-height-real) px-page-padding flex items-center;
       }
 
+      .fern-header-switchers {
+        @apply flex w-full flex-col items-center justify-center gap-2;
+      }
+
       .fern-header-tabs {
         @apply w-page-width-padded px-page-padding mx-auto;
       }

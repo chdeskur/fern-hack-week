@@ -13,6 +13,7 @@ import { ThemeSwitch } from "./theme-switch";
 
 export const SidebarContainer = React.memo(function SidebarContainer({
   logo,
+  productSelect,
   versionSelect,
   navbarLinks,
   loginButton,
@@ -23,6 +24,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
   showSearchBar: boolean;
   showHeaderInSidebar: boolean;
   logo: React.ReactNode;
+  productSelect: React.ReactNode;
   versionSelect: React.ReactNode;
   navbarLinks: React.ReactNode;
   loginButton: React.ReactNode;
@@ -35,6 +37,7 @@ export const SidebarContainer = React.memo(function SidebarContainer({
     <>
       <SidebarFixedItemsSection
         logo={logo}
+        productSelect={productSelect}
         versionSelect={versionSelect}
         showSearchBar={showSearchBar}
         showHeaderInSidebar={showHeaderInSidebar}

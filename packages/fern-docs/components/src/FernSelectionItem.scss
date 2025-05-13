@@ -1,0 +1,40 @@
+.fern-selection-item {
+  @apply rounded-2 flex flex-1 cursor-pointer items-center justify-between gap-2 border border-transparent py-1 pl-1 pr-2.5;
+  @apply w-full;
+  @apply text-left;
+  @apply transition-all duration-200 ease-in-out;
+
+  .fern-selection-item-title {
+    @apply text-(color:--grayscale-a12) font-bold leading-tight lg:text-sm;
+  }
+
+  .fern-selection-item-icon {
+    @apply rounded-2 border-(color:--grayscale-a5) text-(color:--grayscale-a11) border;
+    @apply m-1 flex h-[56px] w-[56px] shrink-0 items-center justify-center p-1;
+
+    svg {
+      @apply block h-[50%] w-[50%];
+    }
+  }
+
+  &.dense .fern-selection-item-icon {
+    @apply m-0.5 h-[36px] w-[36px] p-0.5;
+  }
+
+  .fern-selection-item-end-icon {
+    @apply text-(color:--grayscale-a11);
+  }
+
+  &:hover {
+    @apply text-(color:--accent) bg-(color:--grayscale-a3);
+  }
+}
+
+[data-state="open"] {
+  .product-dropdown-trigger,
+  .version-dropdown-trigger {
+    &.dense {
+      @apply bg-(color:--grayscale-a3) border-(color:--grayscale-a5)!;
+    }
+  }
+}

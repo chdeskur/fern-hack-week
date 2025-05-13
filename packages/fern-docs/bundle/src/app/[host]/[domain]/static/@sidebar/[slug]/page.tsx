@@ -44,6 +44,7 @@ export default async function SidebarPage({
   ) {
     const serialize = createCachedMdxSerializer(loader, {
       scope: {
+        product: found?.currentProduct?.productId,
         version: found?.currentVersion?.versionId,
         tab: found?.currentTab?.title,
       },

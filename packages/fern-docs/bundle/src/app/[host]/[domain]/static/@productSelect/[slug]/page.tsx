@@ -1,13 +1,13 @@
 import "server-only";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { isVersionNode, slugjoin } from "@fern-api/fdr-sdk/navigation";
+import { isProductNode, slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { getFernToken } from "@/app/fern-token";
-import { VersionDropdown } from "@/components/header/VersionDropdown";
+import { ProductDropdown } from "@/components/header/ProductDropdown";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
-export default async function VersionSelectPage({
+export default async function ProductSelectPage({
   params,
 }: {
   params: Promise<{ host: string; domain: string; slug: string }>;
@@ -34,18 +34,16 @@ export default async function VersionSelectPage({
   if (foundNode.type !== "found") {
     return null;
   }
-  const version = foundNode.parents.find(isVersionNode);
-  if (version == null) {
+
+  const product = foundNode.parents.find(isProductNode);
+  if (product == null) {
     return null;
   }
 
   return (
-    <VersionDropdown
+    <ProductDropdown
       loader={loader}
-      currentNode={foundNode.node}
-      slugMap={foundNode.collector.slugMap}
-      parents={Array.from(foundNode.parents)}
-      fallbackVersion={version}
+      fallbackProduct={product}
       useDenseLayout={useDenseLayout}
     />
   );

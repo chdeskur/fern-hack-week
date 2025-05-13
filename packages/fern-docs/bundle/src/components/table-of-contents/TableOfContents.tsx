@@ -126,6 +126,9 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
       }
     );
   };
+  if (tableOfContents.length === 0) {
+    return null;
+  }
 
   return (
     <>

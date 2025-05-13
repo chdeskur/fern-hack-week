@@ -19,14 +19,17 @@ export function TableOfContentsLayout({
     tableOfContents != null &&
     !hideTableOfContents &&
     tableOfContents.length > 0;
+
+  if (!showTableOfContents) {
+    return null;
+  }
   return (
     <aside id={FERN_TOC_ID}>
       <SetEmptyTableOfContents value={!showTableOfContents} />
-      {showTableOfContents && (
-        <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-5">
-          <TableOfContents tableOfContents={tableOfContents} />
-        </FernScrollArea>
-      )}
+
+      <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-5">
+        <TableOfContents tableOfContents={tableOfContents} />
+      </FernScrollArea>
     </aside>
   );
 }

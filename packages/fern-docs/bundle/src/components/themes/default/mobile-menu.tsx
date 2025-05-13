@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import { RemoveScroll } from "react-remove-scroll";
 
 import { Portal } from "@radix-ui/react-portal";
@@ -59,6 +59,13 @@ export function MobileMenu({
   const x = useMotionValue(0);
 
   const mainRef = React.useContext(MainCtx);
+
+  const getSidebarWidth = useCallback(() => {
+    if (typeof window === "undefined") return 0;
+    const sidebar = document.getElementById(FERN_SIDEBAR_ID);
+    if (!sidebar) return 0;
+    return sidebar.clientWidth;
+  }, []);
 
   // shift the main content when the sidebar is open
   useMotionValueEvent(x, "change", (value) => {
@@ -292,10 +299,4 @@ function calculateWidth(value: number | string, sidebarWidth: number) {
     return value - sidebarWidth;
   }
   return 0;
-}
-
-function getSidebarWidth() {
-  const sidebar = document.getElementById(FERN_SIDEBAR_ID);
-  if (!sidebar) return 0;
-  return sidebar.clientWidth;
 }

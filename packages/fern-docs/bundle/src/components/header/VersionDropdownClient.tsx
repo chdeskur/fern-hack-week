@@ -1,12 +1,20 @@
 "use client";
 
-import { ChevronDown, Lock } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, Lock, Tag } from "lucide-react";
 
-import { Availability, AvailabilityBadge, Badge } from "@fern-docs/components";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import {
+  Availability,
+  AvailabilityBadge,
+  AvailabilityFullyQualifiedDisplayNames,
+  cn,
+} from "@fern-docs/components";
 import { slugToHref } from "@fern-docs/utils";
+import { useIsDesktop } from "@fern-ui/react-commons";
 
 import { useCurrentVersionId, useCurrentVersionSlug } from "@/state/navigation";
 
+import { FernSelectionItem } from "../../../../components/src/FernSelectionItem";
 import { FernLinkDropdown } from "../FernLinkDropdown";
 
 export interface VersionDropdownItem {
@@ -23,14 +31,21 @@ export interface VersionDropdownItem {
 
 export function VersionDropdownClient({
   versions,
+  fallbackVersion,
+  useDenseLayout = false,
 }: {
   versions: VersionDropdownItem[];
+  fallbackVersion: FernNavigation.VersionNode;
+  useDenseLayout?: boolean;
 }) {
+  const isDesktop = useIsDesktop();
   const currentVersionId = useCurrentVersionId();
   const currentVersionSlug = useCurrentVersionSlug();
   const currentVersion =
     versions.find((version) => version.versionId === currentVersionId) ??
-    versions.find((version) => version.default);
+    versions.find((version) => version.default) ??
+    fallbackVersion;
+
   return (
     <FernLinkDropdown
       value={currentVersionId}
@@ -75,18 +90,36 @@ export function VersionDropdownClient({
         "data-testid": "version-dropdown-content",
       }}
       side="bottom"
-      align="start"
+      align={isDesktop ? "start" : "center"}
+      triggerAsChild={false}
+      className="w-full lg:w-auto"
     >
-      <Badge
-        rounded
-        data-testid="version-dropdown"
-        variant="outlined-subtle"
-        interactive
-      >
-        {currentVersion?.icon}
-        {currentVersion?.title}
-        <ChevronDown className="transition-transform data-[state=open]:rotate-180" />
-      </Badge>
+      <>
+        <div
+          className={cn("version-dropdown-trigger hidden", {
+            "lg:flex": !useDenseLayout,
+          })}
+        >
+          {currentVersion?.title}
+          <ChevronDown className="size-icon transition-transform data-[state=open]:rotate-180" />
+        </div>
+        <FernSelectionItem
+          icon={<Tag />}
+          title={currentVersion.title}
+          subtitle={
+            currentVersion.availability
+              ? AvailabilityFullyQualifiedDisplayNames[
+                  currentVersion.availability
+                ]
+              : undefined
+          }
+          dense
+          endIcon={<ChevronsUpDown className="size-icon" />}
+          className={cn("version-dropdown-trigger w-full", {
+            "lg:hidden!": !useDenseLayout,
+          })}
+        />
+      </>
     </FernLinkDropdown>
   );
 }
