@@ -54,7 +54,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
 
   return (
     <FernSyntaxHighlighter
-      className={"relative min-h-0 flex-1 shrink"}
+      className="relative min-h-0 flex-1 shrink select-text"
       language={requestType === "curl" ? "bash" : requestType}
       code={code}
       fontSize="sm"

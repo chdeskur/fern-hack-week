@@ -28,10 +28,10 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
 
   useIsomorphicLayoutEffect(() => {
     if (open) {
-      setSnap(1);
       setTimeout(() => {
         if (open) {
           document.body.style.pointerEvents = "auto";
+          setSnap(1);
         }
         // transition takes 500ms to complete
       }, 500);
@@ -58,6 +58,7 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
       snapToSequentialPoint
       noBodyStyles
       preventScrollRestoration
+      handleOnly
       // reposition inputs seem to be quite buggy with the way the playground is implemented
       repositionInputs={false}
     >
