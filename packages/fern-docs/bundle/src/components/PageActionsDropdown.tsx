@@ -1,36 +1,45 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useState } from "react";
 
+import { useSetAtom } from "jotai";
 import { Check, ChevronDown, Copy } from "lucide-react";
 
 import { FernButton, FernDropdown } from "@fern-docs/components";
 
+import { searchDialogOpenAtom, useIsAskAiEnabled } from "@/state/search";
+
 import {
   CopyPageOption,
-  OpenWithLLM,
+  OpenAISearchOption,
+  OpenLLMSTxtOption,
   ViewAsMarkdownOption,
 } from "./PageActionsDropdownOptions";
+import { askAiAtom } from "./search";
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const { domain, slug } = useParams();
+
+  // this is used to open the search dialog, and then AI chat
+  const setSearchDialogState = useSetAtom(searchDialogOpenAtom);
+  const setAskAi = useSetAtom(askAiAtom);
 
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption();
+  const openAISearchOption = OpenAISearchOption();
+  const openLLMSTxtOption = OpenLLMSTxtOption();
 
-  const options: FernDropdown.Option[] = [
-    copyOption,
+  let options: FernDropdown.Option[] = [copyOption];
+  if (useIsAskAiEnabled()) {
+    options.push({ type: "separator" } as FernDropdown.SeparatorOption);
+    options.push(openAISearchOption);
+  }
+  options = options.concat([
     { type: "separator" } as FernDropdown.SeparatorOption,
     viewAsMarkdownOption,
     { type: "separator" } as FernDropdown.SeparatorOption,
-    OpenWithLLM({
-      domain,
-      slug,
-      llm: "ChatGPT",
-    }),
-  ];
+    openLLMSTxtOption,
+  ]);
 
   const handleValueChange = async (value: string) => {
     if (value === "copy-page") {
@@ -43,6 +52,9 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
           }, 2000);
         });
       }
+    } else if (value === "open-ai-search") {
+      setSearchDialogState(true);
+      setAskAi(true);
     }
   };
 

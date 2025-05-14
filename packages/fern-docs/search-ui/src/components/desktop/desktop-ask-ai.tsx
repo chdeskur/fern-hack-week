@@ -183,7 +183,9 @@ export const DesktopCommandWithAskAI = forwardRef<
                 checkForDefaultPrevented: false,
               })
         }
-        onEscapeKeyDown={props.onEscapeKeyDown}
+        onEscapeKeyDown={(event) => {
+          props.onEscapeKeyDown?.(event);
+        }}
         escapeKeyShouldPopState={!askAI && filters.length > 0}
         data-mode={askAI ? "ask-ai" : "search"}
       >

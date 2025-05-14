@@ -55,7 +55,7 @@ function useAlgoliaUserToken() {
   return useAtomValue(userTokenRef.current);
 }
 
-const askAiAtom = atom(false);
+export const askAiAtom = atom(false);
 
 export const SearchV2 = React.memo(function SearchV2({
   domain,
@@ -147,7 +147,11 @@ export const SearchV2 = React.memo(function SearchV2({
         domain={domain}
       />
       <CommandActions>
-        <CommandTheme onClose={() => setOpen(false)} />
+        <CommandTheme
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
       </CommandActions>
     </>
   );
