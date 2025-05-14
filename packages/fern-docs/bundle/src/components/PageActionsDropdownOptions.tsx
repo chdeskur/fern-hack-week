@@ -33,7 +33,7 @@ export const ViewAsMarkdownOption = (): FernDropdown.ValueOption => {
     value: "view-as-markdown",
     label: "View as Markdown",
     helperText: "View this page as plain text",
-    icon: <MarkdownIcon className="size-icon" />,
+    icon: <MarkdownIcon />,
     href: `${pathname}.md`,
     rightElement: <ExternalLink className="size-icon" />,
   } as FernDropdown.ValueOption;
@@ -55,7 +55,7 @@ export const OpenAISearchOption = (): FernDropdown.ValueOption => {
     value: "open-ai-search",
     label: "Ask a question",
     helperText: "Chat with an AI assistant",
-    icon: <SparklesIcon className="size-icon" key="openai-logo" />,
+    icon: <SparklesIcon />,
   } as FernDropdown.ValueOption;
 };
 
