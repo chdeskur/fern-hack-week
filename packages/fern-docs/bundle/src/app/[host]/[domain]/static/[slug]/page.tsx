@@ -4,9 +4,8 @@ import { Metadata } from "next/types";
 
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
-import SharedPage, {
-  generateMetadata as _generateMetadata,
-} from "@/components/shared-page";
+import { getMetadataTitleFromPage } from "@/components/seo";
+import SharedPage from "@/components/shared-page";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export const dynamic = "force-static";
@@ -28,5 +27,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { host, domain, slug } = await params;
   const loader = await createCachedDocsLoader(host, domain);
-  return _generateMetadata({ loader, slug: slugjoin(slug) });
+  return {
+    title: await getMetadataTitleFromPage({ loader, slug: slugjoin(slug) }),
+  };
 }

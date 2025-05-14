@@ -1,6 +1,5 @@
 import "server-only";
 
-import { Metadata } from "next";
 import { RedirectType, redirect } from "next/navigation";
 import React from "react";
 
@@ -49,22 +48,4 @@ export default async function ExplorerPage({
   const node = found.node;
 
   return <ExplorerContent loader={loader} node={node} />;
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ host: string; domain: string; slug: string }>;
-}): Promise<Metadata> {
-  const { host, domain, slug: slugProp } = await params;
-  const slug = FernNavigation.slugjoin(slugProp);
-  const loader = await createCachedDocsLoader(host, domain);
-  const root = await loader.getRoot();
-  const found = FernNavigation.utils.findNode(root, slug);
-  if (found.type !== "found") {
-    return {};
-  }
-  return {
-    title: `${found.node.title} (API Explorer)`,
-  };
 }

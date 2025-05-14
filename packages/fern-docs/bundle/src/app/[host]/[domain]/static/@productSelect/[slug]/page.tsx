@@ -39,6 +39,10 @@ export default async function ProductSelectPage({
 
   const product = foundNode.parents.find(isProductNode);
 
+  if (product == null) {
+    return null;
+  }
+
   return (
     <ProductDropdown
       loader={loader}

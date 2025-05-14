@@ -49,11 +49,3 @@ export default async function ExplorerLayout({
     </PlaygroundDrawer>
   );
 }
-
-export function generateMetadata() {
-  return {
-    title: "API Explorer",
-    description:
-      "Browse, explore, and try out API endpoints without leaving the documentation.",
-  };
-}

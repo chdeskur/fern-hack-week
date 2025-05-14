@@ -70,6 +70,6 @@ export async function generateMetadata({
     return {};
   }
   return {
-    title: `${found.node.title} (API Explorer)`,
+    title: found.node.title,
   };
 }

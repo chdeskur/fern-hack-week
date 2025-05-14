@@ -38,6 +38,10 @@ export default async function VersionSelectPage({
   }
   const version = foundNode.parents.find(isVersionNode);
 
+  if (version == null) {
+    return null;
+  }
+
   return (
     <VersionDropdown
       loader={loader}
