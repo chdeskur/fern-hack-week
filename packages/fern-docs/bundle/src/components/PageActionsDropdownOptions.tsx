@@ -4,17 +4,16 @@ import { ParamValue } from "next/dist/server/request/params";
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
 
-import { ExternalLink } from "lucide-react";
+import { Copy, ExternalLink } from "lucide-react";
 
 import { FernDropdown } from "@fern-docs/components";
 
 import {
   ClaudeIcon,
-  CopyIcon,
-  ExternalLinkIcon,
+  MarkdownIcon,
   OpenAIIcon,
+  SparklesIcon,
   TextIcon,
-  WandIcon,
 } from "./PageActionsDropdownAssets";
 
 export const CopyPageOption = (): FernDropdown.ValueOption => {
@@ -23,7 +22,7 @@ export const CopyPageOption = (): FernDropdown.ValueOption => {
     value: "copy-page",
     label: "Copy page",
     helperText: "Copy this page as Markdown for LLMs",
-    icon: <CopyIcon />,
+    icon: <Copy className="size-icon" height={24} width={24} />,
   } as FernDropdown.ValueOption;
 };
 
@@ -34,8 +33,9 @@ export const ViewAsMarkdownOption = (): FernDropdown.ValueOption => {
     value: "view-as-markdown",
     label: "View as Markdown",
     helperText: "View this page as plain text",
-    icon: <ExternalLinkIcon key="markdown-logo" />,
+    icon: <MarkdownIcon className="size-icon" />,
     href: `${pathname}.md`,
+    rightElement: <ExternalLink className="size-icon" />,
   } as FernDropdown.ValueOption;
 };
 
@@ -55,7 +55,7 @@ export const OpenAISearchOption = (): FernDropdown.ValueOption => {
     value: "open-ai-search",
     label: "Ask a question",
     helperText: "Chat with an AI assistant",
-    icon: <WandIcon key="openai-logo" />,
+    icon: <SparklesIcon className="size-icon" key="openai-logo" />,
   } as FernDropdown.ValueOption;
 };
 
