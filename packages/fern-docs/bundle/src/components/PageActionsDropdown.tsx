@@ -12,7 +12,6 @@ import { searchDialogOpenAtom, useIsAskAiEnabled } from "@/state/search";
 import {
   CopyPageOption,
   OpenAISearchOption,
-  OpenLLMSTxtOption,
   ViewAsMarkdownOption,
 } from "./PageActionsDropdownOptions";
 import { askAiAtom } from "./search";
@@ -27,7 +26,6 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const copyOption = CopyPageOption();
   const viewAsMarkdownOption = ViewAsMarkdownOption();
   const openAISearchOption = OpenAISearchOption();
-  const openLLMSTxtOption = OpenLLMSTxtOption();
 
   let options: FernDropdown.Option[] = [copyOption];
   if (useIsAskAiEnabled()) {
@@ -37,8 +35,6 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
   options = options.concat([
     { type: "separator" } as FernDropdown.SeparatorOption,
     viewAsMarkdownOption,
-    { type: "separator" } as FernDropdown.SeparatorOption,
-    openLLMSTxtOption,
   ]);
 
   const handleValueChange = async (value: string) => {
