@@ -96,7 +96,7 @@ export function VersionDropdownClient({
     >
       <>
         <div
-          className={cn("version-dropdown-trigger hidden", {
+          className={cn("version-dropdown-trigger hidden h-9", {
             "lg:flex": !useDenseLayout,
           })}
           data-testid="version-dropdown"

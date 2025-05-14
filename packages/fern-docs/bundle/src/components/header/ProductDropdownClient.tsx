@@ -73,7 +73,7 @@ export function ProductDropdownClient({
       className="w-full lg:w-auto"
     >
       <div
-        className={cn("product-dropdown-trigger hidden", {
+        className={cn("product-dropdown-trigger hidden h-9", {
           "lg:flex": !useDenseLayout,
         })}
         data-testid="product-dropdown"

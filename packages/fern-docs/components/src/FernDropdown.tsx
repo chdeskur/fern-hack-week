@@ -118,6 +118,7 @@ export const FernDropdown = forwardRef<
         collisionPadding={4}
         side={side}
         align={align}
+        hideWhenDetached
         {...contentProps}
         className={cn(
           "fern-dropdown [&_svg]:size-icon",
@@ -167,7 +168,7 @@ export const FernDropdown = forwardRef<
       <DropdownMenu.Root
         onOpenChange={handleOpenChange}
         open={isOpen}
-        // modal={false}
+        modal={false}
         defaultOpen={defaultOpen}
       >
         <DropdownMenu.Trigger

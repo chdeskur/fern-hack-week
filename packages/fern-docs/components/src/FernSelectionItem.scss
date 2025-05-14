@@ -1,5 +1,5 @@
 .fern-selection-item {
-  @apply rounded-2 flex flex-1 cursor-pointer items-center justify-between gap-2 border border-transparent py-1 pl-1 pr-2.5;
+  @apply rounded-3/2 flex flex-1 cursor-pointer items-center justify-between gap-2 border border-transparent py-1 pl-1 pr-2.5;
   @apply w-full;
   @apply text-left;
   @apply transition-all duration-200 ease-in-out;
@@ -13,7 +13,7 @@
     @apply m-1 flex h-[56px] w-[56px] shrink-0 items-center justify-center p-1;
 
     svg {
-      @apply block h-[50%] w-[50%];
+      @apply block h-[50%] w-[50%] transition-all duration-300 ease-in-out;
     }
   }
 
@@ -27,6 +27,10 @@
 
   &:hover {
     @apply text-(color:--accent) bg-(color:--grayscale-a3);
+
+    svg {
+      @apply scale-120;
+    }
   }
 }
 
