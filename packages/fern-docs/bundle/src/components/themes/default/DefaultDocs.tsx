@@ -22,6 +22,7 @@ export default function DefaultDocs({
   children,
   announcement,
   tabs,
+  hasProductsOrVersions = false,
   isSidebarFixed = false,
   isHeaderDisabled = false,
   showSearchBarInTabs = false,
@@ -37,6 +38,7 @@ export default function DefaultDocs({
   children: React.ReactNode;
   announcement?: React.ReactNode;
   tabs?: React.ReactNode;
+  hasProductsOrVersions?: boolean;
   isSidebarFixed?: boolean;
   isHeaderDisabled?: boolean;
   showSearchBarInTabs?: boolean;
@@ -51,7 +53,6 @@ export default function DefaultDocs({
   const sidebarClassName =
     resolvedTheme === "dark" ? darkSidebarClassName : lightSidebarClassName;
   const mainRef = React.useRef<HTMLDivElement>(null);
-  const headerSwitchersRef = React.useRef<HTMLDivElement>(null);
   return (
     <>
       <SetIsSidebarFixed value={isSidebarFixed} />
@@ -81,9 +82,8 @@ export default function DefaultDocs({
         >
           <SidebarNav className={sidebarClassName} data-theme="default">
             <div
-              ref={headerSwitchersRef}
               className={cn("fern-header-switchers px-2 py-4 lg:hidden", {
-                hidden: !headerSwitchersRef.current?.children.length,
+                hidden: !hasProductsOrVersions,
               })}
             >
               {productSelect}
@@ -91,7 +91,7 @@ export default function DefaultDocs({
             </div>
             <Separator
               className={cn("bg-border-concealed lg:hidden", {
-                hidden: !headerSwitchersRef.current?.children.length,
+                hidden: !hasProductsOrVersions,
               })}
             />
 

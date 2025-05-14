@@ -99,8 +99,9 @@ export function VersionDropdownClient({
           className={cn("version-dropdown-trigger hidden", {
             "lg:flex": !useDenseLayout,
           })}
+          data-testid="version-dropdown"
         >
-          {currentVersion?.title}
+          {currentVersion.title}
           <ChevronDown className="size-icon transition-transform data-[state=open]:rotate-180" />
         </div>
         <FernSelectionItem
@@ -118,6 +119,7 @@ export function VersionDropdownClient({
           className={cn("version-dropdown-trigger w-full", {
             "lg:hidden!": !useDenseLayout,
           })}
+          testId="version-dropdown"
         />
       </>
     </FernLinkDropdown>

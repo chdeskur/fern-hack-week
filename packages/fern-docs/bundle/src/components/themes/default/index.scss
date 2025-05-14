@@ -9,10 +9,6 @@
 
       .fern-header-switchers {
         @apply flex w-full flex-col items-center justify-center gap-2;
-
-        &:empty {
-          @apply hidden;
-        }
       }
 
       .fern-header-tabs {

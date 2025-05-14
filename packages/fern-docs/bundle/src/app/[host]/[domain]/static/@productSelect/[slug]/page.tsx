@@ -22,10 +22,12 @@ export default async function ProductSelectPage({
   const rootPromise = loader.getRoot();
 
   // preload:
-  const layout = await loader.getLayout();
+  const [layout, _auth, _flags] = await Promise.all([
+    loader.getLayout(),
+    loader.getAuthState(),
+    loader.getEdgeFlags(),
+  ]);
   const useDenseLayout = layout.isHeaderDisabled;
-  await loader.getAuthState();
-  await loader.getEdgeFlags();
 
   const foundNode = FernNavigation.utils.findNode(
     await rootPromise,
@@ -36,9 +38,6 @@ export default async function ProductSelectPage({
   }
 
   const product = foundNode.parents.find(isProductNode);
-  if (product == null) {
-    return null;
-  }
 
   return (
     <ProductDropdown

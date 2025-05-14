@@ -22,10 +22,12 @@ export default async function VersionSelectPage({
   const rootPromise = loader.getRoot();
 
   // preload:
-  const layout = await loader.getLayout();
+  const [layout, _auth, _flags] = await Promise.all([
+    loader.getLayout(),
+    loader.getAuthState(),
+    loader.getEdgeFlags(),
+  ]);
   const useDenseLayout = layout.isHeaderDisabled;
-  await loader.getAuthState();
-  await loader.getEdgeFlags();
 
   const foundNode = FernNavigation.utils.findNode(
     await rootPromise,
@@ -35,9 +37,6 @@ export default async function VersionSelectPage({
     return null;
   }
   const version = foundNode.parents.find(isVersionNode);
-  if (version == null) {
-    return null;
-  }
 
   return (
     <VersionDropdown

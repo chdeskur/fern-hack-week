@@ -36,14 +36,18 @@ export default async function SharedLayout({
   const serialize = createCachedMdxSerializer(loader);
   setMdxSerializer(serialize);
 
-  const [config, edgeFlags, colors, layout] = await Promise.all([
+  const [config, edgeFlags, colors, layout, root] = await Promise.all([
     loader.getConfig(),
     loader.getEdgeFlags(),
     loader.getColors(),
     loader.getLayout(),
+    loader.getRoot(),
   ]);
   const theme = edgeFlags.isCohereTheme ? "cohere" : "default";
   const announcementText = config.announcement?.text;
+
+  const hasProductsOrVersions =
+    root.child.type === "productgroup" || root.child.type === "versioned";
 
   return (
     <ThemedDocs
@@ -146,6 +150,7 @@ export default async function SharedLayout({
           {sidebar}
         </SidebarContainer>
       }
+      hasProductsOrVersions={hasProductsOrVersions}
       versionSelect={
         <React.Suspense fallback={null} key="version-select-2">
           {versionSelect}

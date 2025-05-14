@@ -19,6 +19,7 @@ export function FernSelectionItem({
   dense = false,
   endIcon,
   className,
+  testId,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -26,9 +27,13 @@ export function FernSelectionItem({
   dense?: boolean;
   endIcon?: React.ReactNode;
   className?: string;
+  testId?: string;
 }) {
   return (
-    <div className={cn("fern-selection-item", { dense }, className)}>
+    <div
+      className={cn("fern-selection-item", { dense }, className)}
+      data-testid={testId}
+    >
       <div className="flex flex-1 items-center gap-2">
         <div className={cn("fern-selection-item-icon")}>{icon}</div>
 

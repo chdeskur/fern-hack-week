@@ -76,6 +76,7 @@ export function ProductDropdownClient({
         className={cn("product-dropdown-trigger hidden", {
           "lg:flex": !useDenseLayout,
         })}
+        data-testid="product-dropdown"
       >
         <p className="product-item-title w-fit">{currentProduct?.title}</p>
         <ChevronDown className="size-icon transition-transform data-[state=open]:rotate-180" />
@@ -90,6 +91,7 @@ export function ProductDropdownClient({
         className={cn("product-dropdown-trigger", {
           "lg:hidden!": !useDenseLayout,
         })}
+        testId="product-dropdown"
       />
     </FernDropdown>
   );
