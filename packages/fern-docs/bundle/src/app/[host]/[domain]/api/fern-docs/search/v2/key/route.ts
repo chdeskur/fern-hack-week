@@ -16,7 +16,6 @@ import { isLocal } from "@/server/isLocal";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
-export const runtime = "edge";
 export const maxDuration = 10;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
