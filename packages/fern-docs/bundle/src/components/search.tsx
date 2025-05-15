@@ -44,6 +44,25 @@ const ApiKeySchema = z.object({
   apiKey: z.string(),
 });
 
+export const generateConversationId = () => {
+  const chars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let result = "";
+  for (let i = 0; i < 32; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
+export const conversationIdAtom = atom<string>(generateConversationId());
+export function useConversationId() {
+  const [conversationId, setConversationId] = useAtom(conversationIdAtom);
+  return {
+    conversationId,
+    setConversationId,
+    resetConversationId: () => setConversationId(generateConversationId()),
+  };
+}
+
 function useAlgoliaUserToken() {
   const userTokenRef = useLazyRef(() =>
     atomWithStorageString(
@@ -172,6 +191,7 @@ export const SearchV2 = React.memo(function SearchV2({
       <DesktopSearchDialog open={open} onOpenChange={setOpen}>
         {isAskAiEnabled ? (
           <DesktopCommandWithAskAI
+            useConversationId={useConversationId}
             domain={domain}
             askAI={askAi}
             setAskAI={setAskAi}

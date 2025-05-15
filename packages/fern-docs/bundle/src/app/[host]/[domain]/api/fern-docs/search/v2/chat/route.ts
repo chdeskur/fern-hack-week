@@ -13,7 +13,7 @@ import {
   streamText,
   tool,
 } from "ai";
-import { initLogger, wrapAISDKModel } from "braintrust";
+import { initLogger, traced, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
@@ -75,7 +75,8 @@ export async function POST(req: NextRequest) {
   const metadata = await loader.getMetadata();
   const config = await loader.getConfig();
 
-  const { messages, url, filters } = await req.json();
+  const { messages, url, filters, source, conversationId } = await req.json();
+  const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
 
   // TODO: remove this once webflow adds model/system-prompt to docs.yml
   const isWebflow = url.includes("webflow");
@@ -157,99 +158,107 @@ export async function POST(req: NextRequest) {
         documents,
         promptTemplate,
       });
-  const result = streamText({
-    model: languageModel,
-    system,
-    messages,
-    maxSteps: 5,
-    maxRetries: 3,
-    tools: {
-      search: tool({
-        description:
-          "Search the knowledge base for the user's query. Semantic search is enabled.",
-        parameters: z.object({
-          query: z.string(),
-        }),
-        async execute({ query }) {
-          const response = await runQueryTurbopuffer(query, {
-            embeddingModel,
-            namespace,
-            authed: user != null,
-            roles: user?.roles ?? [],
-            filters,
-            topK: 5,
-          });
-          return response.map((hit) => {
-            const { domain, pathname, hash, chunk } = hit.attributes;
-            const url = `https://${domain}${pathname}${hash ?? ""}`;
-            if (chunk.length > 20000) {
-              return {
-                url,
-                chunk: chunk.slice(0, 20000),
-                ...(hit.attributes as Omit<typeof hit.attributes, "chunk">),
-              };
-            }
-            return { url, ...hit.attributes };
-          });
-        },
-      }),
-    },
-    onFinish: async (e) => {
-      const end = Date.now();
-      track("ask_ai", {
-        languageModel: languageModel.modelId,
-        embeddingModel: embeddingModel.modelId,
-        durationMs: end - start,
+  return traced(async (span) => {
+    span.log({
+      metadata: {
         domain,
-        namespace,
-        numToolCalls: e.toolCalls.length,
-        finishReason: e.finishReason,
-        ...e.usage,
-      });
-      e.warnings?.forEach((warning) => {
-        console.warn(warning);
-      });
-    },
+        source: chatSource,
+        conversationId: conversationId,
+      },
+    });
+    const result = streamText({
+      model: languageModel,
+      system,
+      messages,
+      maxSteps: 5,
+      maxRetries: 3,
+      tools: {
+        search: tool({
+          description:
+            "Search the knowledge base for the user's query. Semantic search is enabled.",
+          parameters: z.object({
+            query: z.string(),
+          }),
+          async execute({ query }) {
+            const response = await runQueryTurbopuffer(query, {
+              embeddingModel,
+              namespace,
+              authed: user != null,
+              roles: user?.roles ?? [],
+              filters,
+              topK: 5,
+            });
+            return response.map((hit) => {
+              const { domain, pathname, hash, chunk } = hit.attributes;
+              const url = `https://${domain}${pathname}${hash ?? ""}`;
+              if (chunk.length > 20000) {
+                return {
+                  url,
+                  chunk: chunk.slice(0, 20000),
+                  ...(hit.attributes as Omit<typeof hit.attributes, "chunk">),
+                };
+              }
+              return { url, ...hit.attributes };
+            });
+          },
+        }),
+      },
+      onFinish: async (e) => {
+        const end = Date.now();
+        track("ask_ai", {
+          languageModel: languageModel.modelId,
+          embeddingModel: embeddingModel.modelId,
+          durationMs: end - start,
+          domain,
+          namespace,
+          numToolCalls: e.toolCalls.length,
+          finishReason: e.finishReason,
+          ...e.usage,
+        });
+        e.warnings?.forEach((warning) => {
+          console.warn(warning);
+        });
+      },
+    });
+    const response = result.toDataStreamResponse({
+      getErrorMessage: (error) => {
+        if (error == null) {
+          return "";
+        }
+
+        let errorKind = "UnknownError";
+        if (NoSuchToolError.isInstance(error)) {
+          errorKind = "NoSuchToolError";
+        } else if (InvalidToolArgumentsError.isInstance(error)) {
+          errorKind = "InvalidToolArgumentsError";
+        } else if (ToolExecutionError.isInstance(error)) {
+          errorKind = "ToolExecutionError";
+        }
+
+        const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`;
+        console.error(msg);
+        const slackToken = process.env.SLACK_TOKEN;
+        if (slackToken) {
+          const slackMsg = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
+          const webClient = new WebClient(slackToken);
+          webClient.chat
+            .postMessage({
+              channel: engNotifsSlackChannel,
+              text: slackMsg,
+            })
+            .catch((err: unknown) => {
+              console.error(err);
+            });
+        }
+        return msg;
+      },
+    });
+
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    return response;
   });
-
-  const response = result.toDataStreamResponse({
-    getErrorMessage: (error) => {
-      if (error == null) {
-        return "";
-      }
-
-      let errorKind = "UnknownError";
-      if (NoSuchToolError.isInstance(error)) {
-        errorKind = "NoSuchToolError";
-      } else if (InvalidToolArgumentsError.isInstance(error)) {
-        errorKind = "InvalidToolArgumentsError";
-      } else if (ToolExecutionError.isInstance(error)) {
-        errorKind = "ToolExecutionError";
-      }
-
-      const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`;
-      console.error(msg);
-      const slackToken = process.env.SLACK_TOKEN;
-      if (slackToken) {
-        const slackMsg = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
-        const webClient = new WebClient(slackToken);
-        webClient.chat
-          .postMessage({
-            channel: engNotifsSlackChannel,
-            text: slackMsg,
-          })
-          .catch((err: unknown) => {
-            console.error(err);
-          });
-      }
-      return msg;
-    },
-  });
-
-  response.headers.set("Access-Control-Allow-Origin", "*");
-  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-  return response;
 }
 
 async function runQueryTurbopuffer(
