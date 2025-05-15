@@ -9,6 +9,7 @@ jobs:
   up:
     name: Check if sites are up (US)
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Log location info
         run: curl ipinfo.io
@@ -31,16 +32,20 @@ jobs:
           status="OK"
           while IFS=, read -r line; do 
               resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-
               if [[ $resp -ne 1 ]]; then
-                echo "Site: \"$line\" is not returning the expected response!"
-                status="ERROR"
-                python create_incident.py $line US
+                echo "Site: \"$line\" is not returning the expected response! Will re-check in 30s"
+                sleep 30
+                resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
+                if [[ $resp -ne 1 ]]; then
+                  status="ERROR"
+                  python create_incident.py $line US
+                fi
               fi
           done < sites.csv
 
           if [[ $status != "OK" ]]; then
             echo "Some site are not up, see logs above and linked incidents at incident.io"
+            exit 1
           else
             echo "All sites appear to be ok"
           fi
@@ -50,6 +55,7 @@ jobs:
     runs-on:
       group: International
       labels: eu
+    timeout-minutes: 5
     steps:
       - name: Log location info
         run: curl ipinfo.io
@@ -72,16 +78,20 @@ jobs:
           status="OK"
           while IFS=, read -r line; do 
               resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-
               if [[ $resp -ne 1 ]]; then
-                echo "Site: \"$line\" is not returning the expected response!"
-                status="ERROR"
-                python create_incident.py $line EU
+                echo "Site: \"$line\" is not returning the expected response! Will re-check in 30s"
+                sleep 30
+                resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
+                if [[ $resp -ne 1 ]]; then
+                  status="ERROR"
+                  python create_incident.py $line EU
+                fi
               fi
           done < sites.csv
 
           if [[ $status != "OK" ]]; then
             echo "Some site are not up, see logs above and linked incidents at incident.io"
+            exit 1
           else
             echo "All sites appear to be ok"
           fi
