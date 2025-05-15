@@ -1,0 +1,87 @@
+name: Check Sites
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  up:
+    name: Check if sites are up (US)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log location info
+        run: curl ipinfo.io
+      - uses: actions/checkout@v4
+      - name: Update domain list
+        env:
+          VERCEL_TEAM: ${{ secrets.VERCEL_TEAM }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: python get_sites.py
+      - name: Upload domain list
+        uses: actions/upload-artifact@v4
+        with:
+          name: Checked Domains
+          path: sites.csv
+      - name: Check Sites
+        env:
+          INCIDENT_API_KEY: ${{ secrets.INCIDENT_API_KEY }}
+        run: |
+          set +e
+          status="OK"
+          while IFS=, read -r line; do 
+              resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
+
+              if [[ $resp -ne 1 ]]; then
+                echo "Site: \"$line\" is not returning the expected response!"
+                status="ERROR"
+                python create_incident.py $line US
+              fi
+          done < sites.csv
+
+          if [[ $status != "OK" ]]; then
+            echo "Some site are not up, see logs above and linked incidents at incident.io"
+          else
+            echo "All sites appear to be ok"
+          fi
+
+  up-eu:
+    name: Check if sites are up (via EU runner)
+    runs-on:
+      group: International
+      labels: eu
+    steps:
+      - name: Log location info
+        run: curl ipinfo.io
+      - uses: actions/checkout@v4
+      - name: Update domain list
+        env:
+          VERCEL_TEAM: ${{ secrets.VERCEL_TEAM }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: python get_sites.py
+      - name: Upload domain list
+        uses: actions/upload-artifact@v4
+        with:
+          name: Checked Domains - EU
+          path: sites.csv
+      - name: Check Sites
+        env:
+          INCIDENT_API_KEY: ${{ secrets.INCIDENT_API_KEY }}
+        run: |
+          set +e
+          status="OK"
+          while IFS=, read -r line; do 
+              resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
+
+              if [[ $resp -ne 1 ]]; then
+                echo "Site: \"$line\" is not returning the expected response!"
+                status="ERROR"
+                python create_incident.py $line EU
+              fi
+          done < sites.csv
+
+          if [[ $status != "OK" ]]; then
+            echo "Some site are not up, see logs above and linked incidents at incident.io"
+          else
+            echo "All sites appear to be ok"
+          fi
