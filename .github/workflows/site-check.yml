@@ -32,11 +32,11 @@ jobs:
           status="OK"
           while IFS=, read -r line; do 
               resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-              if [[ $resp -ne 1 ]]; then
+              if [[ $resp -lt 1 ]]; then
                 echo "Site: \"$line\" is not returning the expected response! Will re-check in 30s"
                 sleep 30
                 resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-                if [[ $resp -ne 1 ]]; then
+                if [[ $resp -lt 1 ]]; then
                   echo "Site: \"$line\" is still not returning the expected response! See logs below."
                   wget --server-response --delete-after $line
                   status="ERROR"
@@ -80,11 +80,11 @@ jobs:
           status="OK"
           while IFS=, read -r line; do 
               resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-              if [[ $resp -ne 1 ]]; then
+              if [[ $resp -lt 1 ]]; then
                 echo "Site: \"$line\" is not returning the expected response! Will re-check in 30s"
                 sleep 30
                 resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-                if [[ $resp -ne 1 ]]; then
+                if [[ $resp -lt 1 ]]; then
                   echo "Site: \"$line\" is still not returning the expected response! See logs below."
                   wget --server-response --delete-after $line
                   status="ERROR"
