@@ -25,7 +25,6 @@ import {
   queryTurbopuffer,
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
-import { FacetFilter } from "@fern-docs/search-ui";
 import { withoutStaging } from "@fern-docs/utils";
 
 import { getFernToken } from "@/app/fern-token";
@@ -75,7 +74,7 @@ export async function POST(req: NextRequest) {
   const metadata = await loader.getMetadata();
   const config = await loader.getConfig();
 
-  const { messages, url, filters, source, conversationId } = await req.json();
+  const { messages, url, source, conversationId } = await req.json();
   const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
 
   // TODO: remove this once webflow adds model/system-prompt to docs.yml
@@ -143,7 +142,6 @@ export async function POST(req: NextRequest) {
     authed: user != null,
     roles: user?.roles ?? [],
     topK: 3,
-    filters,
   });
   const documents = toDocuments(searchResults).join("\n\n");
   const system = isWebflow
@@ -185,7 +183,6 @@ export async function POST(req: NextRequest) {
               namespace,
               authed: user != null,
               roles: user?.roles ?? [],
-              filters,
               topK: 5,
             });
             return response.map((hit) => {
@@ -269,7 +266,6 @@ async function runQueryTurbopuffer(
     topK?: number;
     authed?: boolean;
     roles?: string[];
-    filters?: FacetFilter[];
   }
 ) {
   return query == null || query.trimStart().length === 0
@@ -287,6 +283,5 @@ async function runQueryTurbopuffer(
         },
         authed: opts.authed,
         roles: opts.roles,
-        filters: opts.filters,
       });
 }
