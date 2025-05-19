@@ -292,6 +292,7 @@ export class FernNavigationV1ToLatest {
       slug: FernNavigation.Slug(node.slug),
       canonicalSlug: undefined,
       icon: node.icon,
+      image: node.image,
       hidden: node.hidden,
       authed: node.authed,
       pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,

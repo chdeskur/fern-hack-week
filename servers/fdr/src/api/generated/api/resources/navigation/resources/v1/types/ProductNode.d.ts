@@ -9,4 +9,6 @@ export interface ProductNode extends FernRegistry.navigation.v1.WithNodeMetadata
     child: FernRegistry.navigation.v1.ProductChild;
     /** Couple words for what the product is */
     subtitle: string;
+    /** A URL to an image that will be displayed in the sidebar. Takes precedence over `icon` if both are provided. */
+    image: FernRegistry.FileId | undefined;
 }

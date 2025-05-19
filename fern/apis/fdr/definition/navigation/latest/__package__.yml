@@ -152,6 +152,9 @@ types:
       subtitle:
         type: string
         docs: Couple words for what the product is
+      image:
+        type: optional<commons.FileId>
+        docs: A URL to an image that will be displayed in the sidebar. Takes precedence over `icon` if both are provided.
 
   VersionNode:
     extends:
