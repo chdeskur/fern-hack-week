@@ -101,7 +101,7 @@ export function createCachedMdxSerializer(
             }
           );
 
-          return undefined;
+          return content;
         }
       },
       [domain, content, cacheSeed()],
