@@ -8,7 +8,6 @@ import {
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 
 import { DocsLoader, createPruneKey } from "@/server/docs-loader";
-import { revalidate } from "@/server/revalidate";
 
 import { PlaygroundAuthorizationFormCard } from "./auth";
 import { PlaygroundEndpoint } from "./endpoint";
@@ -32,7 +31,7 @@ export async function ExplorerContent({
   } catch (error) {
     console.error(error);
     // TODO: don't revalidate too often
-    revalidate(await loader.getBaseUrl());
+    // revalidate(await loader.getBaseUrl());
   }
 
   if (api == null) {
