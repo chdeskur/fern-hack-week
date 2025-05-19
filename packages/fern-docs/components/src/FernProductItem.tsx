@@ -23,6 +23,7 @@ export function FernProductItem({
     <a href={option.href}>
       <div className={cn("fern-product-item", option.className)}>
         <FernSelectionItem
+          image={option.image}
           icon={option.icon}
           title={option.title}
           subtitle={option.subtitle}

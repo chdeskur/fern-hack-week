@@ -33,6 +33,7 @@ export declare namespace FernDropdown {
     children?: ReactNode | ((active: boolean) => ReactNode);
     value: string;
     icon?: ReactNode;
+    image?: ReactNode;
     className?: string;
     labelClassName?: string;
     href?: string;

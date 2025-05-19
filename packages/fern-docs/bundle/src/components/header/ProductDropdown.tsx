@@ -1,6 +1,9 @@
+import Image from "next/image";
+
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { DocsLoader } from "@/server/docs-loader";
+import { createFileResolver } from "@/server/file-resolver";
 
 import { FaIconServer } from "../fa-icon-server";
 import {
@@ -32,8 +35,13 @@ export async function ProductDropdown({
     return null;
   }
 
+  const files = await loader.getFiles();
+
+  const resolveFileSrc = createFileResolver(files);
+
   const productOptions = products.map((product): ProductDropdownItem => {
     const slug = product.slug ?? product.pointsTo;
+    const image = resolveFileSrc(product.image);
     return {
       productId: product.productId,
       title: product.title,
@@ -42,6 +50,15 @@ export async function ProductDropdown({
       icon: product.icon ? <FaIconServer icon={product.icon} /> : undefined,
       subtitle: product.subtitle,
       default: product.default,
+      image: image ? (
+        <Image
+          src={image.src}
+          alt={product.title}
+          objectFit="cover"
+          width={image.width}
+          height={image.height}
+        />
+      ) : undefined,
     };
   });
 

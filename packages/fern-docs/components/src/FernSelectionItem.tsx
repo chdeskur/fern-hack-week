@@ -13,6 +13,7 @@ import { cn } from "./cn";
  * @returns the rendered product item
  */
 export function FernSelectionItem({
+  image,
   icon,
   title,
   subtitle,
@@ -21,6 +22,7 @@ export function FernSelectionItem({
   className,
   testId,
 }: {
+  image?: React.ReactNode;
   icon: React.ReactNode;
   title: string;
   subtitle?: string;
@@ -35,7 +37,9 @@ export function FernSelectionItem({
       data-testid={testId}
     >
       <div className="flex flex-1 items-center gap-2">
-        <div className={cn("fern-selection-item-icon")}>{icon}</div>
+        <div className={cn("fern-selection-item-icon", { "use-icon": !image })}>
+          {image ?? icon}
+        </div>
 
         <div className={cn("flex flex-col", { "gap-1": !dense })}>
           <p className="fern-selection-item-title">{title}</p>

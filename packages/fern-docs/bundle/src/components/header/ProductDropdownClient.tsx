@@ -18,6 +18,7 @@ export interface ProductDropdownItem {
   slug: string;
   defaultSlug?: string;
   icon?: React.ReactNode;
+  image?: React.ReactNode;
   default: boolean;
 }
 
@@ -47,7 +48,7 @@ export function ProductDropdownClient({
     <FernDropdown
       value={currentProductId}
       options={products.map(
-        ({ icon, productId, title, slug, subtitle, defaultSlug }) => ({
+        ({ icon, image, productId, title, slug, subtitle, defaultSlug }) => ({
           type: "product",
           id: productId,
           title,
@@ -62,6 +63,7 @@ export function ProductDropdownClient({
           ),
           dense: !isDesktop || useDenseLayout,
           icon,
+          image,
         })
       )}
       contentProps={{
