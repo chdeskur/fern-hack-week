@@ -247,39 +247,14 @@ export async function GET(
                   "page"
                 );
                 try {
-                  let res;
-                  let attempts = 0;
-                  while (attempts < 3) {
-                    try {
-                      res = await fetch(
-                        `${req.nextUrl.origin}${slugToHref(slug)}`,
-                        {
-                          method: "HEAD",
-                          cache: "no-store",
-                          headers: { [HEADER_X_FERN_HOST]: domain },
-                        }
-                      );
-                      // break if we get a successful response
-                      if (res.ok) {
-                        break;
-                      }
-                    } catch (e) {
-                      console.debug(
-                        `Failed to revalidate URL ${req.nextUrl.origin}${slugToHref(slug)}, trying again...`
-                      );
-                      attempts++;
-                      if (attempts === 3) throw e;
-                      // Add exponential backoff with jitter
-                      const backoffMs = Math.min(
-                        1000 * Math.pow(2, attempts - 1),
-                        4000
-                      );
-                      const jitter = Math.random() * 200;
-                      await new Promise((resolve) =>
-                        setTimeout(resolve, backoffMs + jitter)
-                      );
+                  const res = await fetch(
+                    `${req.nextUrl.origin}${slugToHref(slug)}`,
+                    {
+                      method: "HEAD",
+                      cache: "no-store",
+                      headers: { [HEADER_X_FERN_HOST]: domain },
                     }
-                  }
+                  );
                   if (!res?.ok) {
                     throw new Error(
                       `Failed to revalidate ${url}. Status code: ${res?.status}`
