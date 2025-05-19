@@ -40,6 +40,7 @@ export const TurbopufferRecordSchema = z.object({
     response_type: z.enum(["stream", "file", "json"]).optional(),
     environments: z.array(z.string()).optional(),
     default_environment_id: z.string().optional(),
+    code_snippets: z.array(z.string()).optional(),
   }),
 });
 
@@ -161,6 +162,11 @@ export const FernTurbopufferAttributeSchema: Record<
   default_environment_id: {
     type: "string",
     filterable: true,
+    bm25: false,
+  },
+  code_snippets: {
+    type: "[]string",
+    filterable: false,
     bm25: false,
   },
 };

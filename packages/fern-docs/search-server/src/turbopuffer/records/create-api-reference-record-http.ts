@@ -49,6 +49,9 @@ export function createApiReferenceRecordHttp({
           request_description != null
             ? truncateToBytes(request_description, 50 * 1000)
             : undefined,
+        code_snippets: request_description_code_snippets?.map(
+          (code_snippet) => code_snippet.code
+        ),
         page_position: 1,
       },
     });
@@ -78,6 +81,9 @@ export function createApiReferenceRecordHttp({
           response_description != null
             ? truncateToBytes(response_description, 50 * 1000)
             : undefined,
+        code_snippets: response_description_code_snippets?.map(
+          (code_snippet) => code_snippet.code
+        ),
         page_position: 1,
       },
     });

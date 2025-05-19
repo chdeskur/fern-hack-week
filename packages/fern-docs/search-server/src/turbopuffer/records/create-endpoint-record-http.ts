@@ -25,6 +25,50 @@ export function createEndpointBaseRecordHttp({
 }: CreateEndpointBaseRecordOptions): TurbopufferRecord {
   const prepared = maybePrepareMdxContent(toDescription(endpoint.description));
 
+  // here, we parse request properties
+  // TODO: make this more comprehensive (handle enums, etc.)
+  const request_properties: {
+    key: string;
+    type: string;
+    description?: string;
+  }[] = [];
+  endpoint.requests?.forEach((request) => {
+    if (request.body.type === "object") {
+      request.body.properties.forEach((property) => {
+        if (property.valueShape.type === "alias") {
+          let property_type = JSON.stringify(property.valueShape);
+          if (property.valueShape.value.type === "id") {
+            property_type = JSON.stringify(types[property.valueShape.value.id]);
+          } else if (property.valueShape.value.type === "optional") {
+            if (
+              property.valueShape.value.shape.type === "alias" &&
+              property.valueShape.value.shape.value.type === "id"
+            ) {
+              property_type = JSON.stringify(
+                types[property.valueShape.value.shape.value.id]
+              );
+            }
+          }
+          request_properties.push({
+            key: property.key.toString(),
+            type: property_type,
+            description: property.description,
+          });
+        } else if (property.valueShape.type === "enum") {
+          request_properties.push({
+            key: property.key.toString(),
+            type: JSON.stringify(property.valueShape),
+            description: property.description,
+          });
+        }
+      });
+    }
+  });
+  prepared.content +=
+    "\n\n" +
+    JSON.stringify(request_properties, null, 2) +
+    "\n\n" +
+    base.attributes.code_snippets?.join("\n\n");
   const keywords: string[] = [];
   if (
     typeof base.attributes.keywords !== "undefined" &&
@@ -80,6 +124,9 @@ export function createEndpointBaseRecordHttp({
     attributes: {
       ...base.attributes,
       chunk: prepared.content ?? "",
+      code_snippets: prepared.code_snippets?.map(
+        (code_snippet) => code_snippet.code
+      ),
       api_type: "http",
       api_definition_id: node.apiDefinitionId,
       api_endpoint_id: node.endpointId,

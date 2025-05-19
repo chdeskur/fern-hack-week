@@ -189,9 +189,7 @@ export const DesktopCommandWithAskAI = forwardRef<
                 checkForDefaultPrevented: false,
               })
         }
-        onEscapeKeyDown={(event) => {
-          props.onEscapeKeyDown?.(event);
-        }}
+        onEscapeKeyDown={props.onEscapeKeyDown}
         escapeKeyShouldPopState={!askAI && filters.length > 0}
         data-mode={askAI ? "ask-ai" : "search"}
       >
@@ -381,7 +379,7 @@ const DesktopAskAIChat = ({
 
   const [isScrolled, setIsScrolled] = useState(false);
 
-  let messages = useDeferredValue(chat.messages);
+  const messages = useDeferredValue(chat.messages);
 
   return (
     <>
@@ -420,7 +418,6 @@ const DesktopAskAIChat = ({
                     onClick={() => {
                       chat.setMessages([]);
                       setInitialConversation([]);
-                      messages = chat.messages;
                       resetConversationId();
                     }}
                   >
