@@ -12,7 +12,6 @@ import { RehypeLinksOptions } from "@/mdx/plugins/rehype-links";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
-import { postToEngineeringNotifs } from "./slack";
 
 export type MdxSerializerOptions = {
   /**
@@ -91,16 +90,6 @@ export function createCachedMdxSerializer(
           });
         } catch (error) {
           console.error("Error serializing mdx", error);
-
-          postToEngineeringNotifs(
-            `:rotating_light: [${domain}] \`Serialize MDX\` encountered an error: \`${String(error)}\` (url: \`https://${domain}/${slug ?? "UNKNOWN"}\`)`,
-            "serialize-mdx",
-            {
-              message: content,
-              mrkdwn: true,
-            }
-          );
-
           return content;
         }
       },
