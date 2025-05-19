@@ -62,6 +62,7 @@ describe("unwrapReference", () => {
         shape: PRIMITIVE_SHAPE,
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
     };
     expect(unwrapReference(shape, types)).toMatchInlineSnapshot(
@@ -134,6 +135,7 @@ describe("unwrapReference", () => {
         },
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
     };
     expect(unwrapReference(shape, types)).toMatchInlineSnapshot(
@@ -182,6 +184,7 @@ describe("unwrapReference", () => {
         },
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
     };
     expect(unwrapReference(shape, types).default).toBe("testing-a");
@@ -213,6 +216,7 @@ describe("unwrapReference", () => {
         },
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
     };
     expect(unwrapReference(shape, types).default).toBe("testing-b");
@@ -230,6 +234,7 @@ describe("unwrapReference", () => {
         shape: { type: "alias", value: shape },
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
     };
     expect(unwrapReference(shape, types).shape.type).toBe("unknown");
@@ -250,6 +255,7 @@ describe("unwrapReference", () => {
         },
         description: "a",
         availability: "Stable",
+        displayName: undefined,
       },
       [TypeId("b")]: {
         name: "b",
@@ -270,12 +276,14 @@ describe("unwrapReference", () => {
         },
         description: "b",
         availability: "Deprecated",
+        displayName: undefined,
       },
       [TypeId("c")]: {
         name: "c",
         shape: PRIMITIVE_SHAPE,
         description: "c",
         availability: "InDevelopment",
+        displayName: undefined,
       },
     };
     const unwrapped = unwrapReference(shape, types);
@@ -307,6 +315,7 @@ describe("unwrapReference", () => {
         },
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
     };
 
@@ -448,6 +457,7 @@ describe("unwrapObjectType", () => {
         },
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
       [TypeId("c")]: {
         name: "c",
@@ -467,6 +477,7 @@ describe("unwrapObjectType", () => {
         },
         description: undefined,
         availability: undefined,
+        displayName: undefined,
       },
     };
     expect(
@@ -514,6 +525,7 @@ describe("unwrapObjectType", () => {
         },
         description: "description-1",
         availability: "GenerallyAvailable",
+        displayName: undefined,
       },
       [TypeId("c")]: {
         name: "b",
@@ -547,6 +559,7 @@ describe("unwrapObjectType", () => {
         },
         description: "description-2",
         availability: undefined,
+        displayName: undefined,
       },
     };
 
@@ -617,6 +630,7 @@ describe("unwrapObjectType", () => {
           },
           description: undefined,
           availability: undefined,
+          displayName: undefined,
         },
       }
     );

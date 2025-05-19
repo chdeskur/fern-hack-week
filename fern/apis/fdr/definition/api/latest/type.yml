@@ -19,7 +19,8 @@ types:
     properties:
       name: string
       shape: TypeShape
-
+      displayName: optional<string>
+      
   TypeReference:
     union:
       id: TypeReferenceId

@@ -5,4 +5,5 @@ import * as FernRegistry from "../../../../../../../index";
 export interface TypeDefinition extends FernRegistry.api.latest.WithDescription, FernRegistry.api.latest.WithAvailability {
     name: string;
     shape: FernRegistry.api.latest.TypeShape;
+    displayName: string | undefined;
 }

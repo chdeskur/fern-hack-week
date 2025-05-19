@@ -614,6 +614,7 @@ function transformTypeDefinition({
     availability: writeShape.availability,
     // htmlDescription,
     name: writeShape.name,
+    displayName: writeShape.displayName,
     shape: transformShape({ writeShape: writeShape.shape }),
     // descriptionContainsMarkdown: true,
   };

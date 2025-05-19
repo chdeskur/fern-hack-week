@@ -97,6 +97,7 @@ export class ApiDefinitionV1ToLatest {
         description: type.description,
         availability: type.availability,
         shape: this.migrateTypeShape(type.shape),
+        displayName: type.displayName,
       };
     });
 

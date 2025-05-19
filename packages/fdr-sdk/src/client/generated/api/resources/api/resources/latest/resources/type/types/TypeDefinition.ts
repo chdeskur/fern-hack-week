@@ -9,4 +9,5 @@ export interface TypeDefinition
         FernRegistry.api.latest.WithAvailability {
     name: string;
     shape: FernRegistry.api.latest.TypeShape;
+    displayName: string | undefined;
 }

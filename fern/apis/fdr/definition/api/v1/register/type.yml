@@ -12,6 +12,7 @@ types:
     properties:
       name: string
       shape: TypeShape
+      displayName: optional<string>
 
   TypeShape:
     union:

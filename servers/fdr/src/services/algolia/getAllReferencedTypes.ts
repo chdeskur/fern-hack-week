@@ -137,6 +137,7 @@ export function getAllReferencedTypes({
                     shape: { type: "object", ...value.additionalProperties },
                     description: undefined,
                     availability: undefined,
+                    displayName: undefined,
                   },
                   results,
                 }),

@@ -156,6 +156,7 @@ const type1: Latest.TypeDefinition = {
     type: "alias",
     value: PRIMITIVE_SHAPE,
   },
+  displayName: undefined,
 };
 
 const type2: Latest.TypeDefinition = {
@@ -166,6 +167,7 @@ const type2: Latest.TypeDefinition = {
     type: "alias",
     value: PRIMITIVE_SHAPE,
   },
+  displayName: undefined,
 };
 
 const type3: Latest.TypeDefinition = {
@@ -176,6 +178,7 @@ const type3: Latest.TypeDefinition = {
     type: "alias",
     value: PRIMITIVE_SHAPE,
   },
+  displayName: undefined,
 };
 
 const type4: Latest.TypeDefinition = {
@@ -186,6 +189,7 @@ const type4: Latest.TypeDefinition = {
     type: "alias",
     value: PRIMITIVE_SHAPE,
   },
+  displayName: undefined,
 };
 
 const authScheme: Latest.AuthScheme = {
