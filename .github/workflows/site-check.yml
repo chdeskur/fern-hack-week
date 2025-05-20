@@ -9,7 +9,7 @@ jobs:
   up:
     name: Check if sites are up (US)
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Log location info
         run: curl ipinfo.io
@@ -27,37 +27,14 @@ jobs:
       - name: Check Sites
         env:
           INCIDENT_API_KEY: ${{ secrets.INCIDENT_API_KEY }}
-        run: |
-          set +e
-          status="OK"
-          while IFS=, read -r line; do 
-              resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-              if [[ $resp -lt 1 ]]; then
-                echo "Site: \"$line\" is not returning the expected response! Will re-check in 30s"
-                sleep 30
-                resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-                if [[ $resp -lt 1 ]]; then
-                  echo "Site: \"$line\" is still not returning the expected response! See logs below."
-                  wget --server-response --delete-after $line
-                  status="ERROR"
-                  python create_incident.py $line US
-                fi
-              fi
-          done < sites.csv
-
-          if [[ $status != "OK" ]]; then
-            echo "Some site are not up, see logs above and linked incidents at incident.io"
-            exit 1
-          else
-            echo "All sites appear to be ok"
-          fi
+        run: python check_sites.py US
 
   up-eu:
     name: Check if sites are up (via EU runner)
     runs-on:
       group: International
       labels: eu
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Log location info
         run: curl ipinfo.io
@@ -75,27 +52,4 @@ jobs:
       - name: Check Sites
         env:
           INCIDENT_API_KEY: ${{ secrets.INCIDENT_API_KEY }}
-        run: |
-          set +e
-          status="OK"
-          while IFS=, read -r line; do 
-              resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-              if [[ $resp -lt 1 ]]; then
-                echo "Site: \"$line\" is not returning the expected response! Will re-check in 30s"
-                sleep 30
-                resp="$(wget --server-response -q --delete-after $line 2>&1 | grep '200\ OK' | wc -l)"
-                if [[ $resp -lt 1 ]]; then
-                  echo "Site: \"$line\" is still not returning the expected response! See logs below."
-                  wget --server-response --delete-after $line
-                  status="ERROR"
-                  python create_incident.py $line EU
-                fi
-              fi
-          done < sites.csv
-
-          if [[ $status != "OK" ]]; then
-            echo "Some site are not up, see logs above and linked incidents at incident.io"
-            exit 1
-          else
-            echo "All sites appear to be ok"
-          fi
+        run: python check_sites.py EU
