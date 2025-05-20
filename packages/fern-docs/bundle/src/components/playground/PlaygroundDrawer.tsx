@@ -1,7 +1,7 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useCallback } from "react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Drawer } from "vaul";
@@ -9,20 +9,16 @@ import { Drawer } from "vaul";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
-import { useCurrentPathname } from "@/hooks/use-current-pathname";
+import { useUrlParams } from "@/hooks/use-url-params";
 
 import { useHeaderHeight, useViewportSize } from "../hooks/useViewportSize";
-import {
-  hasExplorerRouteParam,
-  withoutExplorerRoute,
-} from "./utils/explorer-route";
 
 export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
   const [snap, setSnap] = React.useState<number | string | null>(null);
-  const pathname = useCurrentPathname();
-  const searchParams = useSearchParams();
-  const open = hasExplorerRouteParam(searchParams);
-
+  const { removeUrlParamFromPathname, urlHasParam, addUrlParamToPathname } =
+    useUrlParams();
+  const open = urlHasParam("explorer");
+  const router = useRouter();
   const viewport = useViewportSize();
   const headerHeight = useHeaderHeight();
 
@@ -41,10 +37,25 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
     };
   }, [open]);
 
+  /**
+   * This function is used to handle the open change event of the drawer, this ensures that
+   * the URL param is always in sync with the drawer's open state.
+   */
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        router.replace(removeUrlParamFromPathname("explorer"));
+      } else {
+        router.replace(addUrlParamToPathname("explorer", "true"));
+      }
+    },
+    [router, removeUrlParamFromPathname, addUrlParamToPathname]
+  );
+
   return (
     <Drawer.Root
       open={open}
-      onOpenChange={console.log}
+      onOpenChange={handleOpenChange}
       modal={false}
       dismissible={false}
       disablePreventScroll
@@ -69,7 +80,7 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
             e.preventDefault();
             document
               .getElementById(
-                `playground-button:${slugjoin(withoutExplorerRoute(pathname))}`
+                `playground-button:${slugjoin(removeUrlParamFromPathname("explore"))}`
               )
               ?.focus();
           }}

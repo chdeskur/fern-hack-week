@@ -16,11 +16,3 @@ export function conformExplorerRoute(slugOrPathname: string): string {
 export function isExplorerRoute(pathname: string): boolean {
   return removeTrailingSlash(pathname).endsWith("?explorer=true");
 }
-
-export function hasExplorerRouteParam(params: URLSearchParams): boolean {
-  return params.get("explorer") === "true";
-}
-
-export function withoutExplorerRoute(pathname: string): string {
-  return pathname.replace("?explorer=true", "");
-}

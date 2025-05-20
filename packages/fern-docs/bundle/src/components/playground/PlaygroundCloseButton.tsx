@@ -8,14 +8,14 @@ import { X } from "lucide-react";
 import { FernButton } from "@fern-docs/components";
 import { tunnel } from "@fern-ui/react-commons";
 
-import { useCurrentPathname } from "@/hooks/use-current-pathname";
+import { useUrlParams } from "@/hooks/use-url-params";
 
 import { FernLinkButton } from "../FernLinkButton";
 
 export const closeButton = tunnel();
 
 export function PlaygroundCloseButton() {
-  const pathname = useCurrentPathname();
+  const { removeUrlParamFromPathname } = useUrlParams();
   return (
     <closeButton.In>
       <FernLinkButton
@@ -23,7 +23,7 @@ export function PlaygroundCloseButton() {
         size="large"
         rounded
         variant="outlined"
-        href={pathname.replace("explorer=true", "")} // TODO: Use URL param manager to remove param
+        href={removeUrlParamFromPathname("explorer")}
         replace
         scroll={false}
       />
@@ -33,17 +33,18 @@ export function PlaygroundCloseButton() {
 
 export function InterceptedPlaygroundCloseButton() {
   const router = useRouter();
+  const { removeUrlParamFromPathname } = useUrlParams();
   React.useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        router.back();
+        router.replace(removeUrlParamFromPathname("explorer"));
       }
     };
     window.addEventListener("keydown", handleEscape);
     return () => {
       window.removeEventListener("keydown", handleEscape);
     };
-  }, [router]);
+  }, [router, removeUrlParamFromPathname]);
   return (
     <closeButton.In>
       <FernButton

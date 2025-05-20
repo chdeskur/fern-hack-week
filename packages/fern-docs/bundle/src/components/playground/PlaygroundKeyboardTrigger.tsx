@@ -1,34 +1,38 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect } from "react";
 
-import { removeTrailingSlash } from "@fern-docs/utils";
-
-import { useCurrentPathname } from "@/hooks/use-current-pathname";
+import { useUrlParams } from "@/hooks/use-url-params";
 
 export function PlaygroundKeyboardTrigger() {
-  const pathname = removeTrailingSlash(useCurrentPathname());
   const router = useRouter();
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+  const { urlHasParam, addUrlParamToPathname, removeUrlParamFromPathname } =
+    useUrlParams();
+  const pathname = usePathname();
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
       // Check for Ctrl + ` (backtick)
       if (e.ctrlKey && e.key === "`") {
         e.preventDefault();
         router.replace(
-          pathname.endsWith("/?explorer=true")
-            ? pathname.slice(0, -9)
-            : `${pathname}/?explorer=true`,
+          urlHasParam("explorer")
+            ? removeUrlParamFromPathname("explorer")
+            : addUrlParamToPathname("explorer", "true"),
           { scroll: false }
         );
       }
-    };
+    },
+    [router, urlHasParam, addUrlParamToPathname, removeUrlParamFromPathname]
+  );
 
+  useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [pathname, router]);
+  }, [handleKeyDown, pathname]);
 
   return null;
 }
