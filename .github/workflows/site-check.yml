@@ -30,6 +30,8 @@ jobs:
         run: python check_sites.py US
 
   up-eu:
+    needs: up
+    if: always()
     name: Check if sites are up (via EU runner)
     runs-on:
       group: International
