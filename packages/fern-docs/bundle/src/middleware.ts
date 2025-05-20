@@ -202,23 +202,11 @@ export const middleware: NextMiddleware = async (request) => {
       return NextResponse.redirect(absoluteUrl);
     }
 
-    const getResponse = () => {
-      if (request.nextUrl.searchParams.has("error")) {
-        return rewrite(
-          withDomain(
-            `/dynamic/${encodeURIComponent(conformTrailingSlash(pathname))}`
-          )
-        );
-      }
-
-      return rewrite(
-        withDomain(
-          `/static/${encodeURIComponent(conformTrailingSlash(pathname))}`
-        )
-      );
-    };
-
-    return getResponse();
+    return rewrite(
+      withDomain(
+        `/dynamic/${encodeURIComponent(conformTrailingSlash(pathname))}`
+      )
+    );
   }
 
   const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
