@@ -60,7 +60,9 @@ export class ClonedRepository {
 
   public async commit(message?: string): Promise<void> {
     await this.git.cwd(this.clonePath);
-    await this.git.commit(message ?? `Automated commit`);
+    await this.git.commit(message ?? `Automated commit`, undefined, {
+      "--allow-empty": null,
+    });
   }
 
   public async checkout(branch: string): Promise<void> {
