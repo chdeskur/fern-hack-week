@@ -37,12 +37,9 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     };
   }
   const canonicalUrl = await getCanonicalUrl(domain);
-  const basepath = headersList.get("x-fern-basepath") ?? "";
-  const sitemap = urlJoin(
-    withDefaultProtocol(canonicalUrl ?? domain),
-    basepath,
-    "sitemap.xml"
-  );
+  const basepath = headersList.get("x-fern-basepath")?.replace(/\/$/, "") ?? "";
+  const baseUrl = withDefaultProtocol(canonicalUrl ?? domain);
+  const sitemap = urlJoin(baseUrl, basepath, "sitemap.xml");
 
   if (await getSeoDisabled(domain)) {
     return {
@@ -55,11 +52,12 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     };
   }
 
+  // disallow all query strings
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: conformTrailingSlash("*/~explorer"),
+      disallow: conformTrailingSlash("/*?*"),
     },
     sitemap,
     host: canonicalUrl ? canonicalUrl : domain,
