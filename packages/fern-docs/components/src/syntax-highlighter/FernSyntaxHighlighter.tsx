@@ -36,7 +36,7 @@ export const FernSyntaxHighlighter = forwardRef<
   HTMLPreElement,
   FernSyntaxHighlighterProps
 >((props, ref) => {
-  const { id, code, language, tooltips, template, ...innerProps } = props;
+  const { code, language, tooltips, template, ...innerProps } = props;
   const highlighter = useHighlighter(language);
 
   const variableNames = useDeepCompareMemoize(

@@ -38,6 +38,7 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({
   return (
     <FernSyntaxHighlighter
       className="relative min-h-0 flex-1 shrink select-text"
+      id="playground-response-preview"
       language={getLanguage(response)}
       code={responseJson}
       fontSize="sm"

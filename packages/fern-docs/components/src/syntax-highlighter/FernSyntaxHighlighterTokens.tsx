@@ -31,6 +31,7 @@ export interface FernSyntaxHighlighterTokensProps {
   highlightStyle?: "highlight" | "focus";
 
   className?: string;
+  id?: string;
   style?: React.CSSProperties;
   viewportRef?: React.RefObject<ScrollToHandle | null>;
   maxLines?: number;
@@ -67,6 +68,7 @@ export const FernSyntaxHighlighterTokens = memo(
       maxLines,
       wordWrap,
       template,
+      id,
     } = props;
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -141,6 +143,7 @@ export const FernSyntaxHighlighterTokens = memo(
         style={{ ...style, ...preStyle }}
         ref={ref}
         tabIndex={0}
+        id={id}
       >
         <FernScrollArea
           ref={scrollAreaRef}
