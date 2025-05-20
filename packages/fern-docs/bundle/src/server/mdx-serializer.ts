@@ -73,7 +73,7 @@ export function createCachedMdxSerializer(
 
     // this lets us key on just
     const cachedSerializer = unstable_cache(
-      async ({ filename, toc, scope, slug }: MdxSerializerOptions) => {
+      async ({ filename, toc, scope }: MdxSerializerOptions) => {
         const authState = await loader.getAuthState();
 
         try {
