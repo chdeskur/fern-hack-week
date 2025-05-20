@@ -9,4 +9,5 @@ export interface UndiscriminatedUnionVariant
         FernRegistry.api.v1.WithAvailability {
     typeName: string | undefined;
     type: FernRegistry.api.v1.register.TypeReference;
+    displayName: string | undefined;
 }

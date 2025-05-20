@@ -735,7 +735,10 @@ function transformUnDiscriminatedVariant({
     // htmlDescription,
     type: writeShape.type,
     displayName:
-      writeShape.typeName != null ? titleCase(writeShape.typeName) : undefined,
+      writeShape.displayName ??
+      (writeShape.typeName != null
+        ? titleCase(writeShape.typeName)
+        : undefined),
     // descriptionContainsMarkdown: true,
   };
 }

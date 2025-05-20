@@ -170,6 +170,7 @@ types:
     properties:
       typeName: optional<string>
       type: TypeReference
+      displayName: optional<string>
 
   DiscriminatedUnionType:
     properties:
