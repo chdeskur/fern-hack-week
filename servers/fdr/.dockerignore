@@ -19,5 +19,6 @@ Dockerfile
 *.tsbuildinfo
 **/*.tsbuildinfo
 **/tsconfig.tsbuildinfo
-**/Dockerfile
 tsconfig.tsbuildinfo
+**/Dockerfile
+**/Dockerfile.*

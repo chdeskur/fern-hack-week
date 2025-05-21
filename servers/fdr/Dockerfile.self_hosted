@@ -1,0 +1,7 @@
+
+FROM node:20.18-alpine3.20 AS base
+
+# Install the Fern CLI
+RUN npm install -g fern-api
+
+CMD ["sh", "-c", "echo 'Dockerfile.self_hosted ready. CLI installed.'"]
