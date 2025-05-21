@@ -513,9 +513,22 @@ export class FdrDeployStack extends Stack {
         desiredCount: 1,
         securityGroups: [mdxBundlerSg],
         taskImageOptions: {
-          image: ContainerImage.fromTarball(
-            `../../docker/build/tar/mdx-bundler:${version}.tar`
-          ),
+          image: (() => {
+            const imagePath = `../../docker/build/tar/mdx-bundler:${version}.tar`;
+            console.log(
+              `[MDX Bundler] Attempting to load image from path: ${imagePath}`
+            );
+            console.log(
+              `[MDX Bundler] Current working directory: ${process.cwd()}`
+            );
+            console.log(`[MDX Bundler] Version: ${version}`);
+            try {
+              return ContainerImage.fromTarball(imagePath);
+            } catch (error) {
+              console.error(`[MDX Bundler] Failed to load image: ${error}`);
+              throw error;
+            }
+          })(),
           environment: {
             NODE_ENV: "production",
           },
