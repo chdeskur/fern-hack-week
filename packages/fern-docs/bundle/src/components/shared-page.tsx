@@ -109,10 +109,7 @@ export default async function SharedPage({
   if (found.type === "notFound") {
     console.error(`[${loader.domain}] Not found: ${slug}`);
 
-    // TODO: returning "notFound: true" here will render vercel's default 404 page
-    // this is better than following redirects, since it will signal a proper 404 status code.
-    // however, we should consider rendering a custom 404 page in the future using the customer's branding.
-    // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
+    // returning "notFound: true" here renders our custom 404 page (not-found.tsx)
     if (edgeFlags.is404PageHidden && found.redirect != null) {
       redirect(prepareRedirect(found.redirect));
     }
