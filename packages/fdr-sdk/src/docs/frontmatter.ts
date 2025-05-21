@@ -11,6 +11,7 @@ export const EMPTY_FRONTMATTER: Frontmatter = {
   "edit-this-page-url": undefined,
   "hide-toc": undefined,
   "force-toc": undefined,
+  "max-toc-depth": undefined,
   "hide-nav-links": undefined,
   "hide-feedback": undefined,
   "no-image-zoom": undefined,

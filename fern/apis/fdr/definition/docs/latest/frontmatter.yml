@@ -53,6 +53,9 @@ types:
       hide-nav-links:
         type: optional<boolean>
         docs: Hides the (prev, next) navigation links at the bottom of the page.
+      max-toc-depth:
+        type: optional<integer>
+        docs: The maximum depth of the table of contents.
       hide-feedback:
         type: optional<boolean>
         docs: Hides the feedback form at the bottom of the page

@@ -37,6 +37,8 @@ export interface Frontmatter
     "force-toc": boolean | undefined;
     /** Hides the (prev, next) navigation links at the bottom of the page. */
     "hide-nav-links": boolean | undefined;
+    /** The maximum depth of the table of contents. */
+    "max-toc-depth": number | undefined;
     /** Hides the feedback form at the bottom of the page */
     "hide-feedback": boolean | undefined;
     /** Disables click-to-zoom on all imgages on this page. */
