@@ -734,11 +734,7 @@ function transformUnDiscriminatedVariant({
     availability: writeShape.availability,
     // htmlDescription,
     type: writeShape.type,
-    displayName:
-      writeShape.displayName ??
-      (writeShape.typeName != null
-        ? titleCase(writeShape.typeName)
-        : undefined),
+    displayName: writeShape.displayName,
     // descriptionContainsMarkdown: true,
   };
 }
