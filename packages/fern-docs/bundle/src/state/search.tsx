@@ -31,6 +31,23 @@ export const useIsAskAiEnabled = () => {
   return useAtomValue(isAskAiEnabledAtom);
 };
 
+export const isDefaultSearchFilterOffAtom = atom(false);
+
+export const SetIsDefaultSearchFilterOff = ({
+  isDefaultSearchFilterOff,
+}: {
+  isDefaultSearchFilterOff: boolean;
+}) => {
+  useHydrateAtoms([[isDefaultSearchFilterOffAtom, isDefaultSearchFilterOff]], {
+    dangerouslyForceHydrate: true,
+  });
+  return null;
+};
+
+export const useIsDefaultSearchFilterOff = () => {
+  return useAtomValue(isDefaultSearchFilterOffAtom);
+};
+
 searchInitializedAtom.onMount = (setInitialized) => {
   if (typeof window === "undefined") {
     return;

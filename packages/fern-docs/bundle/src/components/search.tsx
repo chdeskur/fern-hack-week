@@ -34,6 +34,7 @@ import {
   searchDialogOpenAtom,
   searchInitializedAtom,
   useIsAskAiEnabled,
+  useIsDefaultSearchFilterOff,
 } from "@/state/search";
 import { atomWithStorageString } from "@/state/utils/atomWithStorageString";
 
@@ -87,6 +88,7 @@ export const SearchV2 = React.memo(function SearchV2({
   const userToken = useAlgoliaUserToken();
   const user = useFernUser();
   const isAskAiEnabled = useIsAskAiEnabled();
+  const isDefaultSearchFilterOff = useIsDefaultSearchFilterOff();
 
   const [open, setOpen] = useCommandTrigger();
   const [askAi, setAskAi] = useAtom(askAiAtom);
@@ -99,6 +101,9 @@ export const SearchV2 = React.memo(function SearchV2({
     refreshInterval: 60 * 60 * 1000,
     preload: true,
   });
+
+  const shouldApplyVersionFilter =
+    currentVersion != null && !isDefaultSearchFilterOff;
 
   const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
   let chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
@@ -184,7 +189,9 @@ export const SearchV2 = React.memo(function SearchV2({
       fetchFacets={facetFetcher}
       authenticatedUserToken={user?.email}
       initialFilters={
-        currentVersion != null ? { "version.title": currentVersion } : undefined
+        shouldApplyVersionFilter
+          ? { "version.title": currentVersion }
+          : undefined
       }
       analyticsTags={["search-v2-dialog"]}
     >

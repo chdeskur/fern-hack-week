@@ -36,7 +36,7 @@ import {
   getAllSidebarRootNodes,
   getSidebarRootNodeIdToChildToParentsMap,
 } from "@/state/navigation-server";
-import { SetIsAskAiEnabled } from "@/state/search";
+import { SetIsAskAiEnabled, SetIsDefaultSearchFilterOff } from "@/state/search";
 import { Whitelabeled } from "@/state/whitelabeled";
 
 import { GlobalStyles } from "../../global-styles";
@@ -111,6 +111,9 @@ export default async function Layout({
         <Whitelabeled value={edgeFlags.isWhitelabeled} />
         <SetColors colors={colors} />
         <SetIsAskAiEnabled isAskAiEnabled={edgeFlags.isAskAiEnabled} />
+        <SetIsDefaultSearchFilterOff
+          isDefaultSearchFilterOff={edgeFlags.isDefaultSearchFilterOff}
+        />
         <FernUser domain={domain} host={host} />
         <GlobalStyles
           domain={domain}

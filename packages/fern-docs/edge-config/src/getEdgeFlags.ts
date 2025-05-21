@@ -46,6 +46,7 @@ const EDGE_FLAGS = [
   "search-v2" as const,
   "authed-previews" as const,
   "search-disabled" as const,
+  "default-search-filter-off" as const,
 ];
 
 type EdgeFlag = (typeof EDGE_FLAGS)[number];
@@ -191,6 +192,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["search-disabled"]
     );
+    const isDefaultSearchFilterOff = checkDomainMatchesCustomers(
+      domain,
+      config["default-search-filter-off"]
+    );
 
     return {
       isApiPlaygroundEnabled: isDevelopment(domain) || isApiPlaygroundEnabled,
@@ -226,6 +231,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isSearchV2Enabled,
       isAuthedPreview,
       isSearchDisabled,
+      isDefaultSearchFilterOff,
     };
   } catch (e) {
     console.error(e);
@@ -261,6 +267,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isSearchV2Enabled: domain === "buildwithfern.com",
       isAuthedPreview: false,
       isSearchDisabled: false,
+      isDefaultSearchFilterOff: false,
     };
   }
 }
