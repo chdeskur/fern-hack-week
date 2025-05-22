@@ -1,133 +1,7 @@
-import {
-  ApiDefinitionId,
-  ApiReferenceNode,
-  EndpointId,
-  EndpointNode,
-  NodeId,
-  RootNode,
-  Slug,
-  UnversionedNode,
-  VersionNode,
-  VersionedNode,
-} from "@fern-api/fdr-sdk/navigation";
+import { ApiDefinitionId, NodeId, Slug } from "@fern-api/fdr-sdk/navigation";
 
+import { createEndpointNode, createRootNode } from "./create-node";
 import { flattenApiSection } from "./flatten-apis";
-
-function createEndpointNode(id: string, title: string): EndpointNode {
-  return {
-    id: NodeId(id),
-    type: "endpoint",
-    title,
-    slug: Slug(title.toLowerCase().replace(/\s+/g, "-")),
-    apiDefinitionId: ApiDefinitionId("1"),
-    availability: undefined,
-    canonicalSlug: Slug(title.toLowerCase().replace(/\s+/g, "-")),
-    icon: undefined,
-    hidden: undefined,
-    authed: undefined,
-    method: "POST",
-    orphaned: undefined,
-    viewers: undefined,
-    featureFlags: undefined,
-    endpointId: EndpointId(id),
-    isResponseStream: false,
-    playground: undefined,
-  };
-}
-
-function createApiReferenceNode(children: any): ApiReferenceNode {
-  return {
-    type: "apiReference",
-    id: NodeId("api-ref"),
-    title: "API Reference",
-    slug: Slug("api-reference"),
-    apiDefinitionId: ApiDefinitionId("1"),
-    availability: undefined,
-    canonicalSlug: undefined,
-    icon: undefined,
-    hidden: undefined,
-    authed: undefined,
-    orphaned: undefined,
-    viewers: undefined,
-    featureFlags: undefined,
-    paginated: undefined,
-    showErrors: undefined,
-    hideTitle: undefined,
-    children,
-    changelog: undefined,
-    playground: undefined,
-    noindex: undefined,
-    overviewPageId: undefined,
-    pointsTo: undefined,
-  };
-}
-
-function createVersionNode(versionId: string, children: any): VersionNode {
-  return {
-    id: NodeId(versionId),
-    type: "version",
-    title: versionId,
-    slug: Slug(versionId),
-    versionId: versionId as any, // Type assertion needed due to SDK type mismatch
-    default: true,
-    availability: undefined,
-    landingPage: undefined,
-    canonicalSlug: undefined,
-    icon: undefined,
-    hidden: undefined,
-    authed: undefined,
-    orphaned: undefined,
-    viewers: undefined,
-    featureFlags: undefined,
-    pointsTo: undefined,
-    child: {
-      type: "sidebarRoot",
-      id: NodeId("2"),
-      children: [createApiReferenceNode(children)],
-    },
-  };
-}
-
-function createRootNode(children: any, versioned: boolean): RootNode {
-  let sidebar;
-  if (versioned) {
-    sidebar = {
-      id: NodeId("1"),
-      landingPage: undefined,
-      type: "versioned",
-      children: [createVersionNode("v1", children)],
-    } as VersionedNode;
-  } else {
-    sidebar = {
-      id: NodeId("1"),
-      landingPage: undefined,
-      type: "unversioned",
-      child: {
-        type: "sidebarRoot",
-        id: NodeId("2"),
-        children: [createApiReferenceNode(children)],
-      },
-    } as UnversionedNode;
-  }
-
-  return {
-    type: "root",
-    child: sidebar,
-    version: "v2",
-    title: "Root",
-    slug: Slug("root"),
-    canonicalSlug: undefined,
-    authed: undefined,
-    icon: undefined,
-    hidden: false,
-    id: NodeId("4"),
-    viewers: undefined,
-    orphaned: undefined,
-    pointsTo: undefined,
-    roles: [],
-    featureFlags: [],
-  };
-}
 
 describe("flattenApi", () => {
   it("empty root returns empty array", () => {
@@ -135,8 +9,10 @@ describe("flattenApi", () => {
   });
 
   it("unversioned api reference with single endpoint flattens", () => {
-    const endpoints = [createEndpointNode("1", "Endpoint One")];
-    const root = createRootNode(endpoints, false);
+    const endpoints = [
+      createEndpointNode({ id: NodeId("1"), title: "Endpoint One" }),
+    ];
+    const root = createRootNode(endpoints);
     const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
@@ -150,11 +26,11 @@ describe("flattenApi", () => {
 
   it("unversioned api reference with multiple endpoints flattens", () => {
     const endpoints = [
-      createEndpointNode("1", "Endpoint One"),
-      createEndpointNode("2", "Endpoint Two"),
-      createEndpointNode("3", "Endpoint Three"),
+      createEndpointNode({ id: NodeId("1"), title: "Endpoint One" }),
+      createEndpointNode({ id: NodeId("2"), title: "Endpoint Two" }),
+      createEndpointNode({ id: NodeId("3"), title: "Endpoint Three" }),
     ];
-    const root = createRootNode(endpoints, false);
+    const root = createRootNode(endpoints);
     const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
@@ -167,8 +43,10 @@ describe("flattenApi", () => {
   });
 
   it("versioned api reference with single endpoint flattens", () => {
-    const endpoints = [createEndpointNode("1", "Endpoint One")];
-    const root = createRootNode(endpoints, true);
+    const endpoints = [
+      createEndpointNode({ id: NodeId("1"), title: "Endpoint One" }),
+    ];
+    const root = createRootNode(endpoints, "versioned");
     const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
@@ -182,11 +60,11 @@ describe("flattenApi", () => {
 
   it("versioned api reference with multiple endpoints flattens", () => {
     const endpoints = [
-      createEndpointNode("1", "Endpoint One"),
-      createEndpointNode("2", "Endpoint Two"),
-      createEndpointNode("3", "Endpoint Three"),
+      createEndpointNode({ id: NodeId("1"), title: "Endpoint One" }),
+      createEndpointNode({ id: NodeId("2"), title: "Endpoint Two" }),
+      createEndpointNode({ id: NodeId("3"), title: "Endpoint Three" }),
     ];
-    const root = createRootNode(endpoints, true);
+    const root = createRootNode(endpoints, "versioned");
     const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
@@ -207,13 +85,13 @@ describe("flattenApi", () => {
         slug: Slug("section-one"),
         apiDefinitionId: ApiDefinitionId("1"),
         children: [
-          createEndpointNode("1", "Endpoint One"),
-          createEndpointNode("2", "Endpoint Two"),
+          createEndpointNode({ id: NodeId("1"), title: "Endpoint One" }),
+          createEndpointNode({ id: NodeId("2"), title: "Endpoint Two" }),
         ],
       },
     ];
 
-    const root = createRootNode(sections, true);
+    const root = createRootNode(sections, "versioned");
     const result = flattenApiSection(root);
 
     expect(result).toHaveLength(1);
@@ -234,8 +112,8 @@ describe("flattenApi", () => {
         slug: Slug("section-one"),
         apiDefinitionId: ApiDefinitionId("1"),
         children: [
-          createEndpointNode("1", "Endpoint One"),
-          createEndpointNode("2", "Endpoint Two"),
+          createEndpointNode({ id: NodeId("1"), title: "Endpoint One" }),
+          createEndpointNode({ id: NodeId("2"), title: "Endpoint Two" }),
         ],
       },
       {
@@ -245,13 +123,13 @@ describe("flattenApi", () => {
         slug: Slug("section-two"),
         apiDefinitionId: ApiDefinitionId("1"),
         children: [
-          createEndpointNode("3", "Endpoint Three"),
-          createEndpointNode("4", "Endpoint Four"),
+          createEndpointNode({ id: NodeId("3"), title: "Endpoint Three" }),
+          createEndpointNode({ id: NodeId("4"), title: "Endpoint Four" }),
         ],
       },
     ];
 
-    const root = createRootNode(sections, true);
+    const root = createRootNode(sections, "versioned");
     const result = flattenApiSection(root);
 
     expect(result).toHaveLength(2);

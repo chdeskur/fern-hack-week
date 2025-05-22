@@ -39,7 +39,6 @@ export function useHeaderHeight(): number {
     }
     const resizeObserver = new ResizeObserver(() => {
       const header = document.getElementById("fern-header");
-      console.log(header);
       if (header) {
         setHeaderHeight(header.clientHeight);
       }

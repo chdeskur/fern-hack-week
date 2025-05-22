@@ -1,81 +1,17 @@
-import { NodeId, PageId, RoleId, Slug } from "@fern-api/fdr-sdk/navigation";
-import type {
-  NavigationChild,
-  PageNode,
+import {
+  NodeId,
   RootNode,
-  SectionNode,
   SidebarRootChild,
+  Slug,
 } from "@fern-api/fdr-sdk/navigation";
 
+import {
+  createNestedSectionNode,
+  createPageNode,
+  createSectionNode,
+} from "@/components/playground/utils/create-node";
+
 import { withPrunedNavigation } from "./withPrunedNavigation";
-
-function createPageNode(id: string, title = "Should be hidden"): PageNode {
-  return {
-    type: "page",
-    title,
-    slug: Slug("hidden"),
-    pageId: PageId("1.mdx"),
-    canonicalSlug: undefined,
-    authed: undefined,
-    id: NodeId(id),
-    hidden: undefined,
-    icon: undefined,
-    viewers: [RoleId("everyone")],
-    orphaned: undefined,
-    noindex: false,
-    featureFlags: [],
-  };
-}
-
-function createSectionNode(
-  id: string,
-  children: NavigationChild[],
-  hidden = true
-): SectionNode {
-  return {
-    type: "section",
-    id: NodeId(id),
-    children,
-    title: "Public",
-    slug: Slug("public"),
-    canonicalSlug: undefined,
-    authed: undefined,
-    hidden,
-    icon: undefined,
-    viewers: [RoleId("private")],
-    orphaned: undefined,
-    noindex: false,
-    collapsed: false,
-    overviewPageId: PageId("1.mdx"),
-    pointsTo: undefined,
-    featureFlags: [],
-  };
-}
-
-function createNestedSectionNode(
-  id: string,
-  children: NavigationChild[],
-  hidden = undefined
-): SectionNode {
-  return {
-    type: "section",
-    id: NodeId(id),
-    children,
-    title: "Should be hidden",
-    slug: Slug("hidden"),
-    overviewPageId: PageId("1.mdx"),
-    canonicalSlug: undefined,
-    authed: undefined,
-    hidden,
-    icon: undefined,
-    viewers: [RoleId("everyone")],
-    orphaned: undefined,
-    noindex: false,
-    collapsed: false,
-    pointsTo: undefined,
-    featureFlags: [],
-  };
-}
 
 function createRootNode(sectionChildren: SidebarRootChild[]): RootNode {
   return {

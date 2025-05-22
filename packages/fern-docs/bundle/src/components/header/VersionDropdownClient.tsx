@@ -43,8 +43,8 @@ export function VersionDropdownClient({
   const currentVersionSlug = useCurrentVersionSlug();
   const currentVersion =
     versions.find((version) => version.versionId === currentVersionId) ??
-    versions.find((version) => version.default) ??
-    fallbackVersion;
+    fallbackVersion ??
+    versions.find((version) => version.default);
 
   return (
     <FernLinkDropdown

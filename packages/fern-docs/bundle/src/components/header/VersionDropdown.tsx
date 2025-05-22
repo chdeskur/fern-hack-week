@@ -1,7 +1,6 @@
 import "server-only";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { isProductNode } from "@fern-api/fdr-sdk/navigation";
 
 import { DocsLoader } from "@/server/docs-loader";
 import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
@@ -25,6 +24,7 @@ export declare namespace VersionDropdown {
 export async function VersionDropdown({
   loader,
   currentNode,
+  currentProduct,
   slugMap,
   parents,
   fallbackVersion,
@@ -32,6 +32,7 @@ export async function VersionDropdown({
 }: {
   loader: DocsLoader;
   slugMap: Map<string, FernNavigation.NavigationNodeWithMetadata>;
+  currentProduct: FernNavigation.ProductNode | undefined;
   currentNode: FernNavigation.NavigationNodeWithMetadata;
   parents: FernNavigation.NavigationNodeParent[];
   fallbackVersion: FernNavigation.VersionNode;
@@ -45,16 +46,14 @@ export async function VersionDropdown({
   }
 
   let versions: FernNavigation.VersionNode[] = [];
+  // let currentProduct: FernNavigation.ProductNode | undefined;
 
   // Handle case where root is a productgroup and the current product is versioned OR the root is versioned
   if (root.child.type === "productgroup") {
-    const currentProduct = parents.find(isProductNode);
-
-    // If the current product is not versioned, don't render the version dropdown
-    if (currentProduct?.child.type !== "versioned") {
-      return null;
+    // If we have a current product (either from parents or fallback), use its versions
+    if (currentProduct?.child.type === "versioned") {
+      versions = currentProduct.child.children;
     }
-    versions = currentProduct.child.children;
   } else if (root.child.type === "versioned") {
     versions = root.child.children;
   }
@@ -65,12 +64,10 @@ export async function VersionDropdown({
 
   const withInfo = withVersionSwitcherInfo({
     node: currentNode,
-    parents,
+    parents: currentProduct ? [...parents, currentProduct] : parents,
     versions,
     slugMap,
   });
-
-  const currentProduct = parents.find(isProductNode);
 
   const versionOptions = versions.map((version): VersionDropdownItem => {
     const versionInfo = withInfo.find((info) => info.id === version.versionId);
