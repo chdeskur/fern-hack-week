@@ -8,13 +8,10 @@ import { getEnv } from "@vercel/functions";
 import { compact } from "es-toolkit/array";
 
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
   getCustomerAnalytics as deprecated_getCustomerAnalytics,
-  getCanonicalUrl,
   getLaunchDarklySettings,
-  getSeoDisabled,
 } from "@fern-docs/edge-config";
 
 import { JavascriptProvider } from "@/components/JavascriptProvider";
@@ -22,6 +19,7 @@ import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
 import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
+import { generateMetadataFromConfig } from "@/components/seo";
 import { withJsConfig } from "@/components/with-js-config";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
@@ -40,7 +38,6 @@ import { SetIsAskAiEnabled, SetIsDefaultSearchFilterOff } from "@/state/search";
 import { Whitelabeled } from "@/state/whitelabeled";
 
 import { GlobalStyles } from "../../global-styles";
-import { toImageDescriptor } from "../../seo";
 import { ThemeProvider } from "../../theme";
 
 export default async function Layout({
@@ -191,63 +188,7 @@ async function getLaunchDarklyInfo(
 export async function generateMetadata(props: {
   params: Promise<{ host: string; domain: string }>;
 }): Promise<Metadata> {
-  const { host, domain } = await props.params;
-
-  const loader = await createCachedDocsLoader(host, domain);
-  const [files, config, seoDisabled] = await Promise.all([
-    loader.getFiles(),
-    loader.getConfig(),
-    getSeoDisabled(domain),
-  ]);
-
-  let index = config.metadata?.noindex ? false : undefined;
-  let follow = config.metadata?.nofollow ? false : undefined;
-  if (seoDisabled) {
-    index = false;
-    follow = false;
-  }
-
-  const canonicalUrl = await getCanonicalUrl(domain);
-
-  return {
-    metadataBase: canonicalUrl
-      ? new URL(withDefaultProtocol(canonicalUrl))
-      : undefined,
-    applicationName: config.title,
-    title: {
-      template: config.title ? "%s | " + config.title : "%s",
-      default: "Documentation",
-    },
-    robots: { index, follow },
-    openGraph: {
-      title: config.metadata?.["og:title"],
-      description: config.metadata?.["og:description"],
-      locale: config.metadata?.["og:locale"],
-      url: config.metadata?.["og:url"],
-      siteName: config.metadata?.["og:site_name"],
-      images: toImageDescriptor(
-        files,
-        config.metadata?.["og:image"],
-        config.metadata?.["og:image:width"],
-        config.metadata?.["og:image:height"]
-      ),
-    },
-    twitter: {
-      site: config.metadata?.["twitter:site"],
-      creator: config.metadata?.["twitter:handle"],
-      title: config.metadata?.["twitter:title"],
-      description: config.metadata?.["twitter:description"],
-      images: toImageDescriptor(files, config.metadata?.["twitter:image"]),
-    },
-    icons: {
-      icon: config.favicon
-        ? toImageDescriptor(files, {
-            type: "fileId",
-            value: config.favicon,
-          })?.url
-        : undefined,
-    },
-  };
+  return await generateMetadataFromConfig({ params: props.params });
 }
 
 function generatePreloadHrefs(

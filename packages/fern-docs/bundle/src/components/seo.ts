@@ -23,6 +23,7 @@ export async function getMetadataTitleFromPage({
 }): Promise<string | undefined> {
   const findNode = createFindNode(loader);
   const node = await findNode(slug);
+
   const pageId = node != null ? FernNavigation.getPageId(node) : undefined;
   const page = pageId ? await loader.getPage(pageId) : undefined;
   const frontmatter = page ? getFrontmatter(page.markdown)?.data : undefined;
@@ -49,6 +50,7 @@ export async function generateMetadataFromPage({
     loader.getConfig(),
     getSeoDisabled(loader.domain),
   ]);
+
   const pageId = node != null ? FernNavigation.getPageId(node) : undefined;
   const page = pageId ? await loader.getPage(pageId) : undefined;
   const frontmatter = page ? getFrontmatter(page.markdown)?.data : undefined;
@@ -76,7 +78,9 @@ export async function generateMetadataFromPage({
     canonicalUrl = baseUrl;
   }
 
+  const title = await getMetadataTitleFromPage({ loader, slug });
   return {
+    title,
     description: markdownToString(
       frontmatter?.description || frontmatter?.subtitle || frontmatter?.excerpt
     ),
