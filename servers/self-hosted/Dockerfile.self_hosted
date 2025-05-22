@@ -1,0 +1,29 @@
+FROM node:20.18-alpine3.20 AS base
+
+# -----------  Start Postgres setup  -----------
+
+RUN apk update && apk add --no-cache postgresql
+
+# Set up Postgres data directory and configuration
+RUN mkdir -p /var/lib/postgresql/data && \
+    mkdir -p /run/postgresql && \
+    chown -R postgres:postgres /var/lib/postgresql && \
+    chown -R postgres:postgres /run/postgresql
+
+# Switch to postgres user & initialize the database
+USER postgres
+RUN initdb -D /var/lib/postgresql/data
+EXPOSE 5432
+
+# -----------  End Postgres setup  -----------
+
+USER root
+
+# Copy the project files
+WORKDIR /app
+COPY . .
+
+# Install the Fern CLI
+RUN npm install -g fern-api
+
+ENTRYPOINT ["/bin/sh", "/app/servers/fdr/scripts/run_self_hosted.sh"]
