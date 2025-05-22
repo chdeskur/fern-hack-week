@@ -5,7 +5,7 @@ import { Metadata } from "next/types";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { getFernToken } from "@/app/fern-token";
-import { getMetadataTitleFromPage } from "@/components/seo";
+import { generateMetadataFromPage } from "@/components/seo";
 import SharedPage from "@/components/shared-page";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
@@ -27,10 +27,5 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const { host, domain, slug } = await props.params;
   const loader = await createCachedDocsLoader(host, domain);
-  return {
-    title: await getMetadataTitleFromPage({
-      loader,
-      slug: slugjoin(slug),
-    }),
-  };
+  return generateMetadataFromPage({ loader, slug: slugjoin(slug) });
 }
