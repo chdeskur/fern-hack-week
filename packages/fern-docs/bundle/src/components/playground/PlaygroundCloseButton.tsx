@@ -53,7 +53,7 @@ export function InterceptedPlaygroundCloseButton() {
         rounded
         variant="outlined"
         onClick={() => {
-          router.back();
+          router.replace(removeUrlParamFromPathname("explorer"));
         }}
       />
     </closeButton.In>
