@@ -92,7 +92,7 @@ export async function queryTurbopuffer(
       : [];
 
   const bm25Results =
-    mode !== "semantic"
+    mode !== "semantic" && query.length < 1024
       ? await ns.query({
           top_k: topK,
           include_attributes: true,
