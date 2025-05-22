@@ -17,7 +17,7 @@ import {
 } from "@fern-docs/utils";
 
 import { rewritePosthog } from "@/server/analytics/rewritePosthog";
-import { MARKDOWN_PATTERN, RSS_PATTERN } from "@/server/patterns";
+import { JSON_PATTERN, MARKDOWN_PATTERN, RSS_PATTERN } from "@/server/patterns";
 import { withPathname } from "@/server/withPathname";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -161,6 +161,15 @@ export const middleware: NextMiddleware = async (request) => {
   if (pathname.match(RSS_PATTERN)) {
     const format = pathname.match(RSS_PATTERN)?.[1] ?? "rss";
     const slug = removeLeadingSlash(withoutEnding(RSS_PATTERN));
+    return rewrite(withDomain("/api/fern-docs/changelog"), { format, slug });
+  }
+
+  /**
+   * Rewrite changelog json feed
+   */
+  if (pathname.match(JSON_PATTERN)) {
+    const format = pathname.match(JSON_PATTERN)?.[1] ?? "json";
+    const slug = removeLeadingSlash(withoutEnding(JSON_PATTERN));
     return rewrite(withDomain("/api/fern-docs/changelog"), { format, slug });
   }
 
