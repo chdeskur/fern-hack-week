@@ -72,7 +72,7 @@ export function PropertyContainer({
         { "mx-0": !collapsible },
         props.className,
         {
-          "before:bg-(color:--accent-a3) before:rounded-1 before:absolute before:-inset-2 before:content-['']":
+          "before:bg-(color:--accent-a3) before:rounded-1 before:absolute before:-inset-2 before:z-[-1] before:content-['']":
             isActive,
         }
       )}
