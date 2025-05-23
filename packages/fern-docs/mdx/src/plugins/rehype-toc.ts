@@ -11,9 +11,39 @@ import { type Plugin } from "unified";
 
 import { makeToc } from "../toc";
 
+interface MdxjsEsmData {
+  estree: {
+    body: {
+      declaration: {
+        declarations: {
+          init: {
+            properties: {
+              key: { value: string };
+              value: { value: number };
+            }[];
+          };
+        }[];
+      };
+    }[];
+  };
+}
+
 export const rehypeToc: Plugin<[], Root> = () => {
   return (ast) => {
-    const toc = makeToc(ast);
+    const exportNode = ast.children.find(
+      (node) =>
+        node.type === "mdxjsEsm" &&
+        node.data?.estree?.body?.[0]?.type === "ExportNamedDeclaration"
+    );
+
+    // extract max-toc-depth from frontmatter if present
+    const maxTocDepth = (
+      exportNode?.data as MdxjsEsmData
+    )?.estree?.body?.[0]?.declaration?.declarations?.[0]?.init?.properties?.find(
+      (prop) => prop.key?.value === "max-toc-depth"
+    )?.value?.value;
+
+    const toc = makeToc(ast, false, maxTocDepth);
 
     ast.children.unshift({
       type: "mdxjsEsm",
