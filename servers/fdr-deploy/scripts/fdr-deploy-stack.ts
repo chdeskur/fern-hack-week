@@ -508,8 +508,8 @@ export class FdrDeployStack extends Stack {
       {
         serviceName: MDX_BUNDLER_SERVICE_NAME,
         cluster,
-        cpu: 512,
-        memoryLimitMiB: 1024,
+        cpu: 4096,
+        memoryLimitMiB: 8192,
         desiredCount: 1,
         securityGroups: [mdxBundlerSg],
         taskImageOptions: {
