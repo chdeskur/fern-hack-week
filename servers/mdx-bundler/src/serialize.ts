@@ -26,7 +26,7 @@ export interface SerializeMdxResponse {
   jsxElements: string[];
 }
 
-async function serializeTwoslashImpl(
+export async function serializeTwoslash(
   content: string
 ): Promise<SerializeMdxResponse> {
   content = sanitizeBreaks(content);
@@ -149,44 +149,3 @@ async function serializeTwoslashImpl(
 
   return { code: bundled.code, jsxElements };
 }
-
-export function serializeTwoslash(
-  content: string | undefined
-): Promise<SerializeMdxResponse | undefined> {
-  const abortController = new AbortController();
-  const { signal } = abortController;
-
-  return new Promise<SerializeMdxResponse | undefined>((resolve, reject) => {
-    if (!content?.trimStart().length) {
-      resolve(undefined);
-      return;
-    }
-
-    const timeoutId = setTimeout(() => {
-      if (!signal.aborted) {
-        abortController.abort();
-        console.error("Serialize MDX timed out after 10 seconds");
-        reject(new Error("Serialize MDX timed out"));
-      }
-    }, 60_000);
-
-    serializeTwoslashImpl(content).then(
-      (result) => {
-        clearTimeout(timeoutId);
-        resolve(result);
-      },
-      (error: unknown) => {
-        clearTimeout(timeoutId);
-        reject(error instanceof Error ? error : new Error(String(error)));
-        console.error(error);
-      }
-    );
-  });
-}
-
-// uncomment this to log the tree to the console in localhost only (DO NOT COMMIT)
-// function rehypeLog() {
-//   return (_tree: Hast.Root) => {
-//     // console.debug(JSON.stringify(tree));
-//   };
-// }
