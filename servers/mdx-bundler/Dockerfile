@@ -25,7 +25,9 @@ RUN mkdir -p /tmp && chmod 777 /tmp
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml .
-RUN pnpm install
+
+# Use pnpm install --frozen-lockfile for faster installs
+RUN pnpm install --no-frozen-lockfile
 
 # Build
 COPY --from=builder /app/out/full/ .

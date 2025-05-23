@@ -569,7 +569,7 @@ export class FdrDeployStack extends Stack {
 
     mdxBundlerService.targetGroup.configureHealthCheck({
       healthyHttpCodes: "200",
-      path: "/",
+      path: "/health",
       port: "8080",
       timeout: Duration.seconds(120),
       interval: Duration.seconds(150),

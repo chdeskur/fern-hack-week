@@ -40,12 +40,6 @@ async function serializeTwoslashImpl(
     "esbuild"
   );
 
-  console.error(
-    "ESBUILD_BINARY_PATH exists:",
-    !!process.env.ESBUILD_BINARY_PATH
-  );
-  console.error("Current working directory:", process.cwd());
-
   const hasTwoslash = content.includes("twoslash");
   const jsxElements: string[] = [];
 
