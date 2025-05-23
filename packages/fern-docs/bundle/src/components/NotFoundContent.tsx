@@ -2,8 +2,9 @@ import "server-only";
 
 import { FaIcon } from "@fern-docs/components";
 
-import { FernLinkButton } from "@/components/FernLinkButton";
 import { HideAsides } from "@/state/layout";
+
+import ReturnHomeButton from "./ReturnHomeButton";
 
 export default async function NotFoundContent() {
   return (
@@ -41,7 +42,7 @@ export default async function NotFoundContent() {
           </p>
         </div>
 
-        <FernLinkButton href="/" text="Return home" intent="primary" />
+        <ReturnHomeButton />
       </div>
     </>
   );
