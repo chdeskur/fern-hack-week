@@ -1,35 +1,47 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
 
-import { serializeTwoslash } from "./serialize";
+import { serializeTwoslash } from "./serialize.js";
 
 const expressApp = express();
 
 expressApp.use(cors());
 expressApp.use(express.json());
 
+const asyncHandler =
+  (
+    fn: (
+      req: Request,
+      res: Response,
+      next: (err?: unknown) => void
+    ) => Promise<unknown>
+  ) =>
+  (req: Request, res: Response, next: (err?: unknown) => void) => {
+    void Promise.resolve(fn(req, res, next)).catch(next);
+  };
+
 // serializes codeblocks using shiki + twoslash
-expressApp.post("/serialize", (req: Request, res: Response) => {
-  if (!req.body.code) {
-    return res.status(400).json({ error: "No code provided" });
-  }
+expressApp.post(
+  "/serialize",
+  asyncHandler(async (req: Request, res: Response) => {
+    if (!req.body.code) {
+      res.status(400).json({ error: "No code provided" });
+      return;
+    }
 
-  serializeTwoslash(req.body.code)
-    .then((result) => {
+    try {
+      const result = await serializeTwoslash(req.body.code);
       if (!result) {
-        return res.status(400).json({ error: "Failed to serialize MDX" });
+        res.status(400).json({ error: "Failed to serialize MDX" });
+        return;
       }
-      return res.json(result);
-    })
-    .catch((error: unknown) => {
+      res.json(result);
+    } catch (error: unknown) {
       console.error("Error serializing MDX:", error);
-      return res.status(500).json({ error: "Failed to serialize MDX" });
-    });
-});
-
-expressApp.all("*", (_req: Request, res: Response) => {
-  res.sendStatus(200);
-});
+      res.status(500).json({ error: "Failed to serialize MDX" });
+    }
+  })
+);
 
 expressApp.listen(8080);
 

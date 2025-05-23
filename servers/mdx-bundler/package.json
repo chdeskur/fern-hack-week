@@ -10,6 +10,7 @@
     "bundler:build": "tsc --build",
     "bundler:start": "tsx src/server.ts",
     "clean": "rm -rf ./dist && tsc --build --clean",
+    "compile": "tsc --build",
     "docker": "./create_docker.sh"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "@account-kit/smart-contracts": "^4.31.2",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
+    "@fern-platform/configs": "workspace:*",
     "@shikijs/rehype": "^3.2.1",
     "@shikijs/transformers": "^3.2.1",
     "@shikijs/twoslash": "^3.2.1",
@@ -31,6 +33,7 @@
     "@typescript/vfs": "^1.6.1",
     "cors": "^2.8.5",
     "es-toolkit": "^1.32.0",
+    "esbuild": "^0.20.2",
     "estree-util-to-js": "^2.0.0",
     "estree-walker": "^3.0.3",
     "express": "^4.21.2",
@@ -67,6 +70,7 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@vercel/node": "^2.9.6",
+    "infra": "link:@types/@account-kit/infra",
     "tsx": "^4.7.1",
     "typescript": "^5"
   }

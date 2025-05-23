@@ -5,7 +5,7 @@ import { gfmFromMarkdown } from "mdast-util-gfm";
 import { defaultHandlers, toHast } from "mdast-util-to-hast";
 import type { ShikiTransformerContextCommon } from "shiki";
 
-import { transformerShrinkIndent } from "./transformerShrinkIndent";
+import { transformerShrinkIndent } from "./transformerShrinkIndent.js";
 
 export function twoslashRenderer(): TwoslashRenderer {
   function hightlightPopupContent(

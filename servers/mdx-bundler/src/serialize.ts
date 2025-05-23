@@ -5,72 +5,26 @@ import {
   transformerNotationHighlight,
 } from "@shikijs/transformers";
 import { transformerTwoslash } from "@shikijs/twoslash";
-import { exec } from "child_process";
 import { bundleMDX } from "mdx-bundler";
 import path from "path";
 import ts from "typescript";
-import { promisify } from "util";
 
 import { isNonNullish } from "@fern-api/ui-core-utils";
-// import rehypeKatex from "rehype-katex";
-// import remarkFrontmatter from "remark-frontmatter";
-// import remarkGemoji from "remark-gemoji";
-// import remarkGfm from "remark-gfm";
-// import remarkMath from "remark-math";
-// import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-// import remarkSmartypants from "remark-smartypants";
-// import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
-// import { noop } from "ts-essentials";
-
 import {
   type PluggableList,
   sanitizeBreaks,
   sanitizeMdxExpression,
-  // toTree,
 } from "@fern-docs/mdx";
 
-import { rehypeShikiDisplayNotation } from "./plugins/display-shiki-notation";
-// import {
-//   rehypeAcornErrorBoundary,
-//   rehypeExpressionToMd,
-//   rehypeMdxClassStyle,
-//   rehypeSlug,
-//   rehypeToc,
-//   remarkInjectEsm,
-//   remarkSanitizeAcorn,
-// } from "@fern-docs/mdx/plugins";
-
-// import { DocsLoader } from "./docs-loader";
-// import { rehypeAccordionNestedHeaders } from "./plugins/rehype-accordion-nested-headers";
-// import { rehypeAccordions } from "./plugins/rehype-accordions";
-// import { rehypeButtons } from "./plugins/rehype-buttons";
-// import { rehypeCards } from "./plugins/rehype-cards";
-// import { rehypeCodeBlock } from "./plugins/rehype-code-block";
-// import { rehypeCollectJsx } from "./plugins/rehype-collect-jsx";
-// import { rehypeEndpointSnippets } from "../plugins/rehype-endpoint-snippets";
-// import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
-// import { rehypeFiles } from "../plugins/rehype-files";
-// import { RehypeLinksOptions } from "./plugins/rehype-links";
-// import { rehypeMigrateJsx } from "./plugins/rehype-migrate-jsx";
-// import { conditionalRehypeShiki } from "../plugins/rehype-shiki-twoslash";
-// import { rehypeSteps } from "./plugins/rehype-steps";
-// import { rehypeTabs } from "./plugins/rehype-tabs";
-// import { remarkExtractTitle } from "./plugins/remark-extract-title";
-import { conditionalRehypeShiki } from "./plugins/rehype-shiki-twoslash";
-import { twoslashRenderer } from "./plugins/twoslashRenderer";
-import { twoslasher } from "./plugins/twoslasher";
-
-// import { FileData } from "./types";
-
-// gracefulify fs to avoid EMFILE errors on Vercel
-// gracefulify(fs);
+import { rehypeShikiDisplayNotation } from "./plugins/display-shiki-notation.js";
+import { conditionalRehypeShiki } from "./plugins/rehype-shiki-twoslash.js";
+import { twoslashRenderer } from "./plugins/twoslashRenderer.js";
+import { twoslasher } from "./plugins/twoslasher.js";
 
 export interface SerializeMdxResponse {
   code: string;
   jsxElements: string[];
 }
-
-const execPromise = promisify(exec);
 
 async function serializeTwoslashImpl(
   content: string
@@ -78,39 +32,25 @@ async function serializeTwoslashImpl(
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
 
-  // let cwd: string | undefined;
-  // if (filename != null) {
-  //   try {
-  //     cwd = path.dirname(filename);
-  //   } catch {
-  //     console.error("Failed to get cwd from filename", filename);
-  //   }
-  // }
+  process.env.ESBUILD_BINARY_PATH = path.join(
+    "/app/servers/mdx-bundler",
+    "node_modules",
+    "esbuild",
+    "bin",
+    "esbuild"
+  );
 
-  if (process.platform === "win32") {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
-      "node_modules",
-      "esbuild",
-      "esbuild.exe"
-    );
-  } else {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
-      "node_modules",
-      "esbuild",
-      "bin",
-      "esbuild"
-    );
-  }
+  console.error(
+    "ESBUILD_BINARY_PATH exists:",
+    !!process.env.ESBUILD_BINARY_PATH
+  );
+  console.error("Current working directory:", process.cwd());
 
   const hasTwoslash = content.includes("twoslash");
   const jsxElements: string[] = [];
 
   const bundled = await bundleMDX({
     source: content,
-    // files,
-
     globals: {
       "@mdx-js/react": {
         varName: "MdxJsReact",
@@ -120,10 +60,6 @@ async function serializeTwoslashImpl(
     },
 
     mdxOptions: (o) => {
-      // o.remarkRehypeOptions = {
-      //   handlers: { heading: customHeadingHandler },
-      // };
-
       o.providerImportSource = "@mdx-js/react";
 
       const rehypePlugins: PluggableList = [
@@ -157,13 +93,13 @@ async function serializeTwoslashImpl(
                       customTags: ["allowErrors"],
                       compilerOptions: {
                         jsx: ts.JsxEmit.ReactJSX,
-                        //   module: ts.ModuleKind.NodeNext,
-                        //   moduleResolution: ts.ModuleResolutionKind.NodeNext,
-                        //   esModuleInterop: true,
-                        //   lib: ["dom", "esnext"],
-                        //   skipLibCheck: true,
+                        module: ts.ModuleKind.ESNext,
+                        moduleResolution: ts.ModuleResolutionKind.Bundler,
+                        esModuleInterop: true,
+                        lib: ["dom", "esnext"],
+                        skipLibCheck: true,
                       },
-                      vfsRoot: "/app",
+                      vfsRoot: "/app/servers/mdx-bundler",
                     },
                   })
                 : null,

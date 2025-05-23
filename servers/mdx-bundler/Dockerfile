@@ -1,26 +1,47 @@
-FROM node:20.18-alpine3.20
+FROM node:18.20.6-alpine AS base
 
-# Install dependencies
+FROM base AS builder
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
+RUN apk update
+
+# Produce a pruned version of the monorepo
+WORKDIR /app
+RUN npm install -g turbo@2.0.1
+COPY . .
+RUN turbo prune @fern-platform/mdx-bundler --docker
+
+# Add lockfile and package.json's
+FROM base AS installer
+RUN apk add --no-cache libc6-compat
+RUN apk update
 RUN npm install -g pnpm@v9.4.0
+WORKDIR /app
 
 # Create and set permissions for /tmp directory
 RUN mkdir -p /tmp && chmod 777 /tmp
 
-WORKDIR /app
-
-# Copy the entire monorepo structure
-COPY . .
-
-# Install dependencies
+# Install deps
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml .
 RUN pnpm install
 
-# Build workspace dependencies first
+# Build
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
 RUN pnpm --filter @fern-docs/mdx compile
-
-# Build the main package
 RUN pnpm --filter @fern-platform/mdx-bundler bundler:build
+
+FROM base AS runner
+WORKDIR /app
+
+COPY --from=installer /app .
 
 EXPOSE 8080
 
-CMD ["pnpm", "--filter", "@fern-platform/mdx-bundler", "bundler:start"]
+# ENTRYPOINT ["/bin/sh", "/app/servers/mdx-bundler/run.sh"]
+# Run the server and use tail -f to keep the container running
+ENTRYPOINT ["node", "--experimental-specifier-resolution=node", "/app/servers/mdx-bundler/dist/server.js"]
+
+
