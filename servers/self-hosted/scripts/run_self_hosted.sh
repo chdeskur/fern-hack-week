@@ -22,6 +22,16 @@ echo "Postgres is up and running"
 
 # -----------  Finish run Postgres  -----------
 
+# -----------  Start run MinIO  -----------
+
+echo "Starting MinIO server..."
+
+exec minio server ${MINIO_VOLUMES} --console-address ":9001"
+
+echo "MinIO server is up and running"
+
+# -----------  Finish run MinIO  -----------
+
 if [ "${RUN_MODE:-}" = "shell" ]; then
     echo "Entering shell mode..."
     exec /bin/sh

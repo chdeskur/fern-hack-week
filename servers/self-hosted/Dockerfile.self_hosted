@@ -2,7 +2,7 @@ FROM node:20.18-alpine3.20 AS base
 
 # -----------  Start Postgres setup  -----------
 
-RUN apk update && apk add --no-cache postgresql
+RUN apk update && apk add --no-cache postgresql curl
 
 # Set up Postgres data directory and configuration
 RUN mkdir -p /var/lib/postgresql/data && \
@@ -19,6 +19,23 @@ EXPOSE 5432
 
 USER root
 
+# ----------- Start MINIO setup  -----------
+
+RUN wget https://dl.min.io/server/minio/release/linux-amd64/minio
+RUN chmod +x minio
+RUN mv minio /usr/local/bin/
+
+RUN addgroup -S minio-user && adduser -S minio-user -G minio-user && \
+    mkdir -p /data && chown -R minio-user:minio-user /data
+
+ENV MINIO_VOLUMES="/data" \
+    MINIO_SERVER_URL="http://localhost:9000" \
+    MINIO_ROOT_USER="minioadmin" \
+    MINIO_ROOT_PASSWORD="minioadmin"
+
+
+# ----------- End MINIO setup  -----------
+
 # Copy the project files
 WORKDIR /app
 COPY . .
@@ -26,4 +43,4 @@ COPY . .
 # Install the Fern CLI
 RUN npm install -g fern-api
 
-ENTRYPOINT ["/bin/sh", "/app/servers/fdr/scripts/run_self_hosted.sh"]
+ENTRYPOINT ["/bin/sh", "/app/servers/self-hosted/scripts/run_self_hosted.sh"]

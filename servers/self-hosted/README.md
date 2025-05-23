@@ -18,8 +18,13 @@ To build the image from this directory:
 
 To enter a shell inside the container:
 
-- use the variable `RUN_MODE=shell` like follows
-  `docker run -it -e RUN_MODE=shell fern-self-hosted`
+1. use the variable `RUN_MODE=shell` like follows `docker run -it -e RUN_MODE=shell fern-self-hosted`
+
+To expose MinIO ports to your host machine:
+
+1. `docker run -p 9000:9000 -p 9001:9001 fern-self-hosted:latest`
+2. Visit http://localhost:9001/
+3. Should see MinIO Web UI. Can login with user/password (minioadmin, minioadmin)
 
 ## Testing
 
