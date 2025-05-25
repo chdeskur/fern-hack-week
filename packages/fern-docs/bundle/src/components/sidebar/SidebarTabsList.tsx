@@ -8,7 +8,7 @@ import { cn } from "@fern-docs/components";
 import { slugToHref } from "@fern-docs/utils";
 
 import { FernLinkTab } from "@/components/FernLinkTab";
-import { FaIconServer } from "@/components/fa-icon-server";
+import { processIcon } from "@/components/util/processIcon";
 
 export function SidebarTabsList({
   tabs,
@@ -45,7 +45,7 @@ export function SidebarTabsList({
               {tab.type !== "link" && tab.authed ? (
                 <Lock />
               ) : (
-                <FaIconServer icon={tab.icon ?? "book"} />
+                processIcon(tab, "book")
               )}
             </span>
             <span className="truncate font-medium group-data-[state=active]:font-semibold">

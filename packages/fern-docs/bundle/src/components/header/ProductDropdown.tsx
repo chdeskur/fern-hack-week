@@ -2,10 +2,10 @@ import Image from "next/image";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
+import { processIcon } from "@/components/util/processIcon";
 import { DocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 
-import { FaIconServer } from "../fa-icon-server";
 import {
   ProductDropdownClient,
   ProductDropdownItem,
@@ -47,7 +47,7 @@ export async function ProductDropdown({
       title: product.title,
       slug,
       defaultSlug: product.default ? slug : undefined,
-      icon: product.icon ? <FaIconServer icon={product.icon} /> : undefined,
+      icon: processIcon(product),
       subtitle: product.subtitle,
       default: product.default,
       image: image ? (

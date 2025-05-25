@@ -6,7 +6,7 @@ import { UnreachableCaseError } from "ts-essentials";
 
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { FaIconServer } from "@/components/fa-icon-server";
+import { processIcon } from "@/components/util/processIcon";
 
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
@@ -30,7 +30,7 @@ export function SidebarApiPackageChild({
     case "page":
       return (
         <SidebarPageNode
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          icon={processIcon(node)}
           node={node}
           depth={depth}
           shallow={shallow}
@@ -38,11 +38,7 @@ export function SidebarApiPackageChild({
       );
     case "link":
       return (
-        <SidebarLinkNode
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
-          node={node}
-          depth={depth}
-        />
+        <SidebarLinkNode icon={processIcon(node)} node={node} depth={depth} />
       );
     case "endpoint":
       return <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />;
@@ -59,7 +55,7 @@ export function SidebarApiPackageChild({
         <SidebarApiPackageNode
           node={node}
           depth={depth}
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          icon={processIcon(node)}
         >
           {node.children.map((node: FernNavigation.ApiPackageChild) => (
             <SidebarApiPackageChild
@@ -76,7 +72,7 @@ export function SidebarApiPackageChild({
         <SidebarChangelogNode
           node={node}
           depth={depth}
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          icon={processIcon(node)}
         />
       );
     default:

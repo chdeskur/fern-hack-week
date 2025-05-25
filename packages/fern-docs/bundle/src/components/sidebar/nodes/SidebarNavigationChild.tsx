@@ -7,7 +7,7 @@ import { UnreachableCaseError } from "ts-essentials";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
 
-import { FaIconServer } from "@/components/fa-icon-server";
+import { processIcon } from "@/components/util/processIcon";
 
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
@@ -33,7 +33,7 @@ export function SidebarNavigationChild({
         <SidebarApiPackageNode
           node={node}
           depth={depth}
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          icon={processIcon(node)}
         >
           {node.children.map((node: FernNavigation.ApiPackageChild) => (
             <SidebarApiPackageChild
@@ -49,7 +49,7 @@ export function SidebarNavigationChild({
       return (
         <SidebarSectionNode
           node={node}
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          icon={processIcon(node)}
           depth={depth}
           className={cn({
             "!text-body font-semibold": root,
@@ -66,26 +66,18 @@ export function SidebarNavigationChild({
       );
     case "page":
       return (
-        <SidebarPageNode
-          node={node}
-          depth={depth}
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
-        />
+        <SidebarPageNode node={node} depth={depth} icon={processIcon(node)} />
       );
     case "link":
       return (
-        <SidebarLinkNode
-          node={node}
-          depth={depth}
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
-        />
+        <SidebarLinkNode node={node} depth={depth} icon={processIcon(node)} />
       );
     case "changelog":
       return (
         <SidebarChangelogNode
           node={node}
           depth={depth}
-          icon={node.icon ? <FaIconServer icon={node.icon} /> : undefined}
+          icon={processIcon(node)}
         />
       );
     default:

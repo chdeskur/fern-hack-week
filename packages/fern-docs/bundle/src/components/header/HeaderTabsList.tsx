@@ -7,9 +7,8 @@ import { TabChild, hasRedirect } from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
 import { slugToHref } from "@fern-docs/utils";
 
-import { FaIconServer } from "@/components/fa-icon-server";
-
 import { FernLinkTab } from "../FernLinkTab";
+import { processIcon } from "../util/processIcon";
 
 export function HeaderTabsList({
   tabs,
@@ -32,11 +31,7 @@ export function HeaderTabsList({
             scroll={true}
             id={tab.id}
           >
-            {tab.type !== "link" && tab.authed ? (
-              <Lock />
-            ) : (
-              tab.icon && <FaIconServer icon={tab.icon} />
-            )}
+            {tab.type !== "link" && tab.authed ? <Lock /> : processIcon(tab)}
             <span className="truncate">{tab.title}</span>
           </FernLinkTab>
         </Tabs.TabsTrigger>
