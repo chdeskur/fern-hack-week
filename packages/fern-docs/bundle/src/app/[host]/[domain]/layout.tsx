@@ -75,7 +75,6 @@ export default async function Layout({
   ]);
 
   generatePreloadHrefs(config.typographyV2, files);
-
   const { VERCEL_ENV } = getEnv();
 
   const jsConfig = withJsConfig(config.js, files);
@@ -98,7 +97,7 @@ export default async function Layout({
         }
       >
         <Domain value={domain} />
-        <SetBasePath value={basePath} />
+        <SetBasePath value={basePath || "/"} />
         {/** HACKHACK: this is a hack to set the logo text to "Docs" for Cohere, this needs to be moved into docs.yml */}
         <SetLogoText text={domain.includes("cohere") ? "Docs" : undefined} />
         {config.defaultLanguage != null && (
