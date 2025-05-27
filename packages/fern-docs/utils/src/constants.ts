@@ -65,4 +65,5 @@ export const FERN_DOCS_ORIGINS = [
   "prod-slash.ferndocs.com",
   "prod.ferndocs.com",
   "staging.ferndocs.com",
+  "preview.ferndocs.com",
 ];
