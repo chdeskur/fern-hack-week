@@ -22,9 +22,18 @@ To enter a shell inside the container:
 
 To expose MinIO ports to your host machine:
 
-1. `docker run -p 9000:9000 -p 9001:9001 fern-self-hosted:latest`
+1. `docker run -p 9000:9000 -p 9001:9001 -p 8080:8080 -it -e RUN_MODE=shell fern-self-hosted:latest`
 2. Visit http://localhost:9001/
 3. Should see MinIO Web UI. Can login with user/password (minioadmin, minioadmin)
+
+To query postgres:
+
+When the Docker container is built, FDR’s database migrations are automatically applied to the local Postgres instance. If you want to inspect the tables or data in your local Postgres database running inside the self-hosted Docker container, follow these steps:
+
+1. Open a shell inside the Docker container (see instructions above)
+2. Connect to Postgres using psql: `psql -h localhost -U postgres -d postgres`
+3. Switch to the FDR database: `\c fdr`
+4. Once connected, you can list the tables with `\dt` and you should see all the expected tables in the FDR database.
 
 ## Testing
 

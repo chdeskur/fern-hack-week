@@ -38,6 +38,12 @@ const REDIS_CLUSTERING_ENABLED_ENV_VAR = "REDIS_CLUSTERING_ENABLED";
 const APPLICATION_ENVIRONMENT_ENV_VAR = "APPLICATION_ENVIRONMENT";
 const PUBLIC_DOCS_CDN_URL = "PUBLIC_DOCS_CDN_URL";
 
+// Self-hosted env variables
+const MINIO_USERNAME = "MINIO_USERNAME";
+const MINIO_PASSWORD = "MINIO_PASSWORD";
+const MINIO_URL = "MINIO_URL";
+const MINIO_BUCKET_NAME = "MINIO_BUCKET_NAME";
+
 export interface S3Config {
   bucketName: string;
   bucketRegion: string;
@@ -68,7 +74,49 @@ export interface FdrConfig {
   applicationEnvironment: string;
 }
 
+function getSelfHostedS3Config(): S3Config {
+  return {
+    bucketName: getEnvironmentVariableOrThrow(MINIO_BUCKET_NAME),
+    bucketRegion: "global",
+    urlOverride: getEnvironmentVariableOrThrow(MINIO_URL),
+  };
+}
+
+function getConfigForLocalMode(): FdrConfig {
+  const selfHostedS3Config = getSelfHostedS3Config();
+
+  return {
+    venusUrl: "",
+    awsAccessKey: getEnvironmentVariableOrThrow(MINIO_USERNAME),
+    awsSecretKey: getEnvironmentVariableOrThrow(MINIO_PASSWORD),
+    publicDocsS3: selfHostedS3Config,
+    privateDocsS3: selfHostedS3Config,
+    dbDocsDefinitionS3: selfHostedS3Config,
+    privateApiDefinitionSourceS3: selfHostedS3Config,
+    domainSuffix: "docs.buildwithfern.com",
+    algoliaAppId: "local",
+    algoliaAdminApiKey: "local",
+    algoliaSearchApiKey: "local",
+    algoliaSearchIndex: "local",
+    algoliaSearchV2Domains: ["local"],
+    slackToken: "local",
+    logLevel: "info",
+    docsCacheEndpoint: "local",
+    enableCustomerNotifications: false,
+    redisEnabled: false,
+    redisClusteringEnabled: false,
+    applicationEnvironment: "local",
+    cdnPublicDocsUrl: "local",
+  };
+}
+
 export function getConfig(): FdrConfig {
+  const localMode = process.env["LOCAL_MODE_OVERRIDE"] ?? "false";
+  const shouldOverride = localMode === "true";
+  if (shouldOverride) {
+    return getConfigForLocalMode();
+  }
+
   return {
     venusUrl: getEnvironmentVariableOrThrow(VENUS_URL_ENV_VAR),
     awsAccessKey: getEnvironmentVariableOrThrow(AWS_ACCESS_KEY_ENV_VAR),
