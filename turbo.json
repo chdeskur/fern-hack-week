@@ -36,6 +36,7 @@
     "test-ete": {
       "dependsOn": ["compile"]
     },
+    "test:self-hosted": {},
     "dev": {
       "persistent": true
     },
