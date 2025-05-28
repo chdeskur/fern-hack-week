@@ -2,14 +2,6 @@
 title: TWOSLASH PAGE
 ---
 
-Some information about the project.
-
-```ts twoslash
-const hi = "Hello";
-const msg = `${hi}, world`;
-//    ^?
-```
-
 ```ts twoslash
 // @noErrors
 console.e;
@@ -82,4 +74,29 @@ export const hello = "world";
 // @showEmit
 // @showEmittedFile: index.d.ts.map
 export const hello: string = "world";
+```
+
+```ts twoslash
+// @noErrors
+// This is a twoslash code block
+import { useState } from 'react';
+// ---cut---
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+```ts twoslash
+// @noErrors
+// alchemy-specific twoslash code block
+import { createAlchemySmartAccountClient } from "@account-kit/infra";
+
+const client = createAlchemySmartAccountClient({
+  // configuration
+});
 ```

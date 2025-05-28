@@ -107,6 +107,99 @@ async function serializeMdxImpl(
     );
   }
 
+  if (
+    content.includes("```ts twoslash") ||
+    content.includes("```tsx twoslash")
+  ) {
+    console.log("Found twoslash code blocks in content");
+    // Store the original content for comparison
+    const originalContent = content;
+
+    // Extract all twoslash code blocks
+    const twoslashRegex =
+      /```(?:ts|tsx) twoslash(?:[^`\n]*?)\n([\s\S]*?)\n```/g;
+    const twoslashBlocks: { fullMatch: string; codeContent: string }[] = [];
+
+    let match;
+    while ((match = twoslashRegex.exec(originalContent)) != null) {
+      if (match[0] && match[1]) {
+        // Find the actual end of this code block
+        const fullMatch = match[0];
+        const codeContent = match[1].trim();
+
+        // Ensure we're not including content from other code blocks
+        const endIndex = fullMatch.lastIndexOf("```");
+        const actualFullMatch = fullMatch.substring(0, endIndex + 3);
+
+        twoslashBlocks.push({
+          fullMatch: actualFullMatch,
+          codeContent,
+        });
+      }
+    }
+
+    console.log(`Found ${twoslashBlocks.length} twoslash blocks to process`);
+
+    if (twoslashBlocks.length > 0) {
+      // Process each block individually
+      await Promise.all(
+        twoslashBlocks.map(async (block) => {
+          console.log(
+            "Processing twoslash block:",
+            block.codeContent.substring(0, 100) + "..."
+          );
+
+          const ignoreErrors = block.codeContent.includes("noErrors")
+            ? ""
+            : "// @noErrors\n";
+
+          const serviceContent = `\`\`\`${block.fullMatch.includes("tsx") ? "tsx" : "ts"} twoslash\n${ignoreErrors}${block.codeContent}\n\`\`\``;
+
+          try {
+            console.log("Sending request to serialize service...");
+            const response = await fetch(
+              `${getMdxBundlerService()}/serialize`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ code: serviceContent }),
+              }
+            );
+
+            if (!response.ok) {
+              console.error(
+                "Serialize service returned error:",
+                response.statusText
+              );
+              throw new Error(
+                `Failed to serialize TwoSlash: ${response.statusText}`
+              );
+            }
+
+            const result = await response.json();
+            console.log("Successfully received serialized result");
+
+            // Replace only this specific block
+            const twoSlashContent = {
+              code: result.code,
+              jsxElements: result.jsxElements || [],
+            };
+            content = content.replace(
+              block.fullMatch,
+              `<TwoSlash content={${JSON.stringify(twoSlashContent)}} />`
+            );
+            console.log("Successfully replaced twoslash block with component");
+          } catch (error) {
+            console.error("Error processing twoslash block:", error);
+            // If there's an error, we keep the original content for this block
+          }
+        })
+      );
+    }
+  }
+
   let files: Record<string, string> = {};
   let remoteFiles: Record<string, FileData> = {};
   const jsxElements: string[] = [];
@@ -283,7 +376,7 @@ export function serializeMdx(
         console.error("Serialize MDX timed out after 10 seconds");
         reject(new Error("Serialize MDX timed out"));
       }
-    }, 60_000);
+    }, 120_000);
 
     serializeMdxImpl(content, { ...options }).then(
       (result) => {
@@ -304,4 +397,11 @@ function rehypeLog() {
   return (_tree: Hast.Root) => {
     // console.debug(JSON.stringify(tree));
   };
+}
+
+function getMdxBundlerService() {
+  return (
+    process.env.NEXT_PUBLIC_MDX_BUNDLER_ORIGIN ??
+    "https://mdx-bundler-dev2.buildwithfern.com"
+  );
 }

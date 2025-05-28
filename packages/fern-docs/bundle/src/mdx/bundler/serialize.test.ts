@@ -2,7 +2,6 @@
  * @vitest-environment node
  */
 import { readFileSync } from "node:fs";
-import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { serializeMdx } from "./serialize";
@@ -165,10 +164,14 @@ it("should serialize openrouter-proivder.mdx", async () => {
       filename: "content/pages/features/provider-routing.mdx",
       loader: {
         getMdxBundlerFiles: () =>
-          readFile(
-            join(__dirname, "tests", "openrouter-imports.json"),
-            "utf-8"
-          ).then(JSON.parse),
+          Promise.resolve(
+            JSON.parse(
+              readFileSync(
+                join(__dirname, "tests", "openrouter-imports.json"),
+                "utf-8"
+              )
+            )
+          ),
       },
     }
   );
@@ -176,3 +179,80 @@ it("should serialize openrouter-proivder.mdx", async () => {
     join(__dirname, "__snapshots__", "openrouter-provider.js")
   );
 });
+
+it("should serialize simple-twoslash.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "simple-twoslash.mdx"), "utf-8")
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "simple-twoslash.js")
+  );
+}, 50000);
+
+it("should serialize twoslash.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "twoslash.mdx"), "utf-8")
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "twoslash.js")
+  );
+}, 50000);
+
+it("should serialize more-twoslash.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "more-twoslash.mdx"), "utf-8")
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "more-twoslash.js")
+  );
+}, 50000);
+
+it("should serialize twoslash with account hoisting", async () => {
+  const result = await serializeMdx(`
+\`\`\`ts twoslash
+import {
+  createAlchemySmartAccountClient,
+  sepolia,
+  alchemy,
+} from "@account-kit/infra";
+import { createLightAccount } from "@account-kit/smart-contracts";
+import { LocalAccountSigner } from "@aa-sdk/core";
+import { http } from "viem";
+import { generatePrivateKey } from "viem/accounts";
+
+// with account hoisting
+const transport = alchemy({ apiKey: "your-api-key" });
+const hoistedClient = createAlchemySmartAccountClient({
+  transport,
+  chain: sepolia,
+  account: await createLightAccount({
+    signer: LocalAccountSigner.privateKeyToAccountSigner(generatePrivateKey()),
+    chain: sepolia,
+    transport,
+  }),
+});
+
+const signature = await hoistedClient.signMessage({ message: "Hello world! " });
+
+// without account hoisting
+const nonHoistedClient = createAlchemySmartAccountClient({
+  transport,
+  chain: sepolia,
+});
+
+const lightAccount = await createLightAccount({
+  signer: LocalAccountSigner.privateKeyToAccountSigner(generatePrivateKey()),
+  chain: sepolia,
+  transport,
+});
+
+const signature2 = await nonHoistedClient.signMessage({
+  message: "Hello world! ",
+  account: lightAccount,
+});
+\`\`\`
+`);
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "twoslash-account-hoisting.js")
+  );
+}, 50000);

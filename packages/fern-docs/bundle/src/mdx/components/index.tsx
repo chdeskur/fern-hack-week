@@ -49,6 +49,7 @@ import { EndpointSchemaSnippet } from "./snippets/EndpointSchemaSnippet";
 import { Step, StepGroup } from "./steps";
 import { Tab, TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
+import { TwoSlash } from "./twoslash/TwoSlash";
 
 const ElevenLabsWaveform = dynamic(
   () => import("./waveform/WaveformComplex").then((mod) => mod.default),
@@ -89,7 +90,7 @@ const FERN_COMPONENTS = {
   TabGroup,
   Template,
   Tooltip,
-
+  TwoSlash,
   // callout aliases
   Info: InfoCallout,
   Warning: WarningCallout,

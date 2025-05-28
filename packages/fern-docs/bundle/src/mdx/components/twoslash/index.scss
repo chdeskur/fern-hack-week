@@ -4,7 +4,8 @@
   --twoslash-underline-color: currentcolor;
   --twoslash-highlighted-border: #c37d0d50;
   --twoslash-highlighted-bg: #c37d0d20;
-  --twoslash-popup-bg: var(--card-background, var(--grayscale-surface));
+  --twoslash-popup-bg: var(--card-background, var(--card-surface-fallback));
+  --twoslash-popup-bg-mobile: var(--grayscale-2);
   --twoslash-popup-color: inherit;
   --twoslash-popup-shadow: rgba(0, 0, 0, 8%) 0px 1px 4px;
   --twoslash-docs-color: #888;
@@ -24,6 +25,11 @@
   --twoslash-tag-warn-bg: var(--twoslash-warn-bg);
   --twoslash-tag-annotate-color: #1ba673;
   --twoslash-tag-annotate-bg: #1ba67320;
+}
+
+/* Use a slightly lighter shade for the mobile dark mode tooltip for improved contrast */
+.dark {
+  --twoslash-popup-bg-mobile: var(--grayscale-3);
 }
 
 /* Respect people's wishes to not have animations */
@@ -47,29 +53,53 @@ html.dark .shiki span {
   border-bottom: 1px dotted transparent;
   transition: border-color ease 0.3s;
   position: relative;
+
+  @media (width <= 640px) {
+    border-color: var(--twoslash-underline-color);
+  }
 }
 
 .twoslash .twoslash-popup-info-hover {
-  position: fixed;
+  @apply transition-all duration-300;
+  @apply md:translate-y-[1.1em];
+  @apply px-3 py-2;
+
+  position: absolute;
   opacity: 0;
-  display: inline-flex;
+  display: none;
   flex-direction: column;
-  transform: translateY(1.1em);
-  background: var(--card-background, var(--card-surface-fallback));
+  background: var(--twoslash-popup-bg);
   color: var(--twoslash-popup-color);
-  transition: opacity 0.3s;
   border-radius: calc(var(--radius) * 3);
   border: 1px solid var(--card-border, var(--color-border-default));
   user-select: none;
   text-align: left;
   box-shadow: var(--twoslash-popup-shadow);
-  max-width: 500px;
-  max-height: 600px;
+  width: max-content;
+  max-width: 350px;
+  max-height: 400px;
   overflow: scroll;
   pointer-events: none;
   white-space: pre-wrap;
   z-index: 20;
-  padding: 8px 12px;
+
+  @media (width <= 640px) {
+    @apply animate-content-show-from-bottom duration-400 fixed bottom-0 left-0 min-h-[30vh] w-screen max-w-screen-sm rounded-b-none border-b-0 pb-4 pt-7;
+
+    background: var(--twoslash-popup-bg-mobile);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 4px;
+      background-color: var(--grayscale-6, var(--color-border-default));
+      border-radius: 2px;
+    }
+  }
 }
 
 .twoslash .twoslash-query-presisted .twoslash-popup-info-hover {
@@ -82,6 +112,7 @@ html.dark .shiki span {
 .twoslash .twoslash-query-presisted .twoslash-popup-info-hover,
 .twoslash .twoslash-query-line .twoslash-popup-info-hover {
   opacity: 1;
+  display: inline-block;
   pointer-events: auto;
 }
 
@@ -326,7 +357,7 @@ pre.twoslash:hover .dim {
 }
 
 pre.twoslash div.dim {
-  opacity: 0.5;
+  /* opacity: 0.5; */
 }
 
 pre.twoslash div.dim,
