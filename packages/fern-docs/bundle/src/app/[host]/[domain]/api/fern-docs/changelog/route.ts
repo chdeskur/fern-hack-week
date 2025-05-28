@@ -64,17 +64,32 @@ export async function GET(
     });
   }
 
+  const accessHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+
   if (format === "json") {
     return new NextResponse(await getJsonFeed(host, domain, path, fernToken), {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...accessHeaders,
+      },
     });
   } else if (format === "atom") {
     return new NextResponse(await getAtomFeed(host, domain, path, fernToken), {
-      headers: { "Content-Type": "application/atom+xml" },
+      headers: {
+        "Content-Type": "application/atom+xml",
+        ...accessHeaders,
+      },
     });
   } else {
     return new NextResponse(await getRssFeed(host, domain, path, fernToken), {
-      headers: { "Content-Type": "application/rss+xml" },
+      headers: {
+        "Content-Type": "application/rss+xml",
+        ...accessHeaders,
+      },
     });
   }
 }
