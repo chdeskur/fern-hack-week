@@ -10,9 +10,16 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getEdgeFlags } from "@fern-docs/edge-config";
 import { getFrontmatter } from "@fern-docs/mdx";
-import { COOKIE_FERN_TOKEN, slugToHref } from "@fern-docs/utils";
+import {
+  COOKIE_FERN_TOKEN,
+  getRedirectForPath,
+  slugToHref,
+} from "@fern-docs/utils";
 
+import { FernNextResponse } from "@/server/FernNextResponse";
+import { preferPreview } from "@/server/auth/origin";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
 import { FileData } from "@/server/types";
@@ -39,6 +46,23 @@ export async function GET(
   const format = getFormat(req);
 
   const fernToken = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
+
+  const redirect = await checkRedirect(
+    host,
+    domain,
+    req.nextUrl.pathname,
+    fernToken
+  );
+  if (redirect) {
+    const nextUrl = req.nextUrl.clone();
+    nextUrl.host = preferPreview(host, domain);
+    nextUrl.pathname = redirect.destination;
+    nextUrl.search = "";
+    return FernNextResponse.redirect(req, {
+      destination: nextUrl,
+      allowedDestinations: [withDefaultProtocol(preferPreview(host, domain))],
+    });
+  }
 
   if (format === "json") {
     return new NextResponse(await getJsonFeed(host, domain, path, fernToken), {
@@ -224,4 +248,36 @@ function validateExternalUrl(url: string): void {
   if (!url.startsWith("https://")) {
     throw new Error(`Invalid external URL: ${url}`);
   }
+}
+
+// hack: since redirects are handled in shared-page.tsx,
+// this catches the any redirects specifically for changelogs
+async function checkRedirect(
+  host: string,
+  domain: string,
+  path: string,
+  fernToken?: string
+): Promise<{ destination: string; permanent: boolean } | undefined> {
+  const checkForRedirects = (await getEdgeFlags(domain)).isChangelogRedirects;
+
+  if (!checkForRedirects) {
+    return undefined;
+  }
+
+  const loader = await createCachedDocsLoader(host, domain, fernToken);
+  const redirects = (await loader.getConfig()).redirects;
+  const { basePath } = await loader.getMetadata();
+
+  const jsonRedirects = redirects?.filter(
+    (redirect) =>
+      redirect.source.endsWith(".json") ||
+      redirect.source.endsWith(".atom") ||
+      redirect.source.endsWith(".rss")
+  );
+
+  return getRedirectForPath(
+    path,
+    { domain: domain, basePath: basePath },
+    jsonRedirects
+  );
 }

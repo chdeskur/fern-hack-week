@@ -47,6 +47,7 @@ const EDGE_FLAGS = [
   "authed-previews" as const,
   "search-disabled" as const,
   "default-search-filter-off" as const,
+  "changelog-redirects" as const,
 ];
 
 type EdgeFlag = (typeof EDGE_FLAGS)[number];
@@ -196,6 +197,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["default-search-filter-off"]
     );
+    const isChangelogRedirects = checkDomainMatchesCustomers(
+      domain,
+      config["changelog-redirects"]
+    );
 
     return {
       isApiPlaygroundEnabled: isDevelopment(domain) || isApiPlaygroundEnabled,
@@ -232,6 +237,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isAuthedPreview,
       isSearchDisabled,
       isDefaultSearchFilterOff,
+      isChangelogRedirects,
     };
   } catch (e) {
     console.error(e);
@@ -268,6 +274,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isAuthedPreview: false,
       isSearchDisabled: false,
       isDefaultSearchFilterOff: false,
+      isChangelogRedirects: false,
     };
   }
 }
