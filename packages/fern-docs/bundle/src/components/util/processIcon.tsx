@@ -11,7 +11,7 @@ export const processIcon = (
   node: NavigationNode,
   fallback?: string
 ): ReactNode | undefined => {
-  if (!hasMetadata(node)) {
+  if (!hasMetadata(node) && node.type !== "link") {
     return undefined;
   }
 
