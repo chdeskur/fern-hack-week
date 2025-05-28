@@ -2,7 +2,7 @@ import { createHash } from "crypto";
 import { flatten } from "es-toolkit/array";
 
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
@@ -64,11 +64,11 @@ export function createEndpointBaseRecordHttp({
       });
     }
   });
-  prepared.content +=
-    "\n\n" +
+  const description =
     JSON.stringify(request_properties, null, 2) +
     "\n\n" +
     base.attributes.code_snippets?.join("\n\n");
+
   const keywords: string[] = [];
   if (
     typeof base.attributes.keywords !== "undefined" &&
@@ -149,10 +149,7 @@ export function createEndpointBaseRecordHttp({
         ) ?? []),
       ],
       response_type,
-      description:
-        prepared.content != null
-          ? truncateToBytes(prepared.content, 50 * 1000)
-          : undefined,
+      description,
       environments: flatten(
         endpoint.environments?.map((environment) => [
           environment.id,
