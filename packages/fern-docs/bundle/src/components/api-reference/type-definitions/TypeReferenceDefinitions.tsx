@@ -54,46 +54,80 @@ export function hasInternalTypeReference(
   });
 }
 
+export type propertyLocation = "request" | "response";
+
 export const TypeReferenceDefinitions = React.memo(
   function TypeReferenceDefinitions({
     shape,
     types,
+    location,
   }: {
     shape: ApiDefinition.TypeShapeOrReference;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+    location?: propertyLocation;
   }) {
     switch (shape.type) {
       case "id":
-        return <TypeDefinitionSlot id={shape.id} />;
+        return <TypeDefinitionSlot id={shape.id} location={location} />;
       case "object":
       case "enum":
       case "primitive":
       case "undiscriminatedUnion":
       case "discriminatedUnion":
-        return <InternalTypeDefinition shape={shape} types={types} />;
+        return (
+          <InternalTypeDefinition
+            shape={shape}
+            types={types}
+            location={location}
+          />
+        );
       case "list":
       case "set":
         return (
           <TypeDefinitionPathPart part={{ type: "listItem" }}>
-            <TypeReferenceDefinitions shape={shape.itemShape} types={types} />
+            <TypeReferenceDefinitions
+              shape={shape.itemShape}
+              types={types}
+              location={location}
+            />
           </TypeDefinitionPathPart>
         );
       case "map":
         return (
           <TypeDefinitionPathPart part={{ type: "objectProperty" }}>
-            <TypeReferenceDefinitions shape={shape.keyShape} types={types} />
-            <TypeReferenceDefinitions shape={shape.valueShape} types={types} />
+            <TypeReferenceDefinitions
+              shape={shape.keyShape}
+              types={types}
+              location={location}
+            />
+            <TypeReferenceDefinitions
+              shape={shape.valueShape}
+              types={types}
+              location={location}
+            />
           </TypeDefinitionPathPart>
         );
       case "literal":
       case "unknown":
         return null;
       case "alias": {
-        return <TypeReferenceDefinitions shape={shape.value} types={types} />;
+        return (
+          <TypeReferenceDefinitions
+            shape={shape.value}
+            types={types}
+            location={location}
+          />
+        );
       }
       case "optional":
       case "nullable": {
-        return <TypeReferenceDefinitions shape={shape.shape} types={types} />;
+        return (
+          <TypeReferenceDefinitions
+            shape={shape.shape}
+            types={types}
+            location={location}
+          />
+        );
       }
       default:
         throw new UnreachableCaseError(shape);

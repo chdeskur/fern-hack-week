@@ -11,18 +11,21 @@ import { FernCollapseWithButtonUncontrolled } from "./FernCollapseWithButtonUnco
 import { ObjectProperty } from "./ObjectProperty";
 import { TypeDefinitionPathPart } from "./TypeDefinitionContext";
 import { WithSeparator } from "./TypeDefinitionDetails";
+import { propertyLocation } from "./TypeReferenceDefinitions";
 import { UndiscriminatedUnionVariant } from "./UndiscriminatedUnionVariant";
 
 export declare namespace InternalTypeDefinition {
   export interface Props {
     shape: ApiDefinition.TypeShapeOrReference;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+    location?: propertyLocation;
   }
 }
 
 export const InternalTypeDefinition = memo(function InternalTypeDefinition({
   shape,
   types,
+  location,
 }: {
   shape:
     | ApiDefinition.TypeShape.Enum
@@ -31,6 +34,7 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
     | ApiDefinition.TypeShape.Object_
     | ApiDefinition.TypeReference.Primitive;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+  location?: propertyLocation;
 }) {
   switch (shape.type) {
     case "enum": {
@@ -56,6 +60,7 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
                 unionVariant={variant}
                 idx={idx}
                 types={types}
+                location={location}
               />
             ))}
           </WithSeparator>
@@ -74,6 +79,7 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
                 key={variant.displayName}
                 unionVariant={variant}
                 types={types}
+                location={location}
               />
             ))}
           </WithSeparator>
@@ -84,18 +90,31 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
         shape,
         types
       ).properties;
+
+      const filteredProperties = properties.filter((property) => {
+        if (location === "request") {
+          return property.propertyAccess !== "READ_ONLY";
+        } else if (location === "response") {
+          return property.propertyAccess !== "WRITE_ONLY";
+        }
+        return true;
+      });
       return (
         <FernCollapseWithButtonUncontrolled
-          showText={`Show ${properties.length} properties`}
-          hideText={`Hide ${properties.length} properties`}
+          showText={`Show ${filteredProperties.length} properties`}
+          hideText={`Hide ${filteredProperties.length} properties`}
         >
           <WithSeparator>
-            {properties.map((property) => (
+            {filteredProperties.map((property) => (
               <TypeDefinitionPathPart
                 key={property.key}
                 part={{ type: "objectProperty", propertyName: property.key }}
               >
-                <ObjectProperty property={property} types={types} />
+                <ObjectProperty
+                  property={property}
+                  types={types}
+                  location={location}
+                />
               </TypeDefinitionPathPart>
             ))}
           </WithSeparator>

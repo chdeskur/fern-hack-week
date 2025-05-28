@@ -62,6 +62,7 @@ export async function EndpointContentLeft({
           hidden: false,
           valueShape: stringShape,
           availability: undefined,
+          propertyAccess: undefined,
         };
       },
       bearerAuth: (bearerAuth) => {
@@ -73,6 +74,7 @@ export async function EndpointContentLeft({
           hidden: false,
           valueShape: stringShape,
           availability: undefined,
+          propertyAccess: undefined,
         };
       },
       header: (value) => {
@@ -85,6 +87,7 @@ export async function EndpointContentLeft({
           hidden: false,
           valueShape: stringShape,
           availability: undefined,
+          propertyAccess: undefined,
         };
       },
       oAuth: (value) => {
@@ -104,6 +107,7 @@ export async function EndpointContentLeft({
                 hidden: false,
                 valueShape: stringShape,
                 availability: undefined,
+                propertyAccess: undefined,
               }),
             }),
         });

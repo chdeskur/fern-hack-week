@@ -6,6 +6,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 import { PropertyWithShape } from "./ObjectProperty";
+import { propertyLocation } from "./TypeReferenceDefinitions";
 
 type IconInfo = {
   content: string;
@@ -80,10 +81,12 @@ export declare namespace UndiscriminatedUnionVariant {
 export function UndiscriminatedUnionVariant({
   unionVariant,
   types,
+  location,
 }: {
   unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
   idx: number;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+  location?: propertyLocation;
 }) {
   return (
     <PropertyWithShape
@@ -93,6 +96,7 @@ export function UndiscriminatedUnionVariant({
       description={unionVariant.description}
       shape={unionVariant.shape}
       types={types}
+      location={location}
     />
   );
 }

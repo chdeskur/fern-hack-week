@@ -12,10 +12,12 @@ export function DiscriminatedUnionVariant({
   discriminant,
   unionVariant,
   types,
+  location,
 }: {
   discriminant: ApiDefinition.PropertyKey;
   unionVariant: ApiDefinition.DiscriminatedUnionVariant;
   types: Record<string, ApiDefinition.TypeDefinition>;
+  location?: "request" | "response";
 }) {
   const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant(
     { discriminant },
@@ -50,6 +52,7 @@ export function DiscriminatedUnionVariant({
         }}
         availability={unionVariant.availability}
         types={types}
+        location={location}
       />
     </TypeDefinitionPathPart>
   );

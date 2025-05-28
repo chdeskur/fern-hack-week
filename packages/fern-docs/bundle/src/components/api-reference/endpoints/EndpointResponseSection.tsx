@@ -11,14 +11,27 @@ export function EndpointResponseSection({
   body: ApiDefinition.HttpResponseBodyShape;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
+  console.log("EndpointResponseSection");
   switch (body.type) {
     case "empty":
     case "fileDownload":
     case "streamingText":
       return null;
     case "stream":
-      return <TypeReferenceDefinitions shape={body.shape} types={types} />;
+      return (
+        <TypeReferenceDefinitions
+          shape={body.shape}
+          types={types}
+          location={"response"}
+        />
+      );
     default:
-      return <TypeReferenceDefinitions shape={body} types={types} />;
+      return (
+        <TypeReferenceDefinitions
+          shape={body}
+          types={types}
+          location={"response"}
+        />
+      );
   }
 }

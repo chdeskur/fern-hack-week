@@ -2,7 +2,10 @@
 import { TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
 
 import { TypeDefinitionSlotsProvider } from "./TypeDefinitionSlotsClient";
-import { TypeReferenceDefinitions } from "./TypeReferenceDefinitions";
+import {
+  TypeReferenceDefinitions,
+  propertyLocation,
+} from "./TypeReferenceDefinitions";
 
 export function TypeDefinitionSlotsServer({
   types,
@@ -20,9 +23,41 @@ export function TypeDefinitionSlotsServer({
 
 function createTypeDefinitionSlots(types: Record<string, TypeDefinition>) {
   return Object.fromEntries(
-    Object.entries(types).map(([id, type]) => [
-      id,
-      <TypeReferenceDefinitions key={id} shape={type.shape} types={types} />,
-    ])
+    Object.entries(types).flatMap(([id, type]) => {
+      const variants = createPropertyAccessTypeVariants(id, type, types);
+      return [
+        [id, variants.default],
+        [getTypeIdWithLocation(id, "request"), variants.request],
+        [getTypeIdWithLocation(id, "response"), variants.response],
+      ];
+    })
   );
+}
+
+function createPropertyAccessTypeVariants(
+  id: string,
+  type: TypeDefinition,
+  types: Record<string, TypeDefinition>
+) {
+  return {
+    default: <TypeReferenceDefinitions shape={type.shape} types={types} />,
+    request: (
+      <TypeReferenceDefinitions
+        shape={type.shape}
+        types={types}
+        location="request"
+      />
+    ),
+    response: (
+      <TypeReferenceDefinitions
+        shape={type.shape}
+        types={types}
+        location="response"
+      />
+    ),
+  };
+}
+
+export function getTypeIdWithLocation(id: string, location: propertyLocation) {
+  return `${id}_location:${location}`;
 }

@@ -16,15 +16,20 @@ import {
   TypeDefinitionAnchorPart,
   TypeDefinitionCollapsible,
 } from "./TypeDefinitionContext";
-import { TypeReferenceDefinitions } from "./TypeReferenceDefinitions";
+import {
+  TypeReferenceDefinitions,
+  propertyLocation,
+} from "./TypeReferenceDefinitions";
 import { TypeShorthand } from "./TypeShorthand";
 
 export const ObjectProperty = React.memo(function ObjectProperty({
   property,
   types,
+  location,
 }: {
   property: ApiDefinition.ObjectProperty;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+  location?: propertyLocation;
 }) {
   const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
   const description = compact([
@@ -39,6 +44,7 @@ export const ObjectProperty = React.memo(function ObjectProperty({
       description={description}
       shape={property.valueShape}
       types={types}
+      location={location}
     />
   );
 });
@@ -49,6 +55,7 @@ export const PropertyWithShape = React.memo(function PropertyWithShape({
   shape,
   availability,
   types,
+  location,
 }: {
   icon?: React.ReactNode;
   name?: string;
@@ -56,6 +63,7 @@ export const PropertyWithShape = React.memo(function PropertyWithShape({
   availability: ApiDefinition.Availability | null | undefined;
   shape: ApiDefinition.TypeShape;
   types: Record<string, ApiDefinition.TypeDefinition>;
+  location?: propertyLocation;
 }) {
   return (
     <PropertyRenderer
@@ -64,7 +72,11 @@ export const PropertyWithShape = React.memo(function PropertyWithShape({
       typeShorthand={<TypeShorthand shape={shape} />}
       availability={availability}
     >
-      <TypeReferenceDefinitions shape={shape} types={types} />
+      <TypeReferenceDefinitions
+        shape={shape}
+        types={types}
+        location={location}
+      />
     </PropertyRenderer>
   );
 });

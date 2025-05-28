@@ -2,6 +2,9 @@
 
 import React from "react";
 
+import { getTypeIdWithLocation } from "./TypeDefinitionSlotsServer";
+import { propertyLocation } from "./TypeReferenceDefinitions";
+
 const TypeDefinitionSlots = React.createContext<
   Record<string, React.ReactNode>
 >({});
@@ -24,6 +27,13 @@ export function useTypeDefinitionSlots(id: string) {
   return React.useContext(TypeDefinitionSlots)[id];
 }
 
-export function TypeDefinitionSlot({ id }: { id: string }) {
-  return useTypeDefinitionSlots(id);
+export function TypeDefinitionSlot({
+  id,
+  location,
+}: {
+  id: string;
+  location: propertyLocation | undefined;
+}) {
+  const augmentedId = location ? getTypeIdWithLocation(id, location) : id;
+  return useTypeDefinitionSlots(augmentedId);
 }
