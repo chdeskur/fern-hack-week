@@ -62,7 +62,7 @@ export function EndpointRequestSection({
                   shape={property.valueShape}
                   availability={property.availability}
                   types={types}
-                  location={"request"}
+                  location="request"
                 />
               </TypeDefinitionAnchorPart>
             ),
@@ -73,18 +73,10 @@ export function EndpointRequestSection({
     ),
     bytes: () => null,
     object: (obj) => (
-      <TypeReferenceDefinitions
-        shape={obj}
-        types={types}
-        location={"request"}
-      />
+      <TypeReferenceDefinitions shape={obj} types={types} location="request" />
     ),
     alias: (obj) => (
-      <TypeReferenceDefinitions
-        shape={obj}
-        types={types}
-        location={"request"}
-      />
+      <TypeReferenceDefinitions shape={obj} types={types} location="request" />
     ),
   });
 }

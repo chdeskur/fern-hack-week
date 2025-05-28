@@ -11,14 +11,14 @@ import { FernCollapseWithButtonUncontrolled } from "./FernCollapseWithButtonUnco
 import { ObjectProperty } from "./ObjectProperty";
 import { TypeDefinitionPathPart } from "./TypeDefinitionContext";
 import { WithSeparator } from "./TypeDefinitionDetails";
-import { propertyLocation } from "./TypeReferenceDefinitions";
+import { PropertyLocation } from "./TypeReferenceDefinitions";
 import { UndiscriminatedUnionVariant } from "./UndiscriminatedUnionVariant";
 
 export declare namespace InternalTypeDefinition {
   export interface Props {
     shape: ApiDefinition.TypeShapeOrReference;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-    location?: propertyLocation;
+    location?: PropertyLocation;
   }
 }
 
@@ -34,7 +34,7 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
     | ApiDefinition.TypeShape.Object_
     | ApiDefinition.TypeReference.Primitive;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-  location?: propertyLocation;
+  location?: PropertyLocation;
 }) {
   switch (shape.type) {
     case "enum": {
@@ -91,14 +91,14 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
         types
       ).properties;
 
-      const filteredProperties = properties.filter((property) => {
-        if (location === "request") {
-          return property.propertyAccess !== "READ_ONLY";
-        } else if (location === "response") {
-          return property.propertyAccess !== "WRITE_ONLY";
-        }
-        return true;
-      });
+      const filteredProperties = filterDuplicateObjectProperties(
+        filterObjectPropertiesByAccess(properties, location)
+      );
+
+      if (filteredProperties.length === 0) {
+        return null;
+      }
+
       return (
         <FernCollapseWithButtonUncontrolled
           showText={`Show ${filteredProperties.length} properties`}
@@ -127,3 +127,32 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
       throw new UnreachableCaseError(shape);
   }
 });
+
+const filterObjectPropertiesByAccess = (
+  properties: ApiDefinition.ObjectProperty[],
+  location: PropertyLocation | undefined
+) => {
+  if (location === undefined) {
+    return properties;
+  }
+
+  return properties.filter((property) => {
+    if (location === "request") {
+      return property.propertyAccess !== "READ_ONLY";
+    } else if (location === "response") {
+      return property.propertyAccess !== "WRITE_ONLY";
+    }
+    return true;
+  });
+};
+
+const filterDuplicateObjectProperties = (
+  properties: ApiDefinition.ObjectProperty[]
+) => {
+  return properties.reduce<ApiDefinition.ObjectProperty[]>((acc, property) => {
+    if (!acc.some((p) => p.key === property.key)) {
+      acc.push(property);
+    }
+    return acc;
+  }, []);
+};

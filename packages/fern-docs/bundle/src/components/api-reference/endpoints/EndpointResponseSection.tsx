@@ -11,7 +11,6 @@ export function EndpointResponseSection({
   body: ApiDefinition.HttpResponseBodyShape;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }) {
-  console.log("EndpointResponseSection");
   switch (body.type) {
     case "empty":
     case "fileDownload":
@@ -22,7 +21,7 @@ export function EndpointResponseSection({
         <TypeReferenceDefinitions
           shape={body.shape}
           types={types}
-          location={"response"}
+          location="response"
         />
       );
     default:
@@ -30,7 +29,7 @@ export function EndpointResponseSection({
         <TypeReferenceDefinitions
           shape={body}
           types={types}
-          location={"response"}
+          location="response"
         />
       );
   }

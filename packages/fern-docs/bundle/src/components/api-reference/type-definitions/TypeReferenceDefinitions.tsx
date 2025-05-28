@@ -54,7 +54,7 @@ export function hasInternalTypeReference(
   });
 }
 
-export type propertyLocation = "request" | "response";
+export type PropertyLocation = "request" | "response";
 
 export const TypeReferenceDefinitions = React.memo(
   function TypeReferenceDefinitions({
@@ -64,7 +64,7 @@ export const TypeReferenceDefinitions = React.memo(
   }: {
     shape: ApiDefinition.TypeShapeOrReference;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-    location?: propertyLocation;
+    location?: PropertyLocation;
   }) {
     switch (shape.type) {
       case "id":

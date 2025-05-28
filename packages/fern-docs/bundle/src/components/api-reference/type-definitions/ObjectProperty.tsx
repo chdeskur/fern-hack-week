@@ -17,8 +17,8 @@ import {
   TypeDefinitionCollapsible,
 } from "./TypeDefinitionContext";
 import {
+  PropertyLocation,
   TypeReferenceDefinitions,
-  propertyLocation,
 } from "./TypeReferenceDefinitions";
 import { TypeShorthand } from "./TypeShorthand";
 
@@ -29,7 +29,7 @@ export const ObjectProperty = React.memo(function ObjectProperty({
 }: {
   property: ApiDefinition.ObjectProperty;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-  location?: propertyLocation;
+  location?: PropertyLocation;
 }) {
   const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
   const description = compact([
@@ -63,7 +63,7 @@ export const PropertyWithShape = React.memo(function PropertyWithShape({
   availability: ApiDefinition.Availability | null | undefined;
   shape: ApiDefinition.TypeShape;
   types: Record<string, ApiDefinition.TypeDefinition>;
-  location?: propertyLocation;
+  location?: PropertyLocation;
 }) {
   return (
     <PropertyRenderer

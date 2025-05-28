@@ -3,8 +3,8 @@ import { TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
 
 import { TypeDefinitionSlotsProvider } from "./TypeDefinitionSlotsClient";
 import {
+  PropertyLocation,
   TypeReferenceDefinitions,
-  propertyLocation,
 } from "./TypeReferenceDefinitions";
 
 export function TypeDefinitionSlotsServer({
@@ -58,6 +58,6 @@ function createPropertyAccessTypeVariants(
   };
 }
 
-export function getTypeIdWithLocation(id: string, location: propertyLocation) {
+export function getTypeIdWithLocation(id: string, location: PropertyLocation) {
   return `${id}_location:${location}`;
 }
