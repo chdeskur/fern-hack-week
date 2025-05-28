@@ -100,12 +100,14 @@ export const DesktopCommandRoot = forwardRef<
               // note: this func is onKeyDownCapture so it will fire before the input
               // which is important so that the first character typed isn't swallowed
               if (
-                /^[a-zA-Z0-9]$/.test(e.key) ||
-                e.key === " " ||
-                e.key === "Backspace" ||
-                e.key === "Delete" ||
-                e.key === "ArrowLeft" ||
-                e.key === "ArrowRight"
+                (/^[a-zA-Z0-9]$/.test(e.key) ||
+                  e.key === " " ||
+                  e.key === "Backspace" ||
+                  e.key === "Delete" ||
+                  e.key === "ArrowLeft" ||
+                  e.key === "ArrowRight") &&
+                !e.ctrlKey &&
+                !e.metaKey
               ) {
                 // focus input immediately:
                 inputRef.current?.focus();
