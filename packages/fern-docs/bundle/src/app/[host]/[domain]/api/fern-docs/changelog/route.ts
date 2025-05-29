@@ -217,6 +217,9 @@ async function toFeedItem(
   try {
     const { markdown } = await getPage(entry.pageId);
     const { data: frontmatter, content } = getFrontmatter(markdown);
+    if (frontmatter.title) {
+      item.title = frontmatter.title;
+    }
     item.description =
       frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
 
