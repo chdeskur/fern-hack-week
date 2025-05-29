@@ -12,6 +12,19 @@ const em = (px: number, base: number): string => `${round(px / base)}em`;
 const config: Config = {
   theme: {
     extend: {
+      keyframes: {
+        "slide-down": {
+          "0%": {
+            transform: "translateY(-150%)",
+          },
+          "100%": {
+            transform: "translateY(0)",
+          },
+        },
+      },
+      animation: {
+        "slide-down": "slide-down 1s ease-in-out forwards",
+      },
       typography: {
         DEFAULT: {
           css: {

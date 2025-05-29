@@ -1,17 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { cn } from "@fern-docs/components";
 
 import { isLocal } from "@/server/isLocal";
 
+import { Loading } from "./Loading";
+
 export function WebSocketRefresh() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [failedToLoad, setFailedToLoad] = useState(false);
+  const [serverLoaded, setServerLoaded] = useState(false);
+
   useEffect(() => {
     let ws: WebSocket | null = null;
     let connectionTimeout: NodeJS.Timeout | null = null;
 
     const setupWebSocket = async (): Promise<void> => {
       if (!isLocal()) {
-        console.log("Not in local mode, skipping WebSocket connection");
         return;
       }
 
@@ -19,29 +28,33 @@ export function WebSocketRefresh() {
         console.log(
           "Not in browser environment, skipping WebSocket connection"
         );
+        setFailedToLoad(true);
         return;
       }
 
       if (typeof WebSocket === "undefined") {
         console.error("WebSocket is not available in this environment");
+        setFailedToLoad(true);
         return;
       }
 
       // revalidate the page first to clear any cached content
       const revalidateResponse = await fetch("/api/fern-docs/revalidate-local");
       if (!revalidateResponse.ok) {
+        setFailedToLoad(true);
         throw new Error(`HTTP error! status: ${revalidateResponse.status}`);
       }
-      console.log("Client: Successfully revalidated");
 
       const envResponse = await fetch("/api/fern-docs/env-local");
       if (!envResponse.ok) {
+        setFailedToLoad(true);
         throw new Error(`HTTP error! status: ${envResponse.status}`);
       }
       const data = await envResponse.json();
 
       if (!data.backendPort) {
         console.error("No port found in env-local response");
+        setFailedToLoad(true);
         return;
       }
 
@@ -53,36 +66,32 @@ export function WebSocketRefresh() {
         ws = new WebSocket(wsUrl);
 
         ws.onopen = () => {
-          console.log("Client: Successfully connected to WebSocket server");
+          setIsLoading(false);
+          setServerLoaded(true);
         };
 
         ws.onmessage = async (event) => {
-          console.log("Client: Received WebSocket message:", event.data);
-
           try {
             const message = JSON.parse(event.data);
-            console.log("Client: Parsed message:", message);
 
-            // revalidate the docs when a change has been detected
-            // todo: only revalidate the relevant part of the docs (e.g. the page that changed)
+            if (message.type === "startReload") {
+              setIsLoading(true);
+            }
+
             if (message.type === "finishReload") {
-              console.log(
-                "Client: Received finishReload message, calling revalidate-local endpoint"
-              );
+              setIsLoading(false);
               try {
                 const response = await fetch("/api/fern-docs/revalidate-local");
                 if (!response.ok) {
                   throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                console.log("Client: Successfully revalidated");
-                window.location.reload();
+                router.refresh();
               } catch (error) {
                 console.error("Client: Failed to revalidate:", error);
               }
             }
 
             if (message.type === "ping" && ws?.readyState === WebSocket.OPEN) {
-              console.log("Client: Received ping, sending pong");
               ws.send(JSON.stringify({ type: "pong" }));
             }
           } catch (error) {
@@ -98,6 +107,7 @@ export function WebSocketRefresh() {
           console.log(
             `Client: WebSocket connection closed. Code: ${event.code}, Reason: ${event.reason}`
           );
+          setFailedToLoad(true);
         };
 
         connectionTimeout = setTimeout(() => {
@@ -109,21 +119,52 @@ export function WebSocketRefresh() {
         }, 5000);
       } catch (error) {
         console.error("Client: Failed to create WebSocket connection:", error);
+        setFailedToLoad(true);
       }
     };
 
     void setupWebSocket();
 
     return () => {
-      console.log("Client: Cleaning up WebSocket connection");
       if (connectionTimeout) {
         clearTimeout(connectionTimeout);
       }
       if (ws) {
         ws.close();
+        setFailedToLoad(true);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return null;
+  if (!isLocal()) {
+    return null;
+  }
+
+  // if the server was loaded but has since failed, prompt to restart
+  if (failedToLoad && serverLoaded) {
+    return (
+      <div className="animate-slide-down fixed left-1/2 top-0 z-50 -translate-x-1/2">
+        <div className="rounded-3 border-border-default mt-6 border bg-white px-4 py-2 shadow-lg">
+          <div className="text-(color:--red-a11) font-medium">
+            Failed to connect, please restart server
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // otherwise, indicate loading
+  return (
+    <div
+      className={cn(
+        "fixed left-1/2 top-0 z-50 -translate-x-1/2",
+        isLoading || failedToLoad ? "animate-slide-down" : "-translate-y-[150%]"
+      )}
+    >
+      <div className="rounded-3 border-border-default mt-6 border bg-white px-4 py-2 shadow-lg">
+        <Loading text="Reloading..." />
+      </div>
+    </div>
+  );
 }
