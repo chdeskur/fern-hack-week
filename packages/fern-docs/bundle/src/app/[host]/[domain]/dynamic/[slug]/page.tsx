@@ -5,6 +5,7 @@ import { Metadata } from "next/types";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { getFernToken } from "@/app/fern-token";
+import RootPage from "@/app/page";
 import { generateMetadataFromPage } from "@/components/seo";
 import SharedPage from "@/components/shared-page";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -13,6 +14,10 @@ export default async function DynamicPage(props: {
   params: Promise<{ host: string; domain: string; slug: string }>;
 }) {
   const { host, domain, slug } = await props.params;
+
+  if (slug === "index.html") {
+    return <RootPage />;
+  }
 
   const loader = await createCachedDocsLoader(
     host,
