@@ -370,13 +370,20 @@ export function serializeMdx(
       return;
     }
 
+    let serializeTimeout = 10_000;
+    if (content.includes("twoslash")) {
+      serializeTimeout = 240_000;
+    }
+
     const timeoutId = setTimeout(() => {
       if (!signal.aborted) {
         abortController.abort();
-        console.error("Serialize MDX timed out after 10 seconds");
+        console.error(
+          `Serialize MDX timed out after ${serializeTimeout / 1000} seconds`
+        );
         reject(new Error("Serialize MDX timed out"));
       }
-    }, 120_000);
+    }, serializeTimeout);
 
     serializeMdxImpl(content, { ...options }).then(
       (result) => {
