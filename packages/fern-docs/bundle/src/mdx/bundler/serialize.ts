@@ -108,8 +108,9 @@ async function serializeMdxImpl(
   }
 
   if (
-    content.includes("```ts twoslash") ||
-    content.includes("```tsx twoslash")
+    (content.includes("```ts twoslash") ||
+      content.includes("```tsx twoslash")) &&
+    process.env.NEXT_PUBLIC_TWOSLASH_ENABLED === "1"
   ) {
     console.log("Found twoslash code blocks in content");
     // Store the original content for comparison
