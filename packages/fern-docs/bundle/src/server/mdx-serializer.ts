@@ -89,6 +89,7 @@ export function createCachedMdxSerializer(
               ...scope,
             },
             replaceHref,
+            domain,
           });
         } catch (error) {
           console.error("Error serializing mdx", error);

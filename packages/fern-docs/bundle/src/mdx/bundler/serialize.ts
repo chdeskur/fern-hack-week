@@ -1,5 +1,8 @@
 import "server-only";
 
+import { after } from "next/server";
+
+import { kv } from "@vercel/kv";
 import { mapKeys } from "es-toolkit/object";
 import fs from "fs";
 import { gracefulify } from "graceful-fs";
@@ -34,6 +37,7 @@ import {
 } from "@fern-docs/mdx/plugins";
 
 import { DocsLoader } from "@/server/docs-loader";
+import { isLocal } from "@/server/isLocal";
 import { FileData } from "@/server/types";
 
 import { getMDXExport } from "../get-mdx-export";
@@ -73,19 +77,21 @@ async function serializeMdxImpl(
     scope,
     toc = false,
     replaceHref,
+    domain,
   }: {
     loader?: Partial<Pick<DocsLoader, "getFiles" | "getMdxBundlerFiles">>;
     scope?: Record<string, unknown>;
     filename?: string;
     toc?: boolean;
     replaceHref?: RehypeLinksOptions["replaceHref"];
+    domain?: string;
   } = {}
 ): Promise<SerializeMdxResponse> {
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
 
   // Process twoslash blocks if present
-  content = await processTwoslashBlocks(content);
+  content = await processTwoslashBlocks(content, domain ?? "twoslash");
 
   let cwd: string | undefined;
   if (filename != null) {
@@ -326,7 +332,11 @@ function getMdxBundlerService() {
   );
 }
 
-async function processTwoslashBlocks(content: string): Promise<string> {
+// if no domain is provided, store in a twoslash cache
+async function processTwoslashBlocks(
+  content: string,
+  domain: string
+): Promise<string> {
   if (
     !(
       content.includes("```ts twoslash") || content.includes("```tsx twoslash")
@@ -389,29 +399,39 @@ async function processTwoslashBlocks(content: string): Promise<string> {
           const serviceContent = `\`\`\`${block.fullMatch.includes("tsx") ? "tsx" : "ts"} twoslash\n${ignoreErrors}${block.codeContent}\n\`\`\``;
 
           try {
-            console.log("Sending request to serialize service...");
-            const response = await fetch(
-              `${getMdxBundlerService()}/serialize`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ code: serviceContent }),
-              }
-            );
+            let result;
+            const cached = await kvGet(domain, `twoslash:${block.codeContent}`);
 
-            if (!response.ok) {
-              console.error(
-                "Serialize service returned error:",
-                response.statusText
+            if (cached != null) {
+              console.log("Using cached TwoSlash code...");
+              result = cached.value;
+            } else {
+              console.log("Sending request to serialize service...");
+              const response = await fetch(
+                `${getMdxBundlerService()}/serialize`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ code: serviceContent }),
+                }
               );
-              throw new Error(
-                `Failed to serialize TwoSlash: ${response.statusText}`
-              );
+
+              if (!response.ok) {
+                console.error(
+                  "Serialize service returned error:",
+                  response.statusText
+                );
+                throw new Error(
+                  `Failed to serialize TwoSlash: ${response.statusText}`
+                );
+              }
+
+              result = await response.json();
+              kvSet(domain, `twoslash:${block.codeContent}`, result);
             }
 
-            const result = await response.json();
             console.log("Successfully received serialized result");
 
             // Replace only this specific block
@@ -438,4 +458,45 @@ async function processTwoslashBlocks(content: string): Promise<string> {
   }
 
   return content;
+}
+
+const TWOSLASH_SEMANTIC_VERSION = "1";
+
+function kvSet(domain: string, key: string, value: unknown) {
+  if (isLocal()) {
+    return;
+  }
+
+  after(async () => {
+    try {
+      await kv.hset(domain, {
+        [key]: {
+          value: value,
+          version: TWOSLASH_SEMANTIC_VERSION,
+        },
+      });
+    } catch (error) {
+      console.warn(`Failed to set kv key ${key}: ${value}`, error);
+    }
+  });
+}
+
+async function kvGet(
+  domain: string,
+  key: string
+): Promise<Record<string, string> | null> {
+  if (isLocal()) {
+    return null;
+  }
+
+  try {
+    const cached = await kv.hget<Record<string, string>>(domain, key);
+    if (cached && cached.version === TWOSLASH_SEMANTIC_VERSION) {
+      return cached;
+    }
+    return null;
+  } catch (error) {
+    console.warn(`Failed to get kv key ${key}`, error);
+    return null;
+  }
 }
