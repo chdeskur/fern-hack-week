@@ -56,6 +56,9 @@ import { remarkExtractTitle } from "../plugins/remark-extract-title";
 // gracefulify fs to avoid EMFILE errors on Vercel
 gracefulify(fs);
 
+const TWOSLASH_TIMEOUT = 240_000;
+const SERIALIZATION_TIMEOUT = 10_000;
+
 export interface SerializeMdxResponse {
   code: string;
   frontmatter?: Partial<FernDocs.Frontmatter>;
@@ -81,6 +84,9 @@ async function serializeMdxImpl(
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
 
+  // Process twoslash blocks if present
+  content = await processTwoslashBlocks(content);
+
   let cwd: string | undefined;
   if (filename != null) {
     try {
@@ -105,100 +111,6 @@ async function serializeMdxImpl(
       "bin",
       "esbuild"
     );
-  }
-
-  if (
-    (content.includes("```ts twoslash") ||
-      content.includes("```tsx twoslash")) &&
-    process.env.NEXT_PUBLIC_TWOSLASH_ENABLED === "1"
-  ) {
-    console.log("Found twoslash code blocks in content");
-    // Store the original content for comparison
-    const originalContent = content;
-
-    // Extract all twoslash code blocks
-    const twoslashRegex =
-      /```(?:ts|tsx) twoslash(?:[^`\n]*?)\n([\s\S]*?)\n```/g;
-    const twoslashBlocks: { fullMatch: string; codeContent: string }[] = [];
-
-    let match;
-    while ((match = twoslashRegex.exec(originalContent)) != null) {
-      if (match[0] && match[1]) {
-        // Find the actual end of this code block
-        const fullMatch = match[0];
-        const codeContent = match[1].trim();
-
-        // Ensure we're not including content from other code blocks
-        const endIndex = fullMatch.lastIndexOf("```");
-        const actualFullMatch = fullMatch.substring(0, endIndex + 3);
-
-        twoslashBlocks.push({
-          fullMatch: actualFullMatch,
-          codeContent,
-        });
-      }
-    }
-
-    console.log(`Found ${twoslashBlocks.length} twoslash blocks to process`);
-
-    if (twoslashBlocks.length > 0) {
-      // Process each block individually
-      await Promise.all(
-        twoslashBlocks.map(async (block) => {
-          console.log(
-            "Processing twoslash block:",
-            block.codeContent.substring(0, 100) + "..."
-          );
-
-          const ignoreErrors = block.codeContent.includes("noErrors")
-            ? ""
-            : "// @noErrors\n";
-
-          const serviceContent = `\`\`\`${block.fullMatch.includes("tsx") ? "tsx" : "ts"} twoslash\n${ignoreErrors}${block.codeContent}\n\`\`\``;
-
-          try {
-            console.log("Sending request to serialize service...");
-            const response = await fetch(
-              `${getMdxBundlerService()}/serialize`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ code: serviceContent }),
-              }
-            );
-
-            if (!response.ok) {
-              console.error(
-                "Serialize service returned error:",
-                response.statusText
-              );
-              throw new Error(
-                `Failed to serialize TwoSlash: ${response.statusText}`
-              );
-            }
-
-            const result = await response.json();
-            console.log("Successfully received serialized result");
-
-            // Replace only this specific block
-            const twoSlashContent = {
-              code: result.code,
-              jsxElements: result.jsxElements || [],
-            };
-            content = content.replace(
-              block.fullMatch,
-              `<TwoSlash content={${JSON.stringify(twoSlashContent)}} />`
-            );
-            console.log("Successfully replaced twoslash block with component");
-          } catch (error) {
-            console.error("Error processing twoslash block:", error);
-            // If there's an error, we keep the original content for this block
-          }
-        })
-      );
-    }
   }
 
   let files: Record<string, string> = {};
@@ -371,9 +283,9 @@ export function serializeMdx(
       return;
     }
 
-    let serializeTimeout = 10_000;
+    let serializeTimeout = SERIALIZATION_TIMEOUT;
     if (content.includes("twoslash")) {
-      serializeTimeout = 240_000;
+      serializeTimeout = TWOSLASH_TIMEOUT;
     }
 
     const timeoutId = setTimeout(() => {
@@ -412,4 +324,118 @@ function getMdxBundlerService() {
     process.env.NEXT_PUBLIC_MDX_BUNDLER_ORIGIN ??
     "https://mdx-bundler-dev2.buildwithfern.com"
   );
+}
+
+async function processTwoslashBlocks(content: string): Promise<string> {
+  if (
+    !(
+      content.includes("```ts twoslash") || content.includes("```tsx twoslash")
+    ) ||
+    process.env.NEXT_PUBLIC_TWOSLASH_ENABLED !== "1"
+  ) {
+    return content;
+  }
+
+  console.log("Found twoslash code blocks in content");
+  const originalContent = content;
+
+  // Extract all twoslash code blocks
+  const twoslashRegex = /```(?:ts|tsx) twoslash(?:[^`\n]*?)\n([\s\S]*?)\n```/g;
+  const twoslashBlocks: { fullMatch: string; codeContent: string }[] = [];
+
+  let match;
+  while ((match = twoslashRegex.exec(originalContent)) != null) {
+    if (match[0] && match[1]) {
+      const fullMatch = match[0];
+      const codeContent = match[1].trim();
+      const endIndex = fullMatch.lastIndexOf("```");
+      const actualFullMatch = fullMatch.substring(0, endIndex + 3);
+
+      twoslashBlocks.push({
+        fullMatch: actualFullMatch,
+        codeContent,
+      });
+    }
+  }
+
+  console.log(`Found ${twoslashBlocks.length} twoslash blocks to process`);
+
+  if (twoslashBlocks.length === 0) {
+    return content;
+  }
+
+  // Process all blocks within TwoSlash timeout limit (leave time for serialization fallback)
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(
+      () =>
+        reject(new Error("TwoSlash processing timed out after 200 seconds")),
+      TWOSLASH_TIMEOUT - SERIALIZATION_TIMEOUT
+    )
+  );
+
+  try {
+    await Promise.race([
+      Promise.all(
+        twoslashBlocks.map(async (block) => {
+          console.log(
+            "Processing twoslash block:",
+            block.codeContent.substring(0, 100) + "..."
+          );
+
+          const ignoreErrors = block.codeContent.includes("noErrors")
+            ? ""
+            : "// @noErrors\n";
+
+          const serviceContent = `\`\`\`${block.fullMatch.includes("tsx") ? "tsx" : "ts"} twoslash\n${ignoreErrors}${block.codeContent}\n\`\`\``;
+
+          try {
+            console.log("Sending request to serialize service...");
+            const response = await fetch(
+              `${getMdxBundlerService()}/serialize`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ code: serviceContent }),
+              }
+            );
+
+            if (!response.ok) {
+              console.error(
+                "Serialize service returned error:",
+                response.statusText
+              );
+              throw new Error(
+                `Failed to serialize TwoSlash: ${response.statusText}`
+              );
+            }
+
+            const result = await response.json();
+            console.log("Successfully received serialized result");
+
+            // Replace only this specific block
+            const twoSlashContent = {
+              code: result.code,
+              jsxElements: result.jsxElements || [],
+            };
+            content = content.replace(
+              block.fullMatch,
+              `<TwoSlash content={${JSON.stringify(twoSlashContent)}} />`
+            );
+            console.log("Successfully replaced twoslash block with component");
+          } catch (error) {
+            console.error("Error processing twoslash block:", error);
+            // If there's an error, we keep the original content for this block
+          }
+        })
+      ),
+      timeoutPromise,
+    ]);
+  } catch (error) {
+    console.error("TwoSlash processing timed out:", error);
+    // If the entire batch times out, we keep the original content for all blocks
+  }
+
+  return content;
 }
