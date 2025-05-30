@@ -18,7 +18,6 @@ export default async function Page(props: {
   params: Promise<{ host: string; domain: string; slug: string }>;
 }) {
   const { host, domain, slug: slugProp } = await props.params;
-  console.debug(`[${domain}] Loading API Explorer page`);
 
   const slug = FernNavigation.slugjoin(slugProp);
   const loader = await createCachedDocsLoader(
