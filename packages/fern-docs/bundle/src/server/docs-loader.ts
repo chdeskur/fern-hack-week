@@ -188,7 +188,7 @@ export interface DocsLoader {
 
 function assertDocsDomain(domain: string) {
   if (FERN_DOCS_ORIGINS.includes(domain) || domain.endsWith(".vercel.app")) {
-    console.error(`[asserDocsDomain:${domain}] Found unexpected domain`);
+    console.error(`[assertDocsDomain:${domain}] Found unexpected domain`);
     notFound();
   }
 }
