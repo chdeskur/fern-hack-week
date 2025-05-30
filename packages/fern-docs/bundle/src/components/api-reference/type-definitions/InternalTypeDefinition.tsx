@@ -19,6 +19,7 @@ export declare namespace InternalTypeDefinition {
     shape: ApiDefinition.TypeShapeOrReference;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     location?: PropertyLocation;
+    additionalProperties?: ApiDefinition.ObjectProperty[];
   }
 }
 
@@ -26,6 +27,7 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
   shape,
   types,
   location,
+  additionalProperties,
 }: {
   shape:
     | ApiDefinition.TypeShape.Enum
@@ -35,6 +37,7 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
     | ApiDefinition.TypeReference.Primitive;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
   location?: PropertyLocation;
+  additionalProperties?: ApiDefinition.ObjectProperty[];
 }) {
   switch (shape.type) {
     case "enum": {
@@ -61,6 +64,7 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
                 idx={idx}
                 types={types}
                 location={location}
+                additionalProperties={additionalProperties}
               />
             ))}
           </WithSeparator>
@@ -101,10 +105,22 @@ export const InternalTypeDefinition = memo(function InternalTypeDefinition({
 
       return (
         <FernCollapseWithButtonUncontrolled
-          showText={`Show ${filteredProperties.length} properties`}
-          hideText={`Hide ${filteredProperties.length} properties`}
+          showText={`Show ${filteredProperties.length + (additionalProperties?.length ?? 0)} properties`}
+          hideText={`Hide ${filteredProperties.length + (additionalProperties?.length ?? 0)} properties`}
         >
           <WithSeparator>
+            {additionalProperties?.map((property) => (
+              <TypeDefinitionPathPart
+                key={property.key}
+                part={{ type: "objectProperty", propertyName: property.key }}
+              >
+                <ObjectProperty
+                  property={property}
+                  types={types}
+                  location={location}
+                />
+              </TypeDefinitionPathPart>
+            ))}
             {filteredProperties.map((property) => (
               <TypeDefinitionPathPart
                 key={property.key}

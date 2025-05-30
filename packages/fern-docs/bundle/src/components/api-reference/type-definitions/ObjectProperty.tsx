@@ -56,6 +56,7 @@ export const PropertyWithShape = React.memo(function PropertyWithShape({
   availability,
   types,
   location,
+  additionalProperties,
 }: {
   icon?: React.ReactNode;
   name?: string;
@@ -64,6 +65,7 @@ export const PropertyWithShape = React.memo(function PropertyWithShape({
   shape: ApiDefinition.TypeShape;
   types: Record<string, ApiDefinition.TypeDefinition>;
   location?: PropertyLocation;
+  additionalProperties?: ApiDefinition.ObjectProperty[];
 }) {
   return (
     <PropertyRenderer
@@ -76,6 +78,7 @@ export const PropertyWithShape = React.memo(function PropertyWithShape({
         shape={shape}
         types={types}
         location={location}
+        additionalProperties={additionalProperties}
       />
     </PropertyRenderer>
   );

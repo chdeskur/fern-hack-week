@@ -82,11 +82,13 @@ export function UndiscriminatedUnionVariant({
   unionVariant,
   types,
   location,
+  additionalProperties,
 }: {
   unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
   idx: number;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
   location?: PropertyLocation;
+  additionalProperties?: ApiDefinition.ObjectProperty[];
 }) {
   return (
     <PropertyWithShape
@@ -97,6 +99,7 @@ export function UndiscriminatedUnionVariant({
       shape={unionVariant.shape}
       types={types}
       location={location}
+      additionalProperties={additionalProperties}
     />
   );
 }

@@ -61,13 +61,34 @@ export const TypeReferenceDefinitions = React.memo(
     shape,
     types,
     location,
+    additionalProperties,
   }: {
     shape: ApiDefinition.TypeShapeOrReference;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     location?: PropertyLocation;
+    additionalProperties?: ApiDefinition.ObjectProperty[];
   }) {
     switch (shape.type) {
       case "id":
+        if (additionalProperties) {
+          const newTypeShape = types[shape.id]?.shape;
+          if (newTypeShape && newTypeShape.type === "object") {
+            const updatedShape = {
+              ...newTypeShape,
+              properties: [
+                ...(additionalProperties ?? []),
+                ...(newTypeShape.properties ?? []),
+              ],
+            };
+            return (
+              <TypeReferenceDefinitions
+                shape={updatedShape}
+                types={types}
+                location={location}
+              />
+            );
+          }
+        }
         return <TypeDefinitionSlot id={shape.id} location={location} />;
       case "object":
       case "enum":
@@ -79,6 +100,7 @@ export const TypeReferenceDefinitions = React.memo(
             shape={shape}
             types={types}
             location={location}
+            additionalProperties={additionalProperties}
           />
         );
       case "list":
@@ -89,6 +111,7 @@ export const TypeReferenceDefinitions = React.memo(
               shape={shape.itemShape}
               types={types}
               location={location}
+              additionalProperties={additionalProperties}
             />
           </TypeDefinitionPathPart>
         );
@@ -99,11 +122,13 @@ export const TypeReferenceDefinitions = React.memo(
               shape={shape.keyShape}
               types={types}
               location={location}
+              additionalProperties={additionalProperties}
             />
             <TypeReferenceDefinitions
               shape={shape.valueShape}
               types={types}
               location={location}
+              additionalProperties={additionalProperties}
             />
           </TypeDefinitionPathPart>
         );
@@ -116,6 +141,7 @@ export const TypeReferenceDefinitions = React.memo(
             shape={shape.value}
             types={types}
             location={location}
+            additionalProperties={additionalProperties}
           />
         );
       }
@@ -126,6 +152,7 @@ export const TypeReferenceDefinitions = React.memo(
             shape={shape.shape}
             types={types}
             location={location}
+            additionalProperties={additionalProperties}
           />
         );
       }
