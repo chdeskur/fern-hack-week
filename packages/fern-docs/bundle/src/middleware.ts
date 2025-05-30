@@ -44,6 +44,10 @@ export const middleware: NextMiddleware = async (request) => {
   const host = request.nextUrl.host;
   const domain = getDocsDomainEdge(request);
 
+  const ip =
+    request.headers.get("x-real-ip") || request.headers.get("x-forwarded-for");
+  console.log("Request from IP:", ip);
+
   // note: decoding the uri component here will avoid double-encoding the pathname futher
   // down the middleware chain
   const pathname = decodeURIComponent(
