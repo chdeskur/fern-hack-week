@@ -12,6 +12,7 @@ import {
   getSingletonHighlighter,
 } from "shiki";
 
+import { isLocal } from "../util/isLocal";
 import { additionalLanguages } from "./syntaxes";
 import { templateTransformer } from "./transformers/template";
 
@@ -32,41 +33,46 @@ const THEMES: Record<
   },
 };
 
-// only call this once per language
-export const getHighlighterInstance: (
+const getHighlighterInstanceImpl = async (
   language: string
-) => Promise<Highlighter> = memoize(
-  async (language: string): Promise<Highlighter> => {
-    const lang = parseLang(language);
+): Promise<Highlighter> => {
+  const lang = parseLang(language);
 
-    if (process.env.NODE_ENV === "development") {
-      console.debug("Loading language:", lang);
-    }
-
-    if (highlighter == null) {
-      highlighter = await getSingletonHighlighter();
-    }
-
-    // load the themes used by the current language
-    await highlighter.loadTheme(
-      THEMES.light[lang] ?? THEMES.light[DEFAULT],
-      THEMES.dark[lang] ?? THEMES.dark[DEFAULT]
-    );
-
-    if (!highlighter.getLoadedLanguages().includes(lang)) {
-      try {
-        await highlighter.loadLanguage(
-          additionalLanguages[lang] ??
-            (lang as BundledLanguage | SpecialLanguage)
-        );
-      } catch (e) {
-        console.error(`Failed to load language: ${lang}`, e);
-      }
-    }
-
-    return highlighter;
+  if (process.env.NODE_ENV === "development") {
+    console.debug("Loading language:", lang);
   }
+
+  if (highlighter == null) {
+    highlighter = await getSingletonHighlighter();
+  }
+
+  // load the themes used by the current language
+  await highlighter.loadTheme(
+    THEMES.light[lang] ?? THEMES.light[DEFAULT],
+    THEMES.dark[lang] ?? THEMES.dark[DEFAULT]
+  );
+
+  if (!highlighter.getLoadedLanguages().includes(lang)) {
+    try {
+      await highlighter.loadLanguage(
+        additionalLanguages[lang] ?? (lang as BundledLanguage | SpecialLanguage)
+      );
+    } catch (e) {
+      console.error(`Failed to load language: ${lang}`, e);
+    }
+  }
+
+  return highlighter;
+};
+
+const isLocalEnv = isLocal();
+export const memoizedGetHighlighterInstance = memoize(
+  getHighlighterInstanceImpl
 );
+
+// only call this once per language when isLocal is true
+export const getHighlighterInstance = () =>
+  isLocalEnv ? getHighlighterInstanceImpl : memoizedGetHighlighterInstance;
 
 function hasLanguage(lang: string): boolean {
   return highlighter?.getLoadedLanguages().includes(parseLang(lang)) ?? false;
@@ -157,7 +163,7 @@ export function useHighlightTokens(): HighlightCallback {
       cb(createRawTokens(code, language));
     }
     void (async () => {
-      const highlighter = await getHighlighterInstance(language);
+      const highlighter = await getHighlighterInstance()(language);
       cb(highlightTokens(highlighter, code, language));
     })();
   }, []);
@@ -168,7 +174,7 @@ export function useHighlighter(lang: string): Highlighter | undefined {
   useEffect(() => {
     if (!hasLanguage(lang)) {
       void (async () => {
-        await getHighlighterInstance(lang);
+        await getHighlighterInstance()(lang);
         setNonce((n) => n + 1);
       })();
     }

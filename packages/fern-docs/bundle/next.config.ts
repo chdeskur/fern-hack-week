@@ -176,6 +176,18 @@ const nextConfig: NextConfig = {
       },
     ];
 
+    const disableCaching = {
+      source: "/:path*",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+        { key: "Pragma", value: "no-cache" },
+        { key: "Expires", value: "0" },
+      ],
+    };
+
     return [
       {
         source: "/api/fern-docs/auth/:path*",
@@ -189,6 +201,7 @@ const nextConfig: NextConfig = {
         source: "/:prefix*/api/fern-docs/search/v2/:path*",
         headers: searchV2Headers,
       },
+      ...(isLocal ? [disableCaching] : []),
 
       /**
        * Access-Control-Allow-Origin header is required for sentry tunnel

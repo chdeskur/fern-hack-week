@@ -1,11 +1,11 @@
 import { Root } from "hast";
 import { visit } from "unist-util-visit";
 
-import { getHighlighterInstance, highlightTokens } from "../fernShiki";
+import { highlightTokens, memoizedGetHighlighterInstance } from "../fernShiki";
 
 describe("fernShiki", () => {
   it("should highlight diff", async () => {
-    const highlighter = await getHighlighterInstance("diff");
+    const highlighter = await memoizedGetHighlighterInstance("diff");
     expect(highlighter.getLoadedLanguages()).toContain("diff");
     const result = highlightTokens(
       highlighter,
@@ -28,7 +28,7 @@ describe("fernShiki", () => {
   });
 
   it("should highlight ts", async () => {
-    const highlighter = await getHighlighterInstance("typescript");
+    const highlighter = await memoizedGetHighlighterInstance("typescript");
     const result = highlightTokens(highlighter, "const a = 1", "typescript");
     expect(result).toMatchSnapshot();
   });
@@ -49,7 +49,7 @@ function collectTemplates(hast: Root): string[] {
 
 describe("template", () => {
   it("should detect template for typescript", async () => {
-    const highlighter = await getHighlighterInstance("typescript");
+    const highlighter = await memoizedGetHighlighterInstance("typescript");
     const result = highlightTokens(
       highlighter,
       "{{a}}",
@@ -63,7 +63,7 @@ describe("template", () => {
   });
 
   it("should detect template in bash", async () => {
-    const highlighter = await getHighlighterInstance("bash");
+    const highlighter = await memoizedGetHighlighterInstance("bash");
     const result = highlightTokens(
       highlighter,
       "{{a}}",
@@ -76,7 +76,7 @@ describe("template", () => {
   });
 
   it("should detect template for plaintext", async () => {
-    const highlighter = await getHighlighterInstance("plaintext");
+    const highlighter = await memoizedGetHighlighterInstance("plaintext");
     const result = highlightTokens(
       highlighter,
       "{{a}}",
@@ -88,7 +88,7 @@ describe("template", () => {
   });
 
   it("should detect template for swift", async () => {
-    const highlighter = await getHighlighterInstance("swift");
+    const highlighter = await memoizedGetHighlighterInstance("swift");
     const result = highlightTokens(
       highlighter,
       "{{a}}",
@@ -100,7 +100,7 @@ describe("template", () => {
   });
 
   it("should detect template for python", async () => {
-    const highlighter = await getHighlighterInstance("python");
+    const highlighter = await memoizedGetHighlighterInstance("python");
     const result = highlightTokens(
       highlighter,
       "{{a}}",
@@ -112,7 +112,7 @@ describe("template", () => {
   });
 
   it("should detect multiple templates for python", async () => {
-    const highlighter = await getHighlighterInstance("python");
+    const highlighter = await memoizedGetHighlighterInstance("python");
     const result = highlightTokens(
       highlighter,
       "{{a}} {{b}}",
@@ -126,7 +126,7 @@ describe("template", () => {
   });
 
   it("should detect multiple templates for javascript", async () => {
-    const highlighter = await getHighlighterInstance("javascript");
+    const highlighter = await memoizedGetHighlighterInstance("javascript");
     const result = highlightTokens(
       highlighter,
       "{{a}} {{b}}",
@@ -140,7 +140,7 @@ describe("template", () => {
   });
 
   it("should avoid false positives", async () => {
-    const highlighter = await getHighlighterInstance("javascript");
+    const highlighter = await memoizedGetHighlighterInstance("javascript");
     const result = highlightTokens(
       highlighter,
       "{{a}} {{b}}",
@@ -153,7 +153,7 @@ describe("template", () => {
   });
 
   it("should inject templates in a complex bash script", async () => {
-    const highlighter = await getHighlighterInstance("bash");
+    const highlighter = await memoizedGetHighlighterInstance("bash");
     const result = highlightTokens(
       highlighter,
       `echo "Hello, {{name}}!"`,
@@ -166,7 +166,7 @@ describe("template", () => {
   });
 
   it("should preserve text surrounding a template in TypeScript", async () => {
-    const highlighter = await getHighlighterInstance("typescript");
+    const highlighter = await memoizedGetHighlighterInstance("typescript");
     const code = `console.log("prefix{{var}}suffix")`;
     const result = highlightTokens(
       highlighter,
@@ -190,7 +190,7 @@ describe("template", () => {
   });
 
   it("should preserve text surrounding a template in JavaScript string literals", async () => {
-    const highlighter = await getHighlighterInstance("javascript");
+    const highlighter = await memoizedGetHighlighterInstance("javascript");
     const code = `const message = \`Hello, {{name}}! Welcome to {{location}}.\``;
     const result = highlightTokens(
       highlighter,
@@ -215,7 +215,7 @@ describe("template", () => {
   });
 
   it("should preserve surrounding text in multiline code blocks", async () => {
-    const highlighter = await getHighlighterInstance("typescript");
+    const highlighter = await memoizedGetHighlighterInstance("typescript");
     const code = `function greet() {
   // This function uses a template variable
   return \`Hello, {{name}}!\`;
