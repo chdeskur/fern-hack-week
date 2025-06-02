@@ -17,10 +17,7 @@ import { initLogger, traced, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import {
-  createDefaultSystemPrompt,
-  createWebflowSystemPrompt,
-} from "@fern-docs/search-server";
+import { createDefaultSystemPrompt } from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
   toDocuments,
@@ -74,11 +71,8 @@ export async function POST(req: NextRequest) {
   const metadata = await loader.getMetadata();
   const config = await loader.getConfig();
 
-  const { messages, url, source, conversationId } = await req.json();
+  const { messages, source, conversationId } = await req.json();
   const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
-
-  // TODO: remove this once webflow adds model/system-prompt to docs.yml
-  const isWebflow = url.includes("webflow");
 
   const model: string = config.aiChatConfig?.model || "claude-3.5";
   let languageModel;
@@ -94,14 +88,12 @@ export async function POST(req: NextRequest) {
       ({ modelId, region } = modelMap[model]);
     }
     const bedrock = createAmazonBedrock({
-      region: isWebflow ? "us-east-1" : region,
+      region: region,
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
 
-    languageModel = isWebflow
-      ? wrapAISDKModel(bedrock("us.anthropic.claude-3-7-sonnet-20250219-v1:0"))
-      : wrapAISDKModel(bedrock(modelId));
+    languageModel = wrapAISDKModel(bedrock(modelId));
   }
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
@@ -144,18 +136,12 @@ export async function POST(req: NextRequest) {
     topK: 3,
   });
   const documents = toDocuments(searchResults).join("\n\n");
-  const system = isWebflow
-    ? createWebflowSystemPrompt({
-        domain,
-        date: new Date().toDateString(),
-        documents,
-      })
-    : createDefaultSystemPrompt({
-        domain,
-        date: new Date().toDateString(),
-        documents,
-        promptTemplate,
-      });
+  const system = createDefaultSystemPrompt({
+    domain,
+    date: new Date().toDateString(),
+    documents,
+    promptTemplate,
+  });
   return traced(async (span) => {
     span.log({
       metadata: {
