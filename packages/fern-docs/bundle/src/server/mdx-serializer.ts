@@ -6,7 +6,7 @@ import { cache } from "react";
 import { Semaphore } from "es-toolkit/compat";
 
 import { Frontmatter } from "@fern-api/fdr-sdk/docs";
-import { isDevelopment } from "@fern-docs/utils";
+import { isDevelopment, isPreviewDomain } from "@fern-docs/utils";
 
 import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
 import { RehypeLinksOptions } from "@/mdx/plugins/rehype-links";
@@ -94,9 +94,9 @@ export function createCachedMdxSerializer(
         } catch (error) {
           console.error("Error serializing mdx", error);
 
-          if (!isDevelopment(domain)) {
+          if (!isDevelopment(domain) && !isPreviewDomain(domain)) {
             postToEngineeringNotifs(
-              `:rotating_light: Error serializing mdx on ${domain} with the following error: ${String(error)}`,
+              `:rotating_light: Error serializing mdx for ${domain} on file ${filename} with the following error: ${String(error)}`,
               "mdx-serializer"
             );
           }
