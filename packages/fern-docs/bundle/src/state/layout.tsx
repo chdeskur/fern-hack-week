@@ -1,40 +1,26 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
 
 import { FernDocs } from "@fern-api/fdr-sdk";
-import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
-const isSidebarFixedAtom = atom<boolean>(false);
-
-export function SetIsSidebarFixed({ value }: { value: boolean }) {
-  useHydrateAtoms([[isSidebarFixedAtom, value]], {
-    dangerouslyForceHydrate: true,
-  });
-  return null;
-}
+export const isSidebarFixedAtom = atom<boolean>(false);
 
 export function useIsSidebarFixed() {
   return useAtomValue(isSidebarFixedAtom);
 }
 
-const isLandingPageAtom = atom<boolean>(false);
-
-export function SetIsLandingPage({ value }: { value: boolean }) {
-  useHydrateAtoms([[isLandingPageAtom, value]], {
-    dangerouslyForceHydrate: true,
-  });
-  return null;
-}
+export const isLandingPageAtom = atom<boolean>(false);
 
 const layoutAtom = atom<FernDocs.Layout>("guide");
 
 export function SetLayout({ value }: { value: FernDocs.Layout }) {
   const setLayout = useSetAtom(layoutAtom);
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     setLayout(value);
-  }, [value]);
+  }, [value, setLayout]);
   return null;
 }
 
@@ -42,22 +28,22 @@ export function useLayout() {
   return useAtomValue(layoutAtom);
 }
 
-const emptySidebarAtom = atom<boolean>(false);
-const emptyTableOfContentsAtom = atom<boolean>(false);
+export const emptySidebarAtom = atom<boolean>(false);
+export const emptyTableOfContentsAtom = atom<boolean>(false);
 
 export function SetEmptySidebar({ value }: { value: boolean }) {
   const setEmptySidebar = useSetAtom(emptySidebarAtom);
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     setEmptySidebar(value);
-  }, [value]);
+  }, [value, setEmptySidebar]);
   return null;
 }
 
 export function SetEmptyTableOfContents({ value }: { value: boolean }) {
   const setEmptyTableOfContents = useSetAtom(emptyTableOfContentsAtom);
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     setEmptyTableOfContents(value);
-  }, [value]);
+  }, [value, setEmptyTableOfContents]);
   return null;
 }
 
@@ -86,7 +72,10 @@ export function useShouldHideAsides() {
 
 export function HideAsides({ force }: { force?: boolean }) {
   const hideAsides = useShouldHideAsides();
-  return hideAsides || force ? (
+  if (!hideAsides && !force) {
+    return null;
+  }
+  return (
     <style jsx global>{`
       #fern-toc,
       #fern-sidebar[data-state="sticky"],
@@ -98,5 +87,5 @@ export function HideAsides({ force }: { force?: boolean }) {
         display: none;
       }
     `}</style>
-  ) : null;
+  );
 }

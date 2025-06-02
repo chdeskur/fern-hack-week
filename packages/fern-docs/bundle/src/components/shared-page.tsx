@@ -9,6 +9,7 @@ import {
 import React from "react";
 
 import { compact } from "es-toolkit/array";
+import { HydrationBoundary } from "jotai-ssr";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
@@ -28,7 +29,7 @@ import {
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
 import { withPrunedNavigationLoader } from "@/server/withPrunedNavigation";
-import { SetIsLandingPage } from "@/state/layout";
+import { isLandingPageAtom } from "@/state/layout";
 import { SetCurrentNavigationNode } from "@/state/navigation";
 
 import { DocsMainContent } from "../app/[host]/[domain]/main";
@@ -211,28 +212,32 @@ export default async function SharedPage({
     : React.Fragment;
 
   return (
-    <FeedbackPopoverProvider>
-      <SetCurrentNavigationNode
-        nodeId={found.node.id}
-        sidebarRootNodeId={found.sidebar?.id}
-        tabId={found.currentTab?.id}
-        productId={found.currentProduct?.productId}
-        productSlug={found.currentProduct?.slug}
-        versionId={found.currentVersion?.versionId}
-        versionSlug={found.currentVersion?.slug}
-        versionIsDefault={found.isCurrentVersionDefault}
-        productIsDefault={found.isCurrentProductDefault}
-      />
-      <SetIsLandingPage value={found.node.type === "landingPage"} />
-      <DocsMainContent
-        loader={loader}
-        serialize={serialize}
-        node={found.node}
-        parents={found.parents}
-        neighbors={await neighborsPromise}
-        breadcrumb={found.breadcrumb}
-      />
-    </FeedbackPopoverProvider>
+    <HydrationBoundary
+      hydrateAtoms={[[isLandingPageAtom, found.node.type === "landingPage"]]}
+      options={{ enableReHydrate: true }}
+    >
+      <FeedbackPopoverProvider>
+        <SetCurrentNavigationNode
+          nodeId={found.node.id}
+          sidebarRootNodeId={found.sidebar?.id}
+          tabId={found.currentTab?.id}
+          productId={found.currentProduct?.productId}
+          productSlug={found.currentProduct?.slug}
+          versionId={found.currentVersion?.versionId}
+          versionSlug={found.currentVersion?.slug}
+          versionIsDefault={found.isCurrentVersionDefault}
+          productIsDefault={found.isCurrentProductDefault}
+        />
+        <DocsMainContent
+          loader={loader}
+          serialize={serialize}
+          node={found.node}
+          parents={found.parents}
+          neighbors={await neighborsPromise}
+          breadcrumb={found.breadcrumb}
+        />
+      </FeedbackPopoverProvider>
+    </HydrationBoundary>
   );
 }
 

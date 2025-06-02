@@ -115,6 +115,7 @@
     "jose": "^5.9.6",
     "jotai": "^2.12.1",
     "jotai-effect": "^1.1.6",
+    "jotai-ssr": "^0.2.0",
     "jsonpath-plus": "10.3.0",
     "launchdarkly-react-client-sdk": "^3.6.0",
     "lucide-react": "^0.460.0",
