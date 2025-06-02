@@ -20,6 +20,7 @@ export function HeaderContent({
   showSearchBar,
   navbarLinks,
   loginButton,
+  forceHeader = false,
 }: {
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -29,6 +30,7 @@ export function HeaderContent({
   showSearchBar?: boolean;
   navbarLinks: React.ReactNode;
   loginButton?: React.ReactNode;
+  forceHeader?: boolean;
 }) {
   const isDesktop = useIsDesktop();
   return (
@@ -48,7 +50,12 @@ export function HeaderContent({
         <div className="fern-header-logo-container">
           <div className="flex items-center gap-2">
             <div className="flex items-center lg:items-start">{logo}</div>
-            <div className="hidden items-baseline lg:flex">
+            <div
+              className={cn("items-baseline lg:flex", {
+                hidden: !forceHeader,
+                flex: forceHeader,
+              })}
+            >
               {productSelect}
               {versionSelect}
             </div>

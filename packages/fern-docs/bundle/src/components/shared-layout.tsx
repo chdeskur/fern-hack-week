@@ -108,6 +108,7 @@ export default async function SharedLayout({
               />
             </React.Suspense>
           }
+          forceHeader={edgeFlags.isCohereTheme}
         />
       }
       productSelect={
