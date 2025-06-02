@@ -304,7 +304,11 @@ export class ReadmeGenerator {
     writer.writeLine("## Reference");
     writer.writeLine();
     writer.writeLine(
-      `A full reference for this library is available [here](${referenceFile}).`
+      `A full reference for this library is available [here](${
+        this.readmeConfig.remote?.repoUrl != null
+          ? `${this.readmeConfig.remote.repoUrl}/blob/HEAD/${referenceFile}`
+          : referenceFile
+      }).`
     );
     writer.writeLine();
     return new Block({
