@@ -34,7 +34,9 @@ export const TurbopufferRecordSchema = z.object({
     api_definition_id: z.string().optional(),
     api_endpoint_id: z.string().optional(),
     api_type: z.enum(["http", "webhook", "websocket"]).optional(),
-    method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]).optional(),
+    method: z
+      .enum(["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"])
+      .optional(),
     endpoint_path: z.string().optional(),
     endpoint_path_alternates: z.array(z.string()).optional(),
     response_type: z.enum(["stream", "file", "json"]).optional(),

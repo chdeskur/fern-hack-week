@@ -5,7 +5,7 @@
 import * as FernRegistry from "../../../index";
 
 /**
- * The relative path for an endpont (e.g. `/users/{userId}`)
+ * The relative path for an endpoint (e.g. `/users/{userId}`)
  */
 export type EndpointPathLiteral = string & {
     EndpointPathLiteral: void;

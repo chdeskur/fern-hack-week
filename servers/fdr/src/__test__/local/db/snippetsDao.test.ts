@@ -226,6 +226,7 @@ it("snippets dao", async () => {
         PATCH: [],
         POST: [],
         PUT: [],
+        HEAD: [],
       },
     },
   });
@@ -565,6 +566,7 @@ it("snippets template", async () => {
         },
       },
       DELETE: {},
+      HEAD: {},
     },
   });
 

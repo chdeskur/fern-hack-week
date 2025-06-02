@@ -28,7 +28,7 @@
     "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "@fern-fern/fdr-cjs-sdk": "0.76.19-1-6e46ece2a09",
+    "@fern-fern/fdr-cjs-sdk": "0.0.6432",
     "prettier": "^3.4.2"
   },
   "devDependencies": {

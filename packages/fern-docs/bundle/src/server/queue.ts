@@ -32,7 +32,7 @@ export async function queue<TBody = unknown>({
   domain: string;
   basepath?: string;
   endpoint: `/api/fern-docs/${string}`;
-  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
   body?: TBody;
   headers?: HeadersInit;
   retries?: number;
@@ -91,7 +91,7 @@ export async function batchQueue<TBody = unknown>({
   queueName?: string;
   parallelism?: number;
   endpoint: `/api/fern-docs/${string}`;
-  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
   requests: {
     /**
      * the host of the docs (might be different from the domain, in the case of reverse proxies)

@@ -14,7 +14,7 @@ export class EndpointSnippetCollector {
     identifierOverride,
   }: {
     endpointPath: FdrAPI.EndpointPathLiteral;
-    endpointMethod: "POST" | "PUT" | "GET" | "PATCH" | "DELETE";
+    endpointMethod: "POST" | "PUT" | "GET" | "PATCH" | "DELETE" | "HEAD";
     snippet: FdrAPI.Snippet;
     identifierOverride: string | undefined;
   }) {
@@ -31,6 +31,7 @@ export class EndpointSnippetCollector {
         GET: [],
         PATCH: [],
         DELETE: [],
+        HEAD: [],
       };
     }
     this.snippetsByEndpoint[endpointPath]?.[endpointMethod]?.push(snippet);

@@ -6,6 +6,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
     [FernRegistry.TypeId("type_imdb:MovieId")]: {
       description: "The unique identifier for a Movie in the database",
       name: "MovieId",
+      displayName: undefined,
       shape: {
         type: "alias",
         value: {
@@ -24,6 +25,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
     },
     [FernRegistry.TypeId("type_imdb:Movie")]: {
       name: "Movie",
+      displayName: undefined,
       shape: {
         type: "object",
         extraProperties: undefined,
@@ -38,6 +40,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             key: FernRegistry.PropertyKey("title"),
@@ -54,6 +57,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             description: "The rating scale out of ten stars",
@@ -68,6 +72,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               },
             },
             availability: undefined,
+            propertyAccess: undefined,
           },
         ],
       },
@@ -76,6 +81,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
     },
     [FernRegistry.TypeId("type_imdb:DetailedMovieReview")]: {
       name: "DetailedMovieReview",
+      displayName: undefined,
       shape: {
         type: "object",
         extraProperties: undefined,
@@ -96,6 +102,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             key: FernRegistry.PropertyKey("notes"),
@@ -112,6 +119,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             key: FernRegistry.PropertyKey("stars"),
@@ -126,6 +134,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
         ],
       },
@@ -134,6 +143,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
     },
     [FernRegistry.TypeId("type_imdb:AgressiveMovieReview")]: {
       name: "AgressiveMovieReview",
+      displayName: undefined,
       shape: {
         type: "object",
         extraProperties: undefined,
@@ -154,6 +164,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             key: FernRegistry.PropertyKey("notes"),
@@ -170,6 +181,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             key: FernRegistry.PropertyKey("stars"),
@@ -184,6 +196,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
         ],
       },
@@ -192,6 +205,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
     },
     [FernRegistry.TypeId("type_imdb:MovieReview")]: {
       name: "MovieReview",
+      displayName: undefined,
       shape: {
         type: "undiscriminatedUnion",
         variants: [
@@ -252,6 +266,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
     },
     [FernRegistry.TypeId("type_imdb:CreateMovieRequest")]: {
       name: "CreateMovieRequest",
+      displayName: undefined,
       shape: {
         type: "object",
         extraProperties: undefined,
@@ -272,6 +287,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             key: FernRegistry.PropertyKey("rating"),
@@ -286,6 +302,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
           {
             key: FernRegistry.PropertyKey("review"),
@@ -296,6 +313,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
             },
             availability: undefined,
             description: undefined,
+            propertyAccess: undefined,
           },
         ],
       },
@@ -310,6 +328,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
       urlSlug: "imdb",
       endpoints: [
         {
+          protocol: undefined,
           environments: [],
           urlSlug: "123",
           errors: [],

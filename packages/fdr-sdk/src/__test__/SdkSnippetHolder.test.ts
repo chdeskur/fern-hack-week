@@ -34,6 +34,7 @@ describe("SDK Snippet Holder", () => {
             PATCH: [],
             POST: [],
             PUT: [],
+            HEAD: [],
           },
         },
       },

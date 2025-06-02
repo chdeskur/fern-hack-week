@@ -58,7 +58,7 @@ types:
 
   EndpointPathLiteral:
     type: string
-    docs: The relative path for an endpont (e.g. `/users/{userId}`)
+    docs: The relative path for an endpoint (e.g. `/users/{userId}`)
 
   HttpMethod:
     enum:
@@ -67,8 +67,8 @@ types:
       - PUT
       - PATCH
       - DELETE
+      - HEAD
       # - OPTIONS
-      # - HEAD
       # - TRACE
       # - CONNECT
 

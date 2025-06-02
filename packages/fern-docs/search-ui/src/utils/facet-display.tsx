@@ -209,6 +209,7 @@ export const FACET_DISPLAY_NAME_MAP: Record<string, Record<string, string>> = {
     PUT: "PUT requests",
     PATCH: "PATCH requests",
     DELETE: "DELETE requests",
+    HEAD: "HEAD requests",
   },
   api_type: {
     http: "HTTP",
@@ -250,6 +251,7 @@ export const FACET_DISPLAY_NAME_TITLE_CASE_MAP: Record<
     PUT: "PUT requests",
     PATCH: "PATCH requests",
     DELETE: "DELETE requests",
+    HEAD: "HEAD requests",
   },
   api_type: {
     http: "HTTP",

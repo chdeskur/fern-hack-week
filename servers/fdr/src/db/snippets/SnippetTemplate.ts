@@ -336,6 +336,10 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
       typescript: undefined,
       python: undefined,
     },
+    HEAD: {
+      typescript: undefined,
+      python: undefined,
+    },
   };
 
   public async loadSnippetTemplatesByEndpoint({
