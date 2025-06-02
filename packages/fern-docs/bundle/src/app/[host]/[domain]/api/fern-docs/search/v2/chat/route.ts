@@ -17,7 +17,10 @@ import { initLogger, traced, wrapAISDKModel } from "braintrust";
 import { z } from "zod";
 
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { createDefaultSystemPrompt } from "@fern-docs/search-server";
+import {
+  createCohereSystemPrompt,
+  createDefaultSystemPrompt,
+} from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
   toDocuments,
@@ -71,7 +74,8 @@ export async function POST(req: NextRequest) {
   const metadata = await loader.getMetadata();
   const config = await loader.getConfig();
 
-  const { messages, source, conversationId } = await req.json();
+  const { messages, url, source, conversationId } = await req.json();
+  const isCohere = url.includes("cohere");
   const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
 
   const model: string = config.aiChatConfig?.model || "claude-3.5";
@@ -136,12 +140,19 @@ export async function POST(req: NextRequest) {
     topK: 3,
   });
   const documents = toDocuments(searchResults).join("\n\n");
-  const system = createDefaultSystemPrompt({
-    domain,
-    date: new Date().toDateString(),
-    documents,
-    promptTemplate,
-  });
+  const system = isCohere
+    ? createCohereSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+        promptTemplate,
+      })
+    : createDefaultSystemPrompt({
+        domain,
+        date: new Date().toDateString(),
+        documents,
+        promptTemplate,
+      });
   return traced(async (span) => {
     span.log({
       metadata: {
