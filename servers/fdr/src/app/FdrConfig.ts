@@ -51,6 +51,7 @@ export interface S3Config {
 }
 
 export interface FdrConfig {
+  localModeOverride: boolean;
   venusUrl: string;
   awsAccessKey: string;
   awsSecretKey: string;
@@ -86,6 +87,7 @@ function getConfigForLocalMode(): FdrConfig {
   const selfHostedS3Config = getSelfHostedS3Config();
 
   return {
+    localModeOverride: true,
     venusUrl: "",
     awsAccessKey: getEnvironmentVariableOrThrow(MINIO_USERNAME),
     awsSecretKey: getEnvironmentVariableOrThrow(MINIO_PASSWORD),
@@ -118,6 +120,7 @@ export function getConfig(): FdrConfig {
   }
 
   return {
+    localModeOverride: false,
     venusUrl: getEnvironmentVariableOrThrow(VENUS_URL_ENV_VAR),
     awsAccessKey: getEnvironmentVariableOrThrow(AWS_ACCESS_KEY_ENV_VAR),
     awsSecretKey: getEnvironmentVariableOrThrow(AWS_SECRET_KEY_ENV_VAR),

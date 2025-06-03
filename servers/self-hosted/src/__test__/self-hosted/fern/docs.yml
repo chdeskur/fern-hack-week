@@ -1,0 +1,48 @@
+instances:
+  - url: example-org.docs.buildwithfern.com
+    # custom-domain: plantstore.dev # specify your custom domain when you are ready to go live
+
+title: Ariel's Plant Store
+
+layout:
+  searchbar-placement: header
+  page-width: full
+
+navigation:
+  - page: Hello World
+    path: docs/pages/hello-world.mdx
+  - section: Get Started
+    contents:
+      - page: QuickStart
+        path: docs/pages/hello-world.mdx
+      - page: Welcome
+        path: docs/pages/welcome.mdx
+      - page: Concepts
+        path: docs/pages/concepts.mdx
+      - page: SDKs
+        path: docs/pages/sdks.mdx
+        slug: sdks
+  - api: API Reference
+
+navbar-links:
+  - type: minimal
+    text: Fork this repo
+    url: https://github.com/fern-api/docs-starter
+  - type: filled
+    text: Get a demo
+    url: https://buildwithfern.com/contact?utm_campaign=demo&utm_medium=plantstore&utm_source=navbar
+  - type: github
+    value: https://github.com/fern-api/fern
+
+colors:
+  accentPrimary:
+    dark: "#f0c193"
+    light: "#af5f1b"
+
+logo:
+  dark: docs/assets/logo-dark.svg
+  light: docs/assets/logo-light.svg
+  height: 20
+  href: https://buildwithfern.com/?utm_campaign=demo&utm_medium=plantstore&utm_source=logo
+
+favicon: docs/assets/favicon.svg

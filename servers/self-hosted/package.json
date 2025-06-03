@@ -11,6 +11,7 @@
     "test:self-hosted": "vitest src/__test__/self-hosted --globals --config src/__test__/self-hosted/vitest.config.ts"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
     "execa": "^9.5.1",
     "vitest": "^3.0.5"
   }

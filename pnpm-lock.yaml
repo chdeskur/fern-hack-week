@@ -2504,6 +2504,9 @@ importers:
 
   servers/self-hosted:
     devDependencies:
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.7
       execa:
         specifier: ^9.5.1
         version: 9.5.1

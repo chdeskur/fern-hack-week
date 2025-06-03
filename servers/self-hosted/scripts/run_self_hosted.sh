@@ -1,7 +1,20 @@
 #!/bin/bash
 set -euo pipefail
 
+if [ ! -d "/app/fern" ]; then
+    echo "Fern folder not found. Please ensure you are mounting yours in."
+    exit 1
+fi
+
+# --------------------------------------------
+
 source /app/servers/self-hosted/.env
+
+# --------------------------------------------
+
+# map custom domain to local machine
+echo "127.0.0.1 $ORG_NAME.docs.buildwithfern.com.localhost" >> /etc/hosts
+echo "::1 $ORG_NAME.docs.buildwithfern.com.localhost" >> /etc/hosts
 
 # -----------  Start run Postgres  -----------
 
@@ -44,7 +57,7 @@ done
 echo "MinIO server is up and running"
 
 # Initialize MinIO
-mc alias set minio http://localhost:9000 minioadmin minioadmin
+mc alias set minio ${MINIO_URL} ${MINIO_USERNAME} ${MINIO_PASSWORD}
 mc mb minio/${MINIO_BUCKET_NAME}
 
 # -----------  Finish run MinIO  -----------
@@ -61,12 +74,14 @@ DATABASE_URL=${DATABASE_URL} prisma migrate deploy --schema /app/servers/fdr/pri
 
 # -----------  Start run FDR  -----------
 
+
 LOCAL_MODE_OVERRIDE=true \
 DATABASE_URL=${DATABASE_URL} \
 MINIO_USERNAME=${MINIO_USERNAME} \
 MINIO_PASSWORD=${MINIO_PASSWORD} \
 MINIO_URL=${MINIO_URL} \
 MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME} \
+ORG_NAME=${ORG_NAME} \
 node --loader /app/servers/fdr/ts-loader.js --experimental-specifier-resolution=node /app/servers/fdr/dist/server.js & fdr_pid=$!
 
 echo "Waiting for fdr to start at localhost:8080..."
@@ -81,6 +96,24 @@ done
 echo "FDR is up and running at localhost:8080"
 
 # -----------  Finish run FDR  -----------
+
+cd /app/
+
+if [ -d "fern" ]; then
+    echo "Found fern folder in current directory"
+else
+    echo "fern folder NOT found in current directory"
+fi
+
+# --------------  Generate docs and insert into MinIO via FDR --------------
+
+echo "running fern generate --docs"
+
+FERN_SELF_HOSTED=true FERN_TOKEN=dummy OVERRIDE_FDR_ORIGIN=http://localhost:8080  FERN_NO_VERSION_REDIRECTION=true fern generate --docs
+
+echo " docs generated successfully"
+
+# --------------  Finish generate docs --------------
 
 if [ "${RUN_MODE:-}" = "shell" ]; then
     echo "Entering shell mode..."

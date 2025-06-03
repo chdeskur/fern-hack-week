@@ -1,10 +1,14 @@
 import { execa } from "execa";
+import path from "path";
 
 export const SELF_HOSTED_CONTAINER_NAME = "fern-self-hosted-test";
 const SELF_HOSTED_IMAGE_NAME = "fern-self-hosted";
 const SELF_HOSTED_TAG = "test";
 const SELF_HOSTED_IMAGE_TAG_NAME = `${SELF_HOSTED_IMAGE_NAME}:${SELF_HOSTED_TAG}`;
 const SELF_HOSTED_CONTAINER_PORT = 5433;
+
+// we have a fern folder we use for testing
+const FERN_DIR = path.join(__dirname, "fern");
 
 async function stopContainer(containerName: string) {
   try {
@@ -41,6 +45,8 @@ export async function setup() {
     "-d",
     "-p",
     `${SELF_HOSTED_CONTAINER_PORT}:5432`,
+    "-v",
+    `${FERN_DIR}:/app/fern`,
     SELF_HOSTED_IMAGE_TAG_NAME,
   ]);
   await sleep(10000);

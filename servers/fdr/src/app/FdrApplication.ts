@@ -11,7 +11,9 @@ import {
   type AlgoliaIndexSegmentManagerService,
   AlgoliaIndexSegmentManagerServiceImpl,
 } from "../services/algolia-index-segment-manager";
+import { LocalAlgoliaServiceImpl } from "../services/algolia/LocalAlgoliaService";
 import { type AuthService, AuthServiceImpl } from "../services/auth";
+import { LocalAuthServiceImpl } from "../services/auth/LocalAuthService";
 import { type DatabaseService, DatabaseServiceImpl } from "../services/db";
 import {
   DocsDefinitionCache,
@@ -19,11 +21,13 @@ import {
 } from "../services/docs-cache/DocsDefinitionCache";
 import LocalDocsDefinitionStore from "../services/docs-cache/LocalDocsDefinitionStore";
 import RedisDocsDefinitionStore from "../services/docs-cache/RedisDocsDefinitionStore";
+import { LocalRevalidatorServiceImpl } from "../services/revalidator/LocalRevalidatorService";
 import {
   RevalidatorService,
   RevalidatorServiceImpl,
 } from "../services/revalidator/RevalidatorService";
 import { type S3Service, S3ServiceImpl } from "../services/s3";
+import { LocalSlackServiceImpl } from "../services/slack/LocalSlackService";
 import { SlackService, SlackServiceImpl } from "../services/slack/SlackService";
 import { type FdrConfig } from "./FdrConfig";
 
@@ -124,4 +128,19 @@ export class FdrApplication {
   public async initialize(): Promise<void> {
     await this.docsDefinitionCache.initialize();
   }
+}
+
+export function createFdrApplication(config: FdrConfig): FdrApplication {
+  if (config.localModeOverride) {
+    return new FdrApplication(config, {
+      auth: new LocalAuthServiceImpl({
+        orgIds: [],
+      }),
+      algolia: new LocalAlgoliaServiceImpl(),
+      slack: new LocalSlackServiceImpl(),
+      revalidator: new LocalRevalidatorServiceImpl(),
+    });
+  }
+
+  return new FdrApplication(config);
 }

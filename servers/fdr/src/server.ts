@@ -7,6 +7,7 @@ import { Agent, setGlobalDispatcher } from "undici";
 
 import { register } from "./api";
 import { FdrApplication, getConfig } from "./app";
+import { createFdrApplication } from "./app/FdrApplication";
 import { registerBackgroundTasks } from "./background";
 import { getApiLatestService } from "./controllers/api/getApiLatestService";
 import { getReadApiService } from "./controllers/api/getApiReadService";
@@ -67,7 +68,7 @@ expressApp.use(compression());
 
 setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
-const app = new FdrApplication(config);
+const app = createFdrApplication(config);
 
 expressApp.get("/health", (_req, res) => {
   (async () => {

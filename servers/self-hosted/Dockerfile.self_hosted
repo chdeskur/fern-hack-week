@@ -56,7 +56,7 @@ RUN turbo prune @fern-platform/fdr --docker
 FROM base AS installer
 RUN apk add --no-cache libc6-compat
 RUN apk update
-RUN npm install -g pnpm@v9.4.0 fern-api
+RUN npm install -g pnpm@v9.4.0
 WORKDIR /app
 
 # Install deps
@@ -70,6 +70,7 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 COPY shared shared
 COPY fern fern
+
 RUN pnpm turbo --filter=@fern-api/fdr-sdk compile
 RUN pnpm turbo --filter=@fern-platform/fdr codegen
 RUN pnpm turbo --filter=@fern-platform/fdr compile
@@ -78,7 +79,13 @@ RUN pnpm turbo --filter=@fern-platform/fdr compile
 FROM base AS runner
 WORKDIR /app
 
-RUN npm install -g prisma
+# Install MinIO client (mc) in the runner stage
+RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc && \
+    chmod +x mc && \
+    mv mc /usr/local/bin/
+
+RUN npm install -g prisma 
+RUN npm install -g fern-api@latest
 
 # Copy the built FDR application
 COPY --from=installer /app .
