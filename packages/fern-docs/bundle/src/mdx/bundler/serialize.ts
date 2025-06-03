@@ -3,6 +3,7 @@ import "server-only";
 import { after } from "next/server";
 
 import { kv } from "@vercel/kv";
+import { createHash } from "crypto";
 import { mapKeys } from "es-toolkit/object";
 import fs from "fs";
 import { gracefulify } from "graceful-fs";
@@ -443,6 +444,15 @@ async function processTwoslashBlocks(
               block.fullMatch,
               `<TwoSlash content={${JSON.stringify(twoSlashContent)}} />`
             );
+
+            if (content.includes("<CodeBlocks>")) {
+              content = content.replace(
+                /<CodeBlocks>[\s\S]*?<TwoSlash/,
+                "<TwoSlash"
+              );
+              content = content.replace(/\/>[\s\S]*?<\/CodeBlocks>/, "/>");
+            }
+
             console.log("Successfully replaced twoslash block with component");
           } catch (error) {
             console.error("Error processing twoslash block:", error);
@@ -462,6 +472,10 @@ async function processTwoslashBlocks(
 
 const TWOSLASH_SEMANTIC_VERSION = "1";
 
+function hashKey(key: string): string {
+  return createHash("sha256").update(key).digest("hex");
+}
+
 function kvSet(domain: string, key: string, value: unknown) {
   if (isLocal()) {
     return;
@@ -469,10 +483,12 @@ function kvSet(domain: string, key: string, value: unknown) {
 
   after(async () => {
     try {
+      const hashedKey = hashKey(key);
       await kv.hset(domain, {
-        [key]: {
+        [hashedKey]: {
           value: value,
           version: TWOSLASH_SEMANTIC_VERSION,
+          createdAt: new Date().toISOString(),
         },
       });
     } catch (error) {
@@ -490,7 +506,8 @@ async function kvGet(
   }
 
   try {
-    const cached = await kv.hget<Record<string, string>>(domain, key);
+    const hashedKey = hashKey(key);
+    const cached = await kv.hget<Record<string, string>>(domain, hashedKey);
     if (cached && cached.version === TWOSLASH_SEMANTIC_VERSION) {
       return cached;
     }
