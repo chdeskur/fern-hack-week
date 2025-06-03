@@ -568,13 +568,13 @@ const AskAIComposer = forwardRef<
               props.onKeyDown,
               (e) => {
                 if (e.key === "Enter") {
-                  if (!e.shiftKey && value.length === 0) {
+                  if (value.length === 0) {
                     return;
                   } else if (isLoading) {
                     stop?.();
                     e.preventDefault();
                   } else {
-                    if (canSubmit) {
+                    if (!e.shiftKey && canSubmit) {
                       onSend?.(value);
                     }
                     e.preventDefault();

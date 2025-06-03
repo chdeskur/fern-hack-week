@@ -1,7 +1,6 @@
 import { createHash } from "crypto";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
-import { truncateToBytes } from "@fern-api/ui-core-utils";
 
 import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { toDescription } from "../../utils/to-description";
@@ -24,7 +23,6 @@ export function createApiReferenceRecordHttp({
     },
   };
 
-  const records: TurbopufferRecord[] = [];
   const {
     content: request_description,
     code_snippets: request_description_code_snippets,
@@ -32,29 +30,24 @@ export function createApiReferenceRecordHttp({
     toDescription(endpoint.requests?.[0]?.description)
   );
 
+  const record = {
+    ...base,
+    id: createHash("sha256").update(base.id).digest("hex"),
+    attributes: {
+      ...base.attributes,
+    },
+  };
+
+  // if request exists, update record
   if (
     request_description != null ||
     request_description_code_snippets?.length
   ) {
-    records.push({
-      ...base,
-      id: createHash("sha256")
-        .update(base.id + "-request-" + request_description)
-        .digest("hex"),
-      attributes: {
-        ...base.attributes,
-        hash: "#request",
-        title: `${base.attributes.title} - Request`,
-        description:
-          request_description != null
-            ? truncateToBytes(request_description, 50 * 1000)
-            : undefined,
-        code_snippets: request_description_code_snippets?.map(
-          (code_snippet) => code_snippet.code
-        ),
-        page_position: 1,
-      },
-    });
+    record.attributes.description =
+      request_description != null ? request_description : undefined;
+    record.attributes.code_snippets = request_description_code_snippets?.map(
+      (code_snippet) => code_snippet.code
+    );
   }
 
   const {
@@ -64,34 +57,34 @@ export function createApiReferenceRecordHttp({
     toDescription(endpoint.responses?.[0]?.description)
   );
 
+  // if response exists, update record
   if (
     response_description != null ||
     response_description_code_snippets?.length
   ) {
-    records.push({
-      ...base,
-      id: createHash("sha256")
-        .update(base.id + "-response-" + response_description)
-        .digest("hex"),
-      attributes: {
-        ...base.attributes,
-        hash: "#response",
-        title: `${base.attributes.title} - Response`,
-        description:
-          response_description != null
-            ? truncateToBytes(response_description, 50 * 1000)
-            : undefined,
-        code_snippets: response_description_code_snippets?.map(
-          (code_snippet) => code_snippet.code
-        ),
-        page_position: 1,
-      },
-    });
+    if (record.attributes.description != null) {
+      if (response_description != null) {
+        record.attributes.description += "\n\n" + response_description;
+      } else {
+        record.attributes.description = response_description;
+      }
+    }
+    if (response_description_code_snippets?.length) {
+      if (record.attributes.code_snippets != null) {
+        record.attributes.code_snippets = [
+          ...record.attributes.code_snippets,
+          ...response_description_code_snippets.map(
+            (code_snippet) => code_snippet.code
+          ),
+        ];
+      } else {
+        record.attributes.code_snippets =
+          response_description_code_snippets.map(
+            (code_snippet) => code_snippet.code
+          );
+      }
+    }
   }
 
-  if (records.length === 0) {
-    return [base];
-  } else {
-    return records;
-  }
+  return [record];
 }
