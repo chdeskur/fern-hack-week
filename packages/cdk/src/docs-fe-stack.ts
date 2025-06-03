@@ -22,8 +22,8 @@ export class DocsFeStack extends Stack {
     props?: StackProps
   ) {
     super(scope, id, props);
-    const bucket = new Bucket(this, "local-preview-bundle3", {
-      bucketName: `${environmentType.toLowerCase()}-local-preview-bundle3`,
+    const bucket = new Bucket(this, "local-preview-bundle4", {
+      bucketName: `${environmentType.toLowerCase()}-local-preview-bundle4`,
       removalPolicy: RemovalPolicy.RETAIN,
       cors: [
         {
@@ -49,9 +49,9 @@ export class DocsFeStack extends Stack {
       })
     );
 
-    const local_preview_bundle_dist_zip = path.resolve(
+    const local_preview_bundle_dist_tar = path.resolve(
       __dirname,
-      "../../fern-docs/bundle/next.zip"
+      "../../fern-docs/bundle/next.tar.gz"
     );
     if (
       !fs.existsSync(LOCAL_PREVIEW_BUNDLE_OUT_DIR) ||
@@ -71,12 +71,12 @@ export class DocsFeStack extends Stack {
       .then(() => {
         return zipFolder(
           LOCAL_PREVIEW_BUNDLE_OUT_DIR,
-          local_preview_bundle_dist_zip
+          local_preview_bundle_dist_tar
         );
       })
       .then(() => {
-        new BucketDeployment(this, "deploy-local-preview-bundle3", {
-          sources: [Source.asset(local_preview_bundle_dist_zip)],
+        new BucketDeployment(this, "deploy-local-preview-bundle4", {
+          sources: [Source.asset(local_preview_bundle_dist_tar)],
           destinationBucket: bucket,
           extract: false,
           memoryLimit: 1024,
@@ -101,7 +101,9 @@ async function zipFolder(sourceFolder: string, zipFilePath: string) {
 
   return new Promise<void>((resolve, reject) => {
     const output = fs.createWriteStream(zipFilePath);
-    const archive = archiver("zip");
+    const archive = archiver("tar", {
+      gzip: true,
+    });
 
     archive.on("error", (err: unknown) => {
       reject(err instanceof Error ? err : new Error(String(err)));
