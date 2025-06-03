@@ -156,6 +156,7 @@ export default async function SharedPage({
       product: found?.currentProduct?.productId,
       version: found?.currentVersion?.versionId,
       tab: found?.currentTab?.title,
+      path: found.node.slug,
     },
     replaceHref,
   });

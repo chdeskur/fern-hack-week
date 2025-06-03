@@ -47,6 +47,7 @@ export default async function SidebarPage({
         product: found?.currentProduct?.productId,
         version: found?.currentVersion?.versionId,
         tab: found?.currentTab?.title,
+        path: found.node.slug,
       },
     });
     // For page nodes, we need to get the page to check if it's a landing page
