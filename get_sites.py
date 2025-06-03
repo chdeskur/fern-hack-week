@@ -28,7 +28,7 @@ while not done:
         url = f"https://api.vercel.com/v10/projects/prod.ferndocs.com/domains?teamId={teamID}&limit=100&order=ASC&since={next}"
 
 # Skip domains in the list below
-skip_list = ["*.ferndocs.app","staging.ferndocs.com","twoslash.ferndocs.com","app.buildwithfern.com","app.ferndocs.com","canary.ferndocs.com","prod.ferndocs.com","fern-docs.skyflow.dev","docs.pinnacle.sh"]
+skip_list = ["*.ferndocs.app","staging.ferndocs.com","twoslash.ferndocs.com","app.buildwithfern.com","app.ferndocs.com","canary.ferndocs.com","prod.ferndocs.com","fern-docs.skyflow.dev","docs.pinnacle.sh","docs.staging.paradex.trade","developers.ada.cx"]
 
 # Write domains out to file
 print(f"Found {len(domains)} domains to check.")

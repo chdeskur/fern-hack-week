@@ -153,7 +153,7 @@ for currently_down_site in sites_down[region]:
         break
 
 if not sites_stayed_down:
-    print("The list of sites down has changed. Updating the test incident to relfect the updated site list.")
+    print("The list of sites down has changed. Updating the test incident to reflect the updated site list.")
     sites_down[other_region]=test_incident_sites_down[other_region]
     updated_json = {
         "incident": {
@@ -163,6 +163,8 @@ if not sites_stayed_down:
     }
 
 # Apply updates
+print("Applying Updates:")
+print(updated_json)
 edit_response = requests.post(f'https://api.incident.io/v2/incidents/{test_incident_id}/actions/edit', headers=auth_header, json=updated_json)
 if edit_response.status_code != 200:
     print(edit_response.json())
