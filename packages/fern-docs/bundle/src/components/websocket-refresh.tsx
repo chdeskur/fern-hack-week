@@ -147,7 +147,7 @@ export function WebSocketRefresh() {
       <div className="animate-slide-down fixed left-1/2 top-0 z-50 -translate-x-1/2">
         <div className="rounded-3 border-border-default mt-6 border bg-white px-4 py-2 shadow-lg">
           <div className="text-(color:--red-a11) font-medium">
-            Failed to connect, please restart server
+            Server connection lost, please refresh the page
           </div>
         </div>
       </div>
