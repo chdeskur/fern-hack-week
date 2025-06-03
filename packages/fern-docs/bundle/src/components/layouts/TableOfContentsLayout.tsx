@@ -22,19 +22,9 @@ export function TableOfContentsLayout({
     !hideTableOfContents &&
     tableOfContents.length > 0;
 
-  if (!showTableOfContents) {
-    return (
-      <HydrationBoundary
-        hydrateAtoms={[[emptyTableOfContentsAtom, !showTableOfContents]]}
-        options={{ enableReHydrate: true }}
-      />
-    );
-  }
-
   return (
     <HydrationBoundary
       hydrateAtoms={[[emptyTableOfContentsAtom, !showTableOfContents]]}
-      options={{ enableReHydrate: true }}
     >
       <aside id={FERN_TOC_ID}>
         {showTableOfContents && (
