@@ -97,7 +97,7 @@ export function createCachedMdxSerializer(
           if (!isDevelopment(domain) && !isPreviewDomain(domain)) {
             const path = options.slug || scope?.path;
             postToEngineeringNotifs(
-              `:rotating_light: Error serializing mdx for ${domain}${path ? "/" + path : ""} with ${String(error)}\n\nMDX content: ${content}`,
+              `:rotating_light: Error serializing mdx for ${domain}${path ? "/" + path : ""} with ${String(error)}\n\nMDX content:\n\`\`\`\n${content}\n\`\`\``,
               "mdx-serializer"
             );
           }
