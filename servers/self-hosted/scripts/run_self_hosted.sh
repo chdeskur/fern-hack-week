@@ -9,8 +9,11 @@ fi
 # --------------------------------------------
 
 source /app/servers/self-hosted/.env
+ORG_NAME=$(jq -r '.organization' < /app/fern/fern.config.json)
+MINIO_BUCKET_NAME=${ORG_NAME}.${MINIO_BUCKET_NAME_SUFFIX}
 
 # --------------------------------------------
+
 
 # map custom domain to local machine
 echo "127.0.0.1 $ORG_NAME.docs.buildwithfern.com.localhost" >> /etc/hosts

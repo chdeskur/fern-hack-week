@@ -78,7 +78,7 @@ describe("Self-hosted docs has a running Postgres instance", () => {
       "ls",
       "minio",
     ]);
-    const orgName = process.env.ORG_NAME;
+    const orgName = "example-org"; // this comes from the fern folder we mount
     expect(minioStatus).toContain(`${orgName}.docs.buildwithfern.com`);
   });
 });
