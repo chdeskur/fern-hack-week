@@ -30,6 +30,45 @@ export interface SqueezedMessage {
   toolInvocations?: ToolInvocation[];
 }
 
+// this is necessary to fix the discrepancy between claude 3.5 and 3.7
+// claude 3.5 automatically adds new lines after tool invocations, specifically
+// after the messages that say `Let me search for that...`
+// claude 3.7 does not do this, which creates bad formatting in the UI
+// this function ensures that message parts have new lines.
+// hopefully this is a temporary fix that can be removed with better model behavior
+export function ensureMessagePartsHaveNewLines(messages: Message[]): Message[] {
+  return messages.map((message) => {
+    if (message.role === "assistant") {
+      let step = 0;
+      if (message.parts) {
+        message.parts = message.parts.map((part) => {
+          if (part.type === "step-start") {
+            step++;
+            return part;
+          } else if (part.type === "text") {
+            if (step > 1) {
+              if (!part.text.startsWith("\n")) {
+                part.text = "\n\n" + part.text;
+                return part;
+              } else {
+                return part;
+              }
+            }
+          }
+          return part;
+        });
+        message.content = message.parts
+          .filter((part) => part.type === "text")
+          .map((part) => part.text)
+          .join("");
+      }
+      return message;
+    } else {
+      return message;
+    }
+  });
+}
+
 export function squeezeMessages(messages: Message[]): SqueezedMessage[] {
   const squeezed: SqueezedMessage[] = [];
 

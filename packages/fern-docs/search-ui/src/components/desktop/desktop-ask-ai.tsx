@@ -53,6 +53,7 @@ import {
 import {
   SqueezedMessage,
   combineSearchResults,
+  ensureMessagePartsHaveNewLines,
   squeezeMessages,
 } from "../chatbot/utils";
 import * as Command from "../cmdk";
@@ -639,7 +640,8 @@ const AskAICommandItems = memo<{
     domain,
     renderActions,
   }): ReactElement<any> => {
-    const squeezedMessages = squeezeMessages(messages);
+    const messagesWithNewLines = ensureMessagePartsHaveNewLines(messages);
+    const squeezedMessages = squeezeMessages(messagesWithNewLines);
 
     const lastConversationRef = useRef<Element | null>(null);
     const lastConversationId =
