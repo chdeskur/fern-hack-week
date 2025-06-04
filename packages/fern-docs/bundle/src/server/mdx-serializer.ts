@@ -50,7 +50,7 @@ export type MdxSerializer = (
   | undefined
 >;
 
-const monitor = new Semaphore(10);
+const monitor = new Semaphore(20);
 
 export function createCachedMdxSerializer(
   loader: Awaited<ReturnType<typeof createCachedDocsLoader>>,

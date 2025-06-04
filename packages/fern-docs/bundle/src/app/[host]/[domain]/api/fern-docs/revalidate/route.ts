@@ -114,13 +114,14 @@ export async function GET(
             method: "GET",
             cache: "no-store",
             headers: { [HEADER_X_FERN_HOST]: domain },
+            signal: AbortSignal.timeout(600_000),
           }
         )
           .then(() => {
             controller.enqueue(`llms-full-revalidated\n`);
           })
           .catch((e: unknown) => {
-            console.error(e);
+            console.error(`[llms-full-revalidate] error: ${JSON.stringify(e)}`);
             controller.enqueue(
               `llms-full-revalidate-failed:error=${escapeRegExp(String(e))}\n`
             );
@@ -253,6 +254,7 @@ export async function GET(
                       method: "HEAD",
                       cache: "no-store",
                       headers: { [HEADER_X_FERN_HOST]: domain },
+                      signal: AbortSignal.timeout(600_000),
                     }
                   );
                   if (!res?.ok) {
@@ -262,7 +264,9 @@ export async function GET(
                   }
                   controller.enqueue(`revalidated:${url}\n`);
                 } catch (e) {
-                  console.error(e);
+                  console.error(
+                    `[page-revalidate] error: ${JSON.stringify(e)}`
+                  );
                   controller.enqueue(
                     `revalidate-failed:url=${url}:error=${escapeRegExp(String(e))}\n`
                   );
@@ -300,10 +304,13 @@ export async function GET(
                     docs.baseUrl.domain
                   ).toString(),
                 }),
+                signal: AbortSignal.timeout(600_000),
               }
             );
-          } catch (error) {
-            console.error("Failed to regenerate homepage images", error);
+          } catch (e) {
+            console.error(
+              `[homepage-image-revalidate] error: ${JSON.stringify(e)}`
+            );
           }
         }
 

@@ -334,6 +334,7 @@ function getMdxBundlerService() {
 }
 
 // if no domain is provided, store in a twoslash cache
+// if block fails to process, returns the original code, unformatted
 async function processTwoslashBlocks(
   content: string,
   domain: string
@@ -347,7 +348,6 @@ async function processTwoslashBlocks(
     return content;
   }
 
-  console.log("Found twoslash code blocks in content");
   const originalContent = content;
 
   // Extract all twoslash code blocks
@@ -369,8 +369,6 @@ async function processTwoslashBlocks(
     }
   }
 
-  console.log(`Found ${twoslashBlocks.length} twoslash blocks to process`);
-
   if (twoslashBlocks.length === 0) {
     return content;
   }
@@ -388,11 +386,6 @@ async function processTwoslashBlocks(
     await Promise.race([
       Promise.all(
         twoslashBlocks.map(async (block) => {
-          console.log(
-            "Processing twoslash block:",
-            block.codeContent.substring(0, 100) + "..."
-          );
-
           const ignoreErrors = block.codeContent.includes("noErrors")
             ? ""
             : "// @noErrors\n";
@@ -404,7 +397,6 @@ async function processTwoslashBlocks(
             const cached = await kvGet(domain, `twoslash:${block.codeContent}`);
 
             if (cached != null) {
-              console.log("Using cached TwoSlash code...");
               result = cached.value;
             } else {
               console.log("Sending request to serialize service...");
@@ -433,8 +425,6 @@ async function processTwoslashBlocks(
               kvSet(domain, `twoslash:${block.codeContent}`, result);
             }
 
-            console.log("Successfully received serialized result");
-
             // Replace only this specific block
             const twoSlashContent = {
               code: result.code,
@@ -452,11 +442,8 @@ async function processTwoslashBlocks(
               );
               content = content.replace(/\/>[\s\S]*?<\/CodeBlocks>/, "/>");
             }
-
-            console.log("Successfully replaced twoslash block with component");
           } catch (error) {
             console.error("Error processing twoslash block:", error);
-            // If there's an error, we keep the original content for this block
           }
         })
       ),
@@ -464,7 +451,6 @@ async function processTwoslashBlocks(
     ]);
   } catch (error) {
     console.error("TwoSlash processing timed out:", error);
-    // If the entire batch times out, we keep the original content for all blocks
   }
 
   return content;
@@ -511,6 +497,8 @@ async function kvGet(
     if (cached && cached.version === TWOSLASH_SEMANTIC_VERSION) {
       return cached;
     }
+
+    console.debug(`Could not find key ${key}. Using MDX service instead...`);
     return null;
   } catch (error) {
     console.warn(`Failed to get kv key ${key}`, error);

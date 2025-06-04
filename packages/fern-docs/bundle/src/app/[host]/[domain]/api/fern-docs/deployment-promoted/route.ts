@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
 
   await batchQueue({
     queueName: `domain-promoted.${VERCEL_DEPLOYMENT_ID}`,
-    parallelism: 10, // slow down the rate of requests to better balance the load on Vercel
+    parallelism: 5, // slow down the rate of requests to better balance the load on Vercel
     endpoint: "/api/fern-docs/revalidate?reindex=false",
     requests: metadatas.map((metadata) => ({
       host: metadata.domain,

@@ -23,10 +23,6 @@ export default async function ExplorerPage({
 
   const slug = FernNavigation.slugjoin(slugProp);
 
-  console.debug(
-    `[${domain}] Loading intercepted API Explorer page for ${slug}`
-  );
-
   const loader = await createCachedDocsLoader(
     host,
     domain,
