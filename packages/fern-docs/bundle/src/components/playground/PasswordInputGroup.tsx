@@ -19,9 +19,7 @@ export const PasswordInputGroup = forwardRef<HTMLInputElement, FernInputProps>(
             <FernButton
               variant="minimal"
               icon={<Eye />}
-              onMouseDown={showPassword.setTrue}
-              onMouseUp={showPassword.setFalse}
-              onMouseOut={showPassword.setFalse}
+              onClick={showPassword.toggleValue}
             />
           ) : (
             props.rightElement
