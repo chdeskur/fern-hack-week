@@ -76,6 +76,7 @@ export declare namespace FernDropdown {
       "data-testid"?: string;
     };
     triggerAsChild?: boolean;
+    radioGroupProps?: ComponentProps<typeof DropdownMenu.RadioGroup>;
   }
 }
 
@@ -100,6 +101,7 @@ export const FernDropdown = forwardRef<
       onClick,
       contentProps,
       triggerAsChild = true,
+      radioGroupProps = {},
     },
     ref
   ): ReactElement => {
@@ -136,6 +138,7 @@ export const FernDropdown = forwardRef<
               value={value}
               onValueChange={onValueChange}
               onClick={onClick}
+              {...radioGroupProps}
             >
               {options.map((option, idx) =>
                 option.type === "value" ? (

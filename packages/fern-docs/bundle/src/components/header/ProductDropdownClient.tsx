@@ -72,7 +72,10 @@ export function ProductDropdownClient({
       side="bottom"
       align={isDesktop ? "start" : "center"}
       triggerAsChild={false}
-      className="w-full lg:w-auto"
+      className="fern-product-selector w-full lg:w-auto"
+      radioGroupProps={{
+        className: "fern-product-selector-radio-group",
+      }}
     >
       <div
         className={cn("product-dropdown-trigger hidden h-9", {

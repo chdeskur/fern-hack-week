@@ -94,7 +94,10 @@ export function VersionDropdownClient({
       side="bottom"
       align={isDesktop ? "start" : "center"}
       triggerAsChild={false}
-      className="w-full lg:w-auto"
+      className="fern-version-selector w-full lg:w-auto"
+      radioGroupProps={{
+        className: "fern-version-selector-radio-group",
+      }}
     >
       <>
         <div
