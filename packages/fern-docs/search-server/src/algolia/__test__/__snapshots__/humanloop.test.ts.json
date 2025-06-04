@@ -211,7 +211,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Getting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.\nGetting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.",
+    "description": "Getting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.",
     "content": "Create a Humanloop Account\nIf you haven’t already, create an account or log in to Humanloop\nAdd an OpenAI API Key\nIf you’re the first person in your organization, you’ll need to add an API key to a model provider.\nGo to OpenAI and grab an API key\n\nIn Humanloop Organization Settings set up OpenAI as a model provider.\n\n\n\n\nUsing the Prompt Editor will use your OpenAI credits in the same way that the OpenAI playground does. Keep your API keys for Humanloop and the model providers private."
   },
   {
@@ -1732,7 +1732,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Logs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.\nLogs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.",
+    "description": "Logs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.",
     "content": "All Prompts, Tools and Evaluators produce Logs. A Log contains the inputs and the outputs and tracks which version of Prompt/Tool/Evaluator was used.\nFor the example of a Prompt above, the Log would have one input called ‘topic’ and the output will be the completion.\n\n\nA Log which contains an input query"
   },
   {
@@ -1767,7 +1767,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Deployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.\nDeployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.",
+    "description": "Deployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.",
     "content": "Environments enable you to deploy different versions of your files to specific environments, allowing you to separately manage the deployment workflow between testing and production. With environments, you have the control required to manage the full LLM deployment lifecycle."
   },
   {
@@ -12437,7 +12437,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Getting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.\nGetting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.",
+    "description": "Getting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.",
     "content": "Create a Humanloop Account\nIf you haven’t already, create an account or log in to Humanloop\nAdd an OpenAI API Key\nIf you’re the first person in your organization, you’ll need to add an API key to a model provider.\nGo to OpenAI and grab an API key\n\nIn Humanloop Organization Settings set up OpenAI as a model provider.\n\n\n\n\nUsing the Prompt Editor will use your OpenAI credits in the same way that the OpenAI playground does. Keep your API keys for Humanloop and the model providers private."
   },
   {
@@ -13958,7 +13958,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Logs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.\nLogs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.",
+    "description": "Logs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.",
     "content": "All Prompts, Tools and Evaluators produce Logs. A Log contains the inputs and the outputs and tracks which version of Prompt/Tool/Evaluator was used.\nFor the example of a Prompt above, the Log would have one input called ‘topic’ and the output will be the completion.\n\n\nA Log which contains an input query"
   },
   {
@@ -13993,7 +13993,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Deployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.\nDeployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.",
+    "description": "Deployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.",
     "content": "Environments enable you to deploy different versions of your files to specific environments, allowing you to separately manage the deployment workflow between testing and production. With environments, you have the control required to manage the full LLM deployment lifecycle."
   },
   {
@@ -24663,7 +24663,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Getting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.\nGetting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.",
+    "description": "Getting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.",
     "content": "Create a Humanloop Account\nIf you haven’t already, create an account or log in to Humanloop\nAdd an OpenAI API Key\nIf you’re the first person in your organization, you’ll need to add an API key to a model provider.\nGo to OpenAI and grab an API key\n\nIn Humanloop Organization Settings set up OpenAI as a model provider.\n\n\n\n\nUsing the Prompt Editor will use your OpenAI credits in the same way that the OpenAI playground does. Keep your API keys for Humanloop and the model providers private."
   },
   {
@@ -25228,7 +25228,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "In this tutorial, you'll build a custom ChatGPT using Next.js and streaming using Humanloop TypeScript SDK.\nIn this tutorial, you'll build a custom ChatGPT using Next.js and streaming using Humanloop TypeScript SDK.",
+    "description": "In this tutorial, you'll build a custom ChatGPT using Next.js and streaming using Humanloop TypeScript SDK.",
     "content": "At the end of this tutorial, you'll have built a simple ChatGPT-style interface using Humanloop as the backend to manage interactions with your model provider, track user engagement and experiment with model configuration.\nIf you just want to leap in, the complete repo for this project is available on GitHub here."
   },
   {
@@ -30103,7 +30103,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Experiments allow you to set up A/B test between multiple different Prompts.\nExperiments allow you to set up A/B test between multiple different Prompts.",
+    "description": "Experiments allow you to set up A/B test between multiple different Prompts.",
     "content": "Experiments allow you to set up A/B test between multiple different Prompts.\nExperiments can be used to compare different prompt templates, different parameter combinations (such as temperature and presence penalties) and even different base models.\nThis enables you to try out alternative prompts or models and use the feedback from your users to determine which works better."
   },
   {
@@ -31580,7 +31580,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "In this guide we will demonstrate how to use Humanloop’s fine-tuning workflow to produce improved models leveraging your user feedback data.\nIn this guide we will demonstrate how to use Humanloop’s fine-tuning workflow to produce improved models leveraging your user feedback data.",
+    "description": "In this guide we will demonstrate how to use Humanloop’s fine-tuning workflow to produce improved models leveraging your user feedback data.",
     "content": "This feature is not available for the Free tier. Please contact us if you wish\nto learn more about our Enterprise plan"
   },
   {
@@ -32907,7 +32907,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Logs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.\nLogs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.",
+    "description": "Logs contain the inputs and outputs of each time a Prompt, Tool or Evaluator is called.",
     "content": "All Prompts, Tools and Evaluators produce Logs. A Log contains the inputs and the outputs and tracks which version of Prompt/Tool/Evaluator was used.\nFor the example of a Prompt above, the Log would have one input called ‘topic’ and the output will be the completion.\n\n\nA Log which contains an input query"
   },
   {
@@ -32938,7 +32938,7 @@
     "authed": false,
     "page_position": 0,
     "type": "markdown",
-    "description": "Deployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.\nDeployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.",
+    "description": "Deployment environments enable you to control the deployment lifecycle of your Prompts and other files between development and production environments.",
     "content": "Environments enable you to deploy your model configurations to specific environments, allowing you to separately manage the deployment workflow between testing and production. With environments, you have the control required to manage the full LLM deployment lifecycle."
   },
   {

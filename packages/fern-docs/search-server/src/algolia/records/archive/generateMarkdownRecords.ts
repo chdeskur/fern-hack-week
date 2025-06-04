@@ -39,12 +39,15 @@ export function generateMarkdownRecords({
 
   const slug = FernNavigation.V1.Slug(node.canonicalSlug ?? node.slug);
 
+  // use a set to de-duplicate records
   // meta descriptions will be pre-pended to the root node, so we need to collect them here:
-  const metaDescriptions = [
-    data.description,
-    data.subtitle ?? data.excerpt,
-    data["og:description"],
-  ];
+  const metaDescriptions = Array.from(
+    new Set([
+      data.description,
+      data.subtitle ?? data.excerpt,
+      data["og:description"],
+    ])
+  );
 
   const rootBreadcrumbs = breadcrumb.map((breadcrumb) => ({
     title: breadcrumb.title,

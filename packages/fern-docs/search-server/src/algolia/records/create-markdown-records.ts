@@ -38,12 +38,15 @@ export function createMarkdownRecords({
 
   const sections = [...splitMarkdownIntoSections(content)];
 
+  // use a set to de-duplicate records
   // meta descriptions will be pre-pended to the root node, so we need to collect them here:
-  const metaDescriptions = [
-    data.description,
-    data.subtitle ?? data.excerpt,
-    data["og:description"],
-  ];
+  const metaDescriptions = Array.from(
+    new Set([
+      data.description,
+      data.subtitle ?? data.excerpt,
+      data["og:description"],
+    ])
+  );
 
   // the root content can be missing if there is a subheading that immediately after the top of the page.
   let rootContent: string | undefined;
