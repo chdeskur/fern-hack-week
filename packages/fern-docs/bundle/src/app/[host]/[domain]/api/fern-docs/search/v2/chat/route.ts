@@ -75,6 +75,7 @@ export async function POST(req: NextRequest) {
   const config = await loader.getConfig();
 
   const { messages, url, source, conversationId } = await req.json();
+
   const isCohere = url.includes("cohere");
   const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
 
@@ -161,6 +162,9 @@ export async function POST(req: NextRequest) {
         conversationId: conversationId,
       },
     });
+
+    const documentIdsToIgnore: string[] = [];
+
     const result = streamText({
       model: languageModel,
       system,
@@ -181,7 +185,9 @@ export async function POST(req: NextRequest) {
               authed: user != null,
               roles: user?.roles ?? [],
               topK: 5,
+              documentIdsToIgnore: documentIdsToIgnore,
             });
+            documentIdsToIgnore.push(...response.map((hit) => hit.id));
             return response.map((hit) => {
               const { domain, pathname, hash, chunk } = hit.attributes;
               const url = `https://${domain}${pathname}${hash ?? ""}`;
@@ -263,6 +269,7 @@ async function runQueryTurbopuffer(
     topK?: number;
     authed?: boolean;
     roles?: string[];
+    documentIdsToIgnore?: string[];
   }
 ) {
   return query == null || query.trimStart().length === 0
@@ -280,5 +287,6 @@ async function runQueryTurbopuffer(
         },
         authed: opts.authed,
         roles: opts.roles,
+        documentIdsToIgnore: opts.documentIdsToIgnore,
       });
 }

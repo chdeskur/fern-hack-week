@@ -27,6 +27,9 @@ interface SemanticSearchOptions {
 
   authed?: boolean;
   roles?: string[];
+
+  // ignore these document ids; used to avoid tool-calls returning the same document over and over
+  documentIdsToIgnore?: string[];
 }
 
 export async function queryTurbopuffer(
@@ -40,6 +43,7 @@ export async function queryTurbopuffer(
     mode = "hybrid",
     authed = false,
     roles = [],
+    documentIdsToIgnore = [],
   }: SemanticSearchOptions
 ): Promise<TurbopufferRecord[]> {
   const tpuf = new Turbopuffer({
@@ -63,6 +67,12 @@ export async function queryTurbopuffer(
       ] as const)
     : ["authed", "NotEq", true];
 
+  const documentIdFilters: FilterCondition[] = documentIdsToIgnore.map((id) => [
+    "id",
+    "NotEq",
+    id,
+  ]);
+
   const versionFilters = filters
     ? filters.filter((f) => f.facet === "version.title")
     : [];
@@ -76,6 +86,7 @@ export async function queryTurbopuffer(
               const filter: FilterCondition = ["version", "Eq", f.value];
               return filter;
             }),
+            ...documentIdFilters,
           ],
         ]
       : authFilter;
