@@ -8,8 +8,6 @@ import {
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { Loadable } from "@fern-ui/loadable";
 
-import { isLocal } from "@/server/isLocal";
-
 import { PlaygroundEndpointRequestFormState } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { usePlaygroundBaseUrl } from "../utils/select-environment";
@@ -42,7 +40,7 @@ export function PlaygroundEndpointContent({
 }: PlaygroundEndpointContentProps): ReactElement<any> {
   const deferredFormState = useDeferredValue(formState);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
-  const requestDisabled = isLocal() || baseUrl?.includes("localhost");
+  const requestDisabled = baseUrl?.includes("localhost");
 
   const form = (
     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
