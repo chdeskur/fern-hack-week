@@ -498,7 +498,9 @@ async function kvGet(
       return cached;
     }
 
-    console.debug(`Could not find key ${key}. Using MDX service instead...`);
+    console.debug(
+      `Could not find key ${hashedKey}. Using MDX service instead...`
+    );
     return null;
   } catch (error) {
     console.warn(`Failed to get kv key ${key}`, error);
