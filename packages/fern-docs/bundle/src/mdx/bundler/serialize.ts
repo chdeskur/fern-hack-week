@@ -78,21 +78,19 @@ async function serializeMdxImpl(
     scope,
     toc = false,
     replaceHref,
-    domain,
   }: {
     loader?: Partial<Pick<DocsLoader, "getFiles" | "getMdxBundlerFiles">>;
     scope?: Record<string, unknown>;
     filename?: string;
     toc?: boolean;
     replaceHref?: RehypeLinksOptions["replaceHref"];
-    domain?: string;
   } = {}
 ): Promise<SerializeMdxResponse> {
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
 
   // Process twoslash blocks if present
-  content = await processTwoslashBlocks(content, domain ?? "twoslash");
+  content = await processTwoslashBlocks(content);
 
   let cwd: string | undefined;
   if (filename != null) {
@@ -335,10 +333,7 @@ function getMdxBundlerService() {
 
 // if no domain is provided, store in a twoslash cache
 // if block fails to process, returns the original code, unformatted
-async function processTwoslashBlocks(
-  content: string,
-  domain: string
-): Promise<string> {
+async function processTwoslashBlocks(content: string): Promise<string> {
   if (
     !(
       content.includes("```ts twoslash") || content.includes("```tsx twoslash")
@@ -394,7 +389,7 @@ async function processTwoslashBlocks(
 
           try {
             let result;
-            const cached = await kvGet(domain, `twoslash:${block.codeContent}`);
+            const cached = await kvGet(block.codeContent);
 
             if (cached != null) {
               result = cached.value;
@@ -422,7 +417,7 @@ async function processTwoslashBlocks(
               }
 
               result = await response.json();
-              kvSet(domain, `twoslash:${block.codeContent}`, result);
+              kvSet(block.codeContent, result);
             }
 
             // Replace only this specific block
@@ -462,7 +457,7 @@ function hashKey(key: string): string {
   return createHash("sha256").update(key).digest("hex");
 }
 
-function kvSet(domain: string, key: string, value: unknown) {
+function kvSet(key: string, value: unknown) {
   if (isLocal()) {
     return;
   }
@@ -470,7 +465,7 @@ function kvSet(domain: string, key: string, value: unknown) {
   after(async () => {
     try {
       const hashedKey = hashKey(key);
-      await kv.hset(domain, {
+      await kv.hset("twoslash", {
         [hashedKey]: {
           value: value,
           version: TWOSLASH_SEMANTIC_VERSION,
@@ -483,17 +478,14 @@ function kvSet(domain: string, key: string, value: unknown) {
   });
 }
 
-async function kvGet(
-  domain: string,
-  key: string
-): Promise<Record<string, string> | null> {
+async function kvGet(key: string): Promise<Record<string, string> | null> {
   if (isLocal()) {
     return null;
   }
 
   try {
     const hashedKey = hashKey(key);
-    const cached = await kv.hget<Record<string, string>>(domain, hashedKey);
+    const cached = await kv.hget<Record<string, string>>("twoslash", hashedKey);
     if (cached && cached.version === TWOSLASH_SEMANTIC_VERSION) {
       return cached;
     }
