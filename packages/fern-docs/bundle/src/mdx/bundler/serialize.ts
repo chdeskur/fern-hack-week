@@ -421,22 +421,8 @@ async function processTwoslashBlocks(content: string): Promise<string> {
             }
 
             // Replace only this specific block
-            const twoSlashContent = {
-              code: result.code,
-              jsxElements: result.jsxElements || [],
-            };
-            content = content.replace(
-              block.fullMatch,
-              `<TwoSlash content={${JSON.stringify(twoSlashContent)}} />`
-            );
-
-            if (content.includes("<CodeBlocks>")) {
-              content = content.replace(
-                /<CodeBlocks>[\s\S]*?<TwoSlash/,
-                "<TwoSlash"
-              );
-              content = content.replace(/\/>[\s\S]*?<\/CodeBlocks>/, "/>");
-            }
+            const twoSlashContent = `<TwoSlash content={${JSON.stringify(result)}} />`;
+            content = content.replace(block.fullMatch, twoSlashContent);
           } catch (error) {
             console.error("Error processing twoslash block:", error);
           }
@@ -446,6 +432,48 @@ async function processTwoslashBlocks(content: string): Promise<string> {
     ]);
   } catch (error) {
     console.error("TwoSlash processing timed out:", error);
+  }
+
+  // remove codeblocks if they surround twoslash
+  if (content.includes("<CodeBlocks>") && content.includes("<TwoSlash")) {
+    const twoSlashPos = content.indexOf("<TwoSlash");
+    if (twoSlashPos !== -1) {
+      const lines = content.split("\n");
+      const twoSlashLineIndex = lines.findIndex((line) =>
+        line.includes("<TwoSlash")
+      );
+
+      if (twoSlashLineIndex !== -1) {
+        // look backwards for opening tag
+        let i = twoSlashLineIndex - 1;
+        while (i >= 0) {
+          const line = lines[i];
+          if (line?.trim() === "<CodeBlocks>") {
+            lines.splice(i, 1);
+            break;
+          } else if (line?.trim() !== "") {
+            i = 0;
+          }
+          i--;
+        }
+
+        // look forwards for closing tag
+        i = twoSlashLineIndex + 2;
+        while (i < lines.length) {
+          const line = lines[i];
+          if (line && line.trim() === "</CodeBlocks>") {
+            lines.splice(i, 1);
+            break;
+          } else if (line?.trim() !== "") {
+            i = lines.length;
+          }
+          i++;
+        }
+
+        // Join the lines back together
+        content = lines.join("\n");
+      }
+    }
   }
 
   return content;
