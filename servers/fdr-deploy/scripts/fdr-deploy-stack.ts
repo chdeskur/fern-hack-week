@@ -510,7 +510,7 @@ export class FdrDeployStack extends Stack {
         cluster,
         cpu: 4096,
         memoryLimitMiB: 8192,
-        desiredCount: 1,
+        desiredCount: 4, // for fallback on failure
         securityGroups: [mdxBundlerSg],
         taskImageOptions: {
           image: (() => {
@@ -559,7 +559,7 @@ export class FdrDeployStack extends Stack {
 
     mdxBundlerService.targetGroup.setAttribute(
       "deregistration_delay.timeout_seconds",
-      "30"
+      "120" // allow bundling to finish if deregistered
     );
 
     mdxBundlerService.loadBalancer.setAttribute(
