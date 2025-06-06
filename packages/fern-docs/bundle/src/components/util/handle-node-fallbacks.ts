@@ -19,7 +19,6 @@ export const getFallbackProduct = (
     if (product) {
       return product;
     }
-    return null;
   }
 
   // 2. Try to find a matching product based on the slug
@@ -54,7 +53,6 @@ export const getFallbackVersion = (
     if (version) {
       return version;
     }
-    return null;
   }
 
   // 2. Find the matching version or default version for the fallback product, if one exists
