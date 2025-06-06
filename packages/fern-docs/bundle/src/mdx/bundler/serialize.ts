@@ -443,31 +443,38 @@ async function processTwoslashBlocks(content: string): Promise<string> {
         line.includes("<TwoSlash")
       );
 
+      let topLine = null;
+      let bottomLine = null;
       if (twoSlashLineIndex !== -1) {
         // look backwards for opening tag
-        let i = twoSlashLineIndex - 1;
+        let i = twoSlashLineIndex;
         while (i >= 0) {
           const line = lines[i];
           if (line?.trim() === "<CodeBlocks>") {
-            lines.splice(i, 1);
+            topLine = i;
             break;
-          } else if (line?.trim() !== "") {
+          } else if (line?.trim() !== "" && !line?.includes("<TwoSlash")) {
             i = 0;
           }
           i--;
         }
 
         // look forwards for closing tag
-        i = twoSlashLineIndex + 2;
+        i = twoSlashLineIndex;
         while (i < lines.length) {
           const line = lines[i];
           if (line && line.trim() === "</CodeBlocks>") {
-            lines.splice(i, 1);
+            bottomLine = i;
             break;
-          } else if (line?.trim() !== "") {
+          } else if (line?.trim() !== "" && !line?.includes("<TwoSlash")) {
             i = lines.length;
           }
           i++;
+        }
+
+        if (bottomLine && topLine) {
+          lines.splice(bottomLine, 1);
+          lines.splice(topLine, 1);
         }
 
         // Join the lines back together
