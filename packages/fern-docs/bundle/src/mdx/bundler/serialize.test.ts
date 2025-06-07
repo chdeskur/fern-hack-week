@@ -256,3 +256,21 @@ const signature2 = await nonHoistedClient.signMessage({
     join(__dirname, "__snapshots__", "twoslash-account-hoisting.js")
   );
 }, 50000);
+
+it("should serialize twoslash-code.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "twoslash-code.mdx"), "utf-8")
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "twoslash-code.js")
+  );
+}, 50000);
+
+it("should serialize twoslash-code-spaces.mdx", async () => {
+  const result = await serializeMdx(
+    readFileSync(join(__dirname, "tests", "twoslash-code-spaces.mdx"), "utf-8")
+  );
+  await expect(deterministic(result?.code)).toMatchFileSnapshot(
+    join(__dirname, "__snapshots__", "twoslash-code-spaces.js")
+  );
+}, 50000);

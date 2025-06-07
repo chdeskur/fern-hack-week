@@ -335,9 +335,7 @@ function getMdxBundlerService() {
 // if block fails to process, returns the original code, unformatted
 async function processTwoslashBlocks(content: string): Promise<string> {
   if (
-    !(
-      content.includes("```ts twoslash") || content.includes("```tsx twoslash")
-    ) ||
+    !content.includes("twoslash") ||
     process.env.NEXT_PUBLIC_TWOSLASH_ENABLED !== "1"
   ) {
     return content;
@@ -345,8 +343,9 @@ async function processTwoslashBlocks(content: string): Promise<string> {
 
   const originalContent = content;
 
-  // Extract all twoslash code blocks
-  const twoslashRegex = /```(?:ts|tsx) twoslash(?:[^`\n]*?)\n([\s\S]*?)\n```/g;
+  // check for twoslash anywhere in the code meta
+  const twoslashRegex =
+    /```(?:ts|tsx)(?:[^`\n]*?)twoslash(?:[^`\n]*?)\n([\s\S]*?)\n```/g;
   const twoslashBlocks: { fullMatch: string; codeContent: string }[] = [];
 
   let match;
@@ -434,57 +433,98 @@ async function processTwoslashBlocks(content: string): Promise<string> {
     console.error("TwoSlash processing timed out:", error);
   }
 
-  // remove codeblocks if they surround twoslash
   if (content.includes("<CodeBlocks>") && content.includes("<TwoSlash")) {
-    const twoSlashPos = content.indexOf("<TwoSlash");
-    if (twoSlashPos !== -1) {
-      const lines = content.split("\n");
-      const twoSlashLineIndex = lines.findIndex((line) =>
-        line.includes("<TwoSlash")
-      );
-
-      let topLine = null;
-      let bottomLine = null;
-      if (twoSlashLineIndex !== -1) {
-        // look backwards for opening tag
-        let i = twoSlashLineIndex;
-        while (i >= 0) {
-          const line = lines[i];
-          if (line?.trim() === "<CodeBlocks>") {
-            topLine = i;
-            break;
-          } else if (line?.trim() !== "" && !line?.includes("<TwoSlash")) {
-            i = 0;
-          }
-          i--;
-        }
-
-        // look forwards for closing tag
-        i = twoSlashLineIndex;
-        while (i < lines.length) {
-          const line = lines[i];
-          if (line && line.trim() === "</CodeBlocks>") {
-            bottomLine = i;
-            break;
-          } else if (line?.trim() !== "" && !line?.includes("<TwoSlash")) {
-            i = lines.length;
-          }
-          i++;
-        }
-
-        if (bottomLine && topLine) {
-          lines.splice(bottomLine, 1);
-          lines.splice(topLine, 1);
-        }
-
-        // Join the lines back together
-        content = lines.join("\n");
-      }
-    }
+    return removeCodeBlocks(content);
   }
 
   return content;
 }
+
+const removeCodeBlocks = (content: string): string => {
+  // remove codeblocks if they surround twoslash
+  const lines = content.split("\n");
+  const twoSlashIndices: number[] = [];
+
+  lines.forEach((line, index) => {
+    if (line.includes("<TwoSlash")) {
+      twoSlashIndices.push(index);
+    }
+  });
+
+  // process each TwoSlash instance in reverse order to maintain correct indices
+  for (const twoSlashLineIndex of twoSlashIndices.reverse()) {
+    let topLine = null;
+    let bottomLine = null;
+
+    // look backwards for opening tag
+    let i = twoSlashLineIndex;
+    while (i >= 0) {
+      const line = lines[i];
+      if (line?.trim() === "<CodeBlocks>") {
+        topLine = i;
+        break;
+      } else if (line?.trim()) {
+        if (line?.includes("```")) {
+          i--;
+          // we've found an mdx code snippet, skip over it
+          while (i >= 0) {
+            const codeLine = lines[i];
+
+            // we've found the beginning of the codeblock
+            if (codeLine?.includes("```")) {
+              break;
+            }
+
+            i--;
+          }
+        } else if (!line.includes("<TwoSlash")) {
+          // we've found a non-code or twoslash line, stop looking
+          i = 0;
+        }
+      }
+
+      i--;
+    }
+
+    // look forwards for closing tag
+    i = twoSlashLineIndex;
+    while (i < lines.length) {
+      const line = lines[i];
+      if (line && line.trim() === "</CodeBlocks>") {
+        bottomLine = i;
+        break;
+      } else if (line?.trim()) {
+        if (line.includes("```")) {
+          // we've found an mdx code snippet, skip over it
+          i++;
+          while (i < lines.length) {
+            const codeLine = lines[i];
+
+            // we've found the beginning of the codeblock
+            if (codeLine?.includes("```")) {
+              break;
+            }
+
+            i++;
+          }
+        } else if (!line.includes("<TwoSlash")) {
+          // we've found a non-code or twoslash line, stop looking
+          i = lines.length;
+        }
+      }
+
+      i++;
+    }
+
+    if (bottomLine && topLine) {
+      lines.splice(bottomLine, 1);
+      lines.splice(topLine, 1);
+    }
+  }
+
+  // Join the lines back together
+  return lines.join("\n");
+};
 
 const TWOSLASH_SEMANTIC_VERSION = "1";
 
