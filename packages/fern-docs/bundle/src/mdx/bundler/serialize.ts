@@ -345,7 +345,7 @@ async function processTwoslashBlocks(content: string): Promise<string> {
 
   // check for twoslash anywhere in the code meta
   const twoslashRegex =
-    /```(?:ts|tsx)(?:[^`\n]*?)twoslash(?:[^`\n]*?)\n([\s\S]*?)\n```/g;
+    /(?:[ \t]*)```(?:ts|tsx)(?:[^`\n]*?)twoslash(?:[^`\n]*?)\n([\s\S]*?)\n(?:[ \t]*)```/g;
   const twoslashBlocks: { fullMatch: string; codeContent: string }[] = [];
 
   let match;
