@@ -39,11 +39,11 @@ export const remarkExtractTitle: Unified.Plugin<[], Mdast.Root> = () => {
       if (yaml == null) {
         tree.children.unshift({
           type: "yaml",
-          value: `title: ${extractedTitle}`,
+          value: `title: "${extractedTitle.replaceAll('"', '\\"')}"`,
         });
       } else {
         const parsedYaml = parseYaml(yaml.value);
-        parsedYaml.title = extractedTitle;
+        parsedYaml.title = `"${extractedTitle.replaceAll('"', '\\"')}"`;
         yaml.value = stringifyYaml(parsedYaml);
       }
     }

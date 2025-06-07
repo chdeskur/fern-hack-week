@@ -34,7 +34,7 @@ describe("remarkExtractTitle", () => {
     const result = await serializeMdx(
       "---\ndescription: Some description\n---\n\n# My Title"
     );
-    expect(result?.frontmatter?.title).toBe("My Title");
+    expect(result?.frontmatter?.title).toBe('"My Title"');
     expect(result?.frontmatter?.description).toBe("Some description");
   });
 
@@ -64,5 +64,15 @@ describe("remarkExtractTitle", () => {
       "---\ntitle: Frontmatter Title\n---\n\n# Page **Heading** with `code`"
     );
     expect(result?.frontmatter?.title).toBe("Frontmatter Title");
+  });
+
+  it("properly sets title when h1 contains a colon", async () => {
+    const result = await serializeMdx("# Page: Title");
+    expect(result?.frontmatter?.title).toBe("Page: Title");
+  });
+
+  it("properly sets title when h1 contains a quote", async () => {
+    const result = await serializeMdx('# Page: "Title"');
+    expect(result?.frontmatter?.title).toBe('Page: "Title"');
   });
 });
