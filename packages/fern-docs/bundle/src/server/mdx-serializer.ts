@@ -13,7 +13,7 @@ import { RehypeLinksOptions } from "@/mdx/plugins/rehype-links";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 
 import { cacheSeed } from "./cache-seed";
-import { postToEngineeringNotifs } from "./slack";
+import { postToSlack } from "./slack";
 
 export type MdxSerializerOptions = {
   /**
@@ -99,7 +99,8 @@ export function createCachedMdxSerializer(
 
           if (!isDevelopment(domain) && !isPreviewDomain(domain)) {
             const path = options.slug || scope?.path;
-            postToEngineeringNotifs(
+            postToSlack(
+              "#docs-notifs",
               `:rotating_light: Error serializing mdx for ${domain}${path ? "/" + path : ""} with ${String(error)}`,
               "mdx-serializer",
               { message: content, mrkdwn: true }

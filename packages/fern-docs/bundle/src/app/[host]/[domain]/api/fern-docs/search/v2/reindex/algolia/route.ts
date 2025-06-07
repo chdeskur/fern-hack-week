@@ -17,7 +17,7 @@ import {
   fernToken_admin,
 } from "@/server/env-variables";
 import { isLocal } from "@/server/isLocal";
-import { postToEngineeringNotifs } from "@/server/slack";
+import { postToSlack } from "@/server/slack";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -116,7 +116,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       error: String(error),
     });
 
-    postToEngineeringNotifs(
+    postToSlack(
+      "#search-notifs",
       `:rotating_light: [ALGOLIA] Failed to reindex ${domain} with the following error: ${String(error)}`,
       "algolia-reindex"
     );

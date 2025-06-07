@@ -7,7 +7,8 @@ import { RateLimiterManager } from "./rate-limiter";
 
 const RATE_LIMITER_MANAGER = RateLimiterManager.getInstance();
 
-export function postToEngineeringNotifs(
+export function postToSlack(
+  channel: string,
   message: string,
   context: string = "default",
   thread?: {
@@ -42,14 +43,14 @@ export function postToEngineeringNotifs(
 
     const webClient = new WebClient(process.env.SLACK_TOKEN);
     const result = await webClient.chat.postMessage({
-      channel: "#engineering-notifs",
+      channel: channel,
       text: message,
     });
 
     if (result.ts && VERCEL_DEPLOYMENT_ID) {
       await webClient.chat.postMessage({
         thread_ts: result.ts,
-        channel: "#engineering-notifs",
+        channel: channel,
         text: `View deployment logs: https://vercel.com/buildwithfern/prod.ferndocs.com/${VERCEL_DEPLOYMENT_ID.slice(4)}/logs`,
         unfurl_links: true,
       });
@@ -57,7 +58,7 @@ export function postToEngineeringNotifs(
 
     if (result.ts && thread) {
       await webClient.chat.postMessage({
-        channel: "#engineering-notifs",
+        channel: channel,
         text: thread.message,
         thread_ts: result.ts,
         mrkdwn: thread.mrkdwn,

@@ -60,7 +60,7 @@ import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { isLocal } from "./isLocal";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
-import { postToEngineeringNotifs } from "./slack";
+import { postToSlack } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
 import { cleanBasePath } from "./utils/clean-base-path";
 import { pruneWithAuthState } from "./withRbac";
@@ -287,7 +287,8 @@ export const getMetadata = cache(
       console.log("[getMetadata] cache miss:", metadata);
       return metadata;
     } catch (error) {
-      postToEngineeringNotifs(
+      postToSlack(
+        "#docs-notifs",
         `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`,
         "get-metadata"
       );

@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createCohere } from "@ai-sdk/cohere";
 import { createOpenAI } from "@ai-sdk/openai";
-import { WebClient } from "@slack/web-api";
 import {
   EmbeddingModel,
   InvalidToolArgumentsError,
@@ -37,11 +36,11 @@ import {
   turbopufferApiKey,
 } from "@/server/env-variables";
 import { isLocal } from "@/server/isLocal";
+import { postToSlack } from "@/server/slack";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 60;
 export const revalidate = 0;
-const engNotifsSlackChannel = "#engineering-notifs";
 
 const modelMap: Record<string, { modelId: string; region: string }> = {
   "claude-3.5": {
@@ -237,19 +236,10 @@ export async function POST(req: NextRequest) {
 
         const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`;
         console.error(msg);
-        const slackToken = process.env.SLACK_TOKEN;
-        if (slackToken) {
-          const slackMsg = `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``;
-          const webClient = new WebClient(slackToken);
-          webClient.chat
-            .postMessage({
-              channel: engNotifsSlackChannel,
-              text: slackMsg,
-            })
-            .catch((err: unknown) => {
-              console.error(err);
-            });
-        }
+        postToSlack(
+          "#search-notifs",
+          `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``
+        );
         return msg;
       },
     });
