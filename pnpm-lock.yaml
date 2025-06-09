@@ -672,6 +672,9 @@ importers:
       '@ai-sdk/amazon-bedrock':
         specifier: ^2.0.5
         version: 2.0.5(zod@3.24.1)
+      '@ai-sdk/anthropic':
+        specifier: ^1.2.12
+        version: 1.2.12(zod@3.24.1)
       '@ai-sdk/cohere':
         specifier: ^1.2.9
         version: 1.2.9(zod@3.24.1)

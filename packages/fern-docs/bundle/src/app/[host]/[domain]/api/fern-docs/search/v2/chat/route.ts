@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
+import { createAnthropic } from "@ai-sdk/anthropic";
 import { createCohere } from "@ai-sdk/cohere";
 import { createOpenAI } from "@ai-sdk/openai";
 import {
@@ -31,6 +32,7 @@ import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import {
+  anthropicApiKey,
   cohereApiKey,
   openaiApiKey,
   turbopufferApiKey,
@@ -84,6 +86,10 @@ export async function POST(req: NextRequest) {
     // TODO: remove command-r-plus once fern generate change is resolved
     const cohere = createCohere({ apiKey: cohereApiKey() });
     languageModel = wrapAISDKModel(cohere("command-a-03-2025"));
+  } else if (model === "claude-4") {
+    // claude-4 goes through anthropic directly
+    const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
+    languageModel = wrapAISDKModel(anthropic("claude-4-sonnet-20250514"));
   } else {
     let modelId = modelMap["claude-3.5"]?.modelId || ""; // defaults for improper docs.yml entries
     let region = modelMap["claude-3.5"]?.region || "";
