@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { SELF_HOSTED_CONTAINER_NAME } from "./setupSelfHostedDocs";
 
-dotenv.config({ path: path.join(__dirname, "../../../.env") });
+dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 async function getContainerId() {
   const { stdout: containerId } = await execa("docker", [

@@ -8,7 +8,7 @@ const SELF_HOSTED_IMAGE_TAG_NAME = `${SELF_HOSTED_IMAGE_NAME}:${SELF_HOSTED_TAG}
 const SELF_HOSTED_CONTAINER_PORT = 5433;
 
 // we have a fern folder we use for testing
-const FERN_DIR = path.join(__dirname, "fern");
+const FERN_DIR = path.join(__dirname, "../../fern");
 
 async function stopContainer(containerName: string) {
   try {
@@ -35,7 +35,7 @@ export async function setup() {
 
   await execa(
     "pnpm",
-    ["docker:self-hosted", SELF_HOSTED_IMAGE_NAME, SELF_HOSTED_TAG],
+    ["docker:build", SELF_HOSTED_IMAGE_NAME, SELF_HOSTED_TAG],
     { stdio: "inherit" }
   );
   const { stdout: containerId } = await execa("docker", [
