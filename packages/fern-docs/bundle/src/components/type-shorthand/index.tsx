@@ -33,17 +33,18 @@ export function renderTypeShorthandRoot(
   );
   return (
     <span className="fern-api-property-meta">
-      <span>{typeShorthand}</span>
-      {unwrapped.isOptional ? (
-        !hideOptional ? (
-          <span>Optional</span>
-        ) : (
-          false
-        )
-      ) : !isResponse ? (
-        <span className="text-(color:--red-a11)">Required</span>
-      ) : (
+      <span>
+        {typeShorthand}
+        {isResponse && unwrapped.isOptional ? " or null" : false}
+      </span>
+      {isResponse ? (
         false
+      ) : !unwrapped.isOptional ? (
+        <span className="text-(color:--red-a11)">Required</span>
+      ) : hideOptional ? (
+        false
+      ) : (
+        <span>Optional</span>
       )}
       {unwrapped.shape.type === "primitive" &&
         toPrimitiveTypeLabels({ primitive: unwrapped.shape.value }).map(
