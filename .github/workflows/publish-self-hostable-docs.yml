@@ -44,5 +44,5 @@ jobs:
 
       - name: Push to Docker Hub
         run: |
-          docker tag fernplatform/self-hosted-docs:latest fernplatform/self-hosted-docs:${{ github.event.inputs.version || 'latest' }}
+          docker tag fern-self-hosted:latest fernapi/fern-self-hosted:${{ github.event.inputs.version || 'latest' }}
           docker push fernapi/fern-self-hosted:${{ github.event.inputs.version || 'latest' }}
