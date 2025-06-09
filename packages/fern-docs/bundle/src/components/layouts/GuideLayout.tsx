@@ -1,8 +1,6 @@
 import { Prose } from "@/mdx/components/prose";
 import { SetLayout } from "@/state/layout";
 
-import { AsideAwareDiv } from "./AsideAwareDiv";
-
 interface GuideLayoutProps {
   header?: React.ReactNode;
   toc?: React.ReactNode;
@@ -20,7 +18,7 @@ export function GuideLayout({
     <>
       <SetLayout value="guide" />
       {toc}
-      <AsideAwareDiv className="fern-layout-guide">
+      <div className="fern-layout-guide">
         <article className="w-content-width max-w-full">
           {header}
           <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
@@ -28,7 +26,7 @@ export function GuideLayout({
           </Prose>
           {footer}
         </article>
-      </AsideAwareDiv>
+      </div>
     </>
   );
 }

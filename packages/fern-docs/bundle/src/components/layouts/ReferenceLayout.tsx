@@ -8,8 +8,6 @@ import { useIsMobile } from "@fern-ui/react-commons";
 import { Prose } from "@/mdx/components/prose";
 import { SetLayout } from "@/state/layout";
 
-import { AsideAwareDiv } from "./AsideAwareDiv";
-
 interface ReferenceLayoutProps {
   header?: React.ReactNode;
   aside?: React.ReactNode;
@@ -43,7 +41,7 @@ export const ReferenceLayout = React.forwardRef<
 ) {
   const isMobile = useIsMobile();
   return (
-    <AsideAwareDiv className="fern-layout-reference">
+    <div className="fern-layout-reference">
       <SetLayout value="reference" />
       <article
         {...props}
@@ -79,6 +77,6 @@ export const ReferenceLayout = React.forwardRef<
           </Prose>
         </div>
       </article>
-    </AsideAwareDiv>
+    </div>
   );
 });

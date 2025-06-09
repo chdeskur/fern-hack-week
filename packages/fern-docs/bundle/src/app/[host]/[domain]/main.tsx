@@ -49,12 +49,16 @@ export async function DocsMainContent({
   );
 
   if (node.type === "changelog") {
+    // only render full page mode for changelog tabs
+    const changelogType = parents[parents.length - 1]?.type ?? "sidebarGroup";
+
     return (
       <ChangelogPage
         loader={loader}
         serialize={serialize}
         nodeId={node.id}
         breadcrumb={breadcrumb}
+        isFullPage={changelogType === "tabbed"}
       />
     );
   }

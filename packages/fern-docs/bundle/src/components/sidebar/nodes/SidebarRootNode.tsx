@@ -4,7 +4,6 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { DocsLoader } from "@/server/docs-loader";
 import { withPrunedNavigation } from "@/server/withPrunedNavigation";
-import { SetEmptySidebar } from "@/state/layout";
 
 import { SidebarRootChild } from "./SidebarRootChild";
 
@@ -75,15 +74,6 @@ export async function SidebarRootNode({
 
   return (
     <>
-      <SetEmptySidebar
-        value={
-          children.length === 0 ||
-          (children.length === 1 &&
-            children[0]?.type === "sidebarGroup" &&
-            children[0].children.length === 1 &&
-            children[0].children[0]?.type === "page")
-        }
-      />
       {children.length > 0 && (
         <ul className="fern-sidebar-group space-y-6 lg:px-1">
           {children.map((child) => (

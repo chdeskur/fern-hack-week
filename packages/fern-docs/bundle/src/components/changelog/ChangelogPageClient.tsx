@@ -39,11 +39,13 @@ export default function ChangelogPageClient({
   anchorIds,
   overview,
   entries,
+  isFullPage,
 }: {
   node: FernNavigation.ChangelogNode;
   anchorIds: Record<string, FernNavigation.PageId>;
   overview: React.ReactNode;
   entries: Record<string, React.ReactNode>;
+  isFullPage: boolean;
 }): ReactElement<any> {
   const flattenedEntries = useMemo(() => flattenChangelogEntries(node), [node]);
   const chunkedEntries = useMemo(
@@ -146,7 +148,7 @@ export default function ChangelogPageClient({
         hideTableOfContents={true}
       />
       {/* TODO(cd): treat as a guide for now, update for large-screen changelog */}
-      <AsideAwareDiv className="fern-layout-changelog">
+      <AsideAwareDiv className="fern-layout-changelog" isFullPage={isFullPage}>
         <article className="max-w-full">
           <SetLayout value="guide" />
           <HideBuiltWithFern>

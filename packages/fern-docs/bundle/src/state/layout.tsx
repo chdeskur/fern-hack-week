@@ -28,46 +28,15 @@ export function useLayout() {
   return useAtomValue(layoutAtom);
 }
 
-export const emptySidebarAtom = atom<boolean>(false);
-export const emptyTableOfContentsAtom = atom<boolean>(false);
-
-export function SetEmptySidebar({ value }: { value: boolean }) {
-  const setEmptySidebar = useSetAtom(emptySidebarAtom);
-  useEffect(() => {
-    setEmptySidebar(value);
-  }, [value, setEmptySidebar]);
-  return null;
-}
-
-export function SetEmptyTableOfContents({ value }: { value: boolean }) {
-  const setEmptyTableOfContents = useSetAtom(emptyTableOfContentsAtom);
-  useEffect(() => {
-    setEmptyTableOfContents(value);
-  }, [value, setEmptyTableOfContents]);
-  return null;
-}
-
 export function useShouldHideAsides() {
   const isSidebarFixed = useAtomValue(isSidebarFixedAtom);
-  const layout = useLayout();
-  const emptySidebar = useAtomValue(emptySidebarAtom);
   const isLandingPage = useAtomValue(isLandingPageAtom);
-
-  // only guides and overviews currently have table of contents
-  const emptyTableOfContents =
-    useAtomValue(emptyTableOfContentsAtom) ||
-    (layout !== "guide" && layout !== "overview");
-
-  // page layout should supersede a fixed sidebar
-  if (layout === "custom" || layout === "page" || isLandingPage) {
-    return true;
-  }
 
   if (isSidebarFixed) {
     return false;
   }
 
-  return emptySidebar && emptyTableOfContents;
+  return isLandingPage;
 }
 
 export function HideAsides({ force }: { force?: boolean }) {
@@ -75,6 +44,10 @@ export function HideAsides({ force }: { force?: boolean }) {
   if (!hideAsides && !force) {
     return null;
   }
+  return <HiddenSidebar />;
+}
+
+export function HiddenSidebar() {
   return (
     <style jsx global>{`
       #fern-toc,

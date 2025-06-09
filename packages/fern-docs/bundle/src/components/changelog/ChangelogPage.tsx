@@ -23,11 +23,13 @@ export default async function ChangelogPage({
   serialize,
   nodeId,
   breadcrumb,
+  isFullPage,
 }: {
   loader: DocsLoader;
   serialize: MdxSerializer;
   nodeId: FernNavigation.NodeId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  isFullPage: boolean;
 }) {
   const node = await loader.getNavigationNode(nodeId);
   if (node.type !== "changelog") {
@@ -93,6 +95,7 @@ export default async function ChangelogPage({
           ] as const;
         })
       )}
+      isFullPage={isFullPage}
     />
   );
 }

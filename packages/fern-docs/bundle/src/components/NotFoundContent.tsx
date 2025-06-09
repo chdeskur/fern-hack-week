@@ -2,14 +2,15 @@ import "server-only";
 
 import { FaIcon } from "@fern-docs/components";
 
-import { HideAsides } from "@/state/layout";
+import { HiddenSidebar } from "@/state/layout";
 
 import ReturnHomeButton from "./ReturnHomeButton";
 
+// todo: don't hide the sidebar if disable-header is true
 export default async function NotFoundContent() {
   return (
     <>
-      <HideAsides force />
+      <HiddenSidebar />
       <div className="flex h-[calc(100svh-var(--header-height)-6rem)] w-screen flex-col items-center justify-center gap-6">
         <FaIcon
           icon="fa-solid fa-triangle-exclamation"

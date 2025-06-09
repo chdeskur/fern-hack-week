@@ -11,12 +11,13 @@ import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { HideAsides, SetLayout } from "@/state/layout";
+import { HiddenSidebar, SetLayout } from "@/state/layout";
 
 import { AsideAwareDiv } from "../layouts/AsideAwareDiv";
 import { FooterLayout } from "../layouts/FooterLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
+// sidebar is always hidden on changelog entry pages
 export default function ChangelogEntryPage({
   loader,
   serialize,
@@ -33,9 +34,9 @@ export default function ChangelogEntryPage({
   children: React.ReactNode;
 }): ReactElement<any> {
   return (
-    <AsideAwareDiv className="fern-layout-changelog">
+    <AsideAwareDiv className="fern-layout-changelog" isFullPage={true}>
       <SetLayout value="page" />
-      <HideAsides force />
+      <HiddenSidebar />
       <article className="fern-layout-page">
         <HideBuiltWithFern>
           <ChangelogContentLayout as="section" className="mb-8">
