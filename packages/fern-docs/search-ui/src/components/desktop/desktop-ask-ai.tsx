@@ -321,7 +321,7 @@ const DesktopAskAIChat = ({
   renderActions?: (message: SqueezedMessage) => ReactNode;
   darkCodeEnabled?: boolean;
 }) => {
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [inputRef, setInputRef] = useState<HTMLTextAreaElement>();
   const [userScrolled, setUserScrolled] = useState(false);
   const [initialConversation, setInitialConversation] = useAtom(
     initialConversationAtom
@@ -369,14 +369,10 @@ const DesktopAskAIChat = ({
   );
 
   useEffect(() => {
-    if (
-      initialInput &&
-      !chat.messages.map((m) => m.content).includes(initialInput)
-    ) {
-      askAI(initialInput);
+    if (inputRef != null) {
+      inputRef.select();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [inputRef]);
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -505,7 +501,11 @@ const DesktopAskAIChat = ({
         </AskAICommandItems>
       </Command.List>
       <AskAIComposer
-        ref={inputRef}
+        ref={(ref) => {
+          if (ref != null) {
+            setInputRef(ref);
+          }
+        }}
         value={chat.input}
         onValueChange={chat.setInput}
         isLoading={chat.status !== "ready"}
