@@ -69,3 +69,5 @@ deployment-url.txt
 analyze
 
 test-results
+
+**/*.tar.gz
