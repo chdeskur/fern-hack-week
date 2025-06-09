@@ -11,6 +11,7 @@ fi
 source /app/servers/self-hosted/.env
 ORG_NAME=$(jq -r '.organization' < /app/fern/fern.config.json)
 MINIO_BUCKET_NAME=${ORG_NAME}.${MINIO_BUCKET_NAME_SUFFIX}
+NEXT_PUBLIC_DOCS_DOMAIN_URL=${ORG_NAME}.docs.buildwithfern.com
 
 # --------------------------------------------
 
@@ -118,6 +119,25 @@ echo " docs generated successfully"
 
 # --------------  Finish generate docs --------------
 
+# --------------  Start nextapp --------------
+
+echo "Waiting for docs to start at localhost:3000..."
+
+cd /app/nextapp/packages/fern-docs/bundle
+HOSTNAME="0.0.0.0" \
+PORT=3000 \
+NEXT_PUBLIC_FDR_ORIGIN_PORT=8080 \
+NEXT_PUBLIC_FDR_ORIGIN="http://localhost:8080" \
+NEXT_PUBLIC_DOCS_DOMAIN=${NEXT_PUBLIC_DOCS_DOMAIN_URL} \
+NEXT_PUBLIC_IS_LOCAL=1 \
+SELF_HOSTED=1 \
+NEXT_DISABLE_CACHE=1 \
+NODE_PATH=/app/nextapp/.next/standalone/packages/fern-docs/bundle \
+node server.js & docs_pid=$!
+echo "docs_pid: $docs_pid"
+
+# --------------  Finish nextapp --------------
+
 if [ "${RUN_MODE:-}" = "shell" ]; then
     echo "Entering shell mode..."
     exec /bin/sh
@@ -126,3 +146,4 @@ fi
 wait $postgres_pid
 wait $minio_pid
 wait $fdr_pid
+wait $docs_pid

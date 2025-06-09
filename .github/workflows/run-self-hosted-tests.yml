@@ -11,11 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
         uses: ./.github/actions/install
+
+      - name: Compile and build
+        run: pnpm turbo compile codegen build
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+          WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
+
+      - name: Build docs bundle
+        run: pnpm docs:self-hosted-bundle:build
 
       - name: Run tests
         run: pnpm turbo build test:self-hosted --filter=@fern-platform/self-hosted

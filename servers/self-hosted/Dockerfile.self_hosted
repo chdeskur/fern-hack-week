@@ -1,8 +1,10 @@
-FROM node:20.19-alpine3.21 AS base
+FROM node:20.18-alpine3.20 AS base
+
 
 # -----------  Start Postgres setup  -----------
 
 RUN apk update && apk add --no-cache postgresql curl
+
 
 # Set up Postgres data directory and configuration
 RUN mkdir -p /var/lib/postgresql/data && \
@@ -52,7 +54,7 @@ RUN turbo prune @fern-platform/fdr @fern-docs/bundle --docker
 
 # Add lockfile and package.json's
 FROM base AS installer
-RUN apk add --no-cache libc6-compat unzip && \
+RUN apk add --no-cache libc6-compat unzip bash && \
     apk update && \
     npm install -g pnpm@v9.4.0
 
@@ -69,6 +71,8 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 COPY shared shared
 COPY fern fern
+COPY docs_bundle.tar.gz .
+
 
 RUN pnpm turbo --filter=@fern-api/fdr-sdk compile && \
     pnpm turbo --filter=@fern-platform/fdr codegen && \
@@ -93,6 +97,13 @@ COPY servers/self-hosted /app/servers/self-hosted
 
 COPY servers/self-hosted/.env /app/servers/self-hosted/.env
 COPY --from=installer /app/servers/fdr/prisma/schema.prisma /app/servers/fdr/prisma/schema.prisma
+
+# Copy and extract the docs bundle
+
+# Setup Nextapp dependencies
+COPY --from=installer /app/docs_bundle.tar.gz /app/self-hosted.tar.gz
+RUN mkdir -p /app/nextapp && \
+    tar -xzf /app/self-hosted.tar.gz -C /app/nextapp
 
 # ------------ End FDR setup ------------
 
