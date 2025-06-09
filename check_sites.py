@@ -89,7 +89,7 @@ if len(sites_down[region]) == 0:
 
     # If there are still sites down in the other region, just update the sites for this region as being empty.
     if test_incident_id != '':
-        print(f"All sites in {region} now appear to be up, but issues may stil exist in {other_region}. Updating test incident.")
+        print(f"All sites in {region} now appear to be up, but issues may still exist in {other_region}. Updating test incident.")
         sites_down[other_region]=test_incident_sites_down[other_region]
         edit_response = requests.post(f'https://api.incident.io/v2/incidents/{test_incident_id}/actions/edit', headers=auth_header, json={
             "incident": {
@@ -133,34 +133,44 @@ if incident_id != '':
 
 
 # Look for any currently down sites that are still down
-sites_stayed_down = False
 for currently_down_site in sites_down[region]:
     for previously_down_site in test_incident_sites_down[region]:
         # If sites have stayed down, convert incident from test -> standard
         if currently_down_site == previously_down_site:
-            sites_stayed_down = True
-            print("One or more previously down sites are still down, converting the test incident to standard and updating the site list.")
-            sites_down[other_region]=test_incident_sites_down[other_region]
-            updated_json = {
-                "incident": {
-                    "mode": "standard",
-                    "summary": f"The following sites are down as of {time.strftime('%l:%M%p %Z on %b %d, %Y')}.\n\n\nUS Sites:\n\n- {"\n\n- ".join(sites_down["US"])}\n\n\nEU Sites:\n\n- {"\n\n- ".join(sites_down["EU"])}"
-                },
-                "notify_incident_channel": True
-            }
-            break
-    if sites_stayed_down:
-        break
+            print("One or more previously down sites are still down, closing test incident and opening standard one.")
+            edit_response = requests.post(f'https://api.incident.io/v2/incidents/{test_incident_id}/actions/edit', headers=auth_header, json={"incident": {"incident_status_id": "01HR85VFNXMV8SBQ3FRPMDBCST"},"notify_incident_channel": False})
+            if edit_response.status_code != 200:
+                print(edit_response.json())
+                sys.exit(f"Request failed with status code {edit_response.status_code}")
 
-if not sites_stayed_down:
-    print("The list of sites down has changed. Updating the test incident to reflect the updated site list.")
-    sites_down[other_region]=test_incident_sites_down[other_region]
-    updated_json = {
-        "incident": {
-            "summary": f"The following sites are down as of {time.strftime('%l:%M%p %Z on %b %d, %Y')}.\n\n\nUS Sites:\n\n- {"\n\n- ".join(sites_down["US"])}\n\n\nEU Sites:\n\n- {"\n\n- ".join(sites_down["EU"])}"
-        },
-        "notify_incident_channel": False
-    }
+            print("Test incident closed, opening standard incident")
+            sites_down[other_region]=test_incident_sites_down[other_region]
+            create_response = requests.post('https://api.incident.io/v2/incidents', headers=auth_header, json={
+                "idempotency_key": f"{region}-{time.time()}",
+                "name": incident_name,
+                "incident_status_id": "01HR85VFNXWH1H6976YCEJ5XJB", # Monitoring
+                "severity_id": "01HR85VFNX9NYZG6B5Z40K8Y9V", # Minor
+                "summary": f"The following sites are down as of {time.strftime('%l:%M%p %Z on %b %d, %Y')}.\n\n\nUS Sites:\n\n- {"\n\n- ".join(sites_down["US"])}\n\n\nEU Sites:\n\n- {"\n\n- ".join(sites_down["EU"])}",
+                "visibility": "public"
+                })
+            if create_response.status_code != 200:
+                print(create_response.json())
+                sys.exit(f"Request failed with status code {create_response.status_code}")
+
+            print("Incident created: ", create_response.json()["incident"]["permalink"])
+            
+            exit(1)
+
+
+# Update test incident with new list
+print("The list of sites down has changed. Updating the test incident to reflect the updated site list.")
+sites_down[other_region]=test_incident_sites_down[other_region]
+updated_json = {
+    "incident": {
+        "summary": f"The following sites are down as of {time.strftime('%l:%M%p %Z on %b %d, %Y')}.\n\n\nUS Sites:\n\n- {"\n\n- ".join(sites_down["US"])}\n\n\nEU Sites:\n\n- {"\n\n- ".join(sites_down["EU"])}"
+    },
+    "notify_incident_channel": False
+}
 
 # Apply updates
 print("Applying Updates:")
