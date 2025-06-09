@@ -11,7 +11,7 @@ import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { HiddenSidebar, SetLayout } from "@/state/layout";
+import { SetLayout } from "@/state/layout";
 
 import { AsideAwareDiv } from "../layouts/AsideAwareDiv";
 import { FooterLayout } from "../layouts/FooterLayout";
@@ -36,7 +36,6 @@ export default function ChangelogEntryPage({
   return (
     <AsideAwareDiv className="fern-layout-changelog" isFullPage={true}>
       <SetLayout value="page" />
-      <HiddenSidebar />
       <article className="fern-layout-page">
         <HideBuiltWithFern>
           <ChangelogContentLayout as="section" className="mb-8">

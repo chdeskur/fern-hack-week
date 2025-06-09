@@ -7,7 +7,7 @@ import {
   FERN_SIDEBAR_ID,
   FERN_SIDEBAR_SPACER_ID,
 } from "@/components/constants";
-import { HideAsides, useIsSidebarFixed } from "@/state/layout";
+import { useIsSidebarFixed } from "@/state/layout";
 
 import { MobileMenu } from "./mobile-menu";
 
@@ -59,7 +59,6 @@ function DesktopMenu({
   }
   return (
     <>
-      <HideAsides />
       <aside
         id={FERN_SIDEBAR_ID}
         data-viewport="desktop"

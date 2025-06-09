@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { HiddenSidebar } from "@/state/layout";
+
 // data-aside-state styling is only used in the changelog overview
 // this should be deterministic
 export const AsideAwareDiv = React.forwardRef<
@@ -16,6 +18,7 @@ export const AsideAwareDiv = React.forwardRef<
       {...props}
       data-aside-state={isFullPage ? "hidden" : "visible"}
     >
+      {isFullPage && <HiddenSidebar />}
       {children}
     </div>
   );
