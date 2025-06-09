@@ -167,8 +167,10 @@ export class AuthServiceImpl implements AuthService {
     orgId: string;
     failHard?: boolean;
   }): Promise<boolean> {
-    if (authHeader == null) {
-      throw new UnauthorizedError("Authorization header was not specified");
+    if (authHeader == null || authHeader.trim() === "") {
+      throw new UnauthorizedError(
+        "No authorization header found. Please provide FERN_TOKEN or run fern login."
+      );
     }
     await this.checkUserBelongsToOrg({ authHeader, orgId });
     const token = getTokenFromAuthHeader(authHeader);
@@ -176,13 +178,14 @@ export class AuthServiceImpl implements AuthService {
       config: this.app.config,
       token,
     });
-
     const orgResponse = await venus.organization.get(
       FernVenusApi.OrganizationId(orgId)
     );
     if (!orgResponse.ok) {
       this.logger.error("Failed to make request to venus", orgResponse.error);
-      throw new UnavailableError("Failed to resolve user's organizations");
+      throw new UnavailableError(
+        `The authorization header does not have access to org=${orgId}. Please reach out to support@buildwithfern.com.`
+      );
     }
     const org = orgResponse.body;
     if (failHard && !org.snippetTemplatesAccessEnabled) {
