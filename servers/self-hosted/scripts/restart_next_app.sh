@@ -5,7 +5,11 @@ rm -rf /app/nextapp
 
 # Recreate nextapp directory and extract bundle
 mkdir -p /app/nextapp
-tar -xzf /app/fern-platform/self-hosted.tar.gz -C /app/nextapp
+tar -xzf /app/self-hosted.tar.gz -C /app/nextapp
+
+# Kill any existing next.js app running on port 3000
+# TODO: figure out why this is not working, the hack is to run this manually outside the script first
+# kill -9 $(lsof -ti:3000) >/dev/null 2>&1
 
 # Change to the bundle directory and start the Next.js app
 cd /app/nextapp/packages/fern-docs/bundle
