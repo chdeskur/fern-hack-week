@@ -62,11 +62,15 @@ export function getHarRequest(
       mimeType,
     };
 
-    // filter out request parameters that have no value
+    // filter out request parameters that have no value and are not an array
     if (requestBody.value && typeof requestBody.value === "object") {
       requestBody.value = Object.fromEntries(
         Object.entries(requestBody.value).filter(([_, valueObj]) => {
-          if (typeof valueObj === "object" && valueObj != null) {
+          if (
+            typeof valueObj === "object" &&
+            valueObj != null &&
+            !Array.isArray(valueObj)
+          ) {
             return "value" in valueObj;
           }
           return true;
