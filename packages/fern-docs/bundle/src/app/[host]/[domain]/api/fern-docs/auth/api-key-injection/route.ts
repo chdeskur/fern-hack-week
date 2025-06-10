@@ -44,10 +44,15 @@ export async function GET(
 
   const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
+  // fern_token should be set for JWT auto-populate api key
+  const fern_token_cookie = cookieJar.get("fern_token")?.value;
   const fern_token = fernToken_admin();
   const access_token = cookieJar.get("access_token")?.value;
   const refresh_token = cookieJar.get("refresh_token")?.value;
-  const fernUser = await safeVerifyFernJWTConfig(fern_token, edgeConfig);
+  const fernUser = await safeVerifyFernJWTConfig(
+    fern_token_cookie ?? fern_token,
+    edgeConfig
+  );
 
   // if the JWT is valid, and the user has an API key, return it
   if (fernUser?.api_key != null) {
@@ -55,6 +60,15 @@ export async function GET(
       enabled: true,
       authenticated: true,
       access_token: fernUser.api_key,
+      returnToQueryParam,
+    });
+  }
+
+  if (fernUser?.playground?.initial_state?.auth?.bearer_token) {
+    return NextResponse.json({
+      enabled: true,
+      authenticated: true,
+      access_token: fernUser.playground.initial_state.auth.bearer_token,
       returnToQueryParam,
     });
   }

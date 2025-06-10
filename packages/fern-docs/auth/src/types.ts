@@ -215,6 +215,12 @@ export const JwksSchema = z.object({
   keys: z.array(JwkSchema).describe("Array of JWKs"),
 });
 
+export const ApiKeySchema = z.object({
+  apiKey: z.string(),
+  secret: z.string(),
+});
+
+export type ApiKeyDemo = z.infer<typeof ApiKeySchema>;
 export type FernUser = z.infer<typeof FernUserSchema>;
 export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
 export type SSOWorkOS = z.infer<typeof SSOWorkOSSchema>;

@@ -1,6 +1,7 @@
 export {
   getAuthEdgeConfig,
   getApiKeyInjectionEdgeConfig,
+  getApiKeyInjectionDemoConfig,
 } from "./getAuthEdgeConfig";
 export { getCustomerAnalytics } from "./getCustomerAnalytics";
 export { getEdgeFlags } from "./getEdgeFlags";
