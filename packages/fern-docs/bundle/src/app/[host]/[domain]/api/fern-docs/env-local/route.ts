@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 
 import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
 
 export async function GET() {
-  if (!isLocal() || !isSelfHosted()) {
+  if (!isLocal()) {
     return NextResponse.json(
       {
         error:

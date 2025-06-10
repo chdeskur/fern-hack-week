@@ -29,10 +29,22 @@ export const loadWithUrl = cache(
       async () => {
         const domainWithoutStaging = withoutStaging(domain);
 
-        if (isSelfHosted() || isLocal()) {
-          const docsUrl = isSelfHosted()
-            ? (process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? "")
-            : "/";
+        if (isLocal()) {
+          const response =
+            await provideRegistryService().docs.v2.read.getDocsForUrl({
+              url: FdrAPI.Url("/"),
+            });
+          if (response.ok) {
+            return response.body;
+          }
+          console.error("Failed to load docs", {
+            cause: response.error,
+          });
+          notFound();
+        }
+
+        if (isSelfHosted()) {
+          const docsUrl = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? "";
           if (isSelfHosted() && !docsUrl) {
             notFound();
           }
