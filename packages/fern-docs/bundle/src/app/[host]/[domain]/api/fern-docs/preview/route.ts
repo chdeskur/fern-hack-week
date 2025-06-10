@@ -5,15 +5,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { getEnv } from "@vercel/functions";
 
 import {
+  withDeleteCookie,
+  withSecureCookie,
+} from "@fern-api/docs-server/auth/with-secure-cookie";
+import {
   COOKIE_FERN_DOCS_PREVIEW,
   FERN_DOCS_ORIGINS,
   HEADER_X_FORWARDED_HOST,
-} from "@fern-docs/utils";
+} from "@fern-api/docs-utils";
 
-import {
-  withDeleteCookie,
-  withSecureCookie,
-} from "@/server/auth/with-secure-cookie";
 import { redirectResponse } from "@/server/serverResponse";
 
 export const runtime = "edge";

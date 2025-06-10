@@ -3,8 +3,8 @@ import { RefObject, useEffect } from "react";
 
 import { useInView } from "motion/react";
 
+import { slugToHref } from "@fern-api/docs-utils";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { slugToHref } from "@fern-docs/utils";
 
 export function useApiPageCenterElement(
   ref: RefObject<HTMLDivElement | null>,

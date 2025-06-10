@@ -5,8 +5,8 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { Key, User } from "lucide-react";
 import urlJoin from "url-join";
 
+import { APIKeyInjectionConfigEnabled } from "@fern-api/docs-auth";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { APIKeyInjectionConfigEnabled } from "@fern-docs/auth";
 import { FernButton, FernCard } from "@fern-docs/components";
 
 import { Callout } from "@/mdx/components/callout";

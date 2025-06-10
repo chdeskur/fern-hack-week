@@ -3,23 +3,22 @@ import { NextRequest, NextResponse } from "next/server";
 import { createOpenAI } from "@ai-sdk/openai";
 import { Embedding, embedMany } from "ai";
 
-import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
-import { slugToHref, withoutStaging } from "@fern-docs/utils";
-
-import { track } from "@/server/analytics/posthog";
-import { createCachedDocsLoader } from "@/server/docs-loader";
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { track } from "@fern-api/docs-server/analytics/posthog";
 import {
   fdrEnvironment,
   fernToken_admin,
   openaiApiKey,
   turbopufferApiKey,
-} from "@/server/env-variables";
-import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
-import { postToSlack } from "@/server/slack";
-import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+} from "@fern-api/docs-server/env-variables";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { postToSlack } from "@fern-api/docs-server/slack";
+import { Gate, withBasicTokenAnonymous } from "@fern-api/docs-server/withRbac";
+import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
+import { slugToHref, withoutStaging } from "@fern-api/docs-utils";
+import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
+import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
 
 export const maxDuration = 800; // 13 minutes
 

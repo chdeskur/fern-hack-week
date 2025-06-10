@@ -3,13 +3,13 @@ import { kv } from "@vercel/kv";
 import { streamObject } from "ai";
 import { z } from "zod";
 
+import { algoliaAppId } from "@fern-api/docs-server/env-variables";
 import { SuggestionsSchema } from "@fern-docs/search-server";
 import {
   type AlgoliaRecord,
   SEARCH_INDEX,
 } from "@fern-docs/search-server/algolia";
 
-import { algoliaAppId } from "@/server/env-variables";
 import { models } from "@/server/models";
 
 // Allow streaming responses up to 30 seconds

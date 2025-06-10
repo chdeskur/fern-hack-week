@@ -1,6 +1,7 @@
 import { sortBy, uniq, uniqBy } from "es-toolkit/array";
 
-import { EVERYONE_ROLE } from "../../utils/constants";
+import { EVERYONE_ROLE } from "@fern-api/docs-utils";
+
 import { createRoleFacet } from "./create-role-facet";
 
 /**

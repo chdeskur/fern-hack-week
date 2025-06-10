@@ -5,11 +5,11 @@ import {
   Turbopuffer,
 } from "@turbopuffer/turbopuffer";
 
+import { EVERYONE_ROLE } from "@fern-api/docs-utils";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 
 import { createRoleFacet } from "../shared/roles/create-role-facet";
 import { createPermutations } from "../shared/roles/role-utils";
-import { EVERYONE_ROLE } from "../utils/constants";
 import { TurbopufferRecord } from "./types";
 
 interface SemanticSearchOptions {

@@ -39,9 +39,6 @@
     },
     {
       "path": "../search-server"
-    },
-    {
-      "path": "../utils"
     }
   ]
 }

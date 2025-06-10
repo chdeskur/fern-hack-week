@@ -1,11 +1,12 @@
 import { Metadata, Viewport } from "next/types";
 import { experimental_taintUniqueValue } from "react";
 
+import { isLocal } from "@fern-api/docs-server/isLocal";
+
 import { ConsoleMessage } from "@/components/console-message";
 import { FERN_DOCS_ID } from "@/components/constants";
 import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { WebSocketRefresh } from "@/components/websocket-refresh";
-import { isLocal } from "@/server/isLocal";
 
 import "./globals.css";
 import { Providers } from "./providers";

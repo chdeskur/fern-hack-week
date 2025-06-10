@@ -1,6 +1,6 @@
+import { addLeadingSlash, conformTrailingSlash } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 
 export function createReplaceHref(
   rootSlug: string,

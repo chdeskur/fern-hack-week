@@ -2,13 +2,13 @@ import { unstable_cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { addLeadingSlash, slugToHref } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { addLeadingSlash, slugToHref } from "@fern-docs/utils";
 
 import { generateHtml } from "@/app/utils";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getLlmTxtMetadata } from "@/server/llm-txt-md";

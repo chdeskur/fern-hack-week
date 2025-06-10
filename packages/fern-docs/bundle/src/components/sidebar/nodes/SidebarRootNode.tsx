@@ -1,8 +1,8 @@
 import React from "react";
 
+import { DocsLoader } from "@fern-api/docs-loader";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader } from "@/server/docs-loader";
 import { withPrunedNavigation } from "@/server/withPrunedNavigation";
 
 import { SidebarRootChild } from "./SidebarRootChild";

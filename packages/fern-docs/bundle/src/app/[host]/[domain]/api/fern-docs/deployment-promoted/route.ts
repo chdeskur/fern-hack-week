@@ -5,17 +5,17 @@ import { getEnv } from "@vercel/functions";
 import { kv } from "@vercel/kv";
 import { uniq } from "es-toolkit/array";
 
+import { getMetadata } from "@fern-api/docs-loader";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import {
   FERN_DOCS_BUILDWITHFERN_COM,
   FERN_DOCS_DEV_BUILDWITHFERN_COM,
   FERN_DOCS_FERNDOCS_APP,
   FERN_DOCS_STAGING_BUILDWITHFERN_COM,
   withoutStaging,
-} from "@fern-docs/utils";
+} from "@fern-api/docs-utils";
 
-import { getMetadata } from "@/server/docs-loader";
-import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
 import { batchQueue } from "@/server/queue";
 
 export async function POST(request: NextRequest) {

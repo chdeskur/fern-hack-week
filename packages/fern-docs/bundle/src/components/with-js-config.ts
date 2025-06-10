@@ -1,6 +1,5 @@
+import type { FileData } from "@fern-api/docs-server/types";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-
-import type { FileData } from "@/server/types";
 
 import type { JsConfig } from "./JavascriptProvider";
 

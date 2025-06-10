@@ -2,12 +2,12 @@ import "server-only";
 
 import { Metadata } from "next/types";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { getFernToken } from "@/app/fern-token";
 import { getMetadataTitleFromPage } from "@/components/seo";
 import SharedPage from "@/components/shared-page";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export default async function DynamicPage(props: {
   params: Promise<{ host: string; domain: string; slug: string }>;

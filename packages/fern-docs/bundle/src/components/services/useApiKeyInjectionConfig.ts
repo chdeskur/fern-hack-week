@@ -1,4 +1,4 @@
-import type { APIKeyInjectionConfig } from "@fern-docs/auth";
+import type { APIKeyInjectionConfig } from "@fern-api/docs-auth";
 
 import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
 

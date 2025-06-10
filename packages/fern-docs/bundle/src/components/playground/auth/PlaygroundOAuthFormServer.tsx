@@ -1,7 +1,6 @@
+import { DocsLoader } from "@fern-api/docs-loader";
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-
-import { DocsLoader } from "@/server/docs-loader";
 
 import { PlaygroundBearerAuthForm } from "./PlaygroundBearerAuthForm";
 import { FoundOAuthReferencedEndpointForm } from "./PlaygroundOAuthForm";

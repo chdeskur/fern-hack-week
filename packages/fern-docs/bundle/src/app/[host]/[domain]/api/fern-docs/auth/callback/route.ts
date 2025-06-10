@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { FernNextResponse } from "@fern-api/docs-server/FernNextResponse";
+import { getAllowedRedirectUrls } from "@fern-api/docs-server/auth/allowed-redirects";
+import { preferPreview } from "@fern-api/docs-server/auth/origin";
+import { getReturnToQueryParam } from "@fern-api/docs-server/auth/return-to";
+import { safeUrl } from "@fern-api/docs-server/safeUrl";
+import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 
-import { FernNextResponse } from "@/server/FernNextResponse";
-import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
-import { preferPreview } from "@/server/auth/origin";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
-import { safeUrl } from "@/server/safeUrl";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const runtime = "edge";
 

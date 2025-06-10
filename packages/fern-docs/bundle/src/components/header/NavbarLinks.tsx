@@ -4,11 +4,11 @@ import React from "react";
 
 import { ArrowRight } from "lucide-react";
 
+import { DocsLoader } from "@fern-api/docs-loader";
 import { cn } from "@fern-docs/components";
 
 import { FernLinkButton } from "@/components/FernLinkButton";
 import { FaIconServer } from "@/components/fa-icon-server";
-import { DocsLoader } from "@/server/docs-loader";
 import type { NavbarLink, NavbarLink as NavbarLinkType } from "@/state/types";
 
 import { GitHubWidget } from "./GitHubWidget";

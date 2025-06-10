@@ -19,6 +19,10 @@ import remarkSmartypants from "remark-smartypants";
 import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import { noop } from "ts-essentials";
 
+import { DocsLoader } from "@fern-api/docs-loader";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { FileData } from "@fern-api/docs-server/types";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import {
   Hast,
@@ -36,11 +40,6 @@ import {
   remarkInjectEsm,
   remarkSanitizeAcorn,
 } from "@fern-docs/mdx/plugins";
-
-import { DocsLoader } from "@/server/docs-loader";
-import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
-import { FileData } from "@/server/types";
 
 import { getMDXExport } from "../get-mdx-export";
 import { rehypeAccordionNestedHeaders } from "../plugins/rehype-accordion-nested-headers";

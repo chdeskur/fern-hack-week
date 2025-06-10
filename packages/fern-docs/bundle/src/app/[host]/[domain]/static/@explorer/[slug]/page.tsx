@@ -3,15 +3,15 @@ import "server-only";
 import { RedirectType, redirect } from "next/navigation";
 import React from "react";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { conformTrailingSlash } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { conformTrailingSlash } from "@fern-docs/utils";
 
 import {
   ExplorerContent,
   NoEndpointSelected,
 } from "@/components/playground/ExplorerContent";
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export default async function ExplorerPage({
   params,

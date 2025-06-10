@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { withoutStaging } from "@fern-docs/utils";
+import { withoutStaging } from "@fern-api/docs-utils";
 
 import { getEdge } from "./getEdge";
 import { isLocal } from "./isLocal";

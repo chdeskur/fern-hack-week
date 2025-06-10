@@ -1,5 +1,6 @@
 import "server-only";
 
+import { DocsLoader, createPruneKey } from "@fern-api/docs-loader";
 import {
   ApiDefinition,
   createEndpointContext,
@@ -9,7 +10,6 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
-import { DocsLoader, createPruneKey } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { EndpointContent } from "./endpoints/EndpointContent";

@@ -4,7 +4,18 @@ import {
   NextResponse,
 } from "next/server";
 
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { rewritePosthog } from "@fern-api/docs-server/analytics/rewritePosthog";
+import { createGetAuthStateEdge } from "@fern-api/docs-server/auth/getAuthStateEdge";
+import { preferPreview } from "@fern-api/docs-server/auth/origin";
+import { withSecureCookie } from "@fern-api/docs-server/auth/with-secure-cookie";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import {
+  JSON_PATTERN,
+  MARKDOWN_PATTERN,
+  RSS_PATTERN,
+} from "@fern-api/docs-server/patterns";
+import { withPathname } from "@fern-api/docs-server/withPathname";
+import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import {
   COOKIE_FERN_TOKEN,
   HEADER_X_FERN_BASEPATH,
@@ -14,17 +25,9 @@ import {
   isTrailingSlashEnabled,
   removeLeadingSlash,
   removeTrailingSlash,
-} from "@fern-docs/utils";
+} from "@fern-api/docs-utils";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
-import { rewritePosthog } from "@/server/analytics/rewritePosthog";
-import { JSON_PATTERN, MARKDOWN_PATTERN, RSS_PATTERN } from "@/server/patterns";
-import { withPathname } from "@/server/withPathname";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-
-import { createGetAuthStateEdge } from "./server/auth/getAuthStateEdge";
-import { preferPreview } from "./server/auth/origin";
-import { withSecureCookie } from "./server/auth/with-secure-cookie";
-import { isLocal } from "./server/isLocal";
 import { isSelfHosted } from "./server/isSelfHosted";
 
 function splitPathname(
@@ -59,7 +62,7 @@ export const middleware: NextMiddleware = async (request) => {
 
   const rewrite = (
     newPathname: string,
-    search?: string | URLSearchParams | Record<string, string> | string[][]
+    search?: string | URLSearchParams | Record<string, string>
   ) => {
     if (pathname === newPathname && !search) {
       return NextResponse.next({ request: { headers } });

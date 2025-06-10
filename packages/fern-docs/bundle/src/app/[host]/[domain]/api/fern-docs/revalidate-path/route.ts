@@ -1,9 +1,8 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
+import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
-
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export function GET(req: NextRequest) {
   const host = req.nextUrl.host;

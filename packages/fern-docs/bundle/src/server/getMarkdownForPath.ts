@@ -1,5 +1,7 @@
 import { compact } from "es-toolkit/array";
 
+import { DocsLoader, createPruneKey } from "@fern-api/docs-loader";
+import { pascalCaseHeaderKey } from "@fern-api/docs-server/headerKeyCase";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import {
   EndpointDefinition,
@@ -9,8 +11,6 @@ import {
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 
-import { DocsLoader, createPruneKey } from "./docs-loader";
-import { pascalCaseHeaderKey } from "./headerKeyCase";
 import { convertToLlmTxtMarkdown } from "./llm-txt-md";
 
 export async function getMarkdownForPath(

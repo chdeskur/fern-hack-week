@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 
-import { isLocal } from "@/server/isLocal";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 
 export async function GET() {
-  if (!isLocal()) {
+  if (!isLocal() || !isSelfHosted()) {
     return NextResponse.json(
       {
         error:

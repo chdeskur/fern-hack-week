@@ -2,11 +2,10 @@ import * as ld from "@launchdarkly/node-server-sdk";
 import { isEqual } from "es-toolkit/predicate";
 import { camelCase } from "es-toolkit/string";
 
+import { DocsLoader } from "@fern-api/docs-loader";
+import { AuthState } from "@fern-api/docs-server/auth/getAuthState";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getLaunchDarklySettings } from "@fern-docs/edge-config";
-
-import { AuthState } from "./auth/getAuthState";
-import { DocsLoader } from "./docs-loader";
 
 async function withLaunchDarklyContext(
   endpoint: string | undefined,

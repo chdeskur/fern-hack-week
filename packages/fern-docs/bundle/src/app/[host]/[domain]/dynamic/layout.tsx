@@ -1,8 +1,9 @@
 import "server-only";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+
 import { getFernToken } from "@/app/fern-token";
 import SharedLayout from "@/components/shared-layout";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export default async function Layout({
   children,

@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   ],
   experimental: {
     optimizePackageImports: [],
+    useCache: true,
   },
   images: {
     remotePatterns: [

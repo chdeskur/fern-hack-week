@@ -3,16 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { SignJWT } from "jose";
 
+import {
+  getDocsDomainEdge,
+  getJwtSecretKey,
+  withSecureCookie,
+} from "@fern-api/docs-server";
+import { safeUrl } from "@fern-api/docs-server";
+import { preferPreview } from "@fern-api/docs-server";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getApiKeyInjectionDemoConfig } from "@fern-docs/edge-config";
 
 import { FernNextResponse } from "@/server/FernNextResponse";
-import { preferPreview } from "@/server/auth/origin";
-import { withSecureCookie } from "@/server/auth/with-secure-cookie";
-import { getJwtSecretKey } from "@/server/auth/workos";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
-import { safeUrl } from "@/server/safeUrl";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 // a demonstration of setting the fern_token JWT
 export async function GET(req: NextRequest): Promise<NextResponse> {

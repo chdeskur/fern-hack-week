@@ -6,7 +6,7 @@ import React from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { type UrlObject, format, parse, resolve } from "url";
 
-import { conformTrailingSlash } from "@fern-docs/utils";
+import { conformTrailingSlash } from "@fern-api/docs-utils";
 
 import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useDomain } from "@/state/domain";

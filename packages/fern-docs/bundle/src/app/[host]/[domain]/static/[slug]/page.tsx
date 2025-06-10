@@ -2,12 +2,12 @@ import "server-only";
 
 import { Metadata } from "next/types";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import RootPage from "@/app/page";
 import { generateMetadataFromPage } from "@/components/seo";
 import SharedPage from "@/components/shared-page";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export const dynamic = "force-static";
 

@@ -2,7 +2,7 @@ import {
   addLeadingSlash,
   conformTrailingSlash,
   removeTrailingSlash,
-} from "@fern-docs/utils";
+} from "@fern-api/docs-utils";
 
 /**
  * Conforms the slug to the explorer route.

@@ -1,4 +1,4 @@
-import { DocsLoader } from "@/server/docs-loader";
+import { DocsLoader } from "@fern-api/docs-loader";
 
 import { SidebarTabsRoot } from "./SidebarTabsRoot";
 

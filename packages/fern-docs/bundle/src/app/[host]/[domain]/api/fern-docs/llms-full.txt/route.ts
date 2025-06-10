@@ -4,13 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { uniqBy } from "es-toolkit/array";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { slugToHref } from "@fern-docs/utils";
 
 import { generateHtml } from "@/app/utils";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 

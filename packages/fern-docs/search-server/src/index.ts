@@ -1,4 +1,3 @@
-export { EVERYONE_ROLE } from "./utils/constants";
 export {
   SuggestionsSchema,
   type Suggestions,

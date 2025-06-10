@@ -2,6 +2,10 @@ import "server-only";
 
 import React from "react";
 
+import { DocsLoader } from "@fern-api/docs-loader";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+
 import { Announcement } from "@/components/header/Announcement";
 import { HeaderContent } from "@/components/header/HeaderContent";
 import { NavbarLinks } from "@/components/header/NavbarLinks";
@@ -9,9 +13,6 @@ import { SidebarContainer } from "@/components/sidebar/SidebarContainer";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { setMdxSerializer } from "@/context/MdxSerializerContext";
 import { MdxServerComponent } from "@/mdx/components/server-component";
-import { DocsLoader } from "@/server/docs-loader";
-import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 import { LoginButton } from "./login-button";

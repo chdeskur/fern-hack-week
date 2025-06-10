@@ -2,7 +2,7 @@ import { GetServerSidePropsResult, GetStaticPropsResult } from "next";
 
 import { UnreachableCaseError } from "ts-essentials";
 
-import { REVALIDATE_SECONDS } from "@fern-docs/utils";
+import { REVALIDATE_SECONDS } from "@fern-api/docs-utils";
 
 /**
  * Always revalidate redirects and notFound pages.

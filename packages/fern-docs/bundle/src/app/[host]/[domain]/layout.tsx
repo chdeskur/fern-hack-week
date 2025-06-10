@@ -7,6 +7,9 @@ import { preload } from "react-dom";
 import { getEnv } from "@vercel/functions";
 import { compact } from "es-toolkit/array";
 
+import { DocsLoader, createCachedDocsLoader } from "@fern-api/docs-loader";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
@@ -21,9 +24,6 @@ import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
 import { generateMetadataFromConfig } from "@/components/seo";
 import { withJsConfig } from "@/components/with-js-config";
-import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
-import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
 import { SetColors } from "@/state/colors";
 import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";

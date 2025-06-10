@@ -1,7 +1,8 @@
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+
 import { InterceptedPlaygroundCloseButton } from "@/components/playground/PlaygroundCloseButton";
 import { PlaygroundDrawer } from "@/components/playground/PlaygroundDrawer";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { ApiExplorerFlags } from "@/state/api-explorer-flags";
 
 export default async function ExplorerLayout({

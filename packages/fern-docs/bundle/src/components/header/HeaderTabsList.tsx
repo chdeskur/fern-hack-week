@@ -3,9 +3,9 @@ import "server-only";
 import * as Tabs from "@radix-ui/react-tabs";
 import { Lock } from "lucide-react";
 
+import { slugToHref } from "@fern-api/docs-utils";
 import { TabChild, hasRedirect } from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
-import { slugToHref } from "@fern-docs/utils";
 
 import { FernLinkTab } from "../FernLinkTab";
 import { processIcon } from "../util/processIcon";

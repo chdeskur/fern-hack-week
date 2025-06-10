@@ -1,5 +1,5 @@
+import { slugToHref } from "@fern-api/docs-utils";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { slugToHref } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 
 export function useSidebarTabHref(tab: SidebarTab): string {

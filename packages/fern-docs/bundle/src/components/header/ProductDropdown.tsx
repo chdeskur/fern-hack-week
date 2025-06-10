@@ -1,10 +1,10 @@
 import Image from "next/image";
 
+import { DocsLoader } from "@fern-api/docs-loader";
+import { createFileResolver } from "@fern-api/docs-server/file-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { processIcon } from "@/components/util/processIcon";
-import { DocsLoader } from "@/server/docs-loader";
-import { createFileResolver } from "@/server/file-resolver";
 
 import {
   ProductDropdownClient,

@@ -1,11 +1,11 @@
-import type { EdgeFlags } from "@fern-docs/utils";
+import type { EdgeFlags } from "@fern-api/docs-utils";
 import {
   DEFAULT_EDGE_FLAGS,
   isCustomDomain,
   isDevelopment,
   isFern,
   withoutStaging,
-} from "@fern-docs/utils";
+} from "@fern-api/docs-utils";
 
 import { getAllEdge } from "./getEdge";
 import { isLocal } from "./isLocal";

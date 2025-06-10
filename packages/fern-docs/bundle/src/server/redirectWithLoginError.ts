@@ -11,7 +11,6 @@ export function redirectWithLoginError(
   if (location == null) {
     return new NextResponse(null, { status: 500 });
   }
-
   const url = new URL(location);
   url.searchParams.set("error", error);
   if (error_description != null) {

@@ -2,6 +2,7 @@
 
 import { ChevronDown, ChevronsUpDown, Lock, Tag } from "lucide-react";
 
+import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
   Availability,
@@ -9,7 +10,6 @@ import {
   AvailabilityFullyQualifiedDisplayNames,
   cn,
 } from "@fern-docs/components";
-import { slugToHref } from "@fern-docs/utils";
 import { useIsDesktop } from "@fern-ui/react-commons";
 
 import { useCurrentVersionId, useCurrentVersionSlug } from "@/state/navigation";

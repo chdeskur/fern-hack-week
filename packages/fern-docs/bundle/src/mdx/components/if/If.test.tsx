@@ -7,7 +7,7 @@ import { render } from "@testing-library/react";
 import { Atom, atom } from "jotai";
 import { freezeAtom } from "jotai/utils";
 
-import { FernUser } from "@fern-docs/auth";
+import { FernUser } from "@fern-api/docs-auth";
 
 import { If } from "./If";
 

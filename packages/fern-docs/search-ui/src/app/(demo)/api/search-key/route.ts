@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { randomUUID } from "crypto";
 
-import { algoliaSearchApikey } from "@/server/env-variables";
+import { algoliaSearchApikey } from "@fern-api/docs-server/env-variables";
+
 import { withSearchApiKey } from "@/server/with-search-api-key";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {

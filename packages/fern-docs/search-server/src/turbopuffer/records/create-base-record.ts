@@ -1,5 +1,5 @@
+import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { slugToHref } from "@fern-docs/utils";
 
 import { TurbopufferRecordWithoutVector } from "../types";
 

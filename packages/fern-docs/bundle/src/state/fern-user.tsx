@@ -3,7 +3,7 @@
 import { Atom, atom, useAtomValue } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 
-import type { FernUser } from "@fern-docs/auth";
+import type { FernUser } from "@fern-api/docs-auth";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 
 interface UseFernUserOptions {

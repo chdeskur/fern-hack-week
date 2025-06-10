@@ -2,8 +2,8 @@
 
 import React from "react";
 
+import { slugToHref } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { slugToHref } from "@fern-docs/utils";
 
 import { FernAnchor } from "@/components/FernAnchor";
 import { getSlugFromChildren } from "@/components/util/getSlugFromText";

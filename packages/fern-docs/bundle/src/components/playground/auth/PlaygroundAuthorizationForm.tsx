@@ -1,9 +1,8 @@
 import { FC, ReactElement } from "react";
 
+import { DocsLoader } from "@fern-api/docs-loader";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-
-import { DocsLoader } from "@/server/docs-loader";
 
 import { PlaygroundBasicAuthForm } from "./PlaygroundBasicAuthForm";
 import { PlaygroundBearerAuthForm } from "./PlaygroundBearerAuthForm";

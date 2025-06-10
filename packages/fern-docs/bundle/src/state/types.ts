@@ -1,4 +1,4 @@
-import { FileData } from "@/server/types";
+import { FileData } from "@fern-api/docs-server/types";
 
 export interface DefaultNavbarLink {
   type: "filled" | "outlined" | "minimal" | "primary" | "secondary";

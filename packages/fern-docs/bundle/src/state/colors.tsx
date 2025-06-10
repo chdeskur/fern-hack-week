@@ -3,7 +3,7 @@
 import { atom, useAtomValue } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 
-import { FernColorTheme } from "@/server/types";
+import { FernColorTheme } from "@fern-api/docs-server/types";
 
 export const colorsAtom = atom<{
   light?: FernColorTheme;

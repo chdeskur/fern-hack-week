@@ -2,12 +2,12 @@ import "server-only";
 
 import React from "react";
 
+import { DocsLoader } from "@fern-api/docs-loader";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { MdxAside } from "@/mdx/bundler/component";
 import { MdxContent } from "@/mdx/components/MdxContent";
-import { DocsLoader } from "@/server/docs-loader";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { asToc, getMDXExport } from "../../mdx/get-mdx-export";

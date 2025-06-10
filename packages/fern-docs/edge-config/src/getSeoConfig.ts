@@ -1,4 +1,4 @@
-import { isCustomDomain } from "@fern-docs/utils";
+import { isCustomDomain } from "@fern-api/docs-utils";
 
 import { getEdge } from "./getEdge";
 import { isLocal } from "./isLocal";

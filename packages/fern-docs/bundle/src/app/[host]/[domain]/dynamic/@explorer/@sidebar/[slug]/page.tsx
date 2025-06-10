@@ -1,12 +1,12 @@
 import "server-only";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { getFernToken } from "@/app/fern-token";
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export default async function EndpointSelectorPage({
   params,

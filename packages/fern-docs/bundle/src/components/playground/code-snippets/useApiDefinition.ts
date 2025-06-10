@@ -1,8 +1,7 @@
 import useSWRImmutable from "swr/immutable";
 
+import { provideRegistryService } from "@fern-api/docs-server/registry";
 import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
-
-import { provideRegistryService } from "@/server/registry";
 
 export function useApiDefinition(
   apiId: FdrAPI.ApiDefinitionId,

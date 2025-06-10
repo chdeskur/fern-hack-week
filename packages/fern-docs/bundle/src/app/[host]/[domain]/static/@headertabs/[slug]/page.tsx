@@ -1,11 +1,11 @@
 import "server-only";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { HeaderTabsList } from "@/components/header/HeaderTabsList";
 import { getHeaderTabs } from "@/components/util/handle-node-fallbacks";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 
 export default async function HeaderTabsPage({
   params,

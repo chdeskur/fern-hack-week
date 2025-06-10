@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 
+import { slugToHref } from "@fern-api/docs-utils";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
-import { slugToHref } from "@fern-docs/utils";
 
 import { FernLinkButton } from "./FernLinkButton";
 

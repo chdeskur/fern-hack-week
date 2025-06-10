@@ -11,6 +11,7 @@ import { DocsSiteNavBar } from "./DocsSiteNavBar";
 export declare namespace DocsSiteLayout {
   export interface Props {
     docsUrl: DocsUrl;
+    orgName: string;
     featureFlags: PosthogFeatureFlags;
     children: React.JSX.Element;
   }
@@ -18,6 +19,7 @@ export declare namespace DocsSiteLayout {
 
 export function DocsSiteLayout({
   docsUrl,
+  orgName,
   featureFlags,
   children,
 }: DocsSiteLayout.Props) {
@@ -40,7 +42,7 @@ export function DocsSiteLayout({
         }
       />
       <div className="flex flex-col gap-4">
-        <DocsSiteNavBar featureFlags={featureFlags} />
+        <DocsSiteNavBar orgName={orgName} featureFlags={featureFlags} />
         <div className="flex">{children}</div>
       </div>
     </div>

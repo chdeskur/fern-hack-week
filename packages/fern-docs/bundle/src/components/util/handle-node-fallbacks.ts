@@ -74,7 +74,6 @@ export const getFallbackVersion = (
   // 3.Try to find a matching version based on the slug
   const collector = FernNavigation.NodeCollector.collect(root);
   const versionNodes = collector.getVersionNodes();
-  console.log("[2] slug match", slug, versionNodes);
   const versionWithMatchingSlug = versionNodes.find((p) =>
     slugjoin(slug).startsWith(slugjoin(p.slug))
   );

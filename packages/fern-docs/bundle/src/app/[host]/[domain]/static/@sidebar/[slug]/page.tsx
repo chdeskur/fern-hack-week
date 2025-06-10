@@ -1,12 +1,12 @@
 import "server-only";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { SidebarTabsList } from "@/components/sidebar/SidebarTabsList";
 import { SidebarTabsRootServer } from "@/components/sidebar/SidebarTabsRootServer";
 import { SidebarRootNode } from "@/components/sidebar/nodes/SidebarRootNode";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { HiddenSidebar } from "@/state/layout";
 
 export default async function SidebarPage({

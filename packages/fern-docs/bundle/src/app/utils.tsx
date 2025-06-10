@@ -1,4 +1,4 @@
-import { createCachedDocsLoader } from "@/server/docs-loader";
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
 
 export interface HtmlOptions {
   content: string;

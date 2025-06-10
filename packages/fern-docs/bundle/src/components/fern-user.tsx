@@ -1,7 +1,8 @@
 import "server-only";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+
 import { getFernToken } from "@/app/fern-token";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { SetFernUser } from "@/state/fern-user";
 
 export async function FernUser({

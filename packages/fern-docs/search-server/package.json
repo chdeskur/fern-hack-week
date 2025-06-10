@@ -56,10 +56,10 @@
     "test:update": "vitest --run -u --passWithNoTests --globals"
   },
   "dependencies": {
+    "@fern-api/docs-utils": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
-    "@fern-docs/utils": "workspace:*",
     "@turbopuffer/turbopuffer": "^0.5.11",
     "algoliasearch": "^5.20.3",
     "es-toolkit": "^1.32.0",

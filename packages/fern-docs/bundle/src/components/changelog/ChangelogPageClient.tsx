@@ -5,10 +5,10 @@ import React, { Fragment, ReactElement, useEffect, useMemo } from "react";
 import { chunk } from "es-toolkit/array";
 import { useAtomValue } from "jotai";
 
+import { slugToHref } from "@fern-api/docs-utils";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Badge } from "@fern-docs/components";
-import { slugToHref } from "@fern-docs/utils";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import { FernLink } from "@/components/FernLink";

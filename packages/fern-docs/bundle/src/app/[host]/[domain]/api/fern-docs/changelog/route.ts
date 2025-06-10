@@ -6,24 +6,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { Feed, Item } from "feed";
 import urlJoin from "url-join";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { FernNextResponse } from "@fern-api/docs-server/FernNextResponse";
+import { preferPreview } from "@fern-api/docs-server/auth/origin";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { FileData } from "@fern-api/docs-server/types";
+import {
+  COOKIE_FERN_TOKEN,
+  getRedirectForPath,
+  slugToHref,
+} from "@fern-api/docs-utils";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { getFrontmatter } from "@fern-docs/mdx";
-import {
-  COOKIE_FERN_TOKEN,
-  getRedirectForPath,
-  slugToHref,
-} from "@fern-docs/utils";
-
-import { FernNextResponse } from "@/server/FernNextResponse";
-import { preferPreview } from "@/server/auth/origin";
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
-import { FileData } from "@/server/types";
 
 const FORMATS = ["rss", "atom", "json"] as const;
 type Format = (typeof FORMATS)[number];

@@ -1,16 +1,16 @@
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-import { removeLeadingSlash } from "@fern-docs/utils";
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { isLocal } from "@fern-api/docs-server/isLocal";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { MARKDOWN_PATTERN } from "@fern-api/docs-server/patterns";
+import { removeLeadingSlash } from "@fern-api/docs-utils";
 
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import {
   getMarkdownForPath,
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
-import { isLocal } from "@/server/isLocal";
-import { isSelfHosted } from "@/server/isSelfHosted";
-import { MARKDOWN_PATTERN } from "@/server/patterns";
 
 /**
  * This endpoint returns the markdown content of any page in the docs by adding `.md` or `.mdx` to the end of any docs page.

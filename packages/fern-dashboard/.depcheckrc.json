@@ -6,7 +6,8 @@
     "tailwindcss",
     "tailwindcss-animate",
     "clsx",
-    "tailwind-merge"
+    "tailwind-merge",
+    "@tailwindcss/typography"
   ],
   "ignore-patterns": ["dist"]
 }

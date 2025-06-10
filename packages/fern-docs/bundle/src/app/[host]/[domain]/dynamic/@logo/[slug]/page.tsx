@@ -1,13 +1,13 @@
 import "server-only";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { createFileResolver } from "@fern-api/docs-server/file-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getPageId, slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { getFrontmatter } from "@fern-docs/mdx";
 
 import { getFernToken } from "@/app/fern-token";
 import { Logo } from "@/components/logo";
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { createFileResolver } from "@/server/file-resolver";
 import { withLogo } from "@/server/withLogo";
 
 export default async function LogoPage({

@@ -1,11 +1,10 @@
 import "server-only";
 
+import type { DocsLoader } from "@fern-api/docs-loader";
+import type { FileData } from "@fern-api/docs-server/types";
+import { slugToHref } from "@fern-api/docs-utils";
 import type { FileIdOrUrl, Frontmatter } from "@fern-api/fdr-sdk/docs";
 import { isPlainObject } from "@fern-api/ui-core-utils";
-import { slugToHref } from "@fern-docs/utils";
-
-import type { DocsLoader } from "./docs-loader";
-import type { FileData } from "./types";
 
 const DEFAULT_LOGO_HEIGHT = 20;
 

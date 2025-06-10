@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactNode } from "react";
 
 import { Atom } from "jotai";
 
-import { FernUser } from "@fern-docs/auth";
+import { FernUser } from "@fern-api/docs-auth";
 
 import { useFernUser } from "@/state/fern-user";
 

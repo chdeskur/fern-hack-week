@@ -1,13 +1,12 @@
 import { ArrowLeft } from "lucide-react";
 
+import { DocsLoader, createPruneKey } from "@fern-api/docs-loader";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import {
   createEndpointContext,
   createWebSocketContext,
 } from "@fern-api/fdr-sdk/api-definition";
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
-
-import { DocsLoader, createPruneKey } from "@/server/docs-loader";
 
 import { PlaygroundAuthorizationFormCard } from "./auth";
 import { PlaygroundEndpoint } from "./endpoint";

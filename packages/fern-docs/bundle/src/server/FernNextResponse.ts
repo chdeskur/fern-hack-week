@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getDocsDomainEdge } from "./xfernhost/edge";
+import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 
 export class FernNextResponse {
   public static redirect(

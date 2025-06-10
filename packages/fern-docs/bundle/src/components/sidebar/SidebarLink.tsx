@@ -13,9 +13,9 @@ import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { ChevronDown, Lock } from "lucide-react";
 
+import { slugToHref } from "@fern-api/docs-utils";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, cn } from "@fern-docs/components";
-import { slugToHref } from "@fern-docs/utils";
 
 import { FernLink } from "@/components/FernLink";
 import { useIsSelectedSidebarNode } from "@/state/navigation";

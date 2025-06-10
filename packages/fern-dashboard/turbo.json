@@ -7,7 +7,8 @@
       "env": []
     },
     "compile": {
-      "outputs": ["tsconfig.tsbuildinfo"]
+      "outputs": ["tsconfig.tsbuildinfo"],
+      "dependsOn": ["^build", "^compile", "codegen"]
     },
     "dashboard:build": {
       "dependsOn": ["compile"],

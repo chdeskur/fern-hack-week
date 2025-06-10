@@ -1,10 +1,11 @@
 import "server-only";
 
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+
 import { getFernToken } from "@/app/fern-token";
 import { PlaygroundCloseButton } from "@/components/playground/PlaygroundCloseButton";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";
-import { createCachedDocsLoader } from "@/server/docs-loader";
 import { ApiExplorerFlags } from "@/state/api-explorer-flags";
 
 export default async function Layout({
