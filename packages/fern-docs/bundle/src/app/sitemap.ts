@@ -9,12 +9,13 @@ import { conformTrailingSlash } from "@fern-docs/utils";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { getDocsDomainApp, getDocsHostApp } from "@/server/xfernhost/app";
 
 import { getFernToken } from "./fern-token";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return [];
   }
 

@@ -3,6 +3,7 @@ import { sealData, unsealData } from "iron-session";
 import { createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
 
 import { isLocal } from "../isLocal";
+import { isSelfHosted } from "../isSelfHosted";
 import type {
   AccessToken,
   NoWorkOSUserInfo,
@@ -20,7 +21,7 @@ async function encryptSession(session: WorkOSSession): Promise<string> {
 async function refreshSession(
   session: WorkOSSession
 ): Promise<WorkOSSession | undefined> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return undefined;
   }
 

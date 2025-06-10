@@ -12,6 +12,7 @@ import {
 import { removeTrailingSlash } from "@fern-docs/utils";
 
 import { isLocal } from "../isLocal";
+import { isSelfHosted } from "../isSelfHosted";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
 import { preferPreview } from "./origin";
@@ -192,7 +193,7 @@ export async function createGetAuthState(
     getAuthState: (pathname?: string) => AsyncOrSync<AuthState>;
   }
 > {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return {
       domain: domain,
       allowedDestinations: [],

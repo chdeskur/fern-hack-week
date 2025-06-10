@@ -13,13 +13,14 @@ import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
 import { getDocsUrlMetadata } from "@/server/getDocsUrlMetadata";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export const maxDuration = 10;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return NextResponse.json(
       "search key is not accessible in local preview mode",
       { status: 400 }

@@ -25,6 +25,7 @@ import { createGetAuthStateEdge } from "./server/auth/getAuthStateEdge";
 import { preferPreview } from "./server/auth/origin";
 import { withSecureCookie } from "./server/auth/with-secure-cookie";
 import { isLocal } from "./server/isLocal";
+import { isSelfHosted } from "./server/isSelfHosted";
 
 function splitPathname(
   pathname: string,
@@ -198,7 +199,7 @@ export const middleware: NextMiddleware = async (request) => {
   let newToken: string | undefined;
 
   // ignore authentication in local preview
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     // serve local files directly
     if (pathname.startsWith("/_local/")) {
       const origin = process.env.NEXT_PUBLIC_FDR_ORIGIN;

@@ -4,6 +4,7 @@ import { withoutStaging } from "@fern-docs/utils";
 
 import { getEdge } from "./getEdge";
 import { isLocal } from "./isLocal";
+import { isSelfHosted } from "./isSelfHosted";
 
 const LaunchDarklyEdgeConfigSchema = z.object({
   // NOTE: this is client-side visible, so we should be careful about what we expose here if we add more fields
@@ -32,7 +33,7 @@ export async function getLaunchDarklySettings(
   domain: string,
   orgId?: Promise<string | undefined>
 ): Promise<LaunchDarklyEdgeConfig | undefined> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return undefined;
   }
 

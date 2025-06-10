@@ -2,10 +2,11 @@ import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 export async function GET(req: NextRequest) {
-  if (!isLocal()) {
+  if (!isLocal() || !isSelfHosted()) {
     return NextResponse.json(
       {
         error:

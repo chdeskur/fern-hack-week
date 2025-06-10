@@ -9,6 +9,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 
 import { isLocal } from "./isLocal";
+import { isSelfHosted } from "./isSelfHosted";
 
 const getSignedUrl = async ({
   Bucket,
@@ -19,7 +20,7 @@ const getSignedUrl = async ({
   Key: string;
   expiresIn: number;
 }) => {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     throw new Error("signed URL is not accessible in local preview mode");
   }
 

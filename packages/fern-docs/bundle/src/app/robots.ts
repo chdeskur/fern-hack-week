@@ -12,11 +12,12 @@ import {
 } from "@fern-docs/utils";
 
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 
 export const runtime = "edge";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return {
       rules: {
         userAgent: "*",

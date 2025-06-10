@@ -60,6 +60,7 @@ import { generateFernColorPalette } from "./generateFernColors";
 import { FernFonts, generateFonts } from "./generateFonts";
 import { getDocsUrlMetadata } from "./getDocsUrlMetadata";
 import { isLocal } from "./isLocal";
+import { isSelfHosted } from "./isSelfHosted";
 import { loadWithUrl as uncachedLoadWithUrl } from "./loadWithUrl";
 import { postToSlack } from "./slack";
 import { FernColorTheme, FernLayoutConfig, FileData } from "./types";
@@ -196,7 +197,7 @@ function assertDocsDomain(domain: string) {
 
 const setMonitor = new Semaphore(10);
 function kvSet(domain: string, key: string, value: unknown) {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return;
   }
 
@@ -214,7 +215,7 @@ function kvSet(domain: string, key: string, value: unknown) {
 
 const getMonitor = new Semaphore(10);
 async function kvGet<T>(domain: string, key: string): Promise<T | null> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return null;
   }
 
@@ -231,7 +232,7 @@ async function kvGet<T>(domain: string, key: string): Promise<T | null> {
 }
 
 const cachedGetEdgeFlags = cache(async (domain: string) => {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return DEFAULT_EDGE_FLAGS;
   }
 

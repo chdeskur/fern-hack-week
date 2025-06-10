@@ -12,6 +12,7 @@ import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
@@ -19,7 +20,7 @@ import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return new NextResponse("jwt is not accessible in local preview mode", {
       status: 400,
     });

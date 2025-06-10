@@ -22,6 +22,7 @@ import { FernNextResponse } from "@/server/FernNextResponse";
 import { preferPreview } from "@/server/auth/origin";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { FileData } from "@/server/types";
 
 const FORMATS = ["rss", "atom", "json"] as const;
@@ -31,7 +32,7 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return new NextResponse(
       "changelog is not accessible in local preview mode",
       {

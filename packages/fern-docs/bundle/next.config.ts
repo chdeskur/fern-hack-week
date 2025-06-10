@@ -11,7 +11,10 @@ const cdnUri =
 const isTrailingSlashEnabled = process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 const isAssetPrefixDisabled =
   process.env.NEXT_PUBLIC_ASSET_PREFIX_DISABLED === "1";
-const isLocal = process.env.NEXT_PUBLIC_IS_LOCAL === "1";
+const isSelfHosted = process.env.NEXT_PUBLIC_IS_SELF_HOSTED === "1";
+const isStandalone =
+  process.env.NEXT_PUBLIC_IS_LOCAL === "1" ||
+  process.env.NEXT_PUBLIC_IS_SELF_HOSTED === "1";
 
 // TODO: move this to a shared location (this is copied in FernImage.tsx)
 const NEXT_IMAGE_HOSTS = [
@@ -201,7 +204,7 @@ const nextConfig: NextConfig = {
         source: "/:prefix*/api/fern-docs/search/v2/:path*",
         headers: searchV2Headers,
       },
-      ...(isLocal ? [disableCaching] : []),
+      ...(isStandalone ? [disableCaching] : []),
 
       /**
        * Access-Control-Allow-Origin header is required for sentry tunnel
@@ -253,7 +256,7 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
-  output: isLocal ? "standalone" : undefined,
+  output: isStandalone ? "standalone" : undefined,
 };
 
 function withVercelEnv(config: NextConfig): NextConfig {

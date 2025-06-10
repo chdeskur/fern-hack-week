@@ -23,6 +23,7 @@ import { generateMetadataFromConfig } from "@/components/seo";
 import { withJsConfig } from "@/components/with-js-config";
 import { DocsLoader, createCachedDocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { SetColors } from "@/state/colors";
 import { DarkCode } from "@/state/dark-code";
 import { Domain } from "@/state/domain";
@@ -48,7 +49,7 @@ export default async function Layout({
   params: Promise<{ host: string; domain: string }>;
 }) {
   const { host, domain } = await params;
-  const isLocalEnvironment = isLocal();
+  const isLocalEnvironment = isLocal() || isSelfHosted();
   const loader = await createCachedDocsLoader(host, domain);
   const [
     { basePath },

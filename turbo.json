@@ -89,7 +89,8 @@
         "SLACK_TOKEN",
         "TURBOPUFFER_API_KEY",
         "WORKOS_API_KEY",
-        "WORKOS_CLIENT_ID"
+        "WORKOS_CLIENT_ID",
+        "NEXT_PUBLIC_IS_SELF_HOSTED"
       ],
       "passThroughEnv": [
         "ANALYZE",

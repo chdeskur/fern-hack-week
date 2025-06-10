@@ -5,12 +5,13 @@ import { kv } from "@vercel/kv";
 import { escapeRegExp } from "es-toolkit/string";
 
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 
 export async function GET(
   _req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     throw new Error("invalidation is only available in production");
   }
 

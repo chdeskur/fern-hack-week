@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { getEdge } from "./getEdge";
 import { isLocal } from "./isLocal";
+import { isSelfHosted } from "./isSelfHosted";
 
 const WorkosAuthSchema = z.object({
   type: z.literal("workos"),
@@ -28,7 +29,7 @@ export interface Metadata {
 export async function getPreviewUrlAuthConfig(
   metadata: Metadata
 ): Promise<PreviewUrlAuth | undefined> {
-  if (!metadata.isPreview || isLocal()) {
+  if (!metadata.isPreview || isLocal() || isSelfHosted()) {
     return undefined;
   }
   const config = await getEdge<PreviewUrlAuthConfig>("authed-previews");

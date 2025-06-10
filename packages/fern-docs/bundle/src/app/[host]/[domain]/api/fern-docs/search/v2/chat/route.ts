@@ -38,6 +38,7 @@ import {
   turbopufferApiKey,
 } from "@/server/env-variables";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { postToSlack } from "@/server/slack";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -57,7 +58,7 @@ const modelMap: Record<string, { modelId: string; region: string }> = {
 };
 
 export async function POST(req: NextRequest) {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return NextResponse.json(
       "ai chat is not accessible in local preview mode",
       { status: 400 }

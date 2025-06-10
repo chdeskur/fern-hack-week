@@ -13,6 +13,7 @@ import {
 } from "shiki";
 
 import { isLocal } from "../util/isLocal";
+import { isSelfHosted } from "../util/isSelfHosted";
 import { additionalLanguages } from "./syntaxes";
 import { templateTransformer } from "./transformers/template";
 
@@ -65,14 +66,16 @@ const getHighlighterInstanceImpl = async (
   return highlighter;
 };
 
-const isLocalEnv = isLocal();
+const isLocalOrSelfHostedEnv = isLocal() || isSelfHosted();
 export const memoizedGetHighlighterInstance = memoize(
   getHighlighterInstanceImpl
 );
 
 // only call this once per language when isLocal is true
 export const getHighlighterInstance = () =>
-  isLocalEnv ? getHighlighterInstanceImpl : memoizedGetHighlighterInstance;
+  isLocalOrSelfHostedEnv
+    ? getHighlighterInstanceImpl
+    : memoizedGetHighlighterInstance;
 
 function hasLanguage(lang: string): boolean {
   return highlighter?.getLoadedLanguages().includes(parseLang(lang)) ?? false;

@@ -2,6 +2,7 @@ import urlJoin from "url-join";
 
 import { getEdge } from "./getEdge";
 import { isLocal } from "./isLocal";
+import { isSelfHosted } from "./isSelfHosted";
 
 interface GTMParams {
   tagId: string;
@@ -18,7 +19,7 @@ export async function getCustomerAnalytics(
   host: string,
   basePath?: string
 ): Promise<CustomerAnalytics | undefined> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return undefined;
   }
 

@@ -10,9 +10,13 @@ import {
 import { qstashToken } from "@/server/env-variables";
 
 import { isLocal } from "./isLocal";
+import { isSelfHosted } from "./isSelfHosted";
 import { cleanBasePath } from "./utils/clean-base-path";
 
-const q = isLocal() ? undefined : new Client({ token: qstashToken() });
+const q =
+  isLocal() || isSelfHosted()
+    ? undefined
+    : new Client({ token: qstashToken() });
 
 export async function queue<TBody = unknown>({
   host,
@@ -39,7 +43,7 @@ export async function queue<TBody = unknown>({
   deduplicationId?: string;
   disableVercelPreviewDeployment?: boolean;
 }): Promise<string | undefined> {
-  if (isLocal() || q === undefined) {
+  if (isLocal() || isSelfHosted() || q === undefined) {
     return undefined;
   }
 
@@ -116,7 +120,7 @@ export async function batchQueue<TBody = unknown>({
   retries?: number;
   disableVercelPreviewDeployment?: boolean;
 }): Promise<string[]> {
-  if (isLocal() || q === undefined) {
+  if (isLocal() || q === undefined || isSelfHosted()) {
     return [];
   }
 

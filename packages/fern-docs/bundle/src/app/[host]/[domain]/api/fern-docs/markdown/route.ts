@@ -9,6 +9,7 @@ import {
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { MARKDOWN_PATTERN } from "@/server/patterns";
 
 /**
@@ -19,7 +20,7 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return new NextResponse(".md preview is not available in local preview", {
       status: 400,
     });

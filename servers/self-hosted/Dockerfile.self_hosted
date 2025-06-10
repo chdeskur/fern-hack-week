@@ -103,7 +103,9 @@ COPY --from=installer /app/servers/fdr/prisma/schema.prisma /app/servers/fdr/pri
 # Setup Nextapp dependencies
 COPY --from=installer /app/docs_bundle.tar.gz /app/self-hosted.tar.gz
 RUN mkdir -p /app/nextapp && \
-    tar -xzf /app/self-hosted.tar.gz -C /app/nextapp
+    tar -xzf /app/self-hosted.tar.gz -C /app/nextapp && \
+    cd /app/nextapp && \
+    pnpm add esbuild
 
 # ------------ End FDR setup ------------
 

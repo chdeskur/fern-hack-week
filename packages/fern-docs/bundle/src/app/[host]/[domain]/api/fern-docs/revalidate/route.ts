@@ -31,6 +31,7 @@ import {
   getMetadataFromResponse,
 } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import {
   queueAlgoliaReindex,
@@ -44,7 +45,7 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     throw new Error("revalidation is only available in production");
   }
 

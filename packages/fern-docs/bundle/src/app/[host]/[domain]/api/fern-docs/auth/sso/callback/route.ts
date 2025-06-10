@@ -12,6 +12,7 @@ import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getWorkOSClientId, workos } from "@/server/auth/workos";
 import { encryptSession } from "@/server/auth/workos-session";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
@@ -24,7 +25,7 @@ const ERROR_QUERY = "error";
 const ERROR_URI_QUERY = "error_uri";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return new NextResponse("sso is not accessible in local preview mode", {
       status: 400,
     });

@@ -39,6 +39,7 @@ import {
 
 import { DocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { FileData } from "@/server/types";
 
 import { getMDXExport } from "../get-mdx-export";
@@ -516,7 +517,7 @@ function hashKey(key: string): string {
 }
 
 function kvSet(key: string, value: unknown) {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return;
   }
 
@@ -537,7 +538,7 @@ function kvSet(key: string, value: unknown) {
 }
 
 async function kvGet(key: string): Promise<Record<string, string> | null> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return null;
   }
 

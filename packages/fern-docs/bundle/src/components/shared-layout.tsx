@@ -11,6 +11,7 @@ import { setMdxSerializer } from "@/context/MdxSerializerContext";
 import { MdxServerComponent } from "@/mdx/components/server-component";
 import { DocsLoader } from "@/server/docs-loader";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
 
 import { LoginButton } from "./login-button";
@@ -32,7 +33,7 @@ export default async function SharedLayout({
   loader: DocsLoader;
   logo: React.ReactNode;
 }) {
-  const isLocalEnvironment = isLocal();
+  const isLocalEnvironment = isLocal() || isSelfHosted();
   const serialize = createCachedMdxSerializer(loader);
   setMdxSerializer(serialize);
 

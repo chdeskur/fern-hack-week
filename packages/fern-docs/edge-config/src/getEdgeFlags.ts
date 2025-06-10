@@ -9,6 +9,7 @@ import {
 
 import { getAllEdge } from "./getEdge";
 import { isLocal } from "./isLocal";
+import { isSelfHosted } from "./isSelfHosted";
 
 export const runtime = "edge";
 
@@ -55,7 +56,7 @@ type EdgeFlag = (typeof EDGE_FLAGS)[number];
 type EdgeConfigResponse = Record<EdgeFlag, string[] | Record<string, unknown>>;
 
 export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return DEFAULT_EDGE_FLAGS;
   }
 

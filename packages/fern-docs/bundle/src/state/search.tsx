@@ -11,6 +11,7 @@ import { useIsMobile } from "@fern-ui/react-commons";
 
 import { FERN_SEARCH_BUTTON_ID } from "@/components/constants";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 
 export const searchDialogOpenAtom = atom(false);
 export const searchInitializedAtom = atom(false);
@@ -53,7 +54,7 @@ searchInitializedAtom.onMount = (setInitialized) => {
     return;
   }
 
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return;
   }
 

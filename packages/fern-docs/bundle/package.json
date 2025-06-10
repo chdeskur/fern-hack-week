@@ -19,6 +19,7 @@
     "depcheck": "depcheck",
     "docs:build": "next build",
     "docs:build:local": "NEXT_PUBLIC_IS_LOCAL=1 next build && pnpm tsc --project tsconfig.local.json",
+    "docs:build:selfhosted": "NODE_ENV=production QSTASH_TOKEN=abc NEXT_PUBLIC_IS_SELF_HOSTED=1 next build && pnpm tsc --project tsconfig.local.json",
     "docs:dev": "next dev",
     "docs:dev:inspect": "NODE_OPTIONS='--inspect' next dev",
     "docs:hide-env": "mv .env.local .env.local.hidden",

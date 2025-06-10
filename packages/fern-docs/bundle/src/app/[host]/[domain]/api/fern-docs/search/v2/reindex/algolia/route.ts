@@ -17,6 +17,7 @@ import {
   fernToken_admin,
 } from "@/server/env-variables";
 import { isLocal } from "@/server/isLocal";
+import { isSelfHosted } from "@/server/isSelfHosted";
 import { postToSlack } from "@/server/slack";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
@@ -24,7 +25,7 @@ import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 export const maxDuration = 800; // 13 minutes
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  if (isLocal()) {
+  if (isLocal() || isSelfHosted()) {
     return NextResponse.json(
       "algolia indexing is not accessible in local preview mode",
       { status: 400 }
