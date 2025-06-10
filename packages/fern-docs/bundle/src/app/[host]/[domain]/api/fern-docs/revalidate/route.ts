@@ -283,7 +283,10 @@ export async function GET(
           console.warn(
             "Did not generate homepage images because no auth header present on request"
           );
-        } else if (process.env.NEXT_PUBLIC_DASHBOARD_URL == null) {
+        } else if (
+          process.env.NEXT_PUBLIC_DASHBOARD_URL == null ||
+          process.env.NEXT_PUBLIC_DASHBOARD_URL === ""
+        ) {
           console.warn(
             "Did not generate homepage images because NEXT_PUBLIC_DASHBOARD_URL is not defined in the environment"
           );
