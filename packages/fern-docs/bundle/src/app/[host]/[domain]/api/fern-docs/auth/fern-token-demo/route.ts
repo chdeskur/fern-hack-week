@@ -87,7 +87,7 @@ async function mintJwtToken(secret: string, apiKey: string) {
       playground: {
         initial_state: {
           auth: {
-            bearer_token: `Bearer ${apiKey}`,
+            bearer_token: apiKey,
           },
         },
       },

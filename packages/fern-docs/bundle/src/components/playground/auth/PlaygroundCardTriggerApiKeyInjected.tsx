@@ -119,6 +119,17 @@ export function PlaygroundCardTriggerApiKeyInjected({
                   config.returnToQueryParam,
                   returnTo.toString()
                 );
+
+                // invalidate bearer token cookie
+                document.cookie =
+                  "fern_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                // invalidate access token cookie
+                document.cookie =
+                  "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+                // remove bearer token from state
+                setBearerAuth({ token: "" });
+
                 fetch(url)
                   .then(() => {
                     window.location.reload();
