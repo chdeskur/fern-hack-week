@@ -44,9 +44,9 @@ export async function GET(
   const host = req.nextUrl.host;
   const cookieJar = await cookies();
 
-  const edgeConfig =
-    (await getAuthEdgeConfig(domain)) ||
-    (await getApiKeyInjectionEdgeConfig(domain));
+  const authEdgeConfig = await getAuthEdgeConfig(domain);
+  const apiKeyEdgeConfig = await getApiKeyInjectionEdgeConfig(domain);
+  const edgeConfig = authEdgeConfig || apiKeyEdgeConfig;
 
   const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
@@ -86,8 +86,12 @@ export async function GET(
     });
   }
 
-  if (edgeConfig.type === "basic_token_verification") {
-    if (!edgeConfig.redirect) {
+  if (
+    authEdgeConfig &&
+    authEdgeConfig.type === "basic_token_verification" &&
+    authEdgeConfig["api-key-injection-enabled"]
+  ) {
+    if (!authEdgeConfig.redirect) {
       return NextResponse.json({
         enabled: false,
         returnToQueryParam,
@@ -97,7 +101,26 @@ export async function GET(
     return NextResponse.json({
       enabled: true,
       authenticated: false,
-      authorizationUrl: edgeConfig.redirect,
+      authorizationUrl: authEdgeConfig.redirect,
+      returnToQueryParam,
+    });
+  }
+
+  if (
+    apiKeyEdgeConfig &&
+    apiKeyEdgeConfig.type === "basic_token_verification"
+  ) {
+    if (!apiKeyEdgeConfig.redirect) {
+      return NextResponse.json({
+        enabled: false,
+        returnToQueryParam,
+      });
+    }
+
+    return NextResponse.json({
+      enabled: true,
+      authenticated: false,
+      authorizationUrl: apiKeyEdgeConfig.redirect,
       returnToQueryParam,
     });
   }
