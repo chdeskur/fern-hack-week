@@ -1,6 +1,11 @@
 import { mapValues } from "es-toolkit/object";
 
-import { ApiDefinition, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
+import {
+  ApiDefinition,
+  DocsV1Read,
+  FdrClient,
+  FernNavigation,
+} from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
 export interface LoadDocsWithUrlPayload {
@@ -19,7 +24,6 @@ export interface LoadDocsWithUrlPayload {
    */
   domain: string;
 
-  // feature flags
   isBatchStreamToggleDisabled?: boolean;
   isApiScrollingDisabled?: boolean;
   useJavaScriptAsTypeScript?: boolean;
@@ -53,16 +57,17 @@ export async function loadDocsWithUrl(
     );
   }
 
-  const org = await client.docs.v2.read.getOrganizationForUrl({
+  const res = await client.docs.v2.read.getOrganizationForUrl({
     url: ApiDefinition.Url(payload.domain),
   });
-  if (!org.ok) {
+  if (!res.ok) {
     throw new Error(
-      `Failed to get org for ${payload.domain}: ${org.error.error}`
+      `Failed to get org for ${payload.domain}: ${res.error.error}`
     );
   }
+  const org_id = res.body;
 
-  const domain = new URL(withDefaultProtocol(payload.domain));
+  const domain = new URL(withDefaultProtocol(payload.domain)).host;
 
   const root = FernNavigation.utils.toRootNode(
     docs.body,
@@ -70,10 +75,8 @@ export async function loadDocsWithUrl(
     payload.isApiScrollingDisabled ?? false
   );
 
-  // migrate pages
-  const pages = mapValues(docs.body.definition.pages, (page) => page.markdown);
+  const pages = retrieveMarkdownFromPages(docs.body.definition.pages);
 
-  // migrate apis
   const apis = {
     ...mapValues(docs.body.definition.apis, (api) =>
       ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
@@ -87,5 +90,11 @@ export async function loadDocsWithUrl(
     ...docs.body.definition.apisV2,
   };
 
-  return { org_id: org.body, root, pages, apis, domain: domain.host };
+  return { org_id, root, pages, apis, domain };
+}
+
+function retrieveMarkdownFromPages(
+  pages: Record<FernNavigation.PageId, DocsV1Read.PageContent>
+) {
+  return mapValues(pages, (page) => page.markdown);
 }

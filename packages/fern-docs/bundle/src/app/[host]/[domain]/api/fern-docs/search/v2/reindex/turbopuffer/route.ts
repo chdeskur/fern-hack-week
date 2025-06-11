@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createOpenAI } from "@ai-sdk/openai";
-import { Embedding, embedMany } from "ai";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { track } from "@fern-api/docs-server/analytics/posthog";
@@ -18,7 +17,10 @@ import { Gate, withBasicTokenAnonymous } from "@fern-api/docs-server/withRbac";
 import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { slugToHref, withoutStaging } from "@fern-api/docs-utils";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
-import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
+import {
+  getTurbopufferVectorizer,
+  turbopufferUpsertTask,
+} from "@fern-docs/search-server/turbopuffer";
 
 export const maxDuration = 800; // 13 minutes
 
@@ -45,8 +47,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     if (metadata == null) {
       return NextResponse.json("Not found", { status: 404 });
     }
-
-    // If the domain is a preview URL, we don't want to reindex
     if (metadata.isPreview) {
       return NextResponse.json(
         {
@@ -59,16 +59,18 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const start = Date.now();
     const [authEdgeConfig, edgeFlags] = await Promise.all([
       getAuthEdgeConfig(domain),
       getEdgeFlags(domain),
     ]);
 
     if (!edgeFlags.isAskAiEnabled) {
-      throw new Error(`AI Chat is not enabled for ${domain}`);
+      return NextResponse.json("Ask Fern is not enabled for this domain", {
+        status: 404,
+      });
     }
 
+    const start = Date.now();
     const numInserted = await turbopufferUpsertTask({
       apiKey: turbopufferApiKey(),
       namespace,
@@ -78,40 +80,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         domain: withoutStaging(domain),
         ...edgeFlags,
       },
-      vectorizer: async (chunks) => {
-        // openai embedding model has max 300k tokens per request, batch manually
-        let payload = [];
-        let payloadLength = 0;
-        let embeddings: Embedding[] = [];
-        for (const chunk of chunks) {
-          // batch vectorization in chunks of size 100k
-          payloadLength += chunk.length;
-          payload.push(chunk);
-          if (payloadLength >= 100000) {
-            const embeddingOutput = await embedMany({
-              model: embeddingModel,
-              values: payload,
-            });
-            embeddings = embeddings.concat(embeddingOutput.embeddings);
-            payload = [];
-            payloadLength = 0;
-          }
-        }
-        if (payload.length > 0) {
-          // final cleanup
-          const embeddingOutput = await embedMany({
-            model: embeddingModel,
-            values: payload,
-          });
-          embeddings = embeddings.concat(embeddingOutput.embeddings);
-        }
-        return embeddings;
-      },
+      vectorizer: getTurbopufferVectorizer(embeddingModel),
       authed: (node) => {
         if (authEdgeConfig == null) {
           return false;
         }
-
         return (
           withBasicTokenAnonymous(authEdgeConfig, slugToHref(node.slug)) ===
           Gate.DENY
@@ -119,7 +92,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       },
       deleteExisting,
     });
-
     const end = Date.now();
 
     track("turbopuffer_reindex", {
@@ -152,6 +124,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       "turbopuffer-reindex"
     );
 
-    return NextResponse.json("Internal server error", { status: 500 });
+    return NextResponse.json(`Internal server error, error: ${String(error)}`, {
+      status: 500,
+    });
   }
 }

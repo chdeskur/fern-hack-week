@@ -61,6 +61,7 @@
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
     "@turbopuffer/turbopuffer": "^0.5.11",
+    "ai": "^4.3.13",
     "algoliasearch": "^5.20.3",
     "es-toolkit": "^1.32.0",
     "gpt-tokenizer": "2.9.0",
