@@ -22,7 +22,9 @@ import { noop } from "ts-essentials";
 import { DocsLoader } from "@fern-api/docs-loader";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { postToSlack } from "@fern-api/docs-server/slack";
 import { FileData } from "@fern-api/docs-server/types";
+import { isDevelopment, isPreviewDomain } from "@fern-api/docs-utils";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import {
   Hast,
@@ -84,7 +86,8 @@ async function serializeMdxImpl(
     filename?: string;
     toc?: boolean;
     replaceHref?: RehypeLinksOptions["replaceHref"];
-  } = {}
+  } = {},
+  domain: string
 ): Promise<SerializeMdxResponse> {
   content = sanitizeBreaks(content);
   content = sanitizeMdxExpression(content)[0];
@@ -260,6 +263,14 @@ async function serializeMdxImpl(
 
   if (bundled.errors.length > 0) {
     bundled.errors.forEach((error) => {
+      if (!isPreviewDomain(domain) && !isDevelopment(domain)) {
+        postToSlack(
+          "#docs-notifs",
+          `:rotating_light: Error serializing mdx for ${domain}${path ? "/" + path : ""} with ${String(error)}`,
+          "mdx-serializer",
+          { message: content, mrkdwn: true }
+        );
+      }
       console.error(error);
     });
     console.debug("content", content, "code", bundled.code);
@@ -277,7 +288,8 @@ async function serializeMdxImpl(
 
 export function serializeMdx(
   content: string | undefined,
-  options?: Parameters<typeof serializeMdxImpl>[1]
+  options?: Parameters<typeof serializeMdxImpl>[1],
+  domain?: string
 ): Promise<SerializeMdxResponse | undefined> {
   const abortController = new AbortController();
   const { signal } = abortController;
@@ -303,7 +315,7 @@ export function serializeMdx(
       }
     }, serializeTimeout);
 
-    serializeMdxImpl(content, { ...options }).then(
+    serializeMdxImpl(content, { ...options }, domain ?? "").then(
       (result) => {
         clearTimeout(timeoutId);
         resolve(result);

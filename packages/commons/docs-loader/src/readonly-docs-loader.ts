@@ -25,7 +25,6 @@ import {
   getDocsUrlMetadata,
   isLocal,
   isSelfHosted,
-  postToSlack,
   pruneWithAuthState,
 } from "@fern-api/docs-server";
 import { loadWithUrl as uncachedLoadWithUrl } from "@fern-api/docs-server";
@@ -39,7 +38,6 @@ import {
   DEFAULT_SIDEBAR_WIDTH,
   EdgeFlags,
   FERN_DOCS_ORIGINS,
-  isPreviewDomain,
   withoutStaging,
 } from "@fern-api/docs-utils";
 import {
@@ -283,25 +281,10 @@ export const getMetadata = cache(
         error
       );
     }
-    try {
-      const metadata = await getMetadataFromResponse(
-        domain,
-        loadWithUrl(domain)
-      );
-      kvSet(domain, "metadata", metadata);
-      console.log("[getMetadata] cache miss:", metadata);
-      return metadata;
-    } catch (error) {
-      if (!isPreviewDomain(domain)) {
-        postToSlack(
-          "#docs-notifs",
-          `:rotating_light: Failed to get metadata for ${domain} with the following error: ${String(error)}`,
-          "get-metadata"
-        );
-      }
-
-      throw error;
-    }
+    const metadata = await getMetadataFromResponse(domain, loadWithUrl(domain));
+    kvSet(domain, "metadata", metadata);
+    console.log("[getMetadata] cache miss:", metadata);
+    return metadata;
   }
 );
 
