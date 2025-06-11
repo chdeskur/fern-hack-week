@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { postToSlack } from "@fern-api/docs-server";
 import { track } from "@fern-api/docs-server/analytics/posthog";
 import {
   algoliaAppId,
