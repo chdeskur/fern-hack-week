@@ -88,6 +88,8 @@ RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc && \
     apk add --no-cache jq && \
     npm install -g prisma fern-api@latest pnpm
 
+RUN fern upgrade
+
 # Copy the built FDR application
 COPY --from=installer /app .
 

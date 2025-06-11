@@ -254,11 +254,13 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         const apiDefinitionsLatestById = Object.fromEntries(
           apiDefinitionsLatest.map((definition) => [definition.id, definition])
         );
-
         const warmEndpointCachePromises = apiDefinitions.flatMap(
           (apiDefinition) => {
             return Object.entries(apiDefinition.subpackages).flatMap(
               ([_, subpackage]) => {
+                if (app.config.localModeOverride) {
+                  return;
+                }
                 return subpackage.endpoints.map(async (endpoint) => {
                   try {
                     return await fetch(
@@ -359,9 +361,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           });
           throw e;
         }
-
         await Promise.all(warmEndpointCachePromises);
-
         return await res.send();
       } catch (e) {
         app.logger.error(

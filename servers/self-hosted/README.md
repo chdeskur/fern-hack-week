@@ -39,3 +39,52 @@ When the Docker container is built, FDR’s database migrations are automaticall
 
 To run the test suite from this directory:
 `pnpm test:self-hosted`
+
+## Recommended Developer Workflow
+
+Rebuilding the docker container is slow and if you were to rebuild the container every time you made changes to any code in the fern-platform repo it would slow you down. To iterate quickly you should use the following workfow.
+
+### Workflow to run everything:
+
+```
+cd /fern-platform
+Run pnpm docs:self-hosted-bundle:build
+Run pnpm --filter=@fern-platform/self-hosted docker:build
+
+Run pnpm --filter=@fern-platform/self-hosted docker:run
+```
+
+Finally navigate to http://localhost:3000/ where you should see your docs
+
+### To test changes to NextApp:
+
+Run this outside your docker:
+`pnpm docs:self-hosted-bundle:build
+`
+
+Inside your docker run the restart script:
+
+```
+cd /app/fern-platform/servers/self-hosted/scripts
+sh restart_next_app.sh
+```
+
+### To test changes to FDR:
+
+Run this outside your docker: `pnpm docs:self-hosted-fdr:compile`
+
+Inside your docker run the restart script:
+
+```
+cd /app/fern-platform/servers/self-hosted/scripts
+sh restart_fdr_server.sh
+```
+
+### Known Issues
+
+You may need to do the following in your repo outside the docker container as we've seen some weird caching issues:
+
+```
+pnpm clean
+pnpm compile
+```
