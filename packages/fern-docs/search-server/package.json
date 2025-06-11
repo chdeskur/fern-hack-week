@@ -56,6 +56,10 @@
     "test:update": "vitest --run -u --passWithNoTests --globals"
   },
   "dependencies": {
+    "@ai-sdk/amazon-bedrock": "^2.0.5",
+    "@ai-sdk/anthropic": "^1.2.12",
+    "@ai-sdk/cohere": "^1.2.9",
+    "@fern-api/docs-server": "workspace:*",
     "@fern-api/docs-utils": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
@@ -63,6 +67,7 @@
     "@turbopuffer/turbopuffer": "^0.5.11",
     "ai": "^4.3.13",
     "algoliasearch": "^5.20.3",
+    "braintrust": "^0.0.184",
     "es-toolkit": "^1.32.0",
     "gpt-tokenizer": "2.9.0",
     "gray-matter": "^4.0.3",

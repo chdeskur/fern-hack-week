@@ -7,6 +7,7 @@ export function getTurbopufferVectorizer(
     let payload = [];
     let payloadLength = 0;
     let embeddings: Embedding[] = [];
+
     for (const chunk of chunks) {
       payloadLength += chunk.length;
       payload.push(chunk);

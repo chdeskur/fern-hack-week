@@ -43,8 +43,6 @@
   },
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "^2.0.5",
-    "@ai-sdk/anthropic": "^1.2.12",
-    "@ai-sdk/cohere": "^1.2.9",
     "@ai-sdk/openai": "^1.1.15",
     "@algolia/client-search": "^5.20.3",
     "@aws-sdk/client-s3": "^3.744.0",
