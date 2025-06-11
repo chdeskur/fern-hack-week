@@ -16,6 +16,11 @@ export function createFileResolver(files: Record<string, FileData>) {
     const file = files[fileId];
     if (file == null) {
       // the file is not found, so we return the src as the image data
+
+      if (fileId) {
+        console.warn(`[file-resolver]: found unexpected fileId ${fileId}`);
+      }
+
       return { src };
     }
     return file;
