@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 
 import { isLocal } from "@fern-api/docs-server/isLocal";
-import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 
 export async function GET() {
-  if (!isLocal() || !isSelfHosted()) {
+  if (!isLocal()) {
     return NextResponse.json(
       {
         error:
@@ -22,7 +21,7 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json(
       {
-        error: "[revalidate-local] failed to revalidate",
+        error: "[env-local] failed to revalidate",
         message: error instanceof Error ? error.message : "unknown error",
       },
       { status: 500 }
