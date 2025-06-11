@@ -44,6 +44,7 @@ const nextConfig: NextConfig = {
     "@fern-api/docs-loader",
     "@fern-api/docs-server",
     "@fern-api/docs-auth",
+    "@fern-docs/auth",
     "@fern-docs/components",
     "@fern-docs/edge-config",
     "@fern-docs/mdx",

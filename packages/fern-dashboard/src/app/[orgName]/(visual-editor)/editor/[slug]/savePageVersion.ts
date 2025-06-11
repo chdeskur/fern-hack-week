@@ -5,10 +5,14 @@ export async function savePageVersion({
   mdx,
   orgName,
   slug,
+  subtitle,
+  title,
 }: {
-  mdx: string;
+  mdx?: string;
   orgName: string;
   slug: string;
+  subtitle?: string;
+  title?: string;
 }) {
-  console.log("[savePageVersion]", { mdx, orgName, slug });
+  console.log("[savePageVersion]", { mdx, orgName, slug, title, subtitle });
 }
