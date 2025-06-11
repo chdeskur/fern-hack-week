@@ -34,7 +34,7 @@ async function fetchFacetValues(opts: {
       })),
     })
     .catch((err: unknown) => {
-      console.error(err);
+      console.error(`[fetch-facet-values] ${JSON.stringify(err)}`);
       return { results: [] };
     });
 

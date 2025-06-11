@@ -47,7 +47,7 @@ async function OAuthReferencedEndpointForm({
       />
     );
   } catch (e) {
-    console.error(e);
+    console.error(`[playground-oauth-form-server] ${JSON.stringify(e)}`);
     return (
       <PlaygroundBearerAuthForm
         bearerAuth={{ tokenName: "token" }}

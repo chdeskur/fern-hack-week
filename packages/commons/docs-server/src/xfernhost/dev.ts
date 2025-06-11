@@ -13,7 +13,7 @@ export function getNextPublicDocsDomain(): string | undefined {
 
     return new URL(withDefaultProtocol(domain)).host;
   } catch (e) {
-    console.error(e);
+    console.error(`[next-public-docs-domain] ${JSON.stringify(e)}`);
     return undefined;
   }
 }

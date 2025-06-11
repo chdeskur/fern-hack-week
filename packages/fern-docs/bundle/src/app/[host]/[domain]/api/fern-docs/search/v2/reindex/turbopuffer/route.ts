@@ -137,7 +137,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
+    console.error(`[turbopuffer] ${JSON.stringify(error)}`);
 
     track("turbopuffer_reindex_error", {
       embeddingModel: embeddingModel.modelId,

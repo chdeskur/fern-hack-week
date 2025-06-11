@@ -29,7 +29,7 @@ export const provideS3Client = once((): S3Client | undefined => {
       },
     });
   } catch (err) {
-    console.error(err);
+    console.error(`[provide-s3-client] ${JSON.stringify(err)}`);
   }
   return undefined;
 });

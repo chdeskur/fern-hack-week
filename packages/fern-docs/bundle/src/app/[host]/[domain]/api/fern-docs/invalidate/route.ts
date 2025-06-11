@@ -28,7 +28,7 @@ export async function GET(
         try {
           await kv.del(domain);
         } catch (e) {
-          console.error(e);
+          console.error(`[invalidate:enqueue] ${JSON.stringify(e)}`);
           controller.enqueue(
             `invalidate-kv-keys-set-failed:error=${escapeRegExp(String(e))}\n`
           );
@@ -38,7 +38,7 @@ export async function GET(
         console.log(`Reindex took ${end - start}ms`);
         controller.enqueue(`invalidate-finished:${end - start}ms\n`);
       } catch (e) {
-        console.error(e);
+        console.error(`[invalidate] ${JSON.stringify(e)}`);
         controller.enqueue(
           `invalidate-failed:error=${escapeRegExp(String(e))}\n`
         );

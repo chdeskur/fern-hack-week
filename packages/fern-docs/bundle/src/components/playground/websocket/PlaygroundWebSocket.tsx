@@ -160,7 +160,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
       };
 
       socket.current.onerror = (event) => {
-        console.error(event);
+        console.error(`[playground-websocket] ${JSON.stringify(event)}`);
       };
     });
   }, [

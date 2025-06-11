@@ -44,7 +44,7 @@ async function FaIconServerInternal({
       />
     );
   } catch (error) {
-    console.error(error);
+    console.error(`[fa-icon-server] ${JSON.stringify(error)}`);
     return clientIcon;
   }
 }

@@ -9,6 +9,6 @@ export default function ErrorBoundary({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  console.error(error);
+  console.error(`[error-boundary] ${JSON.stringify(error)}`);
   return <ErrorBoundaryFallback error={error} resetErrorBoundary={reset} />;
 }

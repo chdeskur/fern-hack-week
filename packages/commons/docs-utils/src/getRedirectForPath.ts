@@ -22,7 +22,9 @@ export function matchPath(
   try {
     return match(pattern)(path);
   } catch (e) {
-    console.error(e, { pattern, path });
+    console.error(
+      `[redirect-for-path:match-path] ${JSON.stringify(e)}, { ${pattern}, ${path} }`
+    );
     return false;
   }
 }
@@ -34,7 +36,9 @@ function safeCompile(
   try {
     return compile(destination)(match.params);
   } catch (e) {
-    console.error(e, { match, destination });
+    console.error(
+      `[redirect-for-path:safe-compile] ${e}, { ${match}, ${destination} }`
+    );
     return destination;
   }
 }

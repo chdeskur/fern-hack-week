@@ -27,7 +27,7 @@ export function markdownToString(
       preserveNewlines: true,
     }).trim();
   } catch (e) {
-    console.error(e);
+    console.error(`[markdown-to-string] ${JSON.stringify(e)}`);
     return markdown;
   }
 }

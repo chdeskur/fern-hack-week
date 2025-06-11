@@ -107,7 +107,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       unindexable: response.tooLarge.length,
     });
   } catch (error) {
-    console.error(error);
+    console.error(`[algoia] ${JSON.stringify(error)}`);
 
     track("algolia_reindex_error", {
       indexName: SEARCH_INDEX,

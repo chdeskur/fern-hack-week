@@ -40,7 +40,7 @@ export function track(event: string, properties?: Record<string, unknown>) {
       await client?.shutdown();
     } catch (error) {
       if (process.env.NODE_ENV !== "development") {
-        console.error(error);
+        console.error(`[posthog] ${JSON.stringify(error)}`);
       }
     }
   });

@@ -135,7 +135,9 @@ export function PlaygroundCardTriggerApiKeyInjected({
                     window.location.reload();
                   })
                   .catch((error: unknown) => {
-                    console.error(error);
+                    console.error(
+                      `[playground-card-trigger-api-key-injected] ${JSON.stringify(error)}`
+                    );
                   });
               }}
               size="normal"

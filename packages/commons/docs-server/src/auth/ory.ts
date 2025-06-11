@@ -97,7 +97,7 @@ export class OryOAuth2Client {
     try {
       return await this.decode(access_token);
     } catch (e) {
-      console.error(e);
+      console.error(`[ory] ${JSON.stringify(e)}`);
       return null;
     }
   }

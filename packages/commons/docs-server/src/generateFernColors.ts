@@ -69,7 +69,7 @@ export function getClosestGrayColor(source: string): GrayScale {
     }
     return closestColor.scale as GrayScale;
   } catch (e) {
-    console.error(e);
+    console.error(`[generate-fern-colors] ${JSON.stringify(e)}`);
     return "gray";
   }
 }

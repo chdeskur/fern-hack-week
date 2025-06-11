@@ -101,7 +101,7 @@ export async function GET(
               );
             })
             .catch((e: unknown) => {
-              console.error(e);
+              console.error(`[revalidate:reindex] ${JSON.stringify(e)}`);
               controller.enqueue(
                 `reindex-failed:error=${escapeRegExp(String(e))}\n`
               );
@@ -122,7 +122,9 @@ export async function GET(
             controller.enqueue(`llms-full-revalidated\n`);
           })
           .catch((e: unknown) => {
-            console.error(`[llms-full-revalidate] error: ${JSON.stringify(e)}`);
+            console.error(
+              `[revalidate:llms-full-revalidate] error: ${JSON.stringify(e)}`
+            );
             controller.enqueue(
               `llms-full-revalidate-failed:error=${escapeRegExp(String(e))}\n`
             );
@@ -219,7 +221,7 @@ export async function GET(
             `revalidate-kv-keys-set:${Object.keys(keys).length}\n`
           );
         } catch (e) {
-          console.error(e);
+          console.error(`[revalidate:start] ${JSON.stringify(e)}`);
           controller.enqueue(
             `revalidate-kv-keys-set-failed:error=${escapeRegExp(String(e))}\n`
           );
@@ -266,7 +268,7 @@ export async function GET(
                   controller.enqueue(`revalidated:${url}\n`);
                 } catch (e) {
                   console.error(
-                    `[page-revalidate] error: ${JSON.stringify(e)}`
+                    `[revalidate:page-revalidate] error: ${JSON.stringify(e)}`
                   );
                   controller.enqueue(
                     `revalidate-failed:url=${url}:error=${escapeRegExp(String(e))}\n`
@@ -313,7 +315,7 @@ export async function GET(
             );
           } catch (e) {
             console.error(
-              `[homepage-image-revalidate] error: ${JSON.stringify(e)}`
+              `[revalidate:homepage-image-revalidate] error: ${JSON.stringify(e)}`
             );
           }
         }
@@ -327,7 +329,7 @@ export async function GET(
         console.log(`Reindex took ${end - start}ms`);
         controller.enqueue(`revalidate-finished:${end - start}ms\n`);
       } catch (e) {
-        console.error(e);
+        console.error(`[revalidate] ${JSON.stringify(e)}`);
         controller.enqueue(
           `revalidate-failed:error=${escapeRegExp(String(e))}\n`
         );

@@ -199,7 +199,7 @@ export function PlaygroundResponseCard({
           );
         },
         failed: (e) => {
-          console.error(e);
+          console.error(`[playground-response-card] ${JSON.stringify(e)}`);
           return <ErrorBoundaryFallback error={new Error(String(e))} />;
         },
       })}

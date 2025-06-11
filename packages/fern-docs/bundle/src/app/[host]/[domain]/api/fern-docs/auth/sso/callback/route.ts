@@ -42,7 +42,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   if (error != null) {
     // TODO: store this login attempt in posthog
 
-    console.error(error, errorDescription, errorUri);
+    console.error(`[sso:callback] ${error}, ${errorDescription}, ${errorUri}`);
     return new NextResponse(null, { status: 400 });
   }
 
@@ -93,7 +93,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const code = req.nextUrl.searchParams.get(CODE_QUERY);
 
   if (code == null) {
-    console.error("No code param provided");
+    console.error("[sso:callback] No code param provided");
     return new NextResponse(null, { status: 400 });
   }
 
@@ -126,7 +126,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       error: error instanceof Error ? error.message : String(error),
     };
 
-    console.error(errorRes);
+    console.error(`[sso:callback] ${JSON.stringify(errorRes)}`);
 
     return errorResponse();
   }

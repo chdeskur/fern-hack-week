@@ -83,7 +83,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
           }));
           setTimeout(() => closeContainer && closeContainer(), 500);
         } catch (e) {
-          console.error(e);
+          console.error(`[oauth] ${JSON.stringify(e)}`);
           closeContainer && closeContainer();
         }
       } else {

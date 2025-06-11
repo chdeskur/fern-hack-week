@@ -197,7 +197,7 @@ export async function GET(
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error(`[api-key-injection] ${JSON.stringify(error)}`);
       }
 
       const response = NextResponse.json<APIKeyInjectionConfig>({

@@ -96,7 +96,7 @@ export const rehypeCodeBlock: Unified.Plugin<[], Hast.Root> = () => {
           "mdx"
         ).children[0];
       } catch (error) {
-        console.error(error);
+        console.error(`[rehype-code-block] ${JSON.stringify(error)}`);
         // if we fail to parse the meta, just wrap it in a title
         const props = meta.trim().length === 0 ? "" : `title="${escape(meta)}"`;
         replacement = mdastFromMarkdown(`<CodeBlock ${props} />`, "mdx")

@@ -12,7 +12,7 @@ export function safeCall(action: () => void): void {
   try {
     return action();
   } catch (e) {
-    console.error(e);
+    console.error(`[posthog] ${JSON.stringify(e)}`);
   }
 }
 

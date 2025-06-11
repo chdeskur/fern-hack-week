@@ -45,7 +45,7 @@ export function applyTemplates(code: string, data?: Record<string, string>) {
   try {
     return template(code, { interpolate: /{{([^}]+)}}/g })(data);
   } catch (error) {
-    console.error(error);
+    console.error(`[templates] ${JSON.stringify(error)}`);
     return code;
   }
 }

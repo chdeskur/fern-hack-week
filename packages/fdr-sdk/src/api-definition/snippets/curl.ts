@@ -32,7 +32,7 @@ export function convertToCurl(
   try {
     return unsafeStringifyHttpRequestExampleToCurl(request, opts);
   } catch (e) {
-    console.error(e);
+    console.error(`[convert-to-curl] ${JSON.stringify(e)}`);
 
     return "";
   }

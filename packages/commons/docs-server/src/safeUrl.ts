@@ -10,7 +10,7 @@ export function safeUrl(url: string | null | undefined): URL | undefined {
   try {
     return new URL(url);
   } catch (e) {
-    console.error(e);
+    console.error(`[safe-url] ${JSON.stringify(e)}`);
     return undefined;
   }
 }

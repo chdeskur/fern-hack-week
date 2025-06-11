@@ -271,7 +271,7 @@ async function serializeMdxImpl(
           { message: content, mrkdwn: true }
         );
       }
-      console.error(error);
+      console.error(`[serializer:bundle-mdx] ${JSON.stringify(error)}`);
     });
     console.debug("content", content, "code", bundled.code);
   }
@@ -323,7 +323,7 @@ export function serializeMdx(
       (error: unknown) => {
         clearTimeout(timeoutId);
         reject(error instanceof Error ? error : new Error(String(error)));
-        console.error(error);
+        console.error(`[serialize:serialize-mdx] ${JSON.stringify(error)}`);
       }
     );
   });

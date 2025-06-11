@@ -139,7 +139,7 @@ export async function serializeTwoslash(
 
   if (bundled.errors.length > 0) {
     bundled.errors.forEach((error) => {
-      console.error(error);
+      console.error(`[serialize-twoslash] ${JSON.stringify(error)}`);
     });
     console.debug("content", content, "code", bundled.code);
   }

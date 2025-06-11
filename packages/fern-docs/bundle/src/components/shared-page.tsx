@@ -289,7 +289,7 @@ async function getNeighbor(
       excerpt,
     };
   } catch (error) {
-    console.error(error);
+    console.error(`[shared-page:get-neighbor] ${JSON.stringify(error)}`);
     return {
       href: slugToHref(node.slug),
       title: node.title,

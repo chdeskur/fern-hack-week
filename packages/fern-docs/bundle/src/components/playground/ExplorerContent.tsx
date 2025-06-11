@@ -28,7 +28,7 @@ export async function ExplorerContent({
   try {
     api = await loader.getPrunedApi(node.apiDefinitionId, createPruneKey(node));
   } catch (error) {
-    console.error(error);
+    console.error(`[explorer-content] ${JSON.stringify(error)}`);
     // TODO: don't revalidate too often
     // revalidate(await loader.getBaseUrl());
   }

@@ -164,7 +164,7 @@ export function makeToc(
           });
         });
       } catch (e) {
-        console.error(e);
+        console.error(`[make-toc:tabs-group] ${JSON.stringify(e)}`);
       }
     }
 
@@ -194,7 +194,7 @@ export function makeToc(
           });
         });
       } catch (e) {
-        console.error(e);
+        console.error(`[make-toc:accordion-group] ${JSON.stringify(e)}`);
       }
     }
 

@@ -241,7 +241,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isChangelogRedirects,
     };
   } catch (e) {
-    console.error(e);
+    console.error(`[get-edge-flags] ${JSON.stringify(e)}`);
     return {
       isApiPlaygroundEnabled: isDevelopment(domain),
       isApiScrollingDisabled: false,

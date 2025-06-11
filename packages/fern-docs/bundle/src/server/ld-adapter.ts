@@ -43,7 +43,7 @@ async function withLaunchDarklyContext(
 
     return context;
   } catch (error) {
-    console.error(error);
+    console.error(`[ld-adapter:with-ld-context] ${JSON.stringify(error)}`);
     return { kind: "user", key: "anonymous", anonymous: true };
   }
 }
@@ -177,7 +177,7 @@ async function fetchInitialFlags(
       hash: ldClient.secureModeHash(context),
     };
   } catch (error) {
-    console.error(error);
+    console.error(`[ld-adapter:fetch-initial-flags] ${JSON.stringify(error)}`);
     return {
       flags: undefined,
       json: undefined,

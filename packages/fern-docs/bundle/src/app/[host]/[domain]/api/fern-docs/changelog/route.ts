@@ -179,7 +179,7 @@ async function createFeed(
               await toFeedItem(entry, domain, (id) => loader.getPage(id), files)
             );
           } catch (e) {
-            console.error(e);
+            console.error(`[changelog:to-feed] ${JSON.stringify(e)}`);
             // TODO: sentry
           }
         });
@@ -240,7 +240,7 @@ async function toFeedItem(
       item.image = { url: image };
     }
   } catch (e) {
-    console.error(e);
+    console.error(`[changlelog:to-feed-item] ${JSON.stringify(e)}`);
     // TODO: sentry
   }
   return item;

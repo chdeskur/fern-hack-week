@@ -21,7 +21,7 @@ export function ErrorBoundaryFallback({
   error: Error & { digest?: string };
   resetErrorBoundary?: () => void;
 }) {
-  console.error(error);
+  console.error(`[error-boundary-fallback] ${JSON.stringify(error)}`);
   const errorBadge = (
     <SemanticBadge
       variant="subtle"
@@ -60,7 +60,7 @@ export function ErrorBoundary({
     return (
       <ReactErrorBoundary
         onError={(error) => {
-          console.error(error);
+          console.error(`[error-boundary]: ${error.message}`);
         }}
         fallback={fallback}
       >

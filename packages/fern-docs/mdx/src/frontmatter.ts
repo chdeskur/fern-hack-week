@@ -13,7 +13,7 @@ export function getFrontmatter(content: string): {
       content: gm.content,
     };
   } catch (e) {
-    console.error(e);
+    console.error(`[get-frontmatter] ${JSON.stringify(e)}`);
     return {
       data: {} as FernDocs.Frontmatter,
       content,
