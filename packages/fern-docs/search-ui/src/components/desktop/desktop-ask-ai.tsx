@@ -413,6 +413,7 @@ const DesktopAskAIChat = ({
                     size="iconXs"
                     variant="outline"
                     onClick={() => {
+                      chat.stop();
                       chat.setMessages([]);
                       setInitialConversation([]);
                       resetConversationId();
@@ -766,7 +767,8 @@ const AskAICommandItems = memo<{
                             {message.assistant.content}
                           </MarkdownContent>
                         )}
-                        {isLoading &&
+                        {isLastMessage &&
+                          isLoading &&
                           (!message.toolInvocations ||
                             message.toolInvocations.some(
                               (invocation) => invocation.state !== "result"
