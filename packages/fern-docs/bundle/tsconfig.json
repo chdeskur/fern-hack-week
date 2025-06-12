@@ -20,13 +20,13 @@
       "path": "../../commons/core-utils"
     },
     {
+      "path": "../../commons/docs-auth"
+    },
+    {
       "path": "../../commons/fdr-utils"
     },
     {
       "path": "../../fdr-sdk/tsconfig.build.json"
-    },
-    {
-      "path": "../auth"
     },
     {
       "path": "../components"

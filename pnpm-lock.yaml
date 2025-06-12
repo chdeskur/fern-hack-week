@@ -917,31 +917,6 @@ importers:
         specifier: 5.7.3
         version: 5.7.3
 
-  packages/fern-docs/auth:
-    dependencies:
-      zod:
-        specifier: ^3.24.1
-        version: 3.24.1
-    devDependencies:
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../configs
-      '@types/node':
-        specifier: ^18.11.9
-        version: 18.19.33
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      stylelint:
-        specifier: ^16.1.0
-        version: 16.5.0(typescript@5.7.3)
-      typescript:
-        specifier: 5.7.3
-        version: 5.7.3
-      vitest:
-        specifier: ^3.0.5
-        version: 3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
   packages/fern-docs/bundle:
     dependencies:
       '@ai-sdk/amazon-bedrock':
