@@ -538,7 +538,11 @@ const AskAIComposer = forwardRef<
     forwardedRef
   ) => {
     const value = typeof props.value === "string" ? props.value : "";
-    const canSubmit = value.trim().split(/\s+/).length >= 1;
+    const canSubmit =
+      value
+        .trim()
+        .split(/\s+/)
+        .filter((word) => word.length > 0).length >= 1;
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
