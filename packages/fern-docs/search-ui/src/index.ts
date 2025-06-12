@@ -1,4 +1,4 @@
-export { SEARCH_INDEX } from "@fern-docs/search-server/algolia";
+export { SEARCH_INDEX } from "@fern-docs/search-keyword";
 export * from "./components/desktop";
 export * from "./components/mobile";
 export * from "./components/search-client";

@@ -12,7 +12,13 @@
   "include": ["./src/server/**/*.ts"],
   "references": [
     {
-      "path": "../search-server"
+      "path": "../search-server/keyword"
+    },
+    {
+      "path": "../search-server/ask-fern"
+    },
+    {
+      "path": "../search-server/utils"
     }
   ]
 }

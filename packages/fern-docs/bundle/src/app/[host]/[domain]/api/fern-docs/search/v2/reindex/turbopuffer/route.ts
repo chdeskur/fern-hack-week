@@ -20,7 +20,7 @@ import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   getTurbopufferVectorizer,
   turbopufferUpsertTask,
-} from "@fern-docs/search-server/turbopuffer";
+} from "@fern-docs/search-ask-fern";
 
 export const maxDuration = 800; // 13 minutes
 

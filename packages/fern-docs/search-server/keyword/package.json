@@ -1,0 +1,67 @@
+{
+  "name": "@fern-docs/search-keyword",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/fern-docs/search-server/keyword"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./types": {
+      "types": "./dist/algolia/types.d.ts",
+      "default": "./dist/algolia/types.js"
+    },
+    "./edge": {
+      "types": "./dist/algolia/edge/index.d.ts",
+      "default": "./dist/algolia/edge/index.js"
+    },
+    "./archive": {
+      "types": "./dist/algolia/records/archive/index.d.ts",
+      "default": "./dist/algolia/records/archive/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "test": "vitest --run --passWithNoTests --globals",
+    "test:update": "vitest --run -u --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "@fern-api/docs-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
+    "@fern-docs/mdx": "workspace:*",
+    "@fern-docs/search-utils": "workspace:*",
+    "algoliasearch": "^5.20.3",
+    "es-toolkit": "^1.32.0",
+    "html-entities": "^2.5.2",
+    "html-to-text": "^9.0.5",
+    "marked": "^5.1.0",
+    "ts-essentials": "^10.0.4",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/html-to-text": "^9.0.1",
+    "@types/marked": "^5.0.0",
+    "@types/node": "^18.11.9",
+    "depcheck": "^1.4.7",
+    "stylelint": "^16.1.0",
+    "typescript": "^5",
+    "vitest": "^3.0.5"
+  }
+}

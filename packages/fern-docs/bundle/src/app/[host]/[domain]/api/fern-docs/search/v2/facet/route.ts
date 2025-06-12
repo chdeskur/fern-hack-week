@@ -7,7 +7,7 @@ import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { selectFirst } from "@fern-api/docs-server/utils/selectFirst";
 import { toArray } from "@fern-api/docs-server/utils/toArray";
-import { fetchFacetValues } from "@fern-docs/search-server/algolia";
+import { fetchFacetValues } from "@fern-docs/search-keyword";
 
 export const maxDuration = 10;
 

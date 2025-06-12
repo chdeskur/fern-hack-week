@@ -28,11 +28,11 @@ import { withoutStaging } from "@fern-api/docs-utils";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   buildCustomConfig,
+  convertTpufRecordsToDocuments,
   createChatSystemPrompt,
   getLanguageModel,
   queryTurbopuffer,
-  toDocuments,
-} from "@fern-docs/search-server/turbopuffer";
+} from "@fern-docs/search-ask-fern";
 
 import { getFernToken } from "@/app/fern-token";
 
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
     roles: user?.roles ?? [],
     topK: 3,
   });
-  const documents = toDocuments(searchResults).join("\n\n");
+  const documents = convertTpufRecordsToDocuments(searchResults).join("\n\n");
 
   const promptTemplate = config.aiChatConfig?.systemPrompt;
   const systemPrompt = createChatSystemPrompt({

@@ -1,8 +1,8 @@
 import { streamText, tool } from "ai";
 import { z } from "zod";
 
-import { createDefaultSystemPrompt } from "@fern-docs/search-server";
-import { toDocuments } from "@fern-docs/search-server/turbopuffer";
+import { createDefaultSystemPrompt } from "@fern-docs/search-ask-fern";
+import { convertTpufRecordsToDocuments } from "@fern-docs/search-ask-fern";
 
 import { models } from "@/server/models";
 import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";
@@ -35,7 +35,7 @@ export async function POST(request: Request): Promise<Response> {
     domain,
     20
   );
-  const documents = toDocuments(searchResults).join("\n\n");
+  const documents = convertTpufRecordsToDocuments(searchResults).join("\n\n");
 
   const system = createDefaultSystemPrompt({
     domain,

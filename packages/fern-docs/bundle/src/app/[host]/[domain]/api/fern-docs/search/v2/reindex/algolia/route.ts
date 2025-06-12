@@ -19,7 +19,7 @@ import {
   SEARCH_INDEX,
   algoliaIndexSettingsTask,
   algoliaIndexerTask,
-} from "@fern-docs/search-server/algolia";
+} from "@fern-docs/search-keyword";
 
 export const maxDuration = 800; // 13 minutes
 

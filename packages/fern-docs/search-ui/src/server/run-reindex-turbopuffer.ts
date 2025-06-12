@@ -7,7 +7,7 @@ import {
   TurbopufferRecord,
   queryTurbopuffer,
   turbopufferUpsertTask,
-} from "@fern-docs/search-server/turbopuffer";
+} from "@fern-docs/search-ask-fern";
 
 import {
   fdrEnvironment,

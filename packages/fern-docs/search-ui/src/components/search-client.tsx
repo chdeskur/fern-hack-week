@@ -24,10 +24,7 @@ import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
 import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
-import type {
-  FacetName,
-  FacetsResponse,
-} from "@fern-docs/search-server/algolia";
+import type { FacetName, FacetsResponse } from "@fern-docs/search-keyword";
 import {
   useDeepCompareEffectNoCheck,
   useEventCallback,

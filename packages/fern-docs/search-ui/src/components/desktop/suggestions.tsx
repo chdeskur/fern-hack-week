@@ -6,7 +6,7 @@ import { experimental_useObject } from "ai/react";
 import { debounce } from "es-toolkit/function";
 
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { SuggestionsSchema } from "@fern-docs/search-server";
+import { SuggestionsSchema } from "@fern-docs/search-ask-fern";
 
 import * as Command from "../cmdk";
 import { Skeleton } from "../ui/skeleton";

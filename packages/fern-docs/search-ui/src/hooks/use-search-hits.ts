@@ -3,7 +3,7 @@ import { useHits, useInfiniteHits } from "react-instantsearch";
 
 import type { SendEventForHits } from "instantsearch.js/es/lib/utils";
 
-import type { AlgoliaRecord } from "@fern-docs/search-server/algolia/types";
+import type { AlgoliaRecord } from "@fern-docs/search-keyword/types";
 
 import type { AlgoliaRecordHit } from "../types";
 

@@ -8,7 +8,7 @@ import {
   type FacetName,
   type MarkdownRecord,
   SEARCHABLE_FACET_ATTRIBUTES,
-} from "@fern-docs/search-server/algolia/types";
+} from "@fern-docs/search-keyword/types";
 
 export type AlgoliaRecordHit = Hit<AlgoliaRecord & BaseHit>;
 export type MarkdownRecordHit = MarkRequired<Hit<MarkdownRecord>, "type">;

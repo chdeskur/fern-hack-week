@@ -15,7 +15,7 @@ import {
   convertDocsDefinitionToRead,
 } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { generateAlgoliaRecords } from "@fern-docs/search-server/archive";
+import { generateAlgoliaRecords } from "@fern-docs/search-keyword/archive";
 
 import { DocsV2WriteService } from "../../../api";
 import { FernRegistry } from "../../../api/generated";

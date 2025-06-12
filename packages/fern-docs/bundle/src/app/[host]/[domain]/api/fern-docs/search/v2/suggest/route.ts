@@ -15,11 +15,8 @@ import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { COOKIE_FERN_TOKEN } from "@fern-api/docs-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
-import { SuggestionsSchema } from "@fern-docs/search-server";
-import {
-  type AlgoliaRecord,
-  SEARCH_INDEX,
-} from "@fern-docs/search-server/algolia";
+import { SuggestionsSchema } from "@fern-docs/search-ask-fern";
+import { type AlgoliaRecord, SEARCH_INDEX } from "@fern-docs/search-keyword";
 
 const DEPLOYMENT_ID = getEnv().VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
