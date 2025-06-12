@@ -135,6 +135,7 @@ export default async function Layout({
               deprecated_customerAnalytics,
               config.analyticsConfig
             )}
+            isPosthogDisabled={edgeFlags.isPosthogDisabled}
           />
         )}
       </RootNodeProvider>

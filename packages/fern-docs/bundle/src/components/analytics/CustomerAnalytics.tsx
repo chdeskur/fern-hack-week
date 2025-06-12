@@ -17,8 +17,10 @@ const SegmentScript = dynamic(() => import("./segment"), { ssr: true });
 
 export function CustomerAnalytics({
   config,
+  isPosthogDisabled,
 }: {
   config?: Partial<DocsV1Read.AnalyticsConfig>;
+  isPosthogDisabled: boolean;
 }) {
   if (!config) {
     return null;
@@ -26,7 +28,9 @@ export function CustomerAnalytics({
 
   return (
     <>
-      <PosthogProvider customerConfig={config.posthog} />
+      {!isPosthogDisabled && (
+        <PosthogProvider customerConfig={config.posthog} />
+      )}
       {config.fullstory && <FullstoryScript config={config.fullstory} />}
       {config.ga4 && <GoogleAnalytics gaId={config.ga4.measurementId} />}
       {config.gtm && <GoogleTagManager gtmId={config.gtm.containerId} />}

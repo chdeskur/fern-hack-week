@@ -32,6 +32,7 @@ export interface EdgeFlags {
   isSearchDisabled: boolean;
   isDefaultSearchFilterOff: boolean;
   isChangelogRedirects: boolean;
+  isPosthogDisabled: boolean;
 }
 
 export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
@@ -68,4 +69,5 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isSearchDisabled: false,
   isDefaultSearchFilterOff: false,
   isChangelogRedirects: false,
+  isPosthogDisabled: false,
 };
