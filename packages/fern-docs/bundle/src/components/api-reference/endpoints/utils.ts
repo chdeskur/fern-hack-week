@@ -1,6 +1,6 @@
 import { camelCase, upperFirst } from "es-toolkit/string";
 
-import { HttpMethod } from "@fern-docs/components";
+import { HttpMethod } from "@fern-api/docs-utils";
 
 export function convertNameToAnchorPart(
   name: string | null | undefined

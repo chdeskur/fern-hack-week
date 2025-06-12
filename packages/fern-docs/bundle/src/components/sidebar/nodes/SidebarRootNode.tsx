@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DocsLoader } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 import { withPrunedNavigation } from "@/server/withPrunedNavigation";

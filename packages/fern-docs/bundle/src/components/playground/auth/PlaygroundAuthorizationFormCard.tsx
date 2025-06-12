@@ -3,7 +3,7 @@ import "server-only";
 import { ReactElement } from "react";
 import React from "react";
 
-import { DocsLoader } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";

@@ -11,7 +11,7 @@ import React from "react";
 import { compact } from "es-toolkit/array";
 import { HydrationBoundary } from "jotai-ssr";
 
-import { DocsLoader } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import {
   addLeadingSlash,
   conformTrailingSlash,

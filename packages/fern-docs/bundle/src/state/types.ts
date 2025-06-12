@@ -1,5 +1,3 @@
-import { FileData } from "@fern-api/docs-server/types";
-
 export interface DefaultNavbarLink {
   type: "filled" | "outlined" | "minimal" | "primary" | "secondary";
   href: string;
@@ -20,13 +18,6 @@ export interface GithubNavbarLink {
 }
 
 export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
-
-export interface LogoConfiguration {
-  height: number | undefined;
-  href: string | undefined;
-  light: FileData | undefined;
-  dark: FileData | undefined;
-}
 
 export interface JsConfig {
   remote:

@@ -1,7 +1,7 @@
 import "server-only";
 
-import { DocsLoader } from "@fern-api/docs-loader";
 import { getReturnToQueryParam } from "@fern-api/docs-server/auth/return-to";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { isTrailingSlashEnabled } from "@fern-api/docs-utils";
 import { FernButton } from "@fern-docs/components";
 

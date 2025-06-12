@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { DocsLoader } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { createFileResolver } from "@fern-api/docs-server/file-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 

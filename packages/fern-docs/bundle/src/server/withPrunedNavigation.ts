@@ -1,4 +1,4 @@
-import { DocsLoader } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SKIP } from "@fern-docs/mdx";
 

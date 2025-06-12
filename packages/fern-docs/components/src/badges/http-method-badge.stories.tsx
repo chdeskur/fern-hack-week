@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { HttpMethodBadge, HttpMethodOrder } from "./http-method-badge";
+import { HttpMethodOrder } from "@fern-api/docs-utils";
+
+import { HttpMethodBadge } from "./http-method-badge";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof HttpMethodBadge> = {

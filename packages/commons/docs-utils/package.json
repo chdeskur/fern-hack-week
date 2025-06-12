@@ -9,6 +9,10 @@
   },
   "sideEffects": false,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types/*": "./src/types/*.ts"
+  },
   "main": "src/index.ts",
   "module": "src/index.ts",
   "source": "src/index.ts",

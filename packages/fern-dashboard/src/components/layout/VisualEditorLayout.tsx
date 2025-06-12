@@ -1,18 +1,38 @@
 import { ReactNode } from "react";
 
+import { AbstractHeaderContent } from "@fern-docs/components/abstract/AbstractHeaderContent";
+
 export declare namespace VisualEditorLayout {
   export interface Props {
     children: React.JSX.Element;
+    headertabs?: React.ReactNode;
+    versionSelect?: React.ReactNode;
+    productSelect?: React.ReactNode;
+    sidebar?: React.ReactNode;
+    logo?: React.ReactNode;
   }
 }
 
 export async function VisualEditorLayout({
+  headertabs,
+  versionSelect,
+  productSelect,
+  sidebar,
+  logo,
   children,
 }: VisualEditorLayout.Props) {
   return (
     <div className="flex h-full w-full flex-col bg-gray-100">
       <Header />
-      <Preview>{children}</Preview>
+      <Preview
+        headertabs={headertabs}
+        versionSelect={versionSelect}
+        productSelect={productSelect}
+        sidebar={sidebar}
+        logo={logo}
+      >
+        {children}
+      </Preview>
     </div>
   );
 }
@@ -29,11 +49,30 @@ function Header() {
   );
 }
 
-function Preview({ children }: { children: ReactNode }) {
+function Preview({
+  headertabs,
+  versionSelect,
+  productSelect,
+  // sidebar,
+  logo,
+  children,
+}: {
+  children: ReactNode;
+  headertabs?: React.ReactNode;
+  versionSelect?: React.ReactNode;
+  productSelect?: React.ReactNode;
+  sidebar?: React.ReactNode;
+  logo?: React.ReactNode;
+}) {
   return (
-    <div className="border-1 m-2 flex flex-1 flex-col border-gray-500 bg-white shadow-sm">
-      <div className="flex flex-col">
-        <PreviewHeader />
+    <div className="border-1 m-2 flex flex-1 flex-col rounded-2xl border-gray-500 bg-white shadow-sm">
+      <div className="flex w-full flex-col">
+        <PreviewHeader
+          headertabs={headertabs}
+          versionSelect={versionSelect}
+          productSelect={productSelect}
+          logo={logo}
+        />
         <PreviewSubHeader />
       </div>
       <div className="flex flex-1">
@@ -44,12 +83,28 @@ function Preview({ children }: { children: ReactNode }) {
   );
 }
 
-function PreviewHeader() {
+function PreviewHeader({
+  // headertabs,
+  versionSelect,
+  productSelect,
+  logo,
+}: {
+  headertabs?: React.ReactNode;
+  versionSelect?: React.ReactNode;
+  productSelect?: React.ReactNode;
+  logo?: React.ReactNode;
+}) {
   return (
-    <div className="flex h-12 items-center justify-center border-b border-gray-500 bg-white px-2">
-      <div className="flex-1 text-left">Logo</div>
-      <div className="flex-1 text-center">Search</div>
-      <div className="flex-1 text-right">...</div>
+    <div className="fern-header-content">
+      <AbstractHeaderContent
+        className="max-w-page-width mx-auto"
+        logo={logo}
+        versionSelect={versionSelect}
+        productSelect={productSelect}
+        navbarLinks={<div>Links</div>}
+        mobileMenuButton={<div>Menu</div>}
+        themeSwitch={<div>Theme</div>}
+      />
     </div>
   );
 }

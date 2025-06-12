@@ -50,7 +50,7 @@ RUN apk add --no-cache libc6-compat && \
 WORKDIR /app
 RUN npm install -g turbo@2.0.1
 COPY . .
-RUN turbo prune @fern-platform/fdr @fern-docs/bundle --docker
+RUN turbo prune @fern-platform/fdr @fern-docs/bundle @fern-docs/edge-config @fern-docs/auth --docker
 
 # Add lockfile and package.json's
 FROM base AS installer

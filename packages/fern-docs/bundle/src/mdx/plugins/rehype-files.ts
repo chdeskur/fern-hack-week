@@ -1,6 +1,6 @@
 import { walk } from "estree-walker";
 
-import { FileData } from "@fern-api/docs-server/types";
+import { FileData } from "@fern-api/docs-utils/types/file-data";
 import type {
   Hast,
   MdxJsxAttribute,

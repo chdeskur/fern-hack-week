@@ -1,8 +1,7 @@
 import "server-only";
 
+import { FileData } from "@fern-api/docs-utils/types/file-data";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-
-import type { FileData } from "./types";
 
 export function createFileResolver(files: Record<string, FileData>) {
   return (src: string | undefined) => {

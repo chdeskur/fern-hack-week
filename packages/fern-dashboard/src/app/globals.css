@@ -2,6 +2,8 @@
 
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
+@import "@fern-docs/components/abstract/styles";
+@import "@fern-docs/components/styles";
 
 @custom-variant dark (&:is(.dark *));
 
