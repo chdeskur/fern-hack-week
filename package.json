@@ -151,7 +151,10 @@
       "serverless",
       "sharp",
       "workerd"
-    ]
+    ],
+    "overrides": {
+      "webpack-bundle-analyzer>ws": "^7.5.10"
+    }
   },
   "nextBundleAnalysis": {
     "buildOutputDirectory": "packages/fern-docs/bundle/.next",
