@@ -3,6 +3,7 @@ import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import process from "node:process";
+import webpack from "webpack";
 
 const cdnUri =
   process.env.NEXT_PUBLIC_CDN_URI != null
@@ -245,6 +246,16 @@ const nextConfig: NextConfig = {
       ...config.resolve.fallback,
       crypto: false,
     };
+    if (isSelfHosted) {
+      // To solve workos security vulnerability
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /@workos-inc\/node/,
+          require.resolve("./src/server/workos-stub.ts")
+        )
+      );
+    }
+
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
