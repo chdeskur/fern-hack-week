@@ -26,6 +26,10 @@ function isMdxEmpty(mdx: MarkdownText | MarkdownText[] | undefined): boolean {
     return mdx.length === 0 || mdx.every(isMdxEmpty);
   }
 
+  if (!mdx.code) {
+    return true;
+  }
+
   return mdx.code.trim().length === 0;
 }
 
