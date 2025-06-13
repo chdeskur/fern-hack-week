@@ -54,6 +54,10 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
       } catch (e) {
         // if the auth header does not belong to fern, check the org id for the docs url, and check if the user belongs to that org
         if (e instanceof UserNotInOrgError) {
+          // do not parse placeholder domain
+          if (req.body.url.includes("[") || req.body.url.includes("]")) {
+            throw new DocsV2Read.DomainNotRegisteredError();
+          }
           const parsedUrl = ParsedBaseUrl.parse(req.body.url);
           const orgId = await app.dao
             .docsV2()
@@ -67,6 +71,10 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
           });
         }
         throw e;
+      }
+      // do not parse placeholder domain
+      if (req.body.url.includes("[") || req.body.url.includes("]")) {
+        throw new DocsV2Read.DomainNotRegisteredError();
       }
       const parsedUrl = ParsedBaseUrl.parse(req.body.url);
       const response = await app.docsDefinitionCache.getDocsForUrl({
