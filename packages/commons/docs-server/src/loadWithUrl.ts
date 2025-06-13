@@ -29,6 +29,11 @@ export const loadWithUrl = cache(
       async () => {
         const domainWithoutStaging = withoutStaging(domain);
 
+        if (domain.includes("[")) {
+          console.error("Cannot load docs from an invalid domain");
+          notFound();
+        }
+
         if (isLocal()) {
           const response =
             await provideRegistryService().docs.v2.read.getDocsForUrl({
