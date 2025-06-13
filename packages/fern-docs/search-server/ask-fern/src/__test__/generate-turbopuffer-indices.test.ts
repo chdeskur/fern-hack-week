@@ -3,7 +3,7 @@ import { join } from "path";
 import tmp from "tmp-promise";
 import { expect, test } from "vitest";
 
-import { createTurbopufferRecords } from "@fern-docs/search-ask-fern";
+import { createTurbopufferRecords } from "../turbopuffer/records/create-turbopuffer-records";
 
 test("check generated turbopuffer index", { timeout: 60000 }, async () => {
   const fdrJson = join(__dirname, "fixtures", "buildwithfern.com", "fdr.json");

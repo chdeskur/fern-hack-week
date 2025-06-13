@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import matter from "gray-matter";
 
+import { maybeRemoveStyleTags } from "../post-process/markdown/maybe-remove-style-tags";
 import { TurbopufferRecordWithoutVector } from "../types";
 import { BaseRecord } from "./create-base-record";
 
@@ -13,30 +14,15 @@ export async function createMarkdownRecords({
   base,
   markdown,
 }: CreateMarkdownRecordsOptions): Promise<TurbopufferRecordWithoutVector[]> {
-  // TODO: make this more nuanced
-  // avoid removing styling from code snippets, but remove styling from HTML tags otherwise
-  const has_snippets =
-    markdown.includes("```") || markdown.includes("<CodeBlocks");
-  let chunked_content = [];
-  if (!has_snippets) {
-    chunked_content = [
-      // matches on style={{...}} and style="..." and <style>...</style>
-      markdown
-        .replace(/style={{[^}]*}}/g, "")
-        .replace(/style="[^}]*"/g, "")
-        .replace(/<style>[\s\S]*?<\/style>/g, ""),
-    ];
-  } else {
-    chunked_content = [markdown];
-  }
+  const chunkedContent: string[] = [postProcessMarkdown(markdown)];
 
-  return chunked_content.map((chunk, i) => {
-    const mattered_chunk = matter(chunk);
+  return chunkedContent.map((chunk, i) => {
+    const matteredChunk = matter(chunk);
     const attributes = ["title", "description", "pathname", "keywords"];
     for (const attribute of attributes) {
-      if (!mattered_chunk.data[attribute]) {
+      if (!matteredChunk.data[attribute]) {
         if (attribute in base.attributes) {
-          mattered_chunk.data[attribute] =
+          matteredChunk.data[attribute] =
             base.attributes[attribute as keyof typeof base.attributes];
         }
       }
@@ -47,9 +33,13 @@ export async function createMarkdownRecords({
       id: createHash("sha256").update(`${base.id}-${i}`).digest("hex"),
       attributes: {
         ...base.attributes,
-        chunk: matter.stringify(mattered_chunk.content, mattered_chunk.data),
+        chunk: matter.stringify(matteredChunk.content, matteredChunk.data),
         title: base.attributes.title,
       },
     };
   });
+}
+
+function postProcessMarkdown(markdown: string): string {
+  return maybeRemoveStyleTags(markdown);
 }

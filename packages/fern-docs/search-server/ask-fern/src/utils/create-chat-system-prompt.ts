@@ -1,6 +1,6 @@
-import { createCohereSystemPrompt } from "../../utils/cohere-system-prompt";
-import { createDefaultSystemPrompt } from "../../utils/system-prompt";
 import { CustomAskFernConfig } from "../custom/types";
+import { createCohereSystemPrompt } from "../utils/cohere-system-prompt";
+import { createDefaultSystemPrompt } from "../utils/system-prompt";
 
 export function createChatSystemPrompt({
   customConfig,

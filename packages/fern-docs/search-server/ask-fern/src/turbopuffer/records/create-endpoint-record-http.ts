@@ -16,6 +16,12 @@ interface CreateEndpointBaseRecordOptions {
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }
 
+interface RequestProperty {
+  key: string;
+  type: string;
+  description?: string;
+}
+
 export function createEndpointBaseRecordHttp({
   base,
   node,
@@ -24,47 +30,24 @@ export function createEndpointBaseRecordHttp({
 }: CreateEndpointBaseRecordOptions): TurbopufferRecord {
   const prepared = maybePrepareMdxContent(toDescription(endpoint.description));
 
-  // here, we parse request properties
-  // TODO: make this more comprehensive (handle enums, etc.)
-  const request_properties: {
-    key: string;
-    type: string;
-    description?: string;
-  }[] = [];
+  const requestProperties: RequestProperty[] = [];
   endpoint.requests?.forEach((request) => {
     if (request.body.type === "object") {
       request.body.properties.forEach((property) => {
-        if (property.valueShape.type === "alias") {
-          let property_type = JSON.stringify(property.valueShape);
-          if (property.valueShape.value.type === "id") {
-            property_type = JSON.stringify(types[property.valueShape.value.id]);
-          } else if (property.valueShape.value.type === "optional") {
-            if (
-              property.valueShape.value.shape.type === "alias" &&
-              property.valueShape.value.shape.value.type === "id"
-            ) {
-              property_type = JSON.stringify(
-                types[property.valueShape.value.shape.value.id]
-              );
-            }
-          }
-          request_properties.push({
-            key: property.key.toString(),
-            type: property_type,
-            description: property.description,
-          });
-        } else if (property.valueShape.type === "enum") {
-          request_properties.push({
-            key: property.key.toString(),
-            type: JSON.stringify(property.valueShape),
-            description: property.description,
-          });
-        }
+        const stringifiedProperty = maybeGetStringifiedProperty({
+          property,
+          types,
+        });
+        requestProperties.push({
+          key: property.key.toString(),
+          type: stringifiedProperty,
+          description: property.description,
+        });
       });
     }
   });
   const description =
-    JSON.stringify(request_properties, null, 2) +
+    JSON.stringify(requestProperties, null, 2) +
     "\n\n" +
     base.attributes.code_snippets?.join("\n\n");
 
@@ -159,4 +142,30 @@ export function createEndpointBaseRecordHttp({
       keywords: keywords_as_string,
     },
   };
+}
+
+function maybeGetStringifiedProperty({
+  property,
+  types,
+}: {
+  property: ApiDefinition.ObjectProperty;
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}): string {
+  const propertyValueShape = property.valueShape;
+  if (propertyValueShape.type === "alias") {
+    if (propertyValueShape.value.type === "id") {
+      return JSON.stringify(types[propertyValueShape.value.id]);
+    } else if (propertyValueShape.value.type === "optional") {
+      if (
+        propertyValueShape.value.shape.type === "alias" &&
+        propertyValueShape.value.shape.value.type === "id"
+      ) {
+        return JSON.stringify(types[propertyValueShape.value.shape.value.id]);
+      }
+    }
+    return JSON.stringify(propertyValueShape);
+  } else if (propertyValueShape.type === "enum") {
+    return JSON.stringify(propertyValueShape);
+  }
+  return JSON.stringify(propertyValueShape);
 }
