@@ -12,6 +12,7 @@ const cdnUri =
 const isTrailingSlashEnabled = process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 const isAssetPrefixDisabled =
   process.env.NEXT_PUBLIC_ASSET_PREFIX_DISABLED === "1";
+const isSelfHosted = process.env.NEXT_PUBLIC_IS_SELF_HOSTED === "1";
 const isStandalone =
   process.env.NEXT_PUBLIC_IS_LOCAL === "1" ||
   process.env.NEXT_PUBLIC_IS_SELF_HOSTED === "1";
