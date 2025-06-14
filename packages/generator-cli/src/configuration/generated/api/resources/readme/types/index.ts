@@ -9,6 +9,8 @@ export * from "./GoInfo";
 export * from "./JavaInfo";
 export * from "./RubyInfo";
 export * from "./CsharpInfo";
+export * from "./PhpInfo";
+export * from "./ComposerPublishInfo";
 export * from "./NpmPublishInfo";
 export * from "./PypiPublishInfo";
 export * from "./GoPublishInfo";

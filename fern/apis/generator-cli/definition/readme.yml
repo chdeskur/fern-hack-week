@@ -68,6 +68,7 @@ types:
       java: JavaInfo
       ruby: RubyInfo
       csharp: CsharpInfo
+      php: PhpInfo
 
   TypescriptInfo:
     properties:
@@ -92,6 +93,14 @@ types:
   CsharpInfo:
     properties:
       publishInfo: optional<NugetPublishInfo>
+  
+  PhpInfo:
+    properties:
+      publishInfo: optional<ComposerPublishInfo>
+
+  ComposerPublishInfo:
+    properties:
+      packageName: string
 
   NpmPublishInfo:
     properties:

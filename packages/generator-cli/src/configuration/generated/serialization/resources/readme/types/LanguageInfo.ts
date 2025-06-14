@@ -11,6 +11,7 @@ import { GoInfo } from "./GoInfo";
 import { JavaInfo } from "./JavaInfo";
 import { RubyInfo } from "./RubyInfo";
 import { CsharpInfo } from "./CsharpInfo";
+import { PhpInfo } from "./PhpInfo";
 
 export const LanguageInfo: core.serialization.Schema<serializers.LanguageInfo.Raw, FernGeneratorCli.LanguageInfo> =
     core.serialization
@@ -21,6 +22,7 @@ export const LanguageInfo: core.serialization.Schema<serializers.LanguageInfo.Ra
             java: JavaInfo,
             ruby: RubyInfo,
             csharp: CsharpInfo,
+            php: PhpInfo,
         })
         .transform<FernGeneratorCli.LanguageInfo>({
             transform: (value) => {
@@ -37,6 +39,8 @@ export const LanguageInfo: core.serialization.Schema<serializers.LanguageInfo.Ra
                         return FernGeneratorCli.LanguageInfo.ruby(value);
                     case "csharp":
                         return FernGeneratorCli.LanguageInfo.csharp(value);
+                    case "php":
+                        return FernGeneratorCli.LanguageInfo.php(value);
                     default:
                         return value as FernGeneratorCli.LanguageInfo;
                 }
@@ -51,7 +55,8 @@ export declare namespace LanguageInfo {
         | LanguageInfo.Go
         | LanguageInfo.Java
         | LanguageInfo.Ruby
-        | LanguageInfo.Csharp;
+        | LanguageInfo.Csharp
+        | LanguageInfo.Php;
 
     interface Typescript extends TypescriptInfo.Raw {
         type: "typescript";
@@ -75,5 +80,9 @@ export declare namespace LanguageInfo {
 
     interface Csharp extends CsharpInfo.Raw {
         type: "csharp";
+    }
+
+    interface Php extends PhpInfo.Raw {
+        type: "php";
     }
 }
