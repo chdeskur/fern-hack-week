@@ -36,6 +36,7 @@ import {
   DEFAULT_HEADER_HEIGHT,
   DEFAULT_LOGO_HEIGHT,
   DEFAULT_PAGE_WIDTH,
+  DEFAULT_SELF_HOSTED_EDGE_FLAGS,
   DEFAULT_SIDEBAR_WIDTH,
   EdgeFlags,
   FERN_DOCS_ORIGINS,
@@ -117,8 +118,10 @@ async function kvGet<T>(domain: string, key: string): Promise<T | null> {
 }
 
 const cachedGetEdgeFlags = cache(async (domain: string) => {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return DEFAULT_EDGE_FLAGS;
+  } else if (isSelfHosted()) {
+    return DEFAULT_SELF_HOSTED_EDGE_FLAGS;
   }
 
   return await getEdgeFlags(domain);

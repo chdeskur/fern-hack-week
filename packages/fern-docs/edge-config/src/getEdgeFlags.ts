@@ -1,6 +1,7 @@
 import type { EdgeFlags } from "@fern-api/docs-utils";
 import {
   DEFAULT_EDGE_FLAGS,
+  DEFAULT_SELF_HOSTED_EDGE_FLAGS,
   isCustomDomain,
   isDevelopment,
   isFern,
@@ -57,8 +58,10 @@ type EdgeFlag = (typeof EDGE_FLAGS)[number];
 type EdgeConfigResponse = Record<EdgeFlag, string[] | Record<string, unknown>>;
 
 export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return DEFAULT_EDGE_FLAGS;
+  } else if (isSelfHosted()) {
+    return DEFAULT_SELF_HOSTED_EDGE_FLAGS;
   }
 
   try {

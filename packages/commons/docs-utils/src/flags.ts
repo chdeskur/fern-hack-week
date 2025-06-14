@@ -71,3 +71,8 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isChangelogRedirects: false,
   isPosthogDisabled: false,
 };
+
+export const DEFAULT_SELF_HOSTED_EDGE_FLAGS: EdgeFlags = {
+  ...DEFAULT_EDGE_FLAGS,
+  isWhitelabeled: true,
+};
