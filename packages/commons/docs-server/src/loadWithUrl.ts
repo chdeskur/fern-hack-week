@@ -29,7 +29,9 @@ export const loadWithUrl = cache(
       async () => {
         const domainWithoutStaging = withoutStaging(domain);
 
-        if (domain.includes("[")) {
+        // address FDR error: Failed to parse URL: %5Bdomain%5D
+        // todo: figure out where these calls originate
+        if (domain.includes("[") || domain.includes("%5B")) {
           console.error("Cannot load docs from an invalid domain");
           notFound();
         }
