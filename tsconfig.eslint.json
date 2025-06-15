@@ -4,5 +4,12 @@
     "noEmit": true,
     "strict": true
   },
-  "include": ["clis", "packages", "servers", "playwright", "eslint.config.mjs"]
+  "include": [
+    "clis",
+    "packages",
+    "servers",
+    "playwright",
+    "eslint.config.mjs",
+    "tests"
+  ]
 }

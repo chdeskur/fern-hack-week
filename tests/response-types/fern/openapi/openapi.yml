@@ -1,0 +1,895 @@
+openapi: 3.0.0
+info:
+  title: Comprehensive Response Types Demo API
+  version: 1.0.0
+  description: API demonstrating all possible HTTP response types, status codes, and content types
+  contact:
+    name: API Support
+    email: support@example.com
+  
+servers:
+  - url: http://localhost:8080
+    x-fern-server-name: local
+  - url: https://api.example.com
+    x-fern-server-name: production
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+        details:
+          type: object
+          additionalProperties: true
+      required:
+        - error
+        - code
+    
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - username
+        - email
+    
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: number
+          format: float
+        category:
+          type: string
+      required:
+        - id
+        - name
+        - price
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+paths:
+  # 2xx Success Responses
+  /users:
+    get:
+      summary: Get all users
+      description: Returns a paginated list of users
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
+                      total:
+                        type: integer
+                      has_more:
+                        type: boolean
+          headers:
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+              description: Number of requests remaining in the current rate limit window
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of users
+        '206':
+          description: Partial content returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+          headers:
+            Content-Range:
+              schema:
+                type: string
+              example: "users 0-9/100"
+    
+    post:
+      summary: Create a new user
+      description: Creates a new user account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              required:
+                - username
+                - email
+                - password
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL of the created resource
+              example: "/users/123"
+        '202':
+          description: User creation accepted for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User creation request accepted"
+                  request_id:
+                    type: string
+                    example: "req_123456"
+
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '304':
+          description: Not modified (cached version is still valid)
+          headers:
+            ETag:
+              schema:
+                type: string
+              example: '"abc123"'
+            Last-Modified:
+              schema:
+                type: string
+                format: date-time
+    
+    put:
+      summary: Update user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '202':
+          description: Update accepted for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  request_id:
+                    type: string
+    
+    delete:
+      summary: Delete user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: User deleted successfully (no content)
+        '202':
+          description: Deletion accepted for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User deletion scheduled"
+
+  # 3xx Redirection Responses
+  /redirect-temp:
+    get:
+      summary: Temporary redirect example
+      responses:
+        '302':
+          description: Temporary redirect
+          headers:
+            Location:
+              schema:
+                type: string
+              example: "/users"
+        '307':
+          description: Temporary redirect (preserves method)
+          headers:
+            Location:
+              schema:
+                type: string
+              example: "/users"
+
+  /redirect-permanent:
+    get:
+      summary: Permanent redirect example
+      responses:
+        '301':
+          description: Permanent redirect
+          headers:
+            Location:
+              schema:
+                type: string
+              example: "/v2/users"
+        '308':
+          description: Permanent redirect (preserves method)
+          headers:
+            Location:
+              schema:
+                type: string
+              example: "/v2/users"
+
+  # 4xx Client Error Responses
+  /protected-resource:
+    get:
+      summary: Protected resource requiring authentication
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Protected data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sensitive_data:
+                    type: string
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Authentication required"
+                code: "AUTH_REQUIRED"
+          headers:
+            WWW-Authenticate:
+              schema:
+                type: string
+              example: 'Bearer realm="api"'
+
+  /admin-only:
+    get:
+      summary: Admin-only resource
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Admin data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  admin_data:
+                    type: string
+        '403':
+          description: Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Insufficient permissions"
+                code: "FORBIDDEN"
+
+  /nonexistent-resource:
+    get:
+      summary: Resource that doesn't exist
+      responses:
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Resource not found"
+                code: "NOT_FOUND"
+
+  /users/{userId}/posts:
+    post:
+      summary: Create post for user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '201':
+          description: Post created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  content:
+                    type: string
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Invalid request data"
+                code: "VALIDATION_ERROR"
+                details:
+                  title: "Title is required"
+        '409':
+          description: Resource conflict (duplicate)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Post with this title already exists"
+                code: "CONFLICT"
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Data validation failed"
+                code: "UNPROCESSABLE_ENTITY"
+                details:
+                  content: "Content exceeds maximum length"
+
+  /rate-limited:
+    get:
+      summary: Rate limited endpoint
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Rate limit exceeded"
+                code: "RATE_LIMIT_EXCEEDED"
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: Seconds to wait before retrying
+              example: 60
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+              example: 100
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+              example: 0
+
+  # 5xx Server Error Responses
+  /unstable-endpoint:
+    get:
+      summary: Endpoint that may fail
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Internal server error"
+                code: "INTERNAL_ERROR"
+        '502':
+          description: Bad gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Upstream service unavailable"
+                code: "BAD_GATEWAY"
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Service temporarily unavailable"
+                code: "SERVICE_UNAVAILABLE"
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: Seconds to wait before retrying
+              example: 300
+        '504':
+          description: Gateway timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Request timeout"
+                code: "GATEWAY_TIMEOUT"
+
+  # Various Content Types
+  /data/json:
+    get:
+      summary: JSON response
+      responses:
+        '200':
+          description: JSON data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  metadata:
+                    type: object
+                    properties:
+                      timestamp:
+                        type: string
+                        format: date-time
+                      version:
+                        type: string
+
+  /data/xml:
+    get:
+      summary: XML response
+      responses:
+        '200':
+          description: XML data
+          content:
+            application/xml:
+              schema:
+                type: string
+              example: |
+                <?xml version="1.0" encoding="UTF-8"?>
+                <products>
+                  <product id="1">
+                    <name>Widget</name>
+                    <price>19.99</price>
+                  </product>
+                </products>
+
+  /data/text:
+    get:
+      summary: Plain text response
+      responses:
+        '200':
+          description: Plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "This is plain text content"
+
+  /data/html:
+    get:
+      summary: HTML response
+      responses:
+        '200':
+          description: HTML content
+          content:
+            text/html:
+              schema:
+                type: string
+              example: |
+                <html>
+                  <head><title>Example</title></head>
+                  <body><h1>Hello World</h1></body>
+                </html>
+
+  /data/csv:
+    get:
+      summary: CSV response
+      responses:
+        '200':
+          description: CSV data
+          content:
+            text/csv:
+              schema:
+                type: string
+              example: |
+                id,name,price
+                1,Widget,19.99
+                2,Gadget,29.99
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+              example: 'attachment; filename="products.csv"'
+
+  /files/download/{fileId}:
+    get:
+      summary: File download
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File download
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            application/zip:
+              schema:
+                type: string
+                format: binary
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+              example: 'attachment; filename="document.pdf"'
+            Content-Length:
+              schema:
+                type: integer
+              description: Size of the file in bytes
+            Content-Type:
+              schema:
+                type: string
+              description: MIME type of the file
+
+  /files/upload:
+    post:
+      summary: File upload
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                description:
+                  type: string
+      responses:
+        '201':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file_id:
+                    type: string
+                  filename:
+                    type: string
+                  size:
+                    type: integer
+                  url:
+                    type: string
+        '413':
+          description: File too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "File size exceeds maximum allowed"
+                code: "FILE_TOO_LARGE"
+        '415':
+          description: Unsupported media type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "File type not supported"
+                code: "UNSUPPORTED_MEDIA_TYPE"
+
+  /stream/events:
+    get:
+      summary: Server-sent events stream
+      responses:
+        '200':
+          description: Event stream
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                format: binary
+              example: |
+                data: {"event": "user_joined", "user": "john"}
+                
+                data: {"event": "message", "text": "Hello world"}
+                
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+              example: "no-cache"
+            Connection:
+              schema:
+                type: string
+              example: "keep-alive"
+
+  /stream/data:
+    get:
+      summary: Streaming data download
+      responses:
+        '200':
+          description: Streaming data
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          headers:
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: "chunked"
+
+  /search:
+    get:
+      summary: Search with multiple possible outcomes
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [users, products, all]
+            default: all
+      responses:
+        '200':
+          description: Search results found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                  total:
+                    type: integer
+                  query:
+                    type: string
+        '204':
+          description: No results found
+        '400':
+          description: Invalid search query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /webhooks/receive:
+    post:
+      summary: Webhook receiver
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Webhook processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "processed"
+        '202':
+          description: Webhook accepted for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "accepted"
+                  id:
+                    type: string
+
+  /health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+        '503':
+          description: Service is unhealthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "unhealthy"
+                  errors:
+                    type: array
+                    items:
+                      type: string

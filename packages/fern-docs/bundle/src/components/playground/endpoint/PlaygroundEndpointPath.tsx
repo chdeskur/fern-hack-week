@@ -29,6 +29,7 @@ import { useAllEnvironmentIds } from "@/state/environment";
 import { closeButton } from "../PlaygroundCloseButton";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
+import { isLocal } from "../utils/utils";
 
 interface PlaygroundEndpointPathProps {
   method: HttpMethod | undefined;
@@ -59,7 +60,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 }) => {
   const environmentIds = useAllEnvironmentIds();
   const isEditingEnvironment = useBooleanState(false);
-  const requestDisabled = baseUrl?.includes("localhost");
+  const requestDisabled = !isLocal() && baseUrl?.includes("localhost");
 
   return (
     <div className="playground-endpoint">

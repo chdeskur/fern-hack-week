@@ -160,3 +160,7 @@ export function isValidFile(file: any): file is File {
     "type" in file
   );
 }
+
+export const isLocal = () => {
+  return process.env.NEXT_PUBLIC_IS_LOCAL === "1";
+};
