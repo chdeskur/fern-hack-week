@@ -1,5 +1,3 @@
-import * as Sentry from "@sentry/node";
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import compression from "compression";
 import cors from "cors";
 import express from "express";
@@ -35,32 +33,6 @@ const config = getConfig();
 
 const expressApp = express();
 expressApp.disable("x-powered-by");
-
-// ========= Init Sentry =========
-Sentry.init({
-  dsn: "https://ca7d28b81fee41961a6f9f3fb59dfa8a@o4507138224160768.ingest.us.sentry.io/4507148234522624",
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Sentry.Integrations.Express({ app: expressApp }),
-    nodeProfilingIntegration(),
-  ],
-  // Performance Monitoring
-  tracesSampleRate: config.applicationEnvironment == "prod" ? 0.25 : 0.1, //  Capture 25% of the transactions
-  profilesSampleRate: config.applicationEnvironment == "prod" ? 0.25 : 0.1,
-  environment: config.applicationEnvironment,
-  maxValueLength: 1000,
-  enabled:
-    config.applicationEnvironment === "dev" ||
-    config.applicationEnvironment == "prod",
-});
-
-// The request handler must be the first middleware on the app
-expressApp.use(Sentry.Handlers.requestHandler());
-// TracingHandler creates a trace for every incoming request
-expressApp.use(Sentry.Handlers.tracingHandler());
-// ========= Init Sentry =========
 
 expressApp.use(cors());
 expressApp.use(compression());
@@ -156,8 +128,6 @@ async function startServer(): Promise<void> {
       },
     });
     app.logger.info(`Listening for requests on port ${PORT}`);
-    // The error handler must be registered before any other error middleware and after all controllers
-    expressApp.use(Sentry.Handlers.errorHandler());
     expressApp.listen(PORT);
   } catch (err) {
     app.logger.error("Failed to start express server", err);

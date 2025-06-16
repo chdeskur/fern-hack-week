@@ -95,6 +95,7 @@ export class Read {
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error)?.error) {
+                case "UnauthorizedError":
                 case "DomainNotRegisteredError":
                     return {
                         data: {
@@ -179,6 +180,7 @@ export class Read {
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as FernRegistry.docs.v1.read.getDocsForDomain.Error)?.error) {
+                case "UnauthorizedError":
                 case "DomainNotRegisteredError":
                     return {
                         data: {

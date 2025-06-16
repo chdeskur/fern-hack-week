@@ -6,10 +6,16 @@ import * as FernRegistry from "../../../../../../../index";
 import * as core from "../../../../../../../../core";
 
 export type Error =
+    | FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error.UnauthorizedError
     | FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error.DomainNotRegisteredError
     | FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error._Unknown;
 
 export namespace Error {
+    export interface UnauthorizedError {
+        error: "UnauthorizedError";
+        content: string;
+    }
+
     export interface DomainNotRegisteredError {
         error: "DomainNotRegisteredError";
     }
@@ -20,12 +26,20 @@ export namespace Error {
     }
 
     export interface _Visitor<_Result> {
+        unauthorizedError: (value: string) => _Result;
         domainNotRegisteredError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
+    unauthorizedError: (value: string): FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error.UnauthorizedError => {
+        return {
+            content: value,
+            error: "UnauthorizedError",
+        };
+    },
+
     domainNotRegisteredError: (): FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error.DomainNotRegisteredError => {
         return {
             error: "DomainNotRegisteredError",
@@ -44,6 +58,8 @@ export const Error = {
         visitor: FernRegistry.docs.v1.read.getDocsForDomainLegacy.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
+            case "UnauthorizedError":
+                return visitor.unauthorizedError(value.content);
             case "DomainNotRegisteredError":
                 return visitor.domainNotRegisteredError();
             default:

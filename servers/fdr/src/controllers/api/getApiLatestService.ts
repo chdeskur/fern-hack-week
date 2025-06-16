@@ -12,21 +12,29 @@ export function getApiLatestService(app: FdrApplication): APILatestService {
           authHeader: req.headers.authorization,
           orgId: "fern",
         });
-      } catch (e) {
-        if (e instanceof UserNotInOrgError) {
-          const orgId = await app.dao
-            .apis()
-            .getOrgIdForApiDefinition(req.params.apiDefinitionId);
-          if (orgId == null) {
-            throw new ApiDoesNotExistError();
+      } catch (fern_error) {
+        if (fern_error instanceof UserNotInOrgError) {
+          // if the auth header belongs to org, return the api definition
+          try {
+            const orgId = await app.dao
+              .apis()
+              .getOrgIdForApiDefinition(req.params.apiDefinitionId);
+            if (orgId == null) {
+              throw new ApiDoesNotExistError();
+            }
+            await app.services.auth.checkUserBelongsToOrg({
+              authHeader: req.headers.authorization,
+              orgId,
+            });
+          } catch (org_error) {
+            // if not either, throw
+            throw org_error;
           }
-          await app.services.auth.checkUserBelongsToOrg({
-            authHeader: req.headers.authorization,
-            orgId,
-          });
+        } else {
+          throw fern_error;
         }
-        throw e;
       }
+
       const apiDefinition = await app.dao
         .apis()
         .loadAPILatestDefinition(req.params.apiDefinitionId);

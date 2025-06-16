@@ -38,6 +38,7 @@ export class ReadService {
             catch (error) {
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
+                        case "UnauthorizedError":
                         case "ApiDoesNotExistError":
                             break;
                         default:

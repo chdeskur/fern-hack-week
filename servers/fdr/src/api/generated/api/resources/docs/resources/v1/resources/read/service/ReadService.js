@@ -38,6 +38,7 @@ export class ReadService {
             catch (error) {
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
+                        case "UnauthorizedError":
                         case "DomainNotRegisteredError":
                             break;
                         default:
@@ -67,6 +68,7 @@ export class ReadService {
             catch (error) {
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
+                        case "UnauthorizedError":
                         case "DomainNotRegisteredError":
                             break;
                         default:

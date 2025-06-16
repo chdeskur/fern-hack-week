@@ -210,18 +210,6 @@ const nextConfig: NextConfig = {
         headers: searchV2Headers,
       },
       ...(isStandalone ? [disableCaching] : []),
-
-      /**
-       * Access-Control-Allow-Origin header is required for sentry tunnel
-       * to work across origins (i.e. subpath routing)
-       */
-      // {
-      //     source: sentryTunnelRoute,
-      //     headers: [
-      //         { key: "Access-Control-Allow-Origin", value: "*" },
-      //         { key: "Access-Control-Allow-Headers", value: "sentry-trace, baggage" },
-      //     ],
-      // },
     ];
   },
   images: {

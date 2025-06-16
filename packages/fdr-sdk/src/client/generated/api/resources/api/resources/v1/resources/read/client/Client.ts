@@ -89,6 +89,7 @@ export class Read {
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as FernRegistry.api.v1.read.getApi.Error)?.error) {
+                case "UnauthorizedError":
                 case "ApiDoesNotExistError":
                     return {
                         data: {

@@ -89,6 +89,7 @@ export class Latest {
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as FernRegistry.api.latest.getApiLatest.Error)?.error) {
+                case "UnauthorizedError":
                 case "ApiDoesNotExistError":
                     return {
                         data: {

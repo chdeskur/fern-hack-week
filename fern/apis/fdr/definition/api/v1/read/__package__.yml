@@ -21,6 +21,7 @@ service:
         apiDefinitionId: rootCommons.ApiDefinitionId
       response: ApiDefinition
       errors:
+        - rootCommons.UnauthorizedError
         - ApiDoesNotExistError
 
 types:

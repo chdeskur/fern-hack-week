@@ -6,10 +6,16 @@ import * as FernRegistry from "../../../../../../../index";
 import * as core from "../../../../../../../../core";
 
 export type Error =
+    | FernRegistry.api.v1.read.getApi.Error.UnauthorizedError
     | FernRegistry.api.v1.read.getApi.Error.ApiDoesNotExistError
     | FernRegistry.api.v1.read.getApi.Error._Unknown;
 
 export namespace Error {
+    export interface UnauthorizedError {
+        error: "UnauthorizedError";
+        content: string;
+    }
+
     export interface ApiDoesNotExistError {
         error: "ApiDoesNotExistError";
     }
@@ -20,12 +26,20 @@ export namespace Error {
     }
 
     export interface _Visitor<_Result> {
+        unauthorizedError: (value: string) => _Result;
         apiDoesNotExistError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
+    unauthorizedError: (value: string): FernRegistry.api.v1.read.getApi.Error.UnauthorizedError => {
+        return {
+            content: value,
+            error: "UnauthorizedError",
+        };
+    },
+
     apiDoesNotExistError: (): FernRegistry.api.v1.read.getApi.Error.ApiDoesNotExistError => {
         return {
             error: "ApiDoesNotExistError",
@@ -44,6 +58,8 @@ export const Error = {
         visitor: FernRegistry.api.v1.read.getApi.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.error) {
+            case "UnauthorizedError":
+                return visitor.unauthorizedError(value.content);
             case "ApiDoesNotExistError":
                 return visitor.apiDoesNotExistError();
             default:

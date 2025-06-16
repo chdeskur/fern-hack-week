@@ -22,6 +22,7 @@ service:
         domain: string
       response: DocsDefinition
       errors:
+        - rootCommons.UnauthorizedError
         - DomainNotRegisteredError
 
     getDocsForDomain:
@@ -35,6 +36,7 @@ service:
             domain: string
       response: DocsDefinition
       errors:
+        - rootCommons.UnauthorizedError
         - DomainNotRegisteredError
 
 types:
