@@ -25,9 +25,30 @@ const REGISTER_API_DEFINITION_META = {
   endpoint: "registerApiDefinition",
 };
 
+const SLOW_OPERATION_THRESHOLD_MS = 30000; // 30 seconds
+
+function logSlowOperation(operation: string, durationMs: number) {
+  LOGGER.warn(
+    `Operation "${operation}" took ${durationMs}ms (threshold: ${SLOW_OPERATION_THRESHOLD_MS}ms)`,
+    REGISTER_API_DEFINITION_META
+  );
+}
+
 export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
   return new APIV1WriteService({
     registerApiDefinition: async (req, res) => {
+      const startTime = Date.now();
+      let lastOperationTime = startTime;
+
+      const logOperationTime = (operation: string) => {
+        const now = Date.now();
+        const duration = now - lastOperationTime;
+        if (duration > SLOW_OPERATION_THRESHOLD_MS) {
+          logSlowOperation(operation, duration);
+        }
+        lastOperationTime = now;
+      };
+
       app.logger.debug(
         `Checking if user belongs to org ${req.body.orgId}`,
         REGISTER_API_DEFINITION_META
@@ -36,6 +57,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         authHeader: req.headers.authorization,
         orgId: req.body.orgId,
       });
+      logOperationTime("checkUserBelongsToOrg");
 
       let apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
       let transformedApiDefinition:
@@ -57,6 +79,8 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
       const snippetsConfigurationWithSdkIds = await app.dao
         .sdks()
         .getSdkIdsForPackages(snippetsConfiguration);
+      logOperationTime("getSdkIdsForPackages");
+
       const sdkIds: string[] = [];
       if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
         sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);
@@ -80,9 +104,13 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
       const snippetsBySdkId = await app.dao
         .snippets()
         .loadAllSnippetsForSdkIds(sdkIds);
+      logOperationTime("loadAllSnippetsForSdkIds");
+
       const snippetsBySdkIdAndEndpointId = await app.dao
         .snippets()
         .loadAllSnippetsForSdkIdsByEndpointId(sdkIds);
+      logOperationTime("loadAllSnippetsForSdkIdsByEndpointId");
+
       let snippetTemplatesByEndpoint: SnippetTemplatesByEndpoint = {};
       let snippetTemplatesByEndpointId: SnippetTemplatesByEndpointIdentifier =
         {};
@@ -95,6 +123,8 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         definition: req.body.definition ?? req.body.definitionV2,
         snippetsConfigurationWithSdkIds,
       });
+      logOperationTime("getSnippetTemplatesIfEnabled");
+
       snippetTemplatesByEndpointId =
         await getSnippetTemplatesByEndpointIdIfEnabled({
           app,
@@ -104,6 +134,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           definition: req.body.definition ?? req.body.definitionV2,
           snippetsConfigurationWithSdkIds,
         });
+      logOperationTime("getSnippetTemplatesByEndpointIdIfEnabled");
 
       const snippetHolder = new SDKSnippetHolder({
         snippetsBySdkId,
@@ -123,6 +154,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           snippetHolder
         );
       }
+      logOperationTime("convertAPIDefinitionToDb");
 
       let isLatest = false;
       if (transformedApiDefinition == null) {
@@ -140,6 +172,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         isLatest = true;
         apiDefinitionId = transformedApiDefinition.id;
       }
+      logOperationTime("enrichApiLatestDefinitionWithSnippets");
 
       let sources: Record<string, APIV1Write.SourceUpload> | undefined;
       if (req.body.sources != null) {
@@ -153,6 +186,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           apiId: req.body.apiId,
           sources: req.body.sources,
         });
+        logOperationTime("getSourceUploads");
         app.logger.debug(
           "Successfully prepared source upload URLs",
           REGISTER_API_DEFINITION_META
@@ -175,6 +209,14 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           definition: writeBuffer(transformedApiDefinition),
         },
       });
+      logOperationTime("createApiDefinition");
+
+      const totalDuration = Date.now() - startTime;
+      LOGGER.warn(
+        `API Registration for ${req.body.orgId}:${req.body.apiId} took ${totalDuration}ms`,
+        REGISTER_API_DEFINITION_META
+      );
+
       app.logger.debug(
         `Returning API Definition ID id=${apiDefinitionId}`,
         REGISTER_API_DEFINITION_META
