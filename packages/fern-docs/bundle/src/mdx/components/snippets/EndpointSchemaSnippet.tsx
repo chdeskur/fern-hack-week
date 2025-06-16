@@ -1,4 +1,5 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import { useCurrentSlug } from "@fern-docs/components/hooks/use-current-pathname";
 
 import { EndpointRequestSection } from "@/components/api-reference/endpoints/EndpointRequestSection";
 import { EndpointResponseSection } from "@/components/api-reference/endpoints/EndpointResponseSection";
@@ -11,7 +12,6 @@ import {
 } from "@/components/api-reference/type-definitions/TypeDefinitionContext";
 import { WithSeparator } from "@/components/api-reference/type-definitions/TypeDefinitionDetails";
 import { TypeDefinitionSlotsServer } from "@/components/api-reference/type-definitions/TypeDefinitionSlotsServer";
-import { useCurrentSlug } from "@/hooks/use-current-pathname";
 
 type EndpointSchemaSnippetProps = {
   /**

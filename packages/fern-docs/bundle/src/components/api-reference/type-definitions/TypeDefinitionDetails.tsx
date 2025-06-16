@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement } from "react";
 
-import { Separator } from "@/components/Separator";
+import { Separator } from "@fern-docs/components/Separator";
 
 export declare namespace TypeDefinitionDetails {
   export interface Props {

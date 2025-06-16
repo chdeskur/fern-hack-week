@@ -10,8 +10,8 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { FernButton, cn } from "@fern-docs/components";
+import { FERN_ANNOUNCEMENT_ID } from "@fern-docs/components/constants";
 
-import { FERN_ANNOUNCEMENT_ID } from "../constants";
 import { ErrorBoundary } from "../error-boundary";
 
 type AnnouncementStore = {

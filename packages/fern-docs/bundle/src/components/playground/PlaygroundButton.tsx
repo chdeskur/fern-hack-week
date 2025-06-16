@@ -4,14 +4,13 @@ import { FC } from "react";
 
 import { Play } from "lucide-react";
 
+import { conformExplorerRoute } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
 import { cn } from "@fern-docs/components";
-
-import { ButtonLink } from "@/components/FernLinkButton";
+import { ButtonLink } from "@fern-docs/components/FernLinkButton";
 
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
-import { conformExplorerRoute } from "./utils/explorer-route";
 
 export const PlaygroundButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;

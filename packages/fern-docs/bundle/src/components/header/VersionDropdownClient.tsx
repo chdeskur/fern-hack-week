@@ -10,9 +10,11 @@ import {
   AvailabilityFullyQualifiedDisplayNames,
   cn,
 } from "@fern-docs/components";
+import {
+  useCurrentVersionId,
+  useCurrentVersionSlug,
+} from "@fern-docs/components/state/navigation";
 import { useIsDesktop } from "@fern-ui/react-commons";
-
-import { useCurrentVersionId, useCurrentVersionSlug } from "@/state/navigation";
 
 import { FernSelectionItem } from "../../../../components/src/FernSelectionItem";
 import { FernLinkDropdown } from "../FernLinkDropdown";

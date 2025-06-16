@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
+import { useCurrentVersionSlug } from "@fern-docs/components/state/navigation";
 
 import { ApiReferenceButton } from "@/components/ApiReferenceButton";
 import { CodeExampleClientDropdown } from "@/components/api-reference/endpoints/CodeExampleClientDropdown";
@@ -9,7 +10,6 @@ import { EndpointUrlWithOverflow } from "@/components/api-reference/endpoints/En
 import { useExampleSelection } from "@/components/api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "@/components/api-reference/examples/CodeSnippetExample";
 import { usePlaygroundBaseUrl } from "@/components/playground/utils/select-environment";
-import { useCurrentVersionSlug } from "@/state/navigation";
 
 export function EndpointRequestSnippet({
   example,

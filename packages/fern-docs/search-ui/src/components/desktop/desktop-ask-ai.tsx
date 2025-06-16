@@ -43,8 +43,7 @@ import {
   useIsMobile,
 } from "@fern-ui/react-commons";
 
-import { FacetFilter } from "@/types";
-
+import { FacetFilter } from "../../types";
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
   ChatbotTurnContextProvider,

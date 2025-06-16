@@ -5,9 +5,11 @@ import { ChevronDown, ChevronsUpDown } from "lucide-react";
 import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernDropdown, cn } from "@fern-docs/components";
+import {
+  useCurrentProductId,
+  useCurrentProductSlug,
+} from "@fern-docs/components/state/navigation";
 import { useIsDesktop } from "@fern-ui/react-commons";
-
-import { useCurrentProductId, useCurrentProductSlug } from "@/state/navigation";
 
 import { FernSelectionItem } from "../../../../components/src/FernSelectionItem";
 

@@ -3,12 +3,11 @@
 import React, { ReactNode } from "react";
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-
 import {
   useIsChildSelected,
   useIsExpanded,
   useToggleSidebarNode,
-} from "@/state/navigation";
+} from "@fern-docs/components/state/navigation";
 
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";

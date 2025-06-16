@@ -16,16 +16,18 @@ export default async function SidebarPage({
 }) {
   const { host, domain, slug } = await params;
   const loader = await createCachedDocsLoader(host, domain);
+  const config = await loader.getConfig();
   const isSidebarFixed =
-    (await loader.getConfig()).layout?.disableHeader ||
-    (await loader.getConfig()).layout?.tabsPlacement === "SIDEBAR";
+    config.layout?.disableHeader || config.layout?.tabsPlacement === "SIDEBAR";
 
   const rootPromise = loader.getRoot();
 
   // preload:
-  await loader.getLayout();
-  await loader.getAuthState();
-  await loader.getEdgeFlags();
+  await Promise.all([
+    loader.getLayout(),
+    loader.getAuthState(),
+    loader.getEdgeFlags(),
+  ]);
 
   const found = FernNavigation.utils.findNode(
     await rootPromise,

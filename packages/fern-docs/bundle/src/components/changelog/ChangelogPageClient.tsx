@@ -9,10 +9,10 @@ import { slugToHref } from "@fern-api/docs-utils";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Badge } from "@fern-docs/components";
+import { FernLink } from "@fern-docs/components/FernLink";
+import { Separator } from "@fern-docs/components/Separator";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
-import { FernLink } from "@/components/FernLink";
-import { Separator } from "@/components/Separator";
 import { HideBuiltWithFern } from "@/components/built-with-fern";
 import { useCurrentAnchor } from "@/hooks/use-anchor";
 import { SetLayout } from "@/state/layout";

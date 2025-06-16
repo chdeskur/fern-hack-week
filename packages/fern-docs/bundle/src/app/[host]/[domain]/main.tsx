@@ -51,9 +51,10 @@ export async function DocsMainContent({
   if (node.type === "changelog") {
     // only render full page mode for changelog tabs
     const changelogType = parents[parents.length - 1]?.type ?? "sidebarGroup";
+    const config = await loader.getConfig();
     const isSidebarFixed =
-      (await loader.getConfig()).layout?.disableHeader ||
-      (await loader.getConfig()).layout?.tabsPlacement === "SIDEBAR";
+      config.layout?.disableHeader ||
+      config.layout?.tabsPlacement === "SIDEBAR";
 
     return (
       <ChangelogPage

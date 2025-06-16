@@ -1,6 +1,9 @@
+import {
+  createEndpointNode,
+  createRootNode,
+} from "@fern-api/docs-server/utils/create-node";
 import { ApiDefinitionId, NodeId, Slug } from "@fern-api/fdr-sdk/navigation";
 
-import { createEndpointNode, createRootNode } from "./create-node";
 import { flattenApiSection } from "./flatten-apis";
 
 describe("flattenApi", () => {

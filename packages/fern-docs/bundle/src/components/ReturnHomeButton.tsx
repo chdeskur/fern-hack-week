@@ -1,7 +1,7 @@
 "use client";
 
-import { FernLinkButton } from "@/components/FernLinkButton";
-import { useBasePath } from "@/state/navigation";
+import { FernLinkButton } from "@fern-docs/components/FernLinkButton";
+import { useBasePath } from "@fern-docs/components/state/navigation";
 
 export default function ReturnHomeButton() {
   const basePath = useBasePath();

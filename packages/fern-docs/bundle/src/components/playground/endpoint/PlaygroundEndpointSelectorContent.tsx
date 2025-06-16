@@ -5,6 +5,7 @@ import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 import { Search, Slash, X } from "lucide-react";
 
 import { removeTrailingSlash } from "@fern-api/docs-utils";
+import { conformExplorerRoute } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { cn } from "@fern-docs/components";
@@ -14,11 +15,10 @@ import {
   FernScrollArea,
   FernTooltipProvider,
 } from "@fern-docs/components";
+import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
 
 import { BuiltWithFern } from "@/components/built-with-fern";
-import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
-import { conformExplorerRoute } from "../utils/explorer-route";
 import { ApiGroup } from "../utils/flatten-apis";
 import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelectorLeafNode";
 

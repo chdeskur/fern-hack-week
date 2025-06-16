@@ -3,9 +3,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-
-import { useCurrentPathname } from "@/hooks/use-current-pathname";
-import { useDomain } from "@/state/domain";
+import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
+import { useDomain } from "@fern-docs/components/state/domain";
 
 function useServerSideLocationHref() {
   const domain = useDomain();

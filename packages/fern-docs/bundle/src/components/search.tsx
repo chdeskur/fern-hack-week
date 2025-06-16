@@ -7,6 +7,8 @@ import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { z } from "zod";
 
+import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
+import { useCurrentVersionId } from "@fern-docs/components/state/navigation";
 import {
   CommandActions,
   CommandEmpty,
@@ -25,11 +27,9 @@ import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
-import { useCurrentPathname } from "@/hooks/use-current-pathname";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
 import { useFernUser } from "@/state/fern-user";
-import { useCurrentVersionId } from "@/state/navigation";
 import {
   searchDialogOpenAtom,
   searchInitializedAtom,

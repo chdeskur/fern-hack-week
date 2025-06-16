@@ -3,8 +3,7 @@
 import * as Tabs from "@radix-ui/react-tabs";
 
 import { cn } from "@fern-docs/components";
-
-import { useCurrentTabId } from "@/state/navigation";
+import { useCurrentTabId } from "@fern-docs/components/state/navigation";
 
 export function SidebarTabsRoot({
   children,

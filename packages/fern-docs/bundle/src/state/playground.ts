@@ -16,6 +16,7 @@ import {
   WebSocketContext,
 } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { useDomain } from "@fern-docs/components/state/domain";
 
 import { fernUserAtom } from "@/state/fern-user";
 
@@ -39,7 +40,6 @@ import {
   getInitialWebSocketRequestFormState,
 } from "../components/playground/utils";
 import { pascalCaseHeaderKeys } from "../components/playground/utils/header-key-case";
-import { useDomain } from "./domain";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 
 export const PLAYGROUND_AUTH_STATE_ATOM =

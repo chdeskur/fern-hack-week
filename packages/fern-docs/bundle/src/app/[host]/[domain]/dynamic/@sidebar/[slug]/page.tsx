@@ -21,9 +21,9 @@ export default async function SidebarPage({
     domain,
     await getFernToken()
   );
+  const config = await loader.getConfig();
   const isSidebarFixed =
-    (await loader.getConfig()).layout?.disableHeader ||
-    (await loader.getConfig()).layout?.tabsPlacement === "SIDEBAR";
+    config.layout?.disableHeader || config.layout?.tabsPlacement === "SIDEBAR";
 
   const rootPromise = loader.getRoot();
 

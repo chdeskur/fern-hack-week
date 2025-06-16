@@ -6,9 +6,9 @@ import { useAtom } from "jotai";
 
 import { slugToHref } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { useCurrentSlug } from "@fern-docs/components/hooks/use-current-pathname";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
-import { useCurrentSlug } from "@/hooks/use-current-pathname";
 import { FERN_STREAM_ATOM } from "@/state/stream";
 
 import { StreamingEnabledToggle } from "./StreamingEnabledToggle";

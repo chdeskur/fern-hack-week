@@ -2,15 +2,14 @@
 
 import React from "react";
 
+import { FERN_SIDEBAR_SCROLL_AREA_ID } from "@fern-docs/components/constants";
+import { useIsSelectedSidebarNode } from "@fern-docs/components/state/navigation";
 import {
   isomorphicRequestIdleCallback,
   useIsomorphicLayoutEffect,
 } from "@fern-ui/react-commons";
 
-import { FERN_SIDEBAR_SCROLL_AREA_ID } from "@/components/constants";
 import { scrollToCenter } from "@/components/util/scrollToCenter";
-
-import { useIsSelectedSidebarNode } from "./navigation";
 
 let justScrolledTo: string | undefined;
 

@@ -5,8 +5,8 @@ import React from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { MaybeFernLink } from "@/components/FernLink";
-import { Separator } from "@/components/Separator";
+import { MaybeFernLink } from "@fern-docs/components/FernLink";
+import { Separator } from "@fern-docs/components/Separator";
 
 export function BottomNavigationClient({
   prev,

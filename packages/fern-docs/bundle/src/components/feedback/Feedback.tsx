@@ -6,9 +6,8 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 
 import { Button, cn } from "@fern-docs/components";
 import { toast } from "@fern-docs/components";
+import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
 import { useKeyboardPress } from "@fern-ui/react-commons";
-
-import { useCurrentPathname } from "@/hooks/use-current-pathname";
 
 import { track } from "../analytics";
 import { registerPosthogProperties } from "../analytics/posthog";

@@ -3,12 +3,12 @@ import "server-only";
 import React from "react";
 
 import type { FernNavigation } from "@fern-api/fdr-sdk";
+import { FernLink } from "@fern-docs/components/FernLink";
 
 import { MdxServerComponent } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
-import { FernLink } from "./FernLink";
 import { PageActionsDropdown } from "./PageActionsDropdown";
 
 export function PageHeader({

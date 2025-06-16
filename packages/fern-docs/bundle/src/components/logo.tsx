@@ -2,11 +2,10 @@ import React from "react";
 
 import { LogoConfiguration } from "@fern-api/docs-utils/types/logo-configuration";
 import { cn } from "@fern-docs/components";
+import { MaybeFernLink } from "@fern-docs/components/FernLink";
 import { AbstractLogo } from "@fern-docs/components/abstract/logo";
 
 import { LogoText } from "@/state/logo-text";
-
-import { MaybeFernLink } from "./FernLink";
 
 export function Logo({
   logo,

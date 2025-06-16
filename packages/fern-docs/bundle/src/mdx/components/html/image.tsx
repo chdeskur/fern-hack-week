@@ -1,28 +1,14 @@
 "use client";
 
-import {
-  ComponentProps,
-  ReactElement,
-  ReactNode,
-  createContext,
-  forwardRef,
-  useContext,
-} from "react";
+import { ComponentProps, ReactElement, forwardRef, useContext } from "react";
 import Zoom from "react-medium-image-zoom";
 
 import { cn } from "@fern-docs/components";
+import { FernImage } from "@fern-docs/components/FernImage";
+import { NoZoomContext } from "@fern-docs/components/contexts/NoZoom";
 
-import { FernImage } from "@/components/FernImage";
 import { useFrontmatter } from "@/components/contexts/frontmatter";
 import { toPixelValue } from "@/components/util/to-pixel-value";
-
-const NoZoomContext = createContext<boolean>(false);
-
-export function NoZoom({ children }: { children: ReactNode }) {
-  return (
-    <NoZoomContext.Provider value={true}>{children}</NoZoomContext.Provider>
-  );
-}
 
 export const Image = forwardRef<
   HTMLImageElement,

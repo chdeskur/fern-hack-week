@@ -30,3 +30,5 @@ export * from "./FernTooltip";
 export * from "./kbd";
 export * from "./util/shared-component-types";
 export * from "./syntax-highlighter";
+export * from "./theme";
+export * from "./FernLinkButton";

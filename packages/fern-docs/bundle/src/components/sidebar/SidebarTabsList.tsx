@@ -6,8 +6,8 @@ import { Lock } from "lucide-react";
 import { slugToHref } from "@fern-api/docs-utils";
 import { TabChild, hasRedirect } from "@fern-api/fdr-sdk/navigation";
 import { cn } from "@fern-docs/components";
+import { FernLinkTab } from "@fern-docs/components/FernLinkTab";
 
-import { FernLinkTab } from "@/components/FernLinkTab";
 import { processIcon } from "@/components/util/processIcon";
 
 export function SidebarTabsList({

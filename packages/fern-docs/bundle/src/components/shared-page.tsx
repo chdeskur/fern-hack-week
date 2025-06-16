@@ -9,7 +9,6 @@ import {
 import React from "react";
 
 import { compact } from "es-toolkit/array";
-import { HydrationBoundary } from "jotai-ssr";
 
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import {
@@ -21,6 +20,7 @@ import {
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { SetCurrentNavigationNode } from "@fern-docs/components/state/navigation";
 
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
 import { withLaunchDarkly } from "@/server/ld-adapter";
@@ -29,8 +29,6 @@ import {
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
 import { withPrunedNavigationLoader } from "@/server/withPrunedNavigation";
-import { isLandingPageAtom } from "@/state/layout";
-import { SetCurrentNavigationNode } from "@/state/navigation";
 
 import { DocsMainContent } from "../app/[host]/[domain]/main";
 
@@ -213,32 +211,27 @@ export default async function SharedPage({
     : React.Fragment;
 
   return (
-    <HydrationBoundary
-      hydrateAtoms={[[isLandingPageAtom, found.node.type === "landingPage"]]}
-      options={{ enableReHydrate: true }}
-    >
-      <FeedbackPopoverProvider>
-        <SetCurrentNavigationNode
-          nodeId={found.node.id}
-          sidebarRootNodeId={found.sidebar?.id}
-          tabId={found.currentTab?.id}
-          productId={found.currentProduct?.productId}
-          productSlug={found.currentProduct?.slug}
-          versionId={found.currentVersion?.versionId}
-          versionSlug={found.currentVersion?.slug}
-          versionIsDefault={found.isCurrentVersionDefault}
-          productIsDefault={found.isCurrentProductDefault}
-        />
-        <DocsMainContent
-          loader={loader}
-          serialize={serialize}
-          node={found.node}
-          parents={found.parents}
-          neighbors={await neighborsPromise}
-          breadcrumb={found.breadcrumb}
-        />
-      </FeedbackPopoverProvider>
-    </HydrationBoundary>
+    <FeedbackPopoverProvider>
+      <SetCurrentNavigationNode
+        nodeId={found.node.id}
+        sidebarRootNodeId={found.sidebar?.id}
+        tabId={found.currentTab?.id}
+        productId={found.currentProduct?.productId}
+        productSlug={found.currentProduct?.slug}
+        versionId={found.currentVersion?.versionId}
+        versionSlug={found.currentVersion?.slug}
+        versionIsDefault={found.isCurrentVersionDefault}
+        productIsDefault={found.isCurrentProductDefault}
+      />
+      <DocsMainContent
+        loader={loader}
+        serialize={serialize}
+        node={found.node}
+        parents={found.parents}
+        neighbors={await neighborsPromise}
+        breadcrumb={found.breadcrumb}
+      />
+    </FeedbackPopoverProvider>
   );
 }
 

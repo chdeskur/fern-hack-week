@@ -5,6 +5,7 @@ import React from "react";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { conformTrailingSlash } from "@fern-api/docs-utils";
+import { conformExplorerRoute } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { getFernToken } from "@/app/fern-token";
@@ -12,7 +13,6 @@ import {
   ExplorerContent,
   NoEndpointSelected,
 } from "@/components/playground/ExplorerContent";
-import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 
 export default async function ExplorerPage({
   params,

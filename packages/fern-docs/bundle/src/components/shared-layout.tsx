@@ -5,10 +5,10 @@ import React from "react";
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { NavbarLinks } from "@fern-docs/components/header/NavbarLinks";
 
 import { Announcement } from "@/components/header/Announcement";
 import { HeaderContent } from "@/components/header/HeaderContent";
-import { NavbarLinks } from "@/components/header/NavbarLinks";
 import { SidebarContainer } from "@/components/sidebar/SidebarContainer";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { setMdxSerializer } from "@/context/MdxSerializerContext";

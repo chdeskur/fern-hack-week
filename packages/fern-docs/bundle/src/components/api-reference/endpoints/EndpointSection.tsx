@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Separator } from "@/components/Separator";
+import { Separator } from "@fern-docs/components/Separator";
+
 import { ErrorBoundary } from "@/components/error-boundary";
 
 import { SectionContainer, TypeDefinitionAnchor } from "./TypeDefinitionAnchor";

@@ -3,8 +3,7 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { cn } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
-
-import { useIsSelectedSidebarNode } from "@/state/navigation";
+import { useIsSelectedSidebarNode } from "@fern-docs/components/state/navigation";
 
 export function ApiLeafBadge({
   node,

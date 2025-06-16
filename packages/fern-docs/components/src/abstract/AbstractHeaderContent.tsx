@@ -3,8 +3,12 @@
 import { CSSProperties } from "react";
 import React from "react";
 
+import { useIsDesktop } from "@fern-ui/react-commons";
+
 import { FernButtonGroup } from "../FernButton";
 import { cn } from "../cn";
+import { MobileMenuButton } from "../header/MobileButtons";
+import { ThemeSwitch } from "../header/theme-switch";
 
 export function AbstractHeaderContent({
   logo,
@@ -15,9 +19,8 @@ export function AbstractHeaderContent({
   navbarLinks,
   loginButton,
   forceHeader = false,
+  showSearchBar,
   searchBar,
-  mobileMenuButton,
-  themeSwitch,
 }: {
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -28,10 +31,9 @@ export function AbstractHeaderContent({
   navbarLinks: React.ReactNode;
   loginButton?: React.ReactNode;
   forceHeader?: boolean;
-  searchBar?: React.ReactNode;
-  mobileMenuButton: React.ReactNode;
-  themeSwitch: React.ReactNode;
+  searchBar: React.ReactNode;
 }) {
+  const isDesktop = useIsDesktop();
   return (
     <div
       className={cn(
@@ -61,17 +63,19 @@ export function AbstractHeaderContent({
           </div>
         </div>
 
-        {searchBar}
+        {(showSearchBar || !isDesktop) && searchBar}
 
         <FernButtonGroup asChild>
           <nav className="fern-header-navbar-links" aria-label="Navbar links">
             {navbarLinks}
             {loginButton}
-            {themeSwitch}
+            <ThemeSwitch iconOnly variant="ghost" className="ml-2" />
           </nav>
         </FernButtonGroup>
 
-        <div className="fern-header-mobile-menu-button">{mobileMenuButton}</div>
+        <div className="fern-header-mobile-menu-button">
+          <MobileMenuButton />
+        </div>
       </div>
     </div>
   );

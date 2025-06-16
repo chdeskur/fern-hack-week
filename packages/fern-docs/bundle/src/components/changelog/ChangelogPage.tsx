@@ -8,9 +8,9 @@ import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { FernLink } from "@fern-docs/components/FernLink";
 import { type TableOfContentsItem, makeToc, toTree } from "@fern-docs/mdx";
 
-import { FernLink } from "@/components/FernLink";
 import { PageHeader } from "@/components/PageHeader";
 import { Markdown } from "@/mdx/components/Markdown";
 import { MdxContent } from "@/mdx/components/MdxContent";

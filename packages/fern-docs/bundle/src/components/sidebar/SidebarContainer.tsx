@@ -3,13 +3,13 @@
 import React from "react";
 
 import { FernScrollArea, cn } from "@fern-docs/components";
+import { FERN_SIDEBAR_SCROLL_AREA_ID } from "@fern-docs/components/constants";
+import { ThemeSwitch } from "@fern-docs/components/header/theme-switch";
 
 import { useDismountMeasureSidebarScrollPosition } from "@/state/sidebar-scroll";
 
-import { FERN_SIDEBAR_SCROLL_AREA_ID } from "../constants";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
-import { ThemeSwitch } from "./theme-switch";
 
 export const SidebarContainer = React.memo(function SidebarContainer({
   logo,

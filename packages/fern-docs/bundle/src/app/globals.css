@@ -3,6 +3,7 @@
 @import "../../../search-ui/src/index.css";
 @import "../components/index.scss";
 @import "../mdx/components/index.scss";
+@import "@fern-docs/components/styles";
 
 @plugin "@tailwindcss/typography";
 @config "./tailwind.config.ts";

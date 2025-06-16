@@ -14,6 +14,8 @@
 @import "./accordion.scss";
 @import "./utilities.scss";
 @import "./syntax-highlighter/index.css";
+@import "./header/index.scss";
+@import "./theming/index.scss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));
@@ -24,6 +26,34 @@
   --color-body: var(--color-black);
   --header-height-real: 4rem;
   --card-surface-fallback: color-mix(in srgb, var(--background), white 80%);
+}
+
+:root {
+  --page-padding: 1rem;
+  --page-margin: calc((100vw - var(--page-width)) / 2);
+  --aside-offset: max(0px, calc(var(--page-margin) - var(--page-padding)));
+  --sticky-aside-width: calc(
+    var(--spacing-sidebar-width) + var(--aside-offset)
+  );
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-padding: 2rem;
+  }
+}
+
+@theme inline {
+  --spacing-page-padding: var(--page-padding);
+  --spacing-page-width-padded: calc(
+    var(--spacing-page-width) + var(--spacing-page-padding) * 2
+  );
 }
 
 @theme {

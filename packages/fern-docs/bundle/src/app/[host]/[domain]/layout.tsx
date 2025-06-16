@@ -7,11 +7,23 @@ import { preload } from "react-dom";
 import { getEnv } from "@vercel/functions";
 import { compact } from "es-toolkit/array";
 
-import { DocsLoader, createCachedDocsLoader } from "@fern-api/docs-loader";
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { Domain } from "@fern-docs/components/state/domain";
+import {
+  RootNodeProvider,
+  SetBasePath,
+} from "@fern-docs/components/state/navigation";
+import {
+  getAllSidebarRootNodes,
+  getSidebarRootNodeIdToChildToParentsMap,
+} from "@fern-docs/components/state/navigation-server";
+import { FernThemeProvider } from "@fern-docs/components/theme";
+import { GlobalStyles } from "@fern-docs/components/theming/global-styles";
 import {
   getCustomerAnalytics as deprecated_getCustomerAnalytics,
   getLaunchDarklySettings,
@@ -26,20 +38,11 @@ import { generateMetadataFromConfig } from "@/components/seo";
 import { withJsConfig } from "@/components/with-js-config";
 import { SetColors } from "@/state/colors";
 import { DarkCode } from "@/state/dark-code";
-import { Domain } from "@/state/domain";
 import { LaunchDarklyInfo } from "@/state/feature-flags";
 import { DefaultLanguage } from "@/state/language";
 import { SetLogoText } from "@/state/logo-text";
-import { RootNodeProvider, SetBasePath } from "@/state/navigation";
-import {
-  getAllSidebarRootNodes,
-  getSidebarRootNodeIdToChildToParentsMap,
-} from "@/state/navigation-server";
 import { SetIsAskAiEnabled, SetIsDefaultSearchFilterOff } from "@/state/search";
 import { Whitelabeled } from "@/state/whitelabeled";
-
-import { GlobalStyles } from "../../global-styles";
-import { ThemeProvider } from "../../theme";
 
 export default async function Layout({
   children,
@@ -86,7 +89,7 @@ export default async function Layout({
     getSidebarRootNodeIdToChildToParentsMap(sidebarRootNodes);
 
   return (
-    <ThemeProvider
+    <FernThemeProvider
       hasLight={Boolean(colors.light)}
       hasDark={Boolean(colors.dark)}
       lightThemeColor={colors.light?.themeColor}
@@ -139,7 +142,7 @@ export default async function Layout({
           />
         )}
       </RootNodeProvider>
-    </ThemeProvider>
+    </FernThemeProvider>
   );
 }
 

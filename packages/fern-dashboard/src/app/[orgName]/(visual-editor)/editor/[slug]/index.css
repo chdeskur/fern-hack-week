@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+@import "@fern-docs/components/styles";
+@import "@fern-docs/search-ui/styles";
+
+/* This makes sure that the header stays within the bounds of our preview page */
+#fern-header {
+  @apply relative;
+}
+
+/* This makes sure that the main content is not pushed down by the header, since the header is no longer fixed in this layout. */
+main {
+  @apply mt-0;
+}

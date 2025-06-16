@@ -2,12 +2,12 @@ import { isValidElement } from "react";
 
 import { cn } from "@fern-docs/components";
 import { FaIcon, FernCard } from "@fern-docs/components";
+import { NoZoom } from "@fern-docs/components/contexts/NoZoom";
 
 import { DisableFernAnchor } from "@/components/FernAnchor";
 import { FernLinkCard } from "@/components/FernLinkCard";
 
 import { Badge } from "../badge";
-import { NoZoom } from "../html/image";
 
 export declare namespace Card {
   export interface Props {

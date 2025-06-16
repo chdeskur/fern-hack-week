@@ -5,12 +5,10 @@ import React from "react";
 
 import { X } from "lucide-react";
 
-import { FernButton } from "@fern-docs/components";
+import { FernButton, FernLinkButton } from "@fern-docs/components";
 import { tunnel } from "@fern-ui/react-commons";
 
 import { useUrlParams } from "@/hooks/use-url-params";
-
-import { FernLinkButton } from "../FernLinkButton";
 
 export const closeButton = tunnel();
 

@@ -3,13 +3,9 @@
 import { CSSProperties } from "react";
 import React from "react";
 
-import { FernButtonGroup, cn } from "@fern-docs/components";
-import { useIsDesktop } from "@fern-ui/react-commons";
+import { AbstractHeaderContent } from "@fern-docs/components/abstract/AbstractHeaderContent";
 
 import { SearchV2Trigger } from "@/state/search";
-
-import { ThemeSwitch } from "../sidebar/theme-switch";
-import { MobileMenuButton } from "./MobileButtons";
 
 export function HeaderContent({
   logo,
@@ -32,56 +28,24 @@ export function HeaderContent({
   loginButton?: React.ReactNode;
   forceHeader?: boolean;
 }) {
-  const isDesktop = useIsDesktop();
   return (
-    <div
-      className={cn(
-        "flex w-full flex-col items-center justify-stretch gap-4",
-        className
-      )}
-    >
-      <div
-        className={cn(
-          "flex w-full items-center justify-stretch gap-4",
-          className
-        )}
-        style={style}
-      >
-        <div className="fern-header-logo-container">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center lg:items-start">{logo}</div>
-            <div
-              className={cn("items-baseline lg:flex", {
-                hidden: !forceHeader,
-                flex: forceHeader,
-              })}
-            >
-              {productSelect}
-              {versionSelect}
-            </div>
-          </div>
-        </div>
-
-        {(showSearchBar || !isDesktop) && (
-          <SearchV2Trigger
-            aria-label="Search"
-            className="fern-header-search-bar overflow-hidden"
-            isSearchInSidebar={false}
-          />
-        )}
-
-        <FernButtonGroup asChild>
-          <nav className="fern-header-navbar-links" aria-label="Navbar links">
-            {navbarLinks}
-            {loginButton}
-            <ThemeSwitch iconOnly variant="ghost" className="ml-2" />
-          </nav>
-        </FernButtonGroup>
-
-        <div className="fern-header-mobile-menu-button">
-          <MobileMenuButton />
-        </div>
-      </div>
-    </div>
+    <AbstractHeaderContent
+      className={className}
+      style={style}
+      logo={logo}
+      versionSelect={versionSelect}
+      productSelect={productSelect}
+      showSearchBar={showSearchBar}
+      navbarLinks={navbarLinks}
+      loginButton={loginButton}
+      forceHeader={forceHeader}
+      searchBar={
+        <SearchV2Trigger
+          aria-label="Search"
+          className="fern-header-search-bar overflow-hidden"
+          isSearchInSidebar={false}
+        />
+      }
+    />
   );
 }

@@ -8,9 +8,8 @@ import { Check, Link2 } from "lucide-react";
 import { AnimatePresence, LazyMotion, domAnimation } from "motion/react";
 import * as m from "motion/react-m";
 
+import { FernLink } from "@fern-docs/components/FernLink";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
-
-import { FernLink } from "./FernLink";
 
 interface FernAnchorProps {
   href: string;

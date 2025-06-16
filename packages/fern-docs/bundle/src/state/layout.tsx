@@ -6,14 +6,6 @@ import { atom, useAtomValue, useSetAtom } from "jotai";
 
 import { FernDocs } from "@fern-api/fdr-sdk";
 
-export const isSidebarFixedAtom = atom<boolean>(false);
-
-export function useIsSidebarFixed() {
-  return useAtomValue(isSidebarFixedAtom);
-}
-
-export const isLandingPageAtom = atom<boolean>(false);
-
 const layoutAtom = atom<FernDocs.Layout>("guide");
 
 export function SetLayout({ value }: { value: FernDocs.Layout }) {
@@ -26,25 +18,6 @@ export function SetLayout({ value }: { value: FernDocs.Layout }) {
 
 export function useLayout() {
   return useAtomValue(layoutAtom);
-}
-
-export function useShouldHideAsides() {
-  const isSidebarFixed = useAtomValue(isSidebarFixedAtom);
-  const isLandingPage = useAtomValue(isLandingPageAtom);
-
-  if (isSidebarFixed) {
-    return false;
-  }
-
-  return isLandingPage;
-}
-
-export function HideAsides({ force }: { force?: boolean }) {
-  const hideAsides = useShouldHideAsides();
-  if (!hideAsides && !force) {
-    return null;
-  }
-  return <HiddenSidebar />;
 }
 
 export function HiddenSidebar() {

@@ -1,15 +1,14 @@
 import {
+  createNestedSectionNode,
+  createPageNode,
+  createSectionNode,
+} from "@fern-api/docs-server/utils/create-node";
+import {
   NodeId,
   RootNode,
   SidebarRootChild,
   Slug,
 } from "@fern-api/fdr-sdk/navigation";
-
-import {
-  createNestedSectionNode,
-  createPageNode,
-  createSectionNode,
-} from "@/components/playground/utils/create-node";
 
 import { withPrunedNavigation } from "./withPrunedNavigation";
 

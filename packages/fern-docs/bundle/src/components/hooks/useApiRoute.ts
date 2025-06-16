@@ -1,4 +1,4 @@
-import { useBasePath } from "@/state/navigation";
+import { useBasePath } from "@fern-docs/components/state/navigation";
 
 import { getApiRouteSupplier } from "../util/getApiRouteSupplier";
 
