@@ -39,7 +39,7 @@ import {
   queueTurbopufferReindex,
 } from "@/server/queue-reindex";
 
-export const maxDuration = 300; // 5 minutes timeout
+export const maxDuration = 600; // 10 minutes timeout
 
 export async function GET(
   req: NextRequest,
