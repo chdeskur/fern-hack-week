@@ -24,11 +24,6 @@ const API_DEFINITION_SOURCE_BUCKET_URL_OVERRIDE_ENV_VAR =
   "API_DEFINITION_SOURCE_BUCKET_URL_OVERRIDE";
 
 const DOMAIN_SUFFIX_ENV_VAR = "DOMAIN_SUFFIX";
-const ALGOLIA_APP_ID_ENV_VAR = "ALGOLIA_APP_ID";
-const ALGOLIA_ADMIN_API_KEY_ENV_VAR = "ALGOLIA_ADMIN_API_KEY";
-const ALGOLIA_SEARCH_INDEX_ENV_VAR = "ALGOLIA_SEARCH_INDEX";
-const ALGOLIA_SEARCH_API_KEY_ENV_VAR = "ALGOLIA_SEARCH_API_KEY";
-const ALGOLIA_SEARCH_V2_DOMAINS_ENV_VAR = "ALGOLIA_SEARCH_V2_DOMAINS";
 const SLACK_TOKEN_ENV_VAR = "SLACK_TOKEN";
 const LOG_LEVEL_ENV_VAR = "LOG_LEVEL";
 const DOCS_CACHE_ENDPOINT_ENV_VAR = "DOCS_CACHE_ENDPOINT";
@@ -61,11 +56,6 @@ export interface FdrConfig {
   dbDocsDefinitionS3: S3Config;
   privateApiDefinitionSourceS3: S3Config;
   domainSuffix: string;
-  algoliaAppId: string;
-  algoliaAdminApiKey: string;
-  algoliaSearchApiKey: string;
-  algoliaSearchIndex: string;
-  algoliaSearchV2Domains: string[];
   slackToken: string;
   logLevel: string;
   docsCacheEndpoint: string;
@@ -96,11 +86,6 @@ function getConfigForLocalMode(): FdrConfig {
     dbDocsDefinitionS3: selfHostedS3Config,
     privateApiDefinitionSourceS3: selfHostedS3Config,
     domainSuffix: "docs.buildwithfern.com",
-    algoliaAppId: "local",
-    algoliaAdminApiKey: "local",
-    algoliaSearchApiKey: "local",
-    algoliaSearchIndex: "local",
-    algoliaSearchV2Domains: ["local"],
     slackToken: "local",
     logLevel: "info",
     docsCacheEndpoint: "local",
@@ -158,20 +143,6 @@ export function getConfig(): FdrConfig {
         process.env[API_DEFINITION_SOURCE_BUCKET_URL_OVERRIDE_ENV_VAR],
     },
     domainSuffix: getEnvironmentVariableOrThrow(DOMAIN_SUFFIX_ENV_VAR),
-    algoliaAppId: getEnvironmentVariableOrThrow(ALGOLIA_APP_ID_ENV_VAR),
-    algoliaAdminApiKey: getEnvironmentVariableOrThrow(
-      ALGOLIA_ADMIN_API_KEY_ENV_VAR
-    ),
-    algoliaSearchIndex: getEnvironmentVariableOrThrow(
-      ALGOLIA_SEARCH_INDEX_ENV_VAR
-    ),
-    algoliaSearchApiKey: getEnvironmentVariableOrThrow(
-      ALGOLIA_SEARCH_API_KEY_ENV_VAR
-    ),
-    algoliaSearchV2Domains:
-      getEnvironmentVariableOrThrow(ALGOLIA_SEARCH_V2_DOMAINS_ENV_VAR).split(
-        ","
-      ) ?? [],
     slackToken: getEnvironmentVariableOrThrow(SLACK_TOKEN_ENV_VAR),
     logLevel: process.env[LOG_LEVEL_ENV_VAR] ?? "info",
     docsCacheEndpoint: getEnvironmentVariableOrThrow(

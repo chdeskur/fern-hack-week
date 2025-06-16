@@ -305,19 +305,6 @@ export class FdrDeployStack extends Stack {
             API_DEFINITION_SOURCE_BUCKET_REGION:
               privateApiDefinitionSourceBucket.stack.region,
             DOMAIN_SUFFIX: getDomainSuffix(environmentType),
-            ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
-            ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow(
-              "ALGOLIA_ADMIN_API_KEY"
-            ),
-            ALGOLIA_SEARCH_INDEX: getEnvironmentVariableOrThrow(
-              "ALGOLIA_SEARCH_INDEX"
-            ),
-            ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow(
-              "ALGOLIA_SEARCH_API_KEY"
-            ),
-            ALGOLIA_SEARCH_V2_DOMAINS: getEnvironmentVariableOrThrow(
-              "ALGOLIA_SEARCH_V2_DOMAINS"
-            ),
             SLACK_TOKEN: getEnvironmentVariableOrThrow(
               "FERNIE_SLACK_APP_TOKEN"
             ),
