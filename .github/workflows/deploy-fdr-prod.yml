@@ -31,11 +31,6 @@ jobs:
     environment: Fern Prod
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}/fdr?schema=public&connection_limit=6&pool_timeout=30
-      ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
-      ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
-      ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
-      ALGOLIA_SEARCH_V2_DOMAINS: "workato,rohin-bhargava-staging,monite,humanloop,cohere,buildwithfern.com/learn"
-      ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
       APPLICATION_ENVIRONMENT: prod
     steps:
       - uses: actions/checkout@v4

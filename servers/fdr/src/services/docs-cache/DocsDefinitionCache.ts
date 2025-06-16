@@ -11,7 +11,6 @@ import {
 } from "../../controllers/docs/v1/getDocsReadService";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { FdrDao } from "../../db";
-import type { IndexSegment } from "../algolia";
 import { Semaphore } from "../revalidator/Semaphore";
 import LocalDocsDefinitionStore from "./LocalDocsDefinitionStore";
 import RedisDocsDefinitionStore from "./RedisDocsDefinitionStore";
@@ -26,21 +25,17 @@ export interface DocsDefinitionCache {
   storeDocsForUrl({
     docsRegistrationInfo,
     dbDocsDefinition,
-    indexSegments,
   }: {
     docsRegistrationInfo: DocsRegistrationInfo;
     dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
-    indexSegments: IndexSegment[];
   }): Promise<void>;
 
   replaceDocsForInstanceId({
     instanceId,
     dbDocsDefinition,
-    indexSegments,
   }: {
     instanceId: string;
     dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
-    indexSegments: IndexSegment[];
   }): Promise<void>;
 
   initialize(): Promise<void>;
@@ -170,16 +165,13 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
   public async storeDocsForUrl({
     docsRegistrationInfo,
     dbDocsDefinition,
-    indexSegments,
   }: {
     docsRegistrationInfo: DocsRegistrationInfo;
     dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
-    indexSegments: IndexSegment[];
   }): Promise<void> {
     const resp = await this.dao.docsV2().storeDocsDefinition({
       docsRegistrationInfo,
       dbDocsDefinition,
-      indexSegments,
     });
 
     // cache fern URL + custom URLs
@@ -201,16 +193,13 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
   public async replaceDocsForInstanceId({
     instanceId,
     dbDocsDefinition,
-    indexSegments,
   }: {
     instanceId: string;
     dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
-    indexSegments: IndexSegment[];
   }): Promise<void> {
     const resp = await this.dao.docsV2().replaceDocsDefinition({
       instanceId,
       dbDocsDefinition,
-      indexSegments,
     });
 
     // cache fern URL + custom URLs

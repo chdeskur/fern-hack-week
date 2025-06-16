@@ -8,7 +8,6 @@ import { Agent, setGlobalDispatcher } from "undici";
 import { register } from "./api";
 import { FdrApplication, getConfig } from "./app";
 import { createFdrApplication } from "./app/FdrApplication";
-import { registerBackgroundTasks } from "./background";
 import { getApiLatestService } from "./controllers/api/getApiLatestService";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
@@ -156,7 +155,6 @@ async function startServer(): Promise<void> {
         _root: getDashboardController(app),
       },
     });
-    registerBackgroundTasks(app);
     app.logger.info(`Listening for requests on port ${PORT}`);
     // The error handler must be registered before any other error middleware and after all controllers
     expressApp.use(Sentry.Handlers.errorHandler());

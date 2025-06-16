@@ -206,59 +206,6 @@ it("docs register V2", async () => {
   );
 });
 
-it("docs reindex", async () => {
-  const fdr = getClient({ authed: true, url: inject("url") });
-  // register docs
-  const startDocsRegisterResponse = getAPIResponse(
-    await fdr.docs.v2.write.startDocsRegister({
-      orgId: FdrAPI.OrgId("acme"),
-      apiId: FdrAPI.ApiId("api"),
-      domain: "https://acme.docs.buildwithfern.com",
-      customDomains: ["https://docs.useacme.com/docs"],
-      filepaths: [
-        DocsV1Write.FilePath("logo.png"),
-        DocsV1Write.FilePath("guides/guide.mdx"),
-        DocsV1Write.FilePath("fonts/Syne.woff2"),
-      ],
-    })
-  );
-  await fdr.docs.v2.write.finishDocsRegister(
-    startDocsRegisterResponse.docsRegistrationId,
-    {
-      docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
-    }
-  );
-
-  const first = getAPIResponse(
-    await fdr.docs.v2.read.getDocsForUrl({
-      url: DocsV1Write.Url("https://acme.docs.buildwithfern.com"),
-    })
-  );
-
-  const response = await fdr.docs.v2.write.reindexAlgoliaSearchRecords({
-    url: DocsV1Write.Url("https://acme.docs.buildwithfern.com"),
-  });
-
-  expect(response.ok).toBeTruthy();
-
-  const second = getAPIResponse(
-    await fdr.docs.v2.read.getDocsForUrl({
-      url: DocsV1Write.Url("https://acme.docs.buildwithfern.com"),
-    })
-  );
-
-  if (
-    first.definition.search.type === "legacyMultiAlgoliaIndex" ||
-    second.definition.search.type === "legacyMultiAlgoliaIndex"
-  ) {
-    throw new Error("Expected search type to be 'singleAlgoliaIndex'");
-  }
-
-  expect(first.definition.search.value).not.toEqual(
-    second.definition.search.value
-  );
-});
-
 test.sequential("revalidates a custom docs domain", async () => {
   const fdr = getClient({ authed: true, url: inject("url") });
 

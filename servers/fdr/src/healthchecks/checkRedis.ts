@@ -1,5 +1,3 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
-
 import { OrgId } from "../api/generated/api";
 import { LOGGER } from "../app/FdrApplication";
 import { CachedDocsResponse } from "../services/docs-cache/DocsDefinitionCache";
@@ -46,17 +44,6 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
       },
       files: {},
       filesV2: {},
-      search: {
-        type: "singleAlgoliaIndex",
-        value: {
-          type: "unversioned",
-          indexSegment: {
-            id: FdrAPI.IndexSegmentId("healthcheck"),
-            searchApiKey: "dummy",
-          },
-        },
-      },
-      algoliaSearchIndex: undefined,
       jsFiles: undefined,
       id: undefined,
     },

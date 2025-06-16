@@ -41,17 +41,6 @@ export class DefinitionObjectFactory {
         js: undefined,
         aiChatConfig: undefined,
       },
-      search: {
-        type: "singleAlgoliaIndex",
-        value: {
-          type: "unversioned",
-          indexSegment: {
-            id: FdrAPI.IndexSegmentId(""),
-            searchApiKey: "",
-          },
-        },
-      },
-      algoliaSearchIndex: undefined,
       jsFiles: undefined,
       id: undefined,
     };

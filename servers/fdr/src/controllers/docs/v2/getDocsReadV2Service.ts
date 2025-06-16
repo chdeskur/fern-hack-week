@@ -159,32 +159,6 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
       }
       return res.send(docsConfig);
     },
-    // TODO: deprecate this:
-    getSearchApiKeyForIndexSegment: async (req, res) => {
-      await app.services.auth.checkUserBelongsToOrg({
-        authHeader: req.headers.authorization,
-        orgId: "fern",
-      });
-      const { indexSegmentId } = req.body;
-      const cachedKey =
-        app.services.algoliaIndexSegmentManager.getSearchApiKeyForIndexSegment(
-          indexSegmentId
-        );
-      if (cachedKey != null) {
-        return res.send({ searchApiKey: cachedKey });
-      }
-      const indexSegment = await app.dao
-        .indexSegment()
-        .loadIndexSegment(indexSegmentId);
-      if (indexSegment == null) {
-        throw new DocsV2Read.IndexSegmentNotFoundError();
-      }
-      const searchApiKey =
-        app.services.algoliaIndexSegmentManager.generateAndCacheApiKey(
-          indexSegmentId
-        );
-      return res.send({ searchApiKey });
-    },
     listAllDocsUrls: async (req, res) => {
       // must be a fern employee
       await app.services.auth.checkUserBelongsToOrg({

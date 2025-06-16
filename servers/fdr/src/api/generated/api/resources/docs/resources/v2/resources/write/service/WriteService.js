@@ -122,36 +122,6 @@ export class WriteService {
                 next(error);
             }
         }));
-        this.router.post("/algolia/reindex", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.methods.reindexAlgoliaSearchRecords(req, {
-                    send: () => __awaiter(this, void 0, void 0, function* () {
-                        res.sendStatus(204);
-                    }),
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                }, next);
-                next();
-            }
-            catch (error) {
-                if (error instanceof errors.FernRegistryError) {
-                    switch (error.errorName) {
-                        case "DocsNotFoundError":
-                        case "ReindexNotAllowedError":
-                            break;
-                        default:
-                            console.warn(`Endpoint 'reindexAlgoliaSearchRecords' unexpectedly threw ${error.constructor.name}.` +
-                                ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition.");
-                    }
-                    yield error.send(res);
-                }
-                else {
-                    res.status(500).json("Internal Server Error");
-                }
-                next(error);
-            }
-        }));
         this.router.post("/transfer-ownership", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.transferOwnershipOfDomain(req, {

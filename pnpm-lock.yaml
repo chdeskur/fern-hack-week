@@ -1940,12 +1940,6 @@ importers:
       html-entities:
         specifier: ^2.5.2
         version: 2.5.2
-      html-to-text:
-        specifier: ^9.0.5
-        version: 9.0.5
-      marked:
-        specifier: ^5.1.0
-        version: 5.1.2
       ts-essentials:
         specifier: ^10.0.4
         version: 10.0.4(typescript@5.7.3)
@@ -1956,12 +1950,6 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../../configs
-      '@types/html-to-text':
-        specifier: ^9.0.1
-        version: 9.0.4
-      '@types/marked':
-        specifier: ^5.0.0
-        version: 5.0.2
       '@types/node':
         specifier: ^18.11.9
         version: 18.19.87

@@ -5,7 +5,6 @@ import { mapValues } from "es-toolkit/object";
 import {
   APIV1Db,
   APIV1Read,
-  Algolia,
   DocsV1Db,
   DocsV1Read,
   FdrAPI,
@@ -95,10 +94,6 @@ export async function getDocsForDomain({
       docsV2:
         docsV2 != null
           ? {
-              algoliaIndex:
-                docsV2.algoliaIndex != null
-                  ? FdrAPI.algolia.AlgoliaSearchIndex(docsV2.algoliaIndex)
-                  : undefined,
               orgId: FdrAPI.OrgId(docsV2.orgID),
               docsDefinition: migrateDocsDbDefinition(
                 readBuffer(docsV2.docsDefinition)
@@ -130,7 +125,7 @@ export async function getDocsDefinition({
   docsDbDefinition: DocsV1Db.DocsDefinitionDb;
   docsV2: LoadDocsDefinitionByUrlResponse | null;
 }): Promise<DocsV1Read.DocsDefinition> {
-  const [apiDefinitions, apiV2Definitions, searchInfo] = await Promise.all([
+  const [apiDefinitions, apiV2Definitions] = await Promise.all([
     app.services.db.prisma.apiDefinitionsV2.findMany({
       where: {
         apiDefinitionId: {
@@ -144,11 +139,6 @@ export async function getDocsDefinition({
           in: Array.from(docsDbDefinition.referencedApis),
         },
       },
-    }),
-    loadIndexSegmentsAndGetSearchInfo({
-      app,
-      docsDbDefinition,
-      docsV2,
     }),
   ]);
 
@@ -171,152 +161,11 @@ export async function getDocsDefinition({
 
   return convertDocsDefinitionToRead({
     docsDbDefinition,
-    algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
     filesV2,
     apis: apiDefinitionsById,
     apisV2: apiV2DefinitionsById,
     id: docsV2?.docsConfigInstanceId ?? undefined,
-    search: searchInfo,
   });
-}
-
-export async function loadIndexSegmentsAndGetSearchInfo({
-  app,
-  docsDbDefinition,
-  docsV2,
-}: {
-  app: FdrApplication;
-  docsDbDefinition: DocsV1Db.DocsDefinitionDb;
-  docsV2: LoadDocsDefinitionByUrlResponse | null;
-}): Promise<Algolia.SearchInfo> {
-  const activeIndexSegments =
-    docsV2?.indexSegmentIds != null
-      ? await app.services.db.prisma.indexSegment.findMany({
-          where: { id: { in: docsV2.indexSegmentIds } },
-        })
-      : [];
-  return getSearchInfoFromDocs({
-    algoliaIndex: docsV2?.algoliaIndex,
-    indexSegmentIds: docsV2?.indexSegmentIds,
-    docsDbDefinition,
-    activeIndexSegments,
-    app,
-  });
-}
-
-function getVersionedSearchInfoFromDocs(
-  activeIndexSegments: IndexSegment[],
-  app: FdrApplication
-): Algolia.SearchInfo {
-  const indexSegmentsByVersionId = activeIndexSegments.reduce<
-    Record<string, Algolia.IndexSegment>
-  >((acc, indexSegment) => {
-    const searchApiKey =
-      app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-        indexSegment.id
-      );
-    // Since the docs are versioned, all referenced index segments will have a version
-    if (indexSegment.version) {
-      acc[indexSegment.version] = {
-        id: FdrAPI.IndexSegmentId(indexSegment.id),
-        searchApiKey,
-      };
-    }
-    return acc;
-  }, {});
-  return {
-    type: "singleAlgoliaIndex",
-    value: {
-      type: "versioned",
-      indexSegmentsByVersionId,
-    },
-  };
-}
-
-function getUnversionedSearchInfoFromDocs(
-  activeIndexSegments: IndexSegment[],
-  app: FdrApplication
-): Algolia.SearchInfo {
-  const indexSegment = activeIndexSegments[0];
-  if (indexSegment == null) {
-    /* preview docs do not have algolia index segments, and should return with an undefined index */
-    return { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined };
-  }
-  const searchApiKey =
-    app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-      indexSegment.id
-    );
-
-  return {
-    type: "singleAlgoliaIndex",
-    value: {
-      type: "unversioned",
-      indexSegment: {
-        id: FdrAPI.IndexSegmentId(indexSegment.id),
-        searchApiKey,
-      },
-    },
-  };
-}
-
-export function getSearchInfoFromDocs({
-  algoliaIndex,
-  indexSegmentIds,
-  activeIndexSegments,
-  docsDbDefinition,
-  app,
-}: {
-  algoliaIndex: string | undefined;
-  indexSegmentIds: string[] | undefined;
-  activeIndexSegments: IndexSegment[];
-  docsDbDefinition: DocsV1Db.DocsDefinitionDb;
-  app: FdrApplication;
-}): Algolia.SearchInfo {
-  if (indexSegmentIds == null) {
-    return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
-  }
-
-  if (
-    docsDbDefinition.config.navigation == null &&
-    docsDbDefinition.config.root == null
-  ) {
-    return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
-  }
-
-  if (docsDbDefinition.config.root != null) {
-    const latestRoot =
-      FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
-        docsDbDefinition.config.root
-      );
-    let searchInfo: Algolia.SearchInfo | undefined;
-    FernNavigation.traverseBF(latestRoot, (node) => {
-      if (node.type === "versioned") {
-        searchInfo = getVersionedSearchInfoFromDocs(activeIndexSegments, app);
-        return false;
-      } else if (node.type === "unversioned") {
-        searchInfo = getUnversionedSearchInfoFromDocs(activeIndexSegments, app);
-        return false;
-      }
-      return true;
-    });
-    if (searchInfo != null) {
-      return searchInfo;
-    }
-  } else if (docsDbDefinition.config.navigation != null) {
-    return visitDbNavigationConfig<Algolia.SearchInfo>(
-      docsDbDefinition.config.navigation,
-      {
-        versioned: () => {
-          return getVersionedSearchInfoFromDocs(activeIndexSegments, app);
-        },
-        unversioned: () => {
-          return getUnversionedSearchInfoFromDocs(activeIndexSegments, app);
-        },
-      }
-    );
-  }
-
-  return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
 }
 
 export function convertDbApiDefinitionToRead(

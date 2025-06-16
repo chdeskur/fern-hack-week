@@ -5,7 +5,6 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface DocsDefinition {
-    algoliaSearchIndex: FernRegistry.AlgoliaSearchIndex | undefined;
     pages: Record<FernRegistry.PageId, FernRegistry.docs.v1.read.PageContent>;
     apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
     apisV2: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.latest.ApiDefinition>;
@@ -18,5 +17,4 @@ export interface DocsDefinition {
     jsFiles: Record<string, string> | undefined;
     id: FernRegistry.DocsConfigId | undefined;
     config: FernRegistry.docs.v1.read.DocsConfig;
-    search: FernRegistry.SearchInfo;
 }

@@ -3,8 +3,6 @@ export * as dashboard from "./dashboard";
 export * as docs from "./docs";
 export * as generators from "./generators";
 export * as navigation from "./navigation";
-export * as algolia from "./algolia";
-export * from "./algolia/types";
 export * as commons from "./commons";
 export * from "./commons/types";
 export * as diff from "./diff";

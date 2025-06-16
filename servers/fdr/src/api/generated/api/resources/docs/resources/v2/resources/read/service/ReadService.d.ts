@@ -40,11 +40,6 @@ export interface ReadServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
-    getSearchApiKeyForIndexSegment(req: express.Request<never, FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentResponse, FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentRequest, never>, res: {
-        send: (responseBody: FernRegistry.docs.v2.read.GetSearchApiKeyForIndexSegmentResponse) => Promise<void>;
-        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
-        locals: any;
-    }, next: express.NextFunction): void | Promise<void>;
     prepopulateFdrReadS3Bucket(req: express.Request<never, never, never, never>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

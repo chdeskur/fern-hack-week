@@ -2,16 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import winston from "winston";
 
 import { FdrDao } from "../db";
-import { type AlgoliaService, AlgoliaServiceImpl } from "../services/algolia";
-import {
-  type AlgoliaIndexSegmentDeleterService,
-  AlgoliaIndexSegmentDeleterServiceImpl,
-} from "../services/algolia-index-segment-deleter";
-import {
-  type AlgoliaIndexSegmentManagerService,
-  AlgoliaIndexSegmentManagerServiceImpl,
-} from "../services/algolia-index-segment-manager";
-import { LocalAlgoliaServiceImpl } from "../services/algolia/LocalAlgoliaService";
 import { type AuthService, AuthServiceImpl } from "../services/auth";
 import { LocalAuthServiceImpl } from "../services/auth/LocalAuthService";
 import { type DatabaseService, DatabaseServiceImpl } from "../services/db";
@@ -34,9 +24,6 @@ import { type FdrConfig } from "./FdrConfig";
 export interface FdrServices {
   readonly auth: AuthService;
   readonly db: DatabaseService;
-  readonly algolia: AlgoliaService;
-  readonly algoliaIndexSegmentDeleter: AlgoliaIndexSegmentDeleterService;
-  readonly algoliaIndexSegmentManager: AlgoliaIndexSegmentManagerService;
   readonly s3: S3Service;
   readonly slack: SlackService;
   readonly revalidator: RevalidatorService;
@@ -83,13 +70,6 @@ export class FdrApplication {
     this.services = {
       auth: services?.auth ?? new AuthServiceImpl(this),
       db: services?.db ?? new DatabaseServiceImpl(prisma),
-      algolia: services?.algolia ?? new AlgoliaServiceImpl(this),
-      algoliaIndexSegmentDeleter:
-        services?.algoliaIndexSegmentDeleter ??
-        new AlgoliaIndexSegmentDeleterServiceImpl(this),
-      algoliaIndexSegmentManager:
-        services?.algoliaIndexSegmentManager ??
-        new AlgoliaIndexSegmentManagerServiceImpl(this),
       s3: services?.s3 ?? new S3ServiceImpl(this.config, this),
       slack: services?.slack ?? new SlackServiceImpl(this),
       revalidator: services?.revalidator ?? new RevalidatorServiceImpl(),
@@ -136,7 +116,6 @@ export function createFdrApplication(config: FdrConfig): FdrApplication {
       auth: new LocalAuthServiceImpl({
         orgIds: [],
       }),
-      algolia: new LocalAlgoliaServiceImpl(),
       slack: new LocalSlackServiceImpl(),
       revalidator: new LocalRevalidatorServiceImpl(),
     });

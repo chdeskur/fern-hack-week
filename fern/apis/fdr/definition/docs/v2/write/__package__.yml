@@ -77,18 +77,6 @@ service:
         - rootCommons.UserNotInOrgError
         - v1DocsWrite.DocsRegistrationIdNotFound
 
-    reindexAlgoliaSearchRecords:
-      method: POST
-      path: /algolia/reindex
-      request:
-        name: ReindexAlgoliaRecordsRequest
-        body:
-          properties:
-            url: rootCommons.Url
-      errors:
-        - DocsNotFoundError
-        - ReindexNotAllowedError
-
     transferOwnershipOfDomain:
       auth: true
       method: POST
