@@ -1,7 +1,10 @@
 import "server-only";
 
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
-import { getFallbackProduct, getFallbackVersion } from "@fern-api/docs-server";
+import {
+  getFallbackProduct,
+  getFallbackVersion,
+} from "@fern-api/docs-server/handle-node-fallbacks";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 

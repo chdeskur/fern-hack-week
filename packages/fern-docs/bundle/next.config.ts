@@ -66,6 +66,10 @@ const nextConfig: NextConfig = {
       "@fern-docs/components",
       "@fern-docs/search-keyword",
       "@fern-docs/search-ask-fern",
+      "@fern-docs/search-ui",
+      "@fern-api/docs-utils",
+      "@fern-api/docs-server",
+      "@fern-api/docs-loader",
       "es-toolkit",
       "ts-essentials",
       "lucide-react",
@@ -225,6 +229,7 @@ const nextConfig: NextConfig = {
     //   ...config.optimization,
     //   minimize: false,
     // };
+
     if (isServer) {
       config.externals = config.externals || [];
       config.externals.push("esbuild");

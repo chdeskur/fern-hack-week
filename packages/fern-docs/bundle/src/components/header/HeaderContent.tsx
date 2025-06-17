@@ -1,5 +1,3 @@
-"use client";
-
 import { CSSProperties } from "react";
 import React from "react";
 
@@ -35,16 +33,17 @@ export function HeaderContent({
       logo={logo}
       versionSelect={versionSelect}
       productSelect={productSelect}
-      showSearchBar={showSearchBar}
       navbarLinks={navbarLinks}
       loginButton={loginButton}
       forceHeader={forceHeader}
       searchBar={
-        <SearchV2Trigger
-          aria-label="Search"
-          className="fern-header-search-bar overflow-hidden"
-          isSearchInSidebar={false}
-        />
+        showSearchBar && (
+          <SearchV2Trigger
+            aria-label="Search"
+            className="fern-header-search-bar overflow-hidden"
+            isSearchInSidebar={false}
+          />
+        )
       }
     />
   );

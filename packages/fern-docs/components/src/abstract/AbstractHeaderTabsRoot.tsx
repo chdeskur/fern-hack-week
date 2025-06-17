@@ -7,12 +7,10 @@ import { useCurrentTabId } from "../state/navigation";
 
 export function AbstractHeaderTabsRoot({
   children,
-  showSearchBar,
   className,
   searchBar,
 }: {
   children: React.ReactNode;
-  showSearchBar: boolean;
   className?: string;
   searchBar?: React.ReactNode;
 }) {
@@ -23,7 +21,7 @@ export function AbstractHeaderTabsRoot({
       className={cn("fern-header-tabs", className)}
     >
       {children}
-      {showSearchBar && searchBar}
+      {searchBar}
     </Tabs.Root>
   );
 }

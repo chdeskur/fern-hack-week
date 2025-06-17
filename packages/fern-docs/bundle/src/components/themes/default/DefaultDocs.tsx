@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 import AbstractDefaultDocs from "@fern-docs/components/theming/AbstractDefaultDocs";

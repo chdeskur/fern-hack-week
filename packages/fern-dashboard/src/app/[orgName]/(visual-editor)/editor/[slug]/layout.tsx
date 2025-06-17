@@ -1,9 +1,11 @@
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import { FernThemeProvider } from "@fern-docs/components";
 import { AbstractHeaderTabsRoot } from "@fern-docs/components/abstract/AbstractHeaderTabsRoot";
+import { FERN_SEARCH_BUTTON_ID } from "@fern-docs/components/constants";
 import { NavbarLinks } from "@fern-docs/components/header/NavbarLinks";
 import AbstractDefaultDocs from "@fern-docs/components/theming/AbstractDefaultDocs";
 import { GlobalStyles } from "@fern-docs/components/theming/global-styles";
+import { DesktopSearchButton } from "@fern-docs/search-ui/components/desktop/desktop-search-button";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
@@ -96,7 +98,16 @@ export default async function AuthedLayout({
           productSelect={productSelect}
           sidebar={sidebar}
           headerTabs={
-            <AbstractHeaderTabsRoot showSearchBar={showSearchBar}>
+            <AbstractHeaderTabsRoot
+              searchBar={
+                showSearchBar && (
+                  <DesktopSearchButton
+                    id={FERN_SEARCH_BUTTON_ID}
+                    className="fern-header-search-bar cursor-not-allowed overflow-hidden"
+                  />
+                )
+              }
+            >
               {headertabs}
             </AbstractHeaderTabsRoot>
           }

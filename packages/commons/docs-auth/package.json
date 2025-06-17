@@ -11,7 +11,7 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/index.d.js",
       "default": "./dist/index.js"
     }
   },

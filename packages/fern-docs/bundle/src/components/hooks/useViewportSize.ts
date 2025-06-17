@@ -1,31 +1,24 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 export function useViewportSize(): { width: number; height: number } {
-  const [width, setViewportWidth] = useState<number>(() =>
-    typeof window !== "undefined" ? window.innerWidth : 0
-  );
-  const [height, setViewportHeight] = useState<number>(() =>
-    typeof window !== "undefined" ? window.innerHeight : 0
-  );
+  const [width, setViewportWidth] = useState<number>(0);
+  const [height, setViewportHeight] = useState<number>(0);
 
-  if (typeof window !== "undefined") {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useLayoutEffect(() => {
-      const handleResize = () => {
-        setViewportHeight(window.innerHeight);
-        setViewportWidth(window.innerWidth);
-      };
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight);
+      setViewportWidth(window.innerWidth);
+    };
 
-      handleResize();
+    handleResize();
 
-      window.addEventListener("resize", handleResize, { passive: true });
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []);
-  }
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return { width, height };
 }
