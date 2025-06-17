@@ -1,3 +1,5 @@
+"use client";
+
 import { AbstractHeaderTabsRoot } from "@fern-docs/components/abstract/AbstractHeaderTabsRoot";
 
 import { SearchV2Trigger } from "@/state/search";
