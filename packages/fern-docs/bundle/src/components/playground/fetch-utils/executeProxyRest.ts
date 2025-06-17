@@ -23,16 +23,20 @@ export async function executeProxyRest(
   if (req.body?.type === "form-data") {
     requestHeaders.delete("Content-Type");
   }
+  const fetchOptions: RequestInit = {
+    method: req.method,
+    headers: requestHeaders,
+    body: await toBodyInit(req.body),
+    mode: "cors" as RequestMode,
+  };
+
+  if (disableProxy) {
+    fetchOptions.credentials = "include";
+  }
 
   const res = await fetch(
     disableProxy ? req.url : urljoin(PROXY_URL, req.url),
-    {
-      method: req.method,
-      headers: requestHeaders,
-      body: await toBodyInit(req.body),
-      mode: "cors",
-      credentials: "include", // Add credentials for CORS requests
-    }
+    fetchOptions
   );
 
   // Only process proxy-specific headers when using the proxy
