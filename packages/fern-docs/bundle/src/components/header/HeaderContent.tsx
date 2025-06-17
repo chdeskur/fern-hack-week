@@ -36,6 +36,7 @@ export function HeaderContent({
       navbarLinks={navbarLinks}
       loginButton={loginButton}
       forceHeader={forceHeader}
+      showSearchBar={showSearchBar}
       searchBar={
         showSearchBar && (
           <SearchV2Trigger

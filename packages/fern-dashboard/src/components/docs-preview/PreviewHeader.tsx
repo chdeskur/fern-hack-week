@@ -24,6 +24,7 @@ export function PreviewHeader({
       logo={logo}
       versionSelect={versionSelect}
       productSelect={productSelect}
+      showSearchBar={showSearchBar}
       searchBar={
         showSearchBar && (
           <DesktopSearchButton

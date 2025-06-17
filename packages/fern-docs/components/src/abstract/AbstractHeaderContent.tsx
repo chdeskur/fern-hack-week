@@ -16,6 +16,7 @@ export function AbstractHeaderContent({
   productSelect,
   className,
   style,
+  showSearchBar,
   navbarLinks,
   loginButton,
   forceHeader = false,
@@ -26,6 +27,7 @@ export function AbstractHeaderContent({
   productSelect: React.ReactNode;
   className?: string;
   style?: CSSProperties;
+  showSearchBar?: boolean;
   navbarLinks: React.ReactNode;
   loginButton?: React.ReactNode;
   forceHeader?: boolean;
@@ -61,7 +63,7 @@ export function AbstractHeaderContent({
           </div>
         </div>
 
-        {!isDesktop && searchBar}
+        {(showSearchBar || !isDesktop) && searchBar}
 
         <FernButtonGroup asChild>
           <nav className="fern-header-navbar-links" aria-label="Navbar links">
