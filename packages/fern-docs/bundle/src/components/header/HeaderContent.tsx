@@ -40,13 +40,11 @@ export function HeaderContent({
       forceHeader={forceHeader}
       showSearchBar={showSearchBar}
       searchBar={
-        showSearchBar && (
-          <SearchV2Trigger
-            aria-label="Search"
-            className="fern-header-search-bar overflow-hidden"
-            isSearchInSidebar={false}
-          />
-        )
+        <SearchV2Trigger
+          aria-label="Search"
+          className="fern-header-search-bar overflow-hidden"
+          isSearchInSidebar={false}
+        />
       }
     />
   );

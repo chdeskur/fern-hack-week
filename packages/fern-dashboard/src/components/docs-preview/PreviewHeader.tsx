@@ -26,12 +26,10 @@ export function PreviewHeader({
       productSelect={productSelect}
       showSearchBar={showSearchBar}
       searchBar={
-        showSearchBar && (
-          <DesktopSearchButton
-            id={FERN_SEARCH_BUTTON_ID}
-            className="fern-header-search-bar cursor-not-allowed overflow-hidden"
-          />
-        )
+        <DesktopSearchButton
+          id={FERN_SEARCH_BUTTON_ID}
+          className="fern-header-search-bar cursor-not-allowed overflow-hidden"
+        />
       }
       navbarLinks={navbarLinks}
     />
