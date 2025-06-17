@@ -66,14 +66,16 @@ export function getHarRequest(
     if (requestBody.value && typeof requestBody.value === "object") {
       requestBody.value = Object.fromEntries(
         Object.entries(requestBody.value).filter(([_, valueObj]) => {
+          // Keep arrays and primitive values
           if (
-            typeof valueObj === "object" &&
-            valueObj != null &&
-            !Array.isArray(valueObj)
+            Array.isArray(valueObj) ||
+            typeof valueObj !== "object" ||
+            valueObj === null
           ) {
-            return "value" in valueObj;
+            return true;
           }
-          return true;
+          // For objects, only filter out empty objects without a value property
+          return Object.keys(valueObj).length > 0;
         })
       );
     }

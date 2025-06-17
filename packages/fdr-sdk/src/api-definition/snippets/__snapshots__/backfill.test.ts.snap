@@ -1,0 +1,260 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`backfillSnippets > should backfill snippets for a search endpoint example 1`] = `
+{
+  "csharp": [
+    {
+      "code": "var client = new RestClient("https://api.example.com/v1/");
+var request = new RestRequest(Method.POST);
+request.AddHeader("Content-Type", "application/json");
+request.AddParameter("application/json", "{\\n  \\"RecordCount\\": 50,\\n  \\"DocumentSearchParams\\": {\\n    \\"SearchTerms\\": {\\n      \\"All\\": [\\n        \\"data security\\"\\n      ],\\n      \\"Any\\": [\\n        \\"cyberattack\\",\\n        \\"breach\\"\\n      ],\\n      \\"None\\": [\\n        \\"ransomware\\"\\n      ]\\n    },\\n    \\"DocumentDateRangeStart\\": \\"2023-01-01T00:00:00Z\\",\\n    \\"DocumentDateRangeEnd\\": \\"2023-12-31T23:59:59Z\\"\\n  }\\n}", ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "csharp",
+      "name": undefined,
+    },
+  ],
+  "curl": [
+    {
+      "code": "curl -X POST https://api.example.com/v1/ \\
+     -H "Content-Type: application/json" \\
+     -d '{
+  "RecordCount": 50,
+  "DocumentSearchParams": {
+    "SearchTerms": {
+      "All": [
+        "data security"
+      ],
+      "Any": [
+        "cyberattack",
+        "breach"
+      ],
+      "None": [
+        "ransomware"
+      ]
+    },
+    "DocumentDateRangeStart": "2023-01-01T00:00:00Z",
+    "DocumentDateRangeEnd": "2023-12-31T23:59:59Z"
+  }
+}'",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "curl",
+      "name": undefined,
+    },
+  ],
+  "go": [
+    {
+      "code": "package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io"
+)
+
+func main() {
+
+	url := "https://api.example.com/v1/"
+
+	payload := strings.NewReader("{\\n  \\"RecordCount\\": 50,\\n  \\"DocumentSearchParams\\": {\\n    \\"SearchTerms\\": {\\n      \\"All\\": [\\n        \\"data security\\"\\n      ],\\n      \\"Any\\": [\\n        \\"cyberattack\\",\\n        \\"breach\\"\\n      ],\\n      \\"None\\": [\\n        \\"ransomware\\"\\n      ]\\n    },\\n    \\"DocumentDateRangeStart\\": \\"2023-01-01T00:00:00Z\\",\\n    \\"DocumentDateRangeEnd\\": \\"2023-12-31T23:59:59Z\\"\\n  }\\n}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("Content-Type", "application/json")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "go",
+      "name": undefined,
+    },
+  ],
+  "java": [
+    {
+      "code": "HttpResponse<String> response = Unirest.post("https://api.example.com/v1/")
+  .header("Content-Type", "application/json")
+  .body("{\\n  \\"RecordCount\\": 50,\\n  \\"DocumentSearchParams\\": {\\n    \\"SearchTerms\\": {\\n      \\"All\\": [\\n        \\"data security\\"\\n      ],\\n      \\"Any\\": [\\n        \\"cyberattack\\",\\n        \\"breach\\"\\n      ],\\n      \\"None\\": [\\n        \\"ransomware\\"\\n      ]\\n    },\\n    \\"DocumentDateRangeStart\\": \\"2023-01-01T00:00:00Z\\",\\n    \\"DocumentDateRangeEnd\\": \\"2023-12-31T23:59:59Z\\"\\n  }\\n}")
+  .asString();",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "java",
+      "name": undefined,
+    },
+  ],
+  "javascript": [
+    {
+      "code": "const url = 'https://api.example.com/v1/';
+const options = {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: '{"RecordCount":50,"DocumentSearchParams":{"SearchTerms":{"All":["data security"],"Any":["cyberattack","breach"],"None":["ransomware"]},"DocumentDateRangeStart":"2023-01-01T00:00:00Z","DocumentDateRangeEnd":"2023-12-31T23:59:59Z"}}'
+};
+
+try {
+  const response = await fetch(url, options);
+  const data = await response.json();
+  console.log(data);
+} catch (error) {
+  console.error(error);
+}",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "javascript",
+      "name": undefined,
+    },
+  ],
+  "php": [
+    {
+      "code": "<?php
+
+$client = new \\GuzzleHttp\\Client();
+
+$response = $client->request('POST', 'https://api.example.com/v1/', [
+  'body' => '{
+  "RecordCount": 50,
+  "DocumentSearchParams": {
+    "SearchTerms": {
+      "All": [
+        "data security"
+      ],
+      "Any": [
+        "cyberattack",
+        "breach"
+      ],
+      "None": [
+        "ransomware"
+      ]
+    },
+    "DocumentDateRangeStart": "2023-01-01T00:00:00Z",
+    "DocumentDateRangeEnd": "2023-12-31T23:59:59Z"
+  }
+}',
+  'headers' => [
+    'Content-Type' => 'application/json',
+  ],
+]);
+
+echo $response->getBody();",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "php",
+      "name": undefined,
+    },
+  ],
+  "python": [
+    {
+      "code": "import requests
+
+url = "https://api.example.com/v1/"
+
+payload = {
+    "RecordCount": 50,
+    "DocumentSearchParams": {
+        "SearchTerms": {
+            "All": ["data security"],
+            "Any": ["cyberattack", "breach"],
+            "None": ["ransomware"]
+        },
+        "DocumentDateRangeStart": "2023-01-01T00:00:00Z",
+        "DocumentDateRangeEnd": "2023-12-31T23:59:59Z"
+    }
+}
+headers = {"Content-Type": "application/json"}
+
+response = requests.post(url, json=payload, headers=headers)
+
+print(response.json())",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "python",
+      "name": undefined,
+    },
+  ],
+  "ruby": [
+    {
+      "code": "require 'uri'
+require 'net/http'
+
+url = URI("https://api.example.com/v1/")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+
+request = Net::HTTP::Post.new(url)
+request["Content-Type"] = 'application/json'
+request.body = "{\\n  \\"RecordCount\\": 50,\\n  \\"DocumentSearchParams\\": {\\n    \\"SearchTerms\\": {\\n      \\"All\\": [\\n        \\"data security\\"\\n      ],\\n      \\"Any\\": [\\n        \\"cyberattack\\",\\n        \\"breach\\"\\n      ],\\n      \\"None\\": [\\n        \\"ransomware\\"\\n      ]\\n    },\\n    \\"DocumentDateRangeStart\\": \\"2023-01-01T00:00:00Z\\",\\n    \\"DocumentDateRangeEnd\\": \\"2023-12-31T23:59:59Z\\"\\n  }\\n}"
+
+response = http.request(request)
+puts response.read_body",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "ruby",
+      "name": undefined,
+    },
+  ],
+  "swift": [
+    {
+      "code": "import Foundation
+
+let headers = ["Content-Type": "application/json"]
+let parameters = [
+  "RecordCount": 50,
+  "DocumentSearchParams": [
+    "SearchTerms": [
+      "All": ["data security"],
+      "Any": ["cyberattack", "breach"],
+      "None": ["ransomware"]
+    ],
+    "DocumentDateRangeStart": "2023-01-01T00:00:00Z",
+    "DocumentDateRangeEnd": "2023-12-31T23:59:59Z"
+  ]
+] as [String : Any]
+
+let postData = JSONSerialization.data(withJSONObject: parameters, options: [])
+
+let request = NSMutableURLRequest(url: NSURL(string: "https://api.example.com/v1/")! as URL,
+                                        cachePolicy: .useProtocolCachePolicy,
+                                    timeoutInterval: 10.0)
+request.httpMethod = "POST"
+request.allHTTPHeaderFields = headers
+request.httpBody = postData as Data
+
+let session = URLSession.shared
+let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+  if (error != nil) {
+    print(error as Any)
+  } else {
+    let httpResponse = response as? HTTPURLResponse
+    print(httpResponse)
+  }
+})
+
+dataTask.resume()",
+      "description": undefined,
+      "generated": true,
+      "install": undefined,
+      "language": "swift",
+      "name": undefined,
+    },
+  ],
+}
+`;
