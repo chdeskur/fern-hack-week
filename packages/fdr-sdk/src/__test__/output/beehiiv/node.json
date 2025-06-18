@@ -5,6 +5,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "welcome/getting-started",
               "hidden": false,
               "id": "root.uv.welcome.getting-started",
               "pageId": "docs/pages/getting-started/getting-started.mdx",
@@ -13,6 +14,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "welcome/create-an-api-key",
               "hidden": false,
               "id": "root.uv.welcome.create-an-api-key",
               "pageId": "docs/pages/getting-started/create-an-api-key.mdx",
@@ -21,6 +23,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "welcome/no-code-integrations",
               "hidden": false,
               "id": "root.uv.welcome.no-code-integrations",
               "pageId": "docs/pages/getting-started/no-code-integrations.mdx",
@@ -39,12 +42,14 @@
         },
         {
           "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+          "canonicalSlug": "webhooks",
           "children": [
             {
               "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
               "children": [
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/post/sent",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_post.sent",
                   "method": "POST",
                   "slug": "webhooks/post/sent",
@@ -64,6 +69,7 @@
               "children": [
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/subscription/created",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.created",
                   "method": "POST",
                   "slug": "webhooks/subscription/created",
@@ -73,6 +79,7 @@
                 },
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/subscription/confirmed",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.confirmed",
                   "method": "POST",
                   "slug": "webhooks/subscription/confirmed",
@@ -82,6 +89,7 @@
                 },
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/subscription/deleted",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.deleted",
                   "method": "POST",
                   "slug": "webhooks/subscription/deleted",
@@ -91,6 +99,7 @@
                 },
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/subscription/upgraded",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.upgraded",
                   "method": "POST",
                   "slug": "webhooks/subscription/upgraded",
@@ -100,6 +109,7 @@
                 },
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/subscription/downgraded",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.downgraded",
                   "method": "POST",
                   "slug": "webhooks/subscription/downgraded",
@@ -109,6 +119,7 @@
                 },
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/subscription/tier-added",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.tier_added",
                   "method": "POST",
                   "slug": "webhooks/subscription/tier-added",
@@ -118,6 +129,7 @@
                 },
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/subscription/tier-deleted",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.tier_deleted",
                   "method": "POST",
                   "slug": "webhooks/subscription/tier-deleted",
@@ -137,6 +149,7 @@
               "children": [
                 {
                   "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "canonicalSlug": "webhooks/survey/submitted",
                   "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_survey.submitted",
                   "method": "POST",
                   "slug": "webhooks/survey/submitted",
@@ -170,6 +183,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/automation-journeys/create",
                   "endpointId": "endpoint_automationJourneys.create",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automationJourneys.create",
                   "isResponseStream": false,
@@ -180,6 +194,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/automation-journeys/index",
                   "endpointId": "endpoint_automationJourneys.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automationJourneys.index",
                   "isResponseStream": false,
@@ -190,6 +205,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/automation-journeys/show",
                   "endpointId": "endpoint_automationJourneys.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automationJourneys.show",
                   "isResponseStream": false,
@@ -210,6 +226,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/automations/index",
                   "endpointId": "endpoint_automations.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automations.index",
                   "isResponseStream": false,
@@ -220,6 +237,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/automations/show",
                   "endpointId": "endpoint_automations.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automations.show",
                   "isResponseStream": false,
@@ -240,6 +258,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/bulk-subscription-updates/index",
                   "endpointId": "endpoint_bulkSubscriptionUpdates.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.index",
                   "isResponseStream": false,
@@ -250,6 +269,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/bulk-subscription-updates/show",
                   "endpointId": "endpoint_bulkSubscriptionUpdates.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.show",
                   "isResponseStream": false,
@@ -260,6 +280,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/bulk-subscription-updates/put",
                   "endpointId": "endpoint_bulkSubscriptionUpdates.put",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.put",
                   "isResponseStream": false,
@@ -281,6 +302,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/bulk-subscription-updates/put-status",
                   "endpointId": "endpoint_bulkSubscriptionUpdates.put-status",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.put-status",
                   "isResponseStream": false,
@@ -312,6 +334,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/custom-fields/create",
                   "endpointId": "endpoint_customFields.create",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.create",
                   "isResponseStream": false,
@@ -322,6 +345,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/custom-fields/show",
                   "endpointId": "endpoint_customFields.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.show",
                   "isResponseStream": false,
@@ -332,6 +356,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/custom-fields/index",
                   "endpointId": "endpoint_customFields.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.index",
                   "isResponseStream": false,
@@ -342,6 +367,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/custom-fields/put",
                   "endpointId": "endpoint_customFields.put",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.put",
                   "isResponseStream": false,
@@ -363,6 +389,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/custom-fields/delete",
                   "endpointId": "endpoint_customFields.delete",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.delete",
                   "isResponseStream": false,
@@ -383,6 +410,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/posts/index",
                   "endpointId": "endpoint_posts.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_posts.index",
                   "isResponseStream": false,
@@ -393,6 +421,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/posts/show",
                   "endpointId": "endpoint_posts.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_posts.show",
                   "isResponseStream": false,
@@ -403,6 +432,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/posts/delete",
                   "endpointId": "endpoint_posts.delete",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_posts.delete",
                   "isResponseStream": false,
@@ -423,6 +453,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/publications/index",
                   "endpointId": "endpoint_publications.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_publications.index",
                   "isResponseStream": false,
@@ -433,6 +464,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/publications/show",
                   "endpointId": "endpoint_publications.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_publications.show",
                   "isResponseStream": false,
@@ -453,6 +485,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/referral-program/show",
                   "endpointId": "endpoint_referralProgram.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_referralProgram.show",
                   "isResponseStream": false,
@@ -473,6 +506,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/segments/index",
                   "endpointId": "endpoint_segments.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.index",
                   "isResponseStream": false,
@@ -483,6 +517,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/segments/show",
                   "endpointId": "endpoint_segments.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.show",
                   "isResponseStream": false,
@@ -493,6 +528,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/segments/expand-results",
                   "endpointId": "endpoint_segments.expand_results",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.expand_results",
                   "isResponseStream": false,
@@ -503,6 +539,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/segments/delete",
                   "endpointId": "endpoint_segments.delete",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.delete",
                   "isResponseStream": false,
@@ -523,6 +560,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscriptions/create",
                   "endpointId": "endpoint_subscriptions.create",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.create",
                   "isResponseStream": false,
@@ -533,6 +571,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscriptions/index",
                   "endpointId": "endpoint_subscriptions.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.index",
                   "isResponseStream": false,
@@ -543,6 +582,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscriptions/get-by-email",
                   "endpointId": "endpoint_subscriptions.get-by-email",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.get-by-email",
                   "isResponseStream": false,
@@ -553,6 +593,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscriptions/get-by-id",
                   "endpointId": "endpoint_subscriptions.get-by-id",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.get-by-id",
                   "isResponseStream": false,
@@ -563,6 +604,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscriptions/put",
                   "endpointId": "endpoint_subscriptions.put",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.put",
                   "isResponseStream": false,
@@ -584,6 +626,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscriptions/delete",
                   "endpointId": "endpoint_subscriptions.delete",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.delete",
                   "isResponseStream": false,
@@ -604,6 +647,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscription-tags/create",
                   "endpointId": "endpoint_subscriptionTags.create",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptionTags.create",
                   "isResponseStream": false,
@@ -624,6 +668,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/tiers/create",
                   "endpointId": "endpoint_tiers.create",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.create",
                   "isResponseStream": false,
@@ -634,6 +679,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/tiers/index",
                   "endpointId": "endpoint_tiers.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.index",
                   "isResponseStream": false,
@@ -644,6 +690,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/tiers/show",
                   "endpointId": "endpoint_tiers.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.show",
                   "isResponseStream": false,
@@ -654,6 +701,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/tiers/put",
                   "endpointId": "endpoint_tiers.put",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.put",
                   "isResponseStream": false,
@@ -685,6 +733,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/webhooks/create",
                   "endpointId": "endpoint_webhooks.create",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.create",
                   "isResponseStream": false,
@@ -695,6 +744,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/webhooks/index",
                   "endpointId": "endpoint_webhooks.index",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.index",
                   "isResponseStream": false,
@@ -705,6 +755,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/webhooks/show",
                   "endpointId": "endpoint_webhooks.show",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.show",
                   "isResponseStream": false,
@@ -715,6 +766,7 @@
                 },
                 {
                   "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/webhooks/delete",
                   "endpointId": "endpoint_webhooks.delete",
                   "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.delete",
                   "isResponseStream": false,

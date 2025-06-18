@@ -141,7 +141,7 @@ exports[`primer > gets all urls from docs config 1`] = `
 
 exports[`primer > gets navigation root for /docs/api/introduction/getting-started 1`] = `
 {
-  "canonicalSlug": "docs/api/v2.3/introduction/getting-started",
+  "canonicalSlug": "docs/api/introduction/getting-started",
   "id": "root..v2.3.uv.introduction.getting-started",
   "pageId": "introduction/getting-started.md",
   "slug": "docs/api/introduction/getting-started",
@@ -159,7 +159,7 @@ exports[`primer > gets navigation root for /docs/api/v2.1/api-reference/client-s
   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
   "authed": undefined,
   "availability": undefined,
-  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
+  "canonicalSlug": "docs/api/api-reference/client-session-api/retrieve-client-side-token",
   "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
   "featureFlags": undefined,
   "hidden": undefined,

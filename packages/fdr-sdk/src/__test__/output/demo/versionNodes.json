@@ -8,6 +8,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "subpath/api/overview",
                     "id": "98be4aef6362fdfe8d85deb74d853d72a80d02ea12b07fdb33b800ed9967fcce",
                     "pageId": "pages/overview.mdx",
                     "slug": "subpath/v2/api/overview",
@@ -21,6 +22,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "subpath/api/apple/overview",
                     "id": "47810535e98923e0b5ad47c87f961a7a425d1d3f0078aab983c5f2f9b3a4cbbc",
                     "pageId": "pages/apple.mdx",
                     "slug": "subpath/v2/api/apple/overview",
@@ -32,6 +34,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "d18f1aa9-487e-443f-8604-ac65bc48f280",
+                        "canonicalSlug": "subpath/api/apple/webhooks-1/create-pet",
                         "id": "d18f1aa9-487e-443f-8604-ac65bc48f280:__package__.createPet",
                         "method": "POST",
                         "slug": "subpath/v2/api/apple/webhooks-1/create-pet",
@@ -58,6 +61,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "subpath/api/banana/overview",
                     "id": "ac8a13964f38160e4541c86647d4ba81bb386dfe2360df0d28056386498ed090",
                     "pageId": "pages/banana.mdx",
                     "slug": "subpath/v2/api/banana/overview",
@@ -69,6 +73,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "1504329f-2ebc-4695-be7a-95793adc10b8",
+                        "canonicalSlug": "subpath/api/banana/webhooks-2/create-pet",
                         "id": "1504329f-2ebc-4695-be7a-95793adc10b8:__package__.createPet",
                         "method": "POST",
                         "slug": "subpath/v2/api/banana/webhooks-2/create-pet",

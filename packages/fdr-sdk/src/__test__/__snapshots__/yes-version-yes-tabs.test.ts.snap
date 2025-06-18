@@ -41,7 +41,7 @@ exports[`yes-version-yes-tabs > gets navigation root for /docs/api 1`] = `
 
 exports[`yes-version-yes-tabs > gets navigation root for /docs/api/tab-1 1`] = `
 {
-  "canonicalSlug": "docs/api/version-1/tab-1",
+  "canonicalSlug": "docs/api/tab-1",
   "id": "root..version-1.uv.tab-1.tab-1.section-3.page-6",
   "pageId": "page-6.md",
   "slug": "docs/api/tab-1",
@@ -71,7 +71,7 @@ exports[`yes-version-yes-tabs > gets navigation root for /docs/api/version-1 1`]
 exports[`yes-version-yes-tabs > gets navigation root for /docs/api/version-1/section-2 1`] = `
 {
   "authed": undefined,
-  "canonicalSlug": undefined,
+  "canonicalSlug": "docs/api/section-2",
   "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,

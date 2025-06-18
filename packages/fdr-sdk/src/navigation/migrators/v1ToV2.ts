@@ -16,7 +16,19 @@ export class FernNavigationV1ToLatest {
 
   private constructor() {}
 
+  // store the base slug
+  #baseUrl: string | undefined;
+
+  // this will store the product slug we are currently parsing
+  // to be used when setting the canonical URL
+  #currentProductSlug: string | undefined;
+
+  // this will store the product slug we are currently parsing
+  // to be used when setting the canonical URL
+  #currentDefaultVersionSlug: string | undefined;
+
   public root = (node: FernNavigation.V1.RootNode): FernNavigation.RootNode => {
+    this.#baseUrl = FernNavigation.Slug(node.slug);
     const latest: FernNavigation.RootNode = {
       type: "root",
       child: visitDiscriminatedUnion(
@@ -68,6 +80,11 @@ export class FernNavigationV1ToLatest {
     if (!defaultVersionV1) {
       throw new Error("default version is undefined");
     }
+
+    this.#currentDefaultVersionSlug = FernNavigation.Slug(
+      defaultVersionV1.slug
+    );
+
     const defaultVersion = this.version(defaultVersionV1, [...parents, node]);
 
     /**
@@ -285,6 +302,7 @@ export class FernNavigationV1ToLatest {
     node: FernNavigation.V1.ProductNode,
     parents: FernNavigation.V1.NavigationNode[]
   ): FernNavigation.ProductNode => {
+    this.#currentProductSlug = node.slug;
     const latest: FernNavigation.ProductNode = {
       type: "product",
       id: FernNavigation.NodeId(node.id),
@@ -774,6 +792,57 @@ export class FernNavigationV1ToLatest {
 
   #canonicalSlugs = new Map<string, FernNavigation.Slug>();
 
+  // return a match found with any key
+  #getCanonicalSlug = (keyOrKeys: string | string[]) => {
+    if (typeof keyOrKeys === "string") {
+      return this.#canonicalSlugs.get(keyOrKeys);
+    }
+
+    for (const key of keyOrKeys) {
+      const existing = this.#canonicalSlugs.get(key);
+
+      // explicitly check for undefined because empty string is valid
+      if (existing !== undefined) {
+        return existing;
+      }
+    }
+
+    return undefined;
+  };
+
+  // set all keys to use the same canonical url
+  #setCanonicalSlug = (
+    keyOrKeys: string | string[],
+    fullCanonical: FernNavigation.Slug
+  ) => {
+    const baseSlug = this.#currentProductSlug ?? "" + this.#baseUrl;
+
+    // if the canonical slug includes the default version, prefer an unversioned slug
+    const normalizedCanonical = this.#currentDefaultVersionSlug
+      ? fullCanonical.replace(
+          new RegExp(`(^|/)${this.#currentDefaultVersionSlug}(/|$)`, "g"),
+          `$1${baseSlug}$2`
+        )
+      : fullCanonical;
+
+    // canonical slug should always begin without a slash
+    const canonicalSlug = FernNavigation.Slug(
+      normalizedCanonical.replace(/^\//, "")
+    );
+
+    if (typeof keyOrKeys === "string") {
+      this.#canonicalSlugs.set(keyOrKeys, canonicalSlug);
+      return canonicalSlug;
+    }
+
+    // canonical slug should apply to all keys of a given page
+    for (const key of keyOrKeys) {
+      this.#canonicalSlugs.set(key, canonicalSlug);
+    }
+
+    return canonicalSlug;
+  };
+
   // TODO: canonical url logic should account for RBAC, since we should always prefer the publicly available url over the private one (for SEO)
   #getAndSetCanonicalSlug = (
     keyOrKeys: string | string[],
@@ -783,21 +852,13 @@ export class FernNavigationV1ToLatest {
       return undefined;
     }
 
-    if (Array.isArray(keyOrKeys)) {
-      /**
-       * This will set the canonical slug to each of the keys in the array, and return the first non-null slug
-       */
-      return keyOrKeys
-        .map((key) => this.#getAndSetCanonicalSlug(key, slug))
-        .find((s) => s != null);
-    }
-
-    const existing = this.#canonicalSlugs.get(keyOrKeys);
+    const existing = this.#getCanonicalSlug(keyOrKeys);
     if (existing != null) {
       return existing;
     }
-    this.#canonicalSlugs.set(keyOrKeys, slug);
-    return undefined;
+
+    const canonicalSlug = this.#setCanonicalSlug(keyOrKeys, slug);
+    return canonicalSlug;
   };
 
   #createTitleDisambiguationKey = (

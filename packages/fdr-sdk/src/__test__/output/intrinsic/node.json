@@ -5,6 +5,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "getting-started/welcome",
               "hidden": false,
               "id": "root.uv.getting-started.welcome",
               "pageId": "docs/pages/welcome.mdx",
@@ -13,6 +14,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "getting-started/quickstart",
               "hidden": false,
               "id": "root.uv.getting-started.quickstart",
               "pageId": "docs/pages/quickstart.mdx",
@@ -32,6 +34,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "sd-ks/ruby-sdk",
               "hidden": false,
               "id": "root.uv.sd-ks.ruby-sdk",
               "pageId": "docs/pages/ruby-sdk.mdx",
@@ -40,6 +43,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "sd-ks/go-sdk",
               "hidden": false,
               "id": "root.uv.sd-ks.go-sdk",
               "pageId": "docs/pages/go-sdk.mdx",
@@ -59,6 +63,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "okta-sso-integration/setup-okta-sso",
               "hidden": false,
               "id": "root.uv.okta-sso-integration.setup-okta-sso",
               "pageId": "docs/pages/okta.mdx",
@@ -83,6 +88,7 @@
               "children": [
                 {
                   "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "canonicalSlug": "api-reference/detections/get-detection",
                   "endpointId": "subpackage_detections.getDetection",
                   "id": "root.uv.api-reference.subpackage_detections.subpackage_detections.getDetection",
                   "isResponseStream": false,
@@ -103,6 +109,7 @@
               "children": [
                 {
                   "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "canonicalSlug": "api-reference/events/create-event-sync",
                   "endpointId": "subpackage_events.createEventSync",
                   "id": "root.uv.api-reference.subpackage_events.subpackage_events.createEventSync",
                   "isResponseStream": false,
@@ -113,6 +120,7 @@
                 },
                 {
                   "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "canonicalSlug": "api-reference/events/create-event-async",
                   "endpointId": "subpackage_events.createEventAsync",
                   "id": "root.uv.api-reference.subpackage_events.subpackage_events.createEventAsync",
                   "isResponseStream": false,
@@ -133,6 +141,7 @@
               "children": [
                 {
                   "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "canonicalSlug": "api-reference/event-types/get-event-types",
                   "endpointId": "subpackage_eventTypes.getEventTypes",
                   "id": "root.uv.api-reference.subpackage_eventTypes.subpackage_eventTypes.getEventTypes",
                   "isResponseStream": false,
@@ -143,6 +152,7 @@
                 },
                 {
                   "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "canonicalSlug": "api-reference/event-types/create-event-type",
                   "endpointId": "subpackage_eventTypes.createEventType",
                   "id": "root.uv.api-reference.subpackage_eventTypes.subpackage_eventTypes.createEventType",
                   "isResponseStream": false,
@@ -153,6 +163,7 @@
                 },
                 {
                   "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "canonicalSlug": "api-reference/event-types/patch-event-type",
                   "endpointId": "subpackage_eventTypes.patchEventType",
                   "id": "root.uv.api-reference.subpackage_eventTypes.subpackage_eventTypes.patchEventType",
                   "isResponseStream": false,

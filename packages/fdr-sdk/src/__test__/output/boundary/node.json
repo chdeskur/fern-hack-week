@@ -8,6 +8,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "home",
                     "hidden": false,
                     "id": "root.uv.home.home.welcome",
                     "pageId": "pages/welcome.mdx",
@@ -36,6 +37,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/introduction/what-is-baml",
                     "hidden": false,
                     "icon": "fa-regular fa-question-circle",
                     "id": "root.uv.guide.guide.introduction.what-is-baml",
@@ -45,6 +47,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/introduction/baml_src",
                     "hidden": false,
                     "icon": "fa-regular fa-folder",
                     "id": "root.uv.guide.guide.introduction.baml_src",
@@ -54,6 +57,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/introduction/baml_client",
                     "hidden": false,
                     "icon": "fa-regular fa-folder-gear",
                     "id": "root.uv.guide.guide.introduction.baml_client",
@@ -74,6 +78,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/installation-editors/vs-code-extension",
                     "hidden": false,
                     "icon": "fa-brands fa-microsoft",
                     "id": "root.uv.guide.guide.installation-editors.vs-code-extension",
@@ -83,6 +88,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/installation-editors/cursor-extension",
                     "hidden": false,
                     "icon": "fa-brands fa-microsoft",
                     "id": "root.uv.guide.guide.installation-editors.cursor-extension",
@@ -92,6 +98,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/installation-editors/others",
                     "hidden": false,
                     "icon": "fa-brands fa-microsoft",
                     "id": "root.uv.guide.guide.installation-editors.others",
@@ -112,6 +119,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/installation-language/python",
                     "hidden": false,
                     "icon": "fa-brands fa-python",
                     "id": "root.uv.guide.guide.installation-language.python",
@@ -121,6 +129,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/installation-language/typescript",
                     "hidden": false,
                     "icon": "fa-brands fa-js",
                     "id": "root.uv.guide.guide.installation-language.typescript",
@@ -130,6 +139,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/installation-language/ruby",
                     "hidden": false,
                     "icon": "fa-regular fa-gem",
                     "id": "root.uv.guide.guide.installation-language.ruby",
@@ -139,6 +149,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/installation-language/rest-api-other-languages",
                     "hidden": false,
                     "icon": "fa-regular fa-network-wired",
                     "id": "root.uv.guide.guide.installation-language.rest-api-other-languages",
@@ -148,6 +159,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/installation-language/next-js",
                     "hidden": false,
                     "icon": "fa-brands fa-react",
                     "id": "root.uv.guide.guide.installation-language.next-js",
@@ -168,6 +180,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/development/environment-variables",
                     "hidden": false,
                     "icon": "fa-regular fa-cogs",
                     "id": "root.uv.guide.guide.development.environment-variables",
@@ -177,6 +190,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/development/terminal-logs",
                     "hidden": false,
                     "icon": "fa-regular fa-file-lines",
                     "id": "root.uv.guide.guide.development.terminal-logs",
@@ -186,6 +200,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/development/upgrade-baml-versions",
                     "hidden": false,
                     "icon": "fa-regular fa-circle-arrow-up",
                     "id": "root.uv.guide.guide.development.upgrade-baml-versions",
@@ -197,6 +212,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "guide/development/deploying/aws",
                         "hidden": false,
                         "icon": "fa-brands fa-aws",
                         "id": "root.uv.guide.guide.development.deploying.aws",
@@ -206,6 +222,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "guide/development/deploying/next-js",
                         "hidden": false,
                         "icon": "fa-brands fa-react",
                         "id": "root.uv.guide.guide.development.deploying.next-js",
@@ -215,6 +232,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "guide/development/deploying/docker",
                         "hidden": false,
                         "icon": "fa-brands fa-docker",
                         "id": "root.uv.guide.guide.development.deploying.docker",
@@ -224,6 +242,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "guide/development/deploying/docker-rest-api",
                         "hidden": false,
                         "icon": "fa-brands fa-docker",
                         "id": "root.uv.guide.guide.development.deploying.docker-rest-api",
@@ -254,6 +273,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/baml-basics/prompting-with-baml",
                     "hidden": false,
                     "icon": "fa-solid fa-terminal",
                     "id": "root.uv.guide.guide.baml-basics.prompting-with-baml",
@@ -263,6 +283,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-basics/switching-llms",
                     "hidden": false,
                     "icon": "fa-regular fa-random",
                     "id": "root.uv.guide.guide.baml-basics.switching-ll-ms",
@@ -272,6 +293,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-basics/testing-functions",
                     "hidden": false,
                     "icon": "fa-regular fa-vial",
                     "id": "root.uv.guide.guide.baml-basics.testing-functions",
@@ -281,6 +303,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-basics/streaming",
                     "hidden": false,
                     "icon": "fa-regular fa-faucet",
                     "id": "root.uv.guide.guide.baml-basics.streaming",
@@ -290,6 +313,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-basics/multi-modal",
                     "hidden": false,
                     "icon": "fa-regular fa-image",
                     "id": "root.uv.guide.guide.baml-basics.multi-modal-images-audio",
@@ -299,6 +323,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-basics/error-handling",
                     "hidden": false,
                     "icon": "fa-regular fa-triangle-exclamation",
                     "id": "root.uv.guide.guide.baml-basics.error-handling",
@@ -308,6 +333,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-basics/concurrent-calls",
                     "hidden": false,
                     "icon": "fa-regular fa-clock-rotate-left",
                     "id": "root.uv.guide.guide.baml-basics.concurrent-calls",
@@ -328,6 +354,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/baml-advanced/llm-client-registry",
                     "hidden": false,
                     "icon": "fa-regular fa-gears",
                     "id": "root.uv.guide.guide.baml-advanced.llm-client-registry",
@@ -337,6 +364,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-advanced/dynamic-runtime-types",
                     "hidden": false,
                     "icon": "fa-solid fa-person-running",
                     "id": "root.uv.guide.guide.baml-advanced.dynamic-runtime-types",
@@ -346,6 +374,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-advanced/reusing-prompt-snippets",
                     "hidden": false,
                     "icon": "fa-regular fa-repeat",
                     "id": "root.uv.guide.guide.baml-advanced.reusing-prompt-snippets",
@@ -355,6 +384,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-advanced/prompt-caching-message-role-metadata",
                     "hidden": false,
                     "icon": "fa-regular fa-database",
                     "id": "root.uv.guide.guide.baml-advanced.prompt-caching-message-role-metadata",
@@ -364,6 +394,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/baml-advanced/validations",
                     "hidden": false,
                     "icon": "fa-regular fa-check-circle",
                     "id": "root.uv.guide.guide.baml-advanced.validations",
@@ -386,6 +417,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "guide/cloud/functions/get-started",
                         "hidden": false,
                         "id": "root.uv.guide.guide.boundary-cloud.functions.get-started",
                         "pageId": "01-guide/functions/get-started.mdx",
@@ -394,6 +426,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "guide/cloud/functions/using-openapi",
                         "hidden": false,
                         "id": "root.uv.guide.guide.boundary-cloud.functions.using-open-api",
                         "pageId": "01-guide/functions/using-openapi.mdx",
@@ -402,6 +435,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "guide/cloud/functions/environment-variables",
                         "hidden": false,
                         "id": "root.uv.guide.guide.boundary-cloud.functions.environment-variables",
                         "pageId": "01-guide/functions/environment-variables.mdx",
@@ -422,6 +456,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "guide/boundary-cloud/observability/tracking-usage",
                         "hidden": false,
                         "icon": "fa-regular fa-bar-chart",
                         "id": "root.uv.guide.guide.boundary-cloud.observability.tracking-usage",
@@ -452,6 +487,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/comparisons/baml-vs-marvin",
                     "hidden": false,
                     "icon": "fa-solid fa-magnifying-glass",
                     "id": "root.uv.guide.guide.comparisons.baml-vs-marvin",
@@ -461,6 +497,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guide/comparisons/baml-vs-pydantic",
                     "hidden": false,
                     "icon": "fa-solid fa-magnifying-glass",
                     "id": "root.uv.guide.guide.comparisons.baml-vs-pydantic",
@@ -481,6 +518,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guide/contact",
                     "hidden": false,
                     "icon": "fa-regular fa-envelope",
                     "id": "root.uv.guide.guide.contact",
@@ -510,6 +548,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "examples/interactive-examples",
                     "hidden": false,
                     "icon": "fa-solid fa-play",
                     "id": "root.uv.examples.examples.interactive-examples",
@@ -525,6 +564,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "examples/prompt-engineering/reducing-hallucinations",
                     "hidden": false,
                     "icon": "fa-regular fa-person-fairy",
                     "id": "root.uv.examples.examples.prompt-engineering.reducing-hallucinations",
@@ -534,6 +574,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "examples/prompt-engineering/chat",
                     "hidden": false,
                     "icon": "fa-regular fa-comments",
                     "id": "root.uv.examples.examples.prompt-engineering.chat",
@@ -543,6 +584,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "examples/prompt-engineering/tools-function-calling",
                     "hidden": false,
                     "icon": "fa-regular fa-wrench",
                     "id": "root.uv.examples.examples.prompt-engineering.tools-function-calling",
@@ -552,6 +594,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "examples/prompt-engineering/chain-of-thought",
                     "hidden": false,
                     "icon": "fa-solid fa-brain",
                     "id": "root.uv.examples.examples.prompt-engineering.chain-of-thought",
@@ -561,6 +604,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "examples/prompt-engineering/symbol-tuning",
                     "hidden": false,
                     "icon": "fa-regular fa-adjust",
                     "id": "root.uv.examples.examples.prompt-engineering.symbol-tuning",
@@ -570,6 +614,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "examples/prompt-engineering/retrieval-augmented-generation",
                     "hidden": false,
                     "icon": "fa-regular fa-database",
                     "id": "root.uv.examples.examples.prompt-engineering.retrieval-augmented-generation",
@@ -604,6 +649,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/overview",
                     "hidden": false,
                     "id": "root.uv.ref.ref.overview",
                     "pageId": "03-reference/overview.mdx",
@@ -618,6 +664,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/baml-cli/init",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml-cli.init",
                     "pageId": "03-reference/baml-cli/init.mdx",
@@ -626,6 +673,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml-cli/generate",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml-cli.generate",
                     "pageId": "03-reference/baml-cli/generate.mdx",
@@ -634,6 +682,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml-cli/serve",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml-cli.serve",
                     "pageId": "03-reference/baml-cli/serve.mdx",
@@ -642,6 +691,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml-cli/dev",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml-cli.dev",
                     "pageId": "03-reference/baml-cli/dev.mdx",
@@ -663,6 +713,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "ref/baml/general-baml-syntax/comments",
                         "hidden": false,
                         "id": "root.uv.ref.ref.baml.general-baml-syntax.comments",
                         "pageId": "03-reference/baml/comments.mdx",
@@ -671,6 +722,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "ref/baml/general-baml-syntax/enviornment-variables",
                         "hidden": false,
                         "id": "root.uv.ref.ref.baml.general-baml-syntax.enviornment-variables",
                         "pageId": "03-reference/baml/env-vars.mdx",
@@ -679,6 +731,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "ref/baml/general-baml-syntax/string",
                         "hidden": false,
                         "id": "root.uv.ref.ref.baml.general-baml-syntax.string",
                         "pageId": "03-reference/baml/string.mdx",
@@ -687,6 +740,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "ref/baml/general-baml-syntax/int-float",
                         "hidden": false,
                         "id": "root.uv.ref.ref.baml.general-baml-syntax.int-float",
                         "pageId": "03-reference/baml/int-float.mdx",
@@ -695,6 +749,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "ref/baml/general-baml-syntax/bool",
                         "hidden": false,
                         "id": "root.uv.ref.ref.baml.general-baml-syntax.bool",
                         "pageId": "03-reference/baml/bool.mdx",
@@ -703,6 +758,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "ref/baml/general-baml-syntax/array-list",
                         "hidden": false,
                         "id": "root.uv.ref.ref.baml.general-baml-syntax.array-list",
                         "pageId": "03-reference/baml/array.mdx",
@@ -711,6 +767,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "ref/baml/general-baml-syntax/map-dictionary",
                         "hidden": false,
                         "id": "root.uv.ref.ref.baml.general-baml-syntax.map-dictionary",
                         "pageId": "03-reference/baml/map.mdx",
@@ -728,6 +785,7 @@
                     "type": "section"
                   },
                   {
+                    "canonicalSlug": "ref/baml/types",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.types",
                     "pageId": "03-reference/baml/types.mdx",
@@ -736,6 +794,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml/function",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.function",
                     "pageId": "03-reference/baml/function.mdx",
@@ -744,6 +803,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml/test",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.test",
                     "pageId": "03-reference/baml/test.mdx",
@@ -752,6 +812,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml/template-string",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.template-string",
                     "pageId": "03-reference/baml/template_string.mdx",
@@ -760,6 +821,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml/client-llm",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.client-llm",
                     "pageId": "03-reference/baml/client-llm.mdx",
@@ -768,6 +830,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml/class",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.class",
                     "pageId": "03-reference/baml/class.mdx",
@@ -776,6 +839,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml/enum",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.enum",
                     "pageId": "03-reference/baml/enum.mdx",
@@ -784,6 +848,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/baml/generator",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml.generator",
                     "pageId": "03-reference/generator.mdx",
@@ -803,6 +868,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/attributes/what-are-attributes",
                     "hidden": false,
                     "id": "root.uv.ref.ref.attributes.what-are-attributes",
                     "pageId": "03-reference/baml/attributes/attributes-overview.mdx",
@@ -811,6 +877,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/attributes/alias-alias",
                     "hidden": false,
                     "id": "root.uv.ref.ref.attributes.alias-alias",
                     "pageId": "03-reference/baml/attributes/alias.mdx",
@@ -819,6 +886,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/attributes/description-description",
                     "hidden": false,
                     "id": "root.uv.ref.ref.attributes.description-description",
                     "pageId": "03-reference/baml/attributes/description.mdx",
@@ -827,6 +895,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/attributes/skip",
                     "hidden": false,
                     "id": "root.uv.ref.ref.attributes.skip",
                     "pageId": "03-reference/baml/attributes/skip.mdx",
@@ -835,6 +904,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/attributes/assert",
                     "hidden": false,
                     "id": "root.uv.ref.ref.attributes.assert",
                     "pageId": "03-reference/baml/attributes/assert.mdx",
@@ -843,6 +913,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/attributes/check",
                     "hidden": false,
                     "id": "root.uv.ref.ref.attributes.check",
                     "pageId": "03-reference/baml/attributes/check.mdx",
@@ -851,6 +922,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/attributes/dynamic",
                     "hidden": false,
                     "id": "root.uv.ref.ref.attributes.dynamic",
                     "pageId": "03-reference/baml/attributes/dynamic.mdx",
@@ -870,6 +942,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/llm-client-providers/aws-bedrock",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.aws-bedrock",
                     "pageId": "03-reference/baml/clients/providers/aws-bedrock.mdx",
@@ -878,6 +951,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/anthropic",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.anthropic",
                     "pageId": "03-reference/baml/clients/providers/anthropic.mdx",
@@ -886,6 +960,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/google-ai-gemini",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.google-ai-gemini",
                     "pageId": "03-reference/baml/clients/providers/google-ai.mdx",
@@ -894,6 +969,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/google-vertex",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.google-vertex",
                     "pageId": "03-reference/baml/clients/providers/vertex.mdx",
@@ -902,6 +978,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/open-ai",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.open-ai",
                     "pageId": "03-reference/baml/clients/providers/openai.mdx",
@@ -910,6 +987,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/open-ai-from-azure",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.open-ai-from-azure",
                     "pageId": "03-reference/baml/clients/providers/azure.mdx",
@@ -918,6 +996,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic",
                     "pageId": "03-reference/baml/clients/providers/openai-generic.mdx",
@@ -926,6 +1005,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-groq",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-groq",
                     "pageId": "03-reference/baml/clients/providers/groq.mdx",
@@ -934,6 +1014,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-hugging-face",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-hugging-face",
                     "pageId": "03-reference/baml/clients/providers/huggingface.mdx",
@@ -942,6 +1023,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-keywords-ai",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-keywords-ai",
                     "pageId": "03-reference/baml/clients/providers/keywordsai.mdx",
@@ -950,6 +1032,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-lm-studio",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-lm-studio",
                     "pageId": "03-reference/baml/clients/providers/lmstudio.mdx",
@@ -958,6 +1041,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-ollama",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-ollama",
                     "pageId": "03-reference/baml/clients/providers/ollama.mdx",
@@ -966,6 +1050,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-open-router",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-open-router",
                     "pageId": "03-reference/baml/clients/providers/openrouter.mdx",
@@ -974,6 +1059,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-together-ai",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-together-ai",
                     "pageId": "03-reference/baml/clients/providers/together.mdx",
@@ -982,6 +1068,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-unify-ai",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-unify-ai",
                     "pageId": "03-reference/baml/clients/providers/unify.mdx",
@@ -990,6 +1077,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-providers/openai-generic-v-llm",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-providers.openai-generic-v-llm",
                     "pageId": "03-reference/baml/clients/providers/vllm.mdx",
@@ -1009,6 +1097,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/llm-client-strategies/retry-policy",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-strategies.retry-policy",
                     "pageId": "03-reference/baml/clients/strategy/retry.mdx",
@@ -1017,6 +1106,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-strategies/fallback",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-strategies.fallback",
                     "pageId": "03-reference/baml/clients/strategy/fallback.mdx",
@@ -1025,6 +1115,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/llm-client-strategies/round-robin",
                     "hidden": false,
                     "id": "root.uv.ref.ref.llm-client-strategies.round-robin",
                     "pageId": "03-reference/baml/clients/strategy/round-robin.mdx",
@@ -1044,6 +1135,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/baml-client/type-builder",
                     "hidden": false,
                     "id": "root.uv.ref.ref.baml-client.type-builder",
                     "pageId": "03-reference/baml_client/typebuilder.mdx",
@@ -1072,6 +1164,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/prompt-syntax/what-is-jinja",
                     "hidden": false,
                     "id": "root.uv.ref.ref.prompt-syntax.what-is-jinja",
                     "pageId": "03-reference/baml/prompt-syntax/what-is-jinja.mdx",
@@ -1080,6 +1173,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/prompt-syntax/ctx-output-format",
                     "hidden": false,
                     "id": "root.uv.ref.ref.prompt-syntax.ctx-output-format",
                     "pageId": "03-reference/baml/prompt-syntax/output-format.mdx",
@@ -1088,6 +1182,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/prompt-syntax/ctx-client",
                     "hidden": false,
                     "id": "root.uv.ref.ref.prompt-syntax.ctx-client",
                     "pageId": "03-reference/baml/prompt-syntax/ctx.mdx",
@@ -1096,6 +1191,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/prompt-syntax/role",
                     "hidden": false,
                     "id": "root.uv.ref.ref.prompt-syntax.role",
                     "pageId": "03-reference/baml/prompt-syntax/role.mdx",
@@ -1104,6 +1200,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/prompt-syntax/variables",
                     "hidden": false,
                     "id": "root.uv.ref.ref.prompt-syntax.variables",
                     "pageId": "03-reference/baml/prompt-syntax/variables.mdx",
@@ -1112,6 +1209,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/prompt-syntax/conditionals",
                     "hidden": false,
                     "id": "root.uv.ref.ref.prompt-syntax.conditionals",
                     "pageId": "03-reference/baml/prompt-syntax/conditionals.mdx",
@@ -1120,6 +1218,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/prompt-syntax/loops",
                     "hidden": false,
                     "id": "root.uv.ref.ref.prompt-syntax.loops",
                     "pageId": "03-reference/baml/prompt-syntax/loops.mdx",
@@ -1139,6 +1238,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/editor-extension-settings/baml-cli-path",
                     "hidden": false,
                     "id": "root.uv.ref.ref.editor-extension-settings.baml-cli-path",
                     "pageId": "03-reference/vscode-ext/clipath.mdx",
@@ -1147,6 +1247,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/editor-extension-settings/baml-generate-code-on-save",
                     "hidden": false,
                     "id": "root.uv.ref.ref.editor-extension-settings.baml-generate-code-on-save",
                     "pageId": "03-reference/vscode-ext/generateCodeOnSave.mdx",
@@ -1155,6 +1256,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "ref/editor-extension-settings/baml-restart-ts-server-on-save",
                     "hidden": false,
                     "id": "root.uv.ref.ref.editor-extension-settings.baml-restart-ts-server-on-save",
                     "pageId": "03-reference/vscode-ext/restartTSServerOnSave.mdx",
@@ -1175,9 +1277,11 @@
                 "children": [
                   {
                     "apiDefinitionId": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
+                    "canonicalSlug": "ref/boundary-extraction-api/extract",
                     "children": [
                       {
                         "apiDefinitionId": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
+                        "canonicalSlug": "ref/boundary-extraction-api/extract/extract-data",
                         "endpointId": "endpoint_.extractData",
                         "id": "eaa1074a-b676-4a6b-93df-43c52a64d62f.extractData",
                         "isResponseStream": false,
@@ -1187,6 +1291,7 @@
                         "type": "endpoint"
                       },
                       {
+                        "canonicalSlug": "ref/boundary-extraction-api/extract/extraction-examples",
                         "id": "eaa1074a-b676-4a6b-93df-43c52a64d62f.page:03-reference/extract/examples.mdx",
                         "pageId": "03-reference/extract/examples.mdx",
                         "slug": "ref/boundary-extraction-api/extract/extraction-examples",
@@ -1216,6 +1321,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "ref/cloud/limits",
                     "hidden": false,
                     "id": "root.uv.ref.ref.boundary-cloud-api.limits",
                     "pageId": "03-reference/cloud/limits.mdx",
@@ -1256,6 +1362,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "changelog/changelog",
                     "hidden": false,
                     "icon": "fa-regular fa-history",
                     "id": "root.uv.changelog.changelog.changelog",

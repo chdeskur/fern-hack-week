@@ -10,6 +10,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/api/tab-1/section-1/page-1",
                         "id": "root..version-1.uv.tab-1.tab-1.section-1.page-1",
                         "pageId": "page-1.md",
                         "slug": "docs/api/version-1/tab-1/section-1/page-1",
@@ -17,6 +18,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/api/page-2",
                         "id": "root..version-1.uv.tab-1.tab-1.section-1.page-2",
                         "pageId": "page-2.md",
                         "slug": "docs/api/version-1/page-2",
@@ -34,6 +36,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/api/section-2",
                         "id": "root..version-1.uv.tab-1.tab-1.section-2.page-3",
                         "pageId": "page-3.md",
                         "slug": "docs/api/version-1/section-2",
@@ -41,6 +44,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/api/tab-1/section-2/page-4",
                         "id": "root..version-1.uv.tab-1.tab-1.section-2.page-4",
                         "pageId": "page-4.md",
                         "slug": "docs/api/version-1/tab-1/section-2/page-4",
@@ -58,6 +62,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/api/tab-1/page-5",
                         "id": "root..version-1.uv.tab-1.tab-1.section-3.page-5",
                         "pageId": "page-5.md",
                         "slug": "docs/api/version-1/tab-1/page-5",
@@ -65,6 +70,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/api/tab-1",
                         "id": "root..version-1.uv.tab-1.tab-1.section-3.page-6",
                         "pageId": "page-6.md",
                         "slug": "docs/api/version-1/tab-1",
@@ -96,6 +102,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/api/tab-2/page-7",
                         "id": "root..version-1.uv.tab-2.tab-2.section-4.page-7",
                         "pageId": "page-7.md",
                         "slug": "docs/api/version-1/tab-2/page-7",
@@ -103,6 +110,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/api/tab-2/page-8",
                         "id": "root..version-1.uv.tab-2.tab-2.section-4.page-8",
                         "pageId": "page-8.md",
                         "slug": "docs/api/version-1/tab-2/page-8",
@@ -120,6 +128,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/api/tab-1",
                         "id": "root..version-1.uv.tab-2.tab-2.section-5.page-9",
                         "pageId": "page-9.md",
                         "slug": "docs/api/version-1/tab-1",
@@ -127,6 +136,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/api/tab-2/section-5/page-10",
                         "id": "root..version-1.uv.tab-2.tab-2.section-5.page-10",
                         "pageId": "page-10.md",
                         "slug": "docs/api/version-1/tab-2/section-5/page-10",
@@ -174,7 +184,7 @@
                   {
                     "children": [
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-1/section-1/page-1",
+                        "canonicalSlug": "docs/api/tab-1/section-1/page-1",
                         "id": "root..version-2.uv.tab-1.tab-1.section-1.page-1",
                         "pageId": "page-1.md",
                         "slug": "docs/api/version-2/tab-1/section-1/page-1",
@@ -182,7 +192,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/api/version-1/page-2",
+                        "canonicalSlug": "docs/api/page-2",
                         "id": "root..version-2.uv.tab-1.tab-1.section-1.page-2",
                         "pageId": "page-2.md",
                         "slug": "docs/api/version-2/page-2",
@@ -200,7 +210,7 @@
                   {
                     "children": [
                       {
-                        "canonicalSlug": "docs/api/version-1/section-2",
+                        "canonicalSlug": "docs/api/section-2",
                         "id": "root..version-2.uv.tab-1.tab-1.section-2.page-3",
                         "pageId": "page-3.md",
                         "slug": "docs/api/version-2/section-2",
@@ -208,7 +218,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-1/section-2/page-4",
+                        "canonicalSlug": "docs/api/tab-1/section-2/page-4",
                         "id": "root..version-2.uv.tab-1.tab-1.section-2.page-4",
                         "pageId": "page-4.md",
                         "slug": "docs/api/version-2/tab-1/section-2/page-4",
@@ -226,7 +236,7 @@
                   {
                     "children": [
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-1/page-5",
+                        "canonicalSlug": "docs/api/tab-1/page-5",
                         "id": "root..version-2.uv.tab-1.tab-1.section-3.page-5",
                         "pageId": "page-5.md",
                         "slug": "docs/api/version-2/tab-1/page-5",
@@ -234,7 +244,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-1",
+                        "canonicalSlug": "docs/api/tab-1",
                         "id": "root..version-2.uv.tab-1.tab-1.section-3.page-6",
                         "pageId": "page-6.md",
                         "slug": "docs/api/version-2/tab-1",
@@ -266,7 +276,7 @@
                   {
                     "children": [
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-2/page-7",
+                        "canonicalSlug": "docs/api/tab-2/page-7",
                         "id": "root..version-2.uv.tab-2.tab-2.section-4.page-7",
                         "pageId": "page-7.md",
                         "slug": "docs/api/version-2/tab-2/page-7",
@@ -274,7 +284,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-2/page-8",
+                        "canonicalSlug": "docs/api/tab-2/page-8",
                         "id": "root..version-2.uv.tab-2.tab-2.section-4.page-8",
                         "pageId": "page-8.md",
                         "slug": "docs/api/version-2/tab-2/page-8",
@@ -292,7 +302,7 @@
                   {
                     "children": [
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-1",
+                        "canonicalSlug": "docs/api/tab-1",
                         "id": "root..version-2.uv.tab-2.tab-2.section-5.page-9",
                         "pageId": "page-9.md",
                         "slug": "docs/api/version-2/tab-1",
@@ -300,7 +310,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/api/version-1/tab-2/section-5/page-10",
+                        "canonicalSlug": "docs/api/tab-2/section-5/page-10",
                         "id": "root..version-2.uv.tab-2.tab-2.section-5.page-10",
                         "pageId": "page-10.md",
                         "slug": "docs/api/version-2/tab-2/section-5/page-10",

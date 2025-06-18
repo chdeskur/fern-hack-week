@@ -1,6 +1,6 @@
 [
   {
-    "canonicalSlug": "v2/docs/deployment-options",
+    "canonicalSlug": "docs/deployment-options",
     "hidden": true,
     "id": "root..v2.uv.docs.docs.deployment-options-0",
     "pageId": "pages/deployment-options/deployment-options.mdx",
@@ -9,7 +9,7 @@
     "type": "page"
   },
   {
-    "canonicalSlug": "v2/docs/oracle-cloud-infrastructure-oci",
+    "canonicalSlug": "docs/oracle-cloud-infrastructure-oci",
     "hidden": true,
     "id": "root..v2.uv.docs.docs.oracle-cloud-infrastructure-oci",
     "pageId": "pages/deployment-options/deployment-options/oracle-cloud-infrastructure-oci.mdx",
@@ -19,7 +19,7 @@
   },
   {
     "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
-    "canonicalSlug": "v2/reference/rerank",
+    "canonicalSlug": "reference/rerank",
     "endpointId": "endpoint_.rerank",
     "hidden": true,
     "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.rerank-1",
@@ -31,7 +31,7 @@
   },
   {
     "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
-    "canonicalSlug": "v2/reference/embed",
+    "canonicalSlug": "reference/embed",
     "endpointId": "endpoint_.embed",
     "hidden": true,
     "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.embed-1",
@@ -42,6 +42,7 @@
     "type": "endpoint"
   },
   {
+    "canonicalSlug": "docs/deployment-options",
     "hidden": true,
     "id": "root..v2.uv.docs.docs.deployment-options-0",
     "pageId": "pages/deployment-options/deployment-options.mdx",
@@ -50,6 +51,7 @@
     "type": "page"
   },
   {
+    "canonicalSlug": "docs/oracle-cloud-infrastructure-oci",
     "hidden": true,
     "id": "root..v2.uv.docs.docs.oracle-cloud-infrastructure-oci",
     "pageId": "pages/deployment-options/deployment-options/oracle-cloud-infrastructure-oci.mdx",
@@ -59,6 +61,7 @@
   },
   {
     "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
+    "canonicalSlug": "reference/rerank",
     "endpointId": "endpoint_.rerank",
     "hidden": true,
     "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.rerank-1",
@@ -70,6 +73,7 @@
   },
   {
     "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
+    "canonicalSlug": "reference/embed",
     "endpointId": "endpoint_.embed",
     "hidden": true,
     "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.embed-1",
@@ -80,7 +84,7 @@
     "type": "endpoint"
   },
   {
-    "canonicalSlug": "v2/docs/deployment-options",
+    "canonicalSlug": "docs/deployment-options",
     "hidden": true,
     "id": "root..v1.uv.docs.docs.deployment-options-0",
     "pageId": "pages/deployment-options/deployment-options.mdx",
@@ -89,7 +93,7 @@
     "type": "page"
   },
   {
-    "canonicalSlug": "v2/docs/oracle-cloud-infrastructure-oci",
+    "canonicalSlug": "docs/oracle-cloud-infrastructure-oci",
     "hidden": true,
     "id": "root..v1.uv.docs.docs.oracle-cloud-infrastructure-oci",
     "pageId": "pages/deployment-options/deployment-options/oracle-cloud-infrastructure-oci.mdx",

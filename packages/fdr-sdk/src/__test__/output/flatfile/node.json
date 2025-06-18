@@ -5,6 +5,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "overview/welcome",
               "hidden": false,
               "icon": "fa-regular fa-home",
               "id": "root.uv.overview.welcome",
@@ -14,6 +15,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "overview/auth",
               "hidden": false,
               "icon": "fa-regular fa-key",
               "id": "root.uv.overview.auth",
@@ -23,6 +25,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "overview/using-environments",
               "hidden": false,
               "icon": "fa-regular fa-cogs",
               "id": "root.uv.overview.using-environments",
@@ -48,6 +51,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/accounts/get-current",
                   "endpointId": "endpoint_accounts.getCurrent",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_accounts.getCurrent",
                   "isResponseStream": false,
@@ -58,6 +62,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/accounts/update-current",
                   "endpointId": "endpoint_accounts.updateCurrent",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_accounts.updateCurrent",
                   "isResponseStream": false,
@@ -78,6 +83,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/actions/create",
                   "endpointId": "endpoint_actions.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.create",
                   "isResponseStream": false,
@@ -88,6 +94,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/actions/bulk-create",
                   "endpointId": "endpoint_actions.bulkCreate",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.bulkCreate",
                   "isResponseStream": false,
@@ -98,6 +105,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/actions/get",
                   "endpointId": "endpoint_actions.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.get",
                   "isResponseStream": false,
@@ -108,6 +116,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/actions/update",
                   "endpointId": "endpoint_actions.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.update",
                   "isResponseStream": false,
@@ -118,6 +127,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/actions/delete",
                   "endpointId": "endpoint_actions.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.delete",
                   "isResponseStream": false,
@@ -138,6 +148,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/list",
                   "endpointId": "endpoint_agents.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.list",
                   "isResponseStream": false,
@@ -148,6 +159,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/create",
                   "endpointId": "endpoint_agents.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.create",
                   "isResponseStream": false,
@@ -158,6 +170,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/get",
                   "endpointId": "endpoint_agents.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.get",
                   "isResponseStream": false,
@@ -168,6 +181,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/list-versions",
                   "endpointId": "endpoint_agents.listVersions",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.listVersions",
                   "isResponseStream": false,
@@ -178,6 +192,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/revert",
                   "endpointId": "endpoint_agents.revert",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.revert",
                   "isResponseStream": false,
@@ -188,6 +203,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/list-agent-roles",
                   "endpointId": "endpoint_agents.listAgentRoles",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.listAgentRoles",
                   "isResponseStream": false,
@@ -198,6 +214,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/assign-agent-role",
                   "endpointId": "endpoint_agents.assignAgentRole",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.assignAgentRole",
                   "isResponseStream": false,
@@ -208,6 +225,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/delete-agent-role",
                   "endpointId": "endpoint_agents.deleteAgentRole",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.deleteAgentRole",
                   "isResponseStream": false,
@@ -218,6 +236,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/get-agent-logs",
                   "endpointId": "endpoint_agents.getAgentLogs",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getAgentLogs",
                   "isResponseStream": false,
@@ -228,6 +247,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/get-agent-log",
                   "endpointId": "endpoint_agents.getAgentLog",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getAgentLog",
                   "isResponseStream": false,
@@ -238,6 +258,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/get-environment-agent-logs",
                   "endpointId": "endpoint_agents.getEnvironmentAgentLogs",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getEnvironmentAgentLogs",
                   "isResponseStream": false,
@@ -248,6 +269,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/get-environment-agent-executions",
                   "endpointId": "endpoint_agents.getEnvironmentAgentExecutions",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getEnvironmentAgentExecutions",
                   "isResponseStream": false,
@@ -258,6 +280,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/agents/delete",
                   "endpointId": "endpoint_agents.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.delete",
                   "isResponseStream": false,
@@ -278,6 +301,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/list",
                   "endpointId": "endpoint_apps.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.list",
                   "isResponseStream": false,
@@ -288,6 +312,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/get",
                   "endpointId": "endpoint_apps.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.get",
                   "isResponseStream": false,
@@ -298,6 +323,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/update",
                   "endpointId": "endpoint_apps.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.update",
                   "isResponseStream": false,
@@ -308,6 +334,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/create",
                   "endpointId": "endpoint_apps.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.create",
                   "isResponseStream": false,
@@ -318,6 +345,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/delete",
                   "endpointId": "endpoint_apps.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.delete",
                   "isResponseStream": false,
@@ -328,6 +356,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/get-constraints",
                   "endpointId": "endpoint_apps.getConstraints",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraints",
                   "isResponseStream": false,
@@ -338,6 +367,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/create-constraint",
                   "endpointId": "endpoint_apps.createConstraint",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.createConstraint",
                   "isResponseStream": false,
@@ -348,6 +378,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/get-constraint-by-id",
                   "endpointId": "endpoint_apps.getConstraintById",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraintById",
                   "isResponseStream": false,
@@ -358,6 +389,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/get-constraint-versions",
                   "endpointId": "endpoint_apps.getConstraintVersions",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraintVersions",
                   "isResponseStream": false,
@@ -368,6 +400,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/get-constraint-version",
                   "endpointId": "endpoint_apps.getConstraintVersion",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraintVersion",
                   "isResponseStream": false,
@@ -378,6 +411,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/update-constraint",
                   "endpointId": "endpoint_apps.updateConstraint",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.updateConstraint",
                   "isResponseStream": false,
@@ -388,6 +422,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/apps/delete-constraint",
                   "endpointId": "endpoint_apps.deleteConstraint",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.deleteConstraint",
                   "isResponseStream": false,
@@ -408,6 +443,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/assistant/list",
                   "endpointId": "endpoint_assistant.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.list",
                   "isResponseStream": false,
@@ -418,6 +454,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/assistant/get",
                   "endpointId": "endpoint_assistant.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.get",
                   "isResponseStream": false,
@@ -428,6 +465,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/assistant/update",
                   "endpointId": "endpoint_assistant.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.update",
                   "isResponseStream": false,
@@ -438,6 +476,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/assistant/create",
                   "endpointId": "endpoint_assistant.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.create",
                   "isResponseStream": false,
@@ -448,6 +487,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/assistant/delete",
                   "endpointId": "endpoint_assistant.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.delete",
                   "isResponseStream": false,
@@ -468,6 +508,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/commits/get",
                   "endpointId": "endpoint_commits.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_commits.get",
                   "isResponseStream": false,
@@ -478,6 +519,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/commits/complete",
                   "endpointId": "endpoint_commits.complete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_commits.complete",
                   "isResponseStream": false,
@@ -488,6 +530,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/commits/replay",
                   "endpointId": "endpoint_commits.replay",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_commits.replay",
                   "isResponseStream": false,
@@ -508,6 +551,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/data-retention-policies/list",
                   "endpointId": "endpoint_data-retention-policies.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.list",
                   "isResponseStream": false,
@@ -518,6 +562,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/data-retention-policies/create",
                   "endpointId": "endpoint_data-retention-policies.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.create",
                   "isResponseStream": false,
@@ -528,6 +573,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/data-retention-policies/get",
                   "endpointId": "endpoint_data-retention-policies.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.get",
                   "isResponseStream": false,
@@ -538,6 +584,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/data-retention-policies/update",
                   "endpointId": "endpoint_data-retention-policies.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.update",
                   "isResponseStream": false,
@@ -548,6 +595,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/data-retention-policies/delete",
                   "endpointId": "endpoint_data-retention-policies.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.delete",
                   "isResponseStream": false,
@@ -568,6 +616,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/documents/list",
                   "endpointId": "endpoint_documents.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.list",
                   "isResponseStream": false,
@@ -578,6 +627,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/documents/create",
                   "endpointId": "endpoint_documents.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.create",
                   "isResponseStream": false,
@@ -588,6 +638,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/documents/get",
                   "endpointId": "endpoint_documents.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.get",
                   "isResponseStream": false,
@@ -598,6 +649,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/documents/update",
                   "endpointId": "endpoint_documents.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.update",
                   "isResponseStream": false,
@@ -608,6 +660,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/documents/delete",
                   "endpointId": "endpoint_documents.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.delete",
                   "isResponseStream": false,
@@ -628,6 +681,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/entitlements/list",
                   "endpointId": "endpoint_entitlements.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_entitlements.list",
                   "isResponseStream": false,
@@ -648,6 +702,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/environments/list",
                   "endpointId": "endpoint_environments.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.list",
                   "isResponseStream": false,
@@ -658,6 +713,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/environments/create",
                   "endpointId": "endpoint_environments.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.create",
                   "isResponseStream": false,
@@ -668,6 +724,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/environments/get-environment-event-token",
                   "endpointId": "endpoint_environments.getEnvironmentEventToken",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.getEnvironmentEventToken",
                   "isResponseStream": false,
@@ -678,6 +735,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/environments/get",
                   "endpointId": "endpoint_environments.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.get",
                   "isResponseStream": false,
@@ -688,6 +746,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/environments/update",
                   "endpointId": "endpoint_environments.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.update",
                   "isResponseStream": false,
@@ -698,6 +757,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/environments/delete",
                   "endpointId": "endpoint_environments.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.delete",
                   "isResponseStream": false,
@@ -718,6 +778,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/events/list",
                   "endpointId": "endpoint_events.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.list",
                   "isResponseStream": false,
@@ -728,6 +789,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/events/create",
                   "endpointId": "endpoint_events.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.create",
                   "isResponseStream": false,
@@ -738,6 +800,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/events/get",
                   "endpointId": "endpoint_events.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.get",
                   "isResponseStream": false,
@@ -748,6 +811,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/events/ack",
                   "endpointId": "endpoint_events.ack",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.ack",
                   "isResponseStream": false,
@@ -758,6 +822,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/events/get-event-token",
                   "endpointId": "endpoint_events.getEventToken",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.getEventToken",
                   "isResponseStream": false,
@@ -778,6 +843,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/files/list",
                   "endpointId": "endpoint_files.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.list",
                   "isResponseStream": false,
@@ -788,6 +854,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/files/upload",
                   "endpointId": "endpoint_files.upload",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.upload",
                   "isResponseStream": false,
@@ -798,6 +865,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/files/get",
                   "endpointId": "endpoint_files.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.get",
                   "isResponseStream": false,
@@ -808,6 +876,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/files/delete",
                   "endpointId": "endpoint_files.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.delete",
                   "isResponseStream": false,
@@ -818,6 +887,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/files/update",
                   "endpointId": "endpoint_files.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.update",
                   "isResponseStream": false,
@@ -828,6 +898,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/files/download",
                   "endpointId": "endpoint_files.download",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.download",
                   "isResponseStream": false,
@@ -848,6 +919,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/list",
                   "endpointId": "endpoint_guests.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.list",
                   "isResponseStream": false,
@@ -858,6 +930,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/create",
                   "endpointId": "endpoint_guests.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.create",
                   "isResponseStream": false,
@@ -868,6 +941,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/get",
                   "endpointId": "endpoint_guests.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.get",
                   "isResponseStream": false,
@@ -878,6 +952,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/delete",
                   "endpointId": "endpoint_guests.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.delete",
                   "isResponseStream": false,
@@ -888,6 +963,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/update",
                   "endpointId": "endpoint_guests.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.update",
                   "isResponseStream": false,
@@ -898,6 +974,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/get-guest-token",
                   "endpointId": "endpoint_guests.getGuestToken",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.getGuestToken",
                   "isResponseStream": false,
@@ -908,6 +985,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/list-guest-roles",
                   "endpointId": "endpoint_guests.listGuestRoles",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.listGuestRoles",
                   "isResponseStream": false,
@@ -918,6 +996,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/assign-guest-role",
                   "endpointId": "endpoint_guests.assignGuestRole",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.assignGuestRole",
                   "isResponseStream": false,
@@ -928,6 +1007,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/delete-guest-role",
                   "endpointId": "endpoint_guests.deleteGuestRole",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.deleteGuestRole",
                   "isResponseStream": false,
@@ -938,6 +1018,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/guests/invite",
                   "endpointId": "endpoint_guests.invite",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.invite",
                   "isResponseStream": false,
@@ -958,6 +1039,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/list",
                   "endpointId": "endpoint_jobs.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.list",
                   "isResponseStream": false,
@@ -968,6 +1050,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/create",
                   "endpointId": "endpoint_jobs.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.create",
                   "isResponseStream": false,
@@ -978,6 +1061,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/get",
                   "endpointId": "endpoint_jobs.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.get",
                   "isResponseStream": false,
@@ -988,6 +1072,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/update",
                   "endpointId": "endpoint_jobs.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.update",
                   "isResponseStream": false,
@@ -998,6 +1083,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/delete",
                   "endpointId": "endpoint_jobs.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.delete",
                   "isResponseStream": false,
@@ -1008,6 +1094,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/execute",
                   "endpointId": "endpoint_jobs.execute",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.execute",
                   "isResponseStream": false,
@@ -1018,6 +1105,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/get-execution-plan",
                   "endpointId": "endpoint_jobs.getExecutionPlan",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.getExecutionPlan",
                   "isResponseStream": false,
@@ -1028,6 +1116,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/update-execution-plan",
                   "endpointId": "endpoint_jobs.updateExecutionPlan",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.updateExecutionPlan",
                   "isResponseStream": false,
@@ -1038,6 +1127,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/update-execution-plan-fields",
                   "endpointId": "endpoint_jobs.updateExecutionPlanFields",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.updateExecutionPlanFields",
                   "isResponseStream": false,
@@ -1048,6 +1138,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/ack",
                   "endpointId": "endpoint_jobs.ack",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.ack",
                   "isResponseStream": false,
@@ -1058,6 +1149,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/ack-outcome",
                   "endpointId": "endpoint_jobs.ackOutcome",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.ackOutcome",
                   "isResponseStream": false,
@@ -1068,6 +1160,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/complete",
                   "endpointId": "endpoint_jobs.complete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.complete",
                   "isResponseStream": false,
@@ -1078,6 +1171,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/fail",
                   "endpointId": "endpoint_jobs.fail",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.fail",
                   "isResponseStream": false,
@@ -1088,6 +1182,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/cancel",
                   "endpointId": "endpoint_jobs.cancel",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.cancel",
                   "isResponseStream": false,
@@ -1098,6 +1193,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/retry",
                   "endpointId": "endpoint_jobs.retry",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.retry",
                   "isResponseStream": false,
@@ -1108,6 +1204,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/preview-mutation",
                   "endpointId": "endpoint_jobs.previewMutation",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.previewMutation",
                   "isResponseStream": false,
@@ -1118,6 +1215,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/jobs/split",
                   "endpointId": "endpoint_jobs.split",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.split",
                   "isResponseStream": false,
@@ -1138,6 +1236,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/create-mapping-program",
                   "endpointId": "endpoint_mapping.createMappingProgram",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.createMappingProgram",
                   "isResponseStream": false,
@@ -1148,6 +1247,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/delete-all-history-for-user",
                   "endpointId": "endpoint_mapping.deleteAllHistoryForUser",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteAllHistoryForUser",
                   "isResponseStream": false,
@@ -1158,6 +1258,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/list-mapping-programs",
                   "endpointId": "endpoint_mapping.listMappingPrograms",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.listMappingPrograms",
                   "isResponseStream": false,
@@ -1168,6 +1269,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/get-mapping-program",
                   "endpointId": "endpoint_mapping.getMappingProgram",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.getMappingProgram",
                   "isResponseStream": false,
@@ -1178,6 +1280,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/update-mapping-program",
                   "endpointId": "endpoint_mapping.updateMappingProgram",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.updateMappingProgram",
                   "isResponseStream": false,
@@ -1188,6 +1291,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/delete-mapping-program",
                   "endpointId": "endpoint_mapping.deleteMappingProgram",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteMappingProgram",
                   "isResponseStream": false,
@@ -1198,6 +1302,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/create-rules",
                   "endpointId": "endpoint_mapping.createRules",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.createRules",
                   "isResponseStream": false,
@@ -1208,6 +1313,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/delete-multiple-rules",
                   "endpointId": "endpoint_mapping.deleteMultipleRules",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteMultipleRules",
                   "isResponseStream": false,
@@ -1218,6 +1324,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/list-rules",
                   "endpointId": "endpoint_mapping.listRules",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.listRules",
                   "isResponseStream": false,
@@ -1228,6 +1335,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/get-rule",
                   "endpointId": "endpoint_mapping.getRule",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.getRule",
                   "isResponseStream": false,
@@ -1238,6 +1346,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/update-rule",
                   "endpointId": "endpoint_mapping.updateRule",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.updateRule",
                   "isResponseStream": false,
@@ -1248,6 +1357,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/update-rules",
                   "endpointId": "endpoint_mapping.updateRules",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.updateRules",
                   "isResponseStream": false,
@@ -1258,6 +1368,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/mapping/delete-rule",
                   "endpointId": "endpoint_mapping.deleteRule",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteRule",
                   "isResponseStream": false,
@@ -1278,6 +1389,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/records/get",
                   "endpointId": "endpoint_records.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.get",
                   "isResponseStream": false,
@@ -1288,6 +1400,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/records/update",
                   "endpointId": "endpoint_records.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.update",
                   "isResponseStream": false,
@@ -1298,6 +1411,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/records/insert",
                   "endpointId": "endpoint_records.insert",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.insert",
                   "isResponseStream": false,
@@ -1308,6 +1422,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/records/delete",
                   "endpointId": "endpoint_records.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.delete",
                   "isResponseStream": false,
@@ -1318,6 +1433,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/records/find-and-replace",
                   "endpointId": "endpoint_records.findAndReplace",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.findAndReplace",
                   "isResponseStream": false,
@@ -1338,6 +1454,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/roles/list",
                   "endpointId": "endpoint_roles.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_roles.list",
                   "isResponseStream": false,
@@ -1358,6 +1475,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/secrets/list",
                   "endpointId": "endpoint_secrets.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_secrets.list",
                   "isResponseStream": false,
@@ -1368,6 +1486,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/secrets/upsert",
                   "endpointId": "endpoint_secrets.upsert",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_secrets.upsert",
                   "isResponseStream": false,
@@ -1378,6 +1497,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/secrets/delete",
                   "endpointId": "endpoint_secrets.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_secrets.delete",
                   "isResponseStream": false,
@@ -1398,6 +1518,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/list",
                   "endpointId": "endpoint_sheets.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.list",
                   "isResponseStream": false,
@@ -1408,6 +1529,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/get",
                   "endpointId": "endpoint_sheets.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.get",
                   "isResponseStream": false,
@@ -1418,6 +1540,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/delete",
                   "endpointId": "endpoint_sheets.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.delete",
                   "isResponseStream": false,
@@ -1428,6 +1551,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/validate",
                   "endpointId": "endpoint_sheets.validate",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.validate",
                   "isResponseStream": false,
@@ -1438,6 +1562,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/get-records-as-csv",
                   "endpointId": "endpoint_sheets.getRecordsAsCsv",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getRecordsAsCsv",
                   "isResponseStream": false,
@@ -1448,6 +1573,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/get-record-counts",
                   "endpointId": "endpoint_sheets.getRecordCounts",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getRecordCounts",
                   "isResponseStream": false,
@@ -1458,6 +1584,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/get-sheet-commits",
                   "endpointId": "endpoint_sheets.getSheetCommits",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getSheetCommits",
                   "isResponseStream": false,
@@ -1468,6 +1595,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/lock-sheet",
                   "endpointId": "endpoint_sheets.lockSheet",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.lockSheet",
                   "isResponseStream": false,
@@ -1478,6 +1606,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/unlock-sheet",
                   "endpointId": "endpoint_sheets.unlockSheet",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.unlockSheet",
                   "isResponseStream": false,
@@ -1488,6 +1617,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/get-cell-values",
                   "endpointId": "endpoint_sheets.getCellValues",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getCellValues",
                   "isResponseStream": false,
@@ -1498,6 +1628,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/sheets/update-sheet",
                   "endpointId": "endpoint_sheets.updateSheet",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.updateSheet",
                   "isResponseStream": false,
@@ -1518,6 +1649,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/snapshots/create-snapshot",
                   "endpointId": "endpoint_snapshots.createSnapshot",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.createSnapshot",
                   "isResponseStream": false,
@@ -1528,6 +1660,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/snapshots/list-snapshots",
                   "endpointId": "endpoint_snapshots.listSnapshots",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.listSnapshots",
                   "isResponseStream": false,
@@ -1538,6 +1671,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/snapshots/get-snapshot",
                   "endpointId": "endpoint_snapshots.getSnapshot",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.getSnapshot",
                   "isResponseStream": false,
@@ -1548,6 +1682,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/snapshots/delete-snapshot",
                   "endpointId": "endpoint_snapshots.deleteSnapshot",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.deleteSnapshot",
                   "isResponseStream": false,
@@ -1558,6 +1693,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/snapshots/restore-snapshot",
                   "endpointId": "endpoint_snapshots.restoreSnapshot",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.restoreSnapshot",
                   "isResponseStream": false,
@@ -1568,6 +1704,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/snapshots/get-snapshot-records",
                   "endpointId": "endpoint_snapshots.getSnapshotRecords",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.getSnapshotRecords",
                   "isResponseStream": false,
@@ -1588,6 +1725,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/list",
                   "endpointId": "endpoint_spaces.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.list",
                   "isResponseStream": false,
@@ -1598,6 +1736,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/create",
                   "endpointId": "endpoint_spaces.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.create",
                   "isResponseStream": false,
@@ -1608,6 +1747,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/get",
                   "endpointId": "endpoint_spaces.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.get",
                   "isResponseStream": false,
@@ -1618,6 +1758,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/delete",
                   "endpointId": "endpoint_spaces.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.delete",
                   "isResponseStream": false,
@@ -1628,6 +1769,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/bulk-delete",
                   "endpointId": "endpoint_spaces.bulkDelete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.bulkDelete",
                   "isResponseStream": false,
@@ -1638,6 +1780,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/update",
                   "endpointId": "endpoint_spaces.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.update",
                   "isResponseStream": false,
@@ -1648,6 +1791,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/archive-space",
                   "endpointId": "endpoint_spaces.archiveSpace",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.archiveSpace",
                   "isResponseStream": false,
@@ -1658,6 +1802,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/spaces/unarchive-space",
                   "endpointId": "endpoint_spaces.unarchiveSpace",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.unarchiveSpace",
                   "isResponseStream": false,
@@ -1678,6 +1823,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/list",
                   "endpointId": "endpoint_users.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.list",
                   "isResponseStream": false,
@@ -1688,6 +1834,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/create-and-invite",
                   "endpointId": "endpoint_users.createAndInvite",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.createAndInvite",
                   "isResponseStream": false,
@@ -1698,6 +1845,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/resend-invite",
                   "endpointId": "endpoint_users.resendInvite",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.resendInvite",
                   "isResponseStream": false,
@@ -1708,6 +1856,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/update",
                   "endpointId": "endpoint_users.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.update",
                   "isResponseStream": false,
@@ -1718,6 +1867,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/get",
                   "endpointId": "endpoint_users.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.get",
                   "isResponseStream": false,
@@ -1728,6 +1878,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/delete",
                   "endpointId": "endpoint_users.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.delete",
                   "isResponseStream": false,
@@ -1738,6 +1889,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/list-user-roles",
                   "endpointId": "endpoint_users.listUserRoles",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.listUserRoles",
                   "isResponseStream": false,
@@ -1748,6 +1900,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/assign-user-role",
                   "endpointId": "endpoint_users.assignUserRole",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.assignUserRole",
                   "isResponseStream": false,
@@ -1758,6 +1911,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/users/delete-user-role",
                   "endpointId": "endpoint_users.deleteUserRole",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.deleteUserRole",
                   "isResponseStream": false,
@@ -1779,6 +1933,7 @@
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
                   "availability": "Deprecated",
+                  "canonicalSlug": "api-reference/versions/create-id",
                   "endpointId": "endpoint_versions.createId",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_versions.createId",
                   "isResponseStream": false,
@@ -1799,6 +1954,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/views/list",
                   "endpointId": "endpoint_views.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.list",
                   "isResponseStream": false,
@@ -1809,6 +1965,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/views/create",
                   "endpointId": "endpoint_views.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.create",
                   "isResponseStream": false,
@@ -1819,6 +1976,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/views/get",
                   "endpointId": "endpoint_views.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.get",
                   "isResponseStream": false,
@@ -1829,6 +1987,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/views/update",
                   "endpointId": "endpoint_views.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.update",
                   "isResponseStream": false,
@@ -1839,6 +1998,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/views/delete",
                   "endpointId": "endpoint_views.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.delete",
                   "isResponseStream": false,
@@ -1859,6 +2019,7 @@
               "children": [
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/workbooks/list",
                   "endpointId": "endpoint_workbooks.list",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.list",
                   "isResponseStream": false,
@@ -1869,6 +2030,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/workbooks/create",
                   "endpointId": "endpoint_workbooks.create",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.create",
                   "isResponseStream": false,
@@ -1879,6 +2041,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/workbooks/get",
                   "endpointId": "endpoint_workbooks.get",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.get",
                   "isResponseStream": false,
@@ -1889,6 +2052,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/workbooks/delete",
                   "endpointId": "endpoint_workbooks.delete",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.delete",
                   "isResponseStream": false,
@@ -1899,6 +2063,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/workbooks/update",
                   "endpointId": "endpoint_workbooks.update",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.update",
                   "isResponseStream": false,
@@ -1909,6 +2074,7 @@
                 },
                 {
                   "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "canonicalSlug": "api-reference/workbooks/get-workbook-commits",
                   "endpointId": "endpoint_workbooks.getWorkbookCommits",
                   "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.getWorkbookCommits",
                   "isResponseStream": false,

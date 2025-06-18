@@ -8,6 +8,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/introduction/intro",
                     "id": "root.uv.docs.docs.introduction.intro",
                     "pageId": "pages/index.mdx",
                     "slug": "docs/introduction/intro",
@@ -15,6 +16,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/introduction/start/quickstart",
                     "id": "root.uv.docs.docs.introduction.start/quickstart",
                     "pageId": "pages/start/quickstart.mdx",
                     "slug": "docs/introduction/start/quickstart",
@@ -22,6 +24,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/introduction/security",
                     "id": "root.uv.docs.docs.introduction.security",
                     "pageId": "pages/security/index.mdx",
                     "slug": "docs/introduction/security",
@@ -29,6 +32,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/introduction/billing",
                     "id": "root.uv.docs.docs.introduction.billing",
                     "pageId": "pages/billing.mdx",
                     "slug": "docs/introduction/billing",
@@ -46,6 +50,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/uploading/uploads",
                     "id": "root.uv.docs.docs.uploading.uploads",
                     "pageId": "pages/uploads/index.mdx",
                     "slug": "docs/uploading/uploads",
@@ -53,6 +58,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/uploading/uploading-files",
                     "id": "root.uv.docs.docs.uploading.uploading-files",
                     "pageId": "pages/uploading-files/index.mdx",
                     "slug": "docs/uploading/uploading-files",
@@ -62,6 +68,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/uploading/file-uploader/file-uploader",
                         "id": "root.uv.docs.docs.uploading.file-uploader.file-uploader",
                         "pageId": "pages/file-uploader/index.mdx",
                         "slug": "docs/uploading/file-uploader/file-uploader",
@@ -87,6 +94,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/optimization/image-optimization",
                     "id": "root.uv.docs.docs.optimization.image-optimization",
                     "pageId": "pages/transformations/image/compression.mdx",
                     "slug": "docs/optimization/image-optimization",
@@ -104,6 +112,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/image-transformations/overview",
                     "id": "root.uv.docs.docs.image-transformations.overview",
                     "pageId": "pages/transformations/image/index.mdx",
                     "slug": "docs/image-transformations/overview",
@@ -121,6 +130,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/delivery/overview",
                     "id": "root.uv.docs.docs.delivery.overview",
                     "pageId": "pages/delivery/index.mdx",
                     "slug": "docs/delivery/overview",
@@ -138,6 +148,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/file-management/overview",
                     "id": "root.uv.docs.docs.file-management.overview",
                     "pageId": "pages/start/file-management.mdx",
                     "slug": "docs/file-management/overview",
@@ -169,6 +180,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/integrations/all-integrations",
                     "id": "root.uv.docs/integrations.docs/integrations.all-integrations",
                     "pageId": "pages/integrations/index.mdx",
                     "slug": "docs/integrations/all-integrations",
@@ -182,6 +194,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/integrations/api-clients/python",
                     "id": "root.uv.docs/integrations.docs/integrations.api-clients.python",
                     "pageId": "pages/integrations/python.mdx",
                     "slug": "docs/integrations/api-clients/python",
@@ -218,6 +231,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/upload/base-upload",
                         "endpointId": "subpackage_upload.baseUpload",
                         "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.baseUpload",
                         "isResponseStream": false,
@@ -228,6 +242,7 @@
                       },
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/upload/multipart-file-upload-start",
                         "endpointId": "subpackage_upload.multipartFileUploadStart",
                         "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadStart",
                         "isResponseStream": false,
@@ -238,6 +253,7 @@
                       },
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/upload/multipart-file-upload-part",
                         "endpointId": "subpackage_upload.multipartFileUploadPart",
                         "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadPart",
                         "isResponseStream": false,
@@ -248,6 +264,7 @@
                       },
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/upload/multipart-file-upload-complete",
                         "endpointId": "subpackage_upload.multipartFileUploadComplete",
                         "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadComplete",
                         "isResponseStream": false,
@@ -258,6 +275,7 @@
                       },
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/upload/from-url-upload",
                         "endpointId": "subpackage_upload.fromURLUpload",
                         "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fromURLUpload",
                         "isResponseStream": false,
@@ -268,6 +286,7 @@
                       },
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/upload/from-url-upload-status",
                         "endpointId": "subpackage_upload.fromURLUploadStatus",
                         "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fromURLUploadStatus",
                         "isResponseStream": false,
@@ -278,6 +297,7 @@
                       },
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/upload/file-upload-info",
                         "endpointId": "subpackage_upload.fileUploadInfo",
                         "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fileUploadInfo",
                         "isResponseStream": false,
@@ -298,6 +318,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/groups/create-files-group",
                         "endpointId": "subpackage_groups.createFilesGroup",
                         "id": "root.uv.api.api.upload-api.subpackage_groups.subpackage_groups.createFilesGroup",
                         "isResponseStream": false,
@@ -308,6 +329,7 @@
                       },
                       {
                         "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "canonicalSlug": "api/upload-api/groups/files-group-info",
                         "endpointId": "subpackage_groups.filesGroupInfo",
                         "id": "root.uv.api.api.upload-api.subpackage_groups.subpackage_groups.filesGroupInfo",
                         "isResponseStream": false,
@@ -336,6 +358,7 @@
                 "children": [
                   {
                     "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "canonicalSlug": "api/rest-api-v-0-7/file-metadata",
                     "endpointId": "__package__.File metadata",
                     "id": "root.uv.api.api.rest-api-v-0-7.__package__.File metadata",
                     "isResponseStream": false,
@@ -349,6 +372,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/files-list",
                         "endpointId": "subpackage_file.filesList",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesList",
                         "isResponseStream": false,
@@ -359,6 +383,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/store-file",
                         "endpointId": "subpackage_file.storeFile",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.storeFile",
                         "isResponseStream": false,
@@ -369,6 +394,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/delete-file-storage",
                         "endpointId": "subpackage_file.deleteFileStorage",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.deleteFileStorage",
                         "isResponseStream": false,
@@ -379,6 +405,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/info",
                         "endpointId": "subpackage_file.info",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.info",
                         "isResponseStream": false,
@@ -389,6 +416,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/files-storing",
                         "endpointId": "subpackage_file.filesStoring",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesStoring",
                         "isResponseStream": false,
@@ -399,6 +427,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/files-delete",
                         "endpointId": "subpackage_file.filesDelete",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesDelete",
                         "isResponseStream": false,
@@ -409,6 +438,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/create-local-copy",
                         "endpointId": "subpackage_file.createLocalCopy",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.createLocalCopy",
                         "isResponseStream": false,
@@ -419,6 +449,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file/create-remote-copy",
                         "endpointId": "subpackage_file.createRemoteCopy",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.createRemoteCopy",
                         "isResponseStream": false,
@@ -439,6 +470,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/aws-rekognition-execute",
                         "endpointId": "subpackage_addOns.awsRekognitionExecute",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionExecute",
                         "isResponseStream": false,
@@ -449,6 +481,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/aws-rekognition-execution-status",
                         "endpointId": "subpackage_addOns.awsRekognitionExecutionStatus",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionExecutionStatus",
                         "isResponseStream": false,
@@ -459,6 +492,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/aws-rekognition-detect-moderation-labels-execute",
                         "endpointId": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecute",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionDetectModerationLabelsExecute",
                         "isResponseStream": false,
@@ -469,6 +503,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/aws-rekognition-detect-moderation-labels-execution-status",
                         "endpointId": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
                         "isResponseStream": false,
@@ -479,6 +514,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/uc-clamav-virus-scan-execute",
                         "endpointId": "subpackage_addOns.ucClamavVirusScanExecute",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.ucClamavVirusScanExecute",
                         "isResponseStream": false,
@@ -489,6 +525,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/uc-clamav-virus-scan-execution-status",
                         "endpointId": "subpackage_addOns.ucClamavVirusScanExecutionStatus",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.ucClamavVirusScanExecutionStatus",
                         "isResponseStream": false,
@@ -499,6 +536,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/remove-bg-execute",
                         "endpointId": "subpackage_addOns.removeBgExecute",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.removeBgExecute",
                         "isResponseStream": false,
@@ -509,6 +547,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/add-ons/remove-bg-execution-status",
                         "endpointId": "subpackage_addOns.removeBgExecutionStatus",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.removeBgExecutionStatus",
                         "isResponseStream": false,
@@ -529,6 +568,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file-metadata/key",
                         "endpointId": "subpackage_fileMetadata.key",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.key",
                         "isResponseStream": false,
@@ -539,6 +579,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file-metadata/update-file-metadata-key",
                         "endpointId": "subpackage_fileMetadata.updateFileMetadataKey",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.updateFileMetadataKey",
                         "isResponseStream": false,
@@ -549,6 +590,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/file-metadata/delete-file-metadata-key",
                         "endpointId": "subpackage_fileMetadata.deleteFileMetadataKey",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.deleteFileMetadataKey",
                         "isResponseStream": false,
@@ -569,6 +611,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/group/groups-list",
                         "endpointId": "subpackage_group.groupsList",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.groupsList",
                         "isResponseStream": false,
@@ -579,6 +622,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/group/info",
                         "endpointId": "subpackage_group.info",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.info",
                         "isResponseStream": false,
@@ -589,6 +633,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/group/delete-group",
                         "endpointId": "subpackage_group.deleteGroup",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.deleteGroup",
                         "isResponseStream": false,
@@ -609,6 +654,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/project/info",
                         "endpointId": "subpackage_project.info",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_project.subpackage_project.info",
                         "isResponseStream": false,
@@ -629,6 +675,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/webhook/webhooks-list",
                         "endpointId": "subpackage_webhook.webhooksList",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.webhooksList",
                         "isResponseStream": false,
@@ -639,6 +686,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/webhook/create",
                         "endpointId": "subpackage_webhook.create",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.create",
                         "isResponseStream": false,
@@ -649,6 +697,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/webhook/update-webhook",
                         "endpointId": "subpackage_webhook.updateWebhook",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.updateWebhook",
                         "isResponseStream": false,
@@ -659,6 +708,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/webhook/unsubscribe",
                         "endpointId": "subpackage_webhook.unsubscribe",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.unsubscribe",
                         "isResponseStream": false,
@@ -679,6 +729,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/conversion/document-convert-info",
                         "endpointId": "subpackage_conversion.documentConvertInfo",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvertInfo",
                         "isResponseStream": false,
@@ -689,6 +740,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/conversion/document-convert",
                         "endpointId": "subpackage_conversion.documentConvert",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvert",
                         "isResponseStream": false,
@@ -699,6 +751,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/conversion/document-convert-status",
                         "endpointId": "subpackage_conversion.documentConvertStatus",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvertStatus",
                         "isResponseStream": false,
@@ -709,6 +762,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/conversion/video-convert",
                         "endpointId": "subpackage_conversion.videoConvert",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.videoConvert",
                         "isResponseStream": false,
@@ -719,6 +773,7 @@
                       },
                       {
                         "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "canonicalSlug": "api/rest-api-v-0-7/conversion/video-convert-status",
                         "endpointId": "subpackage_conversion.videoConvertStatus",
                         "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.videoConvertStatus",
                         "isResponseStream": false,
@@ -750,6 +805,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                        "canonicalSlug": "api/url-api/file-information/file-info-json",
                         "endpointId": "subpackage_fileInformation.fileInfoJson",
                         "id": "root.uv.api.api.url-api.subpackage_fileInformation.subpackage_fileInformation.fileInfoJson",
                         "isResponseStream": false,
@@ -760,6 +816,7 @@
                       },
                       {
                         "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                        "canonicalSlug": "api/url-api/file-information/file-info-jsonp",
                         "endpointId": "subpackage_fileInformation.fileInfoJsonp",
                         "id": "root.uv.api.api.url-api.subpackage_fileInformation.subpackage_fileInformation.fileInfoJsonp",
                         "isResponseStream": false,
@@ -780,6 +837,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                        "canonicalSlug": "api/url-api/file-names/file-with-name",
                         "endpointId": "subpackage_fileNames.fileWithName",
                         "id": "root.uv.api.api.url-api.subpackage_fileNames.subpackage_fileNames.fileWithName",
                         "isResponseStream": false,

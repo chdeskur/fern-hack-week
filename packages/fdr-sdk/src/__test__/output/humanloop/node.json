@@ -10,6 +10,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/getting-started/overview",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.getting-started.getting-started/overview",
                         "pageId": "v5-pages/getting-started/overview.mdx",
@@ -18,6 +19,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/getting-started/why-humanloop",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.getting-started.getting-started/why-humanloop",
                         "pageId": "v5-pages/getting-started/why-humanloop.mdx",
@@ -26,6 +28,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/tutorials/quickstart",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.getting-started.tutorials/quickstart",
                         "pageId": "v5-pages/tutorials/quickstart-tutorial.mdx",
@@ -36,6 +39,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/concepts/overview",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.overview",
                             "pageId": "v5-pages/concepts/overview.mdx",
@@ -44,6 +48,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/concepts/prompts",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.prompts",
                             "pageId": "v5-pages/concepts/prompts.mdx",
@@ -52,6 +57,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/concepts/tools",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.tools",
                             "pageId": "v5-pages/concepts/tools.mdx",
@@ -60,6 +66,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/concepts/datasets",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.datasets",
                             "pageId": "v5-pages/concepts/datasets.mdx",
@@ -68,6 +75,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/concepts/evaluators",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.evaluators",
                             "pageId": "v5-pages/concepts/evaluators.mdx",
@@ -76,6 +84,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/concepts/logs",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.logs",
                             "pageId": "v5-pages/concepts/logs.mdx",
@@ -84,6 +93,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/concepts/environments",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.environments",
                             "pageId": "v5-pages/concepts/environments.mdx",
@@ -92,6 +102,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/concepts/directories",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.getting-started.concepts.directories",
                             "pageId": "v5-pages/concepts/directories.mdx",
@@ -120,6 +131,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/development/overview",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.development.overview",
                         "pageId": "v5-pages/development/overview.mdx",
@@ -130,6 +142,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/development/guides/create-prompt",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.create-prompt",
                             "pageId": "v5-pages/development/guides/create-prompt.mdx",
@@ -138,6 +151,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/call-prompt",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.call-prompt",
                             "pageId": "v5-pages/development/guides/call-prompt.mdx",
@@ -146,6 +160,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/proxy-model-calls",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.proxy-model-calls",
                             "pageId": "v5-pages/development/guides/proxy-model-calls.mdx",
@@ -154,6 +169,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/log-to-a-prompt",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.log-to-a-prompt",
                             "pageId": "v5-pages/development/guides/log-to-a-prompt.mdx",
@@ -162,6 +178,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/tool-calling-editor",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.tool-calling-editor",
                             "pageId": "v5-pages/development/guides/tool-calling-editor.mdx",
@@ -170,6 +187,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/reusable-snippets",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.reusable-snippets",
                             "pageId": "v5-pages/development/guides/reusable-snippets.mdx",
@@ -178,6 +196,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/create-deployment-environments",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.create-deployment-environments",
                             "pageId": "v5-pages/development/guides/create-deployment-environments.mdx",
@@ -186,6 +205,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/deploy-to-environment",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.deploy-to-environment",
                             "pageId": "v5-pages/development/guides/deploy-to-environment.mdx",
@@ -194,6 +214,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/create-directory",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.create-directory",
                             "pageId": "v5-pages/development/guides/create-directory.mdx",
@@ -202,6 +223,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/link-tool",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.link-tool",
                             "pageId": "v5-pages/development/guides/link-tool.mdx",
@@ -210,6 +232,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/development/guides/link-json-schema-tool",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.development.guides.link-json-schema-tool",
                             "pageId": "v5-pages/development/guides/link-json-schema-tool.mdx",
@@ -238,6 +261,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/evaluation/overview",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.evaluation.overview",
                         "pageId": "v5-pages/evaluation/overview.mdx",
@@ -248,6 +272,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/evaluation/guides/comparing-prompt-editor",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.comparing-prompt-editor",
                             "pageId": "v5-pages/evaluation/guides/comparing-prompt-editor.mdx",
@@ -256,6 +281,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/evaluation/guides/create-dataset",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.create-dataset",
                             "pageId": "v5-pages/evaluation/guides/create-dataset.mdx",
@@ -264,6 +290,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/evaluation/guides/code-based-evaluator",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.code-based-evaluator",
                             "pageId": "v5-pages/evaluation/guides/code-based-evaluator.mdx",
@@ -272,6 +299,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/evaluation/guides/llm-as-a-judge",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.llm-as-a-judge",
                             "pageId": "v5-pages/evaluation/guides/llm-as-a-judge.mdx",
@@ -280,6 +308,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/evaluation/guides/human-evaluators",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.human-evaluators",
                             "pageId": "v5-pages/evaluation/guides/human-evaluators.mdx",
@@ -288,6 +317,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/evaluation/guides/run-evaluation",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.run-evaluation",
                             "pageId": "v5-pages/evaluation/guides/run-evaluation.mdx",
@@ -296,6 +326,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/evaluation/guides/run-human-evaluation",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.run-human-evaluation",
                             "pageId": "v5-pages/evaluation/guides/run-human-evaluation.mdx",
@@ -304,6 +335,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/evaluation/guides/cicd-integration",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.evaluation.guides.cicd-integration",
                             "pageId": "v5-pages/evaluation/guides/cicd-integration.mdx",
@@ -332,6 +364,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/observability/overview",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.observability.overview",
                         "pageId": "v5-pages/observability/overview.mdx",
@@ -340,6 +373,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/observability/alerts-and-guardrails",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.observability.alerts-and-guardrails",
                         "pageId": "v5-pages/observability/alerts-and-guardrails.mdx",
@@ -350,6 +384,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/observability/guides/set-up-monitoring",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.observability.guides.set-up-monitoring",
                             "pageId": "v5-pages/observability/guides/monitoring.mdx",
@@ -358,6 +393,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/observability/guides/set-up-webhooks",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.observability.guides.set-up-webhooks",
                             "pageId": "v5-pages/observability/guides/set-up-webhooks.mdx",
@@ -366,6 +402,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/observability/guides/capture-user-feedback",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.observability.guides.capture-user-feedback",
                             "pageId": "v5-pages/observability/guides/capture-user-feedback.mdx",
@@ -394,6 +431,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/admin/access-roles",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.admin.access-roles",
                         "pageId": "v5-pages/admin/access-roles.mdx",
@@ -402,6 +440,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/admin/sso-and-authentication",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.admin.sso-and-authentication",
                         "pageId": "v5-pages/admin/sso-authentication.mdx",
@@ -412,6 +451,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/admin/guides/invite-collaborators",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.admin.guides.invite-collaborators",
                             "pageId": "v5-pages/admin/guides/invite-collaborators.mdx",
@@ -420,6 +460,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/admin/guides/manage-api-keys",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.admin.guides.manage-api-keys",
                             "pageId": "v5-pages/admin/guides/manage-api-keys.mdx",
@@ -428,6 +469,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/admin/guides/manage-environments",
                             "hidden": false,
                             "id": "root..v5.uv.docs.docs.admin.guides.manage-environments",
                             "pageId": "v5-pages/admin/guides/manage-environments.mdx",
@@ -456,6 +498,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/reference/deployment-options",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.deployment-options",
                         "pageId": "v5-pages/reference/deployment-options.mdx",
@@ -464,6 +507,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/reference/supported-models",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.supported-models",
                         "pageId": "v5-pages/reference/models.mdx",
@@ -472,6 +516,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/reference/prompt-file-format",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.prompt-file-format",
                         "pageId": "v5-pages/reference/prompt-file-format.mdx",
@@ -480,6 +525,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/reference/example-projects",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.example-projects",
                         "pageId": "v5-pages/reference/example-projects.mdx",
@@ -488,6 +534,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/reference/python-environment",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.python-environment",
                         "pageId": "v5-pages/reference/code-env-spec.mdx",
@@ -496,6 +543,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/reference/integrations",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.integrations",
                         "pageId": "v5-pages/reference/integrations.mdx",
@@ -504,6 +552,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/reference/security-and-compliance",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.security-and-compliance",
                         "pageId": "v5-pages/reference/security-compliance.mdx",
@@ -512,6 +561,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/reference/data-management",
                         "hidden": false,
                         "id": "root..v5.uv.docs.docs.reference.data-management",
                         "pageId": "v5-pages/reference/data-management.mdx",
@@ -545,6 +595,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/api-reference/sdks",
                         "hidden": false,
                         "id": "root..v5.uv.api-reference.api-reference.introduction.sdks",
                         "pageId": "v5-pages/api-reference/sdks.md",
@@ -553,6 +604,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/api-reference/errors",
                         "hidden": false,
                         "id": "root..v5.uv.api-reference.api-reference.introduction.errors",
                         "pageId": "v5-pages/api-reference/errors.md",
@@ -571,12 +623,14 @@
                   },
                   {
                     "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                    "canonicalSlug": "docs/api-reference",
                     "children": [
                       {
                         "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/log",
                             "endpointId": "endpoint_prompts.log",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.log",
                             "isResponseStream": false,
@@ -587,6 +641,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/update",
                             "endpointId": "endpoint_prompts.update",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.update",
                             "isResponseStream": false,
@@ -599,6 +654,7 @@
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.call+endpoint_prompts.call_stream",
                             "nonStream": {
                               "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                              "canonicalSlug": "docs/api-reference/prompts/call",
                               "endpointId": "endpoint_prompts.call",
                               "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.call",
                               "isResponseStream": false,
@@ -609,7 +665,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
-                              "canonicalSlug": "docs/v5/api-reference/prompts/call",
+                              "canonicalSlug": "docs/api-reference/prompts/call",
                               "endpointId": "endpoint_prompts.call_stream",
                               "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.call_stream",
                               "isResponseStream": true,
@@ -622,6 +678,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/list",
                             "endpointId": "endpoint_prompts.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.list",
                             "isResponseStream": false,
@@ -632,6 +689,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/upsert",
                             "endpointId": "endpoint_prompts.upsert",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.upsert",
                             "isResponseStream": false,
@@ -642,6 +700,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/get",
                             "endpointId": "endpoint_prompts.get",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.get",
                             "isResponseStream": false,
@@ -652,6 +711,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/delete",
                             "endpointId": "endpoint_prompts.delete",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.delete",
                             "isResponseStream": false,
@@ -662,6 +722,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/move",
                             "endpointId": "endpoint_prompts.move",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.move",
                             "isResponseStream": false,
@@ -672,6 +733,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/list-versions",
                             "endpointId": "endpoint_prompts.listVersions",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.listVersions",
                             "isResponseStream": false,
@@ -682,6 +744,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/commit",
                             "endpointId": "endpoint_prompts.commit",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.commit",
                             "isResponseStream": false,
@@ -692,6 +755,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/update-monitoring",
                             "endpointId": "endpoint_prompts.updateMonitoring",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.updateMonitoring",
                             "isResponseStream": false,
@@ -702,6 +766,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/set-deployment",
                             "endpointId": "endpoint_prompts.setDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.setDeployment",
                             "isResponseStream": false,
@@ -712,6 +777,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/remove-deployment",
                             "endpointId": "endpoint_prompts.removeDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.removeDeployment",
                             "isResponseStream": false,
@@ -722,6 +788,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/prompts/list-environments",
                             "endpointId": "endpoint_prompts.listEnvironments",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.listEnvironments",
                             "isResponseStream": false,
@@ -742,6 +809,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/log",
                             "endpointId": "endpoint_tools.log",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.log",
                             "isResponseStream": false,
@@ -752,6 +820,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/update",
                             "endpointId": "endpoint_tools.update",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.update",
                             "isResponseStream": false,
@@ -762,6 +831,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/list",
                             "endpointId": "endpoint_tools.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.list",
                             "isResponseStream": false,
@@ -772,6 +842,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/upsert",
                             "endpointId": "endpoint_tools.upsert",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.upsert",
                             "isResponseStream": false,
@@ -782,6 +853,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/get",
                             "endpointId": "endpoint_tools.get",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.get",
                             "isResponseStream": false,
@@ -792,6 +864,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/delete",
                             "endpointId": "endpoint_tools.delete",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.delete",
                             "isResponseStream": false,
@@ -802,6 +875,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/move",
                             "endpointId": "endpoint_tools.move",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.move",
                             "isResponseStream": false,
@@ -812,6 +886,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/list-versions",
                             "endpointId": "endpoint_tools.listVersions",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.listVersions",
                             "isResponseStream": false,
@@ -822,6 +897,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/commit",
                             "endpointId": "endpoint_tools.commit",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.commit",
                             "isResponseStream": false,
@@ -832,6 +908,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/update-monitoring",
                             "endpointId": "endpoint_tools.updateMonitoring",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.updateMonitoring",
                             "isResponseStream": false,
@@ -842,6 +919,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/set-deployment",
                             "endpointId": "endpoint_tools.setDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.setDeployment",
                             "isResponseStream": false,
@@ -852,6 +930,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/remove-deployment",
                             "endpointId": "endpoint_tools.removeDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.removeDeployment",
                             "isResponseStream": false,
@@ -862,6 +941,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/tools/list-environments",
                             "endpointId": "endpoint_tools.listEnvironments",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_tools.listEnvironments",
                             "isResponseStream": false,
@@ -882,6 +962,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/list",
                             "endpointId": "endpoint_datasets.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.list",
                             "isResponseStream": false,
@@ -892,6 +973,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/upsert",
                             "endpointId": "endpoint_datasets.upsert",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.upsert",
                             "isResponseStream": false,
@@ -902,6 +984,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/get",
                             "endpointId": "endpoint_datasets.get",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.get",
                             "isResponseStream": false,
@@ -912,6 +995,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/delete",
                             "endpointId": "endpoint_datasets.delete",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.delete",
                             "isResponseStream": false,
@@ -922,6 +1006,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/move",
                             "endpointId": "endpoint_datasets.move",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.move",
                             "isResponseStream": false,
@@ -932,6 +1017,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/list-datapoints",
                             "endpointId": "endpoint_datasets.listDatapoints",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.listDatapoints",
                             "isResponseStream": false,
@@ -942,6 +1028,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/list-versions",
                             "endpointId": "endpoint_datasets.listVersions",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.listVersions",
                             "isResponseStream": false,
@@ -952,6 +1039,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/commit",
                             "endpointId": "endpoint_datasets.commit",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.commit",
                             "isResponseStream": false,
@@ -962,6 +1050,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/upload-csv",
                             "endpointId": "endpoint_datasets.uploadCsv",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.uploadCsv",
                             "isResponseStream": false,
@@ -972,6 +1061,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/set-deployment",
                             "endpointId": "endpoint_datasets.setDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.setDeployment",
                             "isResponseStream": false,
@@ -982,6 +1072,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/remove-deployment",
                             "endpointId": "endpoint_datasets.removeDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.removeDeployment",
                             "isResponseStream": false,
@@ -992,6 +1083,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/datasets/list-environments",
                             "endpointId": "endpoint_datasets.listEnvironments",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_datasets.listEnvironments",
                             "isResponseStream": false,
@@ -1012,6 +1104,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/list",
                             "endpointId": "endpoint_evaluators.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.list",
                             "isResponseStream": false,
@@ -1022,6 +1115,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/upsert",
                             "endpointId": "endpoint_evaluators.upsert",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.upsert",
                             "isResponseStream": false,
@@ -1032,6 +1126,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/get",
                             "endpointId": "endpoint_evaluators.get",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.get",
                             "isResponseStream": false,
@@ -1042,6 +1137,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/delete",
                             "endpointId": "endpoint_evaluators.delete",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.delete",
                             "isResponseStream": false,
@@ -1052,6 +1148,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/move",
                             "endpointId": "endpoint_evaluators.move",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.move",
                             "isResponseStream": false,
@@ -1062,6 +1159,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/list-versions",
                             "endpointId": "endpoint_evaluators.listVersions",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.listVersions",
                             "isResponseStream": false,
@@ -1072,6 +1170,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/commit",
                             "endpointId": "endpoint_evaluators.commit",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.commit",
                             "isResponseStream": false,
@@ -1082,6 +1181,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/set-deployment",
                             "endpointId": "endpoint_evaluators.setDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.setDeployment",
                             "isResponseStream": false,
@@ -1092,6 +1192,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/remove-deployment",
                             "endpointId": "endpoint_evaluators.removeDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.removeDeployment",
                             "isResponseStream": false,
@@ -1102,6 +1203,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/list-environments",
                             "endpointId": "endpoint_evaluators.listEnvironments",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.listEnvironments",
                             "isResponseStream": false,
@@ -1112,6 +1214,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluators/log",
                             "endpointId": "endpoint_evaluators.log",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluators.log",
                             "isResponseStream": false,
@@ -1132,6 +1235,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/get",
                             "endpointId": "endpoint_flows.get",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.get",
                             "isResponseStream": false,
@@ -1142,6 +1246,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/delete",
                             "endpointId": "endpoint_flows.delete",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.delete",
                             "isResponseStream": false,
@@ -1152,6 +1257,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/move",
                             "endpointId": "endpoint_flows.move",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.move",
                             "isResponseStream": false,
@@ -1162,6 +1268,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/list",
                             "endpointId": "endpoint_flows.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.list",
                             "isResponseStream": false,
@@ -1172,6 +1279,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/upsert",
                             "endpointId": "endpoint_flows.upsert",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.upsert",
                             "isResponseStream": false,
@@ -1182,6 +1290,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/log",
                             "endpointId": "endpoint_flows.log",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.log",
                             "isResponseStream": false,
@@ -1192,6 +1301,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/update-log",
                             "endpointId": "endpoint_flows.updateLog",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.updateLog",
                             "isResponseStream": false,
@@ -1202,6 +1312,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/list-versions",
                             "endpointId": "endpoint_flows.listVersions",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.listVersions",
                             "isResponseStream": false,
@@ -1212,6 +1323,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/commit",
                             "endpointId": "endpoint_flows.commit",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.commit",
                             "isResponseStream": false,
@@ -1222,6 +1334,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/set-deployment",
                             "endpointId": "endpoint_flows.setDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.setDeployment",
                             "isResponseStream": false,
@@ -1232,6 +1345,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/remove-deployment",
                             "endpointId": "endpoint_flows.removeDeployment",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.removeDeployment",
                             "isResponseStream": false,
@@ -1242,6 +1356,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/list-environments",
                             "endpointId": "endpoint_flows.listEnvironments",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.listEnvironments",
                             "isResponseStream": false,
@@ -1252,6 +1367,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/flows/update-monitoring",
                             "endpointId": "endpoint_flows.updateMonitoring",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_flows.updateMonitoring",
                             "isResponseStream": false,
@@ -1272,6 +1388,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/files/list",
                             "endpointId": "endpoint_files.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_files.list",
                             "isResponseStream": false,
@@ -1292,6 +1409,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/list",
                             "endpointId": "endpoint_evaluations.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.list",
                             "isResponseStream": false,
@@ -1302,6 +1420,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/create",
                             "endpointId": "endpoint_evaluations.create",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.create",
                             "isResponseStream": false,
@@ -1312,6 +1431,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/get",
                             "endpointId": "endpoint_evaluations.get",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.get",
                             "isResponseStream": false,
@@ -1322,6 +1442,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/delete",
                             "endpointId": "endpoint_evaluations.delete",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.delete",
                             "isResponseStream": false,
@@ -1332,6 +1453,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/update-setup",
                             "endpointId": "endpoint_evaluations.updateSetup",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.updateSetup",
                             "isResponseStream": false,
@@ -1342,6 +1464,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/update-status",
                             "endpointId": "endpoint_evaluations.updateStatus",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.updateStatus",
                             "isResponseStream": false,
@@ -1352,6 +1475,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/get-stats",
                             "endpointId": "endpoint_evaluations.getStats",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.getStats",
                             "isResponseStream": false,
@@ -1362,6 +1486,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/evaluations/get-logs",
                             "endpointId": "endpoint_evaluations.getLogs",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_evaluations.getLogs",
                             "isResponseStream": false,
@@ -1382,6 +1507,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/logs/list",
                             "endpointId": "endpoint_logs.list",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_logs.list",
                             "isResponseStream": false,
@@ -1392,6 +1518,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/logs/delete",
                             "endpointId": "endpoint_logs.delete",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_logs.delete",
                             "isResponseStream": false,
@@ -1402,6 +1529,7 @@
                           },
                           {
                             "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                            "canonicalSlug": "docs/api-reference/logs/get",
                             "endpointId": "endpoint_logs.get",
                             "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_logs.get",
                             "isResponseStream": false,
@@ -1446,6 +1574,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/9/17",
                           "date": "2024-09-17T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-9-17",
                           "pageId": "changelog/2024-09-17.md",
@@ -1454,6 +1583,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/9/15",
                           "date": "2024-09-15T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-9-15",
                           "pageId": "changelog/2024-09-15.md",
@@ -1462,6 +1592,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/9/13",
                           "date": "2024-09-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-9-13",
                           "pageId": "changelog/2024-09-13.md",
@@ -1470,6 +1601,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/9/10",
                           "date": "2024-09-10T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-9-10",
                           "pageId": "changelog/2024-09-10.md",
@@ -1478,6 +1610,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/9/5",
                           "date": "2024-09-05T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-9-5",
                           "pageId": "changelog/2024-09-05.md",
@@ -1495,6 +1628,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/30",
                           "date": "2024-08-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-30",
                           "pageId": "changelog/2024-08-30.md",
@@ -1503,6 +1637,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/29",
                           "date": "2024-08-29T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-29",
                           "pageId": "changelog/2024-08-29.md",
@@ -1511,6 +1646,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/28",
                           "date": "2024-08-28T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-28",
                           "pageId": "changelog/2024-08-28.md",
@@ -1519,6 +1655,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/24",
                           "date": "2024-08-24T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-24",
                           "pageId": "changelog/2024-08-24.md",
@@ -1527,6 +1664,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/20",
                           "date": "2024-08-20T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-20",
                           "pageId": "changelog/2024-08-20.md",
@@ -1535,6 +1673,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/16",
                           "date": "2024-08-16T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-16",
                           "pageId": "changelog/2024-08-16.md",
@@ -1543,6 +1682,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/15",
                           "date": "2024-08-15T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-15",
                           "pageId": "changelog/2024-08-15.md",
@@ -1551,6 +1691,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/14",
                           "date": "2024-08-14T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-14",
                           "pageId": "changelog/2024-08-14.md",
@@ -1559,6 +1700,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/13",
                           "date": "2024-08-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-13",
                           "pageId": "changelog/2024-08-13.md",
@@ -1567,6 +1709,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/7",
                           "date": "2024-08-07T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-7",
                           "pageId": "changelog/2024-08-07.md",
@@ -1575,6 +1718,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/5",
                           "date": "2024-08-05T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-5",
                           "pageId": "changelog/2024-08-05.md",
@@ -1583,6 +1727,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/8/1",
                           "date": "2024-08-01T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-8-1",
                           "pageId": "changelog/2024-08-01.md",
@@ -1600,6 +1745,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/7/30",
                           "date": "2024-07-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-7-30",
                           "pageId": "changelog/2024-07-30.md",
@@ -1608,6 +1754,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/7/19",
                           "date": "2024-07-19T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-7-19",
                           "pageId": "changelog/2024-07-19.md",
@@ -1616,6 +1763,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/7/18",
                           "date": "2024-07-18T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-7-18",
                           "pageId": "changelog/2024-07-18.md",
@@ -1624,6 +1772,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/7/10",
                           "date": "2024-07-10T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-7-10",
                           "pageId": "changelog/2024-07-10.md",
@@ -1641,6 +1790,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/6/30",
                           "date": "2024-06-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-6-30",
                           "pageId": "changelog/2024-06-30.md",
@@ -1649,6 +1799,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/6/24",
                           "date": "2024-06-24T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-6-24",
                           "pageId": "changelog/2024-06-24.md",
@@ -1657,6 +1808,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/6/20",
                           "date": "2024-06-20T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-6-20",
                           "pageId": "changelog/2024-06-20.md",
@@ -1665,6 +1817,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/6/18",
                           "date": "2024-06-18T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-6-18",
                           "pageId": "changelog/2024-06-18.md",
@@ -1673,6 +1826,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/6/16",
                           "date": "2024-06-16T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-6-16",
                           "pageId": "changelog/2024-06-16.md",
@@ -1681,6 +1835,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/6/10",
                           "date": "2024-06-10T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-6-10",
                           "pageId": "changelog/2024-06-10.md",
@@ -1689,6 +1844,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/6/4",
                           "date": "2024-06-04T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-6-4",
                           "pageId": "changelog/2024-06-04.md",
@@ -1706,6 +1862,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/5/28",
                           "date": "2024-05-28T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-5-28",
                           "pageId": "changelog/2024-05-28.md",
@@ -1714,6 +1871,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/5/20",
                           "date": "2024-05-20T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-5-20",
                           "pageId": "changelog/2024-05-20.md",
@@ -1722,6 +1880,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/5/15",
                           "date": "2024-05-15T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-5-15",
                           "pageId": "changelog/2024-05-15.md",
@@ -1730,6 +1889,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/5/13",
                           "date": "2024-05-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-5-13",
                           "pageId": "changelog/2024-05-13.md",
@@ -1738,6 +1898,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/5/12",
                           "date": "2024-05-12T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-5-12",
                           "pageId": "changelog/2024-05-12.md",
@@ -1746,6 +1907,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/5/8",
                           "date": "2024-05-08T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-5-8",
                           "pageId": "changelog/2024-05-08.md",
@@ -1763,6 +1925,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/4/30",
                           "date": "2024-04-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-4-30",
                           "pageId": "changelog/2024-04-30.md",
@@ -1771,6 +1934,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/4/26",
                           "date": "2024-04-26T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-4-26",
                           "pageId": "changelog/2024-04-26.md",
@@ -1779,6 +1943,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/4/23",
                           "date": "2024-04-23T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-4-23",
                           "pageId": "changelog/2024-04-23.md",
@@ -1787,6 +1952,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/4/18",
                           "date": "2024-04-18T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-4-18",
                           "pageId": "changelog/2024-04-18.md",
@@ -1795,6 +1961,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/4/16",
                           "date": "2024-04-16T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-4-16",
                           "pageId": "changelog/2024-04-16.md",
@@ -1803,6 +1970,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/4/13",
                           "date": "2024-04-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-4-13",
                           "pageId": "changelog/2024-04-13.md",
@@ -1811,6 +1979,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/4/5",
                           "date": "2024-04-05T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-4-5",
                           "pageId": "changelog/2024-04-05.md",
@@ -1828,6 +1997,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/3/25",
                           "date": "2024-03-25T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-3-25",
                           "pageId": "changelog/2024-03-25.md",
@@ -1836,6 +2006,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/3/18",
                           "date": "2024-03-18T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-3-18",
                           "pageId": "changelog/2024-03-18.md",
@@ -1844,6 +2015,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/3/7",
                           "date": "2024-03-07T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-3-7",
                           "pageId": "changelog/2024-03-07.md",
@@ -1852,6 +2024,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/3/6",
                           "date": "2024-03-06T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-3-6",
                           "pageId": "changelog/2024-03-06.md",
@@ -1869,6 +2042,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/2/26",
                           "date": "2024-02-26T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-2-26",
                           "pageId": "changelog/2024-02-26.md",
@@ -1877,6 +2051,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/2/14",
                           "date": "2024-02-14T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-2-14",
                           "pageId": "changelog/2024-02-14.md",
@@ -1885,6 +2060,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/2/13",
                           "date": "2024-02-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-2-13",
                           "pageId": "changelog/2024-02-13.md",
@@ -1893,6 +2069,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/2/9",
                           "date": "2024-02-09T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-2-9",
                           "pageId": "changelog/2024-02-09.md",
@@ -1901,6 +2078,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/2/8",
                           "date": "2024-02-08T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-2-8",
                           "pageId": "changelog/2024-02-08.md",
@@ -1909,6 +2087,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/2/2",
                           "date": "2024-02-02T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-2-2",
                           "pageId": "changelog/2024-02-02.md",
@@ -1926,6 +2105,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2024/1/30",
                           "date": "2024-01-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-1-30",
                           "pageId": "changelog/2024-01-30.md",
@@ -1934,6 +2114,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/1/19",
                           "date": "2024-01-19T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-1-19",
                           "pageId": "changelog/2024-01-19.md",
@@ -1942,6 +2123,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/1/12",
                           "date": "2024-01-12T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-1-12",
                           "pageId": "changelog/2024-01-12.md",
@@ -1950,6 +2132,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2024/1/11",
                           "date": "2024-01-11T00:00:00.000Z",
                           "id": "docs/v5.changelog.2024-1-11",
                           "pageId": "changelog/2024-01-11.md",
@@ -1976,6 +2159,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/12/22",
                           "date": "2023-12-22T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-12-22",
                           "pageId": "changelog/2023-12-22.md",
@@ -1984,6 +2168,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/12/21",
                           "date": "2023-12-21T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-12-21",
                           "pageId": "changelog/2023-12-21.md",
@@ -1992,6 +2177,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/12/13",
                           "date": "2023-12-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-12-13",
                           "pageId": "changelog/2023-12-13.md",
@@ -2000,6 +2186,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/12/12",
                           "date": "2023-12-12T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-12-12",
                           "pageId": "changelog/2023-12-12.md",
@@ -2008,6 +2195,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/12/5",
                           "date": "2023-12-05T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-12-5",
                           "pageId": "changelog/2023-12-05.md",
@@ -2016,6 +2204,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/12/4",
                           "date": "2023-12-04T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-12-4",
                           "pageId": "changelog/2023-12-04.md",
@@ -2033,6 +2222,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/28",
                           "date": "2023-11-28T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-28",
                           "pageId": "changelog/2023-11-28.md",
@@ -2041,6 +2231,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/22",
                           "date": "2023-11-22T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-22",
                           "pageId": "changelog/2023-11-22.md",
@@ -2049,6 +2240,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/21",
                           "date": "2023-11-21T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-21",
                           "pageId": "changelog/2023-11-21.md",
@@ -2057,6 +2249,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/20",
                           "date": "2023-11-20T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-20",
                           "pageId": "changelog/2023-11-20.md",
@@ -2065,6 +2258,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/17",
                           "date": "2023-11-17T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-17",
                           "pageId": "changelog/2023-11-17.md",
@@ -2073,6 +2267,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/10",
                           "date": "2023-11-10T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-10",
                           "pageId": "changelog/2023-11-10.md",
@@ -2081,6 +2276,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/9",
                           "date": "2023-11-09T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-9",
                           "pageId": "changelog/2023-11-09.md",
@@ -2089,6 +2285,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/8",
                           "date": "2023-11-08T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-8",
                           "pageId": "changelog/2023-11-08.md",
@@ -2097,6 +2294,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/11/1",
                           "date": "2023-11-01T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-11-1",
                           "pageId": "changelog/2023-11-01.md",
@@ -2114,6 +2312,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/10/30",
                           "date": "2023-10-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-10-30",
                           "pageId": "changelog/2023-10-30.md",
@@ -2122,6 +2321,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/10/17",
                           "date": "2023-10-17T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-10-17",
                           "pageId": "changelog/2023-10-17.md",
@@ -2130,6 +2330,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/10/16",
                           "date": "2023-10-16T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-10-16",
                           "pageId": "changelog/2023-10-16.md",
@@ -2138,6 +2339,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/10/10",
                           "date": "2023-10-10T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-10-10",
                           "pageId": "changelog/2023-10-10.md",
@@ -2155,6 +2357,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/9/15",
                           "date": "2023-09-15T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-9-15",
                           "pageId": "changelog/2023-09-15.md",
@@ -2163,6 +2366,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/9/13",
                           "date": "2023-09-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-9-13",
                           "pageId": "changelog/2023-09-13.md",
@@ -2180,6 +2384,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/8/31",
                           "date": "2023-08-31T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-8-31",
                           "pageId": "changelog/2023-08-31.md",
@@ -2188,6 +2393,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/8/21",
                           "date": "2023-08-21T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-8-21",
                           "pageId": "changelog/2023-08-21.md",
@@ -2196,6 +2402,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/8/15",
                           "date": "2023-08-15T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-8-15",
                           "pageId": "changelog/2023-08-15.md",
@@ -2204,6 +2411,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/8/14",
                           "date": "2023-08-14T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-8-14",
                           "pageId": "changelog/2023-08-14.md",
@@ -2221,6 +2429,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/7/30",
                           "date": "2023-07-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-7-30",
                           "pageId": "changelog/2023-07-30.md",
@@ -2229,6 +2438,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/7/25",
                           "date": "2023-07-25T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-7-25",
                           "pageId": "changelog/2023-07-25.md",
@@ -2237,6 +2447,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/7/24",
                           "date": "2023-07-24T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-7-24",
                           "pageId": "changelog/2023-07-24.md",
@@ -2245,6 +2456,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/7/17",
                           "date": "2023-07-17T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-7-17",
                           "pageId": "changelog/2023-07-17.md",
@@ -2253,6 +2465,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/7/7",
                           "date": "2023-07-07T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-7-7",
                           "pageId": "changelog/2023-07-07.md",
@@ -2261,6 +2474,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/7/5",
                           "date": "2023-07-05T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-7-5",
                           "pageId": "changelog/2023-07-05.md",
@@ -2269,6 +2483,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/7/3",
                           "date": "2023-07-03T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-7-3",
                           "pageId": "changelog/2023-07-03.md",
@@ -2286,6 +2501,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/6/27",
                           "date": "2023-06-27T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-6-27",
                           "pageId": "changelog/2023-06-27.md",
@@ -2294,6 +2510,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/6/20",
                           "date": "2023-06-20T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-6-20",
                           "pageId": "changelog/2023-06-20.md",
@@ -2302,6 +2519,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/6/13",
                           "date": "2023-06-13T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-6-13",
                           "pageId": "changelog/2023-06-13.md",
@@ -2319,6 +2537,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/5/23",
                           "date": "2023-05-23T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-5-23",
                           "pageId": "changelog/2023-05-23.md",
@@ -2327,6 +2546,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/5/17",
                           "date": "2023-05-17T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-5-17",
                           "pageId": "changelog/2023-05-17.md",
@@ -2344,6 +2564,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/4/3",
                           "date": "2023-04-03T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-4-3",
                           "pageId": "changelog/2023-04-03.md",
@@ -2361,6 +2582,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/3/30",
                           "date": "2023-03-30T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-3-30",
                           "pageId": "changelog/2023-03-30.md",
@@ -2369,6 +2591,7 @@
                           "type": "changelogEntry"
                         },
                         {
+                          "canonicalSlug": "docs/changelog/2023/3/2",
                           "date": "2023-03-02T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-3-2",
                           "pageId": "changelog/2023-03-02.md",
@@ -2386,6 +2609,7 @@
                     {
                       "children": [
                         {
+                          "canonicalSlug": "docs/changelog/2023/2/20",
                           "date": "2023-02-20T00:00:00.000Z",
                           "id": "docs/v5.changelog.2023-2-20",
                           "pageId": "changelog/2023-02-20.md",
@@ -2436,7 +2660,7 @@
                   {
                     "children": [
                       {
-                        "canonicalSlug": "docs/v5/getting-started/overview",
+                        "canonicalSlug": "docs/getting-started/overview",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.getting-started.overview",
                         "pageId": "pages/getting-started/overview.mdx",
@@ -2445,7 +2669,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/v5/getting-started/why-humanloop",
+                        "canonicalSlug": "docs/getting-started/why-humanloop",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.getting-started.why-humanloop",
                         "pageId": "pages/getting-started/why-humanloop.mdx",
@@ -2454,7 +2678,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/v5/tutorials/quickstart",
+                        "canonicalSlug": "docs/tutorials/quickstart",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.getting-started.tutorials/quickstart",
                         "pageId": "pages/getting-started/quickstart-tutorial.mdx",
@@ -2474,6 +2698,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/v4/tutorials/create-your-first-gpt-4-app",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.tutorials.create-your-first-gpt-4-app",
                         "pageId": "pages/tutorials/create-app.mdx",
@@ -2482,6 +2707,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/tutorials/chatgpt-clone-in-nextjs",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.tutorials.chatgpt-clone-in-nextjs",
                         "pageId": "pages/tutorials/clone.mdx",
@@ -2490,6 +2716,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/tutorials/debug-a-langchain-agent",
                         "hidden": true,
                         "id": "root..v4.uv.docs.docs.tutorials.debug-a-langchain-agent",
                         "pageId": "pages/tutorials/debug-a-langchain-agent.mdx",
@@ -2509,6 +2736,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/v4/guides/create-prompt",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.guides.create-prompt",
                         "pageId": "pages/guides/create-prompt.mdx",
@@ -2519,6 +2747,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/v4/guides/generate-and-log-with-the-sdk",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.generate-and-log.generate-and-log-with-the-sdk",
                             "pageId": "pages/guides/generate/generate-and-log.mdx",
@@ -2527,6 +2756,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/completion-using-the-sdk",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.generate-and-log.completion-using-the-sdk",
                             "pageId": "pages/guides/generate/generate-completions.mdx",
@@ -2535,6 +2765,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/chat-using-the-sdk",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.generate-and-log.chat-using-the-sdk",
                             "pageId": "pages/guides/generate/generate-chat.mdx",
@@ -2543,6 +2774,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/capture-user-feedback",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.generate-and-log.capture-user-feedback",
                             "pageId": "pages/guides/generate/capture-feedback.mdx",
@@ -2551,6 +2783,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/upload-historic-data",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.generate-and-log.upload-historic-data",
                             "pageId": "pages/guides/generate/upload-data.mdx",
@@ -2559,6 +2792,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/use-your-own-model-provider",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.generate-and-log.use-your-own-model-provider",
                             "pageId": "pages/guides/generate/use-model.mdx",
@@ -2567,6 +2801,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/logging-session-traces",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.generate-and-log.logging-session-traces",
                             "pageId": "pages/guides/generate/chain-calls.mdx",
@@ -2586,6 +2821,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/overview",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.overview",
                             "pageId": "pages/guides/evaluate/overview.mdx",
@@ -2594,6 +2830,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/evaluate-models-offline",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.evaluate-models-offline",
                             "pageId": "pages/guides/evaluate/evaluate-offline.mdx",
@@ -2602,6 +2839,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/evaluations-using-api",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.evaluations-using-api",
                             "pageId": "pages/guides/evaluate/set-up-evaluations.mdx",
@@ -2610,6 +2848,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/use-llms-to-evaluate-logs",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.use-llms-to-evaluate-logs",
                             "pageId": "pages/guides/evaluate/use-llms.mdx",
@@ -2618,6 +2857,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/self-hosted-evaluations",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.self-hosted-evaluations",
                             "pageId": "pages/guides/evaluate/self-hosted-evaluations.mdx",
@@ -2626,6 +2866,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/evaluating-externally-generated-logs",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.evaluating-externally-generated-logs",
                             "pageId": "pages/guides/evaluate/externally-generated-logs.mdx",
@@ -2634,6 +2875,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/evaluating-with-human-feedback",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.evaluating-with-human-feedback",
                             "pageId": "pages/guides/evaluate/evaluating-with-feedback.mdx",
@@ -2642,6 +2884,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/evaluation/monitoring",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.evaluation.monitoring",
                             "pageId": "pages/guides/evaluate/evaluate-online.mdx",
@@ -2661,6 +2904,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/v4/guides/overview",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.datasets.overview",
                             "pageId": "pages/guides/create-datasets/create-and-use.mdx",
@@ -2669,6 +2913,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/create-dataset",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.datasets.create-dataset",
                             "pageId": "pages/guides/create-datasets/create-dataset.mdx",
@@ -2677,6 +2922,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/batch-generate",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.datasets.batch-generate",
                             "pageId": "pages/guides/create-datasets/batch-generate.mdx",
@@ -2696,6 +2942,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/v4/guides/run-an-experiment",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.experiments.run-an-experiment",
                             "pageId": "pages/guides/experiments/overview.mdx",
@@ -2704,6 +2951,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/experiments-from-the-app",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.experiments.experiments-from-the-app",
                             "pageId": "pages/guides/experiments/run-experiment.mdx",
@@ -2712,6 +2960,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/run-an-experiment-with-your-own-model-provider",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.experiments.run-an-experiment-with-your-own-model-provider",
                             "pageId": "pages/guides/experiments/run-with-model.mdx",
@@ -2731,6 +2980,7 @@
                       {
                         "children": [
                           {
+                            "canonicalSlug": "docs/v4/guides/tool-calling",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.tools.tool-calling",
                             "pageId": "pages/guides/tools/tool-calling.mdx",
@@ -2739,6 +2989,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/create-a-tool-with-the-sdk",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.tools.create-a-tool-with-the-sdk",
                             "pageId": "pages/guides/tools/tool-calling-sdk.mdx",
@@ -2747,6 +2998,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/link-jsonschema-tool",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.tools.link-jsonschema-tool",
                             "pageId": "pages/guides/tools/link-json.mdx",
@@ -2755,6 +3007,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/snippet-tool",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.tools.snippet-tool",
                             "pageId": "pages/guides/tools/with-snippet.mdx",
@@ -2763,6 +3016,7 @@
                             "type": "page"
                           },
                           {
+                            "canonicalSlug": "docs/v4/guides/set-up-semantic-search",
                             "hidden": false,
                             "id": "root..v4.uv.docs.docs.guides.tools.set-up-semantic-search",
                             "pageId": "pages/guides/tools/set-up-search.mdx",
@@ -2780,6 +3034,7 @@
                         "type": "section"
                       },
                       {
+                        "canonicalSlug": "docs/v4/guides/finetune-a-model",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.guides.finetune-a-model",
                         "pageId": "pages/guides/fine-tune-model.mdx",
@@ -2788,6 +3043,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/guides/create-and-revoke-api-keys",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.guides.create-and-revoke-api-keys",
                         "pageId": "pages/guides/manage-api-keys.mdx",
@@ -2796,6 +3052,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/guides/invite-collaborators",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.guides.invite-collaborators",
                         "pageId": "pages/guides/invite-collaborators.mdx",
@@ -2804,6 +3061,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/guides/deploy-to-an-environment",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.guides.deploy-to-an-environment",
                         "pageId": "pages/guides/deploy-to-environments.mdx",
@@ -2823,6 +3081,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/v4/prompts",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.core-concepts.prompts",
                         "pageId": "pages/core-entities/prompts.mdx",
@@ -2831,6 +3090,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/tools",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.core-concepts.tools",
                         "pageId": "pages/core-entities/tools.mdx",
@@ -2839,6 +3099,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/datasets",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.core-concepts.datasets",
                         "pageId": "pages/core-entities/datasets.mdx",
@@ -2847,6 +3108,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/evaluators",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.core-concepts.evaluators",
                         "pageId": "pages/core-entities/evaluators.mdx",
@@ -2855,6 +3117,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/logs",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.core-concepts.logs",
                         "pageId": "pages/core-entities/logs.mdx",
@@ -2863,6 +3126,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/environments",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.core-concepts.environments",
                         "pageId": "pages/core-entities/environments.mdx",
@@ -2871,6 +3135,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/key-concepts",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.core-concepts.key-concepts",
                         "pageId": "pages/core-entities/key-concepts.mdx",
@@ -2890,6 +3155,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/v4/examples",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.examples.examples",
                         "pageId": "pages/examples/example-projects.mdx",
@@ -2909,6 +3175,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/v4/supported-models",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.references.supported-models",
                         "pageId": "pages/references/models.mdx",
@@ -2917,6 +3184,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/access-roles",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.references.access-roles",
                         "pageId": "pages/references/access-roles.mdx",
@@ -2925,6 +3193,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/prompt-file-format",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.references.prompt-file-format",
                         "pageId": "pages/references/prompt-files.mdx",
@@ -2933,6 +3202,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v4/postman-workspace",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.references.postman-workspace",
                         "pageId": "pages/references/postman-workspace.mdx",
@@ -2966,7 +3236,7 @@
                   {
                     "children": [
                       {
-                        "canonicalSlug": "docs/v5/api-reference/sdks",
+                        "canonicalSlug": "docs/api-reference/sdks",
                         "hidden": false,
                         "id": "root..v4.uv.api-reference.api-reference.introduction.sdks",
                         "pageId": "pages/api-reference/sdks.md",
@@ -2975,7 +3245,7 @@
                         "type": "page"
                       },
                       {
-                        "canonicalSlug": "docs/v5/api-reference/errors",
+                        "canonicalSlug": "docs/api-reference/errors",
                         "hidden": false,
                         "id": "root..v4.uv.api-reference.api-reference.introduction.errors",
                         "pageId": "pages/api-reference/errors.md",
@@ -2994,7 +3264,7 @@
                   },
                   {
                     "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                    "canonicalSlug": "docs/v5/api-reference",
+                    "canonicalSlug": "docs/api-reference",
                     "children": [
                       {
                         "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
@@ -3003,6 +3273,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create+endpoint_chats.createStream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create",
                               "endpointId": "endpoint_chats.create",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create",
                               "isResponseStream": false,
@@ -3028,6 +3299,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_deployed+endpoint_chats.create_deployed_stream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create-deployed",
                               "endpointId": "endpoint_chats.create_deployed",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_deployed",
                               "isResponseStream": false,
@@ -3053,6 +3325,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_config+endpoint_chats.create_config_stream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create-config",
                               "endpointId": "endpoint_chats.create_config",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_config",
                               "isResponseStream": false,
@@ -3078,6 +3351,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_experiment+endpoint_chats.create_experiment_stream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create-experiment",
                               "endpointId": "endpoint_chats.create_experiment",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_experiment",
                               "isResponseStream": false,
@@ -3088,6 +3362,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create-experiment-stream",
                               "endpointId": "endpoint_chats.create_experiment_stream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_experiment_stream",
                               "isResponseStream": true,
@@ -3112,6 +3387,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create+endpoint_completions.createStream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create",
                               "endpointId": "endpoint_completions.create",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create",
                               "isResponseStream": false,
@@ -3137,6 +3413,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_deployed+endpoint_completions.create_deployed_stream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create-deployed",
                               "endpointId": "endpoint_completions.create_deployed",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_deployed",
                               "isResponseStream": false,
@@ -3162,6 +3439,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_config+endpoint_completions.create_config_stream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create-config",
                               "endpointId": "endpoint_completions.create_config",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_config",
                               "isResponseStream": false,
@@ -3187,6 +3465,7 @@
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_experiment+endpoint_completions.create_experiment_stream",
                             "nonStream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create-experiment",
                               "endpointId": "endpoint_completions.create_experiment",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_experiment",
                               "isResponseStream": false,
@@ -3197,6 +3476,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create-experiment-stream",
                               "endpointId": "endpoint_completions.create_experiment_stream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_experiment_stream",
                               "isResponseStream": true,
@@ -3219,6 +3499,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/datapoints/get",
                             "endpointId": "endpoint_datapoints.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datapoints.get",
                             "isResponseStream": false,
@@ -3230,6 +3511,7 @@
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
                             "availability": "Deprecated",
+                            "canonicalSlug": "docs/v4/api-reference/datapoints/update",
                             "endpointId": "endpoint_datapoints.update",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datapoints.update",
                             "isResponseStream": false,
@@ -3241,6 +3523,7 @@
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
                             "availability": "Deprecated",
+                            "canonicalSlug": "docs/v4/api-reference/datapoints/delete",
                             "endpointId": "endpoint_datapoints.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datapoints.delete",
                             "isResponseStream": false,
@@ -3262,6 +3545,7 @@
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
                             "availability": "Deprecated",
+                            "canonicalSlug": "docs/v4/api-reference/projects/list-datasets",
                             "endpointId": "endpoint_projects.list_datasets",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.list_datasets",
                             "isResponseStream": false,
@@ -3284,6 +3568,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/projects/list",
                             "endpointId": "endpoint_projects.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.list",
                             "isResponseStream": false,
@@ -3294,6 +3579,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/projects/create",
                             "endpointId": "endpoint_projects.create",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.create",
                             "isResponseStream": false,
@@ -3304,6 +3590,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/projects/get",
                             "endpointId": "endpoint_projects.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.get",
                             "isResponseStream": false,
@@ -3314,6 +3601,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/projects/delete",
                             "endpointId": "endpoint_projects.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.delete",
                             "isResponseStream": false,
@@ -3324,6 +3612,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/projects/update",
                             "endpointId": "endpoint_projects.update",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.update",
                             "isResponseStream": false,
@@ -3334,6 +3623,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/projects/list-configs",
                             "endpointId": "endpoint_projects.list_configs",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.list_configs",
                             "isResponseStream": false,
@@ -3345,6 +3635,7 @@
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
                             "availability": "Deprecated",
+                            "canonicalSlug": "docs/v4/api-reference/projects/create-feedback-type",
                             "endpointId": "endpoint_projects.create_feedback_type",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.create_feedback_type",
                             "isResponseStream": false,
@@ -3356,6 +3647,7 @@
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
                             "availability": "Deprecated",
+                            "canonicalSlug": "docs/v4/api-reference/projects/update-feedback-types",
                             "endpointId": "endpoint_projects.update_feedback_types",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.update_feedback_types",
                             "isResponseStream": false,
@@ -3366,6 +3658,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/projects/export",
                             "endpointId": "endpoint_projects.export",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.export",
                             "isResponseStream": false,
@@ -3379,6 +3672,7 @@
                             "children": [
                               {
                                 "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                                "canonicalSlug": "docs/v4/api-reference/projects/active-config/get",
                                 "endpointId": "endpoint_projects/activeConfig.get",
                                 "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects/activeConfig.get",
                                 "isResponseStream": false,
@@ -3389,6 +3683,7 @@
                               },
                               {
                                 "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                                "canonicalSlug": "docs/v4/api-reference/projects/active-config/deactivate",
                                 "endpointId": "endpoint_projects/activeConfig.deactivate",
                                 "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects/activeConfig.deactivate",
                                 "isResponseStream": false,
@@ -3409,6 +3704,7 @@
                             "children": [
                               {
                                 "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                                "canonicalSlug": "docs/v4/api-reference/projects/deployed-config/list",
                                 "endpointId": "endpoint_projects/deployedConfig.list",
                                 "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects/deployedConfig.list",
                                 "isResponseStream": false,
@@ -3419,6 +3715,7 @@
                               },
                               {
                                 "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                                "canonicalSlug": "docs/v4/api-reference/projects/deployed-config/deploy",
                                 "endpointId": "endpoint_projects/deployedConfig.deploy",
                                 "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects/deployedConfig.deploy",
                                 "isResponseStream": false,
@@ -3429,6 +3726,7 @@
                               },
                               {
                                 "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                                "canonicalSlug": "docs/v4/api-reference/projects/deployed-config/delete",
                                 "endpointId": "endpoint_projects/deployedConfig.delete",
                                 "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects/deployedConfig.delete",
                                 "isResponseStream": false,
@@ -3456,6 +3754,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/datasets/create",
                             "endpointId": "endpoint_datasets.create",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.create",
                             "isResponseStream": false,
@@ -3466,7 +3765,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/datasets/list",
+                            "canonicalSlug": "docs/api-reference/datasets/list",
                             "endpointId": "endpoint_datasets.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.list",
                             "isResponseStream": false,
@@ -3477,7 +3776,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/datasets/get",
+                            "canonicalSlug": "docs/api-reference/datasets/get",
                             "endpointId": "endpoint_datasets.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.get",
                             "isResponseStream": false,
@@ -3488,7 +3787,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/datasets/delete",
+                            "canonicalSlug": "docs/api-reference/datasets/delete",
                             "endpointId": "endpoint_datasets.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.delete",
                             "isResponseStream": false,
@@ -3499,6 +3798,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/datasets/update",
                             "endpointId": "endpoint_datasets.update",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.update",
                             "isResponseStream": false,
@@ -3509,6 +3809,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/datasets/list-datapoints",
                             "endpointId": "endpoint_datasets.list_datapoints",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.list_datapoints",
                             "isResponseStream": false,
@@ -3519,6 +3820,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/datasets/create-datapoint",
                             "endpointId": "endpoint_datasets.create_datapoint",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.create_datapoint",
                             "isResponseStream": false,
@@ -3539,7 +3841,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/evaluations/get",
+                            "canonicalSlug": "docs/api-reference/evaluations/get",
                             "endpointId": "endpoint_evaluations.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.get",
                             "isResponseStream": false,
@@ -3550,6 +3852,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/evaluations/list-datapoints",
                             "endpointId": "endpoint_evaluations.list_datapoints",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.list_datapoints",
                             "isResponseStream": false,
@@ -3560,7 +3863,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/evaluations/create",
+                            "canonicalSlug": "docs/api-reference/evaluations/create",
                             "endpointId": "endpoint_evaluations.create",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.create",
                             "isResponseStream": false,
@@ -3571,6 +3874,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/evaluations/log",
                             "endpointId": "endpoint_evaluations.log",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.log",
                             "isResponseStream": false,
@@ -3581,6 +3885,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/evaluations/result",
                             "endpointId": "endpoint_evaluations.result",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.result",
                             "isResponseStream": false,
@@ -3591,7 +3896,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/evaluations/update-status",
+                            "canonicalSlug": "docs/api-reference/evaluations/update-status",
                             "endpointId": "endpoint_evaluations.update_status",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.update_status",
                             "isResponseStream": false,
@@ -3602,6 +3907,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/evaluations/add-evaluators",
                             "endpointId": "endpoint_evaluations.add_evaluators",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.add_evaluators",
                             "isResponseStream": false,
@@ -3612,7 +3918,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/evaluations/list",
+                            "canonicalSlug": "docs/api-reference/evaluations/list",
                             "endpointId": "endpoint_evaluations.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.list",
                             "isResponseStream": false,
@@ -3633,7 +3939,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/evaluators/list",
+                            "canonicalSlug": "docs/api-reference/evaluators/list",
                             "endpointId": "endpoint_evaluators.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.list",
                             "isResponseStream": false,
@@ -3644,6 +3950,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/evaluators/create",
                             "endpointId": "endpoint_evaluators.create",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.create",
                             "isResponseStream": false,
@@ -3654,7 +3961,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/evaluators/get",
+                            "canonicalSlug": "docs/api-reference/evaluators/get",
                             "endpointId": "endpoint_evaluators.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.get",
                             "isResponseStream": false,
@@ -3665,7 +3972,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/evaluators/delete",
+                            "canonicalSlug": "docs/api-reference/evaluators/delete",
                             "endpointId": "endpoint_evaluators.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.delete",
                             "isResponseStream": false,
@@ -3676,6 +3983,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/evaluators/update",
                             "endpointId": "endpoint_evaluators.update",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.update",
                             "isResponseStream": false,
@@ -3696,6 +4004,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/feedback/feedback",
                             "endpointId": "endpoint_feedback.feedback",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_feedback.feedback",
                             "isResponseStream": false,
@@ -3716,7 +4025,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/logs/list",
+                            "canonicalSlug": "docs/api-reference/logs/list",
                             "endpointId": "endpoint_logs.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.list",
                             "isResponseStream": false,
@@ -3727,6 +4036,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/logs/log",
                             "endpointId": "endpoint_logs.log",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.log",
                             "isResponseStream": false,
@@ -3737,7 +4047,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/logs/delete",
+                            "canonicalSlug": "docs/api-reference/logs/delete",
                             "endpointId": "endpoint_logs.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.delete",
                             "isResponseStream": false,
@@ -3748,6 +4058,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/logs/update-by-ref",
                             "endpointId": "endpoint_logs.update_by_ref",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.update_by_ref",
                             "isResponseStream": false,
@@ -3758,7 +4069,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
-                            "canonicalSlug": "docs/v5/api-reference/logs/get",
+                            "canonicalSlug": "docs/api-reference/logs/get",
                             "endpointId": "endpoint_logs.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.get",
                             "isResponseStream": false,
@@ -3769,6 +4080,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/logs/update",
                             "endpointId": "endpoint_logs.update",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.update",
                             "isResponseStream": false,
@@ -3789,6 +4101,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/model-configs/register",
                             "endpointId": "endpoint_modelConfigs.register",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_modelConfigs.register",
                             "isResponseStream": false,
@@ -3799,6 +4112,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/model-configs/get",
                             "endpointId": "endpoint_modelConfigs.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_modelConfigs.get",
                             "isResponseStream": false,
@@ -3809,6 +4123,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/model-configs/export",
                             "endpointId": "endpoint_modelConfigs.export",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_modelConfigs.export",
                             "isResponseStream": false,
@@ -3819,6 +4134,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/model-configs/serialize",
                             "endpointId": "endpoint_modelConfigs.serialize",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_modelConfigs.serialize",
                             "isResponseStream": false,
@@ -3829,6 +4145,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/model-configs/deserialize",
                             "endpointId": "endpoint_modelConfigs.deserialize",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_modelConfigs.deserialize",
                             "isResponseStream": false,
@@ -3849,6 +4166,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/sessions/list",
                             "endpointId": "endpoint_sessions.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_sessions.list",
                             "isResponseStream": false,
@@ -3859,6 +4177,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/sessions/create",
                             "endpointId": "endpoint_sessions.create",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_sessions.create",
                             "isResponseStream": false,
@@ -3869,6 +4188,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v4/api-reference/sessions/get",
                             "endpointId": "endpoint_sessions.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_sessions.get",
                             "isResponseStream": false,
@@ -3913,7 +4233,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/9/17",
+                          "canonicalSlug": "docs/changelog/2024/9/17",
                           "date": "2024-09-17T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-9-17",
                           "pageId": "changelog/2024-09-17.md",
@@ -3922,7 +4242,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/9/15",
+                          "canonicalSlug": "docs/changelog/2024/9/15",
                           "date": "2024-09-15T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-9-15",
                           "pageId": "changelog/2024-09-15.md",
@@ -3931,7 +4251,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/9/13",
+                          "canonicalSlug": "docs/changelog/2024/9/13",
                           "date": "2024-09-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-9-13",
                           "pageId": "changelog/2024-09-13.md",
@@ -3940,7 +4260,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/9/10",
+                          "canonicalSlug": "docs/changelog/2024/9/10",
                           "date": "2024-09-10T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-9-10",
                           "pageId": "changelog/2024-09-10.md",
@@ -3949,7 +4269,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/9/5",
+                          "canonicalSlug": "docs/changelog/2024/9/5",
                           "date": "2024-09-05T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-9-5",
                           "pageId": "changelog/2024-09-05.md",
@@ -3967,7 +4287,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/30",
+                          "canonicalSlug": "docs/changelog/2024/8/30",
                           "date": "2024-08-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-30",
                           "pageId": "changelog/2024-08-30.md",
@@ -3976,7 +4296,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/29",
+                          "canonicalSlug": "docs/changelog/2024/8/29",
                           "date": "2024-08-29T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-29",
                           "pageId": "changelog/2024-08-29.md",
@@ -3985,7 +4305,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/28",
+                          "canonicalSlug": "docs/changelog/2024/8/28",
                           "date": "2024-08-28T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-28",
                           "pageId": "changelog/2024-08-28.md",
@@ -3994,7 +4314,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/24",
+                          "canonicalSlug": "docs/changelog/2024/8/24",
                           "date": "2024-08-24T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-24",
                           "pageId": "changelog/2024-08-24.md",
@@ -4003,7 +4323,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/20",
+                          "canonicalSlug": "docs/changelog/2024/8/20",
                           "date": "2024-08-20T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-20",
                           "pageId": "changelog/2024-08-20.md",
@@ -4012,7 +4332,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/16",
+                          "canonicalSlug": "docs/changelog/2024/8/16",
                           "date": "2024-08-16T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-16",
                           "pageId": "changelog/2024-08-16.md",
@@ -4021,7 +4341,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/15",
+                          "canonicalSlug": "docs/changelog/2024/8/15",
                           "date": "2024-08-15T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-15",
                           "pageId": "changelog/2024-08-15.md",
@@ -4030,7 +4350,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/14",
+                          "canonicalSlug": "docs/changelog/2024/8/14",
                           "date": "2024-08-14T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-14",
                           "pageId": "changelog/2024-08-14.md",
@@ -4039,7 +4359,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/13",
+                          "canonicalSlug": "docs/changelog/2024/8/13",
                           "date": "2024-08-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-13",
                           "pageId": "changelog/2024-08-13.md",
@@ -4048,7 +4368,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/7",
+                          "canonicalSlug": "docs/changelog/2024/8/7",
                           "date": "2024-08-07T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-7",
                           "pageId": "changelog/2024-08-07.md",
@@ -4057,7 +4377,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/5",
+                          "canonicalSlug": "docs/changelog/2024/8/5",
                           "date": "2024-08-05T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-5",
                           "pageId": "changelog/2024-08-05.md",
@@ -4066,7 +4386,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/8/1",
+                          "canonicalSlug": "docs/changelog/2024/8/1",
                           "date": "2024-08-01T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-8-1",
                           "pageId": "changelog/2024-08-01.md",
@@ -4084,7 +4404,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/7/30",
+                          "canonicalSlug": "docs/changelog/2024/7/30",
                           "date": "2024-07-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-7-30",
                           "pageId": "changelog/2024-07-30.md",
@@ -4093,7 +4413,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/7/19",
+                          "canonicalSlug": "docs/changelog/2024/7/19",
                           "date": "2024-07-19T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-7-19",
                           "pageId": "changelog/2024-07-19.md",
@@ -4102,7 +4422,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/7/18",
+                          "canonicalSlug": "docs/changelog/2024/7/18",
                           "date": "2024-07-18T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-7-18",
                           "pageId": "changelog/2024-07-18.md",
@@ -4111,7 +4431,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/7/10",
+                          "canonicalSlug": "docs/changelog/2024/7/10",
                           "date": "2024-07-10T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-7-10",
                           "pageId": "changelog/2024-07-10.md",
@@ -4129,7 +4449,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/6/30",
+                          "canonicalSlug": "docs/changelog/2024/6/30",
                           "date": "2024-06-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-6-30",
                           "pageId": "changelog/2024-06-30.md",
@@ -4138,7 +4458,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/6/24",
+                          "canonicalSlug": "docs/changelog/2024/6/24",
                           "date": "2024-06-24T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-6-24",
                           "pageId": "changelog/2024-06-24.md",
@@ -4147,7 +4467,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/6/20",
+                          "canonicalSlug": "docs/changelog/2024/6/20",
                           "date": "2024-06-20T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-6-20",
                           "pageId": "changelog/2024-06-20.md",
@@ -4156,7 +4476,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/6/18",
+                          "canonicalSlug": "docs/changelog/2024/6/18",
                           "date": "2024-06-18T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-6-18",
                           "pageId": "changelog/2024-06-18.md",
@@ -4165,7 +4485,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/6/16",
+                          "canonicalSlug": "docs/changelog/2024/6/16",
                           "date": "2024-06-16T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-6-16",
                           "pageId": "changelog/2024-06-16.md",
@@ -4174,7 +4494,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/6/10",
+                          "canonicalSlug": "docs/changelog/2024/6/10",
                           "date": "2024-06-10T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-6-10",
                           "pageId": "changelog/2024-06-10.md",
@@ -4183,7 +4503,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/6/4",
+                          "canonicalSlug": "docs/changelog/2024/6/4",
                           "date": "2024-06-04T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-6-4",
                           "pageId": "changelog/2024-06-04.md",
@@ -4201,7 +4521,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/5/28",
+                          "canonicalSlug": "docs/changelog/2024/5/28",
                           "date": "2024-05-28T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-5-28",
                           "pageId": "changelog/2024-05-28.md",
@@ -4210,7 +4530,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/5/20",
+                          "canonicalSlug": "docs/changelog/2024/5/20",
                           "date": "2024-05-20T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-5-20",
                           "pageId": "changelog/2024-05-20.md",
@@ -4219,7 +4539,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/5/15",
+                          "canonicalSlug": "docs/changelog/2024/5/15",
                           "date": "2024-05-15T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-5-15",
                           "pageId": "changelog/2024-05-15.md",
@@ -4228,7 +4548,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/5/13",
+                          "canonicalSlug": "docs/changelog/2024/5/13",
                           "date": "2024-05-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-5-13",
                           "pageId": "changelog/2024-05-13.md",
@@ -4237,7 +4557,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/5/12",
+                          "canonicalSlug": "docs/changelog/2024/5/12",
                           "date": "2024-05-12T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-5-12",
                           "pageId": "changelog/2024-05-12.md",
@@ -4246,7 +4566,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/5/8",
+                          "canonicalSlug": "docs/changelog/2024/5/8",
                           "date": "2024-05-08T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-5-8",
                           "pageId": "changelog/2024-05-08.md",
@@ -4264,7 +4584,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/4/30",
+                          "canonicalSlug": "docs/changelog/2024/4/30",
                           "date": "2024-04-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-4-30",
                           "pageId": "changelog/2024-04-30.md",
@@ -4273,7 +4593,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/4/26",
+                          "canonicalSlug": "docs/changelog/2024/4/26",
                           "date": "2024-04-26T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-4-26",
                           "pageId": "changelog/2024-04-26.md",
@@ -4282,7 +4602,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/4/23",
+                          "canonicalSlug": "docs/changelog/2024/4/23",
                           "date": "2024-04-23T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-4-23",
                           "pageId": "changelog/2024-04-23.md",
@@ -4291,7 +4611,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/4/18",
+                          "canonicalSlug": "docs/changelog/2024/4/18",
                           "date": "2024-04-18T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-4-18",
                           "pageId": "changelog/2024-04-18.md",
@@ -4300,7 +4620,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/4/16",
+                          "canonicalSlug": "docs/changelog/2024/4/16",
                           "date": "2024-04-16T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-4-16",
                           "pageId": "changelog/2024-04-16.md",
@@ -4309,7 +4629,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/4/13",
+                          "canonicalSlug": "docs/changelog/2024/4/13",
                           "date": "2024-04-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-4-13",
                           "pageId": "changelog/2024-04-13.md",
@@ -4318,7 +4638,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/4/5",
+                          "canonicalSlug": "docs/changelog/2024/4/5",
                           "date": "2024-04-05T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-4-5",
                           "pageId": "changelog/2024-04-05.md",
@@ -4336,7 +4656,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/3/25",
+                          "canonicalSlug": "docs/changelog/2024/3/25",
                           "date": "2024-03-25T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-3-25",
                           "pageId": "changelog/2024-03-25.md",
@@ -4345,7 +4665,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/3/18",
+                          "canonicalSlug": "docs/changelog/2024/3/18",
                           "date": "2024-03-18T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-3-18",
                           "pageId": "changelog/2024-03-18.md",
@@ -4354,7 +4674,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/3/7",
+                          "canonicalSlug": "docs/changelog/2024/3/7",
                           "date": "2024-03-07T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-3-7",
                           "pageId": "changelog/2024-03-07.md",
@@ -4363,7 +4683,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/3/6",
+                          "canonicalSlug": "docs/changelog/2024/3/6",
                           "date": "2024-03-06T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-3-6",
                           "pageId": "changelog/2024-03-06.md",
@@ -4381,7 +4701,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/2/26",
+                          "canonicalSlug": "docs/changelog/2024/2/26",
                           "date": "2024-02-26T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-2-26",
                           "pageId": "changelog/2024-02-26.md",
@@ -4390,7 +4710,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/2/14",
+                          "canonicalSlug": "docs/changelog/2024/2/14",
                           "date": "2024-02-14T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-2-14",
                           "pageId": "changelog/2024-02-14.md",
@@ -4399,7 +4719,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/2/13",
+                          "canonicalSlug": "docs/changelog/2024/2/13",
                           "date": "2024-02-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-2-13",
                           "pageId": "changelog/2024-02-13.md",
@@ -4408,7 +4728,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/2/9",
+                          "canonicalSlug": "docs/changelog/2024/2/9",
                           "date": "2024-02-09T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-2-9",
                           "pageId": "changelog/2024-02-09.md",
@@ -4417,7 +4737,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/2/8",
+                          "canonicalSlug": "docs/changelog/2024/2/8",
                           "date": "2024-02-08T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-2-8",
                           "pageId": "changelog/2024-02-08.md",
@@ -4426,7 +4746,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/2/2",
+                          "canonicalSlug": "docs/changelog/2024/2/2",
                           "date": "2024-02-02T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-2-2",
                           "pageId": "changelog/2024-02-02.md",
@@ -4444,7 +4764,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/1/30",
+                          "canonicalSlug": "docs/changelog/2024/1/30",
                           "date": "2024-01-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-1-30",
                           "pageId": "changelog/2024-01-30.md",
@@ -4453,7 +4773,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/1/19",
+                          "canonicalSlug": "docs/changelog/2024/1/19",
                           "date": "2024-01-19T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-1-19",
                           "pageId": "changelog/2024-01-19.md",
@@ -4462,7 +4782,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/1/12",
+                          "canonicalSlug": "docs/changelog/2024/1/12",
                           "date": "2024-01-12T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-1-12",
                           "pageId": "changelog/2024-01-12.md",
@@ -4471,7 +4791,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2024/1/11",
+                          "canonicalSlug": "docs/changelog/2024/1/11",
                           "date": "2024-01-11T00:00:00.000Z",
                           "id": "docs/v4.changelog.2024-1-11",
                           "pageId": "changelog/2024-01-11.md",
@@ -4498,7 +4818,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/12/22",
+                          "canonicalSlug": "docs/changelog/2023/12/22",
                           "date": "2023-12-22T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-12-22",
                           "pageId": "changelog/2023-12-22.md",
@@ -4507,7 +4827,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/12/21",
+                          "canonicalSlug": "docs/changelog/2023/12/21",
                           "date": "2023-12-21T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-12-21",
                           "pageId": "changelog/2023-12-21.md",
@@ -4516,7 +4836,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/12/13",
+                          "canonicalSlug": "docs/changelog/2023/12/13",
                           "date": "2023-12-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-12-13",
                           "pageId": "changelog/2023-12-13.md",
@@ -4525,7 +4845,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/12/12",
+                          "canonicalSlug": "docs/changelog/2023/12/12",
                           "date": "2023-12-12T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-12-12",
                           "pageId": "changelog/2023-12-12.md",
@@ -4534,7 +4854,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/12/5",
+                          "canonicalSlug": "docs/changelog/2023/12/5",
                           "date": "2023-12-05T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-12-5",
                           "pageId": "changelog/2023-12-05.md",
@@ -4543,7 +4863,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/12/4",
+                          "canonicalSlug": "docs/changelog/2023/12/4",
                           "date": "2023-12-04T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-12-4",
                           "pageId": "changelog/2023-12-04.md",
@@ -4561,7 +4881,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/28",
+                          "canonicalSlug": "docs/changelog/2023/11/28",
                           "date": "2023-11-28T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-28",
                           "pageId": "changelog/2023-11-28.md",
@@ -4570,7 +4890,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/22",
+                          "canonicalSlug": "docs/changelog/2023/11/22",
                           "date": "2023-11-22T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-22",
                           "pageId": "changelog/2023-11-22.md",
@@ -4579,7 +4899,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/21",
+                          "canonicalSlug": "docs/changelog/2023/11/21",
                           "date": "2023-11-21T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-21",
                           "pageId": "changelog/2023-11-21.md",
@@ -4588,7 +4908,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/20",
+                          "canonicalSlug": "docs/changelog/2023/11/20",
                           "date": "2023-11-20T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-20",
                           "pageId": "changelog/2023-11-20.md",
@@ -4597,7 +4917,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/17",
+                          "canonicalSlug": "docs/changelog/2023/11/17",
                           "date": "2023-11-17T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-17",
                           "pageId": "changelog/2023-11-17.md",
@@ -4606,7 +4926,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/10",
+                          "canonicalSlug": "docs/changelog/2023/11/10",
                           "date": "2023-11-10T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-10",
                           "pageId": "changelog/2023-11-10.md",
@@ -4615,7 +4935,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/9",
+                          "canonicalSlug": "docs/changelog/2023/11/9",
                           "date": "2023-11-09T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-9",
                           "pageId": "changelog/2023-11-09.md",
@@ -4624,7 +4944,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/8",
+                          "canonicalSlug": "docs/changelog/2023/11/8",
                           "date": "2023-11-08T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-8",
                           "pageId": "changelog/2023-11-08.md",
@@ -4633,7 +4953,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/11/1",
+                          "canonicalSlug": "docs/changelog/2023/11/1",
                           "date": "2023-11-01T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-11-1",
                           "pageId": "changelog/2023-11-01.md",
@@ -4651,7 +4971,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/10/30",
+                          "canonicalSlug": "docs/changelog/2023/10/30",
                           "date": "2023-10-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-10-30",
                           "pageId": "changelog/2023-10-30.md",
@@ -4660,7 +4980,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/10/17",
+                          "canonicalSlug": "docs/changelog/2023/10/17",
                           "date": "2023-10-17T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-10-17",
                           "pageId": "changelog/2023-10-17.md",
@@ -4669,7 +4989,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/10/16",
+                          "canonicalSlug": "docs/changelog/2023/10/16",
                           "date": "2023-10-16T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-10-16",
                           "pageId": "changelog/2023-10-16.md",
@@ -4678,7 +4998,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/10/10",
+                          "canonicalSlug": "docs/changelog/2023/10/10",
                           "date": "2023-10-10T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-10-10",
                           "pageId": "changelog/2023-10-10.md",
@@ -4696,7 +5016,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/9/15",
+                          "canonicalSlug": "docs/changelog/2023/9/15",
                           "date": "2023-09-15T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-9-15",
                           "pageId": "changelog/2023-09-15.md",
@@ -4705,7 +5025,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/9/13",
+                          "canonicalSlug": "docs/changelog/2023/9/13",
                           "date": "2023-09-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-9-13",
                           "pageId": "changelog/2023-09-13.md",
@@ -4723,7 +5043,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/8/31",
+                          "canonicalSlug": "docs/changelog/2023/8/31",
                           "date": "2023-08-31T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-8-31",
                           "pageId": "changelog/2023-08-31.md",
@@ -4732,7 +5052,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/8/21",
+                          "canonicalSlug": "docs/changelog/2023/8/21",
                           "date": "2023-08-21T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-8-21",
                           "pageId": "changelog/2023-08-21.md",
@@ -4741,7 +5061,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/8/15",
+                          "canonicalSlug": "docs/changelog/2023/8/15",
                           "date": "2023-08-15T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-8-15",
                           "pageId": "changelog/2023-08-15.md",
@@ -4750,7 +5070,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/8/14",
+                          "canonicalSlug": "docs/changelog/2023/8/14",
                           "date": "2023-08-14T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-8-14",
                           "pageId": "changelog/2023-08-14.md",
@@ -4768,7 +5088,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/7/30",
+                          "canonicalSlug": "docs/changelog/2023/7/30",
                           "date": "2023-07-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-7-30",
                           "pageId": "changelog/2023-07-30.md",
@@ -4777,7 +5097,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/7/25",
+                          "canonicalSlug": "docs/changelog/2023/7/25",
                           "date": "2023-07-25T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-7-25",
                           "pageId": "changelog/2023-07-25.md",
@@ -4786,7 +5106,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/7/24",
+                          "canonicalSlug": "docs/changelog/2023/7/24",
                           "date": "2023-07-24T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-7-24",
                           "pageId": "changelog/2023-07-24.md",
@@ -4795,7 +5115,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/7/17",
+                          "canonicalSlug": "docs/changelog/2023/7/17",
                           "date": "2023-07-17T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-7-17",
                           "pageId": "changelog/2023-07-17.md",
@@ -4804,7 +5124,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/7/7",
+                          "canonicalSlug": "docs/changelog/2023/7/7",
                           "date": "2023-07-07T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-7-7",
                           "pageId": "changelog/2023-07-07.md",
@@ -4813,7 +5133,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/7/5",
+                          "canonicalSlug": "docs/changelog/2023/7/5",
                           "date": "2023-07-05T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-7-5",
                           "pageId": "changelog/2023-07-05.md",
@@ -4822,7 +5142,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/7/3",
+                          "canonicalSlug": "docs/changelog/2023/7/3",
                           "date": "2023-07-03T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-7-3",
                           "pageId": "changelog/2023-07-03.md",
@@ -4840,7 +5160,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/6/27",
+                          "canonicalSlug": "docs/changelog/2023/6/27",
                           "date": "2023-06-27T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-6-27",
                           "pageId": "changelog/2023-06-27.md",
@@ -4849,7 +5169,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/6/20",
+                          "canonicalSlug": "docs/changelog/2023/6/20",
                           "date": "2023-06-20T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-6-20",
                           "pageId": "changelog/2023-06-20.md",
@@ -4858,7 +5178,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/6/13",
+                          "canonicalSlug": "docs/changelog/2023/6/13",
                           "date": "2023-06-13T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-6-13",
                           "pageId": "changelog/2023-06-13.md",
@@ -4876,7 +5196,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/5/23",
+                          "canonicalSlug": "docs/changelog/2023/5/23",
                           "date": "2023-05-23T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-5-23",
                           "pageId": "changelog/2023-05-23.md",
@@ -4885,7 +5205,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/5/17",
+                          "canonicalSlug": "docs/changelog/2023/5/17",
                           "date": "2023-05-17T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-5-17",
                           "pageId": "changelog/2023-05-17.md",
@@ -4903,7 +5223,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/4/3",
+                          "canonicalSlug": "docs/changelog/2023/4/3",
                           "date": "2023-04-03T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-4-3",
                           "pageId": "changelog/2023-04-03.md",
@@ -4921,7 +5241,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/3/30",
+                          "canonicalSlug": "docs/changelog/2023/3/30",
                           "date": "2023-03-30T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-3-30",
                           "pageId": "changelog/2023-03-30.md",
@@ -4930,7 +5250,7 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/3/2",
+                          "canonicalSlug": "docs/changelog/2023/3/2",
                           "date": "2023-03-02T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-3-2",
                           "pageId": "changelog/2023-03-02.md",
@@ -4948,7 +5268,7 @@
                     {
                       "children": [
                         {
-                          "canonicalSlug": "docs/v5/changelog/2023/2/20",
+                          "canonicalSlug": "docs/changelog/2023/2/20",
                           "date": "2023-02-20T00:00:00.000Z",
                           "id": "docs/v4.changelog.2023-2-20",
                           "pageId": "changelog/2023-02-20.md",

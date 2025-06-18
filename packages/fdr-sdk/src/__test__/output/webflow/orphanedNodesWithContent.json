@@ -1,0 +1,44 @@
+[
+  {
+    "canonicalSlug": "designer/set-page-metadata",
+    "children": [
+      {
+        "canonicalSlug": "designer/reference/check-if-page-is-draft",
+        "id": "7197c074b263065e6e85bf5c81e41440c498d8adadfc0d791608e7dbd93e1340",
+        "pageId": "products/designer/pages/Pages-Folders/managing-pages/page-settings/is-draft.mdx",
+        "slug": "designer/reference/check-if-page-is-draft",
+        "title": "Check if page is draft",
+        "type": "page"
+      },
+      {
+        "canonicalSlug": "designer/reference/set-draft",
+        "id": "26cd1cbbb6dc06422811b0d840ea6ccb690b562b4baa5c7dcb89fed97f8b48dd",
+        "pageId": "products/designer/pages/Pages-Folders/managing-pages/page-settings/set-draft.mdx",
+        "slug": "designer/reference/set-draft",
+        "title": "Set draft status",
+        "type": "page"
+      },
+      {
+        "canonicalSlug": "designer/reference/check-if-page-is-homepage",
+        "id": "dac5f830f8349c30eee198aa5154e65805e98b80bea58cb29df421b8ff70a261",
+        "pageId": "products/designer/pages/Pages-Folders/managing-pages/page-settings/is-homepage.mdx",
+        "slug": "designer/reference/check-if-page-is-homepage",
+        "title": "Check if page is homepage",
+        "type": "page"
+      },
+      {
+        "canonicalSlug": "designer/reference/check-if-page-is-password-protected",
+        "id": "6656402ff65051f478792c631814ed13000ebad2b0a1e461bb9c9dbf9ade241f",
+        "pageId": "products/designer/pages/Pages-Folders/managing-pages/page-settings/is-password-protected.mdx",
+        "slug": "designer/reference/check-if-page-is-password-protected",
+        "title": "Check if page is password protected",
+        "type": "page"
+      }
+    ],
+    "id": "4f96f3c313661a08f455fbcc30a1f8b514da6d4c593bbc105f122d063019a657",
+    "overviewPageId": "products/designer/pages/Pages-Folders/managing-pages/set-page-metadata.mdx",
+    "slug": "designer/set-page-metadata",
+    "title": "Page settings",
+    "type": "section"
+  }
+]

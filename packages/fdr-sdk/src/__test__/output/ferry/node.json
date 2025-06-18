@@ -5,6 +5,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "",
               "hidden": false,
               "id": "root.uv.overview",
               "pageId": "pages/overview.mdx",
@@ -24,6 +25,7 @@
               "children": [
                 {
                   "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "canonicalSlug": "api-reference/appointment-tasks/create-appointment-task",
                   "endpointId": "endpoint_.CreateAppointmentTask",
                   "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.CreateAppointmentTask",
                   "isResponseStream": false,
@@ -34,6 +36,7 @@
                 },
                 {
                   "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "canonicalSlug": "api-reference/appointment-tasks/get-appointment-task",
                   "endpointId": "endpoint_.GetAppointmentTask",
                   "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.GetAppointmentTask",
                   "isResponseStream": false,
@@ -44,6 +47,7 @@
                 },
                 {
                   "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "canonicalSlug": "api-reference/appointment-tasks/cancel-appointment-task",
                   "endpointId": "endpoint_.CancelAppointmentTask",
                   "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.CancelAppointmentTask",
                   "isResponseStream": false,
@@ -54,6 +58,7 @@
                 },
                 {
                   "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "canonicalSlug": "api-reference/appointment-tasks/get-all-appointment-tasks",
                   "endpointId": "endpoint_.GetAllAppointmentTasks",
                   "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.GetAllAppointmentTasks",
                   "isResponseStream": false,

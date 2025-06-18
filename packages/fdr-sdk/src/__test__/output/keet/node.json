@@ -8,6 +8,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "overview/introduction",
                     "hidden": false,
                     "id": "root.uv.overview.overview.introduction",
                     "pageId": "docs/contents/intro.mdx",
@@ -16,6 +17,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "overview/quick-start",
                     "hidden": false,
                     "id": "root.uv.overview.overview.quick-start",
                     "pageId": "docs/contents/quick-start.mdx",
@@ -30,6 +32,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "overview/integrations/overview",
                     "hidden": false,
                     "id": "root.uv.overview.overview.integrations.overview",
                     "pageId": "docs/contents/integration-overview.mdx",
@@ -38,6 +41,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "overview/integrations/custom-automations",
                     "hidden": false,
                     "id": "root.uv.overview.overview.integrations.custom-automations",
                     "pageId": "docs/contents/integration-sessions.mdx",
@@ -46,6 +50,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "overview/integrations/using-our-abstractions",
                     "hidden": false,
                     "id": "root.uv.overview.overview.integrations.using-our-abstractions",
                     "pageId": "docs/contents/integration-api-abstractions.mdx",
@@ -87,6 +92,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon/create-session",
                             "endpointId": "endpoint_integrations/amazon.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazon.createSession",
                             "isResponseStream": false,
@@ -97,6 +103,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon/get-buy-again-items",
                             "endpointId": "endpoint_integrations/amazon.getBuyAgainItems",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazon.getBuyAgainItems",
                             "isResponseStream": false,
@@ -107,6 +114,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon/buy-now",
                             "endpointId": "endpoint_integrations/amazon.buyNow",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazon.buyNow",
                             "isResponseStream": false,
@@ -117,6 +125,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon/add-to-cart",
                             "endpointId": "endpoint_integrations/amazon.addToCart",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazon.addToCart",
                             "isResponseStream": false,
@@ -127,6 +136,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon/search",
                             "endpointId": "endpoint_integrations/amazon.search",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazon.search",
                             "isResponseStream": false,
@@ -147,6 +157,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon-business/create-session",
                             "endpointId": "endpoint_integrations/amazonBusiness.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazonBusiness.createSession",
                             "isResponseStream": false,
@@ -157,6 +168,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon-business/get-orders",
                             "endpointId": "endpoint_integrations/amazonBusiness.getOrders",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazonBusiness.getOrders",
                             "isResponseStream": false,
@@ -167,6 +179,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon-business/get-buy-again-items",
                             "endpointId": "endpoint_integrations/amazonBusiness.getBuyAgainItems",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazonBusiness.getBuyAgainItems",
                             "isResponseStream": false,
@@ -177,6 +190,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon-business/buy-now",
                             "endpointId": "endpoint_integrations/amazonBusiness.buyNow",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazonBusiness.buyNow",
                             "isResponseStream": false,
@@ -197,6 +211,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/amazon-seller/create-session",
                             "endpointId": "endpoint_integrations/amazonSeller.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/amazonSeller.createSession",
                             "isResponseStream": false,
@@ -217,6 +232,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/create-session",
                             "endpointId": "endpoint_integrations/dispatchMe.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.createSession",
                             "isResponseStream": false,
@@ -227,6 +243,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/edit-customer",
                             "endpointId": "endpoint_integrations/dispatchMe.editCustomer",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.editCustomer",
                             "isResponseStream": false,
@@ -237,6 +254,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/create-customer",
                             "endpointId": "endpoint_integrations/dispatchMe.createCustomer",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.createCustomer",
                             "isResponseStream": false,
@@ -247,6 +265,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/get-customers",
                             "endpointId": "endpoint_integrations/dispatchMe.getCustomers",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.getCustomers",
                             "isResponseStream": false,
@@ -257,6 +276,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/get-account-organizations",
                             "endpointId": "endpoint_integrations/dispatchMe.getAccountOrganizations",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.getAccountOrganizations",
                             "isResponseStream": false,
@@ -267,6 +287,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/get-jobs",
                             "endpointId": "endpoint_integrations/dispatchMe.getJobs",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.getJobs",
                             "isResponseStream": false,
@@ -277,6 +298,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/get-users",
                             "endpointId": "endpoint_integrations/dispatchMe.getUsers",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.getUsers",
                             "isResponseStream": false,
@@ -287,6 +309,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/create-appointment",
                             "endpointId": "endpoint_integrations/dispatchMe.createAppointment",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.createAppointment",
                             "isResponseStream": false,
@@ -297,6 +320,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/dispatch-me/create-note",
                             "endpointId": "endpoint_integrations/dispatchMe.createNote",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/dispatchMe.createNote",
                             "isResponseStream": false,
@@ -317,6 +341,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/facebook/create-session",
                             "endpointId": "endpoint_integrations/facebook.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/facebook.createSession",
                             "isResponseStream": false,
@@ -327,6 +352,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/facebook/post-group-message",
                             "endpointId": "endpoint_integrations/facebook.postGroupMessage",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/facebook.postGroupMessage",
                             "isResponseStream": false,
@@ -337,6 +363,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/facebook/join-group",
                             "endpointId": "endpoint_integrations/facebook.joinGroup",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/facebook.joinGroup",
                             "isResponseStream": false,
@@ -347,6 +374,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/facebook/search-groups",
                             "endpointId": "endpoint_integrations/facebook.searchGroups",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/facebook.searchGroups",
                             "isResponseStream": false,
@@ -367,6 +395,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/instagram/create-session",
                             "endpointId": "endpoint_integrations/instagram.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/instagram.createSession",
                             "isResponseStream": false,
@@ -387,6 +416,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/create-session",
                             "endpointId": "endpoint_integrations/linkedin.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.createSession",
                             "isResponseStream": false,
@@ -397,6 +427,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/get-connection-invitations",
                             "endpointId": "endpoint_integrations/linkedin.getConnectionInvitations",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.getConnectionInvitations",
                             "isResponseStream": false,
@@ -407,6 +438,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/accept-connection-invitation",
                             "endpointId": "endpoint_integrations/linkedin.acceptConnectionInvitation",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.acceptConnectionInvitation",
                             "isResponseStream": false,
@@ -417,6 +449,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/create-post",
                             "endpointId": "endpoint_integrations/linkedin.createPost",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.createPost",
                             "isResponseStream": false,
@@ -427,6 +460,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/search",
                             "endpointId": "endpoint_integrations/linkedin.search",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.search",
                             "isResponseStream": false,
@@ -437,6 +471,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/get-connections",
                             "endpointId": "endpoint_integrations/linkedin.getConnections",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.getConnections",
                             "isResponseStream": false,
@@ -447,6 +482,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/send-message",
                             "endpointId": "endpoint_integrations/linkedin.sendMessage",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.sendMessage",
                             "isResponseStream": false,
@@ -457,6 +493,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/linkedin/get-messages",
                             "endpointId": "endpoint_integrations/linkedin.getMessages",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/linkedin.getMessages",
                             "isResponseStream": false,
@@ -477,6 +514,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/create-session",
                             "endpointId": "endpoint_integrations/ppp.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.createSession",
                             "isResponseStream": false,
@@ -487,6 +525,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/create-customer",
                             "endpointId": "endpoint_integrations/ppp.createCustomer",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.createCustomer",
                             "isResponseStream": false,
@@ -497,6 +536,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/search-customer-details",
                             "endpointId": "endpoint_integrations/ppp.searchCustomerDetails",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.searchCustomerDetails",
                             "isResponseStream": false,
@@ -507,6 +547,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/create-appointment",
                             "endpointId": "endpoint_integrations/ppp.createAppointment",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.createAppointment",
                             "isResponseStream": false,
@@ -517,6 +558,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-billing-terms",
                             "endpointId": "endpoint_integrations/ppp.getBillingTerms",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getBillingTerms",
                             "isResponseStream": false,
@@ -527,6 +569,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-invoice-types",
                             "endpointId": "endpoint_integrations/ppp.getInvoiceTypes",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getInvoiceTypes",
                             "isResponseStream": false,
@@ -537,6 +580,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-customer-types",
                             "endpointId": "endpoint_integrations/ppp.getCustomerTypes",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getCustomerTypes",
                             "isResponseStream": false,
@@ -547,6 +591,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-arrival-window",
                             "endpointId": "endpoint_integrations/ppp.getArrivalWindow",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getArrivalWindow",
                             "isResponseStream": false,
@@ -557,6 +602,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-service-call-type",
                             "endpointId": "endpoint_integrations/ppp.getServiceCallType",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getServiceCallType",
                             "isResponseStream": false,
@@ -567,6 +613,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-diagnostic-fee",
                             "endpointId": "endpoint_integrations/ppp.getDiagnosticFee",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getDiagnosticFee",
                             "isResponseStream": false,
@@ -577,6 +624,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-service-call-status",
                             "endpointId": "endpoint_integrations/ppp.getServiceCallStatus",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getServiceCallStatus",
                             "isResponseStream": false,
@@ -587,6 +635,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-lead-source",
                             "endpointId": "endpoint_integrations/ppp.getLeadSource",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getLeadSource",
                             "isResponseStream": false,
@@ -597,6 +646,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-board-ids",
                             "endpointId": "endpoint_integrations/ppp.getBoardIds",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getBoardIds",
                             "isResponseStream": false,
@@ -607,6 +657,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-technicians",
                             "endpointId": "endpoint_integrations/ppp.getTechnicians",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getTechnicians",
                             "isResponseStream": false,
@@ -617,6 +668,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/ppp/get-calendar",
                             "endpointId": "endpoint_integrations/ppp.getCalendar",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/ppp.getCalendar",
                             "isResponseStream": false,
@@ -637,6 +689,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/servicebox/create-session",
                             "endpointId": "endpoint_integrations/servicebox.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/servicebox.createSession",
                             "isResponseStream": false,
@@ -647,6 +700,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/servicebox/get-receptionnaires",
                             "endpointId": "endpoint_integrations/servicebox.getReceptionnaires",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/servicebox.getReceptionnaires",
                             "isResponseStream": false,
@@ -657,6 +711,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/servicebox/get-equippes",
                             "endpointId": "endpoint_integrations/servicebox.getEquippes",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/servicebox.getEquippes",
                             "isResponseStream": false,
@@ -667,6 +722,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/servicebox/get-bar-graph",
                             "endpointId": "endpoint_integrations/servicebox.getBarGraph",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/servicebox.getBarGraph",
                             "isResponseStream": false,
@@ -677,6 +733,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/servicebox/get-calendar",
                             "endpointId": "endpoint_integrations/servicebox.getCalendar",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/servicebox.getCalendar",
                             "isResponseStream": false,
@@ -697,6 +754,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/toast/create-session",
                             "endpointId": "endpoint_integrations/toast.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/toast.createSession",
                             "isResponseStream": false,
@@ -707,6 +765,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/toast/get-menu",
                             "endpointId": "endpoint_integrations/toast.getMenu",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/toast.getMenu",
                             "isResponseStream": false,
@@ -727,6 +786,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/uber/create-session",
                             "endpointId": "endpoint_integrations/uber.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/uber.createSession",
                             "isResponseStream": false,
@@ -737,6 +797,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/uber/order-ride",
                             "endpointId": "endpoint_integrations/uber.orderRide",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/uber.orderRide",
                             "isResponseStream": false,
@@ -757,6 +818,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/venmo/create-session",
                             "endpointId": "endpoint_integrations/venmo.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/venmo.createSession",
                             "isResponseStream": false,
@@ -767,6 +829,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/venmo/get-transactions",
                             "endpointId": "endpoint_integrations/venmo.getTransactions",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/venmo.getTransactions",
                             "isResponseStream": false,
@@ -787,6 +850,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/create-session",
                             "endpointId": "endpoint_integrations/vin.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.createSession",
                             "isResponseStream": false,
@@ -797,6 +861,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/create-sales-appointment",
                             "endpointId": "endpoint_integrations/vin.createSalesAppointment",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.createSalesAppointment",
                             "isResponseStream": false,
@@ -807,6 +872,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/get-appointments",
                             "endpointId": "endpoint_integrations/vin.getAppointments",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.getAppointments",
                             "isResponseStream": false,
@@ -817,6 +883,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/get-users",
                             "endpointId": "endpoint_integrations/vin.getUsers",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.getUsers",
                             "isResponseStream": false,
@@ -827,6 +894,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/get-dealers",
                             "endpointId": "endpoint_integrations/vin.getDealers",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.getDealers",
                             "isResponseStream": false,
@@ -837,6 +905,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/search-customers",
                             "endpointId": "endpoint_integrations/vin.searchCustomers",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.searchCustomers",
                             "isResponseStream": false,
@@ -847,6 +916,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/get-vehicles",
                             "endpointId": "endpoint_integrations/vin.getVehicles",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.getVehicles",
                             "isResponseStream": false,
@@ -857,6 +927,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/vin/create-customer",
                             "endpointId": "endpoint_integrations/vin.createCustomer",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/vin.createCustomer",
                             "isResponseStream": false,
@@ -877,6 +948,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/whatsapp/create-session",
                             "endpointId": "endpoint_integrations/whatsapp.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/whatsapp.createSession",
                             "isResponseStream": false,
@@ -887,6 +959,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/whatsapp/send-message",
                             "endpointId": "endpoint_integrations/whatsapp.sendMessage",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/whatsapp.sendMessage",
                             "isResponseStream": false,
@@ -897,6 +970,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/whatsapp/change-status",
                             "endpointId": "endpoint_integrations/whatsapp.changeStatus",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/whatsapp.changeStatus",
                             "isResponseStream": false,
@@ -907,6 +981,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/whatsapp/read-messages",
                             "endpointId": "endpoint_integrations/whatsapp.readMessages",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/whatsapp.readMessages",
                             "isResponseStream": false,
@@ -927,6 +1002,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/x/create-session",
                             "endpointId": "endpoint_integrations/x.createSession",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/x.createSession",
                             "isResponseStream": false,
@@ -937,6 +1013,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/x/get-followers",
                             "endpointId": "endpoint_integrations/x.getFollowers",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/x.getFollowers",
                             "isResponseStream": false,
@@ -947,6 +1024,7 @@
                           },
                           {
                             "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                            "canonicalSlug": "api-reference/api-reference/integrations/x/get-following-tweets",
                             "endpointId": "endpoint_integrations/x.getFollowingTweets",
                             "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_integrations/x.getFollowingTweets",
                             "isResponseStream": false,
@@ -974,6 +1052,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                        "canonicalSlug": "api-reference/api-reference/link/create-link-token",
                         "endpointId": "endpoint_link.createLinkToken",
                         "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_link.createLinkToken",
                         "isResponseStream": false,
@@ -994,6 +1073,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                        "canonicalSlug": "api-reference/api-reference/linked-accounts/get-linked-accounts",
                         "endpointId": "endpoint_linked-accounts.getLinkedAccounts",
                         "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_linked-accounts.getLinkedAccounts",
                         "isResponseStream": false,
@@ -1004,6 +1084,7 @@
                       },
                       {
                         "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                        "canonicalSlug": "api-reference/api-reference/linked-accounts/get-linked-account",
                         "endpointId": "endpoint_linked-accounts.getLinkedAccount",
                         "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_linked-accounts.getLinkedAccount",
                         "isResponseStream": false,
@@ -1014,6 +1095,7 @@
                       },
                       {
                         "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                        "canonicalSlug": "api-reference/api-reference/linked-accounts/delete-linked-account",
                         "endpointId": "endpoint_linked-accounts.deleteLinkedAccount",
                         "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_linked-accounts.deleteLinkedAccount",
                         "isResponseStream": false,
@@ -1024,6 +1106,7 @@
                       },
                       {
                         "apiDefinitionId": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
+                        "canonicalSlug": "api-reference/api-reference/linked-accounts/get-token",
                         "endpointId": "endpoint_linked-accounts.getToken",
                         "id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a:endpoint_linked-accounts.getToken",
                         "isResponseStream": false,

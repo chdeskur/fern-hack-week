@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c00eece51ebef3362376bde4956e51bdb829a94e2cce394fe37bc2b2ec937f7e",
+    "slug": "data",
+    "title": "v2",
+    "type": "version"
+  },
+  {
+    "id": "10900dbc911ced10866df2342c4f0afba071f436222e3174dcbbfdad54ee7983",
+    "slug": "data/reference",
+    "title": "API Reference",
+    "type": "apiReference"
+  },
+  {
+    "id": "a3a5518b2c2f462bd6b3f33576ce0cbb07c1f83a7ab8b91750a5720e8c6d2698",
+    "slug": "data/examples",
+    "title": "Examples",
+    "type": "tab"
+  },
+  {
+    "id": "10900dbc911ced10866df2342c4f0afba071f436222e3174dcbbfdad54ee7983",
+    "slug": "data/v2.0.0/reference",
+    "title": "API Reference",
+    "type": "apiReference"
+  },
+  {
+    "id": "a3a5518b2c2f462bd6b3f33576ce0cbb07c1f83a7ab8b91750a5720e8c6d2698",
+    "slug": "data/v2.0.0/examples",
+    "title": "Examples",
+    "type": "tab"
+  },
+  {
+    "id": "3d446d337ec09b6742b02ef994e6e04b28651f38935dbf2a2c2bc1b6712adb34",
+    "slug": "data/v2.0.0-beta/reference",
+    "title": "API Reference",
+    "type": "apiReference"
+  },
+  {
+    "id": "44ae46713c95b08b42777abb749a5fa371a095105561a3e9a646dd785e7a2c15",
+    "slug": "data/v1.0.0/reference",
+    "title": "Webflow Data API",
+    "type": "apiReference"
+  },
+  {
+    "id": "4f96f3c313661a08f455fbcc30a1f8b514da6d4c593bbc105f122d063019a657",
+    "slug": "designer/set-page-metadata",
+    "title": "Page settings",
+    "type": "section"
+  },
+  {
+    "id": "6c53173b2ae8c5278e3c628b365ee1df051245ac4c4622de1cbe5fca9276625f",
+    "slug": "designer/examples",
+    "title": "Examples",
+    "type": "tab"
+  },
+  {
+    "id": "4610931c4048b7dd14ceaeb22a9f8d0c3905aee028d0635ef36f0aa2604b4f31",
+    "slug": "webflow-cloud/examples",
+    "title": "Examples",
+    "type": "tab"
+  }
+]

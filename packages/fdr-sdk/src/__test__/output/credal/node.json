@@ -5,6 +5,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "getting-started/overview",
               "hidden": false,
               "id": "root.uv.getting-started.overview",
               "pageId": "docs/pages/guides/overview.mdx",
@@ -15,6 +16,7 @@
             {
               "children": [
                 {
+                  "canonicalSlug": "getting-started/copilots/quick-start",
                   "hidden": false,
                   "id": "root.uv.getting-started.copilots.quick-start",
                   "pageId": "docs/pages/guides/copilots/quick-start.mdx",
@@ -23,6 +25,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "getting-started/copilots/in-depth-guide",
                   "hidden": false,
                   "id": "root.uv.getting-started.copilots.in-depth-guide",
                   "pageId": "docs/pages/guides/copilots/in-depth-guide.mdx",
@@ -40,6 +43,7 @@
               "type": "section"
             },
             {
+              "canonicalSlug": "getting-started/bulk-analysis",
               "hidden": false,
               "id": "root.uv.getting-started.bulk-analysis",
               "pageId": "docs/pages/guides/bulk-analysis.mdx",
@@ -48,6 +52,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "getting-started/permissions-service",
               "hidden": false,
               "id": "root.uv.getting-started.permissions-service",
               "pageId": "docs/pages/guides/permissions-service.mdx",
@@ -56,6 +61,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "getting-started/o-auth",
               "hidden": false,
               "id": "root.uv.getting-started.o-auth",
               "pageId": "docs/pages/guides/oauth.mdx",
@@ -64,6 +70,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "getting-started/prompting",
               "hidden": false,
               "id": "root.uv.getting-started.prompting",
               "pageId": "docs/pages/guides/prompting.mdx",
@@ -89,6 +96,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/copilots/create-copilot",
                   "endpointId": "endpoint_copilots.createCopilot",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.createCopilot",
                   "isResponseStream": false,
@@ -99,6 +107,7 @@
                 },
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/copilots/create-conversation",
                   "endpointId": "endpoint_copilots.createConversation",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.createConversation",
                   "isResponseStream": false,
@@ -109,6 +118,7 @@
                 },
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/copilots/provide-message-feedback",
                   "endpointId": "endpoint_copilots.provideMessageFeedback",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.provideMessageFeedback",
                   "isResponseStream": false,
@@ -119,6 +129,7 @@
                 },
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/copilots/send-message",
                   "endpointId": "endpoint_copilots.sendMessage",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.sendMessage",
                   "isResponseStream": false,
@@ -130,6 +141,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/copilots/stream-message",
                   "endpointId": "endpoint_copilots.streamMessage",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.streamMessage",
                   "isResponseStream": true,
@@ -141,6 +153,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/copilots/add-collection-to-copilot",
                   "endpointId": "endpoint_copilots.addCollectionToCopilot",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.addCollectionToCopilot",
                   "isResponseStream": false,
@@ -152,6 +165,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/copilots/remove-collection-from-copilot",
                   "endpointId": "endpoint_copilots.removeCollectionFromCopilot",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.removeCollectionFromCopilot",
                   "isResponseStream": false,
@@ -163,6 +177,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/copilots/update-configuration",
                   "endpointId": "endpoint_copilots.updateConfiguration",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.updateConfiguration",
                   "isResponseStream": false,
@@ -174,6 +189,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/copilots/delete-copilot",
                   "endpointId": "endpoint_copilots.deleteCopilot",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.deleteCopilot",
                   "isResponseStream": false,
@@ -194,6 +210,7 @@
               "children": [
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/document-catalog/upload-document-contents",
                   "endpointId": "endpoint_documentCatalog.uploadDocumentContents",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCatalog.uploadDocumentContents",
                   "isResponseStream": false,
@@ -204,6 +221,7 @@
                 },
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/document-catalog/metadata",
                   "endpointId": "endpoint_documentCatalog.metadata",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCatalog.metadata",
                   "isResponseStream": false,
@@ -224,6 +242,7 @@
               "children": [
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/document-collections/add-documents-to-collection",
                   "endpointId": "endpoint_documentCollections.addDocumentsToCollection",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.addDocumentsToCollection",
                   "isResponseStream": false,
@@ -235,6 +254,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/document-collections/remove-documents-from-collection",
                   "endpointId": "endpoint_documentCollections.removeDocumentsFromCollection",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.removeDocumentsFromCollection",
                   "isResponseStream": false,
@@ -246,6 +266,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/document-collections/create-collection",
                   "endpointId": "endpoint_documentCollections.createCollection",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.createCollection",
                   "isResponseStream": false,
@@ -257,6 +278,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/document-collections/delete-collection",
                   "endpointId": "endpoint_documentCollections.deleteCollection",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.deleteCollection",
                   "isResponseStream": false,
@@ -268,6 +290,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/document-collections/create-mongo-collection-sync",
                   "endpointId": "endpoint_documentCollections.createMongoCollectionSync",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.createMongoCollectionSync",
                   "isResponseStream": false,
@@ -279,6 +302,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/document-collections/update-mongo-collection-sync",
                   "endpointId": "endpoint_documentCollections.updateMongoCollectionSync",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.updateMongoCollectionSync",
                   "isResponseStream": false,
@@ -300,6 +324,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/permissions-service/check-resource-authorization-for-user",
                   "endpointId": "endpoint_permissionsService.checkResourceAuthorizationForUser",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_permissionsService.checkResourceAuthorizationForUser",
                   "isResponseStream": false,
@@ -311,6 +336,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/permissions-service/check-bulk-resources-authorization-for-user",
                   "endpointId": "endpoint_permissionsService.checkBulkResourcesAuthorizationForUser",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_permissionsService.checkBulkResourcesAuthorizationForUser",
                   "isResponseStream": false,
@@ -322,6 +348,7 @@
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
                   "availability": "Beta",
+                  "canonicalSlug": "api-reference/permissions-service/list-cached-authorized-resources-for-user",
                   "endpointId": "endpoint_permissionsService.listCachedAuthorizedResourcesForUser",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_permissionsService.listCachedAuthorizedResourcesForUser",
                   "isResponseStream": false,
@@ -342,6 +369,7 @@
               "children": [
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/search/search-document-collection",
                   "endpointId": "endpoint_search.searchDocumentCollection",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_search.searchDocumentCollection",
                   "isResponseStream": false,
@@ -362,6 +390,7 @@
               "children": [
                 {
                   "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "canonicalSlug": "api-reference/users/metadata",
                   "endpointId": "endpoint_users.metadata",
                   "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_users.metadata",
                   "isResponseStream": false,

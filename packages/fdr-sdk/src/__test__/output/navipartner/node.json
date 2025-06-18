@@ -5,6 +5,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "introduction",
               "hidden": false,
               "icon": "fa-solid house",
               "id": "root.uv.introduction",
@@ -14,6 +15,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "url-paths",
               "hidden": false,
               "icon": "fa-solid fa-link",
               "id": "root.uv.url-and-path-parameters",
@@ -23,6 +25,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "authenticate",
               "hidden": false,
               "icon": "fa-solid fa-key",
               "id": "root.uv.authentication",
@@ -32,6 +35,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "errors",
               "hidden": false,
               "icon": "fa-solid fa-bug",
               "id": "root.uv.errors",
@@ -41,6 +45,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "error-codes",
               "hidden": false,
               "icon": "fa-solid fa-rectangle-list",
               "id": "root.uv.error-codes",
@@ -50,6 +55,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "crane",
               "hidden": true,
               "icon": "fa-brands fa-docker",
               "id": "root.uv.crane",
@@ -64,15 +70,19 @@
         },
         {
           "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+          "canonicalSlug": "api-reference",
           "children": [
             {
               "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+              "canonicalSlug": "api-reference/system-services",
               "children": [
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/system-services/companies",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/system-services/companies/get-companies",
                       "endpointId": "endpoint_systemservices/companies.getCompanies",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d:endpoint_systemservices/companies.getCompanies",
                       "isResponseStream": false,
@@ -91,9 +101,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/system-services/helloworld",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/system-services/helloworld/get-hello-world",
                       "endpointId": "endpoint_systemservices/helloworld.getHelloWorld",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d:endpoint_systemservices/helloworld.getHelloWorld",
                       "isResponseStream": false,
@@ -120,8 +132,10 @@
             },
             {
               "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+              "canonicalSlug": "api-reference/ticketing",
               "children": [
                 {
+                  "canonicalSlug": "api-reference/ticketing/getting-started",
                   "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.page:docs\\pages\\ticketing\\get-started.mdx",
                   "pageId": "docs\\pages\\ticketing\\get-started.mdx",
                   "slug": "api-reference/ticketing/getting-started",
@@ -130,9 +144,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/ticketing/service-catalog",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-catalog/get-catalog",
                       "endpointId": "endpoint_ticketing/service-catalog.getCatalog",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-catalog.getCatalog",
                       "isResponseStream": false,
@@ -151,9 +167,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/ticketing/service-capacity",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-capacity/get-capacity",
                       "endpointId": "endpoint_ticketing/service-capacity.getCapacity",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-capacity.getCapacity",
                       "isResponseStream": false,
@@ -172,9 +190,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/ticketing/service-ticket",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-ticket/get-ticket",
                       "endpointId": "endpoint_ticketing/service-ticket.getTicket",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-ticket.getTicket",
                       "isResponseStream": false,
@@ -185,6 +205,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-ticket/revoke-ticket",
                       "endpointId": "endpoint_ticketing/service-ticket.revokeTicket",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-ticket.revokeTicket",
                       "isResponseStream": false,
@@ -195,6 +216,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-ticket/validate-arrival",
                       "endpointId": "endpoint_ticketing/service-ticket.validateArrival",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-ticket.validateArrival",
                       "isResponseStream": false,
@@ -205,6 +227,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-ticket/validate-departure",
                       "endpointId": "endpoint_ticketing/service-ticket.validateDeparture",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-ticket.validateDeparture",
                       "isResponseStream": false,
@@ -215,6 +238,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-ticket/validate-member-arrival",
                       "endpointId": "endpoint_ticketing/service-ticket.validateMemberArrival",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-ticket.validateMemberArrival",
                       "isResponseStream": false,
@@ -225,6 +249,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-ticket/send-to-wallet",
                       "endpointId": "endpoint_ticketing/service-ticket.sendToWallet",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-ticket.sendToWallet",
                       "isResponseStream": false,
@@ -235,6 +260,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-ticket/exchange-for-coupon",
                       "endpointId": "endpoint_ticketing/service-ticket.exchangeForCoupon",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-ticket.exchangeForCoupon",
                       "isResponseStream": false,
@@ -253,9 +279,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/ticketing/service-reservations",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-reservations/create-reservation",
                       "endpointId": "endpoint_ticketing/service-reservations.createReservation",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-reservations.createReservation",
                       "isResponseStream": false,
@@ -266,6 +294,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-reservations/update-reservation",
                       "endpointId": "endpoint_ticketing/service-reservations.updateReservation",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-reservations.updateReservation",
                       "isResponseStream": false,
@@ -276,6 +305,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-reservations/cancel-reservation",
                       "endpointId": "endpoint_ticketing/service-reservations.cancelReservation",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-reservations.cancelReservation",
                       "isResponseStream": false,
@@ -286,6 +316,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-reservations/pre-confirm-reservation",
                       "endpointId": "endpoint_ticketing/service-reservations.preConfirmReservation",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-reservations.preConfirmReservation",
                       "isResponseStream": false,
@@ -296,6 +327,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-reservations/confirm-reservation",
                       "endpointId": "endpoint_ticketing/service-reservations.confirmReservation",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-reservations.confirmReservation",
                       "isResponseStream": false,
@@ -306,6 +338,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-reservations/get-reservation",
                       "endpointId": "endpoint_ticketing/service-reservations.getReservation",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-reservations.getReservation",
                       "isResponseStream": false,
@@ -316,6 +349,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/ticketing/service-reservations/get-tickets",
                       "endpointId": "endpoint_ticketing/service-reservations.getTickets",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_ticketing/service-reservations.getTickets",
                       "isResponseStream": false,
@@ -342,12 +376,15 @@
             },
             {
               "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+              "canonicalSlug": "api-reference/memberships",
               "children": [
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/memberships/service-catalog",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-catalog/get-catalog",
                       "endpointId": "endpoint_memberships/service-catalog.getCatalog",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-catalog.getCatalog",
                       "isResponseStream": false,
@@ -366,9 +403,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/memberships/service-membership",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-membership/create-membership",
                       "endpointId": "endpoint_memberships/service-membership.createMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-membership.createMembership",
                       "isResponseStream": false,
@@ -379,6 +418,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-membership/get-membership-id",
                       "endpointId": "endpoint_memberships/service-membership.getMembershipId",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-membership.getMembershipId",
                       "isResponseStream": false,
@@ -389,6 +429,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-membership/get-membership-number",
                       "endpointId": "endpoint_memberships/service-membership.getMembershipNumber",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-membership.getMembershipNumber",
                       "isResponseStream": false,
@@ -399,6 +440,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-membership/block-membership",
                       "endpointId": "endpoint_memberships/service-membership.blockMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-membership.blockMembership",
                       "isResponseStream": false,
@@ -409,6 +451,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-membership/unblock-membership",
                       "endpointId": "endpoint_memberships/service-membership.unblockMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-membership.unblockMembership",
                       "isResponseStream": false,
@@ -419,6 +462,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-membership/get-members",
                       "endpointId": "endpoint_memberships/service-membership.getMembers",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-membership.getMembers",
                       "isResponseStream": false,
@@ -437,9 +481,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/memberships/service-member",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/get-member-id",
                       "endpointId": "endpoint_memberships/service-member.getMemberId",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.getMemberId",
                       "isResponseStream": false,
@@ -450,6 +496,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/get-member-number",
                       "endpointId": "endpoint_memberships/service-member.getMemberNumber",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.getMemberNumber",
                       "isResponseStream": false,
@@ -460,6 +507,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/add-member",
                       "endpointId": "endpoint_memberships/service-member.addMember",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.addMember",
                       "isResponseStream": false,
@@ -470,6 +518,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/update-member",
                       "endpointId": "endpoint_memberships/service-member.updateMember",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.updateMember",
                       "isResponseStream": false,
@@ -480,6 +529,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/get-member-image",
                       "endpointId": "endpoint_memberships/service-member.getMemberImage",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.getMemberImage",
                       "isResponseStream": false,
@@ -490,6 +540,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/set-member-image",
                       "endpointId": "endpoint_memberships/service-member.setMemberImage",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.setMemberImage",
                       "isResponseStream": false,
@@ -500,6 +551,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/find-members",
                       "endpointId": "endpoint_memberships/service-member.findMembers",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.findMembers",
                       "isResponseStream": false,
@@ -510,6 +562,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/block-member",
                       "endpointId": "endpoint_memberships/service-member.blockMember",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.blockMember",
                       "isResponseStream": false,
@@ -520,6 +573,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-member/unblock-member",
                       "endpointId": "endpoint_memberships/service-member.unblockMember",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-member.unblockMember",
                       "isResponseStream": false,
@@ -538,9 +592,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/memberships/service-card",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-card/get-card-id",
                       "endpointId": "endpoint_memberships/service-card.getCardId",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-card.getCardId",
                       "isResponseStream": false,
@@ -551,6 +607,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-card/get-card-number",
                       "endpointId": "endpoint_memberships/service-card.getCardNumber",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-card.getCardNumber",
                       "isResponseStream": false,
@@ -561,6 +618,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-card/add-card",
                       "endpointId": "endpoint_memberships/service-card.addCard",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-card.addCard",
                       "isResponseStream": false,
@@ -571,6 +629,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-card/replace-card",
                       "endpointId": "endpoint_memberships/service-card.replaceCard",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-card.replaceCard",
                       "isResponseStream": false,
@@ -581,6 +640,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-card/register-arrival",
                       "endpointId": "endpoint_memberships/service-card.registerArrival",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-card.registerArrival",
                       "isResponseStream": false,
@@ -591,6 +651,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-card/send-to-wallet",
                       "endpointId": "endpoint_memberships/service-card.sendToWallet",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-card.sendToWallet",
                       "isResponseStream": false,
@@ -609,9 +670,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/memberships/service-lifecycle",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/get-membership-history",
                       "endpointId": "endpoint_memberships/service-lifecycle.getMembershipHistory",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.getMembershipHistory",
                       "isResponseStream": false,
@@ -622,6 +685,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/activate-membership",
                       "endpointId": "endpoint_memberships/service-lifecycle.activateMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.activateMembership",
                       "isResponseStream": false,
@@ -632,6 +696,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/cancel-membership",
                       "endpointId": "endpoint_memberships/service-lifecycle.cancelMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.cancelMembership",
                       "isResponseStream": false,
@@ -642,6 +707,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/get-renewal-options",
                       "endpointId": "endpoint_memberships/service-lifecycle.getRenewalOptions",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.getRenewalOptions",
                       "isResponseStream": false,
@@ -652,6 +718,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/renew-membership",
                       "endpointId": "endpoint_memberships/service-lifecycle.renewMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.renewMembership",
                       "isResponseStream": false,
@@ -662,6 +729,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/get-upgrade-options",
                       "endpointId": "endpoint_memberships/service-lifecycle.getUpgradeOptions",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.getUpgradeOptions",
                       "isResponseStream": false,
@@ -672,6 +740,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/upgrade-membership",
                       "endpointId": "endpoint_memberships/service-lifecycle.upgradeMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.upgradeMembership",
                       "isResponseStream": false,
@@ -682,6 +751,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/get-extend-options",
                       "endpointId": "endpoint_memberships/service-lifecycle.getExtendOptions",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.getExtendOptions",
                       "isResponseStream": false,
@@ -692,6 +762,7 @@
                     },
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-lifecycle/extend-membership",
                       "endpointId": "endpoint_memberships/service-lifecycle.extendMembership",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-lifecycle.extendMembership",
                       "isResponseStream": false,
@@ -710,9 +781,11 @@
                 },
                 {
                   "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                  "canonicalSlug": "api-reference/memberships/service-misc",
                   "children": [
                     {
                       "apiDefinitionId": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
+                      "canonicalSlug": "api-reference/memberships/service-misc/resolve-identifier",
                       "endpointId": "endpoint_memberships/service-misc.resolveIdentifier",
                       "id": "e08c5491-f85f-4c3a-8402-21f1e34c253d.subpackage_memberships/service-misc.resolveIdentifier",
                       "isResponseStream": false,

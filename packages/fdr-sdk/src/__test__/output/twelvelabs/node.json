@@ -8,6 +8,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guides/get-started/introduction",
                     "hidden": false,
                     "id": "root.uv.guides.guides.get-started.introduction",
                     "pageId": "docs/pages/introduction.mdx",
@@ -16,6 +17,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guides/get-started/platform-overview",
                     "hidden": false,
                     "id": "root.uv.guides.guides.get-started.platform-overview",
                     "pageId": "docs/pages/platform-overview.mdx",
@@ -24,6 +26,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guides/get-started/quickstart",
                     "hidden": false,
                     "id": "root.uv.guides.guides.get-started.quickstart",
                     "pageId": "docs/pages/quickstart.mdx",
@@ -43,6 +46,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "guides/guides/authentication",
                     "hidden": false,
                     "id": "root.uv.guides.guides.guides.authentication",
                     "pageId": "docs/pages/authentication.mdx",
@@ -51,6 +55,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guides/guides/create-indexes",
                     "hidden": false,
                     "id": "root.uv.guides.guides.guides.create-indexes",
                     "pageId": "docs/pages/create-indexes.mdx",
@@ -59,6 +64,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "guides/guides/upload-videos",
                     "hidden": false,
                     "id": "root.uv.guides.guides.guides.upload-videos",
                     "pageId": "docs/pages/upload-videos.mdx",
@@ -90,12 +96,14 @@
             "children": [
               {
                 "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                "canonicalSlug": "api-reference/api-reference",
                 "children": [
                   {
                     "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/tasks/list",
                         "endpointId": "endpoint_tasks.list",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_tasks.list",
                         "isResponseStream": false,
@@ -106,6 +114,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/tasks/create",
                         "endpointId": "endpoint_tasks.create",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_tasks.create",
                         "isResponseStream": false,
@@ -116,6 +125,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/tasks/retrieve",
                         "endpointId": "endpoint_tasks.retrieve",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_tasks.retrieve",
                         "isResponseStream": false,
@@ -126,6 +136,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/tasks/delete",
                         "endpointId": "endpoint_tasks.delete",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_tasks.delete",
                         "isResponseStream": false,
@@ -136,6 +147,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/tasks/status",
                         "endpointId": "endpoint_tasks.status",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_tasks.status",
                         "isResponseStream": false,
@@ -146,6 +158,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/tasks/transfers",
                         "endpointId": "endpoint_tasks.transfers",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_tasks.transfers",
                         "isResponseStream": false,
@@ -166,6 +179,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/upload-videos/cloud-to-cloud-import-videos",
                         "endpointId": "endpoint_uploadVideos.cloud-to-cloud-import-videos",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_uploadVideos.cloud-to-cloud-import-videos",
                         "isResponseStream": false,
@@ -176,6 +190,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-status",
                         "endpointId": "endpoint_uploadVideos.cloud-to-cloud-retrieve-status",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_uploadVideos.cloud-to-cloud-retrieve-status",
                         "isResponseStream": false,
@@ -186,6 +201,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-import-logs",
                         "endpointId": "endpoint_uploadVideos.cloud-to-cloud-retrieve-import-logs",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_uploadVideos.cloud-to-cloud-retrieve-import-logs",
                         "isResponseStream": false,
@@ -206,6 +222,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/indexes/list",
                         "endpointId": "endpoint_indexes.list",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes.list",
                         "isResponseStream": false,
@@ -216,6 +233,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/indexes/create",
                         "endpointId": "endpoint_indexes.create",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes.create",
                         "isResponseStream": false,
@@ -226,6 +244,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/indexes/retrieve",
                         "endpointId": "endpoint_indexes.retrieve",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes.retrieve",
                         "isResponseStream": false,
@@ -236,6 +255,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/indexes/update",
                         "endpointId": "endpoint_indexes.update",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes.update",
                         "isResponseStream": false,
@@ -246,6 +266,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/indexes/delete",
                         "endpointId": "endpoint_indexes.delete",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes.delete",
                         "isResponseStream": false,
@@ -259,6 +280,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                            "canonicalSlug": "api-reference/api-reference/indexes/videos/list",
                             "endpointId": "endpoint_indexes/videos.list",
                             "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes/videos.list",
                             "isResponseStream": false,
@@ -269,6 +291,7 @@
                           },
                           {
                             "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                            "canonicalSlug": "api-reference/api-reference/indexes/videos/retrieve",
                             "endpointId": "endpoint_indexes/videos.retrieve",
                             "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes/videos.retrieve",
                             "isResponseStream": false,
@@ -279,6 +302,7 @@
                           },
                           {
                             "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                            "canonicalSlug": "api-reference/api-reference/indexes/videos/update",
                             "endpointId": "endpoint_indexes/videos.update",
                             "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes/videos.update",
                             "isResponseStream": false,
@@ -289,6 +313,7 @@
                           },
                           {
                             "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                            "canonicalSlug": "api-reference/api-reference/indexes/videos/delete",
                             "endpointId": "endpoint_indexes/videos.delete",
                             "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_indexes/videos.delete",
                             "isResponseStream": false,
@@ -316,6 +341,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/summarize/create",
                         "endpointId": "endpoint_summarize.create",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_summarize.create",
                         "isResponseStream": false,
@@ -336,6 +362,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/generate/create",
                         "endpointId": "endpoint_generate.create",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_generate.create",
                         "isResponseStream": false,
@@ -356,6 +383,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/embed/create",
                         "endpointId": "endpoint_embed.create",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_embed.create",
                         "isResponseStream": false,
@@ -369,6 +397,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                            "canonicalSlug": "api-reference/api-reference/embed/tasks/list",
                             "endpointId": "endpoint_embed/tasks.list",
                             "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_embed/tasks.list",
                             "isResponseStream": false,
@@ -379,6 +408,7 @@
                           },
                           {
                             "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                            "canonicalSlug": "api-reference/api-reference/embed/tasks/create",
                             "endpointId": "endpoint_embed/tasks.create",
                             "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_embed/tasks.create",
                             "isResponseStream": false,
@@ -389,6 +419,7 @@
                           },
                           {
                             "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                            "canonicalSlug": "api-reference/api-reference/embed/tasks/retrieve",
                             "endpointId": "endpoint_embed/tasks.retrieve",
                             "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_embed/tasks.retrieve",
                             "isResponseStream": false,
@@ -402,6 +433,7 @@
                             "children": [
                               {
                                 "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                                "canonicalSlug": "api-reference/api-reference/embed/tasks/status/retrieve",
                                 "endpointId": "endpoint_embed/tasks/status.retrieve",
                                 "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_embed/tasks/status.retrieve",
                                 "isResponseStream": false,
@@ -436,6 +468,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/search/query",
                         "endpointId": "endpoint_search.query",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_search.query",
                         "isResponseStream": false,
@@ -446,6 +479,7 @@
                       },
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/search/retrieve",
                         "endpointId": "endpoint_search.retrieve",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_search.retrieve",
                         "isResponseStream": false,
@@ -466,6 +500,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/gist/create",
                         "endpointId": "endpoint_gist.create",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_gist.create",
                         "isResponseStream": false,
@@ -486,6 +521,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
+                        "canonicalSlug": "api-reference/api-reference/embed-new/create",
                         "endpointId": "endpoint_embedNew.create",
                         "id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3:endpoint_embedNew.create",
                         "isResponseStream": false,

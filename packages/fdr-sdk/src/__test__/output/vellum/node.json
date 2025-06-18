@@ -8,6 +8,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/welcome/welcome",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.welcome.welcome",
                     "pageId": "docs/content/help/welcome/intro.mdx",
@@ -16,6 +17,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/welcome/getting-support",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.welcome.getting-support",
                     "pageId": "docs/content/help/welcome/getting-support.mdx",
@@ -35,6 +37,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/prompts/prompt-engineering",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.prompts.prompt-engineering",
                     "pageId": "docs/content/help/prompts/prompt-engineering-in-vellum.mdx",
@@ -43,6 +46,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/prompts/collaboration",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.prompts.collaboration",
                     "pageId": "docs/content/help/prompts/collaborating-on-prompts.mdx",
@@ -51,6 +55,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/prompts/custom-models",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.prompts.custom-models",
                     "pageId": "docs/content/help/prompts/adding-custom-models-to-your-workspace.mdx",
@@ -59,6 +64,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/prompts/images",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.prompts.images",
                     "pageId": "docs/content/help/prompts/working-with-images-in-vellum.mdx",
@@ -67,6 +73,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/prompts/prompting-tips-and-examples",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.prompts.prompting-tips-and-examples",
                     "pageId": "docs/content/help/prompts/prompting-tips-and-examples.mdx",
@@ -86,6 +93,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/workflows/introduction",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.introduction",
                     "pageId": "docs/content/help/workflows/intro.mdx",
@@ -94,6 +102,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/experimentation",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.experimentation",
                     "pageId": "docs/content/help/workflows/experimenting.mdx",
@@ -102,6 +111,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/node-types",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.node-types",
                     "pageId": "docs/content/help/workflows/node-types.mdx",
@@ -110,6 +120,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/common-architectures",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.common-architectures",
                     "pageId": "docs/content/help/workflows/common-architectures.mdx",
@@ -118,6 +129,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/common-data-transforms",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.common-data-transforms",
                     "pageId": "docs/content/help/workflows/common-data-transforms.mdx",
@@ -126,6 +138,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/code-execution-node-examples",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.code-execution-node-examples",
                     "pageId": "docs/content/help/workflows/code-execution-node-examples.mdx",
@@ -134,6 +147,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/api-integration",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.api-integration",
                     "pageId": "docs/content/help/workflows/integrating.mdx",
@@ -142,6 +156,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/function-calling-with-chat-models",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.function-calling-with-chat-models",
                     "pageId": "docs/content/help/workflows/function-calling.mdx",
@@ -150,6 +165,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/workflows/examples-and-walkthroughs",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.workflows.examples-and-walkthroughs",
                     "pageId": "docs/content/help/workflows/examples-and-walkthroughs.mdx",
@@ -169,6 +185,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/evaluation/quantitative-evaluation",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.evaluation.quantitative-evaluation",
                     "pageId": "docs/content/help/evaluation/quantitatively-evaluating-outputs.mdx",
@@ -177,6 +194,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/evaluation/evaluating-rag-pipelines",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.evaluation.evaluating-rag-pipelines",
                     "pageId": "docs/content/help/evaluation/evaluating-rag-pipelines.mdx",
@@ -185,6 +203,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/evaluation/online-evaluations",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.evaluation.online-evaluations",
                     "pageId": "docs/content/help/evaluation/online-evaluations.mdx",
@@ -204,6 +223,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/metrics/out-of-the-box-metrics",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.metrics.out-of-the-box-metrics",
                     "pageId": "docs/content/help/metrics/out-of-the-box-metrics.mdx",
@@ -212,6 +232,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/metrics/custom-metrics",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.metrics.custom-metrics",
                     "pageId": "docs/content/help/metrics/custom-metrics.mdx",
@@ -231,6 +252,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/deployments/prompt-lifecycle-management",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.deployments.prompt-lifecycle-management",
                     "pageId": "docs/content/help/deployments/prompt-lifecycle-management.mdx",
@@ -239,6 +261,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/deployments/observability",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.deployments.observability",
                     "pageId": "docs/content/help/deployments/observability-in-production.mdx",
@@ -247,6 +270,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/deployments/monitoring",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.deployments.monitoring",
                     "pageId": "docs/content/help/deployments/monitoring-production-trends.mdx",
@@ -255,6 +279,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/deployments/managing-releases",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.deployments.managing-releases",
                     "pageId": "docs/content/help/deployments/managing-releases.mdx",
@@ -274,6 +299,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/documents/uploading-documents",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.documents.uploading-documents",
                     "pageId": "docs/content/help/documents/uploading-documents.mdx",
@@ -282,6 +308,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/documents/running-searches",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.documents.running-searches",
                     "pageId": "docs/content/help/documents/running-searches.mdx",
@@ -290,6 +317,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/documents/api-integration",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.documents.api-integration",
                     "pageId": "docs/content/help/documents/integrating-search.mdx",
@@ -298,6 +326,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "help-center/documents/metadata-filtering",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.documents.metadata-filtering",
                     "pageId": "docs/content/help/documents/metadata-filtering.mdx",
@@ -317,6 +346,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "help-center/security/hmac-authentication",
                     "hidden": false,
                     "id": "root.uv.help-center.help-center.security.hmac-authentication",
                     "pageId": "docs/content/help/security/hmac-authentication.mdx",
@@ -350,6 +380,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "api-reference/overview/getting-started",
                     "hidden": false,
                     "id": "root.uv.api-reference.api-reference.overview.getting-started",
                     "pageId": "docs/content/api/intro.mdx",
@@ -358,6 +389,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "api-reference/overview/authentication",
                     "hidden": false,
                     "id": "root.uv.api-reference.api-reference.overview.authentication",
                     "pageId": "docs/content/api/authentication.mdx",
@@ -383,6 +415,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/prompts/execute-prompt",
                         "endpointId": "endpoint_.execute-prompt",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-prompt",
                         "isResponseStream": false,
@@ -394,6 +427,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/prompts/execute-prompt-stream",
                         "endpointId": "endpoint_.execute-prompt-stream",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-prompt-stream",
                         "isResponseStream": true,
@@ -405,6 +439,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/prompts/submit-completion-actuals",
                         "endpointId": "endpoint_.submit-completion-actuals",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.submit-completion-actuals",
                         "isResponseStream": false,
@@ -416,6 +451,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/prompts/retrieve-provider-payload",
                         "endpointId": "endpoint_deployments.retrieve_provider_payload",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve_provider_payload",
                         "isResponseStream": false,
@@ -430,6 +466,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/prompts/sandboxes/deploy-prompt",
                             "endpointId": "endpoint_sandboxes.deploy_prompt",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.deploy_prompt",
                             "isResponseStream": false,
@@ -441,6 +478,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/prompts/sandboxes/upsert-scenario",
                             "endpointId": "endpoint_sandboxes.upsert_sandbox_scenario",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.upsert_sandbox_scenario",
                             "isResponseStream": false,
@@ -452,6 +490,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/prompts/sandboxes/delete-scenario",
                             "endpointId": "endpoint_sandboxes.delete_sandbox_scenario",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.delete_sandbox_scenario",
                             "isResponseStream": false,
@@ -473,6 +512,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/prompts/deployments/list",
                             "endpointId": "endpoint_deployments.list",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.list",
                             "isResponseStream": false,
@@ -484,6 +524,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/prompts/deployments/retrieve",
                             "endpointId": "endpoint_deployments.retrieve",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve",
                             "isResponseStream": false,
@@ -495,6 +536,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/prompts/deployments/retrieve-release-tag",
                             "endpointId": "endpoint_deployments.retrieve_deployment_release_tag",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve_deployment_release_tag",
                             "isResponseStream": false,
@@ -506,6 +548,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/prompts/deployments/update-release-tag",
                             "endpointId": "endpoint_deployments.update_deployment_release_tag",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.update_deployment_release_tag",
                             "isResponseStream": false,
@@ -534,6 +577,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/workflows/execute-workflow",
                         "endpointId": "endpoint_.execute-workflow",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-workflow",
                         "isResponseStream": false,
@@ -545,6 +589,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/workflows/execute-workflow-stream",
                         "endpointId": "endpoint_.execute-workflow-stream",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-workflow-stream",
                         "isResponseStream": true,
@@ -556,6 +601,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/workflows/submit-workflow-execution-actuals",
                         "endpointId": "endpoint_.submit-workflow-execution-actuals",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.submit-workflow-execution-actuals",
                         "isResponseStream": false,
@@ -570,6 +616,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/workflows/sandboxes/deploy-workflow",
                             "endpointId": "endpoint_workflowSandboxes.deploy_workflow",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_workflowSandboxes.deploy_workflow",
                             "isResponseStream": false,
@@ -591,6 +638,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/workflows/deployments/list",
                             "endpointId": "endpoint_workflowDeployments.list",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.list",
                             "isResponseStream": false,
@@ -602,6 +650,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/workflows/deployments/retrieve",
                             "endpointId": "endpoint_workflowDeployments.retrieve",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.retrieve",
                             "isResponseStream": false,
@@ -613,6 +662,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/workflows/deployments/retrieve-release-tag",
                             "endpointId": "endpoint_workflowDeployments.retrieve_workflow_release_tag",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.retrieve_workflow_release_tag",
                             "isResponseStream": false,
@@ -624,6 +674,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/workflows/deployments/update-release-tag",
                             "endpointId": "endpoint_workflowDeployments.update_workflow_release_tag",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.update_workflow_release_tag",
                             "isResponseStream": false,
@@ -652,6 +703,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/document-indexes/search",
                         "endpointId": "endpoint_.search",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.search",
                         "isResponseStream": false,
@@ -663,6 +715,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/add-document",
                         "endpointId": "endpoint_documentIndexes.add_document",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.add_document",
                         "isResponseStream": false,
@@ -674,6 +727,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/create",
                         "endpointId": "endpoint_documentIndexes.create",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.create",
                         "isResponseStream": false,
@@ -685,6 +739,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/retrieve",
                         "endpointId": "endpoint_documentIndexes.retrieve",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.retrieve",
                         "isResponseStream": false,
@@ -696,6 +751,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/list",
                         "endpointId": "endpoint_documentIndexes.list",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.list",
                         "isResponseStream": false,
@@ -707,6 +763,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/partial-update",
                         "endpointId": "endpoint_documentIndexes.partialUpdate",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.partialUpdate",
                         "isResponseStream": false,
@@ -718,6 +775,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/update",
                         "endpointId": "endpoint_documentIndexes.update",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.update",
                         "isResponseStream": false,
@@ -729,6 +787,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/destroy",
                         "endpointId": "endpoint_documentIndexes.destroy",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_documentIndexes.destroy",
                         "isResponseStream": false,
@@ -740,6 +799,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/document-indexes/remove-document",
                         "endpointId": "endpoint_documentIndexes.remove_document",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_documentIndexes.remove_document",
                         "isResponseStream": false,
@@ -761,6 +821,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/documents/upload",
                         "endpointId": "endpoint_documents.upload",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.upload",
                         "isResponseStream": false,
@@ -772,6 +833,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/documents/retrieve",
                         "endpointId": "endpoint_documents.retrieve",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.retrieve",
                         "isResponseStream": false,
@@ -783,6 +845,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "GenerallyAvailable",
+                        "canonicalSlug": "api-reference/documents/list",
                         "endpointId": "endpoint_documents.list",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.list",
                         "isResponseStream": false,
@@ -794,6 +857,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/documents/partial-update",
                         "endpointId": "endpoint_documents.partialUpdate",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.partialUpdate",
                         "isResponseStream": false,
@@ -805,6 +869,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/documents/destroy",
                         "endpointId": "endpoint_documents.destroy",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_documents.destroy",
                         "isResponseStream": false,
@@ -829,6 +894,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/test-suites/test-cases/list",
                             "endpointId": "endpoint_testSuites.list_test_suite_test_cases",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.list_test_suite_test_cases",
                             "isResponseStream": false,
@@ -840,6 +906,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/test-suites/test-cases/upsert",
                             "endpointId": "endpoint_testSuites.upsert_test_suite_test_case",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.upsert_test_suite_test_case",
                             "isResponseStream": false,
@@ -851,6 +918,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/test-suites/test-cases/bulk-update",
                             "endpointId": "endpoint_testSuites.test_suite_test_cases_bulk",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.test_suite_test_cases_bulk",
                             "isResponseStream": true,
@@ -862,6 +930,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/test-suites/test-cases/delete",
                             "endpointId": "endpoint_testSuites.delete_test_suite_test_case",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.delete_test_suite_test_case",
                             "isResponseStream": false,
@@ -883,6 +952,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/test-suites/runs/create",
                             "endpointId": "endpoint_testSuiteRuns.create",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_testSuiteRuns.create",
                             "isResponseStream": false,
@@ -894,6 +964,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/test-suites/runs/retrieve",
                             "endpointId": "endpoint_testSuiteRuns.retrieve",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_testSuiteRuns.retrieve",
                             "isResponseStream": false,
@@ -905,6 +976,7 @@
                           {
                             "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                             "availability": "Beta",
+                            "canonicalSlug": "api-reference/test-suites/runs/list-executions",
                             "endpointId": "endpoint_testSuiteRuns.listExecutions",
                             "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_testSuiteRuns.listExecutions",
                             "isResponseStream": false,
@@ -933,6 +1005,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/folders/add-entity-to-folder",
                         "endpointId": "endpoint_folderEntities.add_entity_to_folder",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.add_entity_to_folder",
                         "isResponseStream": false,
@@ -944,6 +1017,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/folders/list-folder-entities",
                         "endpointId": "endpoint_folderEntities.list",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.list-1",
                         "isResponseStream": false,
@@ -965,6 +1039,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/secrets/retrieve-workspace-secret",
                         "endpointId": "endpoint_workspaceSecrets.retrieve",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve-1",
                         "isResponseStream": false,
@@ -976,6 +1051,7 @@
                       {
                         "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
                         "availability": "Beta",
+                        "canonicalSlug": "api-reference/secrets/update-workspace-secret",
                         "endpointId": "endpoint_workspaceSecrets.partialUpdate",
                         "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.partialUpdate",
                         "isResponseStream": false,
@@ -1018,6 +1094,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "changelog/2024/2024-10",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-10",
                     "pageId": "docs/content/change-log/2024-10.mdx",
@@ -1026,6 +1103,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-09",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-09",
                     "pageId": "docs/content/change-log/2024-09.mdx",
@@ -1034,6 +1112,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-08",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-08",
                     "pageId": "docs/content/change-log/2024-08.mdx",
@@ -1042,6 +1121,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-07",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-07",
                     "pageId": "docs/content/change-log/2024-07.mdx",
@@ -1050,6 +1130,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-06",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-06",
                     "pageId": "docs/content/change-log/2024-06.mdx",
@@ -1058,6 +1139,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-05",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-05",
                     "pageId": "docs/content/change-log/2024-05.mdx",
@@ -1066,6 +1148,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-04",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-04",
                     "pageId": "docs/content/change-log/2024-04.mdx",
@@ -1074,6 +1157,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-03",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-03",
                     "pageId": "docs/content/change-log/2024-03.mdx",
@@ -1082,6 +1166,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-02",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-02",
                     "pageId": "docs/content/change-log/2024-02.mdx",
@@ -1090,6 +1175,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "changelog/2024/2024-01",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.2024.2024-01",
                     "pageId": "docs/content/change-log/2024-01.mdx",

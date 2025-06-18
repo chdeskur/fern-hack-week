@@ -3,7 +3,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/introduction/getting-started",
     "title": "Getting Started",
     "breadcrumb": [
@@ -29,7 +29,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-api-endpoint-deployments-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/introduction/getting-started",
     "title": "API Endpoint Deployments",
     "breadcrumb": [
@@ -66,7 +66,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-api-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/introduction/getting-started",
     "title": "API Versions",
     "breadcrumb": [
@@ -109,7 +109,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-available-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/introduction/getting-started",
     "title": "Available Versions",
     "breadcrumb": [
@@ -150,7 +150,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.authentication-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/introduction/authentication",
     "title": "Authentication",
     "breadcrumb": [
@@ -182,7 +182,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.authentication-managing-api-keys-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/introduction/authentication",
     "title": "Managing API Keys",
     "breadcrumb": [
@@ -219,7 +219,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.authentication-available-scopes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/introduction/authentication",
     "title": "Available scopes",
     "breadcrumb": [
@@ -256,7 +256,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/introduction/api-responses",
     "title": "API Responses",
     "breadcrumb": [
@@ -281,7 +281,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses-status-codes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/introduction/api-responses",
     "title": "Status Codes",
     "breadcrumb": [
@@ -318,7 +318,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses-error-responses-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/introduction/api-responses",
     "title": "Error Responses",
     "breadcrumb": [
@@ -361,7 +361,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses-payment-status-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/introduction/api-responses",
     "title": "Payment Status",
     "breadcrumb": [
@@ -398,7 +398,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.idempotency-key-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/idempotency-key",
+    "canonicalPathname": "/docs/api/introduction/idempotency-key",
     "pathname": "/docs/api/introduction/idempotency-key",
     "title": "Idempotency Key",
     "breadcrumb": [
@@ -430,7 +430,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "breadcrumb": [
@@ -456,7 +456,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-get-the-customer-balance-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/introduction/loyalty-transactions",
     "title": "Get the customer balance",
     "breadcrumb": [
@@ -493,7 +493,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-redeem-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/introduction/loyalty-transactions",
     "title": "Redeem points",
     "breadcrumb": [
@@ -530,7 +530,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-refund-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/introduction/loyalty-transactions",
     "title": "Refund points",
     "breadcrumb": [
@@ -567,7 +567,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-get-a-list-of-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/introduction/loyalty-transactions",
     "title": "Get a list of transactions",
     "breadcrumb": [
@@ -604,7 +604,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Changelogs",
     "breadcrumb": [
@@ -629,7 +629,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v23-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "API v2.3",
     "breadcrumb": [
@@ -666,7 +666,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -707,7 +707,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v22-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "API v2.2",
     "breadcrumb": [
@@ -744,7 +744,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-client-session-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -785,7 +785,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -826,7 +826,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v21-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "API v2.1",
     "breadcrumb": [
@@ -863,7 +863,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-client-session-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -904,7 +904,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -945,7 +945,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payment-methods-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Payment Methods API",
     "breadcrumb": [
@@ -986,7 +986,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "API v2",
     "breadcrumb": [
@@ -1023,7 +1023,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-client-session-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -1064,7 +1064,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-3-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -1105,7 +1105,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.3/introduction/getting-started",
     "title": "Getting Started",
     "breadcrumb": [
@@ -1131,7 +1131,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-api-endpoint-deployments-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.3/introduction/getting-started",
     "title": "API Endpoint Deployments",
     "breadcrumb": [
@@ -1168,7 +1168,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-api-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.3/introduction/getting-started",
     "title": "API Versions",
     "breadcrumb": [
@@ -1211,7 +1211,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.getting-started-available-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.3/introduction/getting-started",
     "title": "Available Versions",
     "breadcrumb": [
@@ -1252,7 +1252,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.authentication-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.3/introduction/authentication",
     "title": "Authentication",
     "breadcrumb": [
@@ -1284,7 +1284,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.authentication-managing-api-keys-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.3/introduction/authentication",
     "title": "Managing API Keys",
     "breadcrumb": [
@@ -1321,7 +1321,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.authentication-available-scopes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.3/introduction/authentication",
     "title": "Available scopes",
     "breadcrumb": [
@@ -1358,7 +1358,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.3/introduction/api-responses",
     "title": "API Responses",
     "breadcrumb": [
@@ -1383,7 +1383,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses-status-codes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.3/introduction/api-responses",
     "title": "Status Codes",
     "breadcrumb": [
@@ -1420,7 +1420,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses-error-responses-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.3/introduction/api-responses",
     "title": "Error Responses",
     "breadcrumb": [
@@ -1463,7 +1463,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.api-responses-payment-status-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.3/introduction/api-responses",
     "title": "Payment Status",
     "breadcrumb": [
@@ -1500,7 +1500,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.idempotency-key-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/idempotency-key",
+    "canonicalPathname": "/docs/api/introduction/idempotency-key",
     "pathname": "/docs/api/v2.3/introduction/idempotency-key",
     "title": "Idempotency Key",
     "breadcrumb": [
@@ -1532,7 +1532,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.3/introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "breadcrumb": [
@@ -1558,7 +1558,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-get-the-customer-balance-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.3/introduction/loyalty-transactions",
     "title": "Get the customer balance",
     "breadcrumb": [
@@ -1595,7 +1595,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-redeem-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.3/introduction/loyalty-transactions",
     "title": "Redeem points",
     "breadcrumb": [
@@ -1632,7 +1632,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-refund-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.3/introduction/loyalty-transactions",
     "title": "Refund points",
     "breadcrumb": [
@@ -1669,7 +1669,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.loyalty-transactions-get-a-list-of-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.3/introduction/loyalty-transactions",
     "title": "Get a list of transactions",
     "breadcrumb": [
@@ -1706,7 +1706,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Changelogs",
     "breadcrumb": [
@@ -1731,7 +1731,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v23-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "API v2.3",
     "breadcrumb": [
@@ -1768,7 +1768,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -1809,7 +1809,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v22-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "API v2.2",
     "breadcrumb": [
@@ -1846,7 +1846,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-client-session-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -1887,7 +1887,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -1928,7 +1928,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v21-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "API v2.1",
     "breadcrumb": [
@@ -1965,7 +1965,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-client-session-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -2006,7 +2006,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -2047,7 +2047,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payment-methods-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Payment Methods API",
     "breadcrumb": [
@@ -2088,7 +2088,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-api-v2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "API v2",
     "breadcrumb": [
@@ -2125,7 +2125,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-client-session-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -2166,7 +2166,7 @@
     "objectID": "test:test.com:root..v2.3.uv.introduction.changelogs-payments-api-3-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.3/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -2207,7 +2207,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.getting-started-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.2/introduction/getting-started",
     "title": "Getting Started",
     "breadcrumb": [
@@ -2233,7 +2233,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.getting-started-api-endpoint-deployments-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.2/introduction/getting-started",
     "title": "API Endpoint Deployments",
     "breadcrumb": [
@@ -2270,7 +2270,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.getting-started-api-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.2/introduction/getting-started",
     "title": "API Versions",
     "breadcrumb": [
@@ -2313,7 +2313,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.getting-started-available-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.2/introduction/getting-started",
     "title": "Available Versions",
     "breadcrumb": [
@@ -2354,7 +2354,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.authentication-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.2/introduction/authentication",
     "title": "Authentication",
     "breadcrumb": [
@@ -2386,7 +2386,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.authentication-managing-api-keys-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.2/introduction/authentication",
     "title": "Managing API Keys",
     "breadcrumb": [
@@ -2423,7 +2423,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.authentication-available-scopes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.2/introduction/authentication",
     "title": "Available scopes",
     "breadcrumb": [
@@ -2460,7 +2460,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.api-responses",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.2/introduction/api-responses",
     "title": "API Responses",
     "breadcrumb": [
@@ -2485,7 +2485,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.api-responses-status-codes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.2/introduction/api-responses",
     "title": "Status Codes",
     "breadcrumb": [
@@ -2522,7 +2522,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.api-responses-error-responses-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.2/introduction/api-responses",
     "title": "Error Responses",
     "breadcrumb": [
@@ -2565,7 +2565,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.api-responses-payment-status-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.2/introduction/api-responses",
     "title": "Payment Status",
     "breadcrumb": [
@@ -2602,7 +2602,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.idempotency-key-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/idempotency-key",
+    "canonicalPathname": "/docs/api/introduction/idempotency-key",
     "pathname": "/docs/api/v2.2/introduction/idempotency-key",
     "title": "Idempotency Key",
     "breadcrumb": [
@@ -2634,7 +2634,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.loyalty-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.2/introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "breadcrumb": [
@@ -2660,7 +2660,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.loyalty-transactions-get-the-customer-balance-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.2/introduction/loyalty-transactions",
     "title": "Get the customer balance",
     "breadcrumb": [
@@ -2697,7 +2697,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.loyalty-transactions-redeem-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.2/introduction/loyalty-transactions",
     "title": "Redeem points",
     "breadcrumb": [
@@ -2734,7 +2734,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.loyalty-transactions-refund-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.2/introduction/loyalty-transactions",
     "title": "Refund points",
     "breadcrumb": [
@@ -2771,7 +2771,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.loyalty-transactions-get-a-list-of-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.2/introduction/loyalty-transactions",
     "title": "Get a list of transactions",
     "breadcrumb": [
@@ -2808,7 +2808,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Changelogs",
     "breadcrumb": [
@@ -2833,7 +2833,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-api-v23-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "API v2.3",
     "breadcrumb": [
@@ -2870,7 +2870,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-payments-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -2911,7 +2911,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-api-v22-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "API v2.2",
     "breadcrumb": [
@@ -2948,7 +2948,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-client-session-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -2989,7 +2989,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-payments-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -3030,7 +3030,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-api-v21-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "API v2.1",
     "breadcrumb": [
@@ -3067,7 +3067,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-client-session-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -3108,7 +3108,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-payments-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -3149,7 +3149,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-payment-methods-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Payment Methods API",
     "breadcrumb": [
@@ -3190,7 +3190,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-api-v2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "API v2",
     "breadcrumb": [
@@ -3227,7 +3227,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-client-session-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -3268,7 +3268,7 @@
     "objectID": "test:test.com:root..v2.2.uv.introduction.changelogs-payments-api-3-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -3309,7 +3309,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.getting-started-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.1/introduction/getting-started",
     "title": "Getting Started",
     "breadcrumb": [
@@ -3335,7 +3335,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.getting-started-api-endpoint-deployments-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.1/introduction/getting-started",
     "title": "API Endpoint Deployments",
     "breadcrumb": [
@@ -3372,7 +3372,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.getting-started-api-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.1/introduction/getting-started",
     "title": "API Versions",
     "breadcrumb": [
@@ -3415,7 +3415,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.getting-started-available-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2.1/introduction/getting-started",
     "title": "Available Versions",
     "breadcrumb": [
@@ -3456,7 +3456,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.authentication-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.1/introduction/authentication",
     "title": "Authentication",
     "breadcrumb": [
@@ -3488,7 +3488,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.authentication-managing-api-keys-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.1/introduction/authentication",
     "title": "Managing API Keys",
     "breadcrumb": [
@@ -3525,7 +3525,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.authentication-available-scopes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2.1/introduction/authentication",
     "title": "Available scopes",
     "breadcrumb": [
@@ -3562,7 +3562,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.api-responses",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.1/introduction/api-responses",
     "title": "API Responses",
     "breadcrumb": [
@@ -3587,7 +3587,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.api-responses-status-codes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.1/introduction/api-responses",
     "title": "Status Codes",
     "breadcrumb": [
@@ -3624,7 +3624,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.api-responses-error-responses-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.1/introduction/api-responses",
     "title": "Error Responses",
     "breadcrumb": [
@@ -3667,7 +3667,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.api-responses-payment-status-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2.1/introduction/api-responses",
     "title": "Payment Status",
     "breadcrumb": [
@@ -3704,7 +3704,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.idempotency-key-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/idempotency-key",
+    "canonicalPathname": "/docs/api/introduction/idempotency-key",
     "pathname": "/docs/api/v2.1/introduction/idempotency-key",
     "title": "Idempotency Key",
     "breadcrumb": [
@@ -3736,7 +3736,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.loyalty-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.1/introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "breadcrumb": [
@@ -3762,7 +3762,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.loyalty-transactions-get-the-customer-balance-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.1/introduction/loyalty-transactions",
     "title": "Get the customer balance",
     "breadcrumb": [
@@ -3799,7 +3799,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.loyalty-transactions-redeem-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.1/introduction/loyalty-transactions",
     "title": "Redeem points",
     "breadcrumb": [
@@ -3836,7 +3836,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.loyalty-transactions-refund-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.1/introduction/loyalty-transactions",
     "title": "Refund points",
     "breadcrumb": [
@@ -3873,7 +3873,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.loyalty-transactions-get-a-list-of-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2.1/introduction/loyalty-transactions",
     "title": "Get a list of transactions",
     "breadcrumb": [
@@ -3910,7 +3910,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Changelogs",
     "breadcrumb": [
@@ -3935,7 +3935,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-api-v23-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "API v2.3",
     "breadcrumb": [
@@ -3972,7 +3972,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-payments-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -4013,7 +4013,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-api-v22-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "API v2.2",
     "breadcrumb": [
@@ -4050,7 +4050,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-client-session-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -4091,7 +4091,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-payments-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -4132,7 +4132,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-api-v21-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "API v2.1",
     "breadcrumb": [
@@ -4169,7 +4169,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-client-session-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -4210,7 +4210,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-payments-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -4251,7 +4251,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-payment-methods-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Payment Methods API",
     "breadcrumb": [
@@ -4292,7 +4292,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-api-v2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "API v2",
     "breadcrumb": [
@@ -4329,7 +4329,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-client-session-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -4370,7 +4370,7 @@
     "objectID": "test:test.com:root..v2.1.uv.introduction.changelogs-payments-api-3-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2.1/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -4411,7 +4411,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.getting-started-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2/introduction/getting-started",
     "title": "Getting Started",
     "breadcrumb": [
@@ -4437,7 +4437,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.getting-started-api-endpoint-deployments-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2/introduction/getting-started",
     "title": "API Endpoint Deployments",
     "breadcrumb": [
@@ -4474,7 +4474,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.getting-started-api-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2/introduction/getting-started",
     "title": "API Versions",
     "breadcrumb": [
@@ -4517,7 +4517,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.getting-started-available-versions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/getting-started",
+    "canonicalPathname": "/docs/api/introduction/getting-started",
     "pathname": "/docs/api/v2/introduction/getting-started",
     "title": "Available Versions",
     "breadcrumb": [
@@ -4558,7 +4558,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.authentication-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2/introduction/authentication",
     "title": "Authentication",
     "breadcrumb": [
@@ -4590,7 +4590,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.authentication-managing-api-keys-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2/introduction/authentication",
     "title": "Managing API Keys",
     "breadcrumb": [
@@ -4627,7 +4627,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.authentication-available-scopes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/authentication",
+    "canonicalPathname": "/docs/api/introduction/authentication",
     "pathname": "/docs/api/v2/introduction/authentication",
     "title": "Available scopes",
     "breadcrumb": [
@@ -4664,7 +4664,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.api-responses",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2/introduction/api-responses",
     "title": "API Responses",
     "breadcrumb": [
@@ -4689,7 +4689,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.api-responses-status-codes-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2/introduction/api-responses",
     "title": "Status Codes",
     "breadcrumb": [
@@ -4726,7 +4726,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.api-responses-error-responses-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2/introduction/api-responses",
     "title": "Error Responses",
     "breadcrumb": [
@@ -4769,7 +4769,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.api-responses-payment-status-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/api-responses",
+    "canonicalPathname": "/docs/api/introduction/api-responses",
     "pathname": "/docs/api/v2/introduction/api-responses",
     "title": "Payment Status",
     "breadcrumb": [
@@ -4806,7 +4806,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.idempotency-key-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/idempotency-key",
+    "canonicalPathname": "/docs/api/introduction/idempotency-key",
     "pathname": "/docs/api/v2/introduction/idempotency-key",
     "title": "Idempotency Key",
     "breadcrumb": [
@@ -4838,7 +4838,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.loyalty-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2/introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "breadcrumb": [
@@ -4864,7 +4864,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.loyalty-transactions-get-the-customer-balance-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2/introduction/loyalty-transactions",
     "title": "Get the customer balance",
     "breadcrumb": [
@@ -4901,7 +4901,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.loyalty-transactions-redeem-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2/introduction/loyalty-transactions",
     "title": "Redeem points",
     "breadcrumb": [
@@ -4938,7 +4938,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.loyalty-transactions-refund-points-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2/introduction/loyalty-transactions",
     "title": "Refund points",
     "breadcrumb": [
@@ -4975,7 +4975,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.loyalty-transactions-get-a-list-of-transactions-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/loyalty-transactions",
+    "canonicalPathname": "/docs/api/introduction/loyalty-transactions",
     "pathname": "/docs/api/v2/introduction/loyalty-transactions",
     "title": "Get a list of transactions",
     "breadcrumb": [
@@ -5012,7 +5012,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Changelogs",
     "breadcrumb": [
@@ -5037,7 +5037,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-api-v23-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "API v2.3",
     "breadcrumb": [
@@ -5074,7 +5074,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-payments-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -5115,7 +5115,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-api-v22-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "API v2.2",
     "breadcrumb": [
@@ -5152,7 +5152,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-client-session-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -5193,7 +5193,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-payments-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -5234,7 +5234,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-api-v21-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "API v2.1",
     "breadcrumb": [
@@ -5271,7 +5271,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-client-session-api-1-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -5312,7 +5312,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-payments-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -5353,7 +5353,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-payment-methods-api-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Payment Methods API",
     "breadcrumb": [
@@ -5394,7 +5394,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-api-v2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "API v2",
     "breadcrumb": [
@@ -5431,7 +5431,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-client-session-api-2-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Client Session API",
     "breadcrumb": [
@@ -5472,7 +5472,7 @@
     "objectID": "test:test.com:root..v2.uv.introduction.changelogs-payments-api-3-chunk:0",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/introduction/changelogs",
+    "canonicalPathname": "/docs/api/introduction/changelogs",
     "pathname": "/docs/api/v2/introduction/changelogs",
     "title": "Payments API",
     "breadcrumb": [
@@ -5513,7 +5513,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/retrieve-client-side-token",
     "pathname": "/docs/api/api-reference/client-session-api/retrieve-client-side-token",
     "title": "Retrieve a client session",
     "breadcrumb": [
@@ -5571,7 +5571,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/create-client-side-token",
     "pathname": "/docs/api/api-reference/client-session-api/create-client-side-token",
     "title": "Create a client session",
     "breadcrumb": [
@@ -5629,7 +5629,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/update-client-side-token",
     "pathname": "/docs/api/api-reference/client-session-api/update-client-side-token",
     "title": "Update client session",
     "breadcrumb": [
@@ -5687,7 +5687,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/list-payments",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/list-payments",
     "pathname": "/docs/api/api-reference/payments-api/list-payments",
     "title": "Search & list payments",
     "breadcrumb": [
@@ -5750,7 +5750,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/create-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/create-payment",
     "pathname": "/docs/api/api-reference/payments-api/create-payment",
     "title": "Create a payment",
     "breadcrumb": [
@@ -5808,7 +5808,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.authorizePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/authorize-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/authorize-payment",
     "pathname": "/docs/api/api-reference/payments-api/authorize-payment",
     "title": "Authorize a payment",
     "breadcrumb": [
@@ -5868,7 +5868,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/capture-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/capture-payment",
     "pathname": "/docs/api/api-reference/payments-api/capture-payment",
     "title": "Capture a payment",
     "breadcrumb": [
@@ -5927,7 +5927,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/cancel-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/cancel-payment",
     "pathname": "/docs/api/api-reference/payments-api/cancel-payment",
     "title": "Cancel a payment",
     "breadcrumb": [
@@ -5985,7 +5985,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/refund-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/refund-payment",
     "pathname": "/docs/api/api-reference/payments-api/refund-payment",
     "title": "Refund a payment",
     "breadcrumb": [
@@ -6044,7 +6044,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/resume-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/resume-payment",
     "pathname": "/docs/api/api-reference/payments-api/resume-payment",
     "title": "Resume a payment",
     "breadcrumb": [
@@ -6101,7 +6101,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.adjustAuthorization",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/adjust-authorization",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/adjust-authorization",
     "pathname": "/docs/api/api-reference/payments-api/adjust-authorization",
     "title": "Adjust authorized amount",
     "breadcrumb": [
@@ -6161,7 +6161,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/get-payment-by-id",
     "pathname": "/docs/api/api-reference/payments-api/get-payment-by-id",
     "title": "Get a payment",
     "breadcrumb": [
@@ -6218,7 +6218,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "pathname": "/docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "title": "Save a payment method token",
     "breadcrumb": [
@@ -6276,7 +6276,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "pathname": "/docs/api/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "title": "List saved payment methods",
     "breadcrumb": [
@@ -6332,7 +6332,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "pathname": "/docs/api/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "title": "Delete a saved payment method",
     "breadcrumb": [
@@ -6389,7 +6389,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "pathname": "/docs/api/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "title": "Update the default saved payment method",
     "breadcrumb": [
@@ -6446,7 +6446,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment",
+    "canonicalPathname": "/docs/api/api-reference/observability-api-beta/external-payment",
     "pathname": "/docs/api/api-reference/observability-api-beta/external-payment",
     "title": "Create an external payment",
     "breadcrumb": [
@@ -6502,7 +6502,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment_update",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment-update",
+    "canonicalPathname": "/docs/api/api-reference/observability-api-beta/external-payment-update",
     "pathname": "/docs/api/api-reference/observability-api-beta/external-payment-update",
     "title": "Update an external payment",
     "breadcrumb": [
@@ -6558,7 +6558,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer",
     "pathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer",
     "title": "Get a loyalty customer's points balance",
     "breadcrumb": [
@@ -6615,7 +6615,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer_transactions",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer-transactions",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer-transactions",
     "pathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer-transactions",
     "title": "List the transactions for a customer",
     "breadcrumb": [
@@ -6673,7 +6673,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.post_loyalty_transaction",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/post-loyalty-transaction",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/post-loyalty-transaction",
     "pathname": "/docs/api/api-reference/loyalty-api/post-loyalty-transaction",
     "title": "Create a loyalty transaction",
     "breadcrumb": [
@@ -6731,7 +6731,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-status-webhook-event",
     "pathname": "/docs/api/webhooks/payment-webhooks/payment-status-webhook-event",
     "title": "Payment Status Update",
     "breadcrumb": [
@@ -6772,7 +6772,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-refund-webhook-event",
     "pathname": "/docs/api/webhooks/payment-webhooks/payment-refund-webhook-event",
     "title": "Payment Refund",
     "breadcrumb": [
@@ -6813,7 +6813,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "pathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "title": "Dispute Open",
     "breadcrumb": [
@@ -6854,7 +6854,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
     "pathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
     "title": "Dispute Status",
     "breadcrumb": [
@@ -6895,7 +6895,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/retrieve-client-side-token",
     "pathname": "/docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
     "title": "Retrieve a client session",
     "breadcrumb": [
@@ -6953,7 +6953,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/create-client-side-token",
     "pathname": "/docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
     "title": "Create a client session",
     "breadcrumb": [
@@ -7011,7 +7011,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/update-client-side-token",
     "pathname": "/docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
     "title": "Update client session",
     "breadcrumb": [
@@ -7069,7 +7069,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/list-payments",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/list-payments",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/list-payments",
     "title": "Search & list payments",
     "breadcrumb": [
@@ -7132,7 +7132,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/create-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/create-payment",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/create-payment",
     "title": "Create a payment",
     "breadcrumb": [
@@ -7190,7 +7190,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.authorizePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/authorize-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/authorize-payment",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/authorize-payment",
     "title": "Authorize a payment",
     "breadcrumb": [
@@ -7250,7 +7250,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/capture-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/capture-payment",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/capture-payment",
     "title": "Capture a payment",
     "breadcrumb": [
@@ -7309,7 +7309,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/cancel-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/cancel-payment",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/cancel-payment",
     "title": "Cancel a payment",
     "breadcrumb": [
@@ -7367,7 +7367,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/refund-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/refund-payment",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/refund-payment",
     "title": "Refund a payment",
     "breadcrumb": [
@@ -7426,7 +7426,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/resume-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/resume-payment",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/resume-payment",
     "title": "Resume a payment",
     "breadcrumb": [
@@ -7483,7 +7483,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.adjustAuthorization",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/adjust-authorization",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/adjust-authorization",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/adjust-authorization",
     "title": "Adjust authorized amount",
     "breadcrumb": [
@@ -7543,7 +7543,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/get-payment-by-id",
     "pathname": "/docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
     "title": "Get a payment",
     "breadcrumb": [
@@ -7600,7 +7600,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "pathname": "/docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "title": "Save a payment method token",
     "breadcrumb": [
@@ -7658,7 +7658,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "pathname": "/docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "title": "List saved payment methods",
     "breadcrumb": [
@@ -7714,7 +7714,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "pathname": "/docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "title": "Delete a saved payment method",
     "breadcrumb": [
@@ -7771,7 +7771,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "pathname": "/docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "title": "Update the default saved payment method",
     "breadcrumb": [
@@ -7828,7 +7828,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment",
+    "canonicalPathname": "/docs/api/api-reference/observability-api-beta/external-payment",
     "pathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment",
     "title": "Create an external payment",
     "breadcrumb": [
@@ -7884,7 +7884,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment_update",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment-update",
+    "canonicalPathname": "/docs/api/api-reference/observability-api-beta/external-payment-update",
     "pathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment-update",
     "title": "Update an external payment",
     "breadcrumb": [
@@ -7940,7 +7940,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer",
     "pathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer",
     "title": "Get a loyalty customer's points balance",
     "breadcrumb": [
@@ -7997,7 +7997,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer_transactions",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer-transactions",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer-transactions",
     "pathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer-transactions",
     "title": "List the transactions for a customer",
     "breadcrumb": [
@@ -8055,7 +8055,7 @@
     "objectID": "test:test.com:root..v2.3.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.post_loyalty_transaction",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/post-loyalty-transaction",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/post-loyalty-transaction",
     "pathname": "/docs/api/v2.3/api-reference/loyalty-api/post-loyalty-transaction",
     "title": "Create a loyalty transaction",
     "breadcrumb": [
@@ -8113,7 +8113,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-status-webhook-event",
     "pathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
     "title": "Payment Status Update",
     "breadcrumb": [
@@ -8154,7 +8154,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-refund-webhook-event",
     "pathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
     "title": "Payment Refund",
     "breadcrumb": [
@@ -8195,7 +8195,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "pathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "title": "Dispute Open",
     "breadcrumb": [
@@ -8236,7 +8236,7 @@
     "objectID": "test:test.com:root..v2.3.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
     "pathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
     "title": "Dispute Status",
     "breadcrumb": [
@@ -8277,7 +8277,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/retrieve-client-side-token",
     "pathname": "/docs/api/v2.2/api-reference/client-session-api/retrieve-client-side-token",
     "title": "Retrieve a client session",
     "breadcrumb": [
@@ -8335,7 +8335,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/create-client-side-token",
     "pathname": "/docs/api/v2.2/api-reference/client-session-api/create-client-side-token",
     "title": "Create a client session",
     "breadcrumb": [
@@ -8393,7 +8393,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/update-client-side-token",
     "pathname": "/docs/api/v2.2/api-reference/client-session-api/update-client-side-token",
     "title": "Update client session",
     "breadcrumb": [
@@ -8451,7 +8451,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/list-payments",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/list-payments",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/list-payments",
     "title": "Search & list payments",
     "breadcrumb": [
@@ -8514,7 +8514,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/create-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/create-payment",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/create-payment",
     "title": "Create a payment",
     "breadcrumb": [
@@ -8572,7 +8572,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.authorizePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/authorize-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/authorize-payment",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/authorize-payment",
     "title": "Authorize a payment",
     "breadcrumb": [
@@ -8632,7 +8632,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/capture-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/capture-payment",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/capture-payment",
     "title": "Capture a payment",
     "breadcrumb": [
@@ -8690,7 +8690,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/cancel-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/cancel-payment",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/cancel-payment",
     "title": "Cancel a payment",
     "breadcrumb": [
@@ -8747,7 +8747,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/refund-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/refund-payment",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/refund-payment",
     "title": "Refund a payment",
     "breadcrumb": [
@@ -8805,7 +8805,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/resume-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/resume-payment",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/resume-payment",
     "title": "Resume a payment",
     "breadcrumb": [
@@ -8862,7 +8862,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.adjustAuthorization",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/adjust-authorization",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/adjust-authorization",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/adjust-authorization",
     "title": "Adjust authorized amount",
     "breadcrumb": [
@@ -8921,7 +8921,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/get-payment-by-id",
     "pathname": "/docs/api/v2.2/api-reference/payments-api/get-payment-by-id",
     "title": "Get a payment",
     "breadcrumb": [
@@ -8978,7 +8978,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "pathname": "/docs/api/v2.2/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "title": "Save a payment method token",
     "breadcrumb": [
@@ -9036,7 +9036,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "pathname": "/docs/api/v2.2/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "title": "List saved payment methods",
     "breadcrumb": [
@@ -9092,7 +9092,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "pathname": "/docs/api/v2.2/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "title": "Delete a saved payment method",
     "breadcrumb": [
@@ -9149,7 +9149,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "pathname": "/docs/api/v2.2/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "title": "Update the default saved payment method",
     "breadcrumb": [
@@ -9206,7 +9206,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment",
+    "canonicalPathname": "/docs/api/api-reference/observability-api-beta/external-payment",
     "pathname": "/docs/api/v2.2/api-reference/observability-api-beta/external-payment",
     "title": "Create an external payment",
     "breadcrumb": [
@@ -9262,7 +9262,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment_update",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/observability-api-beta/external-payment-update",
+    "canonicalPathname": "/docs/api/api-reference/observability-api-beta/external-payment-update",
     "pathname": "/docs/api/v2.2/api-reference/observability-api-beta/external-payment-update",
     "title": "Update an external payment",
     "breadcrumb": [
@@ -9318,7 +9318,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer",
     "pathname": "/docs/api/v2.2/api-reference/loyalty-api/get-loyalty-customer",
     "title": "Get a loyalty customer's points balance",
     "breadcrumb": [
@@ -9375,7 +9375,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer_transactions",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer-transactions",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/get-loyalty-customer-transactions",
     "pathname": "/docs/api/v2.2/api-reference/loyalty-api/get-loyalty-customer-transactions",
     "title": "List the transactions for a customer",
     "breadcrumb": [
@@ -9433,7 +9433,7 @@
     "objectID": "test:test.com:root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.post_loyalty_transaction",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/loyalty-api/post-loyalty-transaction",
+    "canonicalPathname": "/docs/api/api-reference/loyalty-api/post-loyalty-transaction",
     "pathname": "/docs/api/v2.2/api-reference/loyalty-api/post-loyalty-transaction",
     "title": "Create a loyalty transaction",
     "breadcrumb": [
@@ -9491,7 +9491,7 @@
     "objectID": "test:test.com:root..v2.2.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-status-webhook-event",
     "pathname": "/docs/api/v2.2/webhooks/payment-webhooks/payment-status-webhook-event",
     "title": "Payment Status Update",
     "breadcrumb": [
@@ -9532,7 +9532,7 @@
     "objectID": "test:test.com:root..v2.2.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-refund-webhook-event",
     "pathname": "/docs/api/v2.2/webhooks/payment-webhooks/payment-refund-webhook-event",
     "title": "Payment Refund",
     "breadcrumb": [
@@ -9573,7 +9573,7 @@
     "objectID": "test:test.com:root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "pathname": "/docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "title": "Dispute Open",
     "breadcrumb": [
@@ -9614,7 +9614,7 @@
     "objectID": "test:test.com:root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
     "pathname": "/docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
     "title": "Dispute Status",
     "breadcrumb": [
@@ -9655,7 +9655,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/retrieve-client-side-token",
     "pathname": "/docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token",
     "title": "Retrieve a client session",
     "breadcrumb": [
@@ -9713,7 +9713,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/create-client-side-token",
     "pathname": "/docs/api/v2.1/api-reference/client-session-api/create-client-side-token",
     "title": "Create a client session",
     "breadcrumb": [
@@ -9771,7 +9771,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/update-client-side-token",
     "pathname": "/docs/api/v2.1/api-reference/client-session-api/update-client-side-token",
     "title": "Update client session",
     "breadcrumb": [
@@ -9829,7 +9829,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/list-payments",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/list-payments",
     "pathname": "/docs/api/v2.1/api-reference/payments-api/list-payments",
     "title": "Search & list payments",
     "breadcrumb": [
@@ -9892,7 +9892,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/create-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/create-payment",
     "pathname": "/docs/api/v2.1/api-reference/payments-api/create-payment",
     "title": "Create a payment",
     "breadcrumb": [
@@ -9950,7 +9950,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/capture-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/capture-payment",
     "pathname": "/docs/api/v2.1/api-reference/payments-api/capture-payment",
     "title": "Capture a payment",
     "breadcrumb": [
@@ -10008,7 +10008,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/cancel-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/cancel-payment",
     "pathname": "/docs/api/v2.1/api-reference/payments-api/cancel-payment",
     "title": "Cancel a payment",
     "breadcrumb": [
@@ -10065,7 +10065,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/refund-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/refund-payment",
     "pathname": "/docs/api/v2.1/api-reference/payments-api/refund-payment",
     "title": "Refund a payment",
     "breadcrumb": [
@@ -10123,7 +10123,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/resume-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/resume-payment",
     "pathname": "/docs/api/v2.1/api-reference/payments-api/resume-payment",
     "title": "Resume a payment",
     "breadcrumb": [
@@ -10180,7 +10180,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/get-payment-by-id",
     "pathname": "/docs/api/v2.1/api-reference/payments-api/get-payment-by-id",
     "title": "Get a payment",
     "breadcrumb": [
@@ -10237,7 +10237,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "pathname": "/docs/api/v2.1/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "title": "Save a payment method token",
     "breadcrumb": [
@@ -10295,7 +10295,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "pathname": "/docs/api/v2.1/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "title": "List saved payment methods",
     "breadcrumb": [
@@ -10351,7 +10351,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "pathname": "/docs/api/v2.1/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "title": "Delete a saved payment method",
     "breadcrumb": [
@@ -10408,7 +10408,7 @@
     "objectID": "test:test.com:root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "pathname": "/docs/api/v2.1/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "title": "Update the default saved payment method",
     "breadcrumb": [
@@ -10465,7 +10465,7 @@
     "objectID": "test:test.com:root..v2.1.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-status-webhook-event",
     "pathname": "/docs/api/v2.1/webhooks/payment-webhooks/payment-status-webhook-event",
     "title": "Payment Status Update",
     "breadcrumb": [
@@ -10525,7 +10525,7 @@
     "objectID": "test:test.com:root..v2.1.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/payment-webhooks/payment-refund-webhook-event",
     "pathname": "/docs/api/v2.1/webhooks/payment-webhooks/payment-refund-webhook-event",
     "title": "Payment Refund",
     "breadcrumb": [
@@ -10579,7 +10579,7 @@
     "objectID": "test:test.com:root..v2.1.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
+    "canonicalPathname": "/docs/api/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "pathname": "/docs/api/v2.1/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
     "title": "Dispute Open",
     "breadcrumb": [
@@ -10639,7 +10639,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
+    "canonicalPathname": "/docs/api/api-reference/client-session-api/create-client-side-token",
     "pathname": "/docs/api/v2/api-reference/client-session-api/create-client-side-token",
     "title": "Create a client session",
     "breadcrumb": [
@@ -10697,7 +10697,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/list-payments",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/list-payments",
     "pathname": "/docs/api/v2/api-reference/payments-api/list-payments",
     "title": "Search & list payments",
     "breadcrumb": [
@@ -10760,7 +10760,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/create-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/create-payment",
     "pathname": "/docs/api/v2/api-reference/payments-api/create-payment",
     "title": "Create a payment",
     "breadcrumb": [
@@ -10818,7 +10818,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/capture-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/capture-payment",
     "pathname": "/docs/api/v2/api-reference/payments-api/capture-payment",
     "title": "Capture a payment",
     "breadcrumb": [
@@ -10876,7 +10876,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/cancel-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/cancel-payment",
     "pathname": "/docs/api/v2/api-reference/payments-api/cancel-payment",
     "title": "Cancel a payment",
     "breadcrumb": [
@@ -10933,7 +10933,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/refund-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/refund-payment",
     "pathname": "/docs/api/v2/api-reference/payments-api/refund-payment",
     "title": "Refund a payment",
     "breadcrumb": [
@@ -10991,7 +10991,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/resume-payment",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/resume-payment",
     "pathname": "/docs/api/v2/api-reference/payments-api/resume-payment",
     "title": "Resume a payment",
     "breadcrumb": [
@@ -11048,7 +11048,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
+    "canonicalPathname": "/docs/api/api-reference/payments-api/get-payment-by-id",
     "pathname": "/docs/api/v2/api-reference/payments-api/get-payment-by-id",
     "title": "Get a payment",
     "breadcrumb": [
@@ -11105,7 +11105,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "pathname": "/docs/api/v2/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
     "title": "Save a payment method token",
     "breadcrumb": [
@@ -11162,7 +11162,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "pathname": "/docs/api/v2/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
     "title": "List saved payment methods",
     "breadcrumb": [
@@ -11218,7 +11218,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "pathname": "/docs/api/v2/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
     "title": "Delete a saved payment method",
     "breadcrumb": [
@@ -11275,7 +11275,7 @@
     "objectID": "test:test.com:root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "org_id": "test",
     "domain": "test.com",
-    "canonicalPathname": "/docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
+    "canonicalPathname": "/docs/api/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "pathname": "/docs/api/v2/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
     "title": "Update the default saved payment method",
     "breadcrumb": [

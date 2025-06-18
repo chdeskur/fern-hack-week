@@ -6,6 +6,7 @@
           "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
           "children": [
             {
+              "canonicalSlug": "docs/api-reference/overview",
               "hidden": false,
               "id": "root.uv.api-reference.overview",
               "pageId": "pages/overview.mdx",
@@ -18,6 +19,7 @@
               "children": [
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/files/upload",
                   "endpointId": "endpoint_files.upload",
                   "id": "root.uv.api-reference.subpackage_files.endpoint_files.upload",
                   "isResponseStream": false,
@@ -38,6 +40,7 @@
               "children": [
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/submit",
                   "endpointId": "endpoint_transcripts.submit",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.submit",
                   "isResponseStream": false,
@@ -48,6 +51,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/get",
                   "endpointId": "endpoint_transcripts.get",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.get",
                   "isResponseStream": false,
@@ -58,6 +62,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/get-sentences",
                   "endpointId": "endpoint_transcripts.getSentences",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getSentences",
                   "isResponseStream": false,
@@ -68,6 +73,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/get-paragraphs",
                   "endpointId": "endpoint_transcripts.getParagraphs",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getParagraphs",
                   "isResponseStream": false,
@@ -78,6 +84,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/get-subtitles",
                   "endpointId": "endpoint_transcripts.getSubtitles",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getSubtitles",
                   "isResponseStream": false,
@@ -88,6 +95,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/get-redacted-audio",
                   "endpointId": "endpoint_transcripts.getRedactedAudio",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getRedactedAudio",
                   "isResponseStream": false,
@@ -98,6 +106,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/word-search",
                   "endpointId": "endpoint_transcripts.wordSearch",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.wordSearch",
                   "isResponseStream": false,
@@ -108,6 +117,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/list",
                   "endpointId": "endpoint_transcripts.list",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.list",
                   "isResponseStream": false,
@@ -118,6 +128,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/transcripts/delete",
                   "endpointId": "endpoint_transcripts.delete",
                   "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.delete",
                   "isResponseStream": false,
@@ -138,6 +149,7 @@
               "children": [
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/lemur/task",
                   "endpointId": "endpoint_lemur.task",
                   "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.task",
                   "isResponseStream": false,
@@ -148,6 +160,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/lemur/summary",
                   "endpointId": "endpoint_lemur.summary",
                   "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.summary",
                   "isResponseStream": false,
@@ -158,6 +171,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/lemur/question-answer",
                   "endpointId": "endpoint_lemur.questionAnswer",
                   "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.questionAnswer",
                   "isResponseStream": false,
@@ -168,6 +182,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/lemur/action-items",
                   "endpointId": "endpoint_lemur.actionItems",
                   "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.actionItems",
                   "isResponseStream": false,
@@ -178,6 +193,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/lemur/purge-request-data",
                   "endpointId": "endpoint_lemur.purgeRequestData",
                   "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.purgeRequestData",
                   "isResponseStream": false,
@@ -198,6 +214,7 @@
               "children": [
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/streaming/create-temporary-token",
                   "endpointId": "endpoint_realtime.createTemporaryToken",
                   "id": "root.uv.api-reference.subpackage_streaming.endpoint_realtime.createTemporaryToken",
                   "isResponseStream": false,
@@ -208,6 +225,7 @@
                 },
                 {
                   "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "canonicalSlug": "docs/api-reference/streaming/streaming",
                   "id": "root.uv.api-reference.subpackage_streaming.subpackage_streaming.streaming",
                   "slug": "docs/api-reference/streaming/streaming",
                   "title": "Streaming",

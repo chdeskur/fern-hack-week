@@ -16,6 +16,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "canonicalSlug": "api-reference/api/aiprise/aiprise-webhook-api/verify",
                           "endpointId": "endpoint_api/aiprise/aiprise_webhook_api.verify",
                           "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/aiprise/aiprise_webhook_api.verify",
                           "isResponseStream": false,
@@ -46,6 +47,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "canonicalSlug": "api-reference/api/dev/dev/upload-eor",
                           "endpointId": "endpoint_api/dev/dev.uploadEor",
                           "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/dev/dev.uploadEor",
                           "isResponseStream": false,
@@ -76,6 +78,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "canonicalSlug": "api-reference/api/services/file/attach-document-to-employment",
                           "endpointId": "endpoint_api/services/file.attachDocumentToEmployment",
                           "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.attachDocumentToEmployment",
                           "isResponseStream": false,
@@ -86,6 +89,7 @@
                         },
                         {
                           "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "canonicalSlug": "api-reference/api/services/file/delete-document-from-employment",
                           "endpointId": "endpoint_api/services/file.deleteDocumentFromEmployment",
                           "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.deleteDocumentFromEmployment",
                           "isResponseStream": false,
@@ -96,6 +100,7 @@
                         },
                         {
                           "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "canonicalSlug": "api-reference/api/services/file/load-generic-document-from-employment",
                           "endpointId": "endpoint_api/services/file.loadGenericDocumentFromEmployment",
                           "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadGenericDocumentFromEmployment",
                           "isResponseStream": false,
@@ -106,6 +111,7 @@
                         },
                         {
                           "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "canonicalSlug": "api-reference/api/services/file/load-payslip-from-eor-employment",
                           "endpointId": "endpoint_api/services/file.loadPayslipFromEorEmployment",
                           "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadPayslipFromEorEmployment",
                           "isResponseStream": false,
@@ -116,6 +122,7 @@
                         },
                         {
                           "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "canonicalSlug": "api-reference/api/services/file/load-pay-in-from-eor-employment",
                           "endpointId": "endpoint_api/services/file.loadPayInFromEorEmployment",
                           "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadPayInFromEorEmployment",
                           "isResponseStream": false,
@@ -149,6 +156,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/accounting/accounting-api/change-accounting-integration-setting",
                               "endpointId": "endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
                               "isResponseStream": false,
@@ -159,6 +167,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/accounting/accounting-api/get-accounting-integrations-info",
                               "endpointId": "endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
                               "isResponseStream": false,
@@ -169,6 +178,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/accounting/accounting-api/get-company-accounting-mapping-details",
                               "endpointId": "endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
                               "isResponseStream": false,
@@ -179,6 +189,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/accounting/accounting-api/complete-accounting-integration-auth",
                               "endpointId": "endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
                               "isResponseStream": false,
@@ -209,6 +220,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-plaid-bank-details",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
                               "isResponseStream": false,
@@ -219,6 +231,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/generate-plaid-update-flow-link-token",
                               "endpointId": "endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
                               "isResponseStream": false,
@@ -229,6 +242,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/generate-bank-signup",
                               "endpointId": "endpoint_api/thera/bank/bank_api.generateBankSignup",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.generateBankSignup",
                               "isResponseStream": false,
@@ -239,6 +253,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/complete-bank-signup",
                               "endpointId": "endpoint_api/thera/bank/bank_api.completeBankSignup",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.completeBankSignup",
                               "isResponseStream": false,
@@ -249,6 +264,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/reattach-stripe-mandate",
                               "endpointId": "endpoint_api/thera/bank/bank_api.reattachStripeMandate",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.reattachStripeMandate",
                               "isResponseStream": false,
@@ -259,6 +275,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-payment-methods",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getPaymentMethods",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPaymentMethods",
                               "isResponseStream": false,
@@ -269,6 +286,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/delete-payment-method",
                               "endpointId": "endpoint_api/thera/bank/bank_api.deletePaymentMethod",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deletePaymentMethod",
                               "isResponseStream": false,
@@ -279,6 +297,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/choose-w-2-payment-method",
                               "endpointId": "endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
                               "isResponseStream": false,
@@ -289,6 +308,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/verify-bank-signup",
                               "endpointId": "endpoint_api/thera/bank/bank_api.verifyBankSignup",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.verifyBankSignup",
                               "isResponseStream": false,
@@ -299,6 +319,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/set-auto-pay",
                               "endpointId": "endpoint_api/thera/bank/bank_api.setAutoPay",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.setAutoPay",
                               "isResponseStream": false,
@@ -309,6 +330,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-withdrawal-method-currencies",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
                               "isResponseStream": false,
@@ -319,6 +341,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-bank-transfer-currencies-by-country",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
                               "isResponseStream": false,
@@ -329,6 +352,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-withdrawal-limits-by-method",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
                               "isResponseStream": false,
@@ -339,6 +363,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-currency",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
                               "isResponseStream": false,
@@ -349,6 +374,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-method",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
                               "isResponseStream": false,
@@ -359,6 +385,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-supported-withdrawal-methods",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
                               "isResponseStream": false,
@@ -369,6 +396,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/save-withdrawal-method",
                               "endpointId": "endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
                               "isResponseStream": false,
@@ -379,6 +407,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/delete-withdrawal-method",
                               "endpointId": "endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
                               "isResponseStream": false,
@@ -389,6 +418,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/edit-withdrawal-method",
                               "endpointId": "endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
                               "isResponseStream": false,
@@ -399,6 +429,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-worker-withdrawal-preview",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
                               "isResponseStream": false,
@@ -409,6 +440,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/initiate-worker-withdrawal",
                               "endpointId": "endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
                               "isResponseStream": false,
@@ -419,6 +451,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-worker-balance",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getWorkerBalance",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerBalance",
                               "isResponseStream": false,
@@ -429,6 +462,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-worker-transactions",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getWorkerTransactions",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerTransactions",
                               "isResponseStream": false,
@@ -450,6 +484,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-pay-in-history",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getPayInHistory",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPayInHistory",
                               "isResponseStream": false,
@@ -460,6 +495,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-pay-in-details",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getPayInDetails",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPayInDetails",
                               "isResponseStream": false,
@@ -470,6 +506,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/delete-off-platform-payment",
                               "endpointId": "endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
                               "isResponseStream": false,
@@ -480,6 +517,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-currency-conversion",
                               "endpointId": "endpoint_api/thera/bank/bank_api.getCurrencyConversion",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getCurrencyConversion",
                               "isResponseStream": false,
@@ -490,6 +528,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/set-auto-withdrawals",
                               "endpointId": "endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
                               "isResponseStream": false,
@@ -500,6 +539,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/create-check-payment-method-from-plaid",
                               "endpointId": "endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
                               "isResponseStream": false,
@@ -510,6 +550,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/create-stripe-payment-method-from-plaid",
                               "endpointId": "endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
                               "isResponseStream": false,
@@ -540,6 +581,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/get-monite-token",
                               "endpointId": "endpoint_api/thera/company/company_api.getMoniteToken",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getMoniteToken",
                               "isResponseStream": false,
@@ -550,6 +592,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/invite-contractor",
                               "endpointId": "endpoint_api/thera/company/company_api.inviteContractor",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.inviteContractor",
                               "isResponseStream": false,
@@ -560,6 +603,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/invite-manager",
                               "endpointId": "endpoint_api/thera/company/company_api.inviteManager",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.inviteManager",
                               "isResponseStream": false,
@@ -570,6 +614,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/edit-manager-roles",
                               "endpointId": "endpoint_api/thera/company/company_api.editManagerRoles",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editManagerRoles",
                               "isResponseStream": false,
@@ -580,6 +625,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/edit-org-roles",
                               "endpointId": "endpoint_api/thera/company/company_api.editOrgRoles",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editOrgRoles",
                               "isResponseStream": false,
@@ -590,6 +636,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/remove-manager",
                               "endpointId": "endpoint_api/thera/company/company_api.removeManager",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.removeManager",
                               "isResponseStream": false,
@@ -600,6 +647,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/change-contract-team",
                               "endpointId": "endpoint_api/thera/company/company_api.changeContractTeam",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.changeContractTeam",
                               "isResponseStream": false,
@@ -610,6 +658,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/get-teams",
                               "endpointId": "endpoint_api/thera/company/company_api.getTeams",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getTeams",
                               "isResponseStream": false,
@@ -620,6 +669,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/get-managers",
                               "endpointId": "endpoint_api/thera/company/company_api.getManagers",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getManagers",
                               "isResponseStream": false,
@@ -630,6 +680,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/create-team",
                               "endpointId": "endpoint_api/thera/company/company_api.createTeam",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.createTeam",
                               "isResponseStream": false,
@@ -640,6 +691,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/delete-team",
                               "endpointId": "endpoint_api/thera/company/company_api.deleteTeam",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.deleteTeam",
                               "isResponseStream": false,
@@ -650,6 +702,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/edit-team",
                               "endpointId": "endpoint_api/thera/company/company_api.editTeam",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editTeam",
                               "isResponseStream": false,
@@ -660,6 +713,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/get-all-company-affiliations",
                               "endpointId": "endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
                               "isResponseStream": false,
@@ -670,6 +724,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/check-can-create-account",
                               "endpointId": "endpoint_api/thera/company/company_api.checkCanCreateAccount",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.checkCanCreateAccount",
                               "isResponseStream": false,
@@ -680,6 +735,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/add-eor-employee",
                               "endpointId": "endpoint_api/thera/company/company_api.addEorEmployee",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.addEorEmployee",
                               "isResponseStream": false,
@@ -690,6 +746,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/get-contractor-csv",
                               "endpointId": "endpoint_api/thera/company/company_api.getContractorCsv",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getContractorCsv",
                               "isResponseStream": false,
@@ -700,6 +757,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-api/get-contracts-csv",
                               "endpointId": "endpoint_api/thera/company/company_api.getContractsCSV",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getContractsCSV",
                               "isResponseStream": false,
@@ -720,6 +778,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-w-2-payroll-api/onboard-w-2-payroll",
                               "endpointId": "endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
                               "isResponseStream": false,
@@ -730,6 +789,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-w-2-payroll-api/toggle-w-2-payroll-onboarding-flow-complete",
                               "endpointId": "endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
                               "isResponseStream": false,
@@ -740,6 +800,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/company/company-w-2-payroll-api/setup-payroll",
                               "endpointId": "endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
                               "isResponseStream": false,
@@ -770,6 +831,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/contractor/contractor-api/get-us-contractors-tax-info",
                               "endpointId": "endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
                               "isResponseStream": false,
@@ -780,6 +842,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/contractor/contractor-api/update-us-contractor-tax-info",
                               "endpointId": "endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
                               "isResponseStream": false,
@@ -790,6 +853,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/contractor/contractor-api/onboard-contractors-csv",
                               "endpointId": "endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
                               "isResponseStream": false,
@@ -820,6 +884,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/disbursement/disbursement-api/upload-csv-invoice",
                               "endpointId": "endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
                               "isResponseStream": false,
@@ -830,6 +895,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/disbursement/disbursement-api/create-disbursement",
                               "endpointId": "endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
                               "isResponseStream": false,
@@ -840,6 +906,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/disbursement/disbursement-api/approve-invoice",
                               "endpointId": "endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
                               "isResponseStream": false,
@@ -850,6 +917,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/disbursement/disbursement-api/create-invoice-deduction",
                               "endpointId": "endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
                               "isResponseStream": false,
@@ -860,6 +928,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/disbursement/disbursement-api/delete-invoice-deduction",
                               "endpointId": "endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
                               "isResponseStream": false,
@@ -870,6 +939,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/disbursement/disbursement-api/get-invoices-csv",
                               "endpointId": "endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
                               "isResponseStream": false,
@@ -890,6 +960,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/disbursement/disbursement-webhook-api/invoice-webhook",
                               "endpointId": "endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
                               "isResponseStream": false,
@@ -920,6 +991,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/document/document-api/get-w-9-document",
                               "endpointId": "endpoint_api/thera/document/document_api.getW9Document",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.getW9Document",
                               "isResponseStream": false,
@@ -930,6 +1002,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/document/document-api/get-us-irs-1099-nec-document",
                               "endpointId": "endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
                               "isResponseStream": false,
@@ -940,6 +1013,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/document/document-api/bulk-file-us-irs-1099-nec-document",
                               "endpointId": "endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
                               "isResponseStream": false,
@@ -970,6 +1044,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/email/email-api/send-login-email",
                               "endpointId": "endpoint_api/thera/email/email_api.sendLoginEmail",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/email/email_api.sendLoginEmail",
                               "isResponseStream": false,
@@ -980,6 +1055,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/email/email-api/update-user-email",
                               "endpointId": "endpoint_api/thera/email/email_api.updateUserEmail",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/email/email_api.updateUserEmail",
                               "isResponseStream": false,
@@ -1010,6 +1086,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/employment/employment-api/delete-invoice-item-recurrence",
                               "endpointId": "endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
                               "isResponseStream": false,
@@ -1020,6 +1097,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/employment/employment-api/estimate-contract",
                               "endpointId": "endpoint_api/thera/employment/employment_api.estimateContract",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.estimateContract",
                               "isResponseStream": false,
@@ -1030,6 +1108,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/employment/employment-api/delete-contract",
                               "endpointId": "endpoint_api/thera/employment/employment_api.deleteContract",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.deleteContract",
                               "isResponseStream": false,
@@ -1040,6 +1119,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/employment/employment-api/cancel-contract-termination",
                               "endpointId": "endpoint_api/thera/employment/employment_api.cancelContractTermination",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.cancelContractTermination",
                               "isResponseStream": false,
@@ -1050,6 +1130,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/employment/employment-api/get-pay-cycle",
                               "endpointId": "endpoint_api/thera/employment/employment_api.getPayCycle",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.getPayCycle",
                               "isResponseStream": false,
@@ -1080,6 +1161,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/misc/misc/regular-cron",
                               "endpointId": "endpoint_api/thera/misc/misc.regularCron",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.regularCron",
                               "isResponseStream": false,
@@ -1090,6 +1172,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/misc/misc/auto-pay-cron",
                               "endpointId": "endpoint_api/thera/misc/misc.autoPayCron",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.autoPayCron",
                               "isResponseStream": false,
@@ -1100,6 +1183,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/misc/misc/auto-pay-email-notification-cron",
                               "endpointId": "endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
                               "isResponseStream": false,
@@ -1110,6 +1194,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/misc/misc/contract-renewal-cron",
                               "endpointId": "endpoint_api/thera/misc/misc.contractRenewalCron",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.contractRenewalCron",
                               "isResponseStream": false,
@@ -1140,6 +1225,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/payroll/offcycle-api/get-current-off-cycle-checks",
                               "endpointId": "endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
                               "isResponseStream": false,
@@ -1160,6 +1246,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/payroll/oncycle-api/approve-oncycle-checks",
                               "endpointId": "endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
                               "isResponseStream": false,
@@ -1170,6 +1257,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/payroll/oncycle-api/get-on-cycle-checks",
                               "endpointId": "endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
                               "isResponseStream": false,
@@ -1180,6 +1268,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/payroll/oncycle-api/cancel-current-autopilot-payroll",
                               "endpointId": "endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
                               "isResponseStream": false,
@@ -1210,6 +1299,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/associate-time-off-policy-to-contractor",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
                               "isResponseStream": false,
@@ -1220,6 +1310,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/request-pto-for-contractor",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
                               "isResponseStream": false,
@@ -1230,6 +1321,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/add-time-off-policy",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
                               "isResponseStream": false,
@@ -1240,6 +1332,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/get-time-off-policy",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
                               "isResponseStream": false,
@@ -1250,6 +1343,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/update-time-off-policy",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
                               "isResponseStream": false,
@@ -1260,6 +1354,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/delete-time-off-policy",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
                               "isResponseStream": false,
@@ -1270,6 +1365,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/get-contractors-time-off-history-by-company",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
                               "isResponseStream": false,
@@ -1280,6 +1376,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/get-time-off-history-by-contractor",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
                               "isResponseStream": false,
@@ -1290,6 +1387,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-policy",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
                               "isResponseStream": false,
@@ -1300,6 +1398,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-contractor",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
                               "isResponseStream": false,
@@ -1310,6 +1409,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/modify-time-off-status",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
                               "isResponseStream": false,
@@ -1320,6 +1420,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/bulk-modify-time-off-statuses",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
                               "isResponseStream": false,
@@ -1330,6 +1431,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/timeoff/timeoff-api/update-pto-for-contractor",
                               "endpointId": "endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
                               "isResponseStream": false,
@@ -1360,6 +1462,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/add-company-banking-details",
                               "endpointId": "endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
                               "isResponseStream": false,
@@ -1370,6 +1473,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/get-naics-codes",
                               "endpointId": "endpoint_api/thera/tp/tp_api.getNaicsCodes",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getNaicsCodes",
                               "isResponseStream": false,
@@ -1380,6 +1484,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/process-treasury-prime-payment",
                               "endpointId": "endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
                               "isResponseStream": false,
@@ -1390,6 +1495,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/create-counter-party-for-banking",
                               "endpointId": "endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
                               "isResponseStream": false,
@@ -1400,6 +1506,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/get-tp-accounts-for-company",
                               "endpointId": "endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
                               "isResponseStream": false,
@@ -1410,6 +1517,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/get-tp-account",
                               "endpointId": "endpoint_api/thera/tp/tp_api.getTpAccount",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getTpAccount",
                               "isResponseStream": false,
@@ -1420,6 +1528,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/transfer-funds-to-omnibus-account",
                               "endpointId": "endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
                               "isResponseStream": false,
@@ -1430,6 +1539,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/transaction-history",
                               "endpointId": "endpoint_api/thera/tp/tp_api.transactionHistory",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.transactionHistory",
                               "isResponseStream": false,
@@ -1440,6 +1550,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/deatiled-tp-transaction",
                               "endpointId": "endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
                               "isResponseStream": false,
@@ -1450,6 +1561,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/tp/tp-api/external-transfer-fund",
                               "endpointId": "endpoint_api/thera/tp/tp_api.externalTransferFund",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.externalTransferFund",
                               "isResponseStream": false,
@@ -1480,6 +1592,7 @@
                           "children": [
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/user/user-api/set-user-compliance-setting",
                               "endpointId": "endpoint_api/thera/user/user_api.setUserComplianceSetting",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.setUserComplianceSetting",
                               "isResponseStream": false,
@@ -1490,6 +1603,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/user/user-api/get-compliance-user-setting",
                               "endpointId": "endpoint_api/thera/user/user_api.getComplianceUserSetting",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.getComplianceUserSetting",
                               "isResponseStream": false,
@@ -1500,6 +1614,7 @@
                             },
                             {
                               "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/user/user-api/get-user",
                               "endpointId": "endpoint_api/thera/user/user_api.getUser",
                               "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.getUser",
                               "isResponseStream": false,

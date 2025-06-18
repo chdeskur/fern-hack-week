@@ -8,6 +8,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "intro",
                     "hidden": false,
                     "id": "root.uv.docs.docs.introduction.welcome-to-hume-ai",
                     "pageId": "docs/pages/documentation/introduction/welcome.mdx",
@@ -16,6 +17,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/introduction/api-key",
                     "hidden": false,
                     "id": "root.uv.docs.docs.introduction.api-key",
                     "pageId": "docs/pages/documentation/introduction/getting-your-api-key.mdx",
@@ -24,6 +26,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "support",
                     "hidden": false,
                     "id": "root.uv.docs.docs.introduction.support",
                     "pageId": "docs/pages/documentation/introduction/support.mdx",
@@ -49,6 +52,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/overview",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.overview",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/overview.mdx",
@@ -59,6 +63,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/empathic-voice-interface-evi/quickstart/typescript",
                         "hidden": false,
                         "id": "root.uv.docs.docs.empathic-voice-interface-evi.quickstart.typescript",
                         "pageId": "docs/pages/documentation/empathic-voice-interface/quickstart/typescript.mdx",
@@ -67,6 +72,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/empathic-voice-interface-evi/quickstart/python",
                         "hidden": false,
                         "id": "root.uv.docs.docs.empathic-voice-interface-evi.quickstart.python",
                         "pageId": "docs/pages/documentation/empathic-voice-interface/quickstart/python.mdx",
@@ -84,6 +90,7 @@
                     "type": "section"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/evi-2",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.evi-2",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/evi-2.mdx",
@@ -92,6 +99,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/configuration",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.configuration",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/configuration/configuration.mdx",
@@ -100,6 +108,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/voices",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.voices",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/voices/voices.mdx",
@@ -108,6 +117,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/tool-use",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.tool-use",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/tool-use/tool-use.mdx",
@@ -116,6 +126,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/phone-calling",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.phone-calling",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/phone-calling.mdx",
@@ -124,6 +135,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/prompting",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.prompting",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/prompting.mdx",
@@ -132,6 +144,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/custom-language-model",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/custom-language-model.mdx",
@@ -140,6 +153,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/empathic-voice-interface-evi/faq",
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.faq",
                     "pageId": "docs/pages/documentation/empathic-voice-interface/faq.mdx",
@@ -159,6 +173,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/expression-measurement/overview",
                     "hidden": false,
                     "id": "root.uv.docs.docs.expression-measurement.overview",
                     "pageId": "docs/pages/documentation/expression-measurement-api/overview.mdx",
@@ -167,6 +182,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/expression-measurement/rest",
                     "hidden": false,
                     "id": "root.uv.docs.docs.expression-measurement.rest",
                     "pageId": "docs/pages/documentation/expression-measurement-api/rest.mdx",
@@ -175,6 +191,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/expression-measurement/websocket",
                     "hidden": false,
                     "id": "root.uv.docs.docs.expression-measurement.websocket",
                     "pageId": "docs/pages/documentation/expression-measurement-api/websocket.mdx",
@@ -185,6 +202,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/expression-measurement/custom-models/overview",
                         "hidden": false,
                         "id": "root.uv.docs.docs.expression-measurement.custom-models.overview",
                         "pageId": "docs/pages/documentation/custom-models-api/overview.mdx",
@@ -193,6 +211,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/expression-measurement/custom-models/creating-your-dataset",
                         "hidden": false,
                         "id": "root.uv.docs.docs.expression-measurement.custom-models.creating-your-dataset",
                         "pageId": "docs/pages/documentation/custom-models-api/creating-your-dataset.mdx",
@@ -201,6 +220,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/expression-measurement/custom-models/training-a-custom-model",
                         "hidden": false,
                         "id": "root.uv.docs.docs.expression-measurement.custom-models.training-a-custom-model",
                         "pageId": "docs/pages/documentation/custom-models-api/training-your-model.mdx",
@@ -209,6 +229,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/expression-measurement/custom-models/evaluating-your-custom-model",
                         "hidden": false,
                         "id": "root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model",
                         "pageId": "docs/pages/documentation/custom-models-api/evaluating-your-model.mdx",
@@ -226,6 +247,7 @@
                     "type": "section"
                   },
                   {
+                    "canonicalSlug": "docs/expression-measurement/faq",
                     "hidden": false,
                     "id": "root.uv.docs.docs.expression-measurement.faq",
                     "pageId": "docs/pages/documentation/expression-measurement-api/faq.mdx",
@@ -245,6 +267,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "docs/resources/billing",
                     "hidden": false,
                     "id": "root.uv.docs.docs.resources.billing",
                     "pageId": "docs/pages/documentation/resources/billing.mdx",
@@ -253,6 +276,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/resources/errors",
                     "hidden": false,
                     "id": "root.uv.docs.docs.resources.errors",
                     "pageId": "docs/pages/documentation/resources/errors.mdx",
@@ -261,6 +285,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/resources/science",
                     "hidden": false,
                     "id": "root.uv.docs.docs.resources.science",
                     "pageId": "docs/pages/documentation/resources/science-hume-ai.mdx",
@@ -269,6 +294,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/resources/use-case-guidelines",
                     "hidden": false,
                     "id": "root.uv.docs.docs.resources.use-case-guidelines",
                     "pageId": "docs/pages/documentation/resources/use-case-guidelines.mdx",
@@ -277,6 +303,7 @@
                     "type": "page"
                   },
                   {
+                    "canonicalSlug": "docs/resources/privacy",
                     "hidden": false,
                     "id": "root.uv.docs.docs.resources.privacy",
                     "pageId": "docs/pages/documentation/resources/privacy.mdx",
@@ -327,6 +354,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/list-tools",
                         "endpointId": "endpoint_tools.list-tools",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.list-tools",
                         "isResponseStream": false,
@@ -337,6 +365,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/create-tool",
                         "endpointId": "endpoint_tools.create-tool",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.create-tool",
                         "isResponseStream": false,
@@ -347,6 +376,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/list-tool-versions",
                         "endpointId": "endpoint_tools.list-tool-versions",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.list-tool-versions",
                         "isResponseStream": false,
@@ -357,6 +387,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/create-tool-version",
                         "endpointId": "endpoint_tools.create-tool-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.create-tool-version",
                         "isResponseStream": false,
@@ -367,6 +398,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/delete-tool",
                         "endpointId": "endpoint_tools.delete-tool",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.delete-tool",
                         "isResponseStream": false,
@@ -377,6 +409,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/update-tool-name",
                         "endpointId": "endpoint_tools.update-tool-name",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.update-tool-name",
                         "isResponseStream": false,
@@ -387,6 +420,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/get-tool-version",
                         "endpointId": "endpoint_tools.get-tool-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.get-tool-version",
                         "isResponseStream": false,
@@ -397,6 +431,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/delete-tool-version",
                         "endpointId": "endpoint_tools.delete-tool-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.delete-tool-version",
                         "isResponseStream": false,
@@ -407,6 +442,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/tools/update-tool-description",
                         "endpointId": "endpoint_tools.update-tool-description",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.update-tool-description",
                         "isResponseStream": false,
@@ -427,6 +463,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/list-prompts",
                         "endpointId": "endpoint_prompts.list-prompts",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.list-prompts",
                         "isResponseStream": false,
@@ -437,6 +474,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/create-prompt",
                         "endpointId": "endpoint_prompts.create-prompt",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.create-prompt",
                         "isResponseStream": false,
@@ -447,6 +485,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/list-prompt-versions",
                         "endpointId": "endpoint_prompts.list-prompt-versions",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.list-prompt-versions",
                         "isResponseStream": false,
@@ -457,6 +496,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/create-prompt-verison",
                         "endpointId": "endpoint_prompts.create-prompt-verison",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.create-prompt-verison",
                         "isResponseStream": false,
@@ -467,6 +507,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/delete-prompt",
                         "endpointId": "endpoint_prompts.delete-prompt",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.delete-prompt",
                         "isResponseStream": false,
@@ -477,6 +518,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/update-prompt-name",
                         "endpointId": "endpoint_prompts.update-prompt-name",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.update-prompt-name",
                         "isResponseStream": false,
@@ -487,6 +529,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/get-prompt-version",
                         "endpointId": "endpoint_prompts.get-prompt-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.get-prompt-version",
                         "isResponseStream": false,
@@ -497,6 +540,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/delete-prompt-version",
                         "endpointId": "endpoint_prompts.delete-prompt-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.delete-prompt-version",
                         "isResponseStream": false,
@@ -507,6 +551,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/prompts/update-prompt-description",
                         "endpointId": "endpoint_prompts.update-prompt-description",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.update-prompt-description",
                         "isResponseStream": false,
@@ -527,6 +572,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/custom-voices/list-custom-voices",
                         "endpointId": "endpoint_customVoices.list-custom-voices",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.list-custom-voices",
                         "isResponseStream": false,
@@ -537,6 +583,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/custom-voices/create-custom-voice",
                         "endpointId": "endpoint_customVoices.create-custom-voice",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.create-custom-voice",
                         "isResponseStream": false,
@@ -547,6 +594,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/custom-voices/get-custom-voice",
                         "endpointId": "endpoint_customVoices.get-custom-voice",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.get-custom-voice",
                         "isResponseStream": false,
@@ -557,6 +605,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/custom-voices/create-custom-voice-version",
                         "endpointId": "endpoint_customVoices.create-custom-voice-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.create-custom-voice-version",
                         "isResponseStream": false,
@@ -567,6 +616,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/custom-voices/delete-custom-voice",
                         "endpointId": "endpoint_customVoices.delete-custom-voice",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.delete-custom-voice",
                         "isResponseStream": false,
@@ -577,6 +627,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/custom-voices/update-custom-voice-name",
                         "endpointId": "endpoint_customVoices.update-custom-voice-name",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.update-custom-voice-name",
                         "isResponseStream": false,
@@ -597,6 +648,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/list-configs",
                         "endpointId": "endpoint_configs.list-configs",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.list-configs",
                         "isResponseStream": false,
@@ -607,6 +659,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/create-config",
                         "endpointId": "endpoint_configs.create-config",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.create-config",
                         "isResponseStream": false,
@@ -617,6 +670,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/list-config-versions",
                         "endpointId": "endpoint_configs.list-config-versions",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.list-config-versions",
                         "isResponseStream": false,
@@ -627,6 +681,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/create-config-version",
                         "endpointId": "endpoint_configs.create-config-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.create-config-version",
                         "isResponseStream": false,
@@ -637,6 +692,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/delete-config",
                         "endpointId": "endpoint_configs.delete-config",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.delete-config",
                         "isResponseStream": false,
@@ -647,6 +703,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/update-config-name",
                         "endpointId": "endpoint_configs.update-config-name",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.update-config-name",
                         "isResponseStream": false,
@@ -657,6 +714,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/get-config-version",
                         "endpointId": "endpoint_configs.get-config-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.get-config-version",
                         "isResponseStream": false,
@@ -667,6 +725,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/delete-config-version",
                         "endpointId": "endpoint_configs.delete-config-version",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.delete-config-version",
                         "isResponseStream": false,
@@ -677,6 +736,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/configs/update-config-description",
                         "endpointId": "endpoint_configs.update-config-description",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.update-config-description",
                         "isResponseStream": false,
@@ -697,6 +757,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chats/list-chats",
                         "endpointId": "endpoint_chats.list-chats",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chats.list-chats",
                         "isResponseStream": false,
@@ -707,6 +768,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chats/list-chat-events",
                         "endpointId": "endpoint_chats.list-chat-events",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chats.list-chat-events",
                         "isResponseStream": false,
@@ -717,6 +779,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chats/get-audio",
                         "endpointId": "endpoint_chats.get-audio",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chats.get-audio",
                         "isResponseStream": false,
@@ -737,6 +800,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chat-groups/list-chat-groups",
                         "endpointId": "endpoint_chatGroups.list-chat-groups",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.list-chat-groups",
                         "isResponseStream": false,
@@ -747,6 +811,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chat-groups/get-chat-group",
                         "endpointId": "endpoint_chatGroups.get-chat-group",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.get-chat-group",
                         "isResponseStream": false,
@@ -757,6 +822,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chat-groups/list-chat-group-events",
                         "endpointId": "endpoint_chatGroups.list-chat-group-events",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.list-chat-group-events",
                         "isResponseStream": false,
@@ -767,6 +833,7 @@
                       },
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chat-groups/get-audio",
                         "endpointId": "endpoint_chatGroups.get-audio",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.get-audio",
                         "isResponseStream": false,
@@ -787,6 +854,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "canonicalSlug": "reference/empathic-voice-interface-evi/chat/chat",
                         "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_chat.chat",
                         "slug": "reference/empathic-voice-interface-evi/chat/chat",
                         "title": "Chat",
@@ -818,6 +886,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "canonicalSlug": "reference/expression-measurement-api/batch/list-jobs",
                         "endpointId": "endpoint_batch.list-jobs",
                         "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.list-jobs",
                         "isResponseStream": false,
@@ -828,6 +897,7 @@
                       },
                       {
                         "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "canonicalSlug": "reference/expression-measurement-api/batch/start-inference-job",
                         "endpointId": "endpoint_batch.start-inference-job",
                         "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.start-inference-job",
                         "isResponseStream": false,
@@ -838,6 +908,7 @@
                       },
                       {
                         "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "canonicalSlug": "reference/expression-measurement-api/batch/get-job-details",
                         "endpointId": "endpoint_batch.get-job-details",
                         "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.get-job-details",
                         "isResponseStream": false,
@@ -848,6 +919,7 @@
                       },
                       {
                         "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "canonicalSlug": "reference/expression-measurement-api/batch/get-job-predictions",
                         "endpointId": "endpoint_batch.get-job-predictions",
                         "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.get-job-predictions",
                         "isResponseStream": false,
@@ -858,6 +930,7 @@
                       },
                       {
                         "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "canonicalSlug": "reference/expression-measurement-api/batch/get-job-artifacts",
                         "endpointId": "endpoint_batch.get-job-artifacts",
                         "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.get-job-artifacts",
                         "isResponseStream": false,
@@ -868,6 +941,7 @@
                       },
                       {
                         "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "canonicalSlug": "reference/expression-measurement-api/batch/start-inference-job-from-local-file",
                         "endpointId": "endpoint_batch.start-inference-job-from-local-file",
                         "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.start-inference-job-from-local-file",
                         "isResponseStream": false,
@@ -888,6 +962,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "canonicalSlug": "reference/expression-measurement-api/stream/stream",
                         "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:subpackage_stream.Stream",
                         "slug": "reference/expression-measurement-api/stream/stream",
                         "title": "Stream",
@@ -919,6 +994,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/files/list-files",
                         "endpointId": "endpoint_files.list-files",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.list-files",
                         "isResponseStream": false,
@@ -929,6 +1005,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/files/create-files",
                         "endpointId": "endpoint_files.create-files",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.create-files",
                         "isResponseStream": false,
@@ -939,6 +1016,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/files/upload-file",
                         "endpointId": "endpoint_files.upload-file",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.upload-file",
                         "isResponseStream": false,
@@ -949,6 +1027,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/files/get-file",
                         "endpointId": "endpoint_files.get-file",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.get-file",
                         "isResponseStream": false,
@@ -959,6 +1038,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/files/delete-file",
                         "endpointId": "endpoint_files.delete-file",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.delete-file",
                         "isResponseStream": false,
@@ -969,6 +1049,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/files/update-file-name",
                         "endpointId": "endpoint_files.update-file-name",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.update-file-name",
                         "isResponseStream": false,
@@ -979,6 +1060,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/files/get-file-predictions",
                         "endpointId": "endpoint_files.get-file-predictions",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.get-file-predictions",
                         "isResponseStream": false,
@@ -999,6 +1081,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/list-datasets",
                         "endpointId": "endpoint_datasets.list-datasets",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-datasets",
                         "isResponseStream": false,
@@ -1009,6 +1092,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/create-dataset",
                         "endpointId": "endpoint_datasets.create-dataset",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.create-dataset",
                         "isResponseStream": false,
@@ -1019,6 +1103,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/get-dataset",
                         "endpointId": "endpoint_datasets.get-dataset",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.get-dataset",
                         "isResponseStream": false,
@@ -1029,6 +1114,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/create-dataset-version",
                         "endpointId": "endpoint_datasets.create-dataset-version",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.create-dataset-version",
                         "isResponseStream": false,
@@ -1039,6 +1125,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/delete-dataset",
                         "endpointId": "endpoint_datasets.delete-dataset",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.delete-dataset",
                         "isResponseStream": false,
@@ -1049,6 +1136,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/list-dataset-versions",
                         "endpointId": "endpoint_datasets.list-dataset-versions",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-dataset-versions",
                         "isResponseStream": false,
@@ -1059,6 +1147,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/list-dataset-files",
                         "endpointId": "endpoint_datasets.list-dataset-files",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-dataset-files",
                         "isResponseStream": false,
@@ -1069,6 +1158,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/get-dataset-version",
                         "endpointId": "endpoint_datasets.get-dataset-version",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.get-dataset-version",
                         "isResponseStream": false,
@@ -1079,6 +1169,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/datasets/list-dataset-version-files",
                         "endpointId": "endpoint_datasets.list-dataset-version-files",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-dataset-version-files",
                         "isResponseStream": false,
@@ -1099,6 +1190,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/models/list-models",
                         "endpointId": "endpoint_models.list-models",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.list-models",
                         "isResponseStream": false,
@@ -1109,6 +1201,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/models/get-model-details",
                         "endpointId": "endpoint_models.get-model-details",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.get-model-details",
                         "isResponseStream": false,
@@ -1119,6 +1212,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/models/update-model-name",
                         "endpointId": "endpoint_models.update-model-name",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.update-model-name",
                         "isResponseStream": false,
@@ -1129,6 +1223,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/models/list-model-versions",
                         "endpointId": "endpoint_models.list-model-versions",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.list-model-versions",
                         "isResponseStream": false,
@@ -1139,6 +1234,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/models/get-model-version",
                         "endpointId": "endpoint_models.get-model-version",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.get-model-version",
                         "isResponseStream": false,
@@ -1149,6 +1245,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/models/update-model-description",
                         "endpointId": "endpoint_models.update-model-description",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.update-model-description",
                         "isResponseStream": false,
@@ -1169,6 +1266,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/jobs/start-training-job",
                         "endpointId": "endpoint_jobs.start-training-job",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_jobs.start-training-job",
                         "isResponseStream": false,
@@ -1179,6 +1277,7 @@
                       },
                       {
                         "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                        "canonicalSlug": "reference/custom-models-api/jobs/start-custom-models-inference-job",
                         "endpointId": "endpoint_jobs.start-custom-models-inference-job",
                         "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_jobs.start-custom-models-inference-job",
                         "isResponseStream": false,
@@ -1221,6 +1320,7 @@
               {
                 "children": [
                   {
+                    "canonicalSlug": "changelog",
                     "hidden": false,
                     "id": "root.uv.changelog.changelog.changelog",
                     "pageId": "docs/changelog/2024.mdx",
