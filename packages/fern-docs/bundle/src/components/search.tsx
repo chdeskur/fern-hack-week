@@ -224,7 +224,7 @@ export const SearchV2 = React.memo(function SearchV2({
                     user: user?.content,
                     assistant: assistant.content,
                   })}
-                  feedbackPrepend="[AI Chat] "
+                  feedbackPrepend="[Ask Fern] "
                 />
               );
             }}
