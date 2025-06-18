@@ -23,7 +23,6 @@ test_incident_summary = ''
 test_incident_sites_down = {"US": [], "EU": []}
 for incident in list_test_response.json()["incidents"]:
     if incident["name"] == incident_name:
-        test_incident_id = incident["id"]
         incident_url = incident["permalink"]
         incident_category = incident["incident_status"]["category"]
 
@@ -31,7 +30,8 @@ for incident in list_test_response.json()["incidents"]:
         print(f"Found incident {incident_url} of status {incident_category}")
         if incident_category in ["declined","merged","canceled","learning","closed"]:
             continue
-        
+
+        test_incident_id = incident["id"]
         test_incident_summary = incident["summary"]
         test_incident_sites_down["US"] = test_incident_summary.split("US Sites:\n\n- ")[1].split("\n\n\nEU Sites:\n\n- ")[0].split("\n\n- ")
         test_incident_sites_down["EU"] = test_incident_summary.split("US Sites:\n\n- ")[1].split("\n\n\nEU Sites:\n\n- ")[1].split("\n\n- ")
@@ -52,8 +52,15 @@ incident_id = ''
 incident_summary = ''
 for incident in list_response.json()["incidents"]:
     if incident["name"] == incident_name:
-        incident_id = incident["id"]
         incident_url = incident["permalink"]
+        incident_category = incident["incident_status"]["category"]
+
+        # skip if incident is declined, merged, cancelled, learning or closed
+        print(f"Found incident {incident_url} of status {incident_category}")
+        if incident_category in ["declined","merged","canceled","learning","closed"]:
+            continue
+
+        incident_id = incident["id"]
         incident_summary = incident["summary"]
         print(f"Incident '{incident["name"]}' (id:{incident_id}) exists. See: {incident_url}")
         break
