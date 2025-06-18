@@ -1,13 +1,16 @@
 import "server-only";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import {
+  getIsSidebarFixed,
+  getIsSingleOverviewPage,
+} from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
-
-import { SidebarTabsList } from "@/components/sidebar/SidebarTabsList";
-import { SidebarTabsRootServer } from "@/components/sidebar/SidebarTabsRootServer";
-import { SidebarRootNode } from "@/components/sidebar/nodes/SidebarRootNode";
-import { HiddenSidebar } from "@/state/layout";
+import { SidebarTabsList } from "@fern-docs/components/sidebar/SidebarTabsList";
+import { SidebarTabsRootServer } from "@fern-docs/components/sidebar/SidebarTabsRootServer";
+import { SidebarRootNode } from "@fern-docs/components/sidebar/nodes/SidebarRootNode";
+import { HiddenSidebar } from "@fern-docs/components/theming/HiddenSidebar";
 
 export default async function SidebarPage({
   params,
@@ -17,8 +20,7 @@ export default async function SidebarPage({
   const { host, domain, slug } = await params;
   const loader = await createCachedDocsLoader(host, domain);
   const config = await loader.getConfig();
-  const isSidebarFixed =
-    config.layout?.disableHeader || config.layout?.tabsPlacement === "SIDEBAR";
+  const isSidebarFixed = getIsSidebarFixed(config);
 
   const rootPromise = loader.getRoot();
 
@@ -41,28 +43,7 @@ export default async function SidebarPage({
   const visibleNodes = [...found.parents, found.node];
   const visibleNodeIds = visibleNodes.map((node) => node.id);
 
-  let isSingleOverviewPage = false;
-  if (
-    found.sidebar != null &&
-    found.sidebar.children.length <= 1 &&
-    found.node.type === "page"
-  ) {
-    // check if there is only one page in the sidebar
-
-    if (found.sidebar.children.length <= 1) {
-      let current: FernNavigation.NavigationNode | undefined =
-        found.sidebar.children[0];
-      isSingleOverviewPage = true;
-
-      while (current && "children" in current) {
-        if (current.children.length > 1) {
-          isSingleOverviewPage = false;
-          break;
-        }
-        current = current.children[0];
-      }
-    }
-  }
+  const isSingleOverviewPage = getIsSingleOverviewPage(found);
 
   return (
     <>

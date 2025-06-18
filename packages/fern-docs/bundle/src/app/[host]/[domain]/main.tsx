@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { last } from "es-toolkit/array";
 
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
+import { getIsSidebarFixed } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import ApiEndpointPage from "@/components/api-reference/ApiEndpointPage";
@@ -52,9 +53,7 @@ export async function DocsMainContent({
     // only render full page mode for changelog tabs
     const changelogType = parents[parents.length - 1]?.type ?? "sidebarGroup";
     const config = await loader.getConfig();
-    const isSidebarFixed =
-      config.layout?.disableHeader ||
-      config.layout?.tabsPlacement === "SIDEBAR";
+    const isSidebarFixed = getIsSidebarFixed(config);
 
     return (
       <ChangelogPage

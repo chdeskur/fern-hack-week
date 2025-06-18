@@ -17,8 +17,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useDomain } from "@fern-docs/components/state/domain";
-
-import { fernUserAtom } from "@/state/fern-user";
+import { fernUserAtom } from "@fern-docs/components/state/fern-user";
 
 import {
   PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,

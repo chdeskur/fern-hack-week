@@ -13,7 +13,9 @@ import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { FeatureFlagProvider } from "@fern-docs/components/feature-flags/FeatureFlagProvider";
 import { Domain } from "@fern-docs/components/state/domain";
+import { LaunchDarklyInfo } from "@fern-docs/components/state/feature-flags";
 import {
   RootNodeProvider,
   SetBasePath,
@@ -31,14 +33,12 @@ import {
 
 import { JavascriptProvider } from "@/components/JavascriptProvider";
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
-import { FeatureFlagProvider } from "@/components/feature-flags/FeatureFlagProvider";
 import { FernUser } from "@/components/fern-user";
 import SearchV2 from "@/components/search";
 import { generateMetadataFromConfig } from "@/components/seo";
 import { withJsConfig } from "@/components/with-js-config";
 import { SetColors } from "@/state/colors";
 import { DarkCode } from "@/state/dark-code";
-import { LaunchDarklyInfo } from "@/state/feature-flags";
 import { DefaultLanguage } from "@/state/language";
 import { SetLogoText } from "@/state/logo-text";
 import { SetIsAskAiEnabled, SetIsDefaultSearchFilterOff } from "@/state/search";

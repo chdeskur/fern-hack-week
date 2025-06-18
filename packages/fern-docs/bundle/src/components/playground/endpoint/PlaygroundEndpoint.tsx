@@ -10,6 +10,7 @@ import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider } from "@fern-docs/components";
+import { fernUserAtom } from "@fern-docs/components/state/fern-user";
 import {
   Loadable,
   failed,
@@ -23,7 +24,6 @@ import {
   isProxyDisabledAtom,
   usesApplicationJsonInFormDataValueAtom,
 } from "@/state/api-explorer-flags";
-import { fernUserAtom } from "@/state/fern-user";
 import { jotaiStore } from "@/state/jotai-provider";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,

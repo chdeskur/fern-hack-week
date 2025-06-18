@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 
-import { DocsLoader, createPruneKey } from "@fern-api/docs-loader";
+import { createPruneKey } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import {
   createEndpointContext,

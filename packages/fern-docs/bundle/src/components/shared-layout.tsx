@@ -5,15 +5,17 @@ import React from "react";
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { cn } from "@fern-docs/components";
 import { NavbarLinks } from "@fern-docs/components/header/NavbarLinks";
+import { SidebarContainer } from "@fern-docs/components/sidebar/SidebarContainer";
 
 import { Announcement } from "@/components/header/Announcement";
 import { HeaderContent } from "@/components/header/HeaderContent";
-import { SidebarContainer } from "@/components/sidebar/SidebarContainer";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { setMdxSerializer } from "@/context/MdxSerializerContext";
 import { MdxServerComponent } from "@/mdx/components/server-component";
 import { createCachedMdxSerializer } from "@/server/mdx-serializer";
+import { SearchV2Trigger } from "@/state/search";
 
 import { LoginButton } from "./login-button";
 
@@ -50,6 +52,7 @@ export default async function SharedLayout({
 
   const hasProductsOrVersions =
     root.child.type === "productgroup" || root.child.type === "versioned";
+  const showHeaderInSidebar = layout.isHeaderDisabled;
 
   return (
     <ThemedDocs
@@ -124,7 +127,7 @@ export default async function SharedLayout({
         <SidebarContainer
           logo={<React.Suspense fallback={null}>{logo}</React.Suspense>}
           showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
-          showHeaderInSidebar={layout.isHeaderDisabled}
+          showHeaderInSidebar={showHeaderInSidebar}
           productSelect={
             <React.Suspense fallback={null} key="product-select-3">
               {productSelect}
@@ -148,6 +151,19 @@ export default async function SharedLayout({
                 showIcon
               />
             </React.Suspense>
+          }
+          searchBar={
+            <SearchV2Trigger
+              aria-label="Search"
+              className={cn(
+                "w-full overflow-hidden",
+                !showHeaderInSidebar && "mt-3 lg:mt-2",
+                {
+                  "mt-3": showHeaderInSidebar && hasProductsOrVersions,
+                }
+              )}
+              isSearchInSidebar={true}
+            />
           }
         >
           {sidebar}

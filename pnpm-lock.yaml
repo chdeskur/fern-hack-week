@@ -450,6 +450,9 @@ importers:
       ts-essentials:
         specifier: ^10.0.4
         version: 10.0.4(typescript@5.7.3)
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -490,6 +493,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       path-to-regexp:
         specifier: 6.3.0
         version: 6.3.0
@@ -750,6 +756,9 @@ importers:
       '@fern-api/docs-server':
         specifier: workspace:*
         version: link:../commons/docs-server
+      '@fern-api/docs-utils':
+        specifier: workspace:*
+        version: link:../commons/docs-utils
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../fdr-sdk
@@ -1031,9 +1040,6 @@ importers:
       '@radix-ui/react-accordion':
         specifier: ^1.2.3
         version: 1.2.3(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-collapsible':
-        specifier: ^1.1.3
-        version: 1.1.3(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-compose-refs':
         specifier: ^1.1.1
         version: 1.1.1(@types/react@19.0.10)(react@19.0.0)
@@ -1094,9 +1100,6 @@ importers:
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.5.2)
-      date-fns:
-        specifier: ^4.1.0
-        version: 4.1.0
       es-toolkit:
         specifier: ^1.32.0
         version: 1.32.0
@@ -1139,9 +1142,6 @@ importers:
       jsonpath-plus:
         specifier: 10.3.0
         version: 10.3.0
-      launchdarkly-react-client-sdk:
-        specifier: ^3.6.0
-        version: 3.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@19.0.0)
@@ -1368,6 +1368,9 @@ importers:
 
   packages/fern-docs/components:
     dependencies:
+      '@fern-api/docs-auth':
+        specifier: workspace:*
+        version: link:../../commons/docs-auth
       '@fern-api/docs-server':
         specifier: workspace:*
         version: link:../../commons/docs-server
@@ -1467,6 +1470,9 @@ importers:
       es-toolkit:
         specifier: ^1.32.0
         version: 1.32.0
+      fastdom:
+        specifier: ^1.0.12
+        version: 1.0.12
       hast-util-to-jsx-runtime:
         specifier: ^2.3.0
         version: 2.3.0
@@ -1476,6 +1482,9 @@ importers:
       jotai:
         specifier: ^2.12.1
         version: 2.12.1(@types/react@19.0.10)(react@19.0.0)
+      launchdarkly-react-client-sdk:
+        specifier: ^3.6.0
+        version: 3.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@19.0.0)
@@ -1488,12 +1497,18 @@ importers:
       next-themes:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-error-boundary:
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.0.0)
       react-remove-scroll:
         specifier: ^2.6.3
         version: 2.6.3(@types/react@19.0.10)(react@19.0.0)
       react-virtuoso:
         specifier: ^4.7.7
         version: 4.12.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       shiki:
         specifier: 3.2.1
         version: 3.2.1
@@ -38479,7 +38494,7 @@ snapshots:
 
   react-error-boundary@5.0.0(react@19.0.0):
     dependencies:
-      '@babel/runtime': 7.26.0
+      '@babel/runtime': 7.27.0
       react: 19.0.0
 
   react-instantsearch-core@7.15.5(algoliasearch@5.20.3)(react@19.0.0):

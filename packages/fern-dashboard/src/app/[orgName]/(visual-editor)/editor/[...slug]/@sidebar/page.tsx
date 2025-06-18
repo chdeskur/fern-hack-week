@@ -1,6 +1,4 @@
-import "server-only";
-
-import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import {
   getIsSidebarFixed,
   getIsSingleOverviewPage,
@@ -10,37 +8,28 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { SidebarTabsList } from "@fern-docs/components/sidebar/SidebarTabsList";
 import { SidebarTabsRootServer } from "@fern-docs/components/sidebar/SidebarTabsRootServer";
 import { SidebarRootNode } from "@fern-docs/components/sidebar/nodes/SidebarRootNode";
+import { HiddenSidebar } from "@fern-docs/components/theming/HiddenSidebar";
 
-import { getFernToken } from "@/app/fern-token";
-import { HiddenSidebar } from "@/state/layout";
+import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 
 export default async function SidebarPage({
   params,
 }: {
-  params: Promise<{ host: string; domain: string; slug: string }>;
+  params: Promise<{ orgName: string; slug: string }>;
 }) {
-  const { host, domain, slug } = await params;
-  const loader = await createCachedDocsLoader(
-    host,
-    domain,
-    await getFernToken()
+  const { orgName, slug } = await params;
+  const session = await getCurrentSession();
+  const loader = await createEditableDocsLoader(
+    "localhost:3000",
+    orgName,
+    session?.accessToken
   );
-  const config = await loader.getConfig();
-  const isSidebarFixed = getIsSidebarFixed(config);
-
-  const rootPromise = loader.getRoot();
-
-  // preload:
-  await Promise.all([
-    loader.getLayout(),
-    loader.getAuthState(),
-    loader.getEdgeFlags(),
+  const [config, root] = await Promise.all([
+    loader.getConfig(),
+    loader.getRoot(),
   ]);
 
-  const found = FernNavigation.utils.findNode(
-    await rootPromise,
-    slugjoin(slug)
-  );
+  const found = FernNavigation.utils.findNode(root, slugjoin(slug));
   if (found.type !== "found") {
     return null;
   }
@@ -50,6 +39,7 @@ export default async function SidebarPage({
   const visibleNodeIds = visibleNodes.map((node) => node.id);
 
   const isSingleOverviewPage = getIsSingleOverviewPage(found);
+  const isSidebarFixed = getIsSidebarFixed(config);
 
   return (
     <>

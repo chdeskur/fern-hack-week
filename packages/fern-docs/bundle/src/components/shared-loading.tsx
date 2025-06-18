@@ -1,9 +1,9 @@
 "use client";
 
 import { cn } from "@fern-docs/components";
+import { useRestoreSidebarScrollPosition } from "@fern-docs/components/hooks/sidebar-scroll";
 
 import { useLayout } from "@/state/layout";
-import { useRestoreSidebarScrollPosition } from "@/state/sidebar-scroll";
 
 import {
   CustomLayout,

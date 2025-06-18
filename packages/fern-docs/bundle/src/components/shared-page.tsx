@@ -11,6 +11,7 @@ import React from "react";
 import { compact } from "es-toolkit/array";
 
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
+import { withPrunedNavigationLoader } from "@fern-api/docs-server/withPrunedNavigation";
 import {
   addLeadingSlash,
   conformTrailingSlash,
@@ -28,7 +29,6 @@ import {
   MdxSerializer,
   createCachedMdxSerializer,
 } from "@/server/mdx-serializer";
-import { withPrunedNavigationLoader } from "@/server/withPrunedNavigation";
 
 import { DocsMainContent } from "../app/[host]/[domain]/main";
 

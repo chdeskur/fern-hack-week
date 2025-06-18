@@ -8,6 +8,7 @@ import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { z } from "zod";
 
 import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
+import { useFernUser } from "@fern-docs/components/state/fern-user";
 import { useCurrentVersionId } from "@fern-docs/components/state/navigation";
 import {
   CommandActions,
@@ -29,7 +30,6 @@ import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
 import { useIsDarkCode } from "@/state/dark-code";
-import { useFernUser } from "@/state/fern-user";
 import {
   searchDialogOpenAtom,
   searchInitializedAtom,

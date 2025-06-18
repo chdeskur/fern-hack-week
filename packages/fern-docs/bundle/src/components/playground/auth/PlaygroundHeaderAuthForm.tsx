@@ -9,8 +9,8 @@ import { useMemoOne } from "use-memo-one";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { unknownToString } from "@fern-api/ui-core-utils";
+import { fernUserAtom } from "@fern-docs/components/state/fern-user";
 
-import { fernUserAtom } from "@/state/fern-user";
 import { PLAYGROUND_AUTH_STATE_HEADER_ATOM } from "@/state/playground";
 
 import { PasswordInputGroup } from "../PasswordInputGroup";
