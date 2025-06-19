@@ -1,0 +1,113 @@
+---
+title: "Page with Aside"
+description: "Subtitle"
+layout: page
+---
+
+## Markdown Content
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+## Cards
+
+<Card
+  title="Open Source"
+  icon="brands github"
+  href="https://github.com/fern-api/fern"
+>
+  Give us a star! Fern's CLI & docs source code is available on GitHub.
+</Card>
+
+<CardGroup cols={2}>
+  <Card title="First Card" icon="circle-1">
+    This is the first card.
+  </Card>
+  <Card title="Second Card" icon="circle-2">
+    This is the second card.
+  </Card>
+  <Card title="Third Card" icon="circle-3">
+    This is the third card.
+  </Card>
+  <Card title="Fourth Card" icon="circle-4">
+    This is the fourth and final card.
+  </Card>
+</CardGroup>
+
+## Accordions
+
+<AccordionGroup>
+  <Accordion title="Text Example">
+    This is a basic example of an accordion group.
+  </Accordion>
+
+  <Accordion title="Multimedia Example">
+    You can embed photos, videos, and other media within accordions for rich interactive content.
+
+    <embed
+      src=""
+      type="video/mp4"
+      width="640"
+      height="360"
+    />
+
+  </Accordion>
+
+  <Accordion title="Rich Content Support">
+    Accordions can contain rich content including code blocks, callouts, and other components.
+
+    ```ts
+    export function greet(name: string) {
+      return `Hello, ${name}!`;
+    }
+    ```
+
+  </Accordion>
+  
+  <Accordion title="Best Practices Using Accordion Groups">
+    - Use accordion groups when you have multiple related sections
+    - Each accordion should have a clear title
+    - Keep content concise and focused
+  </Accordion>
+</AccordionGroup>
+
+<Aside>
+  <Steps>
+    <Step>Run hello world ```js console.log("hello world") ```</Step>
+    <Step>
+      Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
+      ex sapien vitae pellentesque sem placerat.
+    </Step>
+  </Steps>
+</Aside>
+
+## Parameter Fields
+
+<ParamField path="username" type="string" required={true}>
+  The user's display name
+</ParamField>
+
+<ParamField path="limit" type="number" default="50">
+  Maximum number of items to return
+</ParamField>
+
+<ParamField path="api_key" type="string" deprecated={true}>
+  Use OAuth authentication instead
+</ParamField>
+
+## Tabs
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+<Tabs>
+  <Tab title="First Tab">
+    ☝️ Welcome to the content that you can only see inside the first Tab.
+  </Tab>
+  <Tab title="Second Tab">
+    ✌️ Here's content that's only inside the second Tab.
+  </Tab>
+  <Tab title="Third Tab">
+    💪 Here's content that's only inside the third Tab.
+  </Tab>
+</Tabs>

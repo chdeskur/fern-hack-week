@@ -1,0 +1,52 @@
+instances:
+  - url: https://fern-test-layouts-defaults.docs.buildwithfern.com
+  # create some unique url
+title: Fern | Documentation
+navbar-links:
+  - type: filled
+    text: Default
+    href: https://fern-test-layouts-defaults.docs.buildwithfern.com
+  - type: minimal
+    text: No Header
+    href: https://fern-test-layouts-no-header.docs.buildwithfern.com
+  - type: minimal
+    text: Search Sidebar
+    href: https://fern-test-layouts-search-sidebar.docs.buildwithfern.com
+  - type: minimal
+    text: Tabs Sidebar
+    href: https://fern-test-layouts-tabs-sidebar.docs.buildwithfern.com
+  - type: minimal
+    text: Min Dimensions
+    href: https://fern-test-layouts-min-dimensions.docs.buildwithfern.com
+  - type: minimal
+    text: Max Dimensions
+    href: https://fern-test-layouts-max-dimensions.docs.buildwithfern.com
+  - type: minimal
+    text: Left Align
+    href: https://fern-test-layouts-left-align.docs.buildwithfern.com
+navigation:
+  - section: Overview
+    contents:
+      - page: Standard Page
+        path: ../../00-pages/page.mdx
+      - page: Standard Page with Aside
+        path: ../../00-pages/page-aside.mdx
+      - page: Overview
+        path: ../../00-pages/overview.mdx
+      - page: Reference
+        path: ../../00-pages/reference.mdx
+      - page: Reference with Aside
+        path: ../../00-pages/reference-aside.mdx
+      - page: Guide
+        path: ../../00-pages/guide.mdx
+tabs:
+  api:
+    display-name: API Reference
+  help:
+    display-name: Help Center
+  github:
+    display-name: GitHub
+    href: https://github.com/fern-api/fern
+colors:
+  accentPrimary: "#ffffff"
+  background: "#000000"
