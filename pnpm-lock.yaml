@@ -1921,9 +1921,6 @@ importers:
       gpt-tokenizer:
         specifier: 2.9.0
         version: 2.9.0
-      gray-matter:
-        specifier: ^4.0.3
-        version: 4.0.3
       zod:
         specifier: ^3.24.1
         version: 3.24.4

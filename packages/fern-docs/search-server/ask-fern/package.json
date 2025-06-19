@@ -42,7 +42,6 @@
     "braintrust": "^0.0.184",
     "es-toolkit": "^1.32.0",
     "gpt-tokenizer": "2.9.0",
-    "gray-matter": "^4.0.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {
