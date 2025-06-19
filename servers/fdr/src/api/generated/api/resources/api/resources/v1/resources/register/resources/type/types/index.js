@@ -18,6 +18,7 @@ export * from "./Base64Type";
 export * from "./DateType";
 export * from "./BigIntegerType";
 export * from "./OptionalType";
+export * from "./NullableType";
 export * from "./ListType";
 export * from "./SetType";
 export * from "./MapType";

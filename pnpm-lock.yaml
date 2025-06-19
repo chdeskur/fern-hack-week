@@ -2371,6 +2371,9 @@ importers:
       '@fern-docs/search-utils':
         specifier: workspace:*
         version: link:../../packages/fern-docs/search-server/utils
+      '@fern-fern/fdr-cjs-sdk':
+        specifier: 0.0.6432
+        version: 0.0.6432
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5

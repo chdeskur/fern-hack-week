@@ -1,5 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 import { SnippetsService } from "../../api";
 import {
@@ -84,7 +85,8 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
             }
             const templateResolver = new SnippetTemplateResolver({
               payload,
-              endpointSnippetTemplate,
+              endpointSnippetTemplate:
+                endpointSnippetTemplate as FernRegistry.EndpointSnippetTemplate,
             });
 
             snippets.push(templateResolver.resolve());

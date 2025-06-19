@@ -170,6 +170,8 @@ export class ApiTypeIdVisitor {
     return visitDiscriminatedUnion(typeReference)._visit({
       id: (value) => visit(value.value),
       primitive: noop,
+      nullable: (value) =>
+        ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
       optional: (value) =>
         ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
       list: (value) =>

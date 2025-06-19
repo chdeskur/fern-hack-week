@@ -282,6 +282,23 @@ export function generateExampleFromTypeReference(
           );
       }
       break;
+    case "nullable":
+      if (reference.itemType.type === "id") {
+        if (visited.has(reference.itemType.value)) {
+          example = undefined;
+          break;
+        } else {
+          visited.add(reference.itemType.value);
+        }
+      }
+      example = generateExampleFromTypeReference(
+        reference.itemType,
+        resolveTypeById,
+        ignoreOptionals,
+        visited,
+        depth
+      );
+      break;
     case "list":
       if (reference.itemType.type === "id") {
         if (visited.has(reference.itemType.value)) {

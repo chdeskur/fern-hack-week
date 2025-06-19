@@ -313,6 +313,13 @@ export class ApiDefinitionV1ToLatest {
         default: value.default,
       }),
       primitive: (value) => value,
+      nullable: (value) => ({
+        type: "nullable",
+        shape: {
+          type: "alias",
+          value: this.migrateTypeReference(value.itemType),
+        },
+      }),
       optional: (value) => ({
         type: "optional",
         shape: {

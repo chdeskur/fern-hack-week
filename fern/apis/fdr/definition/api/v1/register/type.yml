@@ -27,6 +27,7 @@ types:
       id: TypeReferenceId
       primitive: PrimitiveType
       optional: OptionalType
+      nullable: NullableType
       list: ListType
       set: SetType
       map: MapType
@@ -133,6 +134,10 @@ types:
     properties:
       itemType: TypeReference
       defaultValue: optional<unknown>
+
+  NullableType:
+    properties:
+      itemType: TypeReference
 
   ListType:
     properties:

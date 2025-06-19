@@ -42,6 +42,7 @@
     "@fern-docs/search-ask-fern": "workspace:*",
     "@fern-docs/search-keyword": "workspace:*",
     "@fern-docs/search-utils": "workspace:*",
+    "@fern-fern/fdr-cjs-sdk": "0.0.6432",
     "@fern-fern/fern-docs-sdk": "0.0.5",
     "@fern-fern/revalidation-sdk": "0.0.9",
     "@prisma/client": "5.13.0",
