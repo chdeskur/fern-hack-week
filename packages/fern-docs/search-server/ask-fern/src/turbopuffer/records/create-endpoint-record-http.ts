@@ -5,16 +5,7 @@ import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { maybePrepareMdxContent, toDescription } from "@fern-docs/search-utils";
 
-import { TurbopufferRecord, TurbopufferRecordWithoutVector } from "../types";
-
-interface CreateEndpointBaseRecordOptions {
-  node: FernNavigation.EndpointNode;
-  base: Omit<TurbopufferRecordWithoutVector, "attributes"> & {
-    attributes: Omit<TurbopufferRecordWithoutVector["attributes"], "chunk">;
-  };
-  endpoint: ApiDefinition.EndpointDefinition;
-  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-}
+import { BaseRecordIr, RecordIr } from "../types";
 
 interface RequestProperty {
   key: string;
@@ -27,7 +18,12 @@ export function createEndpointBaseRecordHttp({
   node,
   endpoint,
   types,
-}: CreateEndpointBaseRecordOptions): TurbopufferRecord {
+}: {
+  node: FernNavigation.EndpointNode;
+  base: BaseRecordIr;
+  endpoint: ApiDefinition.EndpointDefinition;
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}): RecordIr {
   const prepared = maybePrepareMdxContent(toDescription(endpoint.description));
 
   const requestProperties: RequestProperty[] = [];

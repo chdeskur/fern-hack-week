@@ -75,7 +75,6 @@ export async function createTurbopufferRecords({
             authed: authed?.(node) ?? false,
             type: "markdown",
           });
-
           return createMarkdownRecords({ base, markdown });
         }
       )

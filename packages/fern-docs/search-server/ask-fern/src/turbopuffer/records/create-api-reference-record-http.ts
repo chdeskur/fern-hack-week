@@ -3,18 +3,16 @@ import { createHash } from "crypto";
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { maybePrepareMdxContent, toDescription } from "@fern-docs/search-utils";
 
-import { TurbopufferRecord } from "../types";
-
-interface CreateApiReferenceRecordHttpOptions {
-  endpointBase: TurbopufferRecord;
-  endpoint: ApiDefinition.EndpointDefinition;
-}
+import { RecordIr, TurbopufferRecord } from "../types";
 
 export function createApiReferenceRecordHttp({
   endpointBase,
   endpoint,
-}: CreateApiReferenceRecordHttpOptions): TurbopufferRecord[] {
-  const base: TurbopufferRecord = {
+}: {
+  endpointBase: RecordIr;
+  endpoint: ApiDefinition.EndpointDefinition;
+}): TurbopufferRecord[] {
+  const base: RecordIr = {
     ...endpointBase,
     attributes: {
       ...endpointBase.attributes,
@@ -85,5 +83,27 @@ export function createApiReferenceRecordHttp({
     }
   }
 
-  return [record];
+  const fields = {
+    api_type: "http",
+    api_definition_id: endpointBase.attributes.api_definition_id,
+    api_endpoint_id: endpointBase.attributes.api_endpoint_id,
+    method: endpointBase.attributes.method,
+    endpoint_path: endpointBase.attributes.endpoint_path,
+    endpoint_path_alternates: endpointBase.attributes.endpoint_path_alternates,
+    response_type: endpointBase.attributes.response_type,
+    description: response_description,
+    environments: endpointBase.attributes.environments,
+    default_environment_id: endpointBase.attributes.default_environment_id,
+    code_snippets: record.attributes.code_snippets,
+  };
+
+  return [
+    {
+      ...record,
+      attributes: {
+        ...record.attributes,
+        document: JSON.stringify(fields, null, 2),
+      },
+    },
+  ];
 }

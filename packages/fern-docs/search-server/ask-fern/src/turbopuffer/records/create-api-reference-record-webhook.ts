@@ -5,22 +5,31 @@ import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { truncateToBytes } from "@fern-api/ui-core-utils";
 import { maybePrepareMdxContent, toDescription } from "@fern-docs/search-utils";
 
-import { TurbopufferRecord } from "../types";
-
-interface CreateApiReferenceRecordWebhookOptions {
-  endpointBase: TurbopufferRecord;
-  endpoint: ApiDefinition.WebhookDefinition;
-}
+import { RecordIr, TurbopufferRecord } from "../types";
 
 export function createApiReferenceRecordWebhook({
   endpointBase,
   endpoint,
-}: CreateApiReferenceRecordWebhookOptions): TurbopufferRecord[] {
+}: {
+  endpointBase: RecordIr;
+  endpoint: ApiDefinition.WebhookDefinition;
+}): TurbopufferRecord[] {
+  const fields = {
+    api_type: "webhook",
+    api_definition_id: endpointBase.attributes.api_definition_id,
+    api_endpoint_id: endpointBase.attributes.api_endpoint_id,
+    method: endpointBase.attributes.method,
+    endpoint_path: endpointBase.attributes.endpoint_path,
+    endpoint_path_alternates: endpointBase.attributes.endpoint_path_alternates,
+    description: endpointBase.attributes.description,
+    keywords: endpointBase.attributes.keywords,
+  };
   const base: TurbopufferRecord = {
     ...endpointBase,
     attributes: {
       ...endpointBase.attributes,
       type: "api-reference",
+      document: JSON.stringify(fields, null, 2),
     },
   };
 

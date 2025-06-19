@@ -18,6 +18,7 @@ import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { slugToHref, withoutStaging } from "@fern-api/docs-utils";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
+  getTurbopufferNamespace,
   getTurbopufferVectorizer,
   turbopufferUpsertTask,
 } from "@fern-docs/search-ask-fern";
@@ -39,7 +40,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
   const deleteExisting =
     req.nextUrl.searchParams.get("deleteExisting") === "true";
-  const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
+  const namespace = getTurbopufferNamespace(domain, embeddingModel);
 
   try {
     const loader = await createCachedDocsLoader(host, domain);

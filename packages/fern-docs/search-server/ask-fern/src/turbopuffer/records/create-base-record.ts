@@ -1,20 +1,7 @@
 import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { TurbopufferRecordWithoutVector } from "../types";
-
-interface CreateBaseRecordOptions {
-  domain: string;
-  org_id: string;
-  parents: readonly FernNavigation.NavigationNodeParent[];
-  node: FernNavigation.NavigationNodeWithMetadata;
-  authed: boolean;
-  type: "markdown" | "api-reference";
-}
-
-export type BaseRecord = Omit<TurbopufferRecordWithoutVector, "attributes"> & {
-  attributes: Omit<TurbopufferRecordWithoutVector["attributes"], "chunk">;
-};
+import { BaseRecordIr } from "../types";
 
 export function createBaseRecord({
   domain,
@@ -22,7 +9,14 @@ export function createBaseRecord({
   node,
   authed,
   type,
-}: CreateBaseRecordOptions): BaseRecord {
+}: {
+  domain: string;
+  org_id: string;
+  parents: readonly FernNavigation.NavigationNodeParent[];
+  node: FernNavigation.NavigationNodeWithMetadata;
+  authed: boolean;
+  type: "markdown" | "api-reference";
+}): BaseRecordIr {
   const versionNode = parents.find(
     (n): n is FernNavigation.VersionNode => n.type === "version"
   );
@@ -36,7 +30,6 @@ export function createBaseRecord({
       title: node.title,
       version: versionNode?.title,
       authed,
-      page_position: 0,
     },
   };
 }

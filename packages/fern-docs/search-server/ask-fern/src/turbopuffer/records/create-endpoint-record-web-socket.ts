@@ -5,23 +5,19 @@ import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { maybePrepareMdxContent, toDescription } from "@fern-docs/search-utils";
 
-import { TurbopufferRecord, TurbopufferRecordWithoutVector } from "../types";
-
-interface CreateWebSocketEndpointBaseRecordOptions {
-  node: FernNavigation.WebSocketNode;
-  base: Omit<TurbopufferRecordWithoutVector, "attributes"> & {
-    attributes: Omit<TurbopufferRecordWithoutVector["attributes"], "chunk">;
-  };
-  endpoint: ApiDefinition.WebSocketChannel;
-  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-}
+import { BaseRecordIr, RecordIr } from "../types";
 
 export function createEndpointBaseRecordWebSocket({
   base,
   node,
   endpoint,
   types,
-}: CreateWebSocketEndpointBaseRecordOptions): TurbopufferRecord {
+}: {
+  node: FernNavigation.WebSocketNode;
+  base: BaseRecordIr;
+  endpoint: ApiDefinition.WebSocketChannel;
+  types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}): RecordIr {
   const prepared = maybePrepareMdxContent(toDescription(endpoint.description));
 
   const keywords: string[] = [];
