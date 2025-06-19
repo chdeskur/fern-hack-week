@@ -35,7 +35,9 @@ export function renderTypeShorthandRoot(
     <span className="fern-api-property-meta">
       <span>
         {typeShorthand}
-        {isResponse && unwrapped.isOptional ? " or null" : false}
+        {isResponse && unwrapped.isOptional && !unwrapped.isNullable
+          ? " or null"
+          : false}
       </span>
       {isResponse ? (
         false
