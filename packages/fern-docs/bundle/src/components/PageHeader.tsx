@@ -45,7 +45,7 @@ export function PageHeader({
       )}
 
       <WithAction action={action}>
-        <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-row items-center justify-between gap-2">
           <div className="flex flex-row items-center gap-4">
             {titleHref == null ? (
               <h1 className="fern-page-heading text-balance break-words">
