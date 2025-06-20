@@ -107,7 +107,9 @@ export const middleware: NextMiddleware = async (request) => {
     const filePath = pathname
       .replace("/_files/", "") // trim file indicator
       .replace("https:/", "https://"); // pathnames normalize urls, so we need restore the protocol //
-    return NextResponse.redirect(`https://files.buildwithfern.com/${filePath}`);
+    return NextResponse.rewrite(`https://files.buildwithfern.com/${filePath}`, {
+      request: { headers },
+    });
   }
 
   /**

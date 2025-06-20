@@ -689,7 +689,7 @@ const getFonts = cache(async (domain: string) => {
     );
   }
   const response = await loadWithUrl(domain);
-  const assetHost = (await getEdgeFlags(domain)).isAssetHost;
+  const assetHost = (await getEdgeFlags(domain)).isAssetHost || isSelfHosted();
   const fonts = generateFonts(
     response.definition.config.typographyV2,
     await getFiles(domain),

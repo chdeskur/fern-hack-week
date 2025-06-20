@@ -2,6 +2,7 @@ import "server-only";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { createFileResolver } from "@fern-api/docs-server/file-resolver";
+import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getPageId, slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { getFrontmatter } from "@fern-docs/mdx";
@@ -30,7 +31,10 @@ export default async function LogoPage({
     loader.getEdgeFlags(),
   ]);
 
-  const resolveFileSrc = createFileResolver(files, flags.isAssetHost);
+  const resolveFileSrc = createFileResolver(
+    files,
+    flags.isAssetHost || isSelfHosted()
+  );
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
 
   let frontmatter = null;
