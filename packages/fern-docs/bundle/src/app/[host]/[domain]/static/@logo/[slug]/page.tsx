@@ -22,14 +22,15 @@ export default async function LogoPage({
     await getFernToken()
   );
 
-  const [{ basePath }, config, files, root] = await Promise.all([
+  const [{ basePath }, config, files, root, flags] = await Promise.all([
     loader.getMetadata(),
     loader.getConfig(),
     loader.getFiles(),
     loader.getRoot(),
+    loader.getEdgeFlags(),
   ]);
 
-  const resolveFileSrc = createFileResolver(files);
+  const resolveFileSrc = createFileResolver(files, flags.isAssetHost);
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
 
   let frontmatter = null;

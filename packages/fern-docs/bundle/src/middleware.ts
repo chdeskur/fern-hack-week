@@ -101,6 +101,16 @@ export const middleware: NextMiddleware = async (request) => {
   };
 
   /**
+   * Rewrite /_files/* to https://files.buildwithfern.com/*
+   */
+  if (pathname.startsWith("/_files/")) {
+    const filePath = pathname
+      .replace("/_files/", "") // trim file indicator
+      .replace("https:/", "https://"); // pathnames normalize urls, so we need restore the protocol //
+    return NextResponse.redirect(`https://files.buildwithfern.com/${filePath}`);
+  }
+
+  /**
    * Rewrite /api/fern-docs/revalidate-all/v3 to /api/fern-docs/revalidate?regenerate=true
    */
   if (pathname.endsWith("/api/fern-docs/revalidate-all/v3")) {

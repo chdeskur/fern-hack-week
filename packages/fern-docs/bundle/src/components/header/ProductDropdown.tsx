@@ -36,8 +36,9 @@ export async function ProductDropdown({
   }
 
   const files = await loader.getFiles();
+  const flags = await loader.getEdgeFlags();
 
-  const resolveFileSrc = createFileResolver(files);
+  const resolveFileSrc = createFileResolver(files, flags.isAssetHost);
 
   const productOptions = products.map((product): ProductDropdownItem => {
     const slug = product.slug ?? product.pointsTo;

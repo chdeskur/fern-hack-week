@@ -51,6 +51,7 @@ const EDGE_FLAGS = [
   "default-search-filter-off" as const,
   "changelog-redirects" as const,
   "posthog-disabled" as const,
+  "asset-host" as const,
 ];
 
 type EdgeFlag = (typeof EDGE_FLAGS)[number];
@@ -210,6 +211,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["posthog-disabled"]
     );
+    const isAssetHost = checkDomainMatchesCustomers(
+      domain,
+      config["asset-host"]
+    );
 
     return {
       isApiPlaygroundEnabled: isDevelopment(domain) || isApiPlaygroundEnabled,
@@ -248,6 +253,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isDefaultSearchFilterOff,
       isChangelogRedirects,
       isPosthogDisabled,
+      isAssetHost,
     };
   } catch (e) {
     console.error(`[get-edge-flags] ${JSON.stringify(e)}`);
@@ -286,6 +292,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isDefaultSearchFilterOff: false,
       isChangelogRedirects: false,
       isPosthogDisabled: false,
+      isAssetHost: false,
     };
   }
 }

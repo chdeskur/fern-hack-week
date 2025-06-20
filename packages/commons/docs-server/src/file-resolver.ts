@@ -3,7 +3,10 @@ import "server-only";
 import { FileData } from "@fern-api/docs-utils/types/file-data";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
-export function createFileResolver(files: Record<string, FileData>) {
+export function createFileResolver(
+  files: Record<string, FileData>,
+  assetHost: boolean
+) {
   return (src: string | undefined) => {
     if (src == null) {
       return undefined;
@@ -22,6 +25,14 @@ export function createFileResolver(files: Record<string, FileData>) {
 
       return { src };
     }
+
+    if (assetHost) {
+      file.src = file.src.replace(
+        "https://files.buildwithfern.com/",
+        `/_files/`
+      );
+    }
+
     return file;
   };
 }

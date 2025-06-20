@@ -23,7 +23,13 @@ export async function generateHtml({
       loader.getConfig(),
       loader.getFiles(),
     ]);
-    faviconUrl = config.favicon ? files[config.favicon]?.src : undefined;
+
+    if (config.favicon) {
+      faviconUrl = files[config.favicon]?.src.replace(
+        "https://files.buildwithfern.com/",
+        `/_files/`
+      );
+    }
   }
 
   return `

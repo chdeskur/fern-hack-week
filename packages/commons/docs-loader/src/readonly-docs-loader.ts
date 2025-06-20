@@ -689,9 +689,11 @@ const getFonts = cache(async (domain: string) => {
     );
   }
   const response = await loadWithUrl(domain);
+  const assetHost = (await getEdgeFlags(domain)).isAssetHost;
   const fonts = generateFonts(
     response.definition.config.typographyV2,
-    await getFiles(domain)
+    await getFiles(domain),
+    assetHost
   );
   kvSet(domain, "fonts", fonts);
   return fonts;
