@@ -1,6 +1,3 @@
-import Image from "next/image";
-
-import { UserIcon } from "@heroicons/react/24/outline";
 import { PopoverArrow } from "@radix-ui/react-popover";
 
 import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
@@ -15,6 +12,7 @@ import { OrgSwitcher } from "../auth/OrgSwitcher";
 import { ThemedFernLogo } from "../theme/ThemedFernLogo";
 import { HeaderLinkButton } from "./HeaderLinkButton";
 import { MaybeDocsHeaderItems } from "./MaybeDocsHeaderItems";
+import { ProfileImage } from "./ProfileImage";
 import { SupportButton } from "./SupportButton";
 
 export declare namespace Header {
@@ -47,19 +45,7 @@ export async function Header({ session }: Header.Props) {
         </div>
         <Popover>
           <PopoverTrigger className="cursor-pointer">
-            {picture != null ? (
-              <Image
-                src={picture}
-                alt={name ?? "user photo"}
-                className="rounded-full"
-                width={32}
-                height={32}
-              />
-            ) : (
-              <div className="bg-gray-1200 border-border size-8 rounded-full border p-1">
-                <UserIcon className="size-full text-white" />
-              </div>
-            )}
+            <ProfileImage picture={picture} name={name} />
           </PopoverTrigger>
           <PopoverContent collisionPadding={8}>
             <PopoverArrow className="fill-popover" />

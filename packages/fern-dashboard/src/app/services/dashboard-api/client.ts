@@ -3,6 +3,8 @@ import { getMyDocsSites } from "@/app/api/get-my-docs-sites/route";
 import { getMyOrganizations } from "@/app/api/get-my-organizations/route";
 import { getOrgInvitations } from "@/app/api/get-org-invitations/route";
 import { getOrgMembers } from "@/app/api/get-org-members/route";
+import { getUserGithubRepos } from "@/app/api/get-user-git-repos/route";
+import { getGitHubPermissions } from "@/app/api/github-permissions/route";
 import { getHomepageImageUrl } from "@/app/api/homepage-images/get/route";
 
 export const DashboardApiClient = {
@@ -25,6 +27,10 @@ export const DashboardApiClient = {
     ),
   getDocsUrlOwner: (request: getDocsUrlOwner.Request) =>
     typedFetch<getDocsUrlOwner.Response>("/api/get-docs-url-owner", request),
+  getUserGithubRepos: () =>
+    typedFetch<getUserGithubRepos.Response>("/api/get-user-git-repos"),
+  getGitHubPermissions: () =>
+    typedFetch<getGitHubPermissions.Response>("/api/github-permissions"),
 };
 
 async function typedFetch<T>(

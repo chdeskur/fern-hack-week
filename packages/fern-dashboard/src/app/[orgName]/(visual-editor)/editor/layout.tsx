@@ -1,5 +1,8 @@
+import { redirect } from "next/navigation";
+
+import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { GithubExtendedAccessProtectedRoute } from "@/components/auth/GithubExtendedAccessProtectedRoute";
 import { HeaderToolbar } from "@/components/editor/HeaderToolbar";
 
 export default async function AuthedLayout({
@@ -10,13 +13,18 @@ export default async function AuthedLayout({
   children: React.JSX.Element;
 }>) {
   const { orgName } = await params;
+  const session = await getCurrentSession();
+
+  if (!session) {
+    redirect("/");
+  }
 
   return (
-    <ProtectedRoute orgName={orgName}>
+    <GithubExtendedAccessProtectedRoute orgName={orgName}>
       <div className="flex w-full flex-col">
-        <HeaderToolbar />
-        {children}
+        <HeaderToolbar orgName={orgName} session={session} />
+        <div id="preview-container">{children}</div>
       </div>
-    </ProtectedRoute>
+    </GithubExtendedAccessProtectedRoute>
   );
 }

@@ -52,6 +52,16 @@ async function applyAuth0Middleware(req: NextRequest): Promise<NextResponse> {
     });
   }
 
+  // const session = await auth0.getSession(req);
+
+  // if (!session) {
+  //   // user is not authenticated, redirect to login page
+  //   return NextResponse.redirect(new URL("/auth/login", req.nextUrl.origin));
+  // }
+
+  // // refresh the access token
+  // await auth0.getAccessToken(req, authResponse);
+
   return authResponse;
 }
 

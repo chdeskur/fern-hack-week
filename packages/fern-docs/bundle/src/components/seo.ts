@@ -1,18 +1,17 @@
 import { Metadata } from "next";
 
-import { DocsLoader, createCachedDocsLoader } from "@fern-api/docs-loader";
+import { createCachedDocsLoader } from "@fern-api/docs-loader";
+import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getCanonicalUrl } from "@fern-docs/edge-config";
 import { getSeoDisabled } from "@fern-docs/edge-config";
-import { markdownToString } from "@fern-docs/mdx";
+import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 
 import { toImageDescriptor } from "@/app/seo";
 import { createFindNode } from "@/server/find-node";
-
-import { getFrontmatter } from "../../../mdx/src/frontmatter";
 
 export async function getMetadataTitleFromPage({
   loader,
