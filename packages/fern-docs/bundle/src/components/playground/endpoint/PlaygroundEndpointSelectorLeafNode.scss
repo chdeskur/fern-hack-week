@@ -1,0 +1,13 @@
+@layer components {
+  .fern-endpoint-selector {
+    @apply w-full justify-start text-left;
+
+    &[data-state="on"] {
+      @apply text-(color:--accent-a11)! bg-(color:--accent-a3)! font-medium;
+
+      svg {
+        @apply text-(color:--accent-a9)!;
+      }
+    }
+  }
+}

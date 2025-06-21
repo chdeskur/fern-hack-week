@@ -10,6 +10,12 @@ export function conformExplorerRoute(slugOrPathname: string): string {
   );
 }
 
+export function getExplorerBasePath(slugOrPathname: string): string {
+  return conformTrailingSlash(
+    addLeadingSlash(slugOrPathname.replace("?explorer=true", ""))
+  );
+}
+
 export function isExplorerRoute(pathname: string): boolean {
   return removeTrailingSlash(pathname).endsWith("?explorer=true");
 }

@@ -56,9 +56,10 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
             shallow={shallow}
             replace={replace}
             text={text}
-            className="w-full text-left"
+            className={cn("fern-endpoint-selector", {
+              active: active,
+            })}
             variant="minimal"
-            intent={active ? "primary" : "none"}
             active={active}
             icon={
               <HttpMethodBadge
@@ -85,9 +86,10 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
             shallow={shallow}
             replace={replace}
             text={text}
-            className="w-full text-left"
+            className={cn("fern-endpoint-selector", {
+              active: active,
+            })}
             variant="minimal"
-            intent={active ? "primary" : "none"}
             active={active}
             icon={
               <HttpMethodBadge

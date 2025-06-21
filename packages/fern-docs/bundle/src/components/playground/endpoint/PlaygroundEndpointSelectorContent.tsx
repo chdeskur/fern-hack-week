@@ -4,8 +4,7 @@ import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
 import { Search, Slash, X } from "lucide-react";
 
-import { removeTrailingSlash } from "@fern-api/docs-utils";
-import { conformExplorerRoute } from "@fern-api/docs-utils";
+import { getExplorerBasePath, removeTrailingSlash } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { cn } from "@fern-docs/components";
@@ -90,7 +89,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         <ul className="relative z-0 list-none">
           {apiLeafNodes.map((node) => {
             const active =
-              removeTrailingSlash(pathname) === conformExplorerRoute(node.slug);
+              removeTrailingSlash(pathname) === getExplorerBasePath(node.slug);
             return (
               <PlaygroundEndpointSelectorLeafNode
                 key={node.id}
