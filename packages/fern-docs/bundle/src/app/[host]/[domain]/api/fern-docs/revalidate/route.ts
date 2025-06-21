@@ -184,11 +184,11 @@ export async function GET(
             (file) => {
               if (file.type === "url") {
                 return {
-                  src: file.url.replace(getFileCDN(), "/_files/"),
+                  src: file.url.replace(getFileCDN(), "/_files"),
                 };
               } else if (file.type === "image") {
                 return {
-                  src: file.url.replace(getFileCDN(), "/_files/"),
+                  src: file.url.replace(getFileCDN(), "/_files"),
                   width: file.width,
                   height: file.height,
                   blurDataURL: file.blurDataUrl,
