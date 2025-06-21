@@ -102,6 +102,7 @@ export async function WebSocketContent({
           <EndpointUrlWithPlaygroundBaseUrl
             endpoint={channel}
             className="hidden lg:flex"
+            method="WSS"
           />
         </PageHeader>
       }
@@ -159,7 +160,10 @@ export async function WebSocketContent({
               slug={node.slug}
               headingElement={
                 <div className="border-border-default rounded-3 -mx-2 flex items-center justify-between border px-2 py-1 transition-colors">
-                  <EndpointUrlWithPlaygroundBaseUrl endpoint={channel} />
+                  <EndpointUrlWithPlaygroundBaseUrl
+                    endpoint={channel}
+                    method="WSS"
+                  />
                   <CopyWithBaseUrl channel={channel} />
                 </div>
               }

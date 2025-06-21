@@ -1,11 +1,11 @@
 import { forwardRef } from "react";
 
-import { HttpMethod } from "@fern-api/docs-utils";
+import { HttpOrWss } from "@fern-api/docs-utils";
 
 import { UIColor } from "../colors";
 import { Badge, BadgeProps } from "./badge";
 
-const METHOD_COLOR_SCHEMES: Record<HttpMethod, UIColor> = {
+const METHOD_COLOR_SCHEMES: Record<HttpOrWss, UIColor> = {
   GET: "green",
   DELETE: "red",
   POST: "blue",
@@ -15,12 +15,13 @@ const METHOD_COLOR_SCHEMES: Record<HttpMethod, UIColor> = {
   OPTIONS: "bronze",
   CONNECT: "sky",
   TRACE: "purple",
+  WSS: "green",
 };
 
 /**
  * Abbreviated method names for smaller (fixed-width) badges.
  */
-const ABBREVIATED_METHODS: Record<HttpMethod, string> = {
+const ABBREVIATED_METHODS: Record<HttpOrWss, string> = {
   GET: "GET",
   DELETE: "DEL",
   POST: "POST",
@@ -30,15 +31,16 @@ const ABBREVIATED_METHODS: Record<HttpMethod, string> = {
   OPTIONS: "OPT",
   CONNECT: "CON",
   TRACE: "TRACE",
+  WSS: "WSS",
 };
 
-export interface HttpMethodBadgeProps extends Omit<BadgeProps, "color"> {
-  method: HttpMethod;
+export interface HttpOrWSSBadgeProps extends Omit<BadgeProps, "color"> {
+  method: HttpOrWss;
 }
 
 export const HttpMethodBadge = forwardRef<
   HTMLSpanElement & HTMLButtonElement,
-  HttpMethodBadgeProps
+  HttpOrWSSBadgeProps
 >((props, ref) => {
   const { method, ...rest } = props;
   return (

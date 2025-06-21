@@ -35,3 +35,7 @@ export const HttpMethodOrder = [
 export function isHttpMethod(value: string): value is HttpMethod {
   return HttpMethod[value as keyof typeof HttpMethod] != null;
 }
+
+export type WssProtocol = "WSS";
+
+export type HttpOrWss = HttpMethod | WssProtocol;

@@ -1,5 +1,6 @@
 "use client";
 
+import { HttpOrWss } from "@fern-api/docs-utils";
 import {
   EndpointDefinition,
   WebSocketChannel,
@@ -11,9 +12,11 @@ import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 export function EndpointUrlWithPlaygroundBaseUrl({
   endpoint,
   className,
+  method = "GET",
 }: {
   endpoint: WebSocketChannel | EndpointDefinition;
   className?: string;
+  method?: HttpOrWss;
 }) {
   const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
   return (
@@ -21,7 +24,7 @@ export function EndpointUrlWithPlaygroundBaseUrl({
       baseUrl={baseUrl}
       environmentId={environmentId}
       path={endpoint.path}
-      method={"method" in endpoint ? endpoint.method : "GET"}
+      method={"method" in endpoint ? endpoint.method : method}
       options={endpoint.environments}
       showEnvironment
       large

@@ -11,6 +11,7 @@ import React, {
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { noop } from "ts-essentials";
 
+import { HttpOrWss } from "@fern-api/docs-utils";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -24,7 +25,7 @@ import { MaybeEnvironmentDropdown } from "@/components/MaybeEnvironmentDropdown"
 export declare namespace EndpointUrl {
   export type Props = React.PropsWithChildren<{
     path: ApiDefinition.PathPart[];
-    method: ApiDefinition.HttpMethod;
+    method: HttpOrWss;
     baseUrl?: string;
     environmentId?: ApiDefinition.EnvironmentId;
     options?: APIV1Read.Environment[];
