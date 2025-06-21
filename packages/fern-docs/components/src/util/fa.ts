@@ -38,7 +38,7 @@ export function getIconUrl(icon: string | undefined): string {
     return "";
   }
   const [style, iconName] = parsed;
-  return `/_icons/${style}/${iconName}.svg`;
+  return `${getCdnHost()}/${style}/${iconName}.svg`;
 }
 
 // parse any font awesome icon into two parts: style and icon name
@@ -61,4 +61,12 @@ function parseFontAwesomeIcon(icon: string): [string, string] | undefined {
   // if multiple styles are specified, join them with a dash
   const style = parts.join("-");
   return [style, iconName];
+}
+
+function getCdnHost() {
+  return (
+    (typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST
+      : undefined) ?? "https://icons.ferndocs.com"
+  );
 }
