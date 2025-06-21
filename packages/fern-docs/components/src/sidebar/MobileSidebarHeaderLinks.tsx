@@ -15,7 +15,7 @@ export function MobileSidebarHeaderLinks({
   return (
     <div
       className={cn(
-        "border-border-concealed -mx-4 mt-4 list-none border-t p-4 [&>*]:flex",
+        "border-border-concealed -mx-4 mt-4 flex list-none flex-col gap-2 border-t p-4 [&>*]:flex",
         { "lg:hidden": hideInDesktop }
       )}
     >
