@@ -51,7 +51,17 @@ const AccordionTrigger = React.forwardRef<
       {...props}
     >
       <ChevronRight className="fern-accordion-trigger-arrow" />
-      <h6 className="fern-accordion-trigger-title">{children}</h6>
+      {children && typeof children === "string" ? (
+        <h6 className="fern-accordion-trigger-title">{children}</h6>
+      ) : (
+        <div
+          className="fern-accordion-trigger-title"
+          role="heading"
+          aria-level={6}
+        >
+          {children}
+        </div>
+      )}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));

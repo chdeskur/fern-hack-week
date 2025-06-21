@@ -30,6 +30,13 @@
 
     .fern-accordion-trigger-title {
       @apply text-body m-0 -mb-px flex max-w-max text-left text-base leading-6;
+
+      /* Override necessary for nested elements in the accordion heading */
+      p {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: inherit !important;
+      }
     }
   }
 }
