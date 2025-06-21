@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { createFileResolver } from "@fern-api/docs-server/file-resolver";
-import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 import { processIcon } from "@/components/util/processIcon";
@@ -37,12 +36,8 @@ export async function ProductDropdown({
   }
 
   const files = await loader.getFiles();
-  const flags = await loader.getEdgeFlags();
 
-  const resolveFileSrc = createFileResolver(
-    files,
-    flags.isAssetHost || isSelfHosted()
-  );
+  const resolveFileSrc = createFileResolver(files);
 
   const productOptions = products.map((product): ProductDropdownItem => {
     const slug = product.slug ?? product.pointsTo;

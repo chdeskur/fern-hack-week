@@ -38,15 +38,7 @@ export function getIconUrl(icon: string | undefined): string {
     return "";
   }
   const [style, iconName] = parsed;
-  return `${getCdnHost()}/${style}/${iconName}.svg`;
-}
-
-function getCdnHost() {
-  return (
-    (typeof process !== "undefined"
-      ? process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST
-      : undefined) ?? "https://icons.ferndocs.com"
-  );
+  return `/_icons/${style}/${iconName}.svg`;
 }
 
 // parse any font awesome icon into two parts: style and icon name

@@ -25,10 +25,7 @@ export async function generateHtml({
     ]);
 
     if (config.favicon) {
-      faviconUrl = files[config.favicon]?.src.replace(
-        "https://files.buildwithfern.com/",
-        `/_files/`
-      );
+      faviconUrl = files[config.favicon]?.src;
     }
   }
 

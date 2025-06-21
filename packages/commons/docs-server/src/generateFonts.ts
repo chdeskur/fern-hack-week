@@ -11,16 +11,11 @@ export function getFontExtension(url: string): string {
 function generateFontFace(
   variant: DocsV1Read.CustomFontConfigVariant,
   fontConfig: DocsV1Read.FontConfigV2,
-  files: Record<string, { src: string }>,
-  assetHost: boolean
+  files: Record<string, { src: string }>
 ): string | undefined {
   const file = files[variant.fontFile];
   if (file == null) {
     return undefined;
-  }
-
-  if (assetHost) {
-    file.src = file.src.replace("https://files.buildwithfern.com/", `/_files/`);
   }
 
   let fontExtension: string;
@@ -50,8 +45,7 @@ export interface FernFonts {
 
 export function generateFonts(
   typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-  files: Record<string, { src: string }>,
-  assetHost: boolean
+  files: Record<string, { src: string }>
 ): FernFonts {
   const fontFaces: string[] = [];
   let additionalCss = "";
@@ -62,12 +56,7 @@ export function generateFonts(
   if (typography?.bodyFont?.variants != null) {
     let setVariant = false;
     for (const variant of typography.bodyFont.variants) {
-      const fontFace = generateFontFace(
-        variant,
-        typography.bodyFont,
-        files,
-        assetHost
-      );
+      const fontFace = generateFontFace(variant, typography.bodyFont, files);
       if (fontFace != null) {
         fontFaces.push(fontFace);
         setVariant = true;
@@ -85,8 +74,7 @@ export function generateFonts(
       const fontFace = generateFontFace(
         variant,
         typography.headingsFont,
-        files,
-        assetHost
+        files
       );
       if (fontFace != null) {
         fontFaces.push(fontFace);
@@ -108,12 +96,7 @@ export function generateFonts(
   if (typography?.codeFont?.variants != null) {
     let setVariant = false;
     for (const variant of typography.codeFont.variants) {
-      const fontFace = generateFontFace(
-        variant,
-        typography.codeFont,
-        files,
-        assetHost
-      );
+      const fontFace = generateFontFace(variant, typography.codeFont, files);
       if (fontFace != null) {
         fontFaces.push(fontFace);
         setVariant = true;

@@ -184,11 +184,11 @@ export async function GET(
             (file) => {
               if (file.type === "url") {
                 return {
-                  src: file.url,
+                  src: file.url.replace(getFileCDN(), "/_files/"),
                 };
               } else if (file.type === "image") {
                 return {
-                  src: file.url,
+                  src: file.url.replace(getFileCDN(), "/_files/"),
                   width: file.width,
                   height: file.height,
                   blurDataURL: file.blurDataUrl,
@@ -395,4 +395,12 @@ function createPrunedApi(api: ApiDefinition.ApiDefinition) {
     );
   });
   return apis;
+}
+
+function getFileCDN() {
+  return (
+    (typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FILES_ORIGIN
+      : undefined) ?? "https://files.buildwithfern.com"
+  );
 }

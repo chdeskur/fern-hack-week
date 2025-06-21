@@ -28,7 +28,7 @@ export default async function LogoPage({
     loader.getRoot(),
   ]);
 
-  const resolveFileSrc = createFileResolver(files, false);
+  const resolveFileSrc = createFileResolver(files);
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
 
   let frontmatter = null;

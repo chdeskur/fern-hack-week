@@ -196,11 +196,11 @@ const getFiles = cache(
     const files = mapValues(response.definition.filesV2, (file) => {
       if (file.type === "url") {
         return {
-          src: file.url,
+          src: file.url.replace(getFileCDN(), "/_files/"),
         };
       } else if (file.type === "image") {
         return {
-          src: file.url,
+          src: file.url.replace(getFileCDN(), "/_files/"),
           width: file.width,
           height: file.height,
           blurDataURL: file.blurDataUrl,
@@ -689,11 +689,9 @@ const getFonts = cache(async (domain: string) => {
     );
   }
   const response = await loadWithUrl(domain);
-  const assetHost = (await getEdgeFlags(domain)).isAssetHost || isSelfHosted();
   const fonts = generateFonts(
     response.definition.config.typographyV2,
-    await getFiles(domain),
-    assetHost
+    await getFiles(domain)
   );
   kvSet(domain, "fonts", fonts);
   return fonts;
@@ -904,4 +902,12 @@ export function createPruneKey(
     default:
       throw new Error(`Unknown node type: ${node}`);
   }
+}
+
+function getFileCDN() {
+  return (
+    (typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FILES_ORIGIN
+      : undefined) ?? "https://files.buildwithfern.com"
+  );
 }
