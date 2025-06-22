@@ -30,6 +30,8 @@ export const getIsSingleOverviewPage = (
 
 export const getIsSidebarFixed = (config: any) => {
   return (
-    config.layout?.disableHeader || config.layout?.tabsPlacement === "SIDEBAR"
+    config.layout?.disableHeader ||
+    config.layout?.tabsPlacement === "SIDEBAR" ||
+    !config.layout
   );
 };
