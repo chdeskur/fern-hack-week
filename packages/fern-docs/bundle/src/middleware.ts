@@ -103,21 +103,10 @@ export const middleware: NextMiddleware = async (request) => {
   /**
    * Rewrite /_files/* to file CDN
    */
-  if (pathname.startsWith("/_files/")) {
-    const filePath = pathname
-      .replace("/_files/", "") // trim file indicator
-      .replace("https:/", "https://"); // pathnames normalize urls, so we need restore the protocol //
-    return NextResponse.rewrite(`${getFileCDN()}/${filePath}`);
-  }
-
-  /**
-   * Rewrite /_icons/* to https://icons.ferndocs.com/*
-   */
-  if (pathname.startsWith("/_icons/")) {
-    const filePath = pathname
-      .replace("/_icons/", "")
-      .replace("https:/", "https://");
-    return NextResponse.rewrite(`${getCdnHost()}/${filePath}`);
+  if (pathname.includes("/_files/")) {
+    const filePath = pathname.replace("https:/", "https://"); // pathnames normalize urls, so we need restore the protocol //
+    const removeBase = filePath.replace(/(.*)_files\//, ""); // clean all content before and including file marker
+    return NextResponse.rewrite(`${getFileCDN()}/${removeBase}`);
   }
 
   /**
@@ -286,14 +275,6 @@ export const config: MiddlewareConfig = {
     "/((?!.well-known|_next|_vercel|favicon.ico|manifest.webmanifest).*)",
   ],
 };
-
-function getCdnHost() {
-  return (
-    (typeof process !== "undefined"
-      ? process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST
-      : undefined) ?? "https://icons.ferndocs.com"
-  );
-}
 
 function getFileCDN() {
   return (
