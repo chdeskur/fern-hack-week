@@ -8,7 +8,7 @@ export function convertTpufRecordsToDocuments(
   return uniqBy(
     results.map((result) => {
       return {
-        chunk: result.attributes.chunk,
+        document: result.attributes.document,
         title: result.attributes.title,
         pathname: result.attributes.pathname,
         hash: result.attributes.hash,
@@ -20,6 +20,6 @@ export function convertTpufRecordsToDocuments(
     (result) => `${result.pathname}${result.hash} - ${result.page_position}`
   ).map(
     (result) =>
-      `# ${result.title}\n Citation URL: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.chunk}${result.description}`
+      `# ${result.title}\n Citation URL: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.document}${result.description}`
   );
 }

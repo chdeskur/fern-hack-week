@@ -24,13 +24,13 @@ import {
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
-import { withoutStaging } from "@fern-api/docs-utils";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   buildCustomConfig,
   convertTpufRecordsToDocuments,
   createChatSystemPrompt,
   getLanguageModel,
+  getTurbopufferNamespace,
   queryTurbopuffer,
 } from "@fern-docs/search-ask-fern";
 
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
 
   const start = Date.now();
 
-  const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
+  const namespace = getTurbopufferNamespace(domain, embeddingModel);
   const fernToken = await getFernToken();
   const user = await safeVerifyFernJWTConfig(fernToken, authEdgeConfig);
   const lastUserMessage: string | undefined = messages.findLast(
@@ -146,13 +146,16 @@ export async function POST(req: NextRequest) {
             });
             documentIdsToIgnore.push(...response.map((hit) => hit.id));
             return response.map((hit) => {
-              const { domain, pathname, hash, chunk } = hit.attributes;
+              const { domain, pathname, hash, document } = hit.attributes;
               const url = `https://${domain}${pathname}${hash ?? ""}`;
-              if (chunk.length > 20000) {
+              if (document.length > 20000) {
                 return {
                   url,
-                  chunk: chunk.slice(0, 20000),
-                  ...(hit.attributes as Omit<typeof hit.attributes, "chunk">),
+                  document: document.slice(0, 20000),
+                  ...(hit.attributes as Omit<
+                    typeof hit.attributes,
+                    "document"
+                  >),
                 };
               }
               return { url, ...hit.attributes };
