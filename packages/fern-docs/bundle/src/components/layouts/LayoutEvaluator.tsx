@@ -5,13 +5,16 @@ import React from "react";
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { AbstractLayoutEvaluatorContent } from "@fern-docs/components/layouts/AbstractLayoutEvaluatorContent";
 
 import { MdxAside } from "@/mdx/bundler/component";
 import { MdxContent } from "@/mdx/components/MdxContent";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { asToc, getMDXExport } from "../../mdx/get-mdx-export";
-import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
+import { PageHeader } from "../PageHeader";
+import { BuiltWithFern } from "../built-with-fern";
+import { FooterLayout } from "./FooterLayout";
 
 export async function LayoutEvaluator({
   loader,
@@ -46,24 +49,50 @@ export async function LayoutEvaluator({
 
   frontmatter["edit-this-page-url"] ??= editThisPageUrl;
 
-  return (
-    <LayoutEvaluatorContent
+  const title = frontmatter?.title ?? fallbackTitle;
+  const subtitle = frontmatter?.subtitle ?? frontmatter?.excerpt;
+
+  let layout = frontmatter?.layout ?? "guide";
+  const hasAside = mdx && exports?.Aside;
+  if (hasAside) {
+    layout = "reference";
+  }
+
+  const pageHeader = (
+    <PageHeader
       serialize={serialize}
-      title={frontmatter?.title ?? fallbackTitle}
-      subtitle={frontmatter?.subtitle ?? frontmatter?.excerpt}
-      frontmatter={frontmatter}
+      title={title}
+      subtitle={subtitle}
       breadcrumb={breadcrumb}
+      slug={slug}
+      markdown={markdown}
+      includeDropdown={layout !== "reference"}
+    />
+  );
+
+  const footer = (
+    <FooterLayout
+      hideFeedback={frontmatter?.["hide-feedback"]}
+      hideNavLinks={frontmatter?.["hide-nav-links"]}
+      editThisPageUrl={frontmatter?.["edit-this-page-url"]}
+      bottomNavigation={bottomNavigation}
+    />
+  );
+
+  return (
+    <AbstractLayoutEvaluatorContent
+      frontmatter={frontmatter}
       tableOfContents={toc}
+      pageHeader={pageHeader}
       aside={
-        mdx && exports?.Aside ? (
+        hasAside ? (
           <MdxAside code={mdx.code} jsxElements={mdx.jsxElements} />
         ) : undefined
       }
-      bottomNavigation={bottomNavigation}
-      slug={slug}
-      markdown={markdown}
+      footer={footer}
+      builtWithFern={<BuiltWithFern className="mx-auto my-8 w-fit" />}
     >
       <MdxContent mdx={mdx} fallback={markdown} />
-    </LayoutEvaluatorContent>
+    </AbstractLayoutEvaluatorContent>
   );
 }

@@ -1,11 +1,12 @@
 import React from "react";
 
+import { Prose } from "@fern-docs/components/mdx/prose";
+
 import { ErrorBoundary } from "@/components/error-boundary";
 import { getMdxSerializer } from "@/context/MdxSerializerContext";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { MdxContent } from "./MdxContent";
-import { Prose } from "./prose";
 
 export async function MdxServerComponent({
   serialize,

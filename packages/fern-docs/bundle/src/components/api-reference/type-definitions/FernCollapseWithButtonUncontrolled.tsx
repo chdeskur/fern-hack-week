@@ -3,12 +3,11 @@
 import React from "react";
 
 import { FernButtonProps } from "@fern-docs/components";
+import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
 import {
   useBooleanState,
   useIsomorphicLayoutEffect,
 } from "@fern-ui/react-commons";
-
-import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 import { useTypeDefinitionContext } from "./TypeDefinitionContext";

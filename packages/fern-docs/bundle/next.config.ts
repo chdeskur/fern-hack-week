@@ -67,7 +67,6 @@ const nextConfig: NextConfig = {
       "@fern-docs/search-keyword",
       "@fern-docs/search-ask-fern",
       "@fern-docs/search-ui",
-      "@fern-api/docs-utils",
       "@fern-api/docs-server",
       "@fern-api/docs-loader",
       "es-toolkit",

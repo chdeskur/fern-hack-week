@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Prose } from "../prose";
+import { Prose } from "@fern-docs/components/mdx/prose";
 
 export const ParamField: React.FC<
   React.PropsWithChildren<{

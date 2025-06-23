@@ -1,27 +1,25 @@
-import React from "react";
+import { Prose } from "../mdx/prose";
+import { SetLayout } from "../state/layout";
 
-import { Prose } from "@/mdx/components/prose";
-import { SetLayout } from "@/state/layout";
-
-interface OverviewLayoutProps {
+interface GuideLayoutProps {
   header?: React.ReactNode;
   toc?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
 }
 
-export function OverviewLayout({
+export function GuideLayout({
   header,
   toc,
   children,
   footer,
-}: OverviewLayoutProps) {
+}: GuideLayoutProps) {
   return (
     <>
-      <SetLayout value="overview" />
+      <SetLayout value="guide" />
       {toc}
-      <div className="fern-layout-overview">
-        <article className="w-content-wide-width max-w-full">
+      <div className="fern-layout-guide">
+        <article className="w-content-width max-w-full">
           {header}
           <Prose className="prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full">
             {children}

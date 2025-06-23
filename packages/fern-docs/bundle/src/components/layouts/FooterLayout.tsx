@@ -1,6 +1,5 @@
-import { cn } from "@fern-docs/components";
+import { AbstractFooterLayout } from "@fern-docs/components/layouts/AbstractFooterLayout";
 
-import { EditThisPageButton } from "../EditThisPage";
 import { BuiltWithFern } from "../built-with-fern";
 import { Feedback } from "../feedback/Feedback";
 
@@ -20,15 +19,13 @@ export function FooterLayout({
   className?: string;
 }) {
   return (
-    <footer className={cn("fern-layout-footer not-prose", className)}>
-      <div className="fern-layout-footer-toolbar">
-        <div>{!hideFeedback && <Feedback pathname={pathname} />}</div>
-        <EditThisPageButton editThisPageUrl={editThisPageUrl} />
-      </div>
-
-      {!hideNavLinks && bottomNavigation}
-
-      <BuiltWithFern className="mx-auto mt-12 w-fit" />
-    </footer>
+    <AbstractFooterLayout
+      editThisPageUrl={editThisPageUrl}
+      bottomNavigation={bottomNavigation}
+      hideNavLinks={hideNavLinks}
+      className={className}
+      feedback={<div>{!hideFeedback && <Feedback pathname={pathname} />}</div>}
+      builtWithFern={<BuiltWithFern className="mx-auto mt-12 w-fit" />}
+    />
   );
 }

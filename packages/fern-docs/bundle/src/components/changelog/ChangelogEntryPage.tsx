@@ -8,13 +8,13 @@ import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { Badge } from "@fern-docs/components";
 import { FernLink } from "@fern-docs/components/FernLink";
 import { Separator } from "@fern-docs/components/Separator";
+import { AsideAwareDiv } from "@fern-docs/components/layouts/AsideAwareDiv";
+import { SetLayout } from "@fern-docs/components/state/layout";
 
 import { HideBuiltWithFern } from "@/components/built-with-fern";
+import { FooterLayout } from "@/components/layouts/FooterLayout";
 import { MdxSerializer } from "@/server/mdx-serializer";
-import { SetLayout } from "@/state/layout";
 
-import { AsideAwareDiv } from "../layouts/AsideAwareDiv";
-import { FooterLayout } from "../layouts/FooterLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 // sidebar is always hidden on changelog entry pages

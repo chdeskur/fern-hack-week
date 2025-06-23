@@ -33,7 +33,8 @@
           "variant",
           "variants",
           "source",
-          "utility"
+          "utility",
+          "theme"
         ]
       }
     ],

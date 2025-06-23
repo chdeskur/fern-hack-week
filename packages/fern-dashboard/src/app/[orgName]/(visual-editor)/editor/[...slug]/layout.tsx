@@ -5,6 +5,7 @@ import { FernThemeProvider } from "@fern-docs/components";
 import { AbstractHeaderTabsRoot } from "@fern-docs/components/abstract/AbstractHeaderTabsRoot";
 import { FERN_SEARCH_BUTTON_ID } from "@fern-docs/components/constants";
 import { NavbarLinks } from "@fern-docs/components/header/NavbarLinks";
+import { Providers } from "@fern-docs/components/providers/providers";
 import { SidebarContainer } from "@fern-docs/components/sidebar/SidebarContainer";
 import { RootNodeProvider } from "@fern-docs/components/state/navigation";
 import { getAllSidebarRootNodes } from "@fern-docs/components/state/navigation-server";
@@ -66,115 +67,132 @@ export default async function AuthedLayout({
     getSidebarRootNodeIdToChildToParentsMap(sidebarRootNodes);
 
   return (
-    <FernThemeProvider
-      hasLight={Boolean(colors.light)}
-      hasDark={Boolean(colors.dark)}
-      lightThemeColor={colors.light?.themeColor}
-      darkThemeColor={colors.dark?.themeColor}
-    >
-      <GlobalStyles
-        domain={"fern.docs.buildwithfern.com"}
-        layout={layout}
-        fonts={fonts}
-        light={colors.light}
-        dark={colors.dark}
-        inlineCss={config.css?.inline}
-      />
-      <RootNodeProvider
-        sidebarRootNodesToChildToParentsMap={
-          sidebarRootNodesToChildToParentsMap
-        }
+    <Providers>
+      <FernThemeProvider
+        hasLight={Boolean(colors.light)}
+        hasDark={Boolean(colors.dark)}
+        lightThemeColor={colors.light?.themeColor}
+        darkThemeColor={colors.dark?.themeColor}
       >
-        <div className="border-1 border-border m-2 flex flex-col overflow-hidden rounded-2xl shadow-sm">
-          <AbstractDefaultDocs
-            header={
-              <PreviewHeader
-                navbarLinks={<NavbarLinks loader={loader} />}
-                headertabs={headertabs}
+        <GlobalStyles
+          domain={"fern.docs.buildwithfern.com"}
+          layout={layout}
+          fonts={fonts}
+          light={colors.light}
+          dark={colors.dark}
+          inlineCss={config.css?.inline}
+          scopeSelector="#preview-container :root"
+          lightSelector=".light #preview-container"
+          darkSelector=".dark #preview-container"
+        />
+        <RootNodeProvider
+          sidebarRootNodesToChildToParentsMap={
+            sidebarRootNodesToChildToParentsMap
+          }
+        >
+          <div className="border-1 border-border m-2 flex flex-col overflow-hidden rounded-2xl shadow-sm">
+            {/* BOUNDARY NOTE: All items within the #preview-container will be themed with domain-specific styles. */}
+            <div id="preview-container">
+              <AbstractDefaultDocs
+                header={
+                  <PreviewHeader
+                    navbarLinks={<NavbarLinks loader={loader} />}
+                    headertabs={headertabs}
+                    versionSelect={versionSelect}
+                    productSelect={productSelect}
+                    logo={logo}
+                    showSearchBar={layout.searchbarPlacement === "HEADER"}
+                  />
+                }
+                lightSidebarClassName={
+                  colors.light?.sidebarBackgroundTheme === "dark"
+                    ? "dark"
+                    : undefined
+                }
+                darkSidebarClassName={
+                  colors.dark?.sidebarBackgroundTheme === "light"
+                    ? "light"
+                    : undefined
+                }
+                lightHeaderClassName={
+                  colors.light?.headerBackgroundTheme === "dark"
+                    ? "dark"
+                    : undefined
+                }
+                darkHeaderClassName={
+                  colors.dark?.headerBackgroundTheme === "light"
+                    ? "light"
+                    : undefined
+                }
+                isHeaderDisabled={layout.isHeaderDisabled}
                 versionSelect={versionSelect}
                 productSelect={productSelect}
-                logo={logo}
-                showSearchBar={layout.searchbarPlacement === "HEADER"}
-              />
-            }
-            lightSidebarClassName={
-              colors.light?.sidebarBackgroundTheme === "dark"
-                ? "dark"
-                : undefined
-            }
-            darkSidebarClassName={
-              colors.dark?.sidebarBackgroundTheme === "light"
-                ? "light"
-                : undefined
-            }
-            lightHeaderClassName={
-              colors.light?.headerBackgroundTheme === "dark"
-                ? "dark"
-                : undefined
-            }
-            darkHeaderClassName={
-              colors.dark?.headerBackgroundTheme === "light"
-                ? "light"
-                : undefined
-            }
-            isHeaderDisabled={layout.isHeaderDisabled}
-            versionSelect={versionSelect}
-            productSelect={productSelect}
-            sidebar={
-              <SidebarContainer
-                logo={<React.Suspense fallback={null}>{logo}</React.Suspense>}
-                showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
-                showHeaderInSidebar={showHeaderInSidebar}
-                productSelect={
-                  <React.Suspense fallback={null} key="product-select-3">
-                    {productSelect}
-                  </React.Suspense>
-                }
-                versionSelect={
-                  <React.Suspense fallback={null} key="version-select-3">
-                    {versionSelect}
-                  </React.Suspense>
-                }
-                navbarLinks={
-                  <React.Suspense fallback={null}>
-                    <NavbarLinks loader={loader} />
-                  </React.Suspense>
-                }
-                loginButton={
-                  <React.Suspense fallback={null}>
-                    {/* <LoginButton
+                // TODO: isSidebarFixed ends up putting the sidebar outside of the preview container. We should fix this,
+                // as this also removes certain styles that we want to apply to the sidebar.
+                // isSidebarFixed={
+                // !!colors.dark?.sidebarBackground ||
+                // !!colors.light?.sidebarBackground ||
+                // layout.isHeaderDisabled
+                // }
+                sidebar={
+                  <SidebarContainer
+                    logo={
+                      <React.Suspense fallback={null}>{logo}</React.Suspense>
+                    }
+                    showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
+                    showHeaderInSidebar={showHeaderInSidebar}
+                    productSelect={
+                      <React.Suspense fallback={null} key="product-select-3">
+                        {productSelect}
+                      </React.Suspense>
+                    }
+                    versionSelect={
+                      <React.Suspense fallback={null} key="version-select-3">
+                        {versionSelect}
+                      </React.Suspense>
+                    }
+                    navbarLinks={
+                      <React.Suspense fallback={null}>
+                        <NavbarLinks loader={loader} />
+                      </React.Suspense>
+                    }
+                    loginButton={
+                      <React.Suspense fallback={null}>
+                        {/* <LoginButton
                     loader={loader}
                     className="my-6 flex w-full justify-between lg:hidden"
                     showIcon
                   /> */}
-                  </React.Suspense>
+                      </React.Suspense>
+                    }
+                    searchBar={<DesktopSearchButton />}
+                  >
+                    {sidebar}
+                  </SidebarContainer>
                 }
-                searchBar={<DesktopSearchButton />}
-              >
-                {sidebar}
-              </SidebarContainer>
-            }
-            headerTabs={
-              <AbstractHeaderTabsRoot
-                searchBar={
-                  showSearchBarInHeaderTabs && (
-                    <DesktopSearchButton
-                      id={FERN_SEARCH_BUTTON_ID}
-                      className="fern-header-search-bar cursor-not-allowed overflow-hidden"
-                    />
-                  )
+                headerTabs={
+                  <AbstractHeaderTabsRoot
+                    searchBar={
+                      showSearchBarInHeaderTabs && (
+                        <DesktopSearchButton
+                          id={FERN_SEARCH_BUTTON_ID}
+                          className="fern-header-search-bar cursor-not-allowed overflow-hidden"
+                        />
+                      )
+                    }
+                  >
+                    {headertabs}
+                  </AbstractHeaderTabsRoot>
                 }
+                hasProductsOrVersions={hasProductsOrVersions}
+                // announcement={<div>Announcement</div>}
               >
-                {headertabs}
-              </AbstractHeaderTabsRoot>
-            }
-            hasProductsOrVersions={hasProductsOrVersions}
-            // announcement={<div>Announcement</div>}
-          >
-            {children}
-          </AbstractDefaultDocs>
-        </div>
-      </RootNodeProvider>
-    </FernThemeProvider>
+                {children}
+              </AbstractDefaultDocs>
+            </div>
+          </div>
+        </RootNodeProvider>
+      </FernThemeProvider>
+    </Providers>
   );
 }

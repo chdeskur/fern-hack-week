@@ -2,11 +2,11 @@
 
 import React, { ComponentPropsWithoutRef } from "react";
 
-import { cn } from "@fern-docs/components";
 import { useIsMobile } from "@fern-ui/react-commons";
 
-import { Prose } from "@/mdx/components/prose";
-import { SetLayout } from "@/state/layout";
+import { cn } from "../cn";
+import { Prose } from "../mdx/prose";
+import { SetLayout } from "../state/layout";
 
 interface ReferenceLayoutProps {
   header?: React.ReactNode;
@@ -68,12 +68,16 @@ export const ReferenceLayout = React.forwardRef<
             </aside>
           )}
           <Prose className="mb-12 space-y-12">
-            {children}
-            {isMobile && (
-              <section className="fern-layout-reference-aside">{aside}</section>
-            )}
-            {reference}
-            {footer}
+            <div className="mb-12 space-y-12">
+              {children}
+              {isMobile && (
+                <section className="fern-layout-reference-aside">
+                  {aside}
+                </section>
+              )}
+              {reference}
+              {footer}
+            </div>
           </Prose>
         </div>
       </article>

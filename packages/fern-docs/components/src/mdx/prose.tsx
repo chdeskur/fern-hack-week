@@ -2,7 +2,7 @@ import React from "react";
 
 import { Primitive } from "@radix-ui/react-primitive";
 
-import { cn } from "@fern-docs/components";
+import { cn } from "../cn";
 
 export const Prose = React.forwardRef<
   HTMLDivElement,

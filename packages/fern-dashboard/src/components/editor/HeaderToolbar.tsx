@@ -32,7 +32,7 @@ export function HeaderToolbar({
   };
 
   return (
-    <div className="flex h-12 items-center justify-center border-b border-gray-500 bg-white px-2 shadow-sm">
+    <div className="flex flex-wrap items-center justify-center gap-2 border-b border-gray-500 bg-white px-2 py-2 shadow-sm md:py-1">
       <div className="flex flex-1 items-center gap-2 text-left">
         <Button className="px-2" variant="ghost" size="iconSm" asChild>
           <a href={`/${orgName}/docs`}>
@@ -45,7 +45,7 @@ export function HeaderToolbar({
         <ProfileImage
           picture={picture}
           name={name}
-          className="ring-accent border-3 border-white ring-2"
+          className="ring-primary border-3 border-white ring-2"
         />
         <div className="bg-(--grayscale-a2) border-border rounded-full border px-3 py-0.5">
           {/* TODO: Add undo button functionality */}
@@ -77,7 +77,7 @@ export function HeaderToolbar({
           </Button>
         </div>
       </div>
-      <div className="flex flex-1 shrink-0 items-center justify-end gap-1">
+      <div className="flex flex-1 shrink-0 items-center justify-between gap-1 lg:justify-end">
         {/* TODO: Add preview button functionality */}
         <Button
           variant="ghost"

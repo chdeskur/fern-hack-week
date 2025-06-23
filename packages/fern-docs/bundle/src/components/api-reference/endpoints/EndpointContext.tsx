@@ -8,8 +8,7 @@ import {
   EndpointDefinition,
   ErrorResponse,
 } from "@fern-api/fdr-sdk/api-definition";
-
-import { useCurrentAnchor } from "@/hooks/use-anchor";
+import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
 
 import { useExampleSelection } from "./useExampleSelection";
 import { convertNameToAnchorPart } from "./utils";

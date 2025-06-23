@@ -9,9 +9,9 @@ import {
   FernButtonGroup,
   FernCard,
 } from "@fern-docs/components";
+import { jotaiStore } from "@fern-docs/components/state/jotai-provider";
 
 import { isFileForgeHackEnabledAtom } from "@/state/api-explorer-flags";
-import { jotaiStore } from "@/state/jotai-provider";
 import { useProgrammingLanguage } from "@/state/language";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,

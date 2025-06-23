@@ -5,10 +5,10 @@ import React from "react";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
+import { ReferenceLayout } from "@fern-docs/components/layouts/ReferenceLayout";
 
 import { PageHeader } from "@/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
-import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";

@@ -17,6 +17,8 @@
 @import "./header/index.scss";
 @import "./theming/index.scss";
 @import "./sidebar/index.scss";
+@import "./layouts/index.scss";
+@import "./table-of-contents/index.scss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant light (&:where(.light, .light *));

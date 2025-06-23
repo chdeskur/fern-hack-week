@@ -1,8 +1,7 @@
 import React from "react";
 
 import * as AccordionComponent from "@fern-docs/components";
-
-import { useCurrentAnchor } from "@/hooks/use-anchor";
+import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
 
 import { unwrapChildren } from "../../common/unwrap-children";
 

@@ -2,12 +2,12 @@ import "server-only";
 
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { ReferenceLayout } from "@fern-docs/components/layouts/ReferenceLayout";
+import { Prose } from "@fern-docs/components/mdx/prose";
 
 import { PageHeader } from "@/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
-import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { renderTypeShorthand } from "@/components/type-shorthand";
-import { Prose } from "@/mdx/components/prose";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 

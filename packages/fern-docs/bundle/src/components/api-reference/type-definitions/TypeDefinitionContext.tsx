@@ -5,11 +5,11 @@ import React from "react";
 
 import { slugToHref } from "@fern-api/docs-utils";
 import { TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
+import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
 import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
 import { useLazyRef } from "@fern-ui/react-commons";
 
 import { ErrorBoundary } from "@/components/error-boundary";
-import { useCurrentAnchor } from "@/hooks/use-anchor";
 
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { JsonPropertyPathPart } from "../examples/JsonPropertyPath";

@@ -12,18 +12,18 @@ import {
   FERN_FOOTER_ID,
 } from "@fern-docs/components/constants";
 import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
+import { SCROLL_BODY_ATOM } from "@fern-docs/components/state/viewport";
 import { FernHeader } from "@fern-docs/components/theming/fern-header";
 import { MainCtx } from "@fern-docs/components/theming/mobile-menu";
 import { SidebarNav } from "@fern-docs/components/theming/side-nav";
 
 import { HeaderTabsRoot } from "@/components/header/HeaderTabsRoot";
-import { SCROLL_BODY_ATOM } from "@/state/viewport";
 
 const CohereDocsStyle = () => {
   return (
     <style jsx global>
       {`
-        :root {
+        @theme {
           --header-offset: 0px;
           --card-border: #d8cfc1;
           --bg-color-search-dialog: #fafafa;

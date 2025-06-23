@@ -4,13 +4,13 @@ import { experimental_taintUniqueValue } from "react";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { FERN_DOCS_ID } from "@fern-docs/components/constants";
+import { ScrollToTop } from "@fern-docs/components/layouts/ScrollToTop";
+import { Providers } from "@fern-docs/components/providers/providers";
 
 import { ConsoleMessage } from "@/components/console-message";
-import { ScrollToTop } from "@/components/layouts/ScrollToTop";
 import { WebSocketRefresh } from "@/components/websocket-refresh";
 
 import "./globals.css";
-import { Providers } from "./providers";
 
 const secrets = [
   "BRAINTRUST_API_KEY",

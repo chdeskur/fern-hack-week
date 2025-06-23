@@ -11,17 +11,17 @@ import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Badge } from "@fern-docs/components";
 import { FernLink } from "@fern-docs/components/FernLink";
 import { Separator } from "@fern-docs/components/Separator";
+import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
+import { AsideAwareDiv } from "@fern-docs/components/layouts/AsideAwareDiv";
+import { TableOfContentsLayout } from "@fern-docs/components/layouts/TableOfContentsLayout";
+import { SetLayout } from "@fern-docs/components/state/layout";
+import { SCROLL_BODY_ATOM } from "@fern-docs/components/state/viewport";
 import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 
 import { HideBuiltWithFern } from "@/components/built-with-fern";
-import { useCurrentAnchor } from "@/hooks/use-anchor";
-import { SetLayout } from "@/state/layout";
-import { SCROLL_BODY_ATOM } from "@/state/viewport";
+import { FooterLayout } from "@/components/layouts/FooterLayout";
 
 import { BottomNavigationClient } from "../bottom-nav-client";
-import { AsideAwareDiv } from "../layouts/AsideAwareDiv";
-import { FooterLayout } from "../layouts/FooterLayout";
-import { TableOfContentsLayout } from "../layouts/TableOfContentsLayout";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 function flattenChangelogEntries(

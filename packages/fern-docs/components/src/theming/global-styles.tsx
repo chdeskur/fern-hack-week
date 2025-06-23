@@ -1,5 +1,3 @@
-"use client";
-
 import { FernFonts } from "@fern-api/docs-server/generateFonts";
 import {
   ArrayOf12,
@@ -22,6 +20,9 @@ export function GlobalStyles({
   dark,
   fonts,
   inlineCss = [],
+  scopeSelector = ":root",
+  lightSelector = ".light, :root",
+  darkSelector = ".dark",
 }: {
   domain: string;
   layout: FernLayoutConfig;
@@ -29,6 +30,9 @@ export function GlobalStyles({
   dark?: FernColorTheme;
   fonts: FernFonts;
   inlineCss?: string[];
+  scopeSelector?: string;
+  lightSelector?: string;
+  darkSelector?: string;
 }) {
   const root = light ?? dark;
   const hasTheme = !!light && !!dark;
@@ -125,13 +129,6 @@ export function GlobalStyles({
         ${fonts.fontFaces.join("\n")}
 
         :root {
-          --font-body: ${createFontFamilyCss(fonts.bodyFont, FONT_SANS)};
-          --font-heading: ${createFontFamilyCss(
-            fonts.headingFont,
-            createFontFamilyCss(fonts.bodyFont, FONT_SANS)
-          )};
-          --font-code: ${createFontFamilyCss(fonts.codeFont, FONT_MONO)};
-          ${domain.includes("nominal") ? "--radius: 0px;" : ""}
           --header-height-real: ${layout.headerHeight}px;
           --mobile-header-height-real: ${Math.min(layout.headerHeight, 64)}px;
           --content-width: ${layout.contentWidth}px;
@@ -140,6 +137,17 @@ export function GlobalStyles({
             layout.pageWidth != null ? `${layout.pageWidth}px` : "100vw"
           };
           --logo-height: ${layout.logoHeight}px;
+          --font-body: ${createFontFamilyCss(fonts.bodyFont, FONT_SANS)};
+          --font-heading: ${createFontFamilyCss(
+            fonts.headingFont,
+            createFontFamilyCss(fonts.bodyFont, FONT_SANS)
+          )};
+          --font-code: ${createFontFamilyCss(fonts.codeFont, FONT_MONO)};
+        }
+
+        ${scopeSelector} {
+         
+          ${domain.includes("nominal") ? "--radius: 0px;" : ""}
 
           /* for backwards compatibility */
           --typography-body-font-family: var(--font-body);
@@ -159,6 +167,9 @@ export function GlobalStyles({
                 contrast: root.accentContrast,
                 surface: root.accentSurface,
                 surfaceWideGamut: root.accentSurfaceWideGamut,
+                scopeSelector,
+                lightSelector,
+                darkSelector,
               })
             : ""
         }
@@ -175,6 +186,9 @@ export function GlobalStyles({
                 contrast: root.appearance === "light" ? "#000" : "#fff",
                 surface: root.graySurface,
                 surfaceWideGamut: root.graySurfaceWideGamut,
+                scopeSelector,
+                lightSelector,
+                darkSelector,
               })
             : ""
         }
@@ -191,6 +205,9 @@ export function GlobalStyles({
                 contrast: dark.accentContrast,
                 surface: dark.accentSurface,
                 surfaceWideGamut: dark.accentSurfaceWideGamut,
+                scopeSelector,
+                lightSelector,
+                darkSelector,
               })
             : ""
         }
@@ -207,6 +224,9 @@ export function GlobalStyles({
                 contrast: dark.appearance === "light" ? "#000" : "#fff",
                 surface: dark.graySurface,
                 surfaceWideGamut: dark.graySurfaceWideGamut,
+                scopeSelector,
+                lightSelector,
+                darkSelector,
               })
             : getColorScaleCss({
                 mode: "dark",
@@ -218,10 +238,13 @@ export function GlobalStyles({
                 contrast: "#fff",
                 surface: fallbackDark.graySurface,
                 surfaceWideGamut: fallbackDark.graySurfaceWideGamut,
+                scopeSelector,
+                lightSelector,
+                darkSelector,
               })
         }
 
-        ${hasTheme ? ":root, .light" : ":root"} {
+        ${hasTheme ? lightSelector : scopeSelector} {
           --accent: ${root?.accent ?? FERN_COLOR_ACCENT};
           --background: ${root?.background ?? (light ? "#fff" : "#000")};
           --border: ${
@@ -238,7 +261,7 @@ export function GlobalStyles({
 
         ${
           hasTheme && dark
-            ? `.dark {
+            ? `${darkSelector} {
           --accent: ${dark?.accent ?? FERN_COLOR_ACCENT};
           --background: ${dark.background ?? "#000"};
           --border: ${
@@ -285,6 +308,9 @@ const getColorScaleCss = ({
   contrast,
   surface,
   surfaceWideGamut,
+  scopeSelector,
+  lightSelector,
+  darkSelector,
 }: {
   mode: "light" | "dark" | "none";
   name: string;
@@ -295,9 +321,16 @@ const getColorScaleCss = ({
   contrast: string;
   surface: string;
   surfaceWideGamut: string;
+  scopeSelector?: string;
+  lightSelector?: string;
+  darkSelector?: string;
 }) => {
   const selector =
-    mode === "dark" ? ".dark" : mode === "light" ? ":root, .light" : ":root";
+    mode === "dark"
+      ? darkSelector
+      : mode === "light"
+        ? lightSelector
+        : scopeSelector;
 
   return `
 ${selector} {

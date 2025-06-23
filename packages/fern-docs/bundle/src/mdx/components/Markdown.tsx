@@ -2,8 +2,9 @@
 
 import { type ReactNode, memo } from "react";
 
+import { Prose } from "@fern-docs/components/mdx/prose";
+
 import { MdxContent } from "./MdxContent";
-import { Prose } from "./prose";
 
 export declare namespace Markdown {
   export interface Props {

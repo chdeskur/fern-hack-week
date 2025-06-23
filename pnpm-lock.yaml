@@ -962,9 +962,6 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.744.0
         version: 3.744.0
-      '@bprogress/next':
-        specifier: ^3.1.3
-        version: 3.1.3(next@15.3.0-canary.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@fern-api/docs-auth':
         specifier: workspace:*
         version: link:../../commons/docs-auth
@@ -1052,9 +1049,6 @@ importers:
       '@radix-ui/react-popover':
         specifier: ^1.1.6
         version: 1.1.6(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-primitive':
-        specifier: ^2.0.2
-        version: 2.0.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-select':
         specifier: ^2.1.6
         version: 2.1.6(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1223,9 +1217,6 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
-      styled-jsx:
-        specifier: ^5.1.2
-        version: 5.1.6(@babel/core@7.26.10)(react@19.0.0)
       swr:
         specifier: ^2.3.2
         version: 2.3.2(react@19.0.0)
@@ -1377,6 +1368,9 @@ importers:
 
   packages/fern-docs/components:
     dependencies:
+      '@bprogress/next':
+        specifier: ^3.2.12
+        version: 3.2.12(next@15.3.0-canary.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@fern-api/docs-auth':
         specifier: workspace:*
         version: link:../../commons/docs-auth
@@ -1467,6 +1461,9 @@ importers:
       '@storybook/client-api':
         specifier: ^7.6.17
         version: 7.6.17
+      '@vercel/functions':
+        specifier: ^2.0.0
+        version: 2.0.0(@aws-sdk/credential-provider-web-identity@3.744.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1524,6 +1521,9 @@ importers:
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      styled-jsx:
+        specifier: ^5.1.7
+        version: 5.1.7(@babel/core@7.26.10)(react@19.0.0)
       swr:
         specifier: ^2.2.5
         version: 2.2.5(react@19.0.0)
@@ -1536,6 +1536,9 @@ importers:
       ts-extras:
         specifier: ^0.11.0
         version: 0.11.0
+      use-memo-one:
+        specifier: ^1.1.3
+        version: 1.1.3(react@19.0.0)
       zustand:
         specifier: ^5.0.2
         version: 5.0.3(@types/react@19.0.10)(immer@9.0.21)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0))
@@ -4348,18 +4351,11 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@bprogress/core@1.1.18':
-    resolution: {integrity: sha512-+khsDSJ7jv1L9LU34jnEsNqY6tXViSZDOeoxd09Ws8zVXzFjatRzWwBpiDQqTqyVZc0nlOxkkumFDtAgDJwY2A==}
-
   '@bprogress/core@1.3.3':
     resolution: {integrity: sha512-Vz9vzZE8xvfkgY09e0S6kzNz/ev/2lUw7A/z0TW7N0ZBG9xmVXrzSsFe3uvypxDa5ltn+xLBtfDtxBc8KsrvBQ==}
 
-  '@bprogress/next@3.1.3':
-    resolution: {integrity: sha512-22/AlkaNhC26Wyo/Y/1QKtYrL90+/fuh+C0mytnwWbKJRMMsFEx5Z87rhjhIx2gWP0cWtBwpQ1lD+aoNjotAkw==}
-    peerDependencies:
-      next: '>=13.0.0'
-      react: 19.0.0
-      react-dom: 19.0.0
+  '@bprogress/core@1.3.4':
+    resolution: {integrity: sha512-q/AqpurI/1uJzOrQROuZWixn/+ARekh+uvJGwLCP6HQ/EqAX4SkvNf618tSBxL4NysC0MwqAppb/mRw6Tzi61w==}
 
   '@bprogress/next@3.2.11':
     resolution: {integrity: sha512-UPXApgTvtF0zu3GoxctG0sZ177PbresqVUosaV5giAG46CuGRQeY7Ys3McL7I1h9MaUkh1rg+1NPAdnGE4dEig==}
@@ -4368,14 +4364,21 @@ packages:
       react: 19.0.0
       react-dom: 19.0.0
 
-  '@bprogress/react@1.1.4':
-    resolution: {integrity: sha512-faAGNitciEk5vQfu5eoojFZqHLAe/oB4OeEj5zO15kTBZyLy1v9vs1BOX2u/YYnNx6/IeZQlBvENF4nZwjbZSw==}
+  '@bprogress/next@3.2.12':
+    resolution: {integrity: sha512-/ZvNwbAd0ty9QiQwCfT2AfwWVdAaEyCPx5RUz3CfiiJS/OLBohhDz/IC/srhwK9GnXeXavvtiUrpKzN5GJDwlw==}
     peerDependencies:
+      next: '>=13.0.0'
       react: 19.0.0
       react-dom: 19.0.0
 
   '@bprogress/react@1.2.6':
     resolution: {integrity: sha512-fAK2qSO4+nG0Rak6+9jZmGWQxsntHS8Zw4fm2dBhPardhlfIPzVV47uhkW2cyQl9+r/1We/kYVq+r31deLO5Zg==}
+    peerDependencies:
+      react: 19.0.0
+      react-dom: 19.0.0
+
+  '@bprogress/react@1.2.7':
+    resolution: {integrity: sha512-MqJfHW+R5CQeWqyqrLxUjdBRHk24Xl63OkBLo5DMWqUqocUikRTfCIc/jtQQbPk7BRfdr5OP3Lx7YlfQ9QOZMQ==}
     peerDependencies:
       react: 19.0.0
       react-dom: 19.0.0
@@ -17665,6 +17668,19 @@ packages:
       babel-plugin-macros:
         optional: true
 
+  styled-jsx@5.1.7:
+    resolution: {integrity: sha512-HPLmEIYprxCeWDMLYiaaAhsV3yGfIlCqzuVOybE6fjF3SUJmH67nCoMDO+nAvHNHo46OfvpCNu4Rcue82dMNFg==}
+    engines: {node: '>= 12.0.0'}
+    peerDependencies:
+      '@babel/core': '*'
+      babel-plugin-macros: '*'
+      react: 19.0.0
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      babel-plugin-macros:
+        optional: true
+
   stylehacks@6.1.1:
     resolution: {integrity: sha512-gSTTEQ670cJNoaeIp9KX6lZmm8LJ3jPB5yJmX8Zq/wQxOsAFXV3qjWzHas3YYk1qesuVIyYWWUpZ0vSE/dTSGg==}
     engines: {node: ^14 || ^16 || >=18.0}
@@ -22003,17 +22019,9 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@bprogress/core@1.1.18': {}
-
   '@bprogress/core@1.3.3': {}
 
-  '@bprogress/next@3.1.3(next@15.3.0-canary.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
-    dependencies:
-      '@bprogress/core': 1.1.18
-      '@bprogress/react': 1.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      next: 15.3.0-canary.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+  '@bprogress/core@1.3.4': {}
 
   '@bprogress/next@3.2.11(next@15.3.0-canary.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -22023,15 +22031,23 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  '@bprogress/react@1.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@bprogress/next@3.2.12(next@15.3.0-canary.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@bprogress/core': 1.1.18
+      '@bprogress/core': 1.3.4
+      '@bprogress/react': 1.2.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next: 15.3.0-canary.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.0)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
   '@bprogress/react@1.2.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@bprogress/core': 1.3.3
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
+  '@bprogress/react@1.2.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@bprogress/core': 1.3.4
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
@@ -26709,7 +26725,7 @@ snapshots:
       semver: 7.7.1
       storybook: 8.6.0(bufferutil@4.0.9)(prettier@3.5.2)(utf-8-validate@5.0.10)
       style-loader: 3.3.4(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
-      styled-jsx: 5.1.6(@babel/core@7.26.10)(react@19.0.0)
+      styled-jsx: 5.1.7(@babel/core@7.26.10)(react@19.0.0)
       ts-dedent: 2.2.0
       tsconfig-paths: 4.2.0
       tsconfig-paths-webpack-plugin: 4.2.0
@@ -26774,7 +26790,7 @@ snapshots:
       semver: 7.7.1
       storybook: 8.6.4(bufferutil@4.0.9)(prettier@3.5.2)(utf-8-validate@5.0.10)
       style-loader: 3.3.4(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0))
-      styled-jsx: 5.1.6(@babel/core@7.26.10)(react@19.0.0)
+      styled-jsx: 5.1.7(@babel/core@7.26.10)(react@19.0.0)
       ts-dedent: 2.2.0
       tsconfig-paths: 4.2.0
       tsconfig-paths-webpack-plugin: 4.2.0
@@ -40201,6 +40217,13 @@ snapshots:
       inline-style-parser: 0.2.4
 
   styled-jsx@5.1.6(@babel/core@7.26.10)(react@19.0.0):
+    dependencies:
+      client-only: 0.0.1
+      react: 19.0.0
+    optionalDependencies:
+      '@babel/core': 7.26.10
+
+  styled-jsx@5.1.7(@babel/core@7.26.10)(react@19.0.0):
     dependencies:
       client-only: 0.0.1
       react: 19.0.0

@@ -23,7 +23,7 @@ export default async function AuthedLayout({
     <GithubExtendedAccessProtectedRoute orgName={orgName}>
       <div className="flex w-full flex-col">
         <HeaderToolbar orgName={orgName} session={session} />
-        <div id="preview-container">{children}</div>
+        {children}
       </div>
     </GithubExtendedAccessProtectedRoute>
   );

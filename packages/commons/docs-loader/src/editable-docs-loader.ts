@@ -178,7 +178,10 @@ export const createEditableDocsLoader = async (
   fern_token?: string
 ) => {
   // TODO: derive the domain from the workspace
-  const domain = "fern.docs.buildwithfern.com";
-  const docsLoader = await createCachedDocsLoader(host, domain, fern_token);
+  const docsLoader = await createCachedDocsLoader(
+    host,
+    process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? "fern.docs.buildwithfern.com",
+    fern_token
+  );
   return new EditableDocsLoaderImpl(docsLoader);
 };

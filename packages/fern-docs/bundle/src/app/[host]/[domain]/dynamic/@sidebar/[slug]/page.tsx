@@ -10,9 +10,9 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { SidebarTabsList } from "@fern-docs/components/sidebar/SidebarTabsList";
 import { SidebarTabsRootServer } from "@fern-docs/components/sidebar/SidebarTabsRootServer";
 import { SidebarRootNode } from "@fern-docs/components/sidebar/nodes/SidebarRootNode";
+import { HiddenSidebar } from "@fern-docs/components/state/layout";
 
 import { getFernToken } from "@/app/fern-token";
-import { HiddenSidebar } from "@/state/layout";
 
 export default async function SidebarPage({
   params,
