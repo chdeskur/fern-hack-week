@@ -1,4 +1,5 @@
 import { compact } from "es-toolkit/array";
+import qs from "qs";
 import { UnreachableCaseError } from "ts-essentials";
 
 import { obfuscateSecret } from "@fern-api/fdr-sdk";
@@ -81,10 +82,13 @@ function getBasicAuthString(
 export function getUrlQueriesGetString(
   searchParams: Record<string, unknown>
 ): string[] {
-  return toUrlEncoded(searchParams).map(
-    ([key, value]) =>
-      `${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `"${key}"` : key}=${value.includes(" ") ? `"${value}"` : value}`
-  );
+  return toUrlEncoded(searchParams).map(([key, value]) => {
+    const flag = requiresUrlEncode(value) ? "--data-urlencode" : "-d";
+    if (key.includes(" ") || value.includes(" ") || key.includes("[")) {
+      return `${flag} "${key}=${value}"`;
+    }
+    return `${flag} ${key}=${value}`;
+  });
 }
 
 function getBodyJsonString(
@@ -299,17 +303,24 @@ function unsafeStringifyHttpRequestExampleToCurl(
 }
 
 function toUrlEncoded(urlQueries: Record<string, unknown>): [string, string][] {
-  return Object.entries(urlQueries).flatMap(
-    ([key, value]): [string, string][] => {
-      if (Array.isArray(value)) {
-        return value.filter(isNonNullish).map((v) => [key, unknownToString(v)]);
+  const queryString = qs.stringify(urlQueries, {
+    encode: false,
+    arrayFormat: "repeat",
+    skipNulls: true,
+    filter: (prefix, value) => {
+      if (value !== null && typeof value !== "object") {
+        return String(value);
       }
+      return value;
+    },
+  });
 
-      if (value == null) {
-        return [];
-      }
+  if (!queryString) {
+    return [];
+  }
 
-      return [[key, unknownToString(value)]];
-    }
-  );
+  return queryString.split("&").map((pair) => {
+    const [key, value] = pair.split("=");
+    return [key, value || ""] as [string, string];
+  });
 }

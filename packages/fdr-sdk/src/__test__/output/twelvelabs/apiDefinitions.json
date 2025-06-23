@@ -3951,7 +3951,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/indexes \\\n     -H \"x-api-key: tlk-1234567890\" \\\n     -d sort_by=created_at \\\n     -d sort_option=desc \\\n     -d _id=6298d673f1090f1100476d4c \\\n     -d index_name=myIndex \\\n     --data-urlencode engine_options=engine_options=visual,conversation \\\n     -d engine_family=marengo \\\n     --data-urlencode index_options=index_options=visual,conversation \\\n     --data-urlencode created_at=2024-08-16T16:53:59Z \\\n     --data-urlencode updated_at=2024-08-16T16:55:59Z",
+                  "code": "curl -G https://api.twelvelabs.io/v1.3/indexes \\\n     -H \"x-api-key: tlk-1234567890\" \\\n     -d sort_by=created_at \\\n     -d sort_option=desc \\\n     -d _id=6298d673f1090f1100476d4c \\\n     -d index_name=myIndex \\\n     -d engine_options=engine_options \\\n     -d engine_family=marengo \\\n     -d index_options=index_options \\\n     --data-urlencode created_at=2024-08-16T16:53:59Z \\\n     --data-urlencode updated_at=2024-08-16T16:55:59Z",
                   "generated": true
                 }
               ],

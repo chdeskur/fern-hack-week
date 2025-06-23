@@ -1,3 +1,5 @@
+import qs from "qs";
+
 import { unknownToString } from "@fern-api/ui-core-utils";
 
 import type { EndpointDefinition, PathPart } from "./latest";
@@ -8,13 +10,29 @@ function buildQueryParams(
   if (queryParameters == null) {
     return "";
   }
-  const queryParams = new URLSearchParams();
-  Object.entries(queryParameters).forEach(([key, value]) => {
-    if (value != null) {
-      queryParams.set(key, unknownToString(value));
-    }
+
+  const filteredParams = Object.entries(queryParameters).reduce(
+    (acc, [key, value]) => {
+      if (value != null) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, unknown>
+  );
+
+  if (Object.keys(filteredParams).length === 0) {
+    return "";
+  }
+
+  const queryString = qs.stringify(filteredParams, {
+    encode: false,
+    arrayFormat: "repeat",
+    skipNulls: true,
+    serializeDate: (date: Date) => date.toISOString(),
   });
-  return queryParams.size > 0 ? "?" + queryParams.toString() : "";
+
+  return queryString ? "?" + queryString : "";
 }
 
 function buildPath(

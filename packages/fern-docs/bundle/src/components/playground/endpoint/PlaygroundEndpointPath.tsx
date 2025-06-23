@@ -2,6 +2,7 @@ import { FC, Fragment, ReactNode } from "react";
 
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
+import qs from "qs";
 
 import type {
   Environment,
@@ -122,35 +123,53 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
             queryParameters.length > 0 &&
             Object.keys(omitBy(formState.queryParameters, isUndefined)).length >
               0 &&
-            queryParameters
-              .filter((queryParameter) => {
-                const stateValue =
-                  formState.queryParameters[queryParameter.key];
-                const unwrapped = unwrapReference(
-                  queryParameter.valueShape,
-                  types
-                );
-                if (stateValue == null && unwrapped.isOptional) {
-                  return false;
-                }
-                return true;
-              })
-              .map((queryParameter, idx) => {
-                const stateValue = unknownToString(
-                  formState.queryParameters[queryParameter.key]
-                );
-                return (
-                  <Fragment key={idx}>
-                    <span>{idx === 0 ? "?" : "&"}</span>
+            (() => {
+              const filteredParams: Record<string, unknown> = {};
 
-                    <span>{queryParameter.key}</span>
-                    <span>{"="}</span>
-                    <span className={"text-(color:--accent-a11) font-semibold"}>
-                      {encodeURI(stateValue)}
-                    </span>
-                  </Fragment>
-                );
-              })}
+              queryParameters
+                .filter((queryParameter) => {
+                  const stateValue =
+                    formState.queryParameters[queryParameter.key];
+                  const unwrapped = unwrapReference(
+                    queryParameter.valueShape,
+                    types
+                  );
+                  if (stateValue == null && unwrapped.isOptional) {
+                    return false;
+                  }
+                  return true;
+                })
+                .forEach((queryParameter) => {
+                  const stateValue =
+                    formState.queryParameters[queryParameter.key];
+                  if (stateValue != null) {
+                    filteredParams[queryParameter.key] = stateValue;
+                  }
+                });
+
+              const queryString = qs.stringify(filteredParams, {
+                encode: false,
+                arrayFormat: "repeat",
+              });
+
+              if (!queryString) return null;
+
+              const pairs = queryString.split("&").map((pair) => {
+                const [key, value] = pair.split("=");
+                return { key, value };
+              });
+
+              return pairs.map(({ key, value }, idx) => (
+                <Fragment key={idx}>
+                  <span>{idx === 0 ? "?" : "&"}</span>
+                  <span>{key}</span>
+                  <span>{"="}</span>
+                  <span className={"text-(color:--accent-a11) font-semibold"}>
+                    {value}
+                  </span>
+                </Fragment>
+              ));
+            })()}
         </span>
         <CopyToClipboardButton
           className="playground-endpoint-copy-button"

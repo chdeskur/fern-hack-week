@@ -233,7 +233,7 @@ describe("curl", () => {
     ).toMatchInlineSnapshot(`
       "curl -X POST https://api.example.com/form \\
            -H "Content-Type: application/x-www-form-urlencoded" \\
-           --data-urlencode name="John Doe" \\
+           --data-urlencode "name=John Doe" \\
            --data-urlencode email=john@example.com \\
            -d items=item1 \\
            -d items=item2"
@@ -259,20 +259,20 @@ describe("curl", () => {
     ).toMatchInlineSnapshot(
       `
       "curl -G https://api.example.com/search \\
-           --data-urlencode q="search term with spaces" \\
+           --data-urlencode "q=search term with spaces" \\
            -d filter=category1 \\
            -d filter=category2 \\
-           --data-urlencode sort="date desc""
+           --data-urlencode "sort=date desc""
     `
     );
   });
 
   it("does not include nulls in urlencoded parameters", () => {
     expect(getUrlQueriesGetString({ a: null, b: "b" })).toMatchInlineSnapshot(`
-          [
-            "-d b=b",
-          ]
-        `);
+      [
+        "-d b=b",
+      ]
+    `);
 
     expect(getUrlQueriesGetString({ a: ["b1", null, "b2"] }))
       .toMatchInlineSnapshot(`
@@ -352,5 +352,29 @@ describe("curl", () => {
                -F tags="tag2" \\
                -F tags="tag3""
         `);
+  });
+
+  it("generates GET request with object query params", () => {
+    expect(
+      convertToCurl(
+        {
+          method: "GET",
+          url: "https://api.example.com/obj-query-params",
+          headers: {},
+          searchParams: {
+            include: "verifications",
+            fields: {
+              "verification/driver-license": "status,created-at",
+            },
+          },
+          body: undefined,
+        },
+        { usesApplicationJsonInFormDataValue: false }
+      )
+    ).toMatchInlineSnapshot(`
+      "curl -G https://api.example.com/obj-query-params \\
+           -d include=verifications \\
+           --data-urlencode "fields[verification/driver-license]=status,created-at""
+    `);
   });
 });
