@@ -155,7 +155,6 @@ export const PlaygroundDiscriminatedUnionForm =
               onChange={onChange}
               id={id}
               types={types}
-              disabled={disabled}
             />
           </div>
         )}

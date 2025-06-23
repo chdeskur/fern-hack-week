@@ -22,17 +22,21 @@ interface WithLabelProps {
   htmlFor?: string;
   property?: ObjectProperty;
   value: unknown;
+  onChange: (value: unknown) => void;
   onRemove: () => void;
   types: Record<string, TypeDefinition>;
+  isNullSelected: boolean;
 }
 
 export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
   htmlFor,
   property,
   value,
+  onChange,
   onRemove,
   children,
   types,
+  isNullSelected,
 }) => {
   if (!property) {
     return <>{children}</>;
@@ -45,6 +49,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
       propertyKey={property.key}
       htmlFor={htmlFor}
       value={value}
+      onChange={onChange}
       onRemove={onRemove}
       availability={property.availability}
       description={property.description}
@@ -59,8 +64,11 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
         property.valueShape,
         types,
         false,
-        true
+        true,
+        unwrapped.isNullable,
+        onChange
       )}
+      isNullSelected={isNullSelected}
     >
       {children}
     </WithLabelInternal>
@@ -71,12 +79,14 @@ interface WithLabelInternalProps extends WithAvailability, WithDescription {
   propertyKey: string;
   htmlFor?: string;
   value: unknown;
+  onChange: (value: unknown) => void;
   onRemove: () => void;
   renderInline?: boolean;
   isRequired: boolean;
   typeShorthand: ReactNode;
   isList?: boolean;
   isBoolean?: boolean;
+  isNullSelected?: boolean;
 }
 
 export const WithLabelInternal: FC<
@@ -94,6 +104,7 @@ export const WithLabelInternal: FC<
   isList,
   isBoolean,
   typeShorthand,
+  isNullSelected,
 }) => {
   return (
     <div
@@ -136,7 +147,7 @@ export const WithLabelInternal: FC<
         </label>
 
         {!renderInline && (
-          <span className="inline-flex min-w-0 shrink items-center gap-1">
+          <span className="inline-flex min-w-0 shrink items-center justify-end gap-1">
             {!isRequired && (
               <FernButton
                 icon={<X />}
@@ -158,7 +169,12 @@ export const WithLabelInternal: FC<
         {children}
 
         {renderInline && (
-          <span className="inline-flex min-w-0 shrink items-center gap-1">
+          <span
+            className={cn(
+              "inline-flex min-w-0 shrink items-center justify-end gap-1",
+              isNullSelected && "w-full"
+            )}
+          >
             {!isRequired && (
               <FernButton
                 icon={<X />}

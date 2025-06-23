@@ -13,6 +13,8 @@ import {
   visitDiscriminatedUnion,
 } from "@fern-api/ui-core-utils";
 
+import { NullableDropdown } from "./NullableDropdown";
+
 export interface TypeShorthandOptions {
   plural?: boolean;
   withArticle?: boolean;
@@ -23,7 +25,10 @@ export function renderTypeShorthandRoot(
   shape: TypeShapeOrReference,
   types: Record<string, TypeDefinition>,
   isResponse = false,
-  hideOptional = false
+  hideOptional = false,
+  isNullable = false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onChange: (value: unknown) => void = () => {}
 ): ReactNode {
   const unwrapped = unwrapReference(shape, types);
   const typeShorthand = renderTypeShorthand(
@@ -31,10 +36,20 @@ export function renderTypeShorthandRoot(
     { nullable: unwrapped.isNullable },
     types
   );
+
+  const nullableDropdownOptions = isNullable ? typeShorthand.split(" or ") : [];
+
+  const nullableDropdown =
+    nullableDropdownOptions.length > 0 ? (
+      <NullableDropdown options={nullableDropdownOptions} onChange={onChange} />
+    ) : null;
+
   return (
     <span className="fern-api-property-meta">
       <span>
-        {typeShorthand}
+        {!isResponse && nullableDropdown != null
+          ? nullableDropdown
+          : typeShorthand}
         {isResponse && unwrapped.isOptional && !unwrapped.isNullable
           ? " or null"
           : false}

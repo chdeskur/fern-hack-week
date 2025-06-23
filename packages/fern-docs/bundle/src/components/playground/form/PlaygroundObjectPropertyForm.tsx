@@ -36,21 +36,12 @@ interface PlaygroundObjectPropertyFormProps {
   value: unknown;
   expandByDefault?: boolean;
   types: Record<TypeId, TypeDefinition>;
-  disabled?: boolean;
   defaultValue?: unknown;
 }
 
 const PlaygroundObjectPropertyFormInternal: FC<
   PlaygroundObjectPropertyFormProps
-> = ({
-  id,
-  property,
-  onChange,
-  value,
-  expandByDefault = true,
-  types,
-  disabled,
-}) => {
+> = ({ id, property, onChange, value, expandByDefault = true, types }) => {
   const handleChange = useCallback(
     (newValue: unknown) => {
       onChange(property.key, newValue);
@@ -86,7 +77,6 @@ const PlaygroundObjectPropertyFormInternal: FC<
       onOpenStack={handleOpenStack}
       onCloseStack={handleCloseStack}
       types={types}
-      disabled={disabled}
     />
   );
 };
@@ -104,7 +94,6 @@ interface PlaygroundObjectPropertiesFormProps {
   defaultValue?: unknown;
   indent?: boolean;
   types: Record<string, TypeDefinition>;
-  disabled?: boolean;
 }
 
 export const PlaygroundObjectPropertiesFormInternal =
@@ -116,7 +105,6 @@ export const PlaygroundObjectPropertiesFormInternal =
       value,
       indent = false,
       types,
-      disabled,
       extraProperties,
     } = props;
 
@@ -176,7 +164,9 @@ export const PlaygroundObjectPropertiesFormInternal =
             },
             types,
             false,
-            true
+            true,
+            false,
+            onChange
           ),
           labelClassName: "font-mono",
           tooltip:
@@ -199,7 +189,7 @@ export const PlaygroundObjectPropertiesFormInternal =
         );
       }
       return options;
-    }, [hiddenProperties, types]);
+    }, [hiddenProperties, types, onChange]);
 
     const handleAddAdditionalProperties = useCallback(
       (key: string) => {
@@ -255,7 +245,6 @@ export const PlaygroundObjectPropertiesFormInternal =
                     onChange={onChangeObjectProperty}
                     value={castToRecord(value)[property.key]}
                     types={types}
-                    disabled={disabled}
                   />
                 </li>
               );

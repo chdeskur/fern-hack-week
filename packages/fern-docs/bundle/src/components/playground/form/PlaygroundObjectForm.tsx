@@ -17,7 +17,6 @@ interface PlaygroundObjectFormProps {
   value: unknown;
   indent?: boolean;
   types: Record<string, TypeDefinition>;
-  disabled?: boolean;
   defaultValue?: unknown;
 }
 
