@@ -22,11 +22,14 @@ export default async function EndpointSelectorPage({
     return null;
   }
 
-  const currentVersion = foundNode.currentVersion?.versionId;
-  const versionNode = foundNode.versions.find(
-    (version) => version.versionId === currentVersion
+  const productNode = foundNode.products.find(
+    (product) => product.productId === foundNode.currentProduct?.productId
   );
-  const apiGroups = flattenApiSection(versionNode ?? root);
+  const versionNode = foundNode.versions.find(
+    (version) => version.versionId === foundNode.currentVersion?.versionId
+  );
+
+  const apiGroups = flattenApiSection(versionNode ?? productNode ?? root);
 
   return (
     <PlaygroundEndpointSelectorContent
