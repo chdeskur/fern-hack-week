@@ -17,7 +17,6 @@ import {
   getEmptyValueForHttpRequestBody,
   getEmptyValueForObjectProperties,
 } from "./default-values";
-import { pascalCaseHeaderKeys } from "./header-key-case";
 
 export function getInitialEndpointRequestFormStateWithExample(
   context: EndpointContext | undefined,
@@ -29,24 +28,20 @@ export function getInitialEndpointRequestFormStateWithExample(
   return {
     type: "endpoint",
     headers: {
-      ...pascalCaseHeaderKeys(
-        getEmptyValueForObjectProperties(
-          compact([
-            context?.globalHeaders,
-            context?.endpoint.requestHeaders,
-          ]).flat(),
-          context?.types ?? EMPTY_OBJECT
-        )
+      ...getEmptyValueForObjectProperties(
+        compact([
+          context?.globalHeaders,
+          context?.endpoint.requestHeaders,
+        ]).flat(),
+        context?.types ?? EMPTY_OBJECT
       ),
-      ...pascalCaseHeaderKeys(exampleCall?.headers ?? {}),
-      ...pascalCaseHeaderKeys(
-        filterParams(
-          playgroundInitialState?.headers ?? {},
-          compact([
-            context?.globalHeaders,
-            context?.endpoint.requestHeaders,
-          ]).flat()
-        )
+      ...(exampleCall?.headers ?? {}),
+      ...filterParams(
+        playgroundInitialState?.headers ?? {},
+        compact([
+          context?.globalHeaders,
+          context?.endpoint.requestHeaders,
+        ]).flat()
       ),
     },
     pathParameters: {

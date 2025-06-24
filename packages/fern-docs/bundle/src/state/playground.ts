@@ -38,7 +38,6 @@ import {
   getInitialEndpointRequestFormStateWithExample,
   getInitialWebSocketRequestFormState,
 } from "../components/playground/utils";
-import { pascalCaseHeaderKeys } from "../components/playground/utils/header-key-case";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 
 export const PLAYGROUND_AUTH_STATE_ATOM =
@@ -98,10 +97,10 @@ export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_IS_RESETTABLE_ATOM = atom(
 
 export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
   (get) => ({
-    headers: pascalCaseHeaderKeys({
+    headers: {
       ...(get(PLAYGROUND_AUTH_STATE_ATOM).header?.headers ??
         get(fernUserAtom)?.playground?.initial_state?.headers),
-    }),
+    },
   }),
   (
     _get,

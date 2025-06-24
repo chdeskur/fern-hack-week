@@ -16,7 +16,6 @@ import {
   PlaygroundEndpointRequestFormState,
   PlaygroundFormStateBody,
 } from "../types";
-import { pascalCaseHeaderKey } from "../utils/header-key-case";
 import { PlaygroundEndpointAliasForm } from "./PlaygroundEndpointAliasForm";
 import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
 import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";
@@ -136,7 +135,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
             id="header"
             properties={headers.map((header) => ({
               ...header,
-              key: PropertyKey(pascalCaseHeaderKey(header.key)),
+              key: PropertyKey(header.key),
             }))}
             extraProperties={undefined}
             onChange={setHeaders}
