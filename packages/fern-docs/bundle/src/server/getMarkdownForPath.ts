@@ -1,7 +1,6 @@
 import { compact } from "es-toolkit/array";
 
 import { DocsLoader, createPruneKey } from "@fern-api/docs-loader";
-import { pascalCaseHeaderKey } from "@fern-api/docs-server/headerKeyCase";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import {
   EndpointDefinition,
@@ -141,28 +140,28 @@ export function endpointDefinitionToMarkdown(
     headers
       ?.map(
         (header) =>
-          `- ${pascalCaseHeaderKey(header.key)}${getShorthand(header.valueShape, types, header.description)}`
+          `- ${header.key}${getShorthand(header.valueShape, types, header.description)}`
       )
       .join("\n"),
     endpoint.pathParameters?.length ? "## Path Parameters" : undefined,
     endpoint.pathParameters
       ?.map(
         (param) =>
-          `- ${pascalCaseHeaderKey(param.key)}${getShorthand(param.valueShape, types, param.description)}`
+          `- ${param.key}${getShorthand(param.valueShape, types, param.description)}`
       )
       .join("\n"),
     endpoint.queryParameters?.length ? "## Query Parameters" : undefined,
     endpoint.queryParameters
       ?.map(
         (param) =>
-          `- ${pascalCaseHeaderKey(param.key)}${getShorthand(param.valueShape, types, param.description)}`
+          `- ${param.key}${getShorthand(param.valueShape, types, param.description)}`
       )
       .join("\n"),
     endpoint.responseHeaders?.length ? "## Response Headers" : undefined,
     endpoint.responseHeaders
       ?.map(
         (header) =>
-          `- ${pascalCaseHeaderKey(header.key)}${getShorthand(header.valueShape, types, header.description)}`
+          `- ${header.key}${getShorthand(header.valueShape, types, header.description)}`
       )
       .join("\n"),
     endpoint.responses?.[0] != null || endpoint.errors?.length

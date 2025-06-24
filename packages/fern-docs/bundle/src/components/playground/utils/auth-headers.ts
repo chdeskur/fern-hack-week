@@ -6,7 +6,6 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 
 import { PlaygroundAuthState } from "../types";
-import { pascalCaseHeaderKey } from "./header-key-case";
 import {
   OAuthClientCredentialReferencedEndpointLoginFlowProps,
   oAuthClientCredentialReferencedEndpointLoginFlow,
@@ -34,10 +33,7 @@ export function buildAuthHeaders(
       },
       header: (header) => {
         // pluck the value from the headers object (avoid inheriting all the other headers)
-        let value =
-          authState.header?.headers[
-            pascalCaseHeaderKey(header.headerWireValue)
-          ] ?? "";
+        let value = authState.header?.headers[header.headerWireValue] ?? "";
         if (redacted) {
           value = obfuscateSecret(value);
         }
@@ -90,9 +86,7 @@ export function buildAuthHeaders(
                   oAuthClientCredentials.value.tokenPrefix ?? "Bearer";
 
                 headers[
-                  pascalCaseHeaderKey(
-                    oAuthClientCredentials.value.headerName || "Authorization"
-                  )
+                  oAuthClientCredentials.value.headerName || "Authorization"
                 ] =
                   `${tokenPrefix.length ? `${tokenPrefix} ` : ""}${redacted ? obfuscateSecret(token) : token}`;
               },

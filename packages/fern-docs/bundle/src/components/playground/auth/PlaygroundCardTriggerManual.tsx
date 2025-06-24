@@ -10,7 +10,6 @@ import { Button, SemanticBadge } from "@fern-docs/components";
 import { PLAYGROUND_AUTH_STATE_ATOM } from "@/state/playground";
 
 import { PlaygroundAuthState } from "../types";
-import { pascalCaseHeaderKey } from "../utils/header-key-case";
 
 interface PlaygroundCardTriggerManualProps {
   auth: APIV1Read.ApiAuth;
@@ -75,11 +74,7 @@ function isAuthed(
       !isEmpty(authState.basicAuth?.username.trim()) &&
       !isEmpty(authState.basicAuth?.password.trim()),
     header: (header) =>
-      !isEmpty(
-        authState.header?.headers[
-          pascalCaseHeaderKey(header.headerWireValue)
-        ]?.trim()
-      ),
+      !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
     oAuth: () => {
       const authToken =
         authState.oauth?.selectedInputMethod === "credentials"

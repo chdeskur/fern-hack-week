@@ -14,19 +14,15 @@ import { fernUserAtom } from "@fern-docs/components/state/fern-user";
 import { PLAYGROUND_AUTH_STATE_HEADER_ATOM } from "@/state/playground";
 
 import { PasswordInputGroup } from "../PasswordInputGroup";
-import { pascalCaseHeaderKey } from "../utils/header-key-case";
 
 function headerAtom(headerName: string) {
   return atom(
-    (get) =>
-      get(PLAYGROUND_AUTH_STATE_HEADER_ATOM).headers[
-        pascalCaseHeaderKey(headerName)
-      ],
+    (get) => get(PLAYGROUND_AUTH_STATE_HEADER_ATOM).headers[headerName],
     (_get, set, change: SetStateAction<string> | typeof RESET) => {
       set(PLAYGROUND_AUTH_STATE_HEADER_ATOM, ({ headers }) => {
         const nextHeaderValue =
           typeof change === "function"
-            ? change(headers[pascalCaseHeaderKey(headerName)] ?? "")
+            ? change(headers[headerName] ?? "")
             : change;
         if (nextHeaderValue === RESET) {
           return {
@@ -34,7 +30,7 @@ function headerAtom(headerName: string) {
             headers: JSON.parse(
               JSON.stringify({
                 ...headers,
-                [pascalCaseHeaderKey(headerName)]: undefined,
+                [headerName]: undefined,
               })
             ),
           };
@@ -42,7 +38,7 @@ function headerAtom(headerName: string) {
         return {
           headers: {
             ...headers,
-            [pascalCaseHeaderKey(headerName)]: nextHeaderValue,
+            [headerName]: nextHeaderValue,
           },
         };
       });
@@ -53,12 +49,10 @@ function headerAtom(headerName: string) {
 function isHeaderResettableAtom(headerName: string) {
   return atom((get) => {
     const inputHeader = get(PLAYGROUND_AUTH_STATE_HEADER_ATOM).headers[
-      pascalCaseHeaderKey(headerName)
+      headerName
     ];
     const injectedHeader =
-      get(fernUserAtom)?.playground?.initial_state?.headers?.[
-        pascalCaseHeaderKey(headerName)
-      ];
+      get(fernUserAtom)?.playground?.initial_state?.headers?.[headerName];
     return injectedHeader != null && injectedHeader !== inputHeader;
   });
 }
@@ -87,7 +81,7 @@ export function PlaygroundHeaderAuthForm({
     <li className="-mx-4 space-y-2 p-4">
       <label className="inline-flex flex-wrap items-baseline">
         <span className="font-mono text-sm">
-          {header.nameOverride ?? pascalCaseHeaderKey(header.headerWireValue)}
+          {header.nameOverride ?? header.headerWireValue}
         </span>
       </label>
       <div>
