@@ -1,3 +1,3 @@
-export * from "./Language";
-export * from "./VersionBump";
-export * from "./ComputedSemanticVersionResponse";
+export * from "./Language.js";
+export * from "./VersionBump.js";
+export * from "./ComputedSemanticVersionResponse.js";

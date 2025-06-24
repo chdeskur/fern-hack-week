@@ -1,8 +1,8 @@
-export * as cli from "./cli";
-export * from "./cli/types";
-export * as commons from "./commons";
-export * from "./commons/types";
-export * as versions from "./versions";
-export * from "./versions/types";
-export * from "./cli/client/requests";
-export * from "./versions/client/requests";
+export * as cli from "./cli/index.js";
+export * from "./cli/types/index.js";
+export * as commons from "./commons/index.js";
+export * from "./commons/types/index.js";
+export * as versions from "./versions/index.js";
+export * from "./versions/types/index.js";
+export * from "./cli/client/requests/index.js";
+export * from "./versions/client/requests/index.js";

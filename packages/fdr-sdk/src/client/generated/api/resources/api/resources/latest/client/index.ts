@@ -1,1 +1,1 @@
-export * as getApiLatest from "./getApiLatest";
+export * as getApiLatest from "./getApiLatest.js";

@@ -26,6 +26,7 @@ groups:
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
+          useLegacyExports: false
 
   fdr-cjs-sdk:
     generators:

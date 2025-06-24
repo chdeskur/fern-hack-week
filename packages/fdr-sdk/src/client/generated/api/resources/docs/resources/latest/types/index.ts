@@ -1,1 +1,1 @@
-export * from "./ResolvedMdx";
+export * from "./ResolvedMdx.js";

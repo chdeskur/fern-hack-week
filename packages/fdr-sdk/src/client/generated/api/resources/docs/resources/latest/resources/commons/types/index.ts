@@ -1,1 +1,1 @@
-export * from "./FileIdOrUrl";
+export * from "./FileIdOrUrl.js";

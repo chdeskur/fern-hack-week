@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as registerApiDefinition from "./registerApiDefinition";
+export * from "./requests/index.js";
+export * as registerApiDefinition from "./registerApiDefinition.js";

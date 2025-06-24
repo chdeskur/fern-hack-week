@@ -1,3 +1,3 @@
-export * from "./requests";
-export * as generate from "./generate";
-export * as revoke from "./revoke";
+export * from "./requests/index.js";
+export * as generate from "./generate.js";
+export * as revoke from "./revoke.js";

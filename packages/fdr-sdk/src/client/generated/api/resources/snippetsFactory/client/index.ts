@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as createSnippetsForSdk from "./createSnippetsForSdk";
+export * from "./requests/index.js";
+export * as createSnippetsForSdk from "./createSnippetsForSdk.js";

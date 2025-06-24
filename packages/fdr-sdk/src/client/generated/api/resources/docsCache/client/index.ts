@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as invalidate from "./invalidate";
+export * from "./requests/index.js";
+export * as invalidate from "./invalidate.js";

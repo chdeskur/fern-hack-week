@@ -1,1 +1,1 @@
-export * as getApi from "./getApi";
+export * as getApi from "./getApi.js";

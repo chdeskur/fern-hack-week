@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as getDocsSitesForOrg from "./getDocsSitesForOrg";
+export * from "./requests/index.js";
+export * as getDocsSitesForOrg from "./getDocsSitesForOrg.js";

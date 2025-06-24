@@ -1,3 +1,3 @@
-export * as FernRegistry from "./api";
-export { FernRegistryClient } from "./Client";
-export { FernRegistryEnvironment } from "./environments";
+export * as FernRegistry from "./api/index.js";
+export { FernRegistryClient } from "./Client.js";
+export { FernRegistryEnvironment } from "./environments.js";

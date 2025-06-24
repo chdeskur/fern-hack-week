@@ -1,1 +1,1 @@
-export { type GetDocsSitesForOrgRequest } from "./GetDocsSitesForOrgRequest";
+export { type GetDocsSitesForOrgRequest } from "./GetDocsSitesForOrgRequest.js";

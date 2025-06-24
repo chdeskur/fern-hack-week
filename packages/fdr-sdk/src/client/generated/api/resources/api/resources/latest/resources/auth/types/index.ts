@@ -1,2 +1,2 @@
-export * from "./AuthSchemeId";
-export * from "./AuthScheme";
+export * from "./AuthSchemeId.js";
+export * from "./AuthScheme.js";

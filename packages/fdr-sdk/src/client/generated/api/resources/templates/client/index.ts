@@ -1,4 +1,4 @@
-export * from "./requests";
-export * as register from "./register";
-export * as registerBatch from "./registerBatch";
-export * as get from "./get";
+export * from "./requests/index.js";
+export * as register from "./register.js";
+export * as registerBatch from "./registerBatch.js";
+export * as get from "./get.js";

@@ -1,3 +1,3 @@
-export * from "./WebhookDefinition";
-export * from "./WebhookPayload";
-export * from "./WebhookHttpMethod";
+export * from "./WebhookDefinition.js";
+export * from "./WebhookPayload.js";
+export * from "./WebhookHttpMethod.js";

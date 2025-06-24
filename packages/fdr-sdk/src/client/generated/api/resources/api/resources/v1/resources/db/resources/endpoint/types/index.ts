@@ -1,2 +1,2 @@
-export * from "./DbEndpointDefinition";
-export * from "./DbHttpRequest";
+export * from "./DbEndpointDefinition.js";
+export * from "./DbHttpRequest.js";

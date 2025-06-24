@@ -1,1 +1,1 @@
-export * from "./GenerateTokenResponse";
+export * from "./GenerateTokenResponse.js";

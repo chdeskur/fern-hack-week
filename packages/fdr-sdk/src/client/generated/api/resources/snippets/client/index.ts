@@ -1,3 +1,3 @@
-export * from "./requests";
-export * as get from "./get";
-export * as load from "./load";
+export * from "./requests/index.js";
+export * as get from "./get.js";
+export * as load from "./load.js";

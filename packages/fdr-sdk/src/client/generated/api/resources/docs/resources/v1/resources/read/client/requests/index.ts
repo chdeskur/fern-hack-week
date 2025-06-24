@@ -1,1 +1,1 @@
-export { type LoadDocsForDomainRequest } from "./LoadDocsForDomainRequest";
+export { type LoadDocsForDomainRequest } from "./LoadDocsForDomainRequest.js";

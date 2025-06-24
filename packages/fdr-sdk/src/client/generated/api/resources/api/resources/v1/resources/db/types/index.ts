@@ -1,3 +1,3 @@
-export * from "./DbApiDefinition";
-export * from "./DbApiDefinitionPackage";
-export * from "./DbApiDefinitionSubpackage";
+export * from "./DbApiDefinition.js";
+export * from "./DbApiDefinitionPackage.js";
+export * from "./DbApiDefinitionSubpackage.js";

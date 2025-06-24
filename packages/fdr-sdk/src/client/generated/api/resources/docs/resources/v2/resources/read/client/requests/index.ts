@@ -1,5 +1,5 @@
-export { type GetOrganizationForUrlRequest } from "./GetOrganizationForUrlRequest";
-export { type GetMetadataForUrlRequest } from "./GetMetadataForUrlRequest";
-export { type LoadDocsForUrlRequest } from "./LoadDocsForUrlRequest";
-export { type LoadPrivateDocsForUrlRequest } from "./LoadPrivateDocsForUrlRequest";
-export { type ListAllDocsUrlsRequest } from "./ListAllDocsUrlsRequest";
+export { type GetOrganizationForUrlRequest } from "./GetOrganizationForUrlRequest.js";
+export { type GetMetadataForUrlRequest } from "./GetMetadataForUrlRequest.js";
+export { type LoadDocsForUrlRequest } from "./LoadDocsForUrlRequest.js";
+export { type LoadPrivateDocsForUrlRequest } from "./LoadPrivateDocsForUrlRequest.js";
+export { type ListAllDocsUrlsRequest } from "./ListAllDocsUrlsRequest.js";
