@@ -21,7 +21,7 @@ export function NullableDropdown({ options, onChange }: NullableDropdownProps) {
     if (value !== selectedOption) {
       setSelectedOption(value);
       setIsNullSelected(value === "null");
-      onChange(value);
+      onChange(value === "null" ? null : value);
     }
   };
 

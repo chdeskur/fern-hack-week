@@ -377,4 +377,34 @@ describe("curl", () => {
            --data-urlencode "fields[verification/driver-license]=status,created-at""
     `);
   });
+
+  it("generates POST request with null JSON body fields", () => {
+    expect(
+      convertToCurl(
+        {
+          method: "POST",
+          url: "https://api.example.com/null-json-fields",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          searchParams: {},
+          body: {
+            type: "json",
+            value: {
+              name: null,
+              email: "john@example.com",
+            },
+          },
+        },
+        { usesApplicationJsonInFormDataValue: false }
+      )
+    ).toMatchInlineSnapshot(`
+          "curl -X POST https://api.example.com/null-json-fields \\
+               -H "Content-Type: application/json" \\
+               -d '{
+            "name": null,
+            "email": "john@example.com"
+          }'"
+        `);
+  });
 });
