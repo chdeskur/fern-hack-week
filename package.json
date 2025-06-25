@@ -18,6 +18,7 @@
     "docs:self-hosted-bundle:build": "NODE_ENV=production bash scripts/build-selfhosted-bundle.sh",
     "docs:self-hosted-fdr:compile": "bash scripts/compile-selfhosted-fdr.sh",
     "docs:start": "turbo docs:start",
+    "fai:dev": "bash scripts/run-local-fai.sh",
     "fdr:generate": "pnpm fern generate --api fdr --local && pnpm turbo --filter=@fern-api/fdr-sdk compile",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",

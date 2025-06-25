@@ -54,6 +54,36 @@ jobs:
 
       - name: eslint
         run: pnpm lint:eslint
+  lint-fai:
+    runs-on: CLI
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Setup poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+          cd servers/fai
+          poetry install
+
+      - name: Check formatting
+        run: |
+          cd servers/fai
+          poetry run black --check .
+
+      - name: Check imports
+        run: |
+          cd servers/fai
+          poetry run isort --check .
+
+      - name: Type check
+        run: |
+          cd servers/fai
+          poetry run mypy .
 
   visual-testing:
     runs-on: ubuntu-latest

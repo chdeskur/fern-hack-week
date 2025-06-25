@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - app
+  pull_request:
+
+jobs:
+  run-fai-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Setup poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+          cd servers/fai
+          poetry install
+
+      - name: Build FAI local
+        run: |
+          ./scripts/build-local-fai.sh
+
+      - name: Run FAI tests
+        run: |
+          CONTAINER_ID=$(docker run -d -p 8080:8080 fai-local)
+          echo "Started container: $CONTAINER_ID"
+          
+          max_attempts=60
+          attempt=0
+          
+          echo "Waiting for FAI server to start..."
+          until [ $attempt -eq $max_attempts ]
+          do
+            attempt=$((attempt+1))
+            echo "Health check attempt $attempt/$max_attempts"
+            
+            if ! docker ps -q --no-trunc | grep -q "$CONTAINER_ID"; then
+              echo "Container stopped unexpectedly"
+              docker logs "$CONTAINER_ID"
+              exit 1
+            fi
+            
+            if curl -s -f http://localhost:8080/health > /dev/null 2>&1; then
+              echo "Health check passed!"
+              break
+            fi
+            
+            if [ $attempt -eq $max_attempts ]; then
+              echo "Health check failed after $max_attempts attempts"
+              echo "Container logs:"
+              docker logs "$CONTAINER_ID"
+              docker stop "$CONTAINER_ID"
+              exit 1
+            fi
+            
+            sleep 2
+          done
+          
+          echo "Server is ready, running tests..."
+          
+          response=$(curl -s -w "%{http_code}" -o /tmp/health_response http://localhost:8080/health)
+          echo "Health endpoint response code: $response"
+          echo "Health endpoint response body:"
+          cat /tmp/health_response
+          
+          echo "Stopping container..."
+          docker stop "$CONTAINER_ID"
+          docker rm "$CONTAINER_ID"

@@ -5,7 +5,7 @@ description = ""
 authors = []
 
 packages = [
-    { include = "fern-ai", from = "src" }
+    { include = "fai", from = "src" }
 ]
 
 [tool.poetry.dependencies]
@@ -22,7 +22,7 @@ types-cachetools = "^5.3.0.7"
 uvicorn = {version = "^0.34.3", python = ">=3.9"}
 
 [tool.poetry.scripts]
-start = "fern-ai.main:start"
+start = "src.fai.main:start"
 
 
 [tool.poetry.dev-dependencies]
@@ -34,6 +34,7 @@ pre-commit = "^2.20.0"
 pytest-env = "^0.6.2"
 pytest-docker = "^2.0.1"
 urllib3 = "^1.26.18"
+isort = "^5.13.2"
 
 [tool.black]
 line-length = 79
