@@ -2,6 +2,7 @@
 
 # python
 *.pyc
+.env
 
 # dependencies
 node_modules

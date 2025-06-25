@@ -5,14 +5,7 @@ import requests
 
 
 def test_health_endpoint() -> None:
-    subprocess.run(["docker", "build", "-t", "fern-ai-test", "."], check=True)
-
-    container = subprocess.Popen(
-        ["docker", "run", "-p", "8080:8080", "fern-ai-test"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
+    subprocess.run(["docker", "compose", "up", "-d"], check=True)
 
     container_id = None
     try:
@@ -26,15 +19,14 @@ def test_health_endpoint() -> None:
         )
         container_id = ps_result.stdout.strip()
 
-        for _ in range(5):
+        for _ in range(60):
             try:
-                response = requests.get(
-                    "http://localhost:8080/health", timeout=5
-                )
+                print(f"Checking health endpoint (Attempt {_})...")
+                response = requests.get("http://localhost:8080/health", timeout=5)
                 assert response.status_code == 200, "Health check failed"
                 break
             except requests.exceptions.ConnectionError:
-                time.sleep(2)
+                time.sleep(5)
         else:
             raise AssertionError("Health endpoint not available after retries")
 

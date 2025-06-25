@@ -23,59 +23,61 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Setup Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
       - name: Setup poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
           cd servers/fai
           poetry install
 
-      - name: Build FAI local
-        run: |
-          ./scripts/build-local-fai.sh
-
       - name: Run FAI tests
         run: |
-          CONTAINER_ID=$(docker run -d -p 8080:8080 fai-local)
-          echo "Started container: $CONTAINER_ID"
-          
+          cd servers/fai
+          docker-compose up -d
+
+          echo "Waiting for FAI server to start..."
           max_attempts=60
           attempt=0
-          
-          echo "Waiting for FAI server to start..."
+
           until [ $attempt -eq $max_attempts ]
           do
             attempt=$((attempt+1))
             echo "Health check attempt $attempt/$max_attempts"
-            
-            if ! docker ps -q --no-trunc | grep -q "$CONTAINER_ID"; then
+
+            if ! docker-compose ps | grep -q "Up"; then
               echo "Container stopped unexpectedly"
-              docker logs "$CONTAINER_ID"
+              docker-compose logs
+              docker-compose down
               exit 1
             fi
-            
+
             if curl -s -f http://localhost:8080/health > /dev/null 2>&1; then
               echo "Health check passed!"
               break
             fi
-            
+
             if [ $attempt -eq $max_attempts ]; then
               echo "Health check failed after $max_attempts attempts"
-              echo "Container logs:"
-              docker logs "$CONTAINER_ID"
-              docker stop "$CONTAINER_ID"
+              docker-compose logs
+              docker-compose down
               exit 1
             fi
-            
-            sleep 2
+
+            sleep 5
           done
-          
-          echo "Server is ready, running tests..."
-          
-          response=$(curl -s -w "%{http_code}" -o /tmp/health_response http://localhost:8080/health)
-          echo "Health endpoint response code: $response"
-          echo "Health endpoint response body:"
-          cat /tmp/health_response
-          
-          echo "Stopping container..."
-          docker stop "$CONTAINER_ID"
-          docker rm "$CONTAINER_ID"
+
+          echo "Running tests..."
+          poetry run pytest -sv
+          test_exit_code=$?
+
+          echo "Health endpoint response:"
+          curl -s http://localhost:8080/health || echo "(no response)"
+
+          echo "Stopping containers..."
+          docker-compose down
+
+          exit $test_exit_code

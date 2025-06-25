@@ -13,6 +13,8 @@ jobs:
     environment: fern-dev
     env:
       TURBOPUFFER_API_KEY: ${{ secrets.TURBOPUFFER_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,8 +32,8 @@ jobs:
           poetry run pytest -sv
 
   deploy-dev2:
-    # Run only on app/eden/askfern-deploy-fernai branch
-    if: github.ref == 'refs/heads/eden/askfern-deploy-fernai'
+    # Run only on app branch
+    if: github.ref == 'refs/heads/app'
     needs:
       - test
     runs-on: ubuntu-latest
@@ -41,6 +43,8 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       TURBOPUFFER_API_KEY: ${{ secrets.TURBOPUFFER_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
     steps:
       - name: Checkout
@@ -68,6 +72,8 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       TURBOPUFFER_API_KEY: ${{ secrets.TURBOPUFFER_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
     steps:
       - name: Checkout

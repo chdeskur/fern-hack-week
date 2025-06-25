@@ -1,51 +1,32 @@
-from typing import Dict
+import importlib
+import pkgutil
 
 import uvicorn
 
-from fastapi import FastAPI
-from fastapi import HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Response
+
+from src.fai.app import fai_app
+from src.settings import LOGGER
 
 
-app = FastAPI()
-
-origins = [
-    "http://localhost:5173",
-    "https://www.app.buildwithfern.com",
-    "https://app.buildwithfern.com",
-    "https://www.app-dev.buildwithfern.com",
-    "https://app-dev.buildwithfern.com",
-    "https://www.dashboard-dev.buildwithfern.com",
-    "https://dashboard-dev.buildwithfern.com",
-    "https://www.dashboard.buildwithfern.com",
-    "https://dashboard.buildwithfern.com",
-]
-
-app.add_middleware(
-    CORSMiddleware,  # type: ignore
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+ROUTES_PACKAGE_NAME = "src.fai.routes"
 
 
-@app.get("/health")
-def health() -> Dict[str, str]:
-    return {"status": "hello fernie!"}
-
-
-@app.exception_handler(404)
-async def custom_404_handler() -> None:
-    raise HTTPException(status_code=404, detail="Not Found")
+@fai_app.get("/health")
+def health() -> Response:
+    return Response(content='{"status": "hello fernie!"}', media_type="application/json")
 
 
 def start() -> None:
     """Launched with `poetry run start` at root level"""
 
-    uvicorn.run(
-        "src.fai.main:app", host="0.0.0.0", port=8080, server_header=False
-    )
+    LOGGER.info("Importing all routes...")
+    for _, module_name, _ in pkgutil.iter_modules([ROUTES_PACKAGE_NAME.replace(".", "/")]):
+        full_module_name = f"{ROUTES_PACKAGE_NAME}.{module_name}"
+        importlib.import_module(full_module_name)
+
+    LOGGER.info("Starting FastAPI application...")
+    uvicorn.run("src.fai.main:fai_app", host="0.0.0.0", port=8080, server_header=False)
 
 
 if __name__ == "__main__":

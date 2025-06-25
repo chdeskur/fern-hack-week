@@ -1,0 +1,48 @@
+import logging
+import logging.config
+import os
+
+from typing import Any
+from typing import Dict
+from typing import Optional
+
+from dotenv import load_dotenv
+from openai import OpenAI
+
+
+load_dotenv()
+logging.config.fileConfig("logging.conf")
+LOGGER = logging.getLogger()
+
+
+class Variables:
+    ANTHROPIC_API_KEY: Optional[str] = os.environ.get("ANTHROPIC_API_KEY")
+    OPENAI_API_KEY: Optional[str] = os.environ.get("OPENAI_API_KEY")
+    POSTGRES_DATABASE_URL: Optional[str] = os.environ.get("POSTGRES_DATABASE_URL")
+    TURBOPUFFER_API_KEY: Optional[str] = os.environ.get("TURBOPUFFER_API_KEY")
+
+    @classmethod
+    def validate_env_variables(cls) -> None:
+        for attr_name, attr_value in vars(cls).items():
+            if not attr_name.startswith("_") and isinstance(attr_value, (str, type(None))):
+                if attr_value is None:
+                    raise ValueError(f"Setup: Environment variable {attr_name} is not set.")
+
+
+class SingletonFactory:
+    _instances: Dict[Any, Any] = {}
+
+    @classmethod
+    def get_instance(cls, target_class: Any, *args: Any, **kwargs: Any) -> Any:
+        if target_class not in cls._instances:
+            cls._instances[target_class] = target_class(*args, **kwargs)
+        return cls._instances[target_class]
+
+
+LOGGER.info("Setup: Starting environment variable validation...")
+VARIABLES = SingletonFactory.get_instance(Variables)
+
+VARIABLES.validate_env_variables()
+LOGGER.info("Setup: Environment variables validated.")
+
+openai_client = OpenAI(api_key=VARIABLES.OPENAI_API_KEY)

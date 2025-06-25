@@ -1,8 +1,9 @@
-FROM python:3.8
+FROM python:3.9
 
 COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
 COPY ./src ./src
+COPY ./logging.conf ./logging.conf
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 

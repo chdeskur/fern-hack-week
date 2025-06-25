@@ -33,6 +33,8 @@ async function main() {
           devInfo,
           {
             TURBOPUFFER_API_KEY: getEnvVarOrThrow("TURBOPUFFER_API_KEY"),
+            OPENAI_API_KEY: getEnvVarOrThrow("OPENAI_API_KEY"),
+            ANTHROPIC_API_KEY: getEnvVarOrThrow("ANTHROPIC_API_KEY"),
           },
           {
             env: { account: "985111089818", region: "us-east-1" },
@@ -52,6 +54,8 @@ async function main() {
           dev2Info,
           {
             TURBOPUFFER_API_KEY: getEnvVarOrThrow("TURBOPUFFER_API_KEY"),
+            OPENAI_API_KEY: getEnvVarOrThrow("OPENAI_API_KEY"),
+            ANTHROPIC_API_KEY: getEnvVarOrThrow("ANTHROPIC_API_KEY"),
           },
           {
             env: { account: "985111089818", region: "us-east-1" },
@@ -71,6 +75,8 @@ async function main() {
           prodInfo,
           {
             TURBOPUFFER_API_KEY: getEnvVarOrThrow("TURBOPUFFER_API_KEY"),
+            OPENAI_API_KEY: getEnvVarOrThrow("OPENAI_API_KEY"),
+            ANTHROPIC_API_KEY: getEnvVarOrThrow("ANTHROPIC_API_KEY"),
           },
           {
             env: { account: "985111089818", region: "us-east-1" },

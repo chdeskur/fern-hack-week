@@ -25,6 +25,8 @@ const CONTAINER_NAME = "fai";
 const SERVICE_NAME = "fai";
 
 export interface FernAiEnvVariables {
+  OPENAI_API_KEY: string;
+  ANTHROPIC_API_KEY: string;
   TURBOPUFFER_API_KEY: string;
   [key: string]: string;
 }
