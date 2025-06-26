@@ -8,7 +8,7 @@ teamID = os.environ['VERCEL_TEAM']
 url = f"https://api.vercel.com/v10/projects/prod.ferndocs.com/domains?teamId={teamID}&limit=100&order=ASC"
 token = os.environ['VERCEL_TOKEN']
 done = False
-domains = []
+project_domains = []
 headers = {"Authorization": f"Bearer {token}"}
 
 while not done:
@@ -18,7 +18,7 @@ while not done:
         sys.exit(f"Request failed with status code {response.status_code}")
 
     for domain in response.json()["domains"]:
-        domains.append(domain["name"])
+        project_domains.append(domain["name"])
 
     # Deal with pagination
     next = response.json()["pagination"]["next"]
@@ -26,6 +26,24 @@ while not done:
         done = True
     else:
         url = f"https://api.vercel.com/v10/projects/prod.ferndocs.com/domains?teamId={teamID}&limit=100&order=ASC&since={next}"
+
+# Check if domains are properly configured
+domains = []
+misconfigured_domains = []
+for domain in project_domains:
+    domain_config_url = f"https://api.vercel.com/v6/domains/{domain}/config?teamId={teamID}"
+    response = requests.get(domain_config_url, headers=headers)
+    if response.status_code != 200:
+        print(response.json())
+        sys.exit(f"Request failed with status code {response.status_code}")
+
+    #CHECK if properly configured
+    if response.json()["misconfigured"]:
+        print(f"{domain} is misconfigured and will be skipped")
+        misconfigured_domains.append(domain)
+        continue        
+    domains.append(domain)
+
 
 # Skip domains in the list below
 skip_list = ["*.ferndocs.app","staging.ferndocs.com","twoslash.ferndocs.com","app.buildwithfern.com","app.ferndocs.com","canary.ferndocs.com","prod.ferndocs.com","fern-docs.skyflow.dev","docs.pinnacle.sh","docs.staging.paradex.trade","developers.ada.cx"]
