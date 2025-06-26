@@ -184,17 +184,23 @@ export async function GET(
             (file) => {
               if (file.type === "url") {
                 return {
-                  src: file.url.replace(
-                    getFileCDN(),
-                    `${metadata.basePath ?? ""}/_files`
-                  ),
+                  src:
+                    process.env.NEXT_PUBLIC_ASSET_HOSTING === "1"
+                      ? file.url.replace(
+                          getFileCDN(),
+                          `${metadata.basePath ?? ""}/_files`
+                        )
+                      : file.url,
                 };
               } else if (file.type === "image") {
                 return {
-                  src: file.url.replace(
-                    getFileCDN(),
-                    `${metadata.basePath ?? ""}/_files`
-                  ),
+                  src:
+                    process.env.NEXT_PUBLIC_ASSET_HOSTING === "1"
+                      ? file.url.replace(
+                          getFileCDN(),
+                          `${metadata.basePath ?? ""}/_files`
+                        )
+                      : file.url,
                   width: file.width,
                   height: file.height,
                   blurDataURL: file.blurDataUrl,

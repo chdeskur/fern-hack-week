@@ -196,17 +196,23 @@ const getFiles = cache(
     const files = mapValues(response.definition.filesV2, (file) => {
       if (file.type === "url") {
         return {
-          src: file.url.replace(
-            getFileCDN(),
-            `${response.baseUrl.basePath ?? ""}/_files`
-          ),
+          src:
+            process.env.NEXT_PUBLIC_ASSET_HOSTING === "1"
+              ? file.url.replace(
+                  getFileCDN(),
+                  `${response.baseUrl.basePath ?? ""}/_files`
+                )
+              : file.url,
         };
       } else if (file.type === "image") {
         return {
-          src: file.url.replace(
-            getFileCDN(),
-            `${response.baseUrl.basePath ?? ""}/_files`
-          ),
+          src:
+            process.env.NEXT_PUBLIC_ASSET_HOSTING === "1"
+              ? file.url.replace(
+                  getFileCDN(),
+                  `${response.baseUrl.basePath ?? ""}/_files`
+                )
+              : file.url,
           width: file.width,
           height: file.height,
           blurDataURL: file.blurDataUrl,
