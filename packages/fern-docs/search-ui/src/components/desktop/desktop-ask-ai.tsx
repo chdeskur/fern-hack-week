@@ -482,6 +482,16 @@ const DesktopAskAIChat = ({
                   {children}
                 </a>
               ),
+
+              p: ({
+                children,
+                node,
+                ...props
+              }: PropsWithElement<React.ComponentProps<"p">>) => (
+                <p {...props} className="mb-0 mt-0">
+                  {children}
+                </p>
+              ),
             }),
             [darkCodeEnabled]
           )}
@@ -581,8 +591,8 @@ const AskAIComposer = forwardRef<
                   } else {
                     if (!e.shiftKey && canSubmit) {
                       onSend?.(value);
+                      e.preventDefault();
                     }
-                    e.preventDefault();
                   }
 
                   e.stopPropagation();
