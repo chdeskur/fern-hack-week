@@ -43,6 +43,11 @@ export interface LoadDocsMetadata {
   domain: string;
   path: string;
   isPreview: boolean;
+  gitUrl?: string;
+}
+
+export interface SetDocsMetadataRequest {
+  githubUrl?: string;
 }
 
 export interface LoadDocsConfigResponse {
@@ -90,6 +95,14 @@ export interface DocsV2Dao {
   ): Promise<LoadDocsConfigResponse | undefined>;
 
   loadDocsMetadata(url: URL): Promise<LoadDocsMetadata | undefined>;
+
+  setDocsMetadata({
+    url,
+    metadata,
+  }: {
+    url: ParsedBaseUrl;
+    metadata: SetDocsMetadataRequest;
+  }): Promise<void>;
 
   storeDocsDefinition({
     docsRegistrationInfo,
@@ -141,6 +154,23 @@ export interface DocsV2Dao {
 
 export class DocsV2DaoImpl implements DocsV2Dao {
   constructor(private readonly prisma: PrismaClient) {}
+
+  public async setDocsMetadata({
+    url,
+    metadata,
+  }: {
+    url: ParsedBaseUrl;
+    metadata: SetDocsMetadataRequest;
+  }): Promise<void> {
+    await this.prisma.docsV2.updateMany({
+      where: {
+        domain: url.getFullUrl(),
+      },
+      data: {
+        githubUrl: metadata.githubUrl,
+      },
+    });
+  }
 
   public async transferDomainOwner({
     domain,
@@ -204,6 +234,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         isPreview: true,
         domain: true,
         path: true,
+        githubUrl: true,
       },
     });
 
@@ -216,6 +247,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
       domain: docsDomain.domain,
       path: docsDomain.path,
       isPreview: docsDomain.isPreview,
+      gitUrl: docsDomain.githubUrl ?? undefined,
     };
   }
 

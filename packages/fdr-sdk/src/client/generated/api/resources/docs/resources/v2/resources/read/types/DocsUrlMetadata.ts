@@ -8,4 +8,5 @@ export interface DocsUrlMetadata {
     url: FernRegistry.Url;
     org: FernRegistry.OrgId;
     isPreviewUrl: boolean;
+    gitUrl: FernRegistry.Url | undefined;
 }

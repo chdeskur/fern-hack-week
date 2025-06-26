@@ -3,7 +3,7 @@
 
 lib
 build
-dist
+**/dist/**
 .yarn
 .husky
 generated

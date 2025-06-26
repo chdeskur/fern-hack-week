@@ -2,6 +2,7 @@ import { uniqueId } from "es-toolkit/compat";
 import { inject } from "vitest";
 
 import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 import { getAPIResponse, getClient } from "../util";
 
@@ -220,4 +221,57 @@ test.sequential("revalidates a custom docs domain", async () => {
   console.log(urls);
 
   expect(urls.length).toBeGreaterThan(0);
+});
+
+test.sequential("sets and retrieves docs url metadata", async () => {
+  console.log(inject("url"));
+  const fdr = getClient({ authed: true, url: inject("url") });
+  const domain = `acme-${Math.random()}.docs.buildwithfern.com`;
+
+  // register docs first
+  const startDocsRegisterResponse = getAPIResponse(
+    await fdr.docs.v2.write.startDocsRegister({
+      orgId: FdrAPI.OrgId("acme"),
+      apiId: FdrAPI.ApiId("api"),
+      domain: `https://${domain}`,
+      customDomains: [],
+      filepaths: [
+        DocsV1Write.FilePath("logo.png"),
+        DocsV1Write.FilePath("guides/guide.mdx"),
+        DocsV1Write.FilePath("fonts/Syne.woff2"),
+      ],
+    })
+  );
+  await fdr.docs.v2.write.finishDocsRegister(
+    startDocsRegisterResponse.docsRegistrationId,
+    {
+      docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
+    }
+  );
+
+  // set metadata
+  const githubUrl = "https://github.com/fern-api/fern";
+  await fetch(`${inject("url")}v2/registry/docs/set-metadata-for-url`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer test-token",
+    },
+    body: JSON.stringify({
+      url: `https://${domain}`,
+      githubUrl,
+    }),
+  });
+
+  // retrieve metadata
+  const metadataResponse = getAPIResponse(
+    await fdr.docs.v2.read.getDocsUrlMetadata({
+      url: DocsV1Write.Url(`https://${domain}`),
+    })
+  );
+
+  expect(metadataResponse.url).toEqual(`https://${domain}`);
+  expect(metadataResponse.gitUrl).toEqual(githubUrl);
+  expect(metadataResponse.org).toEqual(FdrAPI.OrgId("acme"));
+  expect(metadataResponse.isPreviewUrl).toBe(false);
 });

@@ -371,5 +371,26 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 
       return res.send();
     },
+    setDocsUrlMetadata: async (req, res) => {
+      const url = ParsedBaseUrl.parse(req.body.url);
+      const orgId = await app.dao.docsV2().getOrgIdForDocsUrl(url.toURL());
+      if (orgId == null) {
+        throw new DomainNotRegisteredError();
+      }
+
+      await app.services.auth.checkUserBelongsToOrg({
+        authHeader: req.headers.authorization,
+        orgId,
+      });
+
+      await app.dao.docsV2().setDocsMetadata({
+        url,
+        metadata: {
+          githubUrl: req.body.githubUrl,
+        },
+      });
+
+      return res.send();
+    },
   });
 }

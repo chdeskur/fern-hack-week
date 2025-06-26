@@ -104,6 +104,7 @@ types:
       url: rootCommons.Url
       org: rootCommons.OrgId
       isPreviewUrl: boolean
+      gitUrl: optional<rootCommons.Url>
 
   GetDocsConfigByIdResponse:
     properties:

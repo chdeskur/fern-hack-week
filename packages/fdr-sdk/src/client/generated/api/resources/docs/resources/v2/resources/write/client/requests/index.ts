@@ -3,3 +3,4 @@ export { type StartDocsPreviewRegisterRequestV2 } from "./StartDocsPreviewRegist
 export { type RegisterDocsRequest } from "./RegisterDocsRequest.js";
 export { type TransferDomainOwnershipRequest } from "./TransferDomainOwnershipRequest.js";
 export { type SetIsArchivedRequest } from "./SetIsArchivedRequest.js";
+export { type SetDocsUrlMetadataRequest } from "./SetDocsUrlMetadataRequest.js";

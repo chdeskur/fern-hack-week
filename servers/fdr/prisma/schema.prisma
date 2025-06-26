@@ -64,6 +64,7 @@ model DocsV2 {
   isPreview            Boolean  @default(false)
   hasPublicS3Assets    Boolean  @default(false)
   isArchived           Boolean  @default(false)
+  githubUrl String?
 
   @@id([domain, path])
 }

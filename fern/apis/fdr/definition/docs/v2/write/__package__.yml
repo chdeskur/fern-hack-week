@@ -104,6 +104,20 @@ service:
       errors:
         - DocsNotFoundError
         - rootCommons.UnauthorizedError 
+    
+    setDocsUrlMetadata:
+      auth: true    
+      method: POST
+      path: /set-metadata-for-url
+      request:
+        name: SetDocsUrlMetadataRequest
+        body:
+          properties:
+            url: rootCommons.Url          
+            githubUrl: optional<rootCommons.Url>
+      errors:
+        - DocsNotFoundError
+        - rootCommons.UnauthorizedError 
 
 types:
   ImageFilePath:

@@ -3,3 +3,4 @@ export { StartDocsPreviewRegisterRequestV2 } from "./StartDocsPreviewRegisterReq
 export { RegisterDocsRequest } from "./RegisterDocsRequest";
 export { TransferDomainOwnershipRequest } from "./TransferDomainOwnershipRequest";
 export { SetIsArchivedRequest } from "./SetIsArchivedRequest";
+export { SetDocsUrlMetadataRequest } from "./SetDocsUrlMetadataRequest";

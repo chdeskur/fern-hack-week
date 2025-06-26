@@ -361,28 +361,36 @@
           {
             "discriminantValue": "resubmit_fresh",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:BulkResubmitFreshClaimAction"],
+              "extends": [
+                "type_bulk-claim-actions/v1:BulkResubmitFreshClaimAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "resubmit_corrected",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:BulkResubmitCorrectedClaimAction"],
+              "extends": [
+                "type_bulk-claim-actions/v1:BulkResubmitCorrectedClaimAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "close_and_process",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:BulkCloseTasksAndProcessClaimAction"],
+              "extends": [
+                "type_bulk-claim-actions/v1:BulkCloseTasksAndProcessClaimAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "move_to_work_queue",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:MoveToWorkQueueClaimAction"],
+              "extends": [
+                "type_bulk-claim-actions/v1:MoveToWorkQueueClaimAction"
+              ],
               "properties": []
             }
           }
@@ -405,14 +413,18 @@
           {
             "discriminantValue": "no_payer_generated_control_number_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:NoPayerGeneratedControlNumberError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:NoPayerGeneratedControlNumberError"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "task_required_for_work_queue_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:TaskRequiredForWorkQueueError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:TaskRequiredForWorkQueueError"
+              ],
               "properties": []
             }
           },
@@ -426,14 +438,18 @@
           {
             "discriminantValue": "user_not_authorized_for_resubmit_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:UserNotAuthorizedForResubmitError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:UserNotAuthorizedForResubmitError"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "user_not_authorized_to_close_all_open_tasks_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:UserNotAuthorizedToCloseAllOpenTasksError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:UserNotAuthorizedToCloseAllOpenTasksError"
+              ],
               "properties": []
             }
           }
@@ -492,7 +508,9 @@
     "type_bulk-claim-actions/v1:BulkClaimActionValidationSuccess": {
       "name": "BulkClaimActionValidationSuccess",
       "shape": {
-        "extends": ["type_bulk-claim-actions/v1:BulkClaimActionValidationResultBase"],
+        "extends": [
+          "type_bulk-claim-actions/v1:BulkClaimActionValidationResultBase"
+        ],
         "properties": [],
         "type": "object"
       }
@@ -500,7 +518,9 @@
     "type_bulk-claim-actions/v1:BulkClaimActionValidationFailure": {
       "name": "BulkClaimActionValidationFailure",
       "shape": {
-        "extends": ["type_bulk-claim-actions/v1:BulkClaimActionValidationResultBase"],
+        "extends": [
+          "type_bulk-claim-actions/v1:BulkClaimActionValidationResultBase"
+        ],
         "properties": [
           {
             "key": "errors",
@@ -524,14 +544,18 @@
           {
             "discriminantValue": "success",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:BulkClaimActionValidationSuccess"],
+              "extends": [
+                "type_bulk-claim-actions/v1:BulkClaimActionValidationSuccess"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "failure",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:BulkClaimActionValidationFailure"],
+              "extends": [
+                "type_bulk-claim-actions/v1:BulkClaimActionValidationFailure"
+              ],
               "properties": []
             }
           }
@@ -573,14 +597,18 @@
           {
             "discriminantValue": "no_payer_generated_control_number_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:NoPayerGeneratedControlNumberError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:NoPayerGeneratedControlNumberError"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "task_required_for_work_queue_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:TaskRequiredForWorkQueueError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:TaskRequiredForWorkQueueError"
+              ],
               "properties": []
             }
           },
@@ -594,14 +622,18 @@
           {
             "discriminantValue": "user_not_authorized_for_resubmit_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:UserNotAuthorizedForResubmitError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:UserNotAuthorizedForResubmitError"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "user_not_authorized_to_close_all_open_tasks_error",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:UserNotAuthorizedToCloseAllOpenTasksError"],
+              "extends": [
+                "type_bulk-claim-actions/v1:UserNotAuthorizedToCloseAllOpenTasksError"
+              ],
               "properties": []
             }
           },
@@ -667,7 +699,9 @@
     "type_bulk-claim-actions/v1:BulkClaimActionExecutionSuccess": {
       "name": "BulkClaimActionExecutionSuccess",
       "shape": {
-        "extends": ["type_bulk-claim-actions/v1:BulkClaimActionExecutionResultBase"],
+        "extends": [
+          "type_bulk-claim-actions/v1:BulkClaimActionExecutionResultBase"
+        ],
         "properties": [],
         "type": "object"
       }
@@ -675,7 +709,9 @@
     "type_bulk-claim-actions/v1:BulkClaimActionExecutionFailure": {
       "name": "BulkClaimActionExecutionFailure",
       "shape": {
-        "extends": ["type_bulk-claim-actions/v1:BulkClaimActionExecutionResultBase"],
+        "extends": [
+          "type_bulk-claim-actions/v1:BulkClaimActionExecutionResultBase"
+        ],
         "properties": [
           {
             "key": "errors",
@@ -699,14 +735,18 @@
           {
             "discriminantValue": "success",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:BulkClaimActionExecutionSuccess"],
+              "extends": [
+                "type_bulk-claim-actions/v1:BulkClaimActionExecutionSuccess"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "failure",
             "additionalProperties": {
-              "extends": ["type_bulk-claim-actions/v1:BulkClaimActionExecutionFailure"],
+              "extends": [
+                "type_bulk-claim-actions/v1:BulkClaimActionExecutionFailure"
+              ],
               "properties": []
             }
           }
@@ -1974,14 +2014,18 @@
           {
             "discriminantValue": "only_primary",
             "additionalProperties": {
-              "extends": ["type_encounters-internal/v1:PrimaryEncounterFinancialInformation"],
+              "extends": [
+                "type_encounters-internal/v1:PrimaryEncounterFinancialInformation"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "multiple_payer_responsibility_financial_information",
             "additionalProperties": {
-              "extends": ["type_encounters-internal/v1:MultiplePayerResponsibilityEncounterFinancialInformation"],
+              "extends": [
+                "type_encounters-internal/v1:MultiplePayerResponsibilityEncounterFinancialInformation"
+              ],
               "properties": []
             }
           }
@@ -3240,7 +3284,9 @@
           {
             "discriminantValue": "success",
             "additionalProperties": {
-              "extends": ["type_encounters/v4:SuccessfulGenerateClinicalNotesPdfResponse"],
+              "extends": [
+                "type_encounters/v4:SuccessfulGenerateClinicalNotesPdfResponse"
+              ],
               "properties": []
             }
           }
@@ -3311,14 +3357,18 @@
           {
             "discriminantValue": "out_of_network",
             "additionalProperties": {
-              "extends": ["type_encounters/v4:OutOfNetworkContractingStatusResult"],
+              "extends": [
+                "type_encounters/v4:OutOfNetworkContractingStatusResult"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "in_network",
             "additionalProperties": {
-              "extends": ["type_encounters/v4:InNetworkContractingStatusResult"],
+              "extends": [
+                "type_encounters/v4:InNetworkContractingStatusResult"
+              ],
               "properties": []
             }
           },
@@ -6459,21 +6509,27 @@
           {
             "discriminantValue": "integration",
             "additionalProperties": {
-              "extends": ["type_managed-emr-configs/v1:IntegrationLevelElationServiceFacilityRoutingMetadata"],
+              "extends": [
+                "type_managed-emr-configs/v1:IntegrationLevelElationServiceFacilityRoutingMetadata"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "rule",
             "additionalProperties": {
-              "extends": ["type_managed-emr-configs/v1:RuleLevelElationServiceFacilityRoutingMetadata"],
+              "extends": [
+                "type_managed-emr-configs/v1:RuleLevelElationServiceFacilityRoutingMetadata"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "filter_action_rule",
             "additionalProperties": {
-              "extends": ["type_managed-emr-configs/v1:FilterActionLevelElationServiceFacilityRoutingMetadata"],
+              "extends": [
+                "type_managed-emr-configs/v1:FilterActionLevelElationServiceFacilityRoutingMetadata"
+              ],
               "properties": []
             }
           }
@@ -21216,7 +21272,9 @@
           {
             "discriminantValue": "evaluate_comparator",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:EvaluateComparatorCondition"],
+              "extends": [
+                "type_configurable-rules-types:EvaluateComparatorCondition"
+              ],
               "properties": []
             }
           }
@@ -21550,7 +21608,9 @@
           {
             "discriminantValue": "hold_ready_to_submit_claim",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:HoldReadyToSubmitClaimAction"],
+              "extends": [
+                "type_configurable-rules-types:HoldReadyToSubmitClaimAction"
+              ],
               "properties": []
             }
           },
@@ -21579,14 +21639,18 @@
           {
             "discriminantValue": "then_validate_or_else",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:ThenValidateOrElseAction"],
+              "extends": [
+                "type_configurable-rules-types:ThenValidateOrElseAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "route_to_work_queue",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:RouteToWorkQueueAction"],
+              "extends": [
+                "type_configurable-rules-types:RouteToWorkQueueAction"
+              ],
               "properties": []
             }
           }
@@ -21668,7 +21732,9 @@
           {
             "discriminantValue": "customer_data_request_task",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:CustomerDataRequestTaskAction"],
+              "extends": [
+                "type_configurable-rules-types:CustomerDataRequestTaskAction"
+              ],
               "properties": []
             }
           },
@@ -22059,42 +22125,54 @@
           {
             "discriminantValue": "hold_claim_available_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:HoldClaimAvailableAction"],
+              "extends": [
+                "type_configurable-rules-types:HoldClaimAvailableAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "hold_ready_to_submit_claim_available_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:HoldReadyToSubmitClaimAvailableAction"],
+              "extends": [
+                "type_configurable-rules-types:HoldReadyToSubmitClaimAvailableAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "create_task_available_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:CreateTaskAvailableAction"],
+              "extends": [
+                "type_configurable-rules-types:CreateTaskAvailableAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "create_task_v2_available_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:CreateTaskV2AvailableAction"],
+              "extends": [
+                "type_configurable-rules-types:CreateTaskV2AvailableAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "then_validate_or_else_available_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:ThenValidateOrElseAvailableAction"],
+              "extends": [
+                "type_configurable-rules-types:ThenValidateOrElseAvailableAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "route_to_work_queue_available_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:RouteToWorkQueueAvailableAction"],
+              "extends": [
+                "type_configurable-rules-types:RouteToWorkQueueAvailableAction"
+              ],
               "properties": []
             }
           }
@@ -22110,42 +22188,54 @@
           {
             "discriminantValue": "hold_claim_executed_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:HoldClaimExecutedAction"],
+              "extends": [
+                "type_configurable-rules-types:HoldClaimExecutedAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "hold_ready_to_submit_claim_executed_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:HoldReadyToSubmitClaimExecutedAction"],
+              "extends": [
+                "type_configurable-rules-types:HoldReadyToSubmitClaimExecutedAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "create_task_executed_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:CreateTaskExecutedAction"],
+              "extends": [
+                "type_configurable-rules-types:CreateTaskExecutedAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "create_task_v2_executed_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:CreateTaskV2ExecutedAction"],
+              "extends": [
+                "type_configurable-rules-types:CreateTaskV2ExecutedAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "then_validate_or_else_executed_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:ThenValidateOrElseExecutedAction"],
+              "extends": [
+                "type_configurable-rules-types:ThenValidateOrElseExecutedAction"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "route_to_work_queue_executed_action",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-types:RouteToWorkQueueExecutedAction"],
+              "extends": [
+                "type_configurable-rules-types:RouteToWorkQueueExecutedAction"
+              ],
               "properties": []
             }
           }
@@ -22626,7 +22716,9 @@
           {
             "discriminantValue": "scope_does_not_support_configurable_rules_error",
             "additionalProperties": {
-              "extends": ["type_configurable-rules:ScopeDoesNotSupportConfigurableRulesError"],
+              "extends": [
+                "type_configurable-rules:ScopeDoesNotSupportConfigurableRulesError"
+              ],
               "properties": []
             }
           },
@@ -22690,7 +22782,9 @@
           {
             "discriminantValue": "rule_with_name_already_exists",
             "additionalProperties": {
-              "extends": ["type_configurable-rules:RuleWithNameAlreadyExistsError"],
+              "extends": [
+                "type_configurable-rules:RuleWithNameAlreadyExistsError"
+              ],
               "properties": []
             }
           }
@@ -22720,7 +22814,9 @@
           {
             "discriminantValue": "duplicate_object_field_names",
             "additionalProperties": {
-              "extends": ["type_configurable-rules:DuplicateObjectFieldNamesError"],
+              "extends": [
+                "type_configurable-rules:DuplicateObjectFieldNamesError"
+              ],
               "properties": []
             }
           },
@@ -22734,14 +22830,18 @@
           {
             "discriminantValue": "incorrect_type_for_path_element_error",
             "additionalProperties": {
-              "extends": ["type_configurable-rules:IncorrectTypeForPathElementError"],
+              "extends": [
+                "type_configurable-rules:IncorrectTypeForPathElementError"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "mismatched_types_for_comparator_error",
             "additionalProperties": {
-              "extends": ["type_configurable-rules:MismatchedTypesForComparatorError"],
+              "extends": [
+                "type_configurable-rules:MismatchedTypesForComparatorError"
+              ],
               "properties": []
             }
           },
@@ -22755,14 +22855,18 @@
           {
             "discriminantValue": "variable_not_found_error",
             "additionalProperties": {
-              "extends": ["type_configurable-rules-variables:VariableNotFoundError"],
+              "extends": [
+                "type_configurable-rules-variables:VariableNotFoundError"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "illegal_index_for_nth_item_error",
             "additionalProperties": {
-              "extends": ["type_configurable-rules:IllegalIndexForNthItemError"],
+              "extends": [
+                "type_configurable-rules:IllegalIndexForNthItemError"
+              ],
               "properties": []
             }
           },
@@ -23400,7 +23504,9 @@
           {
             "discriminantValue": "credentialed",
             "additionalProperties": {
-              "extends": ["type_credentialing:CredentialedEncounterStatusResult"],
+              "extends": [
+                "type_credentialing:CredentialedEncounterStatusResult"
+              ],
               "properties": []
             }
           },
@@ -24132,7 +24238,9 @@
           {
             "discriminantValue": "claim_submission_v2",
             "additionalProperties": {
-              "extends": ["type_encounter_timeline:ClaimSubmissionTimelineEvent"],
+              "extends": [
+                "type_encounter_timeline:ClaimSubmissionTimelineEvent"
+              ],
               "properties": []
             }
           },
@@ -24167,7 +24275,9 @@
           {
             "discriminantValue": "generic",
             "additionalProperties": {
-              "extends": ["type_encounter_timeline:GenericNamedTimelineEventData"],
+              "extends": [
+                "type_encounter_timeline:GenericNamedTimelineEventData"
+              ],
               "properties": []
             }
           }
@@ -27745,28 +27855,36 @@
           {
             "discriminantValue": "chargebee",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:ChargebeePaymentAccountConfig"],
+              "extends": [
+                "type_payment-account-configs:ChargebeePaymentAccountConfig"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "square",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:SquarePaymentAccountConfig"],
+              "extends": [
+                "type_payment-account-configs:SquarePaymentAccountConfig"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "stripe",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:StripePaymentAccountConfig"],
+              "extends": [
+                "type_payment-account-configs:StripePaymentAccountConfig"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "cedar",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:CedarPaymentAccountConfig"],
+              "extends": [
+                "type_payment-account-configs:CedarPaymentAccountConfig"
+              ],
               "properties": []
             }
           }
@@ -28130,21 +28248,27 @@
           {
             "discriminantValue": "chargebee",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:ChargebeePaymentAccountConfigCreate"],
+              "extends": [
+                "type_payment-account-configs:ChargebeePaymentAccountConfigCreate"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "square",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:SquarePaymentAccountConfigCreate"],
+              "extends": [
+                "type_payment-account-configs:SquarePaymentAccountConfigCreate"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "stripe",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:StripePaymentAccountConfigCreate"],
+              "extends": [
+                "type_payment-account-configs:StripePaymentAccountConfigCreate"
+              ],
               "properties": []
             }
           }
@@ -28424,21 +28548,27 @@
           {
             "discriminantValue": "chargebee",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:ChargebeePaymentAccountConfigPatch"],
+              "extends": [
+                "type_payment-account-configs:ChargebeePaymentAccountConfigPatch"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "square",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:SquarePaymentAccountConfigPatch"],
+              "extends": [
+                "type_payment-account-configs:SquarePaymentAccountConfigPatch"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "stripe",
             "additionalProperties": {
-              "extends": ["type_payment-account-configs:StripePaymentAccountConfigPatch"],
+              "extends": [
+                "type_payment-account-configs:StripePaymentAccountConfigPatch"
+              ],
               "properties": []
             }
           }
@@ -29621,7 +29751,9 @@
           {
             "discriminantValue": "configurable_rule_summary",
             "additionalProperties": {
-              "extends": ["type_pipeline-configuration:ConfigurableRuleSummary"],
+              "extends": [
+                "type_pipeline-configuration:ConfigurableRuleSummary"
+              ],
               "properties": []
             }
           }
@@ -29756,14 +29888,18 @@
           {
             "discriminantValue": "success_async",
             "additionalProperties": {
-              "extends": ["type_rules_engine_types:RulesEngineProcessSuccessAsync"],
+              "extends": [
+                "type_rules_engine_types:RulesEngineProcessSuccessAsync"
+              ],
               "properties": []
             }
           },
           {
             "discriminantValue": "success_sync",
             "additionalProperties": {
-              "extends": ["type_rules_engine_types:RulesEngineProcessSuccessSync"],
+              "extends": [
+                "type_rules_engine_types:RulesEngineProcessSuccessSync"
+              ],
               "properties": []
             }
           }
@@ -34105,7 +34241,10 @@
       "endpoints": [],
       "webhooks": [],
       "types": [],
-      "subpackages": ["subpackage_fee-schedules/v1", "subpackage_fee-schedules/v2"]
+      "subpackages": [
+        "subpackage_fee-schedules/v1",
+        "subpackage_fee-schedules/v2"
+      ]
     },
     "subpackage_fee-schedules/v1": {
       "subpackageId": "subpackage_fee-schedules/v1",
@@ -36104,7 +36243,10 @@
       "endpoints": [],
       "webhooks": [],
       "types": [],
-      "subpackages": ["subpackage_organization-providers/v2", "subpackage_organization-providers/v3"]
+      "subpackages": [
+        "subpackage_organization-providers/v2",
+        "subpackage_organization-providers/v3"
+      ]
     },
     "subpackage_organization-providers/v2": {
       "subpackageId": "subpackage_organization-providers/v2",
@@ -36337,7 +36479,9 @@
             "type": {
               "contentType": "application/json",
               "shape": {
-                "extends": ["type_organization-providers/v2:OrganizationProviderBase"],
+                "extends": [
+                  "type_organization-providers/v2:OrganizationProviderBase"
+                ],
                 "properties": [
                   {
                     "description": "The employment status for the provider.",
@@ -37088,7 +37232,10 @@
       "endpoints": [],
       "webhooks": [],
       "types": [],
-      "subpackages": ["subpackage_patient-payments/v2", "subpackage_patient-payments/v3"]
+      "subpackages": [
+        "subpackage_patient-payments/v2",
+        "subpackage_patient-payments/v3"
+      ]
     },
     "subpackage_patient-payments/v2": {
       "subpackageId": "subpackage_patient-payments/v2",
@@ -40058,7 +40205,11 @@
         }
       ],
       "webhooks": [],
-      "types": ["type_tasks/v3:TaskActionExecutionMethod", "type_tasks/v3:TaskActions", "type_tasks/v3:TaskAction"],
+      "types": [
+        "type_tasks/v3:TaskActionExecutionMethod",
+        "type_tasks/v3:TaskActions",
+        "type_tasks/v3:TaskAction"
+      ],
       "subpackages": []
     },
     "subpackage_users": {
@@ -40663,7 +40814,11 @@
       "name": "v1",
       "endpoints": [],
       "webhooks": [],
-      "types": ["type_x12/v1:ClaimStatusCodeEnum", "type_x12/v1:Carc", "type_x12/v1:Rarc"],
+      "types": [
+        "type_x12/v1:ClaimStatusCodeEnum",
+        "type_x12/v1:Carc",
+        "type_x12/v1:Rarc"
+      ],
       "subpackages": []
     },
     "subpackage_adjustments": {
@@ -48934,7 +49089,12 @@
         }
       ],
       "webhooks": [],
-      "types": ["type_tags:TagId", "type_tags:TagCreate", "type_tags:Tag", "type_tags:TagColorEnum"],
+      "types": [
+        "type_tags:TagId",
+        "type_tags:TagCreate",
+        "type_tags:Tag",
+        "type_tags:TagColorEnum"
+      ],
       "subpackages": []
     },
     "subpackage_tasks/commons": {
@@ -48942,7 +49102,10 @@
       "name": "commons",
       "endpoints": [],
       "webhooks": [],
-      "types": ["type_tasks/commons:TaskType", "type_tasks/commons:TaskCategory"],
+      "types": [
+        "type_tasks/commons:TaskType",
+        "type_tasks/commons:TaskCategory"
+      ],
       "subpackages": []
     },
     "subpackage_test-fern": {
@@ -48950,7 +49113,11 @@
       "name": "test-fern",
       "endpoints": [],
       "webhooks": [],
-      "types": ["type_test-fern:ParentPatch", "type_test-fern:UnionParentPatch", "type_test-fern:ChildPatch"],
+      "types": [
+        "type_test-fern:ParentPatch",
+        "type_test-fern:UnionParentPatch",
+        "type_test-fern:ChildPatch"
+      ],
       "subpackages": []
     },
     "subpackage_upload-validation": {

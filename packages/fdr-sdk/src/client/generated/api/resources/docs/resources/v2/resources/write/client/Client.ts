@@ -513,6 +513,86 @@ export class Write {
         };
     }
 
+    /**
+     * @param {FernRegistry.docs.v2.write.SetDocsUrlMetadataRequest} request
+     * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.docs.v2.write.setDocsUrlMetadata({
+     *         url: FernRegistry.Url("url"),
+     *         githubUrl: undefined
+     *     })
+     */
+    public setDocsUrlMetadata(
+        request: FernRegistry.docs.v2.write.SetDocsUrlMetadataRequest,
+        requestOptions?: Write.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, FernRegistry.docs.v2.write.setDocsUrlMetadata.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__setDocsUrlMetadata(request, requestOptions));
+    }
+
+    private async __setDocsUrlMetadata(
+        request: FernRegistry.docs.v2.write.SetDocsUrlMetadataRequest,
+        requestOptions?: Write.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, FernRegistry.docs.v2.write.setDocsUrlMetadata.Error>>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/set-metadata-for-url",
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.docs.v2.write.setDocsUrlMetadata.Error)?.error) {
+                case "DocsNotFoundError":
+                case "UnauthorizedError":
+                    return {
+                        data: {
+                            ok: false,
+                            error: _response.error.body as FernRegistry.docs.v2.write.setDocsUrlMetadata.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
+                    };
+            }
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: FernRegistry.docs.v2.write.setDocsUrlMetadata.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {

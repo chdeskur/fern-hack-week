@@ -13,7 +13,8 @@
     // from generated source code references.
     // This improves issue grouping in Sentry.
     "sourceRoot": "/",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "types": ["vitest/globals"]
   },
   "include": ["./src/**/*"],
   "exclude": ["**/__test__"],

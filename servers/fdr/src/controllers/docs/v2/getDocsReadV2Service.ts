@@ -2,6 +2,7 @@ import {
   convertDbAPIDefinitionsToRead,
   convertDbDocsConfigToRead,
 } from "@fern-api/fdr-sdk";
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 
 import { Cache } from "../../../Cache";
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
@@ -185,6 +186,10 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
           isPreviewUrl: metadata.isPreview,
           org: metadata.orgId,
           url: req.body.url,
+          gitUrl:
+            metadata.gitUrl != null
+              ? DocsV1Write.Url(metadata.gitUrl)
+              : undefined,
         });
       }
       throw new DomainNotRegisteredError();
