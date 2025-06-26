@@ -7,7 +7,6 @@ from typing import Dict
 from typing import Optional
 
 from dotenv import load_dotenv
-from openai import OpenAI
 
 
 load_dotenv()
@@ -20,6 +19,7 @@ class Variables:
     OPENAI_API_KEY: Optional[str] = os.environ.get("OPENAI_API_KEY")
     POSTGRES_DATABASE_URL: Optional[str] = os.environ.get("POSTGRES_DATABASE_URL")
     TURBOPUFFER_API_KEY: Optional[str] = os.environ.get("TURBOPUFFER_API_KEY")
+    IS_LOCAL: bool = os.environ.get("IS_LOCAL", "false").lower() == "true"
 
     @classmethod
     def validate_env_variables(cls) -> None:
@@ -39,10 +39,4 @@ class SingletonFactory:
         return cls._instances[target_class]
 
 
-LOGGER.info("Setup: Starting environment variable validation...")
 VARIABLES = SingletonFactory.get_instance(Variables)
-
-VARIABLES.validate_env_variables()
-LOGGER.info("Setup: Environment variables validated.")
-
-openai_client = OpenAI(api_key=VARIABLES.OPENAI_API_KEY)

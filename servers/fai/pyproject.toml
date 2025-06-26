@@ -29,6 +29,7 @@ greenlet = "^3.2.3"
 
 [tool.poetry.scripts]
 start = "src.fai.main:start"
+start_local = "src.fai.main:start_local"
 
 
 [tool.poetry.dev-dependencies]

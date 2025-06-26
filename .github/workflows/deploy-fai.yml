@@ -15,6 +15,7 @@ jobs:
       TURBOPUFFER_API_KEY: ${{ secrets.TURBOPUFFER_API_KEY }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      POSTGRES_DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/mydatabase
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,7 +56,7 @@ jobs:
         run: |
           git_version="$(scripts/fai-version.sh)"
           cd servers/fai
-          ./create_docker.sh "${git_version}"
+          ./scripts/create_docker.sh "${git_version}"
           cd deploy
           npm install
           VERSION="${git_version}" npm run cdk deploy fai-dev2 --require-approval never --progress events
@@ -84,7 +85,7 @@ jobs:
         run: |
           git_version="$(scripts/fai-version.sh)"
           cd servers/fai
-          ./create_docker.sh "${git_version}"
+          ./scripts/create_docker.sh "${git_version}"
           cd deploy
           npm install
           VERSION="${git_version}" npm run cdk deploy fai-prod --require-approval never --progress events

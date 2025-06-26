@@ -3,26 +3,27 @@ version: "3.9"
 services:
   db:
     image: postgres:15
-    container_name: fastapi_postgres
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: mydatabase
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   fai:
-    build: .
-    container_name: fai-app
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
       - db
     environment:
+      - IS_LOCAL=true
       - PYTHONPATH=${PYTHONPATH}:${PWD}
-      - POSTGRES_DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/mydatabase
+      - POSTGRES_DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/mydatabase
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - TURBOPUFFER_API_KEY=${TURBOPUFFER_API_KEY}
