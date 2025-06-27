@@ -95,9 +95,10 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
 
   const errorSelector =
     showErrors &&
-    Object.values(examplesByStatusCode).some(
-      (examples) => examples.length > 1
-    ) ? (
+    (Object.keys(examplesByStatusCode).length > 1 ||
+      Object.values(examplesByStatusCode).some(
+        (examples) => examples.length > 1
+      )) ? (
       <ErrorExampleSelect
         examplesByStatusCode={examplesByStatusCode}
         selectedExample={selectedExample}
