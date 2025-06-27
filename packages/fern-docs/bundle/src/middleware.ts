@@ -106,7 +106,15 @@ export const middleware: NextMiddleware = async (request) => {
   if (pathname.includes("/_files/")) {
     const filePath = pathname.replace("https:/", "https://"); // pathnames normalize urls, so we need restore the protocol //
     const removeBase = filePath.replace(/(.*)_files\//, ""); // clean all content before and including file marker
-    return NextResponse.rewrite(`${getFileCDN()}/${removeBase}`, {
+    const cdnUrl = `${getFileCDN()}/${removeBase}`;
+
+    // preserve query parameters if they exist
+    const url = new URL(cdnUrl);
+    if (request.nextUrl.search) {
+      url.search = request.nextUrl.search;
+    }
+
+    return NextResponse.rewrite(url.toString(), {
       headers: {
         "Cache-Control": "public, max-age=31536000",
       },
