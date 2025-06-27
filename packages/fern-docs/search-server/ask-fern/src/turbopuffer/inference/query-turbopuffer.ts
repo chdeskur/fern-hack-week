@@ -4,10 +4,6 @@ import {
   Turbopuffer,
 } from "@turbopuffer/turbopuffer";
 
-import { EVERYONE_ROLE } from "@fern-api/docs-utils";
-import { createRoleFacet } from "@fern-docs/search-utils";
-import { createPermutations } from "@fern-docs/search-utils";
-
 import { TurbopufferRecord } from "../types";
 import { reciprocalRankFusion } from "./reciprocal-rank-fusion";
 
@@ -24,9 +20,6 @@ interface SemanticSearchOptions {
    */
   mode?: "semantic" | "bm25" | "hybrid";
 
-  authed?: boolean;
-  roles?: string[];
-
   // ignore these document ids; used to avoid tool-calls returning the same document over and over
   documentIdsToIgnore?: string[];
 }
@@ -40,8 +33,6 @@ export async function queryTurbopuffer(
     topK,
     filters,
     mode = "hybrid",
-    authed = false,
-    roles = [],
     documentIdsToIgnore = [],
   }: SemanticSearchOptions
 ): Promise<TurbopufferRecord[]> {
@@ -53,19 +44,6 @@ export async function queryTurbopuffer(
 
   const vector = await vectorizer(query);
 
-  const authFilter: FilterCondition = authed
-    ? ([
-        "visible_by",
-        "In",
-        [
-          createRoleFacet([EVERYONE_ROLE]),
-          ...createPermutations(roles.filter((r) => r !== EVERYONE_ROLE)).map(
-            (perms) => createRoleFacet(perms)
-          ),
-        ],
-      ] as const)
-    : ["authed", "NotEq", true];
-
   const documentIdFilters: FilterCondition[] = documentIdsToIgnore.map((id) => [
     "id",
     "NotEq",
@@ -75,12 +53,12 @@ export async function queryTurbopuffer(
   const versionFilters = filters
     ? filters.filter((f) => f.facet === "version.title")
     : [];
-  const queryFilters: Filters =
+
+  const queryFilters: Filters | undefined =
     versionFilters.length > 0
       ? [
           "And",
           [
-            authFilter,
             ...versionFilters.map((f) => {
               const filter: FilterCondition = ["version", "Eq", f.value];
               return filter;
@@ -88,7 +66,11 @@ export async function queryTurbopuffer(
             ...documentIdFilters,
           ],
         ]
-      : authFilter;
+      : documentIdFilters.length > 0
+        ? documentIdFilters.length === 1
+          ? documentIdFilters[0]
+          : ["And", documentIdFilters]
+        : undefined;
 
   const semanticResults =
     mode !== "bm25"
