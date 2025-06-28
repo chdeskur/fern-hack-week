@@ -38,7 +38,6 @@ const EDGE_FLAGS = [
   "audio-example-internal" as const,
   "uses-application-json-in-form-data-value" as const,
   "binary-octet-stream-audio-player" as const,
-  "voice-id-playground-form" as const,
   "cohere-theme" as const,
   "file-forge-hack-enabled" as const,
   "hide-404-page" as const,
@@ -162,10 +161,6 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["binary-octet-stream-audio-player"]
     );
-    const hasVoiceIdPlaygroundForm = checkDomainMatchesCustomers(
-      domain,
-      config["voice-id-playground-form"]
-    );
     const isCohereTheme = checkDomainMatchesCustomers(
       domain,
       config["cohere-theme"]
@@ -236,7 +231,6 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isAudioExampleInternal,
       usesApplicationJsonInFormDataValue,
       isBinaryOctetStreamAudioPlayer,
-      hasVoiceIdPlaygroundForm,
       isCohereTheme,
       isFileForgeHackEnabled,
       is404PageHidden,
@@ -274,7 +268,6 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isAudioExampleInternal: false,
       usesApplicationJsonInFormDataValue: false,
       isBinaryOctetStreamAudioPlayer: false,
-      hasVoiceIdPlaygroundForm: false,
       isCohereTheme: false,
       isFileForgeHackEnabled: false,
       is404PageHidden: false,

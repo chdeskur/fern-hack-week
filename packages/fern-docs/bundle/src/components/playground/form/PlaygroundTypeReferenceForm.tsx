@@ -2,8 +2,6 @@
 
 import { ReactElement, memo, useCallback, useState } from "react";
 
-import { useAtomValue } from "jotai";
-
 import {
   ObjectProperty,
   TypeDefinition,
@@ -21,11 +19,9 @@ import {
 import { cn } from "@fern-docs/components";
 
 import { withErrorBoundary } from "@/components/error-boundary";
-import { hasVoiceIdPlaygroundFormAtom } from "@/state/api-explorer-flags";
 
 import { WithLabel } from "../WithLabel";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
-import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
@@ -56,7 +52,6 @@ interface PlaygroundTypeReferenceFormProps {
 
 const PlaygroundTypeReferenceFormInternal =
   memo<PlaygroundTypeReferenceFormProps>((props) => {
-    const hasVoiceIdPlaygroundForm = useAtomValue(hasVoiceIdPlaygroundFormAtom);
     const {
       id,
       property,
@@ -174,19 +169,11 @@ const PlaygroundTypeReferenceFormInternal =
               <span
                 className={cn("block w-full", isNullSelected && "invisible")}
               >
-                {hasVoiceIdPlaygroundForm && property?.key === "voice_id" ? (
-                  // TODO: delete this:
-                  <PlaygroundElevenLabsVoiceIdForm
-                    id={id}
-                    className="w-full"
-                    value={typeof value === "string" ? value : ""}
-                    onValueChange={onChange}
-                  />
-                ) : property?.key === "user_audio_chunk" || // TODO(naman): remove hardcoding for ElevenLabs once the backend mimeType is plumbed through
-                  (primitive.value.type === "base64" &&
-                    primitive.value.mimeType?.includes("audio/webm") &&
-                    typeof window !== "undefined" &&
-                    MediaRecorder.isTypeSupported("audio/webm")) ? (
+                {property?.key === "user_audio_chunk" || // TODO(naman): remove hardcoding for ElevenLabs once the backend mimeType is plumbed through
+                (primitive.value.type === "base64" &&
+                  primitive.value.mimeType?.includes("audio/webm") &&
+                  typeof window !== "undefined" &&
+                  MediaRecorder.isTypeSupported("audio/webm")) ? (
                   <PlaygroundMicrophoneForm
                     id={id}
                     className="w-full"

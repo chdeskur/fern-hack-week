@@ -21,7 +21,6 @@ export interface EdgeFlags {
   isAudioExampleInternal: boolean;
   usesApplicationJsonInFormDataValue: boolean;
   isBinaryOctetStreamAudioPlayer: boolean;
-  hasVoiceIdPlaygroundForm: boolean;
   isCohereTheme: boolean;
   isFileForgeHackEnabled: boolean;
   is404PageHidden: boolean;
@@ -58,7 +57,6 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isAudioExampleInternal: false,
   usesApplicationJsonInFormDataValue: false,
   isBinaryOctetStreamAudioPlayer: false,
-  hasVoiceIdPlaygroundForm: false,
   isCohereTheme: false,
   isFileForgeHackEnabled: false,
   is404PageHidden: false,

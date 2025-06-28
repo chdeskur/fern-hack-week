@@ -25,7 +25,6 @@ export default async function ExplorerLayout({
       <ApiExplorerFlags
         isFileForgeHackEnabled={edgeFlags.isFileForgeHackEnabled}
         isProxyDisabled={edgeFlags.isProxyDisabled}
-        hasVoiceIdPlaygroundForm={edgeFlags.hasVoiceIdPlaygroundForm}
         usesApplicationJsonInFormDataValue={
           edgeFlags.usesApplicationJsonInFormDataValue
         }
