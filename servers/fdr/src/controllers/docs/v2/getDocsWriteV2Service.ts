@@ -244,14 +244,15 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 }
                 return subpackage.endpoints.map(async (endpoint) => {
                   try {
-                    return await fetch(
+                    const response = await fetch(
                       `https://${docsRegistrationInfo.fernUrl.getFullUrl()}/api/fern-docs/api-definition/${apiDefinition.id}/endpoint/${endpoint.originalEndpointId}`
                     );
+                    return response;
                   } catch (e: Error | unknown) {
-                    app.logger.error(
-                      `Error while trying to warm endpoint cache for ${JSON.stringify(docsRegistrationInfo.fernUrl)} ${e instanceof Error ? e.stack : ""}`
+                    app.logger.warn(
+                      `Failed to warm endpoint cache for ${docsRegistrationInfo.fernUrl.getFullUrl()} [api:${apiDefinition.id}, endpoint:${endpoint.originalEndpointId}]`
                     );
-                    throw e;
+                    return null;
                   }
                 });
               }
@@ -322,7 +323,29 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           });
           throw e;
         }
-        await Promise.all(warmEndpointCachePromises);
+
+        // warm endpoint cache - this is non-blocking and failures are logged but don't stop the process
+        try {
+          const warmCacheResults = await Promise.allSettled(
+            warmEndpointCachePromises
+          );
+          const failedWarmCacheCount = warmCacheResults.filter(
+            (result) =>
+              result.status === "rejected" ||
+              (result.status === "fulfilled" && result.value === null)
+          ).length;
+          if (failedWarmCacheCount > 0) {
+            app.logger.warn(
+              `Failed to warm a total of ${failedWarmCacheCount} endpoints for ${docsRegistrationInfo.fernUrl.getFullUrl()}`
+            );
+          }
+        } catch (e) {
+          app.logger.error(
+            `Unexpected error while warming endpoint cache for ${docsRegistrationInfo.fernUrl.getFullUrl()}`,
+            e
+          );
+        }
+
         return await res.send();
       } catch (e) {
         app.logger.error(
