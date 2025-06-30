@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import * as AccordionComponent from "@fern-docs/components";
 import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
@@ -13,7 +13,8 @@ export interface AccordionGroupProps {
 export function AccordionGroup({ children }: AccordionGroupProps) {
   const [activeTabs, setActiveTabs] = React.useState<string[]>([]);
   const anchor = useCurrentAnchor();
-
+  const [updatedUrl, setUpdatedUrl] = React.useState<string | null>(null);
+  const [isProgrammaticUpdate, setIsProgrammaticUpdate] = React.useState(false);
   const items = unwrapChildren(children, Accordion);
 
   const findParentAccordion = React.useCallback(
@@ -36,9 +37,10 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
   );
 
   React.useEffect(() => {
-    if (anchor != null) {
+    if (anchor != null && !updatedUrl) {
       const parentAccordion = findParentAccordion(anchor);
       if (parentAccordion) {
+        setIsProgrammaticUpdate(true);
         setActiveTabs((prev) =>
           prev.includes(parentAccordion) ? prev : [...prev, parentAccordion]
         );
@@ -49,26 +51,40 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
           if (element) {
             element.scrollIntoView({ behavior: "smooth" });
           }
+          setIsProgrammaticUpdate(false);
         }, 100);
       }
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [anchor]);
 
-  const handleValueChange = React.useCallback((nextActiveTabs: string[]) => {
-    setActiveTabs((prev) => {
-      const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
-      if (added[0] != null) {
-        window.location.hash = `#${added[0]}`;
+  const handleValueChange = React.useCallback(
+    (nextActiveTabs: string[]) => {
+      if (isProgrammaticUpdate) {
+        return;
       }
 
-      const removed = prev.filter((tab) => !nextActiveTabs.includes(tab));
-      if (removed[0] != null) {
-        window.history.replaceState(null, "", window.location.pathname);
-      }
+      setActiveTabs((prev) => {
+        const added = nextActiveTabs.find((tab) => !prev.includes(tab));
+        if (added != null) {
+          setUpdatedUrl(`${window.location.pathname}#${added}`);
+        }
 
-      return nextActiveTabs;
-    });
-  }, []);
+        const removed = prev.find((tab) => !nextActiveTabs.includes(tab));
+        if (removed != null) {
+          setUpdatedUrl(window.location.pathname);
+        }
+
+        return nextActiveTabs;
+      });
+    },
+    [isProgrammaticUpdate]
+  );
+
+  useEffect(() => {
+    if (updatedUrl != null) {
+      window.history.replaceState(null, "", updatedUrl);
+    }
+  }, [updatedUrl]);
 
   return (
     <AccordionComponent.Accordion
