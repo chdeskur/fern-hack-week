@@ -9,6 +9,7 @@ const EMPTY_RESPONSE: GithubSourceRepo = {
   repoName: undefined,
   owner: undefined,
   repo: undefined,
+  baseBranch: undefined,
 };
 
 export default async function getDocsGithubSourceHandler({
@@ -56,5 +57,6 @@ export default async function getDocsGithubSourceHandler({
     repoName: response.data.full_name,
     owner: response.data.owner.name ?? owner,
     repo: response.data.name ?? repo,
+    baseBranch: response.data.default_branch,
   };
 }

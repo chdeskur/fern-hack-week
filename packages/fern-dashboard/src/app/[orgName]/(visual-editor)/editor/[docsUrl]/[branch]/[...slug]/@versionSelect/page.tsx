@@ -9,18 +9,19 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { DocsUrl } from "@/utils/types";
 
 export default async function VersionSelectPage({
   params,
 }: {
-  params: Promise<{ orgName: string; slug: string }>;
+  params: Promise<{ docsUrl: DocsUrl; slug: string }>;
 }) {
   console.log("params", params);
   const session = await getCurrentSession();
-  const { orgName, slug } = await params;
+  const { docsUrl, slug } = await params;
   const loader = await createEditableDocsLoader(
     "localhost:3000",
-    orgName,
+    docsUrl,
     session?.accessToken
   );
 

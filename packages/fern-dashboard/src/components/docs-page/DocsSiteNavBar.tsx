@@ -14,18 +14,10 @@ export declare namespace DocsSiteNavBar {
   }
 }
 
-export function DocsSiteNavBar({
-  orgName,
-  featureFlags,
-}: DocsSiteNavBar.Props) {
+export function DocsSiteNavBar({ featureFlags }: DocsSiteNavBar.Props) {
   return (
     <div className="flex">
       <DocsSiteNavBarItem title="Overview" href="" />
-      {/* TEMP: shortcut to editor */}
-      <DocsSiteNavBarItem
-        title="Editor"
-        href={`../../../${orgName}/editor/root`} // TEMP: shortcut to root page
-      />
       <FeatureFlaggedClientSide
         flag={PosthogFeatureFlag.ENABLE_DOCS_ANALYTICS_TAB}
         featureFlags={featureFlags}

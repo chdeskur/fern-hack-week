@@ -1,5 +1,6 @@
 "use client";
 
+import { redirect } from "next/navigation";
 import { useCallback } from "react";
 
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
@@ -7,6 +8,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { getLoadableValue } from "@fern-ui/loadable";
 
 import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
+import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
 import { useGithubSourceRepo } from "@/state/useGithubSourceRepo";
 import { useDocsSite } from "@/state/useMyDocsSites";
@@ -20,12 +22,14 @@ import { SkeletonDocsSiteImage } from "./docs-site-image/SkeletonDocsSiteImage";
 
 export declare namespace DocsSiteOverviewCard {
   export interface Props {
+    orgName: Auth0OrgName;
     docsUrl: DocsUrl;
     session: Auth0SessionData;
   }
 }
 
 export function DocsSiteOverviewCard({
+  orgName,
   docsUrl,
   session,
 }: DocsSiteOverviewCard.Props) {
@@ -54,7 +58,8 @@ export function DocsSiteOverviewCard({
       baseBranch: "main",
     });
     console.log("response", response);
-  }, [sourceRepo, session.user.name]);
+    redirect(`/${orgName}/editor/${docsUrl}/${branchName}/root`);
+  }, [sourceRepo, session.user.name, orgName, docsUrl]);
 
   return (
     <div className="flex w-full flex-col gap-4">

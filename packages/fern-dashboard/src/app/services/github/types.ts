@@ -25,4 +25,5 @@ export type GithubSourceRepo = {
   repoName: string | undefined;
   owner: string | undefined;
   repo: string | undefined;
+  baseBranch: string | undefined;
 };

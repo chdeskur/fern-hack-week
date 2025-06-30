@@ -5,17 +5,18 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { HeaderTabsList } from "@fern-docs/components/HeaderTabsList";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { DocsUrl } from "@/utils/types";
 
 export default async function HeaderTabsPage({
   params,
 }: {
-  params: Promise<{ orgName: string; slug: string }>;
+  params: Promise<{ docsUrl: DocsUrl; slug: string }>;
 }) {
-  const { orgName, slug } = await params;
+  const { docsUrl, slug } = await params;
   const session = await getCurrentSession();
   const loader = await createEditableDocsLoader(
     "localhost:3000",
-    orgName,
+    docsUrl,
     session?.accessToken
   );
   const layout = await loader.getLayout();

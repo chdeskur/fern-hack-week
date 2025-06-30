@@ -24,6 +24,7 @@ export function PreviewHeader({
       logo={logo}
       versionSelect={versionSelect}
       productSelect={productSelect}
+      navbarLinks={navbarLinks}
       showSearchBar={showSearchBar}
       searchBar={
         <DesktopSearchButton
@@ -31,7 +32,6 @@ export function PreviewHeader({
           className="fern-header-search-bar cursor-not-allowed overflow-hidden"
         />
       }
-      navbarLinks={navbarLinks}
     />
   );
 }

@@ -7,6 +7,7 @@ import { AbstractLayoutEvaluatorContent } from "@fern-docs/components/layouts/Ab
 import { SetCurrentNavigationNode } from "@fern-docs/components/state/navigation";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { DocsUrl } from "@/utils/types";
 
 import PageEditor from "./PageEditor";
 import PageSubtitle from "./PageSubtitle";
@@ -18,7 +19,12 @@ const ROOT_SLUG_ALIAS = "root";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ orgName: string; slug: string[] }>;
+  params: Promise<{
+    orgName: string;
+    docsUrl: DocsUrl;
+    branch: string;
+    slug: string[];
+  }>;
 }) {
   const session = await getCurrentSession();
 
@@ -26,13 +32,13 @@ export default async function Page({
     redirect("/");
   }
 
-  const { orgName, slug: slugArray } = await params;
+  const { orgName, docsUrl, branch, slug: slugArray } = await params;
   const slugAlias = slugArray.join("/");
 
   // TODO: dynamically read host value
   const loader = await createEditableDocsLoader(
     "localhost:3000",
-    orgName,
+    docsUrl,
     session?.accessToken
   );
   const root = await loader.getRoot();
@@ -40,15 +46,20 @@ export default async function Page({
   const slug = slugAlias === ROOT_SLUG_ALIAS ? root.slug : slugAlias;
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
 
+  console.log("foundNode", foundNode, root.slug);
+
   // If the page is not found, redirect to the root (index) page
   if (foundNode.type !== "found") {
+    if (foundNode.redirect) {
+      redirect(foundNode.redirect);
+    }
     if (slug === root.slug) {
       // TODO: fix this so that we can redirect to the root page. right now, the root slug is not always the
       // root page. (e.g. elevenlabs' root == "/docs" but the root page is "/docs/overview")
       notFound();
     }
     // only redirect to root if the slug is not the root slug, otherwise we'll get a redirect loop
-    redirect(`/${orgName}/editor/${ROOT_SLUG_ALIAS}`);
+    redirect(`/${orgName}/editor/${docsUrl}/${branch}/${ROOT_SLUG_ALIAS}`);
   }
 
   const pageId = getPageId(foundNode.node);

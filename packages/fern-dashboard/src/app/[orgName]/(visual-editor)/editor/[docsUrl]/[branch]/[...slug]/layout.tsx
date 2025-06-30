@@ -15,8 +15,8 @@ import { GlobalStyles } from "@fern-docs/components/theming/global-styles";
 import { DesktopSearchButton } from "@fern-docs/search-ui/components/desktop/desktop-search-button";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
-import { Auth0OrgName } from "@/app/services/auth0/types";
 import { PreviewHeader } from "@/components/docs-preview/PreviewHeader";
+import { DocsUrl } from "@/utils/types";
 
 import "./index.css";
 
@@ -29,7 +29,7 @@ export default async function AuthedLayout({
   sidebar,
   logo,
 }: Readonly<{
-  params: Promise<{ orgName: Auth0OrgName }>;
+  params: Promise<{ docsUrl: DocsUrl }>;
   children: React.JSX.Element;
   headertabs: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -37,12 +37,12 @@ export default async function AuthedLayout({
   sidebar: React.ReactNode;
   logo: React.ReactNode;
 }>) {
-  const { orgName } = await params;
+  const { docsUrl } = await params;
 
   const session = await getCurrentSession();
   const loader = await createEditableDocsLoader(
     "localhost:3000",
-    orgName,
+    docsUrl,
     session?.accessToken
   );
   const [colors, layout, fonts, config, root, unsafe_fullRoot] =
@@ -75,13 +75,13 @@ export default async function AuthedLayout({
         darkThemeColor={colors.dark?.themeColor}
       >
         <GlobalStyles
-          domain={"fern.docs.buildwithfern.com"}
+          domain={docsUrl}
           layout={layout}
           fonts={fonts}
           light={colors.light}
           dark={colors.dark}
           inlineCss={config.css?.inline}
-          scopeSelector="#preview-container :root"
+          scopeSelector="#preview-container @theme"
           lightSelector=".light #preview-container"
           darkSelector=".dark #preview-container"
         />

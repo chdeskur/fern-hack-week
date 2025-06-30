@@ -11,17 +11,18 @@ import { SidebarRootNode } from "@fern-docs/components/sidebar/nodes/SidebarRoot
 import { HiddenSidebar } from "@fern-docs/components/theming/HiddenSidebar";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { DocsUrl } from "@/utils/types";
 
 export default async function SidebarPage({
   params,
 }: {
-  params: Promise<{ orgName: string; slug: string }>;
+  params: Promise<{ docsUrl: DocsUrl; slug: string }>;
 }) {
-  const { orgName, slug } = await params;
+  const { docsUrl, slug } = await params;
   const session = await getCurrentSession();
   const loader = await createEditableDocsLoader(
     "localhost:3000",
-    orgName,
+    docsUrl,
     session?.accessToken
   );
   const [config, root] = await Promise.all([
