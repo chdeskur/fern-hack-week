@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
@@ -13,7 +13,7 @@ import PageSubtitle from "./PageSubtitle";
 import PageTitle from "./PageTitle";
 import { mdxToHtml } from "./mdxToHtml";
 
-const ROOT_SLUG_ALIAS = "index";
+const ROOT_SLUG_ALIAS = "root";
 
 export default async function Page({
   params,
@@ -42,6 +42,12 @@ export default async function Page({
 
   // If the page is not found, redirect to the root (index) page
   if (foundNode.type !== "found") {
+    if (slug === root.slug) {
+      // TODO: fix this so that we can redirect to the root page. right now, the root slug is not always the
+      // root page. (e.g. elevenlabs' root == "/docs" but the root page is "/docs/overview")
+      notFound();
+    }
+    // only redirect to root if the slug is not the root slug, otherwise we'll get a redirect loop
     redirect(`/${orgName}/editor/${ROOT_SLUG_ALIAS}`);
   }
 
@@ -85,6 +91,7 @@ export default async function Page({
             initialHtml={html}
             orgName={orgName}
             slug={slug}
+            fileName={page?.filename ?? ""}
           />
         )}
       </div>

@@ -4,6 +4,7 @@ import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
 import { GithubExtendedAccessProtectedRoute } from "@/components/auth/GithubExtendedAccessProtectedRoute";
 import { HeaderToolbar } from "@/components/editor/HeaderToolbar";
+import { MdxStateProvider } from "@/providers/MdxStateContext";
 
 export default async function AuthedLayout({
   params,
@@ -21,10 +22,12 @@ export default async function AuthedLayout({
 
   return (
     <GithubExtendedAccessProtectedRoute orgName={orgName}>
-      <div className="flex w-full flex-col">
-        <HeaderToolbar orgName={orgName} session={session} />
-        {children}
-      </div>
+      <MdxStateProvider>
+        <div className="flex w-full flex-col">
+          <HeaderToolbar orgName={orgName} session={session} />
+          {children}
+        </div>
+      </MdxStateProvider>
     </GithubExtendedAccessProtectedRoute>
   );
 }

@@ -24,7 +24,7 @@ export function DocsSiteNavBar({
       {/* TEMP: shortcut to editor */}
       <DocsSiteNavBarItem
         title="Editor"
-        href={`../../../${orgName}/editor/learn`}
+        href={`../../../${orgName}/editor/root`} // TEMP: shortcut to root page
       />
       <FeatureFlaggedClientSide
         flag={PosthogFeatureFlag.ENABLE_DOCS_ANALYTICS_TAB}

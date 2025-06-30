@@ -13,3 +13,4 @@ export * from "./http-methods";
 export * from "./explorer-route";
 export * from "./layout";
 export * from "./changelog";
+export * from "./string";

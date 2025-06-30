@@ -2,17 +2,19 @@
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
-import { GithubLogo } from "../auth/GithubLogo";
-import { Button } from "../ui/button";
+import { DocsUrl } from "@/utils/types";
+
 import { DocsSiteLink } from "./DocsSiteLink";
+import { GithubSource } from "./GithubSource";
 
 export declare namespace DocsSiteInfo {
   export interface Props {
     docsSite: FdrAPI.dashboard.DocsSite;
+    docsUrl: DocsUrl;
   }
 }
 
-export function DocsSiteInfo({ docsSite }: DocsSiteInfo.Props) {
+export function DocsSiteInfo({ docsSite, docsUrl }: DocsSiteInfo.Props) {
   return (
     <div className="flex min-w-0 flex-col gap-4 text-gray-900">
       <div className="flex flex-col gap-2">
@@ -23,13 +25,7 @@ export function DocsSiteInfo({ docsSite }: DocsSiteInfo.Props) {
           ))}
         </div>
       </div>
-      <div className="flex w-fit flex-col gap-2">
-        <p>Source</p>
-        <Button size="sm">
-          <GithubLogo />
-          Connect Repo
-        </Button>
-      </div>
+      <GithubSource docsUrl={docsUrl} />
     </div>
   );
 }

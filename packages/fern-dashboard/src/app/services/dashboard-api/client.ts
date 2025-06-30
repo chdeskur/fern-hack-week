@@ -1,3 +1,5 @@
+import { generatePrDescription } from "@/app/api/generate-pr-description/route";
+import { getDocsGithubSource } from "@/app/api/get-docs-github-source/route";
 import { getDocsUrlOwner } from "@/app/api/get-docs-url-owner/route";
 import { getMyDocsSites } from "@/app/api/get-my-docs-sites/route";
 import { getMyOrganizations } from "@/app/api/get-my-organizations/route";
@@ -6,6 +8,10 @@ import { getOrgMembers } from "@/app/api/get-org-members/route";
 import { getUserGithubRepos } from "@/app/api/get-user-git-repos/route";
 import { getGitHubPermissions } from "@/app/api/github-permissions/route";
 import { getHomepageImageUrl } from "@/app/api/homepage-images/get/route";
+import { postDocsGithubSource } from "@/app/api/post-docs-github-source/route";
+import { postGitCommit } from "@/app/api/post-git-commit/route";
+import { postCreateBranch } from "@/app/api/post-git-create-branch/route";
+import { postCreatePr } from "@/app/api/post-git-create-pr/route";
 
 export const DashboardApiClient = {
   getMyDocsSites: (
@@ -31,6 +37,30 @@ export const DashboardApiClient = {
     typedFetch<getUserGithubRepos.Response>("/api/get-user-git-repos"),
   getGitHubPermissions: () =>
     typedFetch<getGitHubPermissions.Response>("/api/github-permissions"),
+  postCreateBranch: (request: postCreateBranch.Request) =>
+    typedFetch<postCreateBranch.Response>(
+      "/api/post-git-create-branch",
+      request
+    ),
+  postGitCommit: (request: postGitCommit.Request) =>
+    typedFetch<postGitCommit.Response>("/api/post-git-commit", request),
+  postCreatePr: (request: postCreatePr.Request) =>
+    typedFetch<postCreatePr.Response>("/api/post-git-create-pr", request),
+  generatePrDescription: (request: generatePrDescription.Request) =>
+    typedFetch<generatePrDescription.Response>(
+      "/api/generate-pr-description",
+      request
+    ),
+  getDocsGithubSource: (request: getDocsGithubSource.Request) =>
+    typedFetch<getDocsGithubSource.Response>(
+      "/api/get-docs-github-source",
+      request
+    ),
+  postDocsGithubSource: (request: postDocsGithubSource.Request) =>
+    typedFetch<postDocsGithubSource.Response>(
+      "/api/post-docs-github-source",
+      request
+    ),
 };
 
 async function typedFetch<T>(

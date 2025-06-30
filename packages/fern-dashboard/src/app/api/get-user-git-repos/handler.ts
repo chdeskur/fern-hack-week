@@ -16,12 +16,29 @@ export default async function getUserGithubRepos(userId: Auth0UserID) {
     return [];
   }
 
-  const response = await octokit.request("GET /user/repos", {});
+  const response = await octokit.request("GET /user/repos", {
+    per_page: 100, // max is 100
+    affiliation: "organization_member",
+    since: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+  });
 
-  const repos = response.data.map((repo) => ({
-    name: repo.name,
-    url: repo.html_url,
-  }));
+  const repos: GithubRepo[] = response.data
+    .filter((repo) => {
+      const permissions = repo.permissions;
+      return permissions?.admin || permissions?.push || permissions?.maintain;
+    })
+    .map((repo) => ({
+      name: repo.name,
+      url: repo.html_url,
+      avatarUrl: repo.owner.avatar_url,
+      description: repo.description ?? "",
+      stargazersCount: repo.stargazers_count,
+      owner: repo.owner.name ?? "",
+      organization:
+        repo.owner.type === "Organization"
+          ? (repo.owner.name ?? undefined)
+          : undefined,
+    }));
 
-  return repos as GithubRepo[];
+  return repos;
 }

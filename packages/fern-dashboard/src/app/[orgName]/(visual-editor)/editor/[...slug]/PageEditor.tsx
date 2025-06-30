@@ -3,6 +3,7 @@
 import { EditorEvents } from "@tiptap/react";
 
 import TiptapEditor from "@/components/editor/TiptapEditor";
+import { useMdxState } from "@/providers/MdxStateContext";
 
 import { htmlToMdx } from "./htmlToMdx";
 import { savePageVersion } from "./savePageVersion";
@@ -13,6 +14,8 @@ export declare namespace PageEditor {
     initialHtml: string;
     orgName: string;
     slug: string;
+    editThisPageUrl?: string;
+    fileName: string;
   }
 }
 
@@ -22,11 +25,15 @@ export default function PageEditor({
   initialHtml,
   orgName,
   slug,
+  fileName,
 }: PageEditor.Props) {
+  const { setMdxState } = useMdxState();
+
   function onTiptapEditorUpdate(props: EditorEvents["update"]) {
     const html = props.editor.getHTML();
     const mdx = htmlToMdx(html);
     void savePageVersion({ orgName, slug, mdx });
+    setMdxState(fileName, mdx);
   }
 
   return (

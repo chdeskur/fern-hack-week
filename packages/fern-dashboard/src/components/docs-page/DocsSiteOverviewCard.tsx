@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback } from "react";
 
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 
 import { getLoadableValue } from "@fern-ui/loadable";
 
+import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
+import { DashboardApiClient } from "@/app/services/dashboard-api/client";
+import { useGithubSourceRepo } from "@/state/useGithubSourceRepo";
 import { useDocsSite } from "@/state/useMyDocsSites";
-import { useUserGithubRepos } from "@/state/useUserGithubRepos";
 import { DocsUrl } from "@/utils/types";
 
 import { Button } from "../ui/button";
@@ -19,21 +21,40 @@ import { SkeletonDocsSiteImage } from "./docs-site-image/SkeletonDocsSiteImage";
 export declare namespace DocsSiteOverviewCard {
   export interface Props {
     docsUrl: DocsUrl;
+    session: Auth0SessionData;
   }
 }
 
-export function DocsSiteOverviewCard({ docsUrl }: DocsSiteOverviewCard.Props) {
+export function DocsSiteOverviewCard({
+  docsUrl,
+  session,
+}: DocsSiteOverviewCard.Props) {
   const docsSite = getLoadableValue(useDocsSite(docsUrl));
-  const repos = getLoadableValue(useUserGithubRepos());
+  const sourceRepo = getLoadableValue(useGithubSourceRepo(docsUrl));
 
-  useEffect(() => {
-    console.log("repos", repos);
-  }, [repos]);
-
-  const createBranch = () => {
-    // TODO: Implement this.
+  const createBranch = useCallback(async () => {
     console.log("create branch");
-  };
+    if (sourceRepo?.owner == null || sourceRepo.repo == null) {
+      return;
+    }
+    const randomHexString = crypto.randomUUID().split("-")[0];
+
+    const branchName =
+      new Date().toISOString().split("T")[0] +
+      "-" +
+      session.user.name?.toLowerCase().replace(" ", "_") +
+      "-" +
+      randomHexString;
+    console.log("branchName", branchName);
+
+    const response = await DashboardApiClient.postCreateBranch({
+      owner: sourceRepo.owner,
+      repo: sourceRepo.repo,
+      branch: branchName,
+      baseBranch: "main",
+    });
+    console.log("response", response);
+  }, [sourceRepo, session.user.name]);
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -43,26 +64,30 @@ export function DocsSiteOverviewCard({ docsUrl }: DocsSiteOverviewCard.Props) {
         ) : (
           <SkeletonDocsSiteImage />
         )}
-        {docsSite != null && <DocsSiteInfo docsSite={docsSite} />}
+        {docsSite != null && (
+          <DocsSiteInfo docsUrl={docsUrl} docsSite={docsSite} />
+        )}
       </Card>
 
-      <Card className="flex flex-col gap-2">
-        <div className="flex flex-row items-center justify-between">
-          <p>
-            <b>Open Pull Requests</b>
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-primary hover:text-primary"
-            onClick={createBranch}
-          >
-            <PencilSquareIcon className="text-primary" />
-            Create a PR
-          </Button>
-        </div>
-        <p className="text-gray-1100 text-sm">TODO: List PRs</p>
-      </Card>
+      {sourceRepo?.repoName != null && sourceRepo.owner != null && (
+        <Card className="flex flex-col gap-2">
+          <div className="flex flex-row items-center justify-between">
+            <p>
+              <b>Open Pull Requests</b>
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-primary hover:text-primary"
+              onClick={() => void createBranch()}
+            >
+              <PencilSquareIcon className="text-primary" />
+              Create a Branch
+            </Button>
+          </div>
+          <p className="text-gray-1100 text-sm">TODO: List PRs</p>
+        </Card>
+      )}
     </div>
   );
 }

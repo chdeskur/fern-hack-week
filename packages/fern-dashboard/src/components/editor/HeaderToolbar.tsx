@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import {
   ArrowUturnLeftIcon,
   ArrowUturnRightIcon,
@@ -7,10 +9,19 @@ import {
 import { ArrowLeftIcon, Globe, SettingsIcon } from "lucide-react";
 
 import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
+import { DashboardApiClient } from "@/app/services/dashboard-api/client";
+import {
+  handleCreatePr,
+  handleGeneratePrDescription,
+} from "@/app/services/github/github";
+import { useMdxState } from "@/providers/MdxStateContext";
 
 import { GithubLogo } from "../auth/GithubLogo";
 import { ProfileImage } from "../layout/ProfileImage";
 import { Button } from "../ui/button";
+
+// TODO: hardcoded while developing
+const TEST_BRANCH = "mike/458bb34e";
 
 export function HeaderToolbar({
   orgName,
@@ -20,16 +31,54 @@ export function HeaderToolbar({
   session: Auth0SessionData;
 }) {
   const { name, picture } = session.user;
+  const { updatedMarkdownFiles } = useMdxState();
 
-  const handleCommit = () => {
-    // TODO: Implement this.
-    console.log("commit");
-  };
+  const [isCommitting, setIsCommitting] = useState(false);
 
-  const handlePublish = () => {
-    // TODO: Implement this.
-    console.log("publish");
-  };
+  useEffect(() => {
+    console.log("updatedMarkdownFiles", updatedMarkdownFiles);
+  }, [updatedMarkdownFiles]);
+
+  async function handleCommitPress() {
+    if (Object.keys(updatedMarkdownFiles).length === 0) {
+      console.log("No changes to commit");
+      return;
+    }
+    setIsCommitting(true);
+    try {
+      const response = await DashboardApiClient.postGitCommit({
+        owner: "fern-api",
+        repo: "fern",
+        branch: TEST_BRANCH,
+        message: "Visual Editor: Update",
+        files: Object.entries(updatedMarkdownFiles).map(
+          ([filePath, content]) => ({
+            path: `fern/${filePath}`,
+            content,
+            mode: "100644",
+          })
+        ),
+      });
+      if (response.success) {
+        console.log("Successfully committed changes:", response.commitSha);
+      } else {
+        console.error("Failed to commit changes:", response.error);
+      }
+    } catch (error) {
+      console.error("Error committing changes:", error);
+    } finally {
+      setIsCommitting(false);
+    }
+  }
+
+  async function handleCreatePrPress() {
+    await handleCreatePr({
+      branch: TEST_BRANCH,
+    });
+    await handleGeneratePrDescription({
+      branch: TEST_BRANCH,
+    });
+  }
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-2 border-b border-gray-500 bg-white px-2 py-2 shadow-sm md:py-1">
@@ -90,14 +139,21 @@ export function HeaderToolbar({
         {/* <Button variant="ghost">Files</Button> */}
 
         <div className="flex">
-          <Button className="rounded-r-none border-r-0" onClick={handleCommit}>
+          <Button
+            loading={isCommitting}
+            disabled={
+              isCommitting || Object.keys(updatedMarkdownFiles).length === 0
+            }
+            className="rounded-r-none border-r-0"
+            onClick={() => void handleCommitPress()}
+          >
             <GithubLogo />
             Commit
           </Button>
           <Button
             variant="outline"
             className="rounded-l-none border-l-0"
-            onClick={handlePublish}
+            onClick={() => void handleCreatePrPress()}
           >
             <GithubLogo />
             Publish
