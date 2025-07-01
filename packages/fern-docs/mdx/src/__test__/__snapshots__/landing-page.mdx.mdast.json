@@ -320,7 +320,6 @@
                                   269
                                 ]
                               },
-                              "kind": "init",
                               "value": {
                                 "type": "Identifier",
                                 "start": 265,
@@ -343,6 +342,7 @@
                                   269
                                 ]
                               },
+                              "kind": "init",
                               "range": [
                                 265,
                                 269
@@ -389,7 +389,6 @@
                                   276
                                 ]
                               },
-                              "kind": "init",
                               "value": {
                                 "type": "Identifier",
                                 "start": 271,
@@ -412,6 +411,7 @@
                                   276
                                 ]
                               },
+                              "kind": "init",
                               "range": [
                                 271,
                                 276
@@ -458,7 +458,6 @@
                                   284
                                 ]
                               },
-                              "kind": "init",
                               "value": {
                                 "type": "Identifier",
                                 "start": 278,
@@ -481,6 +480,7 @@
                                   284
                                 ]
                               },
+                              "kind": "init",
                               "range": [
                                 278,
                                 284
@@ -527,7 +527,6 @@
                                   297
                                 ]
                               },
-                              "kind": "init",
                               "value": {
                                 "type": "Identifier",
                                 "start": 286,
@@ -550,6 +549,7 @@
                                   297
                                 ]
                               },
+                              "kind": "init",
                               "range": [
                                 286,
                                 297
@@ -3788,7 +3788,6 @@
                                   1499
                                 ]
                               },
-                              "kind": "init",
                               "value": {
                                 "type": "Identifier",
                                 "start": 1495,
@@ -3811,6 +3810,7 @@
                                   1499
                                 ]
                               },
+                              "kind": "init",
                               "range": [
                                 1495,
                                 1499
@@ -3857,7 +3857,6 @@
                                   1506
                                 ]
                               },
-                              "kind": "init",
                               "value": {
                                 "type": "Identifier",
                                 "start": 1501,
@@ -3880,6 +3879,7 @@
                                   1506
                                 ]
                               },
+                              "kind": "init",
                               "range": [
                                 1501,
                                 1506

@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
+import { serializeMdx } from "@fern-api/docs-mdx/bundler/serialize";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getPageId, slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { AbstractLayoutEvaluatorContent } from "@fern-docs/components/layouts/AbstractLayoutEvaluatorContent";
@@ -12,7 +13,6 @@ import { DocsUrl } from "@/utils/types";
 import PageEditor from "./PageEditor";
 import PageSubtitle from "./PageSubtitle";
 import PageTitle from "./PageTitle";
-import { mdxToHtml } from "./mdxToHtml";
 
 const ROOT_SLUG_ALIAS = "root";
 
@@ -65,7 +65,7 @@ export default async function Page({
   const pageId = getPageId(foundNode.node);
 
   const page = pageId && (await loader.getPage(pageId));
-  const html = page?.markdown && (await mdxToHtml(page?.markdown));
+  const serializedMdx = page?.markdown && (await serializeMdx(page?.markdown));
 
   return (
     // TODO: Currently, we are force-hiding the table of contents is within Visual Editor.
@@ -96,13 +96,13 @@ export default async function Page({
           orgName={orgName}
           slug={slug}
         />
-        {html && (
+        {serializedMdx && (
           <PageEditor
             className="w-full max-w-2xl"
-            initialHtml={html}
-            orgName={orgName}
-            slug={slug}
             fileName={page?.filename ?? ""}
+            orgName={orgName}
+            serializedMdx={serializedMdx}
+            slug={slug}
           />
         )}
       </div>

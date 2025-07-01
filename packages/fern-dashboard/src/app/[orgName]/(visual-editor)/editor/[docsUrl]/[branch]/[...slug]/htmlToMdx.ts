@@ -1,6 +1,9 @@
 import TurndownService from "turndown";
 
-const turndownService = new TurndownService();
+const turndownService = new TurndownService({
+  headingStyle: "atx",
+  bulletListMarker: "-",
+});
 
 // HACK: this is a PoC to get mdx from html
 export function htmlToMdx(html: string) {

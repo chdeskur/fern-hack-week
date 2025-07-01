@@ -33,7 +33,7 @@ export const Fallback = Node.create<FallbackOptions>({
 
   addOptions() {
     return {
-      HTMLAttributes: { class: "h-32 w-full bg-gray-200" },
+      HTMLAttributes: { class: "h-32 w-full bg-gray-200 mb-4" },
     };
   },
 
