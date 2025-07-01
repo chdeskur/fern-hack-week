@@ -41,6 +41,9 @@ export default async function getDocsGithubSourceHandler({
   }
 
   const octokit = await getOctokit(userId);
+  if (octokit == null) {
+    return EMPTY_RESPONSE;
+  }
 
   const [owner, repo] = docsUrlMetadata.body.gitUrl.split("/").slice(-2);
   if (owner == null || repo == null) {

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import checkGitHubPermissions from "@/app/api/github-permissions/handler";
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DocsSiteOverviewCard } from "@/components/docs-page/DocsSiteOverviewCard";
@@ -19,6 +20,7 @@ export default async function Page(props: {
     redirect("/");
   }
 
+  const githubPermissions = await checkGitHubPermissions(session.user.sub);
   return (
     <FeatureFlaggedServerSide
       flag={PosthogFeatureFlag.ENABLE_DOCS_PAGE}
@@ -28,6 +30,7 @@ export default async function Page(props: {
         orgName={orgName}
         docsUrl={docsUrl}
         session={session}
+        hasRepoAccess={githubPermissions.hasRepoAccess}
       />
     </FeatureFlaggedServerSide>
   );
