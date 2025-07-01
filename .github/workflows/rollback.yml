@@ -1,0 +1,158 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+        target_tag:
+          description: Which tag should we rollback to
+          type: string
+          required: true
+
+env:
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+
+jobs:
+  Redeploy-Production:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_PROJECT_ID: prj_XXWllSgR38im0A8e0cKXjOnMoo07
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+          ref: ${{ github.event.inputs.target_tag }}
+      - name: Install
+        uses: ./.github/actions/install
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
+      - name: Promote Deployment
+        run: |
+          url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+          vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}
+
+  Redeploy-Production-Slash:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_PROJECT_ID: prj_TnhxLeFgHnzYBZV6XfKMZ8sfUd13
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+          ref: ${{ github.event.inputs.target_tag }}
+      - name: Install
+        uses: ./.github/actions/install
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
+      - name: Promote Deployment
+        run: |
+          url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+          vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}       
+          
+  Redeploy-Production-Assets:
+      runs-on: ubuntu-latest
+      env:
+        VERCEL_PROJECT_ID: prj_PScht6A7acGj2jELnQHXx3NLPVzw
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 2 # This helps turbo resolve changes faster
+            ref: ${{ github.event.inputs.target_tag }}
+        - name: Install
+          uses: ./.github/actions/install
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+        - name: Pull Vercel Environment Information
+          run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Build Project Artifacts
+          run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Deploy Project Artifacts to Vercel
+          id: deploy
+          run: |
+            url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+            echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
+        - name: Promote Deployment
+          run: |
+            url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+            vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}
+  
+  Redeploy-Production-Preview:
+      runs-on: ubuntu-latest
+      env:
+        VERCEL_PROJECT_ID: prj_z06epFqkoFgm4PjgtDfcKLmXbWrW
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 2 # This helps turbo resolve changes faster
+            ref: ${{ github.event.inputs.target_tag }}
+        - name: Install
+          uses: ./.github/actions/install
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+        - name: Pull Vercel Environment Information
+          run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Build Project Artifacts
+          run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Deploy Project Artifacts to Vercel
+          id: deploy
+          run: |
+            url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+            echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
+        - name: Promote Deployment
+          run: |
+            url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
+            vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}
+
+
+  redeploy-local-preview:
+    name: Redeploy Local Preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.target_tag }}
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Install
+        uses: ./.github/actions/install
+      - name: Compile
+        run: pnpm compile
+      - name: Build local preview bundle
+        run: pnpm --filter=@fern-docs/bundle run docs:build:local
+      - name: Copy static and public files
+        working-directory: packages/fern-docs/bundle
+        run: cp -r .next/static .next/standalone/packages/fern-docs/bundle/.next && cp -r public .next/standalone/packages/fern-docs/bundle
+      - name: Remove unnecessary files
+        working-directory: packages/fern-docs/bundle
+        run: find .next -depth -mindepth 1 -not -path ".next/standalone*" -exec rm -rf {} \;
+      - name: Remove esbuild dependency
+        working-directory: packages/fern-docs/bundle
+        run: rm -rf .next/standalone/node_modules/.pnpm/esbuild@0.25.0 && rm -rf .next/standalone/node_modules/.pnpm/@esbuild+linux-x64@0.25.0
+      - name: Synthesize local preview bundle
+        run: pnpm --filter=@fern-platform/cdk run deploy-app:prod
+
+  # TODO: Add job to update GH releases (after redeploy completes, to clarify that all current tags after the rollback tag should be considered unstable... or something to that effect)
