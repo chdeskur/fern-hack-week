@@ -42,15 +42,15 @@ export function getModelConfig(model: ModelId): ModelConfig {
 }
 
 export function getLanguageModel(model: string | undefined): LanguageModelV1 {
-  if (typeof model === "undefined" || model === "claude-4") {
-    const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-    return wrapAISDKModel(anthropic("claude-4-sonnet-20250514"));
-  }
-
   if (model === "command-a" || model === "command-r-plus") {
     // TODO: remove command-r-plus once fern generate change is resolved
     const cohere = createCohere({ apiKey: cohereApiKey() });
     return wrapAISDKModel(cohere("command-a-03-2025"));
+  }
+
+  if (model === "claude-4") {
+    const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
+    return wrapAISDKModel(anthropic("claude-4-sonnet-20250514"));
   }
 
   const modelConfig = getModelConfig(model ?? DEFAULT_MODEL_ID);
