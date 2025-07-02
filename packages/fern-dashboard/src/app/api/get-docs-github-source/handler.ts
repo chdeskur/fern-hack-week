@@ -42,24 +42,46 @@ export default async function getDocsGithubSourceHandler({
 
   const octokit = await getOctokit(userId);
   if (octokit == null) {
-    return EMPTY_RESPONSE;
+    return {
+      githubUrl: docsUrlMetadata.body.gitUrl,
+      repoName: undefined,
+      owner: undefined,
+      repo: undefined,
+      baseBranch: undefined,
+    };
   }
 
   const [owner, repo] = docsUrlMetadata.body.gitUrl.split("/").slice(-2);
   if (owner == null || repo == null) {
-    return EMPTY_RESPONSE;
+    return {
+      githubUrl: docsUrlMetadata.body.gitUrl,
+      repoName: undefined,
+      owner: undefined,
+      repo: undefined,
+      baseBranch: undefined,
+    };
   }
 
-  const response = await octokit.request("GET /repos/{owner}/{repo}", {
-    owner,
-    repo,
-  });
-
-  return {
-    githubUrl: docsUrlMetadata.body.gitUrl,
-    repoName: response.data.full_name,
-    owner: response.data.owner.name ?? owner,
-    repo: response.data.name ?? repo,
-    baseBranch: response.data.default_branch,
-  };
+  try {
+    const response = await octokit.request("GET /repos/{owner}/{repo}", {
+      owner,
+      repo,
+    });
+    return {
+      githubUrl: docsUrlMetadata.body.gitUrl,
+      repoName: response.data.full_name,
+      owner: response.data.owner.name ?? owner,
+      repo: response.data.name ?? repo,
+      baseBranch: response.data.default_branch,
+    };
+  } catch (error) {
+    console.error("Failed to get repo info", error);
+    return {
+      githubUrl: docsUrlMetadata.body.gitUrl,
+      repoName: undefined,
+      owner: undefined,
+      repo: undefined,
+      baseBranch: undefined,
+    };
+  }
 }

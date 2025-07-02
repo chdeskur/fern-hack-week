@@ -46,8 +46,6 @@ export default async function Page({
   const slug = slugAlias === ROOT_SLUG_ALIAS ? root.slug : slugAlias;
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
 
-  console.log("foundNode", foundNode, root.slug);
-
   // If the page is not found, redirect to the root (index) page
   if (foundNode.type !== "found") {
     if (foundNode.redirect) {

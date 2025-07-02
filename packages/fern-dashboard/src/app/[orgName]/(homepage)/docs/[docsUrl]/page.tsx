@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 
-import checkGitHubPermissions from "@/app/api/github-permissions/handler";
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DocsSiteOverviewCard } from "@/components/docs-page/DocsSiteOverviewCard";
+import { GithubProtectedArea } from "@/components/docs-page/GithubProtectedArea";
+import { GithubSource } from "@/components/docs-page/GithubSource";
 import { PosthogFeatureFlag } from "@/components/posthog/feature-flags/flags";
 import { FeatureFlaggedServerSide } from "@/components/posthog/feature-flags/server-side";
 
@@ -20,17 +21,25 @@ export default async function Page(props: {
     redirect("/");
   }
 
-  const githubPermissions = await checkGitHubPermissions(session.user.sub);
   return (
     <FeatureFlaggedServerSide
       flag={PosthogFeatureFlag.ENABLE_DOCS_PAGE}
       redirectWhenDisabled
     >
       <DocsSiteOverviewCard
-        orgName={orgName}
         docsUrl={docsUrl}
-        session={session}
-        hasRepoAccess={githubPermissions.hasRepoAccess}
+        githubProtectedArea={
+          <div className="flex w-fit flex-col gap-2">
+            <p>Source</p>
+            <GithubProtectedArea>
+              <GithubSource
+                docsUrl={docsUrl}
+                orgName={orgName}
+                session={session}
+              />
+            </GithubProtectedArea>
+          </div>
+        }
       />
     </FeatureFlaggedServerSide>
   );

@@ -15,12 +15,15 @@ import { GlobalStyles } from "@fern-docs/components/theming/global-styles";
 import { DesktopSearchButton } from "@fern-docs/search-ui/components/desktop/desktop-search-button";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { Auth0OrgName } from "@/app/services/auth0/types";
 import { PreviewHeader } from "@/components/docs-preview/PreviewHeader";
+import { EditorLinkInterceptor } from "@/components/editor/EditorLinkInterceptor";
+import { EditorRoutingProvider } from "@/providers/EditorRoutingContext";
 import { DocsUrl } from "@/utils/types";
 
 import "./index.css";
 
-export default async function AuthedLayout({
+export default async function VisualEditorPreviewLayout({
   params,
   children,
   headertabs,
@@ -29,7 +32,7 @@ export default async function AuthedLayout({
   sidebar,
   logo,
 }: Readonly<{
-  params: Promise<{ docsUrl: DocsUrl }>;
+  params: Promise<{ orgName: Auth0OrgName; docsUrl: DocsUrl; branch: string }>;
   children: React.JSX.Element;
   headertabs: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -37,7 +40,7 @@ export default async function AuthedLayout({
   sidebar: React.ReactNode;
   logo: React.ReactNode;
 }>) {
-  const { docsUrl } = await params;
+  const { orgName, docsUrl, branch } = await params;
 
   const session = await getCurrentSession();
   const loader = await createEditableDocsLoader(
@@ -90,106 +93,116 @@ export default async function AuthedLayout({
             sidebarRootNodesToChildToParentsMap
           }
         >
-          <div className="border-1 border-border m-2 flex flex-col overflow-hidden rounded-2xl shadow-sm">
+          <div className="border-1 m-2 flex flex-col overflow-hidden rounded-2xl border-gray-500 shadow-sm">
             {/* BOUNDARY NOTE: All items within the #preview-container will be themed with domain-specific styles. */}
-            <div id="preview-container">
-              <AbstractDefaultDocs
-                header={
-                  <PreviewHeader
-                    navbarLinks={<NavbarLinks loader={loader} />}
-                    headertabs={headertabs}
-                    versionSelect={versionSelect}
-                    productSelect={productSelect}
-                    logo={logo}
-                    showSearchBar={layout.searchbarPlacement === "HEADER"}
-                  />
-                }
-                lightSidebarClassName={
-                  colors.light?.sidebarBackgroundTheme === "dark"
-                    ? "dark"
-                    : undefined
-                }
-                darkSidebarClassName={
-                  colors.dark?.sidebarBackgroundTheme === "light"
-                    ? "light"
-                    : undefined
-                }
-                lightHeaderClassName={
-                  colors.light?.headerBackgroundTheme === "dark"
-                    ? "dark"
-                    : undefined
-                }
-                darkHeaderClassName={
-                  colors.dark?.headerBackgroundTheme === "light"
-                    ? "light"
-                    : undefined
-                }
-                isHeaderDisabled={layout.isHeaderDisabled}
-                versionSelect={versionSelect}
-                productSelect={productSelect}
-                // TODO: isSidebarFixed ends up putting the sidebar outside of the preview container. We should fix this,
-                // as this also removes certain styles that we want to apply to the sidebar.
-                // isSidebarFixed={
-                // !!colors.dark?.sidebarBackground ||
-                // !!colors.light?.sidebarBackground ||
-                // layout.isHeaderDisabled
-                // }
-                sidebar={
-                  <SidebarContainer
-                    logo={
-                      <React.Suspense fallback={null}>{logo}</React.Suspense>
-                    }
-                    showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
-                    showHeaderInSidebar={showHeaderInSidebar}
-                    productSelect={
-                      <React.Suspense fallback={null} key="product-select-3">
-                        {productSelect}
-                      </React.Suspense>
-                    }
-                    versionSelect={
-                      <React.Suspense fallback={null} key="version-select-3">
-                        {versionSelect}
-                      </React.Suspense>
-                    }
-                    navbarLinks={
-                      <React.Suspense fallback={null}>
-                        <NavbarLinks loader={loader} />
-                      </React.Suspense>
-                    }
-                    loginButton={
-                      <React.Suspense fallback={null}>
-                        {/* <LoginButton
-                    loader={loader}
-                    className="my-6 flex w-full justify-between lg:hidden"
-                    showIcon
-                  /> */}
-                      </React.Suspense>
-                    }
-                    searchBar={<DesktopSearchButton />}
-                  >
-                    {sidebar}
-                  </SidebarContainer>
-                }
-                headerTabs={
-                  <AbstractHeaderTabsRoot
-                    searchBar={
-                      showSearchBarInHeaderTabs && (
-                        <DesktopSearchButton
-                          id={FERN_SEARCH_BUTTON_ID}
-                          className="fern-header-search-bar cursor-not-allowed overflow-hidden"
-                        />
-                      )
-                    }
-                  >
-                    {headertabs}
-                  </AbstractHeaderTabsRoot>
-                }
-                hasProductsOrVersions={hasProductsOrVersions}
-                // announcement={<div>Announcement</div>}
-              >
-                {children}
-              </AbstractDefaultDocs>
-            </div>
+            <EditorRoutingProvider
+              value={{
+                orgName,
+                docsUrl,
+                branch,
+                isEditorMode: true,
+              }}
+            >
+              <div id="preview-container">
+                <EditorLinkInterceptor />
+                <AbstractDefaultDocs
+                  header={
+                    <PreviewHeader
+                      navbarLinks={<NavbarLinks loader={loader} />}
+                      headertabs={headertabs}
+                      versionSelect={versionSelect}
+                      productSelect={productSelect}
+                      logo={logo}
+                      showSearchBar={layout.searchbarPlacement === "HEADER"}
+                    />
+                  }
+                  lightSidebarClassName={
+                    colors.light?.sidebarBackgroundTheme === "dark"
+                      ? "dark"
+                      : undefined
+                  }
+                  darkSidebarClassName={
+                    colors.dark?.sidebarBackgroundTheme === "light"
+                      ? "light"
+                      : undefined
+                  }
+                  lightHeaderClassName={
+                    colors.light?.headerBackgroundTheme === "dark"
+                      ? "dark"
+                      : undefined
+                  }
+                  darkHeaderClassName={
+                    colors.dark?.headerBackgroundTheme === "light"
+                      ? "light"
+                      : undefined
+                  }
+                  isHeaderDisabled={layout.isHeaderDisabled}
+                  versionSelect={versionSelect}
+                  productSelect={productSelect}
+                  // TODO: isSidebarFixed ends up putting the sidebar outside of the preview container. We should fix this,
+                  // as this also removes certain styles that we want to apply to the sidebar.
+                  // isSidebarFixed={
+                  // !!colors.dark?.sidebarBackground ||
+                  // !!colors.light?.sidebarBackground ||
+                  // layout.isHeaderDisabled
+                  // }
+                  sidebar={
+                    <SidebarContainer
+                      logo={
+                        <React.Suspense fallback={null}>{logo}</React.Suspense>
+                      }
+                      showSearchBar={layout.searchbarPlacement === "SIDEBAR"}
+                      showHeaderInSidebar={showHeaderInSidebar}
+                      productSelect={
+                        <React.Suspense fallback={null} key="product-select-3">
+                          {productSelect}
+                        </React.Suspense>
+                      }
+                      versionSelect={
+                        <React.Suspense fallback={null} key="version-select-3">
+                          {versionSelect}
+                        </React.Suspense>
+                      }
+                      navbarLinks={
+                        <React.Suspense fallback={null}>
+                          <NavbarLinks loader={loader} />
+                        </React.Suspense>
+                      }
+                      loginButton={
+                        <React.Suspense fallback={null}>
+                          {/* <LoginButton
+                              loader={loader}
+                              className="my-6 flex w-full justify-between lg:hidden"
+                              showIcon
+                            /> */}
+                        </React.Suspense>
+                      }
+                      searchBar={<DesktopSearchButton />}
+                    >
+                      {sidebar}
+                    </SidebarContainer>
+                  }
+                  headerTabs={
+                    <AbstractHeaderTabsRoot
+                      searchBar={
+                        showSearchBarInHeaderTabs && (
+                          <DesktopSearchButton
+                            id={FERN_SEARCH_BUTTON_ID}
+                            className="fern-header-search-bar cursor-not-allowed overflow-hidden"
+                          />
+                        )
+                      }
+                    >
+                      {headertabs}
+                    </AbstractHeaderTabsRoot>
+                  }
+                  hasProductsOrVersions={hasProductsOrVersions}
+                  // announcement={<div>Announcement</div>}
+                >
+                  {children}
+                </AbstractDefaultDocs>
+              </div>
+            </EditorRoutingProvider>
           </div>
         </RootNodeProvider>
       </FernThemeProvider>

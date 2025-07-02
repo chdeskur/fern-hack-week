@@ -35,23 +35,5 @@ export default async function HeaderTabsPage({
     return null;
   }
 
-  // const veTabs = tabs.map((tab) => {
-  //   if (tab.type === "link") {
-  //     return {
-  //       ...tab,
-  //       url: Url(`/${orgName}/editor/${tab.url}`),
-  //     };
-  //   }
-  //   return {
-  //     ...tab,
-  //     href: slugToHref(
-  //       convertToEditorRoute(
-  //         orgName,
-  //         hasRedirect(tab) ? tab.pointsTo : tab.slug
-  //       )
-  //     ),
-  //   };
-  // });
-
   return <HeaderTabsList tabs={tabs} />;
 }

@@ -4,15 +4,23 @@ import { GithubLogo } from "./GithubLogo";
 export const LoginButton = ({
   returnTo,
   additionalParams,
+  buttonProps,
+  children,
 }: {
   returnTo?: string;
   additionalParams?: Record<string, string>;
+  buttonProps?: React.ComponentProps<typeof Button>;
+  children?: React.ReactNode;
 }) => {
   return (
-    <Button asChild>
+    <Button {...buttonProps} asChild>
       <a href={getLoginUrl({ returnTo, additionalParams })}>
-        <GithubLogo />
-        Continue with Github
+        {children ?? (
+          <>
+            <GithubLogo />
+            Continue with Github
+          </>
+        )}
       </a>
     </Button>
   );
