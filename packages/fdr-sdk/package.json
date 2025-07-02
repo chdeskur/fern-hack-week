@@ -40,7 +40,7 @@
   ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build tsconfig.build.json",
+    "compile": "tsc --build",
     "dev": "tsc --watch tsconfig.build.json",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",

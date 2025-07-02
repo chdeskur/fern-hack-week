@@ -2,24 +2,48 @@
   "extends": "@fern-platform/configs/tsconfig/nextjs.json",
   "compilerOptions": {
     "rootDir": ".",
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["node", "next", "vitest/globals"],
+    "skipLibCheck": true
   },
   "exclude": ["node_modules"],
   "include": [
-    "**/*",
-    ".next/types/**/*.ts",
+    "src/**/*",
+    // ".next/types/**/*.ts",
     "next.config.ts",
-    "vitest.config.ts",
-    "src/components/members/.tsx"
+    "vitest.config.ts"
   ],
   "references": [
     {
-      "path": "../fdr-sdk/tsconfig.json"
+      "path": "../fdr-sdk"
     },
     {
-      "path": "../commons/loadable/tsconfig.json"
+      "path": "../commons/loadable"
+    },
+    {
+      "path": "../commons/docs-loader"
+    },
+    {
+      "path": "../commons/docs-mdx"
+    },
+    {
+      "path": "../commons/docs-server"
+    },
+    {
+      "path": "../commons/docs-utils"
+    },
+    {
+      "path": "../commons/fdr-utils"
+    },
+    {
+      "path": "../fern-docs/components"
+    },
+    {
+      "path": "../fern-docs/mdx"
     }
   ]
 }

@@ -10,7 +10,7 @@
     "incremental": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "lib": ["ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,

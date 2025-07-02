@@ -10,10 +10,16 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../fdr-sdk/tsconfig.build.json"
+      "path": "../../fdr-sdk"
     },
     {
-      "path": "../../commons/core-utils"
+      "path": "../docs-server"
+    },
+    {
+      "path": "../docs-utils"
+    },
+    {
+      "path": "../core-utils"
     }
   ]
 }

@@ -9,7 +9,6 @@
   },
   "sideEffects": false,
   "scripts": {
-    "codegen": "prisma generate",
     "compile": "tsc --build",
     "dashboard:build": "next build",
     "dashboard:dev": "next dev",
