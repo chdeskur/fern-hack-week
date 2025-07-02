@@ -44,6 +44,7 @@ types:
     union:
       rest: RestProtocol
       openrpc: OpenRpcProtocol
+      grpc: GrpcProtocol
 
   RestProtocol:
     properties: {}
@@ -52,6 +53,10 @@ types:
     properties:
       methodName: string
 
+  GrpcProtocol:
+    properties:
+      methodName: string
+  
   EndpointSnippetTemplates:
     properties:
       typescript: optional<snippetTemplate.VersionedSnippetTemplate>

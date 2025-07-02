@@ -8,3 +8,4 @@ export * from "./Environment";
 export * from "./Protocol";
 export * from "./RestProtocol";
 export * from "./OpenRpcProtocol";
+export * from "./GrpcProtocol";

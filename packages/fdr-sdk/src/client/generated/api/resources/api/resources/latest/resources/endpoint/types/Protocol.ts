@@ -4,7 +4,10 @@
 
 import * as FernRegistry from "../../../../../../../index.js";
 
-export type Protocol = FernRegistry.api.latest.Protocol.Rest | FernRegistry.api.latest.Protocol.Openrpc;
+export type Protocol =
+    | FernRegistry.api.latest.Protocol.Rest
+    | FernRegistry.api.latest.Protocol.Openrpc
+    | FernRegistry.api.latest.Protocol.Grpc;
 
 export namespace Protocol {
     export interface Rest extends FernRegistry.api.latest.RestProtocol {
@@ -13,5 +16,9 @@ export namespace Protocol {
 
     export interface Openrpc extends FernRegistry.api.latest.OpenRpcProtocol {
         type: "openrpc";
+    }
+
+    export interface Grpc extends FernRegistry.api.latest.GrpcProtocol {
+        type: "grpc";
     }
 }

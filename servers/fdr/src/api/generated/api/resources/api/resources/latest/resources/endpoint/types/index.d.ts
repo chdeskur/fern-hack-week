@@ -6,6 +6,7 @@ export * from "./EndpointDefinition";
 export * from "./Protocol";
 export * from "./RestProtocol";
 export * from "./OpenRpcProtocol";
+export * from "./GrpcProtocol";
 export * from "./EndpointSnippetTemplates";
 export * from "./HttpRequest";
 export * from "./HttpRequestBodyShape";

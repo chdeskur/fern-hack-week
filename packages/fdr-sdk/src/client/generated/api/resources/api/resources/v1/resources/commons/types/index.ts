@@ -8,3 +8,4 @@ export * from "./Environment.js";
 export * from "./Protocol.js";
 export * from "./RestProtocol.js";
 export * from "./OpenRpcProtocol.js";
+export * from "./GrpcProtocol.js";
