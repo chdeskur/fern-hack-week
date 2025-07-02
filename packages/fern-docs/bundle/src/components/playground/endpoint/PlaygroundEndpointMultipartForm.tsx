@@ -269,16 +269,16 @@ export function PlaygroundEndpointMultipartForm({
                   label: field.key,
                   helperText:
                     field.type === "property"
-                      ? renderTypeShorthandRoot(
-                          {
+                      ? renderTypeShorthandRoot({
+                          shape: {
                             type: "optional",
                             shape: field.valueShape,
                             default: undefined,
                           },
                           types,
-                          false,
-                          true
-                        )
+                          isResponse: false,
+                          hideOptional: true,
+                        })
                       : field.type,
                   labelClassName: "font-mono",
                   tooltip:

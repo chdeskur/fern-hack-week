@@ -15,29 +15,43 @@ import {
 
 import { NullableDropdown } from "./NullableDropdown";
 
+export interface TypeShorthandRootOptions {
+  shape: TypeShapeOrReference;
+  types: Record<string, TypeDefinition>;
+  isResponse?: boolean;
+  hideOptional?: boolean;
+  // Used to hide all optional, nullable, and required modifiers
+  hideAllModifiers?: boolean;
+  isNullable?: boolean;
+  onChange?: (value: unknown) => void;
+}
+
 export interface TypeShorthandOptions {
   plural?: boolean;
   withArticle?: boolean;
   nullable?: boolean; // determines whether to render "Optional" or "Nullable"
+  hideAllModifiers?: boolean;
 }
 
-export function renderTypeShorthandRoot(
-  shape: TypeShapeOrReference,
-  types: Record<string, TypeDefinition>,
+export function renderTypeShorthandRoot({
+  shape,
+  types,
   isResponse = false,
   hideOptional = false,
+  hideAllModifiers = false,
   isNullable = false,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onChange: (value: unknown) => void = () => {}
-): ReactNode {
+  onChange = () => {},
+}: TypeShorthandRootOptions): ReactNode {
   const unwrapped = unwrapReference(shape, types);
   const typeShorthand = renderTypeShorthand(
     unwrapped.shape,
-    { nullable: unwrapped.isNullable },
+    { nullable: unwrapped.isNullable, hideAllModifiers },
     types
   );
 
-  const nullableDropdownOptions = isNullable ? typeShorthand.split(" or ") : [];
+  const nullableDropdownOptions =
+    isNullable && !hideAllModifiers ? typeShorthand.split(" or ") : [];
 
   const nullableDropdown =
     nullableDropdownOptions.length > 0 ? (
@@ -50,11 +64,14 @@ export function renderTypeShorthandRoot(
         {!isResponse && nullableDropdown != null
           ? nullableDropdown
           : typeShorthand}
-        {isResponse && unwrapped.isOptional && !unwrapped.isNullable
+        {isResponse &&
+        unwrapped.isOptional &&
+        !unwrapped.isNullable &&
+        !hideAllModifiers
           ? " or null"
           : false}
       </span>
-      {isResponse ? (
+      {isResponse || hideAllModifiers ? (
         false
       ) : !unwrapped.isOptional ? (
         <span className="text-(color:--red-a11)">Required</span>
@@ -67,12 +84,14 @@ export function renderTypeShorthandRoot(
         toPrimitiveTypeLabels({ primitive: unwrapped.shape.value }).map(
           (label, index) => <code key={index}>{label}</code>
         )}
-      {unwrapped.default != null && unwrapped.isOptional && (
-        <span>
-          {"Defaults to "}
-          <code>{unknownToString(unwrapped.default)}</code>
-        </span>
-      )}
+      {unwrapped.default != null &&
+        unwrapped.isOptional &&
+        !hideAllModifiers && (
+          <span>
+            {"Defaults to "}
+            <code>{unknownToString(unwrapped.default)}</code>
+          </span>
+        )}
     </span>
   );
 }
@@ -183,10 +202,12 @@ export function renderTypeShorthand(
     plural = false,
     withArticle = false,
     nullable = false,
+    hideAllModifiers = false,
   }: TypeShorthandOptions = {
     plural: false,
     withArticle: false,
     nullable: false,
+    hideAllModifiers: false,
   },
   types: Record<string, TypeDefinition>
 ): string {
@@ -194,12 +215,14 @@ export function renderTypeShorthand(
   const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
     withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
-  if (unwrapped.isNullable && unwrapped.isOptional) {
-    return `${maybeWithArticle("a", "nullable or optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
-  } else if (unwrapped.isNullable) {
-    return `${maybeWithArticle("a", "nullable")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
-  } else if (unwrapped.isOptional) {
-    return `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  if (!hideAllModifiers) {
+    if (unwrapped.isNullable && unwrapped.isOptional) {
+      return `${maybeWithArticle("a", "nullable or optional")} ${renderTypeShorthand(unwrapped.shape, { plural, hideAllModifiers }, types)}`;
+    } else if (unwrapped.isNullable) {
+      return `${maybeWithArticle("a", "nullable")} ${renderTypeShorthand(unwrapped.shape, { plural, hideAllModifiers }, types)}`;
+    } else if (unwrapped.isOptional) {
+      return `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(unwrapped.shape, { plural, hideAllModifiers }, types)}`;
+    }
   }
 
   return (
@@ -232,7 +255,15 @@ export function renderTypeShorthand(
       undiscriminatedUnion: (union) => {
         return uniq(
           union.variants.map((variant) =>
-            renderTypeShorthand(variant.shape, { plural, withArticle }, types)
+            renderTypeShorthand(
+              variant.shape,
+              {
+                plural,
+                withArticle,
+                hideAllModifiers,
+              },
+              types
+            )
           )
         ).join(" or ");
       },
@@ -246,21 +277,21 @@ export function renderTypeShorthand(
       list: (list) =>
         `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderTypeShorthand(
           list.itemShape,
-          { plural: true },
+          { plural: true, hideAllModifiers },
           types
         )}`,
       set: (set) =>
         `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${renderTypeShorthand(
           set.itemShape,
-          { plural: true },
+          { plural: true, hideAllModifiers },
           types
         )}`,
       map: (map) =>
         `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${renderTypeShorthand(
           map.keyShape,
-          { plural: true },
+          { plural: true, hideAllModifiers },
           types
-        )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
+        )} to ${renderTypeShorthand(map.valueShape, { plural: true, hideAllModifiers }, types)}`,
 
       // literals
       literal: (literal) =>

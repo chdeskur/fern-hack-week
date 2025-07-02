@@ -156,18 +156,18 @@ export const PlaygroundObjectPropertiesFormInternal =
           type: "value",
           value: property.key,
           label: property.key,
-          helperText: renderTypeShorthandRoot(
-            {
+          helperText: renderTypeShorthandRoot({
+            shape: {
               type: "optional",
               shape: property.valueShape,
               default: undefined,
             },
             types,
-            false,
-            true,
-            false,
-            onChange
-          ),
+            isResponse: false,
+            hideOptional: true,
+            isNullable: false,
+            onChange,
+          }),
           labelClassName: "font-mono",
           tooltip:
             property.description != null ? (

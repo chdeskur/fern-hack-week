@@ -60,14 +60,14 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
         unwrapped.shape.type === "primitive" &&
         unwrapped.shape.value.type === "boolean"
       }
-      typeShorthand={renderTypeShorthandRoot(
-        property.valueShape,
+      typeShorthand={renderTypeShorthandRoot({
+        shape: property.valueShape,
         types,
-        false,
-        true,
-        unwrapped.isNullable,
-        onChange
-      )}
+        isResponse: false,
+        hideOptional: true,
+        isNullable: unwrapped.isNullable,
+        onChange,
+      })}
       isNullSelected={isNullSelected}
     >
       {children}

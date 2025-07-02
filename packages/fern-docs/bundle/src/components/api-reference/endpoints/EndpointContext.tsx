@@ -7,6 +7,7 @@ import { noop } from "ts-essentials";
 import {
   EndpointDefinition,
   ErrorResponse,
+  Protocol,
 } from "@fern-api/fdr-sdk/api-definition";
 import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
 
@@ -17,6 +18,7 @@ export const EndpointContext = React.createContext<
   {
     selectedError: ErrorResponse | undefined;
     setSelectedError: (error: ErrorResponse | undefined) => void;
+    endpointProtocol: Protocol | undefined;
   } & Omit<ReturnType<typeof useExampleSelection>, "defaultLanguage">
 >({
   selectedError: undefined,
@@ -32,6 +34,7 @@ export const EndpointContext = React.createContext<
   },
   availableLanguages: [],
   setSelectedExampleKey: noop,
+  endpointProtocol: undefined,
 });
 
 export function EndpointContextProvider({
@@ -108,6 +111,7 @@ export function EndpointContextProvider({
       selectedExampleKey,
       availableLanguages,
       setSelectedExampleKey,
+      endpointProtocol: endpoint.protocol,
     }),
     [
       selectedError,
@@ -118,6 +122,7 @@ export function EndpointContextProvider({
       selectedExampleKey,
       availableLanguages,
       setSelectedExampleKey,
+      endpoint.protocol,
     ]
   );
 
