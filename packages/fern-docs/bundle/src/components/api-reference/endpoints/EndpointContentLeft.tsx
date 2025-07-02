@@ -196,7 +196,7 @@ export async function EndpointContentLeft({
             title="Request"
             titleOverride={
               isGrpcTypeAlias(endpoint.requests[0], endpoint.protocol?.type)
-                ? endpoint.requests[0].body.value.id
+                ? types[endpoint.requests[0].body.value.id]?.displayName
                 : undefined
             }
             description={
@@ -227,7 +227,7 @@ export async function EndpointContentLeft({
               title="Response"
               titleOverride={
                 isGrpcTypeAlias(endpoint.responses[0], endpoint.protocol?.type)
-                  ? endpoint.responses[0].body.value.id
+                  ? types[endpoint.responses[0].body.value.id]?.displayName
                   : undefined
               }
               description={
