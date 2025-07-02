@@ -60,7 +60,9 @@ export async function EndpointContent({
           >
             <EndpointUrlWithPlaygroundBaseUrl
               endpoint={endpoint}
-              className="hidden lg:flex"
+              className={
+                endpoint.protocol?.type === "grpc" ? "hidden" : "hidden lg:flex"
+              }
             />
           </PageHeader>
         }
