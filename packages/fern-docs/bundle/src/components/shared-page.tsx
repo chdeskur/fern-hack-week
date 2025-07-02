@@ -75,6 +75,18 @@ export default async function SharedPage({
     .getSlugMapWithParents()
     .get(slug);
 
+  const authState = await authStatePromise;
+
+  // this is a special case for when the user is not authenticated, but the not-found status originates from an authed node
+  // must be checked before pruning auth tree
+  if (
+    currentNode?.node.authed &&
+    !authState.authed &&
+    authState.authorizationUrl != null
+  ) {
+    redirect(prepareRedirect(authState.authorizationUrl));
+  }
+
   const visibleNodeIds = compact([
     ...(currentNode?.parents.map((node) => node.id) ?? []),
     currentNode?.node.id ?? undefined,
@@ -90,18 +102,6 @@ export default async function SharedPage({
 
   // find the node that is currently being viewed
   const found = FernNavigation.utils.findNode(root, slug);
-
-  const authState = await authStatePromise;
-
-  // this is a special case for when the user is not authenticated, but the not-found status originates from an authed node
-  if (
-    found.type === "notFound" &&
-    found.authed &&
-    !authState.authed &&
-    authState.authorizationUrl != null
-  ) {
-    redirect(prepareRedirect(authState.authorizationUrl));
-  }
 
   const edgeFlags = await edgeFlagsPromise;
 
