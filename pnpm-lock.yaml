@@ -1034,9 +1034,6 @@ importers:
       '@types/turndown':
         specifier: ^5.0.5
         version: 5.0.5
-      prisma:
-        specifier: 5.13.0
-        version: 5.13.0
       tailwindcss:
         specifier: ^4.0.9
         version: 4.0.9
