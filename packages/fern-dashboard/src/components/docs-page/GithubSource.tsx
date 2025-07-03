@@ -72,12 +72,14 @@ export function GithubSource({
               )}
             </SetGithubSourcePopover>
           </div>
-          <CreateBranchButton
-            orgName={orgName}
-            docsUrl={docsUrl}
-            session={session}
-            sourceRepo={githubSource}
-          />
+          {!!githubUrl && (
+            <CreateBranchButton
+              orgName={orgName}
+              docsUrl={docsUrl}
+              session={session}
+              sourceRepo={githubSource}
+            />
+          )}
         </>
       )}
     </>
