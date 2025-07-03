@@ -700,7 +700,7 @@ export class ReadmeGenerator {
 
   private generateContributing(): Block {
     return new Block({
-      id: "contributing",
+      id: "CONTRIBUTING",
       content: `## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

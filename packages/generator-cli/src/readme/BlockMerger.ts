@@ -19,74 +19,36 @@ export class BlockMerger {
   }
 
   public merge(): Block[] {
-    let originalIndex = 0;
-    let updatedIndex = 0;
-
     const merged: BlockList = new BlockList();
-    while (
-      originalIndex < this.original.length &&
-      updatedIndex < this.updated.length
-    ) {
-      const originalBlock = this.getOriginalBlock(originalIndex);
-      const updatedBlock = this.getUpdatedBlock(updatedIndex);
-      if (originalBlock.id === updatedBlock.id) {
-        merged.addBlock(updatedBlock);
-        originalIndex++;
-        updatedIndex++;
-        continue;
-      }
+    const processedUpdated = new Set<string>();
 
-      if (originalIndex <= updatedIndex) {
-        while (originalIndex < this.original.length) {
-          const nextOriginalBlock = this.getOriginalBlock(originalIndex);
-          originalIndex++;
-          if (!this.blockExistsInUpdated(nextOriginalBlock)) {
-            merged.addBlock(nextOriginalBlock);
-          } else {
-            break;
-          }
+    // Process each original block in order
+    for (const originalBlock of this.original) {
+      if (this.blockExistsInUpdated(originalBlock)) {
+        // Use the updated version of this block
+        const updatedBlock = this.updatedByID[originalBlock.id];
+        if (updatedBlock && !processedUpdated.has(updatedBlock.id)) {
+          merged.addBlock(updatedBlock);
+          processedUpdated.add(updatedBlock.id);
         }
-        continue;
+      } else {
+        // Keep the original block since it's not in updated
+        merged.addBlock(originalBlock);
       }
-
-      merged.addBlock(updatedBlock);
-      updatedIndex++;
     }
 
-    while (originalIndex < this.original.length) {
-      const block = this.getOriginalBlock(originalIndex);
-      if (!this.blockExistsInUpdated(block)) {
-        merged.addBlock(block);
+    // Add any new blocks from updated that weren't processed
+    for (const updatedBlock of this.updated) {
+      if (!processedUpdated.has(updatedBlock.id)) {
+        merged.addBlock(updatedBlock);
       }
-      originalIndex++;
-    }
-
-    while (updatedIndex < this.updated.length) {
-      merged.addBlock(this.getUpdatedBlock(updatedIndex));
-      updatedIndex++;
     }
 
     return merged.getBlocks();
   }
 
-  private getOriginalBlock(index: number): Block {
-    return this.getBlockOrThrow(this.original, index);
-  }
-
-  private getUpdatedBlock(index: number): Block {
-    return this.getBlockOrThrow(this.updated, index);
-  }
-
   private blockExistsInUpdated(block: Block): boolean {
     return this.updatedByID[block.id] !== undefined;
-  }
-
-  private getBlockOrThrow(blocks: Block[], index: number): Block {
-    const block = blocks[index];
-    if (block == null) {
-      throw new Error(`index out of bounds: ${index}`);
-    }
-    return block;
   }
 }
 

@@ -30,6 +30,12 @@ export class ReadmeParser {
       }
       currentBlock.content += line + "\n";
     }
+
+    // Don't forget to push the last block
+    if (currentBlock) {
+      blocks.push(currentBlock);
+    }
+
     return {
       header,
       blocks,
