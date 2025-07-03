@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useMemo, useState } from "react";
 
-import { experimental_useObject } from "ai/react";
+import { experimental_useObject } from "@ai-sdk/react";
 import { debounce } from "es-toolkit/function";
 
 import { isNonNullish } from "@fern-api/ui-core-utils";
@@ -49,16 +49,18 @@ export const Suggestions = ({
 
   return (
     <Command.Group forceMount heading="Suggestions">
-      {suggestions.map((suggestion) => (
-        <Command.Item
-          key={suggestion}
-          value={suggestion}
-          onSelect={() => askAI(suggestion)}
-          forceMount
-        >
-          {suggestion}
-        </Command.Item>
-      ))}
+      {suggestions.map((suggestion) => {
+        return (
+          <Command.Item
+            key={suggestion}
+            value={suggestion}
+            onSelect={() => askAI(suggestion)}
+            forceMount
+          >
+            {suggestion}
+          </Command.Item>
+        );
+      })}
       {isLoading &&
         suggestions.length < 5 &&
         Array.from({ length: 5 - suggestions.length }).map((_, index) => (

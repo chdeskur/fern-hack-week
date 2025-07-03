@@ -36,9 +36,9 @@ export const TextArea = forwardRef<
       <textarea
         ref={composeRefs(inputRef, forwardedRef)}
         {...props}
-        onChange={composeEventHandlers(props.onChange, (e) =>
-          onValueChange?.(e.target.value)
-        )}
+        onChange={composeEventHandlers(props.onChange, (e) => {
+          onValueChange?.(e.target.value);
+        })}
         style={{
           padding: `${padding}px`,
           maxHeight: maxLines

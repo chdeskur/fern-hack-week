@@ -11,6 +11,10 @@ import {
 } from "@fern-docs/search-keyword/types";
 
 export type AlgoliaRecordHit = Hit<AlgoliaRecord & BaseHit>;
+export interface AskFernRecordHit {
+  title?: string;
+  url?: string;
+}
 export type MarkdownRecordHit = MarkRequired<Hit<MarkdownRecord>, "type">;
 export type ChangelogRecordHit = MarkRequired<Hit<ChangelogRecord>, "type">;
 export type ApiReferenceRecordHit = MarkRequired<

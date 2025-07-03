@@ -42,3 +42,5 @@ export async function generateHtml({
   </body>
 </html>`;
 }
+
+export type ModelProvider = "anthropic" | "cohere";

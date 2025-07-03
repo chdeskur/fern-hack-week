@@ -11,7 +11,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { cn } from "@fern-docs/components";
 import { Badge } from "@fern-docs/components/badges";
 
-import { AlgoliaRecordHit } from "../../types";
+import { AskFernRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";
 import {
   Tooltip,
@@ -75,12 +75,12 @@ export function FootnoteSup({ node }: { node?: HastElement }) {
                 {fn.title}
               </a>
             </h5>
-            <p className="text-(color:--grayscale-a9) max-w-xs break-all text-xs leading-snug">
+            <p className="text-(color:--grayscale-12) max-w-xs break-all text-xs leading-snug">
               <a
                 href={fn.url}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-(color:--grayscale-a10) hover:underline"
+                className="hover:text-(color:--grayscale-12) hover:underline"
               >
                 {fn.url}
               </a>
@@ -130,7 +130,7 @@ export function FootnotesSection({
   className,
 }: {
   node: HastElement;
-  searchResults: AlgoliaRecordHit[];
+  searchResults: AskFernRecordHit[];
   className?: string;
 }) {
   const { footnotesAtom } = useChatbotTurnContext();
@@ -143,10 +143,6 @@ export function FootnotesSection({
           ids: links.map((l) => l.id),
           url: href,
           title: searchResults.find((result) => result.url === href)?.title,
-          icon: searchResults.find((result) => result.url === href)?.icon,
-          type: searchResults.find((result) => result.url === href)?.type,
-          api_type: searchResults.find((result) => result.url === href)
-            ?.api_type,
         })
       )
     );
@@ -171,7 +167,7 @@ export function FootnotesSection({
                 isSubPage={url.includes("#")}
               />
               {title}
-              <span className="text-(color:--grayscale-a9) text-xs">
+              <span className="text-(color:--grayscale-12) text-xs">
                 {String(index + 1)}
               </span>
             </a>

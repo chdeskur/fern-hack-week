@@ -7,9 +7,16 @@ import { visit } from "unist-util-visit";
 export function MarkdownContent({
   children,
   components,
+  citations,
 }: {
   children: string;
   components?: Components;
+  citations?: {
+    start: number;
+    end: number;
+    text: string;
+    url: string;
+  }[];
 }) {
   /*
     Claude 3.5 sometimes doesn't create footnote definitions correctly
@@ -31,8 +38,31 @@ export function MarkdownContent({
     }
   );
   if (footnoteDefinitions.length > 0) {
-    cleanedContent =
-      cleanedContent.trim() + "\n\n" + footnoteDefinitions.join("\n");
+    cleanedContent = cleanedContent + "\n\n" + footnoteDefinitions.join("\n");
+  }
+
+  if (citations && citations.length > 0) {
+    let urlIndex = 1;
+    let seenIndices: Record<string, boolean> = {};
+    for (const citation of citations) {
+      if (!(citation.url in seenIndices)) {
+        cleanedContent = cleanedContent + ` [^${urlIndex}]`;
+        seenIndices[citation.url] = true;
+        urlIndex++;
+      }
+    }
+    urlIndex = 1;
+    seenIndices = {};
+    for (const [_, citation] of citations.entries()) {
+      const cleanedUrl = citation.url.startsWith("https")
+        ? citation.url
+        : `https://${citation.url}`;
+      if (!seenIndices[citation.url]) {
+        cleanedContent = cleanedContent + `\n\n[^${urlIndex}]: ${cleanedUrl}`;
+        seenIndices[citation.url] = true;
+        urlIndex++;
+      }
+    }
   }
 
   return (

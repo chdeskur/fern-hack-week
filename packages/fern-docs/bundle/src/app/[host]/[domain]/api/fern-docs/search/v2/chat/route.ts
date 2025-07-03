@@ -1,40 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createOpenAI } from "@ai-sdk/openai";
-import {
-  EmbeddingModel,
-  InvalidToolArgumentsError,
-  NoSuchToolError,
-  ToolExecutionError,
-  embed,
-  streamText,
-  tool,
-} from "ai";
-import { initLogger, traced } from "braintrust";
-import { z } from "zod";
+import { UIMessage } from "ai";
+import { initLogger } from "braintrust";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
-import { postToSlack } from "@fern-api/docs-server";
-import { track } from "@fern-api/docs-server/analytics/posthog";
-import { safeVerifyFernJWTConfig } from "@fern-api/docs-server/auth/FernJWT";
-import {
-  openaiApiKey,
-  turbopufferApiKey,
-} from "@fern-api/docs-server/env-variables";
+import { openaiApiKey } from "@fern-api/docs-server/env-variables";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
-  buildCustomConfig,
-  convertTpufRecordsToDocuments,
-  createChatSystemPrompt,
   getLanguageModel,
   getTurbopufferNamespace,
-  queryTurbopuffer,
+  runRouteForAnthropic,
+  runRouteForCohere,
 } from "@fern-docs/search-ask-fern";
 
-import { getFernToken } from "@/app/fern-token";
+import { ModelProvider } from "@/app/utils";
 
 export const maxDuration = 60;
 export const revalidate = 0;
@@ -59,7 +42,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const [authEdgeConfig, edgeFlags] = await Promise.all([
+  const [_, edgeFlags] = await Promise.all([
     getAuthEdgeConfig(domain),
     getEdgeFlags(domain),
   ]);
@@ -75,169 +58,75 @@ export async function POST(req: NextRequest) {
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
 
-  const { messages, url, source, conversationId } = await req.json();
-  const config = await loader.getConfig();
+  const {
+    messages,
+    source,
+    conversationId,
+  }: {
+    url: string;
+    messages: UIMessage[];
+    source: string;
+    conversationId: string;
+  } = await req.json();
 
-  const customConfig = buildCustomConfig(url);
+  const config = await loader.getConfig();
   const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
 
-  const languageModel = getLanguageModel(config.aiChatConfig?.model);
+  const modelId = config.aiChatConfig?.model ?? "claude-3.5";
+  let modelProvider: ModelProvider = "anthropic";
+  if (modelId === "claude-4" || modelId === "claude-3.5")
+    modelProvider = "anthropic";
+  if (modelId === "command-a") modelProvider = "cohere";
+  const languageModel = getLanguageModel(modelId);
+
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-large");
 
-  const start = Date.now();
-
-  const namespace = getTurbopufferNamespace(domain, embeddingModel);
-  const fernToken = await getFernToken();
-  const user = await safeVerifyFernJWTConfig(fernToken, authEdgeConfig);
-  const lastUserMessage: string | undefined = messages.findLast(
-    (message: any) => message.role === "user"
-  )?.content;
-
-  const searchResults = await runQueryTurbopuffer(lastUserMessage, {
-    embeddingModel,
-    namespace,
-    authed: user != null,
-    roles: user?.roles ?? [],
-    topK: 3,
-  });
-  const documents = convertTpufRecordsToDocuments(searchResults).join("\n\n");
-
-  const promptTemplate = config.aiChatConfig?.systemPrompt;
-  const systemPrompt = createChatSystemPrompt({
-    customConfig,
-    domain,
-    date: new Date().toDateString(),
-    documents,
-    promptTemplate,
-  });
-
-  return traced(async (span) => {
-    span.log({
-      metadata: {
-        domain,
-        source: chatSource,
-        conversationId: conversationId,
-      },
-    });
-
-    const documentIdsToIgnore: string[] = [];
-    const result = streamText({
-      model: languageModel,
-      system: systemPrompt,
+  if (modelProvider === "anthropic") {
+    return runRouteForAnthropic({
+      domain,
+      chatSource,
+      promptTemplate: config.aiChatConfig?.systemPrompt,
+      conversationId,
+      lastUserMessage: getLastUserMessage(messages),
       messages,
-      maxSteps: 5,
-      maxRetries: 3,
-      tools: {
-        search: tool({
-          description:
-            "Search the knowledge base for the user's query. Semantic search is enabled.",
-          parameters: z.object({
-            query: z.string(),
-          }),
-          async execute({ query }) {
-            const response = await runQueryTurbopuffer(query, {
-              embeddingModel,
-              namespace,
-              authed: user != null,
-              roles: user?.roles ?? [],
-              topK: 5,
-              documentIdsToIgnore: documentIdsToIgnore,
-            });
-            documentIdsToIgnore.push(...response.map((hit) => hit.id));
-            return response.map((hit) => {
-              const { domain, pathname, hash, document } = hit.attributes;
-              const url = `https://${domain}${pathname}${hash ?? ""}`;
-              if (document.length > 20000) {
-                return {
-                  url,
-                  document: document.slice(0, 20000),
-                  ...(hit.attributes as Omit<
-                    typeof hit.attributes,
-                    "document"
-                  >),
-                };
-              }
-              return { url, ...hit.attributes };
-            });
-          },
-        }),
-      },
-      onFinish: async (e) => {
-        const end = Date.now();
-        track("ask_ai", {
-          languageModel: languageModel.modelId,
-          embeddingModel: embeddingModel.modelId,
-          durationMs: end - start,
-          domain,
-          namespace,
-          numToolCalls: e.toolCalls.length,
-          finishReason: e.finishReason,
-          ...e.usage,
-        });
-        e.warnings?.forEach((warning) => {
-          console.warn(warning);
-        });
-      },
+      embeddingModel,
+      turbopufferNamespace: getTurbopufferNamespace(domain, embeddingModel),
+      languageModel,
     });
-    const response = result.toDataStreamResponse({
-      getErrorMessage: (error) => {
-        if (error == null) {
-          return "";
-        }
-
-        let errorKind = "UnknownError";
-        if (NoSuchToolError.isInstance(error)) {
-          errorKind = "NoSuchToolError";
-        } else if (InvalidToolArgumentsError.isInstance(error)) {
-          errorKind = "InvalidToolArgumentsError";
-        } else if (ToolExecutionError.isInstance(error)) {
-          errorKind = "ToolExecutionError";
-        }
-
-        const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${error}'`;
-        console.error(msg);
-        postToSlack(
-          "#search-notifs",
-          `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${error}\``
-        );
-        return msg;
-      },
+  } else if (modelProvider === "cohere") {
+    return runRouteForCohere({
+      domain,
+      chatSource,
+      promptTemplate: config.aiChatConfig?.systemPrompt,
+      conversationId,
+      lastUserMessage: getLastUserMessage(messages),
+      messages,
+      embeddingModel,
+      turbopufferNamespace: getTurbopufferNamespace(domain, embeddingModel),
+      languageModel,
     });
-
-    response.headers.set("Access-Control-Allow-Origin", "*");
-    response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-    return response;
-  });
+  } else {
+    return NextResponse.json(`Invalid model provider: ${modelProvider}`, {
+      status: 400,
+    });
+  }
 }
 
-async function runQueryTurbopuffer(
-  query: string | null | undefined,
-  opts: {
-    embeddingModel: EmbeddingModel<string>;
-    namespace: string;
-    topK?: number;
-    authed?: boolean;
-    roles?: string[];
-    documentIdsToIgnore?: string[];
+function getLastUserMessage(messages: UIMessage[]): string {
+  let lastUserMessageText = "";
+  const lastUserMessage = messages.findLast((message: UIMessage, _: number) => {
+    return message.role === "user";
+  });
+
+  if (lastUserMessage == null) {
+    return "";
   }
-) {
-  return query == null || query.trimStart().length === 0
-    ? []
-    : await queryTurbopuffer(query, {
-        namespace: opts.namespace,
-        apiKey: turbopufferApiKey(),
-        topK: opts.topK ?? 5,
-        vectorizer: async (text) => {
-          const embedding = await embed({
-            model: opts.embeddingModel,
-            value: text,
-          });
-          return embedding.embedding;
-        },
-        authed: opts.authed,
-        roles: opts.roles,
-        documentIdsToIgnore: opts.documentIdsToIgnore,
-      });
+
+  for (const part of lastUserMessage.parts) {
+    if (part.type === "text") {
+      lastUserMessageText += part.text;
+    }
+  }
+  return lastUserMessageText;
 }

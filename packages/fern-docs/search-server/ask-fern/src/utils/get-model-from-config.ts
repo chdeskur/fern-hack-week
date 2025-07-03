@@ -1,7 +1,7 @@
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createCohere } from "@ai-sdk/cohere";
-import { LanguageModelV1 } from "ai";
+import { LanguageModel } from "ai";
 import { wrapAISDKModel } from "braintrust";
 
 import {
@@ -41,7 +41,7 @@ export function getModelConfig(model: ModelId): ModelConfig {
   return modelConfig;
 }
 
-export function getLanguageModel(model: string | undefined): LanguageModelV1 {
+export function getLanguageModel(model: string | undefined): LanguageModel {
   if (model === "command-a" || model === "command-r-plus") {
     // TODO: remove command-r-plus once fern generate change is resolved
     const cohere = createCohere({ apiKey: cohereApiKey() });

@@ -1,21 +1,20 @@
-import { CustomAskFernConfig } from "../custom/types";
 import { createCohereSystemPrompt } from "../utils/cohere-system-prompt";
 import { createDefaultSystemPrompt } from "../utils/system-prompt";
 
 export function createChatSystemPrompt({
-  customConfig,
+  modelProvider,
   domain,
   date,
   documents,
   promptTemplate,
 }: {
-  customConfig: CustomAskFernConfig;
+  modelProvider: string;
   domain: string;
   date: string;
   documents: string;
   promptTemplate?: string;
 }) {
-  return customConfig.isCohere
+  return modelProvider === "cohere"
     ? createCohereSystemPrompt({
         domain,
         date,

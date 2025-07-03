@@ -9,7 +9,6 @@ import {
   forwardRef,
   isValidElement,
   memo,
-  useDeferredValue,
   useEffect,
   useMemo,
   useRef,
@@ -17,13 +16,14 @@ import {
 } from "react";
 import { Components } from "react-markdown";
 
-import { Message, useChat } from "@ai-sdk/react";
+import { UIMessage, useChat } from "@ai-sdk/react";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { DefaultChatTransport } from "ai";
 import type { Element as HastElement } from "hast";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import {
   ArrowLeft,
   ArrowUp,
@@ -36,12 +36,7 @@ import { useIsomorphicLayoutEffect } from "swr/_internal";
 import { cn } from "@fern-docs/components";
 import { Badge } from "@fern-docs/components/badges";
 import { Button } from "@fern-docs/components/button";
-import {
-  tunnel,
-  useDebouncedCallback,
-  useEventCallback,
-  useIsMobile,
-} from "@fern-ui/react-commons";
+import { tunnel, useEventCallback, useIsMobile } from "@fern-ui/react-commons";
 
 import { FacetFilter } from "../../types";
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
@@ -206,6 +201,7 @@ export const DesktopCommandWithAskAI = forwardRef<
               bounce();
             }}
             initialInput={initialInput}
+            setInitialInput={setInitialInput}
             chatId={chatId}
             onSelectHit={onSelectHit}
             prefetch={prefetch}
@@ -238,6 +234,7 @@ DesktopCommandWithAskAI.displayName = "DesktopCommandWithAskAI";
 const DesktopAskAIContent = (props: {
   onReturnToSearch?: () => void;
   initialInput?: string;
+  setInitialInput?: (initialInput: string) => void;
   chatId?: string;
   useConversationId: () => {
     conversationId: string;
@@ -281,17 +278,15 @@ const DesktopAskAIContent = (props: {
   );
 };
 
-const initialConversationAtom = atom<Message[]>([]);
-
 const DesktopAskAIChat = ({
   onReturnToSearch,
   initialInput,
+  setInitialInput,
   chatId,
   useConversationId,
   api,
   suggestionsApi,
   body,
-  filters,
   headers,
   onSelectHit,
   prefetch,
@@ -302,6 +297,7 @@ const DesktopAskAIChat = ({
 }: {
   onReturnToSearch?: () => void;
   initialInput?: string;
+  setInitialInput?: (initialInput: string) => void;
   chatId?: string;
   useConversationId: () => {
     conversationId: string;
@@ -322,22 +318,19 @@ const DesktopAskAIChat = ({
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userScrolled, setUserScrolled] = useState(false);
-  const [initialConversation, setInitialConversation] = useAtom(
-    initialConversationAtom
-  );
+  const [initialInputSent, setInitialInputSent] = useState(false);
   const { conversationId, resetConversationId } = useConversationId();
   const chat = useChat({
     id: chatId,
-    initialInput,
-    initialMessages: initialConversation,
-    api,
-    body: {
-      ...body,
-      conversationId: conversationId,
-    },
-    headers,
-    onFinish: useEventCallback(() => {
-      setInitialConversation(chat.messages);
+    transport: new DefaultChatTransport({
+      api: api || "/api/chat",
+      credentials: "include",
+      headers: headers,
+      body: {
+        ...body,
+        url: document.location.href,
+        conversationId: conversationId,
+      },
     }),
   });
 
@@ -346,40 +339,38 @@ const DesktopAskAIChat = ({
     if (chat.status !== "ready") {
       setUserScrolled(false);
     }
-  }, [chat.status]);
+  }, [chat.status === "streaming"]);
 
-  const askAI = useDebouncedCallback(
-    (message: string): void => {
-      void chat.append(
-        { role: "user", content: message },
-        {
-          body: {
-            url: document.location.href,
-            filters,
-          },
-        }
-      );
-      chat.setInput("");
-    },
+  const [input, setInput] = useState("");
 
-    [chat.append, chat.setInput],
-    1000,
-    { edges: ["leading"] }
-  );
+  const askAI = (message?: string): void => {
+    // message is set when clicking suggestions
+    // otherwise we use internal state (input, setInput)
+    void chat.sendMessage({
+      role: "user",
+      parts: [{ type: "text", text: message ?? input }],
+    });
+    setInput("");
+  };
 
-  useEffect(() => {
-    if (
-      initialInput &&
-      !chat.messages.map((m) => m.content).includes(initialInput)
-    ) {
-      askAI(initialInput);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (
+    initialInput &&
+    !initialInputSent &&
+    !chat.messages
+      .map((m) =>
+        m.parts
+          .filter((p) => p.type === "text")
+          .map((p) => p.text)
+          .join("")
+      )
+      .includes(initialInput)
+  ) {
+    askAI(initialInput);
+    setInitialInputSent(true);
+    setInitialInput?.("");
+  }
 
   const [isScrolled, setIsScrolled] = useState(false);
-
-  const messages = useDeferredValue(chat.messages);
 
   return (
     <>
@@ -416,9 +407,8 @@ const DesktopAskAIChat = ({
                     size="iconXs"
                     variant="outline"
                     onClick={() => {
-                      chat.stop();
+                      void chat.stop();
                       chat.setMessages([]);
-                      setInitialConversation([]);
                       resetConversationId();
                     }}
                   >
@@ -436,7 +426,7 @@ const DesktopAskAIChat = ({
         </headerActions.In>
 
         <AskAICommandItems
-          messages={messages}
+          messages={chat.messages}
           onSelectHit={onSelectHit}
           prefetch={prefetch}
           components={useMemo(
@@ -492,7 +482,7 @@ const DesktopAskAIChat = ({
                 node,
                 ...props
               }: PropsWithElement<React.ComponentProps<"p">>) => (
-                <p {...props} className="mb-0 mt-0">
+                <p {...props} className="mb-0">
                   {children}
                 </p>
               ),
@@ -516,10 +506,12 @@ const DesktopAskAIChat = ({
       </Command.List>
       <AskAIComposer
         ref={inputRef}
-        value={chat.input}
-        onValueChange={chat.setInput}
+        value={input}
+        onValueChange={setInput}
         isLoading={chat.status !== "ready"}
-        stop={chat.stop}
+        stop={() => {
+          void chat.stop();
+        }}
         onSend={askAI}
         onKeyDown={useEventCallback((e) => {
           if (e.key === "ArrowUp" || e.key === "ArrowDown") {
@@ -633,7 +625,7 @@ const AskAIComposer = forwardRef<
 AskAIComposer.displayName = "AskAIComposer";
 
 const AskAICommandItems = memo<{
-  messages: Message[];
+  messages: UIMessage[];
   onSelectHit?: (path: string) => void;
   components?: Components;
   isLoading?: boolean;
@@ -708,6 +700,7 @@ const AskAICommandItems = memo<{
         {squeezedMessages.map((message, idx) => {
           const isLastMessage = idx === squeezedMessages.length - 1;
           const searchResults = combineSearchResults([message]);
+
           return (
             <ChatbotTurnContextProvider
               key={message.user?.id ?? message.assistant?.id ?? idx}
@@ -772,20 +765,16 @@ const AskAICommandItems = memo<{
                                 return <section {...props}>{children}</section>;
                               },
                             }}
+                            citations={message.assistant.citations ?? []}
                           >
                             {message.assistant.content}
                           </MarkdownContent>
                         )}
-                        {isLastMessage &&
-                          isLoading &&
-                          (!message.toolInvocations ||
-                            message.toolInvocations.some(
-                              (invocation) => invocation.state !== "result"
-                            )) && (
-                            <p className="text-(color:--grayscale-a10) thinking-dots">
-                              Thinking
-                            </p>
-                          )}
+                        {isLastMessage && isLoading && (
+                          <p className="text-(color:--grayscale-a10) thinking-dots">
+                            Thinking
+                          </p>
+                        )}
                         {(!isLastMessage || !isLoading) &&
                           renderActions?.(message)}
                       </section>
@@ -834,7 +823,7 @@ function FootnoteCommands({
           </Badge>
           <div>
             <div className="text-sm font-semibold">{footnote.title}</div>
-            <div className="text-(color:--grayscale-a9) text-xs">
+            <div className="text-(color:--grayscale-12) text-xs">
               {footnote.url}
             </div>
           </div>

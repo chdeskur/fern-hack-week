@@ -29,20 +29,20 @@
     "test:update": "vitest --run -u --passWithNoTests --globals"
   },
   "dependencies": {
-    "@ai-sdk/amazon-bedrock": "^2.0.5",
-    "@ai-sdk/anthropic": "^1.2.12",
-    "@ai-sdk/cohere": "^1.2.9",
+    "@ai-sdk/amazon-bedrock": "3.0.0-beta.2",
+    "@ai-sdk/anthropic": "2.0.0-beta.2",
+    "@ai-sdk/cohere": "2.0.0-beta.2",
     "@fern-api/docs-server": "workspace:*",
     "@fern-api/docs-utils": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/search-utils": "workspace:*",
     "@turbopuffer/turbopuffer": "^0.5.11",
-    "ai": "^4.3.13",
-    "braintrust": "^0.0.184",
+    "ai": "5.0.0-beta.2",
+    "braintrust": "^0.0.207",
     "es-toolkit": "^1.32.0",
     "gpt-tokenizer": "2.9.0",
-    "zod": "^3.24.1"
+    "zod": "^3.25.49"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
