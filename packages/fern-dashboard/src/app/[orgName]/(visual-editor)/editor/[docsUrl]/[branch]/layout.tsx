@@ -26,20 +26,11 @@ export default async function AuthedLayout({
     redirect("/");
   }
 
-  // console.log("docsUrl", docsUrl);
-  // const githubSource = await DashboardApiClient.getDocsGithubSource({
-  //   url: docsUrl,
-  // });
-  // console.log("githubSource", githubSource);
-  // if (githubSource.githubUrl == null) {
-  //   redirect(`/${orgName}/docs/${docsUrl}`);
-  // }
-
   return (
     <GithubExtendedAccessProtectedRoute orgName={orgName}>
       <MdxStateProvider>
         <BranchProvider branch={branch}>
-          <div className="flex w-full flex-col overflow-hidden">
+          <div className="bg-background flex w-full flex-col overflow-hidden">
             <HeaderToolbar
               orgName={orgName}
               session={session}

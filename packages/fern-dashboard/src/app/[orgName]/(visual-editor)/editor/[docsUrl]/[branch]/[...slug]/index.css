@@ -7,18 +7,21 @@
 
 @source "../../../../../../../components";
 
-/* This makes sure that the header stays within the bounds of our preview page */
-#fern-header {
-  @apply sticky top-0;
-}
-
 #preview-container {
   @apply relative;
-  /* @import "../../../../../../../../../fern-docs/bundle/src/components/css/base.scss";
-  @import "../../../../../../../../../fern-docs/bundle/src/components/css/components.scss"; */
+  @import "../../../../../../../../../fern-docs/bundle/src/components/css/base.scss";
+  @import "../../../../../../../../../fern-docs/bundle/src/components/css/components.scss";
 
-  /* @apply font-body text-body overflow-auto text-base; */
-  /* background-color: var(--background, , lightdark(#fff, #000)) !important; */
+  @apply font-body text-body bg-background overflow-auto text-base;
+
+  .fern-background-image {
+    overflow: hidden;
+  }
+
+  /* This makes sure that the header stays within the bounds of our preview page */
+  #fern-header {
+    @apply sticky top-0;
+  }
 }
 
 /* This makes sure that the main content is not pushed down by the header, since the header is no longer fixed in this layout. */
