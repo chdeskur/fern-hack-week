@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 import { useSetAtom } from "jotai";
@@ -13,12 +14,14 @@ import { searchDialogOpenAtom, useIsAskAiEnabled } from "@/state/search";
 import {
   CopyPageOption,
   OpenAISearchOption,
+  OpenWithLLM,
   ViewAsMarkdownOption,
 } from "./PageActionsDropdownOptions";
 import { askAiAtom } from "./search";
 
 export function PageActionsDropdown({ markdown }: { markdown: string }) {
   const [showCopied, setShowCopied] = useState<boolean>(false);
+  const { domain, slug } = useParams();
 
   // this is used to open the search dialog, and then AI chat
   const setSearchDialogState = useSetAtom(searchDialogOpenAtom);
@@ -32,6 +35,11 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
   if (useIsAskAiEnabled()) {
     options.push({ type: "separator" } as FernDropdown.SeparatorOption);
     options.push(openAISearchOption);
+  } else {
+    options.push({ type: "separator" } as FernDropdown.SeparatorOption);
+    options.push(OpenWithLLM({ domain, slug, llm: "ChatGPT" }));
+    options.push({ type: "separator" } as FernDropdown.SeparatorOption);
+    options.push(OpenWithLLM({ domain, slug, llm: "Claude" }));
   }
   options = options.concat([
     { type: "separator" } as FernDropdown.SeparatorOption,
