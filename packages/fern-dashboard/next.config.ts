@@ -42,7 +42,10 @@ const nextConfig: NextConfig = {
   },
 
   // vercel chokes on monorepo compilation and we run compile before building
-  typescript: { ignoreBuildErrors: true },
+  typescript: {
+    ignoreBuildErrors: true,
+    tsconfigPath: "./tsconfig.app.json",
+  },
 
   // so it doesn't cover the theme toggle
   devIndicators: { position: "bottom-right" },
