@@ -13,6 +13,7 @@ export {
   type BuildVisitor,
   type VisitorResult,
 } from "unist-util-visit";
+export * from "./convert";
 export * from "./declarations";
 export * from "./frontmatter";
 export * from "./handlers/index";

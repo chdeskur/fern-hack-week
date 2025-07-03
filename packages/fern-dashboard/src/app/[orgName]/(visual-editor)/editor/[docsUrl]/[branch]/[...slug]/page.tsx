@@ -1,18 +1,16 @@
 import { notFound, redirect } from "next/navigation";
 
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
-import { serializeMdx } from "@fern-api/docs-mdx/bundler/serialize";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getPageId, slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { AbstractLayoutEvaluatorContent } from "@fern-docs/components/layouts/AbstractLayoutEvaluatorContent";
 import { SetCurrentNavigationNode } from "@fern-docs/components/state/navigation";
+import { mdxToHtml } from "@fern-docs/mdx";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { DocsUrl } from "@/utils/types";
 
-import PageEditor from "./PageEditor";
-import PageSubtitle from "./PageSubtitle";
-import PageTitle from "./PageTitle";
+import PageContents from "./PageContents";
 
 const ROOT_SLUG_ALIAS = "root";
 
@@ -63,7 +61,8 @@ export default async function Page({
   const pageId = getPageId(foundNode.node);
 
   const page = pageId && (await loader.getPage(pageId));
-  const serializedMdx = page?.markdown && (await serializeMdx(page?.markdown));
+  const mdx = page?.markdown ?? "";
+  const { html, frontmatter, customElements } = mdxToHtml(mdx);
 
   return (
     // TODO: Currently, we are force-hiding the table of contents is within Visual Editor.
@@ -82,27 +81,12 @@ export default async function Page({
           versionIsDefault={foundNode.isCurrentVersionDefault}
           productIsDefault={foundNode.isCurrentProductDefault}
         />
-        <PageTitle
-          className="w-full max-w-2xl"
-          initialText={page?.filename ?? ""} // TODO: get title from page
-          orgName={orgName}
-          slug={slug}
+        <PageContents
+          fileName={page?.filename ?? ""}
+          initialHtml={html}
+          frontmatter={frontmatter}
+          customElements={customElements}
         />
-        <PageSubtitle
-          className="w-full max-w-2xl"
-          initialText={""} // TODO: get subtitle from page
-          orgName={orgName}
-          slug={slug}
-        />
-        {serializedMdx && (
-          <PageEditor
-            className="w-full max-w-2xl"
-            fileName={page?.filename ?? ""}
-            orgName={orgName}
-            serializedMdx={serializedMdx}
-            slug={slug}
-          />
-        )}
       </div>
     </AbstractLayoutEvaluatorContent>
   );

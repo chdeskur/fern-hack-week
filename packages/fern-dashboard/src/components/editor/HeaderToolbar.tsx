@@ -33,7 +33,7 @@ export function HeaderToolbar({
   docsUrl: DocsUrl;
 }) {
   const { name, picture } = session.user;
-  const { updatedMarkdownFiles } = useMdxState();
+  const { changedMdxFiles } = useMdxState();
   const { branch } = useBranch();
   const githubSource = getLoadableValue(useGithubSourceRepo(docsUrl));
 
@@ -54,7 +54,7 @@ export function HeaderToolbar({
       console.log("No branch found");
       return;
     }
-    if (Object.keys(updatedMarkdownFiles).length === 0) {
+    if (Object.keys(changedMdxFiles).length === 0) {
       console.log("No changes to commit");
       return;
     }
@@ -65,13 +65,11 @@ export function HeaderToolbar({
         repo: githubSource.repo,
         branch,
         message: "Visual Editor: Update",
-        files: Object.entries(updatedMarkdownFiles).map(
-          ([filePath, content]) => ({
-            path: `fern/${filePath}`,
-            content,
-            mode: "100644",
-          })
-        ),
+        files: Object.entries(changedMdxFiles).map(([filePath, content]) => ({
+          path: `fern/${filePath}`,
+          content,
+          mode: "100644",
+        })),
       });
       if (response.success) {
         console.log("Successfully committed changes:", response.commitSha);
@@ -163,9 +161,7 @@ export function HeaderToolbar({
         <div className="flex">
           <Button
             loading={isCommitting}
-            disabled={
-              isCommitting || Object.keys(updatedMarkdownFiles).length === 0
-            }
+            disabled={isCommitting || Object.keys(changedMdxFiles).length === 0}
             className="rounded-r-none border-r-0"
             onClick={() => void handleCommitPress()}
           >

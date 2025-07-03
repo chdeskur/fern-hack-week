@@ -28,9 +28,6 @@
       "path": "../commons/docs-loader"
     },
     {
-      "path": "../commons/docs-mdx"
-    },
-    {
       "path": "../commons/docs-server"
     },
     {

@@ -2,29 +2,29 @@
 
 import { useState } from "react";
 
-import { savePageVersion } from "./savePageVersion";
+import { useMdxState } from "@/providers/MdxStateContext";
 
 export declare namespace PageTitle {
   export interface Props {
     className?: string;
-    initialText: string;
-    orgName: string;
-    slug: string;
+    fileName: string;
+    initialText?: string;
   }
 }
 
 export default function PageTitle({
   className,
+  fileName,
   initialText,
-  orgName,
-  slug,
 }: PageTitle.Props) {
   const [text, setText] = useState(initialText);
+
+  const { stageChanges } = useMdxState();
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const nextText = e.target.value;
     setText(nextText);
-    void savePageVersion({ orgName, slug, title: nextText });
+    stageChanges(fileName, { frontmatter: { title: nextText } });
   }
 
   return (
