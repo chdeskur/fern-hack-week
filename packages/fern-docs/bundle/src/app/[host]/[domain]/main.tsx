@@ -84,6 +84,7 @@ export async function DocsMainContent({
             serialize={serialize}
             node={changelogNode}
             breadcrumb={breadcrumb.slice(0, -3)}
+            showRssFeedButton={false}
           />
         }
         bottomNavigation={bottomNavigation}

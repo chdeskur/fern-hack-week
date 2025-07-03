@@ -105,11 +105,13 @@ export async function ChangelogPageOverview({
   serialize,
   node,
   breadcrumb,
+  showRssFeedButton = true,
 }: {
   loader: DocsLoader;
   serialize: MdxSerializer;
   node: FernNavigation.ChangelogNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  showRssFeedButton?: boolean;
 }) {
   const page =
     node.overviewPageId != null
@@ -129,6 +131,7 @@ export async function ChangelogPageOverview({
         subtitle={mdx?.frontmatter?.subtitle ?? mdx?.frontmatter?.excerpt}
         breadcrumb={breadcrumb}
         slug={node.slug}
+        showRssFeedButton={showRssFeedButton}
       />
       <Markdown mdx={mdx} fallback={page?.markdown} />
     </>
