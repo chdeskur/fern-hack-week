@@ -9,3 +9,4 @@ export * from "./Protocol.js";
 export * from "./RestProtocol.js";
 export * from "./OpenRpcProtocol.js";
 export * from "./GrpcProtocol.js";
+export * from "./GrpcMethodType.js";

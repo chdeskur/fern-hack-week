@@ -7,6 +7,7 @@ export * from "./Protocol";
 export * from "./RestProtocol";
 export * from "./OpenRpcProtocol";
 export * from "./GrpcProtocol";
+export * from "./GrpcMethodType";
 export * from "./EndpointSnippetTemplates";
 export * from "./HttpRequest";
 export * from "./HttpRequestBodyShape";
