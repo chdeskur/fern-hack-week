@@ -22,7 +22,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags } from "@fern-docs/edge-config";
-import { getFrontmatter } from "@fern-docs/mdx";
+import { getFrontmatter, mdxToHtml } from "@fern-docs/mdx";
 
 const FORMATS = ["rss", "atom", "json"] as const;
 type Format = (typeof FORMATS)[number];
@@ -223,8 +223,7 @@ async function toFeedItem(
     item.description =
       frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
 
-    // TODO: content should be converted into HTML markup
-    item.content = content;
+    item.content = mdxToHtml(content).html;
 
     let image: string | undefined;
 
