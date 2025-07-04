@@ -165,6 +165,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             method={endpoint.method}
             environmentId={environmentId}
             baseUrl={baseUrl}
+            hideCopyButton={true}
           />
         }
         onClick={(e) => {

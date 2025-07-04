@@ -15,10 +15,10 @@ import { HttpOrWss } from "@fern-api/docs-utils";
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import { FernTooltipProvider, cn } from "@fern-docs/components";
+import { FernTooltip, FernTooltipProvider, cn } from "@fern-docs/components";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
-import { useBooleanState } from "@fern-ui/react-commons";
+import { useBooleanState, useCopyToClipboard } from "@fern-ui/react-commons";
 
 import { MaybeEnvironmentDropdown } from "@/components/MaybeEnvironmentDropdown";
 
@@ -30,6 +30,7 @@ export declare namespace EndpointUrl {
     environmentId?: ApiDefinition.EnvironmentId;
     options?: APIV1Read.Environment[];
     showEnvironment?: boolean;
+    hideCopyButton?: boolean;
     large?: boolean;
     className?: string;
   }>;
@@ -48,6 +49,7 @@ export const EndpointUrl = React.forwardRef<
     large,
     className,
     showEnvironment,
+    hideCopyButton,
     options,
   },
   forwardedRef
@@ -56,6 +58,13 @@ export const EndpointUrl = React.forwardRef<
 
   const [isHovered, setIsHovered] = useState(false);
   const isEditingEnvironment = useBooleanState(false);
+
+  const { copyToClipboard, wasJustCopied } = useCopyToClipboard(
+    ApiDefinition.buildRequestUrl({
+      baseUrl,
+      path,
+    })
+  );
 
   const pathParts = useMemo(() => {
     const elements: (ReactElement<any> | null)[] = [];
@@ -117,60 +126,76 @@ export const EndpointUrl = React.forwardRef<
 
   return (
     <FernTooltipProvider>
-      <div
-        ref={composeRefs(ref, forwardedRef)}
-        className={cn("flex items-center gap-1 pr-2", className)}
-        onPointerEnter={() => setIsHovered(true)}
-        onPointerLeave={() => setIsHovered(false)}
+      <FernTooltip
+        content={wasJustCopied && hideCopyButton ? "Copied!" : undefined}
+        open={wasJustCopied && hideCopyButton ? true : undefined}
       >
-        <HttpMethodBadge method={method} />
+        <div
+          ref={composeRefs(ref, forwardedRef)}
+          className={cn("flex items-center gap-1 pr-2", className)}
+          onPointerEnter={() => setIsHovered(true)}
+          onPointerLeave={() => setIsHovered(false)}
+          onClick={() => {
+            if (hideCopyButton) {
+              void copyToClipboard?.();
+            }
+          }}
+        >
+          <HttpMethodBadge method={method} />
 
-        <div className={cn("flex items-center")}>
-          <span
-            className={`rounded-3/2 inline-flex shrink cursor-default items-center p-1`}
-          >
-            <span className="flex items-center">
-              <span
-                className={cn("font-mono", {
-                  "text-xs": !large,
-                  "text-sm": large,
-                })}
-              >
-                {showEnvironment && (
-                  <span className="whitespace-nowrap max-sm:hidden">
-                    <MaybeEnvironmentDropdown
-                      baseUrl={baseUrl}
-                      environmentId={environmentId}
-                      options={options}
-                      urlTextStyle="text-(color:--grayscale-a11)"
-                      protocolTextStyle="text-(color:--grayscale-a9)"
-                      isEditingEnvironment={isEditingEnvironment}
-                      editable
-                    />
-                  </span>
-                )}
-                {!showEnvironment &&
-                  environmentBasepath &&
-                  environmentBasepath !== "/" && (
-                    <span className="text-(color:--grayscale-a11)">
-                      {environmentBasepath}
+          <div className={cn("flex items-center")}>
+            <span
+              className={`rounded-3/2 inline-flex shrink items-center p-1 ${
+                hideCopyButton
+                  ? "hover:bg-(color:--grayscale-a3) cursor-pointer"
+                  : "cursor-default"
+              }`}
+            >
+              <span className="flex items-center">
+                <span
+                  className={cn("font-mono", {
+                    "text-xs": !large,
+                    "text-sm": large,
+                  })}
+                >
+                  {showEnvironment && (
+                    <span className="whitespace-nowrap max-sm:hidden">
+                      <MaybeEnvironmentDropdown
+                        baseUrl={baseUrl}
+                        environmentId={environmentId}
+                        options={options}
+                        urlTextStyle="text-(color:--grayscale-a11)"
+                        protocolTextStyle="text-(color:--grayscale-a9)"
+                        isEditingEnvironment={isEditingEnvironment}
+                        editable
+                      />
                     </span>
                   )}
-                {pathParts}
+                  {!showEnvironment &&
+                    environmentBasepath &&
+                    environmentBasepath !== "/" && (
+                      <span className="text-(color:--grayscale-a11)">
+                        {environmentBasepath}
+                      </span>
+                    )}
+                  {pathParts}
+                </span>
               </span>
             </span>
-          </span>
+          </div>
+          {!hideCopyButton && (
+            <CopyToClipboardButton
+              className={isHovered ? "visible" : "invisible"}
+              content={() =>
+                ApiDefinition.buildRequestUrl({
+                  baseUrl,
+                  path,
+                })
+              }
+            />
+          )}
         </div>
-        <CopyToClipboardButton
-          className={isHovered ? "visible" : "invisible"}
-          content={() =>
-            ApiDefinition.buildRequestUrl({
-              baseUrl,
-              path,
-            })
-          }
-        />
-      </div>
+      </FernTooltip>
     </FernTooltipProvider>
   );
 });

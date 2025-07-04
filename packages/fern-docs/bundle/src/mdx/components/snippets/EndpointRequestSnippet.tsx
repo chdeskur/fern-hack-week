@@ -79,6 +79,7 @@ function EndpointRequestSnippetInternal({
             environmentId={selectedEnvironmentId}
             baseUrl={baseUrl}
             options={endpoint.environments}
+            hideCopyButton={true}
           />
         }
         // include both dropdown and api ref button for proper placement
