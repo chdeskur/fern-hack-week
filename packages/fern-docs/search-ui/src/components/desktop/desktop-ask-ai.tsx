@@ -33,7 +33,7 @@ import {
 } from "lucide-react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 
-import { cn } from "@fern-docs/components";
+import { FernTooltip, cn } from "@fern-docs/components";
 import { Badge } from "@fern-docs/components/badges";
 import { Button } from "@fern-docs/components/button";
 import { tunnel, useEventCallback, useIsMobile } from "@fern-ui/react-commons";
@@ -407,7 +407,7 @@ const DesktopAskAIChat = ({
                     size="iconXs"
                     variant="outline"
                     onClick={() => {
-                      void chat.stop();
+                      chat.stop();
                       chat.setMessages([]);
                       resetConversationId();
                     }}
@@ -510,7 +510,7 @@ const DesktopAskAIChat = ({
         onValueChange={setInput}
         isLoading={chat.status !== "ready"}
         stop={() => {
-          void chat.stop();
+          chat.stop();
         }}
         onSend={askAI}
         onKeyDown={useEventCallback((e) => {
@@ -540,11 +540,12 @@ const AskAIComposer = forwardRef<
     forwardedRef
   ) => {
     const value = typeof props.value === "string" ? props.value : "";
+    const isOverLimit = value.length > 4000;
     const canSubmit =
       value
         .trim()
         .split(/\s+/)
-        .filter((word) => word.length > 0).length >= 1;
+        .filter((word) => word.length > 0).length >= 1 && !isOverLimit;
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
@@ -607,15 +608,26 @@ const AskAIComposer = forwardRef<
         </DesktopCommandInput>
         <div className="flex items-center justify-between">
           <div>{actions}</div>
-          <Button
-            size="icon"
-            className="rounded-full"
-            variant="default"
-            onClick={isLoading ? stop : () => onSend?.(value)}
-            disabled={!isLoading && !canSubmit}
+          <FernTooltip
+            content={
+              isOverLimit
+                ? "Message must be 4000 characters or fewer"
+                : undefined
+            }
+            side="top"
           >
-            {isLoading ? <StopCircle /> : <ArrowUp />}
-          </Button>
+            <span className="pointer-events-auto cursor-pointer">
+              <Button
+                size="icon"
+                className="rounded-full"
+                variant="default"
+                onClick={isLoading ? stop : () => onSend?.(value)}
+                disabled={!isLoading && !canSubmit}
+              >
+                {isLoading ? <StopCircle /> : <ArrowUp />}
+              </Button>
+            </span>
+          </FernTooltip>
         </div>
       </div>
     );
