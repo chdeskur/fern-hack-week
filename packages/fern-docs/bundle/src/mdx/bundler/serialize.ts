@@ -56,6 +56,7 @@ import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
 import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
+import { rehypeParamField } from "../plugins/rehype-param-field";
 import { rehypeSteps } from "../plugins/rehype-steps";
 import { rehypeTabs } from "../plugins/rehype-tabs";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
@@ -175,7 +176,11 @@ async function serializeMdxImpl(
         rehypeAccordions,
         rehypeTabs,
         rehypeCards,
-        [rehypeSlug, { additionalJsxElements: ["Step", "Accordion", "Tab"] }],
+        rehypeParamField,
+        [
+          rehypeSlug,
+          { additionalJsxElements: ["Step", "Accordion", "Tab", "ParamField"] },
+        ],
         [rehypeLinks, { replaceHref }],
         rehypeAccordionNestedHeaders,
         [

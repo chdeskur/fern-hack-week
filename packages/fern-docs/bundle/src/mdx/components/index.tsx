@@ -43,7 +43,7 @@ import { Icon } from "./icon/Icon";
 import { If } from "./if";
 import { Json } from "./json";
 import { Mermaid } from "./mermaid";
-import { ParamField } from "./mintlify";
+import { ParamField } from "./parameters/ParamField";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { EndpointSchemaSnippet } from "./snippets/EndpointSchemaSnippet";
 import { Step, StepGroup } from "./steps";

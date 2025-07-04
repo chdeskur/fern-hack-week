@@ -198,6 +198,40 @@ export function makeToc(
       }
     }
 
+    if (isMdxJsxElementHast(node) && node.name === "ParamField") {
+      const attributes = node.attributes.filter(isMdxJsxAttribute);
+      const tocAttr = attributes.find((attr) => attr.name === "toc");
+      const isTocEnabled =
+        hastGetBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
+
+      if (!isTocEnabled) {
+        return;
+      }
+
+      // id attribute (set by rehype-slug plugin)
+      const idAttr = attributes.find((attr) => attr.name === "id")?.value;
+      if (idAttr == null || typeof idAttr !== "string") {
+        return;
+      }
+
+      // title attribute (set by rehype-param-field plugin)
+      const titleAttr = attributes.find((attr) => attr.name === "title")?.value;
+      if (
+        titleAttr == null ||
+        typeof titleAttr !== "string" ||
+        titleAttr.trim().length === 0
+      ) {
+        return;
+      }
+
+      headings.push({
+        depth: 6,
+        id: idAttr,
+        title: titleAttr,
+        featureFlags: findFlag(parents),
+      });
+    }
+
     return;
   };
 

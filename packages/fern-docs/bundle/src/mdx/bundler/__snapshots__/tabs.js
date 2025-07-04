@@ -102,6 +102,8 @@ var Component = (() => {
           path: "title",
           type: "string",
           required: true,
+          title: "title",
+          id: "title",
           children: (0, import_jsx_runtime.jsx)(_components.p, {
             children: "The title displayed in the tab header"
           })
@@ -111,6 +113,8 @@ var Component = (() => {
           path: "language",
           type: "string",
           required: false,
+          title: "language",
+          id: "language",
           children: (0, import_jsx_runtime.jsx)(_components.p, {
             children: "The language associated with the code block. Any arbitrary string may be used.\nWhen a user selects a tab with a specific language, all other tabs assigned to\nthe same language will automatically sync and switch to match."
           })
@@ -120,6 +124,8 @@ var Component = (() => {
           path: "children",
           type: "string | JSX",
           required: true,
+          title: "children",
+          id: "children",
           children: (0, import_jsx_runtime.jsx)(_components.p, {
             children: "The content to be displayed when the tab is selected. Can include text,\nmarkdown, and components."
           })
