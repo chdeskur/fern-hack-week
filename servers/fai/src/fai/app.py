@@ -11,11 +11,16 @@ from src.utils.init_db import init
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     if VARIABLES.IS_LOCAL:
         LOGGER.info("Setup: Local development mode. Initializing database...")
-        await init()
-        LOGGER.info("Setup: Database initialized.")
+        try:
+            await init()
+            LOGGER.info("Setup: Database initialized.")
+        except Exception as e:
+            LOGGER.error(f"Setup: Error initializing database: {e}")
+            raise e
     else:
         LOGGER.info("Setup: Production mode. Database not initialized.")
     yield
+    LOGGER.info("Setup: Database not initialized.")
 
 
 fai_app = FastAPI(lifespan=lifespan)

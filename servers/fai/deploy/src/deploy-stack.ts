@@ -96,9 +96,7 @@ export class FernAiDeployStack extends Stack {
     const snsTopic = new sns.Topic(this, "fai-sns-topic", {
       topicName: id,
     });
-    snsTopic.addSubscription(
-      new EmailSubscription("founders@buildwithfern.com")
-    );
+    snsTopic.addSubscription(new EmailSubscription("alerts@buildwithfern.com"));
 
     const environmentResources =
       environmentType == EnvironmentType.Prod

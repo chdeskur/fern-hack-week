@@ -12,3 +12,9 @@ test:
 
 init-db:
 	poetry run python -m src.utils.init_db
+
+build-docker:
+	docker build -t fai .
+
+run-docker:
+	docker run -p 8080:8080 fai

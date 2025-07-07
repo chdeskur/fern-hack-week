@@ -44,6 +44,12 @@ export function openaiApiKey(): string {
   return getEnvVariable("OPENAI_API_KEY");
 }
 
+export function getFaiOrigin(): string {
+  return withDefaultProtocol(
+    process.env.NEXT_PUBLIC_FAI_ORIGIN ?? "https://fai-dev2.buildwithfern.com"
+  );
+}
+
 export function getFdrOrigin(): string {
   return withDefaultProtocol(
     process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com"

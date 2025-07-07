@@ -4,8 +4,7 @@ COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
 COPY ./src ./src
 COPY ./logging.conf ./logging.conf
-
-ENV PYTHONPATH=${PYTHONPATH}:${PWD}
+COPY ./.env ./.env
 
 RUN pip3 install memray
 RUN pip3 install uvicorn
