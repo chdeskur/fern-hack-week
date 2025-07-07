@@ -2,8 +2,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCallback } from "react";
 
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+
+import {
+  FernTooltip,
+  FernTooltipProvider,
+} from "@fern-docs/components/FernTooltip";
 
 import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
@@ -17,11 +23,15 @@ export function CreateBranchButton({
   docsUrl,
   session,
   sourceRepo,
+  disabled = false,
+  disabledReason,
 }: {
   orgName: Auth0OrgName;
   docsUrl: DocsUrl;
   session: Auth0SessionData;
   sourceRepo: any;
+  disabled?: boolean;
+  disabledReason?: string;
 }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -55,18 +65,35 @@ export function CreateBranchButton({
   }, [sourceRepo, session.user.name, orgName, docsUrl, router]);
 
   return (
-    <Button
-      size="sm"
-      className="w-fit"
-      onClick={() => {
-        setIsLoading(true);
-        void createBranch();
-      }}
-      disabled={isLoading}
-    >
-      Go to Editor
-      <ArrowRight />
-    </Button>
+    <div className="flex flex-row items-center gap-1">
+      <Button
+        size="sm"
+        className={`w-fit`}
+        onClick={() => {
+          if (!disabled) {
+            setIsLoading(true);
+            void createBranch();
+          }
+        }}
+        disabled={isLoading || disabled}
+      >
+        Go to Editor
+        <ArrowRight />
+      </Button>
+      {disabled && disabledReason && (
+        <FernTooltipProvider delayDuration={0}>
+          <FernTooltip content={disabledReason}>
+            <button
+              type="button"
+              className="cursor-help border-0 bg-transparent p-0"
+              aria-label="More information"
+            >
+              <ExclamationCircleIcon className="h-4 w-4 text-red-600" />
+            </button>
+          </FernTooltip>
+        </FernTooltipProvider>
+      )}
+    </div>
     // NOTE: This is the UI we want when we have a way to preview branches.
     // <Button
     //   variant="outline"

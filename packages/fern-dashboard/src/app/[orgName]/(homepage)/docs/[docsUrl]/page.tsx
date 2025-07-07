@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import getDocsGithubSourceHandler from "@/app/api/get-docs-github-source/handler";
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DocsSiteOverviewCard } from "@/components/docs-page/DocsSiteOverviewCard";
@@ -21,6 +22,12 @@ export default async function Page(props: {
     redirect("/");
   }
 
+  const sourceRepo = await getDocsGithubSourceHandler({
+    url: docsUrl,
+    token: session.accessToken,
+    userId: session.user.sub,
+  });
+
   return (
     <FeatureFlaggedServerSide
       flag={PosthogFeatureFlag.ENABLE_DOCS_PAGE}
@@ -31,7 +38,7 @@ export default async function Page(props: {
         githubProtectedArea={
           <div className="flex w-fit flex-col gap-2">
             <p>Source</p>
-            <GithubProtectedArea>
+            <GithubProtectedArea sourceRepo={sourceRepo}>
               <GithubSource
                 docsUrl={docsUrl}
                 orgName={orgName}

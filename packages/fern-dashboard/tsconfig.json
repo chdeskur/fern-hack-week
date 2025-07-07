@@ -12,10 +12,11 @@
   },
   "exclude": ["node_modules"],
   "include": [
-    "src/**/*",
-    // ".next/types/**/*.ts",
     "next.config.ts",
-    "vitest.config.ts"
+    // ".next/types/**/*.ts",
+    "src/**/*",
+    "vitest.config.ts",
+    ".next/types/**/*.ts"
   ],
   "references": [
     {

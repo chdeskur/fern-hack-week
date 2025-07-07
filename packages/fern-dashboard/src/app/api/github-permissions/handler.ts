@@ -39,3 +39,24 @@ export default async function checkGitHubPermissions(
     hasRepoAccess: true,
   };
 }
+
+export async function checkWritePermissionToRepo(
+  userId: Auth0UserID,
+  owner: string,
+  repo: string
+) {
+  const octokit = await getOctokit(userId);
+  if (octokit == null) {
+    return false;
+  }
+  try {
+    const response = await octokit.request("GET /repos/{owner}/{repo}", {
+      owner,
+      repo,
+    });
+    const perms = response.data.permissions;
+    return perms?.push;
+  } catch (_error) {
+    return false;
+  }
+}

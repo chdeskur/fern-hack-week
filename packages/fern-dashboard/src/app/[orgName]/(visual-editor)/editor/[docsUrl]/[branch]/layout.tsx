@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import getDocsGithubSourceHandler from "@/app/api/get-docs-github-source/handler";
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
 import { GithubExtendedAccessProtectedRoute } from "@/components/auth/GithubExtendedAccessProtectedRoute";
@@ -26,8 +27,18 @@ export default async function AuthedLayout({
     redirect("/");
   }
 
+  const sourceRepo = await getDocsGithubSourceHandler({
+    url: docsUrl,
+    token: session.accessToken,
+    userId: session.user.sub,
+  });
+
   return (
-    <GithubExtendedAccessProtectedRoute orgName={orgName}>
+    <GithubExtendedAccessProtectedRoute
+      orgName={orgName}
+      owner={sourceRepo.owner}
+      repo={sourceRepo.repo}
+    >
       <MdxStateProvider>
         <BranchProvider branch={branch}>
           <div className="bg-background flex w-full flex-col overflow-hidden">

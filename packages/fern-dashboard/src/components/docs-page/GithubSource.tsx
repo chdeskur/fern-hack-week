@@ -17,6 +17,7 @@ import { ExternalHoverLink } from "../ui/ExternalHoverLink";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import { CreateBranchButton } from "./CreateBranchButton";
+import { useGithubPermissions } from "./GithubPermissionsContext";
 import { SetGithubSourcePopover } from "./SetGithubSource";
 
 export function GithubSource({
@@ -34,6 +35,7 @@ export function GithubSource({
   const [isSaving, setIsSaving] = useState(false);
 
   const githubSource = getLoadableValue(useGithubSourceRepo(docsUrl));
+  const { writePermission } = useGithubPermissions();
 
   useEffect(() => {
     if (!githubSource) {
@@ -78,6 +80,12 @@ export function GithubSource({
               docsUrl={docsUrl}
               session={session}
               sourceRepo={githubSource}
+              disabled={writePermission === false}
+              disabledReason={
+                writePermission === false
+                  ? "You don't have write access to this repo"
+                  : undefined
+              }
             />
           )}
         </>
