@@ -13,7 +13,7 @@ export const HeadingRenderer = (
   props: React.ComponentProps<"h1">
 ) => {
   return (
-    <FernAnchor href={`#${props.id}`} asChild>
+    <FernAnchor href={`#${props.id}`} asChild fullTarget>
       {React.createElement(`h${level}`, props)}
     </FernAnchor>
   );
