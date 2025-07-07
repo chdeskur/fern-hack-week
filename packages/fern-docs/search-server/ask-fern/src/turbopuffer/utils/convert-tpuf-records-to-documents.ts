@@ -31,6 +31,6 @@ export function convertTpufRecordsToDocuments(
     (result) => `${result.pathname}${result.hash} - ${result.page_position}`
   ).map(
     (result) =>
-      `# ${result.title}\n Citation URL: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.document}${result.description}`
+      `# ${result.title}\n Citation URL: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.document.length > 20000 ? result.document.slice(0, 20000) : result.document}${result.description}`
   );
 }

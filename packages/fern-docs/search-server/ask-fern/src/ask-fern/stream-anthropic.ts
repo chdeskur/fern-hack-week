@@ -105,7 +105,6 @@ export async function runRouteForAnthropic({
           messages: modelMessages,
           maxRetries: 3,
           stopWhen: stepCountIs(10),
-          includeRawChunks: true,
           tools: {
             search: tool({
               description:
@@ -127,12 +126,9 @@ export async function runRouteForAnthropic({
                     const url = `https://${domain}${pathname}${hash ?? ""}`;
                     if (document.length > 20000) {
                       return {
+                        ...hit.attributes,
                         url,
                         document: document.slice(0, 20000),
-                        ...(hit.attributes as Omit<
-                          typeof hit.attributes,
-                          "document"
-                        >),
                       };
                     }
                     return { url, ...hit.attributes };
@@ -154,9 +150,13 @@ export async function runRouteForAnthropic({
 
             const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${JSON.stringify(error)}'`;
             console.error(msg);
+            let errorString = JSON.stringify(error);
+            if (errorString.length > 1000) {
+              errorString = errorString.slice(0, 1000) + "...";
+            }
             postToSlack(
               "#search-notifs",
-              `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${JSON.stringify(error)}\``
+              `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${errorString}\``
             );
           },
           onFinish: async (e) => {
