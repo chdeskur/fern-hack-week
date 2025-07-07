@@ -16,6 +16,7 @@ import {
   runRouteForAnthropic,
   runRouteForCohere,
 } from "@fern-docs/search-ask-fern";
+import { MAX_AI_CHAT_MESSAGE_LENGTH } from "@fern-docs/search-ui";
 
 import { ModelProvider } from "@/app/utils";
 
@@ -69,6 +70,14 @@ export async function POST(req: NextRequest) {
     conversationId: string;
   } = await req.json();
 
+  const lastUserMessage = getLastUserMessage(messages);
+  if (lastUserMessage.length > MAX_AI_CHAT_MESSAGE_LENGTH) {
+    return NextResponse.json(
+      `User message exceeds maximum length of ${MAX_AI_CHAT_MESSAGE_LENGTH} characters`,
+      { status: 400 }
+    );
+  }
+
   const config = await loader.getConfig();
   const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
 
@@ -88,7 +97,7 @@ export async function POST(req: NextRequest) {
       chatSource,
       promptTemplate: config.aiChatConfig?.systemPrompt,
       conversationId,
-      lastUserMessage: getLastUserMessage(messages),
+      lastUserMessage,
       messages,
       embeddingModel,
       turbopufferNamespace: getTurbopufferNamespace(domain, embeddingModel),
@@ -100,7 +109,7 @@ export async function POST(req: NextRequest) {
       chatSource,
       promptTemplate: config.aiChatConfig?.systemPrompt,
       conversationId,
-      lastUserMessage: getLastUserMessage(messages),
+      lastUserMessage,
       messages,
       embeddingModel,
       turbopufferNamespace: getTurbopufferNamespace(domain, embeddingModel),

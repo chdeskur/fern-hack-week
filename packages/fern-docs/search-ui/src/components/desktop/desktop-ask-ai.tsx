@@ -38,6 +38,7 @@ import { Badge } from "@fern-docs/components/badges";
 import { Button } from "@fern-docs/components/button";
 import { tunnel, useEventCallback, useIsMobile } from "@fern-ui/react-commons";
 
+import { MAX_AI_CHAT_MESSAGE_LENGTH } from "../../constants";
 import { FacetFilter } from "../../types";
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
@@ -540,7 +541,7 @@ const AskAIComposer = forwardRef<
     forwardedRef
   ) => {
     const value = typeof props.value === "string" ? props.value : "";
-    const isOverLimit = value.length > 4000;
+    const isOverLimit = value.length > MAX_AI_CHAT_MESSAGE_LENGTH;
     const canSubmit =
       value
         .trim()
@@ -611,7 +612,7 @@ const AskAIComposer = forwardRef<
           <FernTooltip
             content={
               isOverLimit
-                ? "Message must be 4000 characters or fewer"
+                ? `Message must be ${MAX_AI_CHAT_MESSAGE_LENGTH} characters or fewer`
                 : undefined
             }
             side="top"
