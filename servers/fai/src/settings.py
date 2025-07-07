@@ -40,3 +40,4 @@ class SingletonFactory:
 
 
 VARIABLES = SingletonFactory.get_instance(Variables)
+VARIABLES.validate_env_variables()
