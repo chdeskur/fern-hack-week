@@ -52,7 +52,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return redirectResponse(req.nextUrl.origin);
   } else if (clear === "true") {
     cookieStore.delete(
-      withDeleteCookie(COOKIE_FERN_DOCS_PREVIEW, req.nextUrl.origin)
+      withDeleteCookie(COOKIE_FERN_DOCS_PREVIEW, req.nextUrl.origin, true)
     );
     return redirectResponse(req.nextUrl.origin);
   }

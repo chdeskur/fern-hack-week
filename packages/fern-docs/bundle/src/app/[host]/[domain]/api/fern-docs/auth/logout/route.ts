@@ -66,23 +66,20 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     destination: redirectLocation,
     allowedDestinations: getAllowedRedirectUrls(authConfig),
   });
-  cookieJar.delete(
-    withDeleteCookie(
-      COOKIE_FERN_TOKEN,
-      withDefaultProtocol(preferPreview(host, domain))
-    )
-  );
-  cookieJar.delete(
-    withDeleteCookie(
-      COOKIE_ACCESS_TOKEN,
-      withDefaultProtocol(preferPreview(host, domain))
-    )
-  );
-  cookieJar.delete(
-    withDeleteCookie(
-      COOKIE_REFRESH_TOKEN,
-      withDefaultProtocol(preferPreview(host, domain))
-    )
-  );
+
+  const deleteCookieWithRetry = (cookieName: string) => {
+    const targetUrl = withDefaultProtocol(preferPreview(host, domain));
+
+    cookieJar.delete(withDeleteCookie(cookieName, targetUrl, false));
+
+    if (cookieJar.get(cookieName)?.value) {
+      cookieJar.delete(withDeleteCookie(cookieName, targetUrl, true));
+    }
+  };
+
+  deleteCookieWithRetry(COOKIE_FERN_TOKEN);
+  deleteCookieWithRetry(COOKIE_ACCESS_TOKEN);
+  deleteCookieWithRetry(COOKIE_REFRESH_TOKEN);
+
   return res;
 }
