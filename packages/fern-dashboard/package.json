@@ -15,6 +15,9 @@
     "dashboard:dev:inspect": "NODE_OPTIONS='--inspect' next dev",
     "dashboard:lint": "next lint",
     "dashboard:start": "next start",
+    "db:migrate:dev": "dotenv -e .env.dev -- prisma migrate deploy --schema server/prisma/schema.prisma",
+    "db:migrate:local": "dotenv -e .env.local -- prisma migrate deploy --schema server/prisma/schema.prisma",
+    "db:migrate:prod": "dotenv -e .env.prod -- prisma migrate deploy --schema server/prisma/schema.prisma",
     "depcheck": "depcheck",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
@@ -85,6 +88,8 @@
     "@types/node": "^18.19.76",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
+    "dotenv-cli": "^6.0.0",
+    "prisma": "5.13.0",
     "tailwindcss": "^4.0.9",
     "typescript": "5.7.3",
     "vitest": "^3.0.5"

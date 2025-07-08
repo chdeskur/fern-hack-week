@@ -1,15 +1,17 @@
-name: Deploy Dashboard
+name: Deploy Dashboard Dev
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_7PayvneDidzQ3RW6SUFMTN88chaa
+  VERCEL_PROJECT_ID: prj_ka9122njnAZrpIWEzatPYzEFL4Ni
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"  
 on:
   push:
     tags:
       - "dashboard@*" 
+    branches:
+      - app
 jobs:
-  Deploy-Production:
+  Deploy-Dev:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +41,3 @@ jobs:
         run: |
           url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
           echo "VERCEL_DEPLOYMENT_URL=$url" >> $GITHUB_OUTPUT
-      - name: Promote Deployment
-        run: |
-          url="${{ steps.deploy.outputs.VERCEL_DEPLOYMENT_URL }}"
-          vercel promote $url --scope=buildwithfern --token=${{ secrets.VERCEL_TOKEN }}
