@@ -20,6 +20,7 @@ import z from "zod";
 
 import { postToSlack, track } from "@fern-api/docs-server";
 import { turbopufferApiKey } from "@fern-api/docs-server/env-variables";
+import { postNewQueryToFai } from "@fern-api/docs-server/postNewQueryToFai";
 
 import {
   convertTpufRecordsToDocuments,
@@ -52,12 +53,12 @@ export async function runRouteForAnthropic({
   languageModel: LanguageModel;
 }) {
   /*
-        Anthropic's API has a bug (see: https://github.com/anthropics/claude-code/issues/473)
-        Where tool calls are not formatted properly, breaking messages that contain tool calls.
-        This is a manual fix - we simply filter out tool call responses.
+    Anthropic's API has a bug (see: https://github.com/anthropics/claude-code/issues/473)
+    Where tool calls are not formatted properly, breaking messages that contain tool calls.
+    This is a manual fix - we simply filter out tool call responses.
 
-        Will file an issue with Vercel to fix this, but for now this is not blocking.
-    */
+    Will file an issue with Vercel to fix this, but for now this is not blocking.
+  */
   const cleanedMessages: UIMessage[] = [];
   for (const message of messages) {
     if (message.role === "assistant") {
@@ -96,6 +97,8 @@ export async function runRouteForAnthropic({
     });
 
     const documentIdsToIgnore: string[] = [];
+    let timeToFirstToken: number | null = null;
+    let responseText = "";
 
     const uiMessageStream = createUIMessageStream({
       execute({ writer }) {
@@ -137,6 +140,14 @@ export async function runRouteForAnthropic({
               },
             }),
           },
+          onChunk: (chunk) => {
+            if (chunk.chunk.type === "text" && chunk.chunk.text.length > 0) {
+              if (timeToFirstToken == null) {
+                timeToFirstToken = Date.now() - start;
+              }
+              responseText += chunk.chunk.text;
+            }
+          },
           onError: (event) => {
             const error = event.error;
             if (error == null) {
@@ -148,8 +159,9 @@ export async function runRouteForAnthropic({
               errorKind = "NoSuchToolError";
             }
 
-            const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${JSON.stringify(error)}'`;
-            console.error(msg);
+            console.error(
+              `Encountered a ${errorKind} for query '${lastUserMessage}: ${JSON.stringify(error)}'`
+            );
             let errorString = JSON.stringify(error);
             if (errorString.length > 1000) {
               errorString = errorString.slice(0, 1000) + "...";
@@ -161,6 +173,16 @@ export async function runRouteForAnthropic({
           },
           onFinish: async (e) => {
             const end = Date.now();
+            const queryId = crypto.randomUUID();
+            await postNewQueryToFai({
+              queryId,
+              domain,
+              conversationId,
+              text: responseText,
+              role: "ASSISTANT",
+              createdAt: new Date(end),
+              timeToFirstToken,
+            });
             track("ask_ai", {
               languageModel: languageModel.valueOf().toString(),
               embeddingModel: embeddingModel.modelId,

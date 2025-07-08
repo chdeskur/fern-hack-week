@@ -26,6 +26,10 @@ def is_responsive(url: str) -> bool:
 
 @pytest.fixture(scope="session")
 def fai_docker(docker_ip: str, docker_services: Services) -> None:
+    db_port = docker_services.port_for("db", 5432)
+    db_url = f"postgresql+asyncpg://postgres:postgres@{docker_ip}:{db_port}/mydatabase"
+    os.environ["POSTGRES_DATABASE_URL"] = db_url
+
     docker_services.wait_until_responsive(
         timeout=30.0,
         pause=1,

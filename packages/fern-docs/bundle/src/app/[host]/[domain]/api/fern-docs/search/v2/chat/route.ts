@@ -8,6 +8,7 @@ import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { openaiApiKey } from "@fern-api/docs-server/env-variables";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
+import { postNewQueryToFai } from "@fern-api/docs-server/postNewQueryToFai";
 import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
@@ -30,6 +31,8 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
   }
+  const queryId = crypto.randomUUID();
+  const createdAt = new Date();
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);
   const loader = await createCachedDocsLoader(host, domain);
@@ -79,7 +82,7 @@ export async function POST(req: NextRequest) {
   }
 
   const config = await loader.getConfig();
-  const chatSource = source ?? "chat"; // distinguish between chat and mcp server request
+  const chatSource = source ?? "chat";
 
   const modelId = config.aiChatConfig?.model ?? "claude-3.5";
   let modelProvider: ModelProvider = "anthropic";
@@ -90,6 +93,16 @@ export async function POST(req: NextRequest) {
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-large");
+
+  await postNewQueryToFai({
+    queryId,
+    domain,
+    conversationId,
+    text: lastUserMessage,
+    role: "USER",
+    createdAt,
+    timeToFirstToken: null,
+  });
 
   if (modelProvider === "anthropic") {
     return runRouteForAnthropic({

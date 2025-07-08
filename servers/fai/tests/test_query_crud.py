@@ -8,10 +8,11 @@ from src.fai.models.query import QueryApi
 def test_create_query(fai_docker: None, docker_ip: str) -> None:
     """Test creating a new query."""
     query_data = QueryApi(
-        domain="test-domain",
+        query_id="test-query-1",
         conversation_id="test-convo-1",
-        query="test query",
-        output="test output",
+        domain="test-domain",
+        text="test query",
+        role="user",
         created_at=datetime.datetime.now(),  # Remove isoformat() call since model_dump will handle serialization
         time_to_first_token=0.5,
     )

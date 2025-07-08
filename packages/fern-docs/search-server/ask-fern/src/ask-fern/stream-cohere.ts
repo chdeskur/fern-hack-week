@@ -16,6 +16,7 @@ import z from "zod";
 
 import { postToSlack, track } from "@fern-api/docs-server";
 import { turbopufferApiKey } from "@fern-api/docs-server/env-variables";
+import { postNewQueryToFai } from "@fern-api/docs-server/postNewQueryToFai";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 
 import {
@@ -98,6 +99,9 @@ export async function runRouteForCohere({
       },
     });
 
+    let timeToFirstToken: number | null = null;
+    let responseText = "";
+
     const uiMessageStream = createUIMessageStream({
       execute({ writer }) {
         const result = streamText({
@@ -124,6 +128,12 @@ export async function runRouteForCohere({
                 },
               });
             }
+            if (chunk.chunk.type === "text" && chunk.chunk.text.length > 0) {
+              if (timeToFirstToken == null) {
+                timeToFirstToken = Date.now() - start;
+              }
+              responseText += chunk.chunk.text;
+            }
           },
           onError: (event) => {
             const error = event.error;
@@ -145,6 +155,16 @@ export async function runRouteForCohere({
           },
           onFinish: async (e) => {
             const end = Date.now();
+            const queryId = crypto.randomUUID();
+            await postNewQueryToFai({
+              queryId,
+              domain,
+              conversationId,
+              text: responseText,
+              role: "ASSISTANT",
+              createdAt: new Date(end),
+              timeToFirstToken,
+            });
             track("ask_ai", {
               languageModel: languageModel.valueOf().toString(),
               embeddingModel: embeddingModel.modelId,

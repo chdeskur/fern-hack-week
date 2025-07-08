@@ -46,7 +46,7 @@ export function openaiApiKey(): string {
 
 export function getFaiOrigin(): string {
   return withDefaultProtocol(
-    process.env.NEXT_PUBLIC_FAI_ORIGIN ?? "https://fai-dev2.buildwithfern.com"
+    process.env.NEXT_PUBLIC_FAI_ORIGIN ?? "https://fai.buildwithfern.com"
   );
 }
 

@@ -29,8 +29,8 @@ async def create_query(query: QueryApi, db: AsyncSession = Depends(get_db)) -> J
             query_id=query.query_id,
             domain=query.domain,
             conversation_id=query.conversation_id,
-            query=query.query,
-            output=query.output,
+            text=query.text,
+            role=query.role,
             created_at=query.created_at,
             time_to_first_token=query.time_to_first_token,
         )
