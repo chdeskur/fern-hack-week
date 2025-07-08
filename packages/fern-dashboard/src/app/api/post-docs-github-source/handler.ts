@@ -15,7 +15,9 @@ export default async function postDocsGithubSourceHandler({
 
   // Use the setDocsUrlMetadata function from the docs read service
   const response = await client.docs.v2.write.setDocsUrlMetadata({
-    url: FdrAPI.Url(url),
+    // NOTE: We have a bug in the service where if we pass in a full URL including its subpath, it will not actually set.
+    // To bypass this, we just pass in the hostname and strip off the subpath.
+    url: FdrAPI.Url(new URL(`https://${url}`).hostname),
     githubUrl: FdrAPI.Url(githubUrl),
   });
 
