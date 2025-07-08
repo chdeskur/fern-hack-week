@@ -269,10 +269,19 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
          * IMPORTANT NOTE:
          * vercel cache is not shared between custom domains, so we need to revalidate on EACH custom domain individually
          */
-        const urls = [
-          docsRegistrationInfo.fernUrl,
-          ...docsRegistrationInfo.customUrls,
-        ];
+        const liveCustomUrls = [];
+        for (const customUrl of docsRegistrationInfo.customUrls) {
+          const isLive = await checkDNSConfigured(customUrl);
+          if (isLive) {
+            liveCustomUrls.push(customUrl);
+          } else {
+            app.logger.info(
+              `Skipping revalidation for ${customUrl.getFullUrl()} - domain is not live`
+            );
+          }
+        }
+
+        const urls = [docsRegistrationInfo.fernUrl, ...liveCustomUrls];
 
         for (const url of urls) {
           try {
@@ -416,4 +425,36 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
       return res.send();
     },
   });
+}
+
+async function checkDNSConfigured(baseUrl: ParsedBaseUrl) {
+  try {
+    const response = await fetch(
+      `https://${baseUrl.hostname}${baseUrl.path || ""}`,
+      {
+        method: "HEAD",
+        redirect: "manual",
+      }
+    );
+
+    return true;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (
+        error.message.includes("getaddrinfo ENOTFOUND") ||
+        (error.name === "TypeError" && error.message.includes("fetch"))
+      ) {
+        return false;
+      }
+    } else if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "ENOTFOUND"
+    ) {
+      return false;
+    }
+
+    return true;
+  }
 }
