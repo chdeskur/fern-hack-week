@@ -6,6 +6,8 @@ import { SignJWT } from "jose";
 import {
   getDocsDomainEdge,
   getJwtSecretKey,
+  isLocal,
+  isSelfHosted,
   withSecureCookie,
 } from "@fern-api/docs-server";
 import { safeUrl } from "@fern-api/docs-server";
@@ -18,6 +20,13 @@ import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 
 // a demonstration of setting the fern_token JWT
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  if (isLocal() || isSelfHosted()) {
+    return NextResponse.json({
+      enabled: false,
+      returnToQueryParam: "",
+    });
+  }
+
   const domain = getDocsDomainEdge(req);
   const host = req.nextUrl.host;
 

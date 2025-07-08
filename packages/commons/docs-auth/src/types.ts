@@ -141,7 +141,26 @@ export const OAuth2WebflowSchema = OAuth2SharedSchema.extend({
   scope: z.optional(z.union([z.string(), z.array(z.string())])),
 });
 
-export const OAuth2Schema = z.union([OAuth2OrySchema, OAuth2WebflowSchema]);
+// used for generalized authorization_code oauth2 flow
+export const OAuth2ClientCredentialsSchema = OAuth2SharedSchema.extend({
+  // todo: deprecate the refinement once webflow is migrated to generalized flow
+  partner: z.string().refine((val) => val !== "ory" && val !== "webflow", {
+    message:
+      "Partner cannot be 'ory' or 'webflow' as they have their own specific schemas",
+  }),
+  auth_endpoint: z.string(),
+  token_endpoint: z.string(),
+  scope: z.optional(z.union([z.string(), z.array(z.string())])),
+  issuer: z.optional(z.string()),
+});
+
+// TODO: remove ory
+// TODO: migrate webflow to generalized authorization_code
+export const OAuth2Schema = z.union([
+  OAuth2ClientCredentialsSchema,
+  OAuth2OrySchema,
+  OAuth2WebflowSchema,
+]);
 
 export const BasicTokenVerificationSchema = z
   .object({
@@ -226,6 +245,9 @@ export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
 export type SSOWorkOS = z.infer<typeof SSOWorkOSSchema>;
 export type OAuth2Ory = z.infer<typeof OAuth2OrySchema>;
 export type OAuth2Webflow = z.infer<typeof OAuth2WebflowSchema>;
+export type OAuth2ClientCredentials = z.infer<
+  typeof OAuth2ClientCredentialsSchema
+>;
 export type BasicTokenVerification = z.infer<
   typeof BasicTokenVerificationSchema
 >;

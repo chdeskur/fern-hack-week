@@ -62,15 +62,38 @@ function getAllowedRedirectUrlsForSSO(_authConfig: SSOWorkOS) {
 }
 
 function getAllowedRedirectUrlsForOAuth2(authConfig: OAuth2) {
+  if (!("partner" in authConfig)) {
+    console.error("Missing required partner field in auth configuration");
+    return [];
+  }
+
   switch (authConfig.partner) {
     case "ory":
-      // since the environment is configured in the edge config, we can trust it
-      return [authConfig.environment];
+      if ("environment" in authConfig) {
+        // since the environment is configured in the edge config, we can trust it
+        // custom for ory (to be removed in the future)
+        return [authConfig.environment];
+      }
+
+      return [];
     case "webflow":
       return [WEBFLOW_API_URL];
     default:
-      console.error(new UnreachableCaseError(authConfig));
-  }
+      // generalized oauth2 flow
+      if (
+        "redirect_urls" in authConfig &&
+        typeof authConfig.redirect_urls === "string"
+      ) {
+        return [authConfig.redirect_urls];
+      }
 
-  return [];
+      if (
+        "redirect_urls" in authConfig &&
+        Array.isArray(authConfig.redirect_urls)
+      ) {
+        return authConfig.redirect_urls;
+      }
+
+      return [];
+  }
 }

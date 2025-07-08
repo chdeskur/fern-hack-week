@@ -15,6 +15,7 @@ import { isLocal } from "../isLocal";
 import { isSelfHosted } from "../isSelfHosted";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
+import { getOAuth2AuthorizationUrl } from "./oauth2";
 import { preferPreview } from "./origin";
 import { getOryAuthorizationUrl } from "./ory";
 import { getReturnToQueryParam } from "./return-to";
@@ -22,7 +23,7 @@ import { getWebflowAuthorizationUrl } from "./webflow";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
 import { handleWorkosAuth } from "./workos-handler";
 
-export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
+export type AuthPartner = "workos" | "ory" | "webflow" | "custom" | string;
 
 export interface DomainAndHost {
   /**
@@ -70,7 +71,7 @@ interface IsLoggedIn extends AuthStateBase {
    * The user payload from the Fern JWT, and the AuthPartner are both guaranteed to be present if the user is logged in
    */
   user: FernUser;
-  partner: AuthPartner;
+  partner: AuthPartner | undefined;
 }
 
 export type AuthState = NotLoggedIn | IsLoggedIn;
@@ -276,6 +277,16 @@ function getAuthorizationUrl(
       loginHint: authConfig.loginHint,
     });
   } else if (authConfig.type === "oauth2") {
+    if ("auth_endpoint" in authConfig) {
+      return getOAuth2AuthorizationUrl(authConfig, {
+        state,
+        redirectUri: `${withDefaultProtocol(
+          removeTrailingSlash(preferPreview(host, domain))
+        )}/api/fern-docs/oauth2/callback`,
+      });
+    }
+
+    // todo: deprecate
     if (authConfig.partner === "webflow") {
       return getWebflowAuthorizationUrl(authConfig, {
         state,

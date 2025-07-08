@@ -52,6 +52,14 @@ export async function verifyFernJWTConfig(
     return verifyFernJWT(token, authConfig.secret, authConfig.issuer);
   }
 
+  if (authConfig.type === "oauth2" && "auth_endpoint" in authConfig) {
+    return verifyFernJWT(
+      token,
+      process.env.OAUTH_JWT_SECRET,
+      authConfig.issuer
+    );
+  }
+
   if (authConfig.type === "sso" && authConfig.partner === "workos") {
     const session = await toSessionUserInfo(await getSessionFromToken(token));
     if (session.user) {

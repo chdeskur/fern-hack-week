@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+import { SignJWT, decodeJwt } from "jose";
 import urlJoin from "url-join";
 import { WebflowClient } from "webflow-api";
 import type { OauthScope } from "webflow-api/api/types/OAuthScope";
@@ -10,6 +11,7 @@ import {
   OryAccessTokenSchema,
 } from "@fern-api/docs-auth";
 import { safeVerifyFernJWTConfig } from "@fern-api/docs-server/auth/FernJWT";
+import { getOAuth2AuthorizationUrl } from "@fern-api/docs-server/auth/oauth2";
 import { preferPreview } from "@fern-api/docs-server/auth/origin";
 import {
   OryOAuth2Client,
@@ -17,6 +19,7 @@ import {
 } from "@fern-api/docs-server/auth/ory";
 import { getReturnToQueryParam } from "@fern-api/docs-server/auth/return-to";
 import { withSecureCookie } from "@fern-api/docs-server/auth/with-secure-cookie";
+import { getJwtSecretKey } from "@fern-api/docs-server/auth/workos";
 import { fernToken_admin } from "@fern-api/docs-server/env-variables";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
@@ -142,6 +145,76 @@ export async function GET(
     });
   }
 
+  if (edgeConfig.type === "oauth2" && "auth_endpoint" in edgeConfig) {
+    if (fern_token_cookie && edgeConfig["api-key-injection-enabled"]) {
+      try {
+        const decodedToken = decodeJwt(fern_token_cookie);
+        const refresh_token = decodedToken.refresh_token as string | undefined;
+
+        if (refresh_token && edgeConfig.token_endpoint) {
+          const token_url = `${edgeConfig.token_endpoint}?grant_type=refresh_token&client_id=${edgeConfig.clientId}&client_secret=${edgeConfig.clientSecret}&refresh_token=${refresh_token}`;
+
+          const response = await fetch(token_url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const new_access_token = data.access_token;
+            const new_refresh_token = data.refresh_token;
+            const expires_in = data.expires_in;
+
+            const new_fern_token = await mintJwtToken({
+              bearer_token: new_access_token,
+              refresh_token: new_refresh_token || refresh_token,
+              issuer: edgeConfig.issuer || "https://buildwithfern.com",
+              expires_in,
+            });
+
+            cookieJar.set(
+              "fern_token",
+              new_fern_token,
+              withSecureCookie(withDefaultProtocol(preferPreview(host, domain)))
+            );
+
+            return NextResponse.json({
+              enabled: true,
+              authenticated: true,
+              access_token: new_access_token,
+              returnToQueryParam,
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error refreshing token:", error);
+      }
+    }
+
+    if (edgeConfig["api-key-injection-enabled"]) {
+      return NextResponse.json({
+        enabled: true,
+        authenticated: false,
+        authorizationUrl: getOAuth2AuthorizationUrl(edgeConfig, {
+          redirectUri: urlJoin(
+            removeTrailingSlash(
+              withDefaultProtocol(preferPreview(host, domain))
+            ),
+            "/api/fern-docs/oauth2/callback"
+          ),
+        }),
+        returnToQueryParam,
+      });
+    }
+
+    return NextResponse.json({
+      enabled: false,
+      returnToQueryParam,
+    });
+  }
+
   // assume that if the edge config is set for webflow, api key injection is always enabled
   if (edgeConfig.partner === "webflow") {
     if (access_token == null) {
@@ -261,4 +334,40 @@ export async function GET(
     enabled: false,
     returnToQueryParam,
   });
+}
+
+const encoder = new TextEncoder();
+
+function getJwtTokenSecret(secret?: string): Uint8Array {
+  return encoder.encode(secret ?? getJwtSecretKey());
+}
+
+async function mintJwtToken({
+  bearer_token,
+  refresh_token,
+  issuer,
+  expires_in,
+}: {
+  bearer_token: string;
+  refresh_token: string;
+  issuer: string;
+  expires_in: number;
+}) {
+  return await new SignJWT({
+    fern: {
+      playground: {
+        initial_state: {
+          auth: {
+            bearer_token: bearer_token,
+          },
+        },
+      },
+    },
+    refresh_token: refresh_token,
+  })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setIssuedAt()
+    .setExpirationTime(`${expires_in} secs`)
+    .setIssuer(issuer)
+    .sign(getJwtTokenSecret(process.env.OAUTH_JWT_SECRET));
 }
