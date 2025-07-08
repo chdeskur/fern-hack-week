@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { SearchIcon } from "lucide-react";
@@ -90,7 +90,7 @@ export function SetGithubSourcePopover({
   }, [isLoading, hasMore, searchQuery, repos.length, filteredRepos.length]);
 
   // Load more repos when needed
-  useMemo(() => {
+  useEffect(() => {
     if (shouldLoadMore) {
       loadNextPage();
     }
