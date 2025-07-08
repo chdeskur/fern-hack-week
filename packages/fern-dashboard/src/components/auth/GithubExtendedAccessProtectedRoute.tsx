@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -53,6 +54,9 @@ export const GithubExtendedAccessProtectedRoute = async ({
     redirect("/");
   }
 
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "/";
+
   const isUserInOrgFromUrl = await auth0Management.doesUserBelongsToOrg(
     session.user.sub,
     orgName
@@ -93,6 +97,7 @@ export const GithubExtendedAccessProtectedRoute = async ({
             connection: "github",
             connection_scope: "read:user,read:org,repo",
           }}
+          returnTo={pathname}
         />
       </PermissionDeniedCard>
     );

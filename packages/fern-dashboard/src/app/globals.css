@@ -306,3 +306,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.noise {
+  z-index: 1;
+  opacity: 1;
+  background-image: url(https://cdn.prod.website-files.com/67880ff570cdb1a85eee946f/6789751936e0c7bd371e8cf2_noise-full.webp);
+  background-position: 5px 0;
+  background-size: 5rem 10rem;
+}

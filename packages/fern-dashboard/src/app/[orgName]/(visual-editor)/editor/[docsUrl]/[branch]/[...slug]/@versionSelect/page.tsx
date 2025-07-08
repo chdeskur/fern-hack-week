@@ -7,6 +7,7 @@ import {
 } from "@fern-api/docs-server/handle-node-fallbacks";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
+import { VersionDropdown } from "@fern-docs/components/header/VersionDropdown";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { DocsUrl } from "@/utils/types";
@@ -16,7 +17,6 @@ export default async function VersionSelectPage({
 }: {
   params: Promise<{ docsUrl: DocsUrl; slug: string }>;
 }) {
-  console.log("params", params);
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;
   const loader = await createEditableDocsLoader(
@@ -32,7 +32,7 @@ export default async function VersionSelectPage({
     loader.getEdgeFlags(),
     loader.getRoot(),
   ]);
-  const _useDenseLayout = layout.isHeaderDisabled;
+  const useDenseLayout = layout.isHeaderDisabled;
 
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
   const collector = FernNavigation.NodeCollector.collect(root);
@@ -42,28 +42,27 @@ export default async function VersionSelectPage({
     return null;
   }
 
-  const _currentProduct = getFallbackProduct(foundNode, root, slug);
+  const currentProduct = getFallbackProduct(foundNode, root, slug);
   const version = getFallbackVersion(foundNode, root, slug);
 
   if (version == null) {
     return null;
   }
 
-  const _currentNode = foundNode.type === "found" ? foundNode.node : version;
+  const currentNode = foundNode.type === "found" ? foundNode.node : version;
 
-  const _parents =
+  const parents =
     foundNode.type === "found" ? Array.from(foundNode.parents) : [];
 
-  return <div>Version Select</div>;
-  //   return (
-  //     <VersionDropdown
-  //       loader={loader}
-  //       currentNode={currentNode}
-  //       currentProduct={currentProduct ?? undefined}
-  //       slugMap={collector.slugMap}
-  //       parents={parents}
-  //       fallbackVersion={version}
-  //       useDenseLayout={useDenseLayout}
-  //     />
-  //   );
+  return (
+    <VersionDropdown
+      loader={loader}
+      currentNode={currentNode}
+      currentProduct={currentProduct ?? undefined}
+      slugMap={collector.slugMap}
+      parents={parents}
+      fallbackVersion={version}
+      useDenseLayout={useDenseLayout}
+    />
+  );
 }

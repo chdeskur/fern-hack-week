@@ -53,7 +53,7 @@ export function GithubSource({
         <Skeleton className="h-4 w-24" />
       ) : (
         <>
-          <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-1">
             {!!githubUrl && (
               <div className="flex items-center gap-2">
                 <GithubLogo />

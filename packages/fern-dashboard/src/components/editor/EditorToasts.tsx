@@ -1,0 +1,47 @@
+import { toast } from "sonner";
+
+/**
+ * This file contains reusable toasts that are used in the editor.
+ */
+
+export function SuccessfulCommitToast() {
+  return toast.success("Successfully committed changes!");
+}
+
+export function SuccessfulEditSourceToast() {
+  return toast.success("Successfully linked your repository!");
+}
+
+export function ErrorEditSourceToast() {
+  return toast.error("Failed to link your repository. Please try again.");
+}
+
+export function ErrorFullCommitToast() {
+  toast.error("Failed to commit changes. Please try again.");
+}
+
+export function ErrorNoGithubSourceToast() {
+  toast.error(
+    "No github source found. Please ensure you have connected your repository."
+  );
+}
+
+export function ErrorNoBaseBranchToast() {
+  toast.error(
+    "No base branch found. Please set a base branch on your repository and reconnect."
+  );
+}
+
+export function ErrorNoBranchToast() {
+  toast.error(
+    "No branch found. Please ensure the working branch is not deleted."
+  );
+}
+
+export function WarningNoChangesToast() {
+  toast.warning("No changes to commit!");
+}
+
+export function ErrorCreateBranchToast() {
+  toast.error("Failed to create branch. Please try again.");
+}

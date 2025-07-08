@@ -33,8 +33,10 @@ export const DashboardApiClient = {
     ),
   getDocsUrlOwner: (request: getDocsUrlOwner.Request) =>
     typedFetch<getDocsUrlOwner.Response>("/api/get-docs-url-owner", request),
-  getUserGithubRepos: () =>
-    typedFetch<getUserGithubRepos.Response>("/api/get-user-git-repos"),
+  getUserGithubRepos: (request?: getUserGithubRepos.Request) =>
+    typedFetch<getUserGithubRepos.Response>(
+      `/api/get-user-git-repos${request?.page ? `?page=${request.page}` : ""}`
+    ),
   getGitHubPermissions: () =>
     typedFetch<getGitHubPermissions.Response>("/api/github-permissions"),
   postCreateBranch: (request: postCreateBranch.Request) =>

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useCallback } from "react";
 
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
-import { ArrowRight } from "lucide-react";
-import { toast } from "sonner";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 import {
   FernTooltip,
@@ -16,6 +15,11 @@ import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
 import { DocsUrl } from "@/utils/types";
 
+import {
+  ErrorCreateBranchToast,
+  ErrorNoBaseBranchToast,
+  ErrorNoGithubSourceToast,
+} from "../editor/EditorToasts";
 import { Button } from "../ui/button";
 
 export function CreateBranchButton({
@@ -38,6 +42,11 @@ export function CreateBranchButton({
 
   const createBranch = useCallback(async () => {
     if (sourceRepo?.owner == null || sourceRepo.repo == null) {
+      ErrorNoGithubSourceToast();
+      return;
+    }
+    if (sourceRepo.baseBranch == null) {
+      ErrorNoBaseBranchToast();
       return;
     }
     const randomHexString = crypto.randomUUID().split("-")[0];
@@ -53,32 +62,37 @@ export function CreateBranchButton({
       owner: sourceRepo.owner,
       repo: sourceRepo.repo,
       branch: branchName,
-      baseBranch: sourceRepo.baseBranch ?? "main",
+      baseBranch: sourceRepo.baseBranch,
     });
     if (response.success === false) {
-      toast.error("Failed to create branch");
+      ErrorCreateBranchToast();
       setIsLoading(false);
       return;
     }
-    router.push(`/${orgName}/editor/${docsUrl}/${branchName}/root`);
     setIsLoading(false);
+    router.refresh();
+    router.push(`/${orgName}/editor/${docsUrl}/${branchName}/root`);
   }, [sourceRepo, session.user.name, orgName, docsUrl, router]);
 
   return (
     <div className="flex flex-row items-center gap-1">
       <Button
         size="sm"
-        className={`w-fit`}
+        className="w-fit"
         onClick={() => {
-          if (!disabled) {
-            setIsLoading(true);
-            void createBranch();
-          }
+          setIsLoading(true);
+          void createBranch();
         }}
         disabled={isLoading || disabled}
       >
-        Go to Editor
-        <ArrowRight />
+        {isLoading ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          <>
+            Go to Editor
+            <ArrowRight />
+          </>
+        )}
       </Button>
       {disabled && disabledReason && (
         <FernTooltipProvider delayDuration={0}>

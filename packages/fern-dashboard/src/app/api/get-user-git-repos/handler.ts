@@ -3,23 +3,34 @@ import { getOctokit } from "@/app/services/auth0/octokit";
 import { Auth0UserID } from "@/app/services/auth0/types";
 import { GithubRepo } from "@/app/services/github/types";
 
-export default async function getUserGithubRepos(userId: Auth0UserID) {
+export interface PaginatedGithubReposResponse {
+  repos: GithubRepo[];
+  hasMore: boolean;
+  totalCount?: number;
+}
+
+const MAX_REPOS_TO_FETCH = 100; // GitHub API max fetchable at once is 100
+
+export default async function getUserGithubRepos(
+  userId: Auth0UserID,
+  page: number = 1
+): Promise<PaginatedGithubReposResponse> {
   const session = await getCurrentSession();
 
   if (session == null) {
-    return [];
+    return { repos: [], hasMore: false };
   }
 
   const octokit = await getOctokit(userId);
 
   if (octokit == null) {
-    return [];
+    return { repos: [], hasMore: false };
   }
 
   const response = await octokit.request("GET /user/repos", {
-    per_page: 100, // max is 100
+    per_page: MAX_REPOS_TO_FETCH,
+    page,
     affiliation: "organization_member",
-    since: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
   });
 
   const repos: GithubRepo[] = response.data
@@ -40,5 +51,13 @@ export default async function getUserGithubRepos(userId: Auth0UserID) {
           : undefined,
     }));
 
-  return repos;
+  // Check if there are more pages
+  const hasMore =
+    response.data.length === MAX_REPOS_TO_FETCH &&
+    !!response.headers.link?.includes('rel="next"');
+
+  return {
+    repos,
+    hasMore,
+  };
 }

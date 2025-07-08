@@ -93,7 +93,7 @@ export default async function VisualEditorPreviewLayout({
             sidebarRootNodesToChildToParentsMap
           }
         >
-          <div className="border-1 m-2 flex flex-col overflow-hidden rounded-2xl border-gray-500 shadow-sm">
+          <div className="border-1 m-2 flex flex-1 flex-col overflow-hidden rounded-2xl border-gray-500 shadow-lg">
             {/* BOUNDARY NOTE: All items within the #preview-container will be themed with domain-specific styles. */}
             <EditorRoutingProvider
               value={{
@@ -139,13 +139,11 @@ export default async function VisualEditorPreviewLayout({
                   isHeaderDisabled={layout.isHeaderDisabled}
                   versionSelect={versionSelect}
                   productSelect={productSelect}
-                  // TODO: isSidebarFixed ends up putting the sidebar outside of the preview container. We should fix this,
-                  // as this also removes certain styles that we want to apply to the sidebar.
-                  // isSidebarFixed={
-                  // !!colors.dark?.sidebarBackground ||
-                  // !!colors.light?.sidebarBackground ||
-                  // layout.isHeaderDisabled
-                  // }
+                  isSidebarFixed={
+                    !!colors.dark?.sidebarBackground ||
+                    !!colors.light?.sidebarBackground ||
+                    layout.isHeaderDisabled
+                  }
                   sidebar={
                     <SidebarContainer
                       logo={

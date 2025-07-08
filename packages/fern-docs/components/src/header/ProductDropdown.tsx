@@ -4,8 +4,7 @@ import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { createFileResolver } from "@fern-api/docs-server/file-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { processIcon } from "@/components/util/processIcon";
-
+import { processIcon } from "../processIcon";
 import {
   ProductDropdownClient,
   ProductDropdownItem,

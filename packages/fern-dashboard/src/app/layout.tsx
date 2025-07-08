@@ -33,7 +33,7 @@ export default async function RootLayout({
         // id is used to remove the hidePylon class programatically
         id="body"
         className={cn(
-          "flex h-[calc(100dvh)] antialiased",
+          "noise flex h-[calc(100dvh)] antialiased",
           HIDE_PYLON_CLASS_NAME
         )}
       >

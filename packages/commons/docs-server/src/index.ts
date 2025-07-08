@@ -49,3 +49,4 @@ export * from "./analytics/posthog";
 export * from "./analytics/rewritePosthog";
 export * from "./withLogo";
 export * from "./handle-node-fallbacks";
+export * from "./withVersionSwitcherInfo";

@@ -10,7 +10,7 @@ export async function handleCreatePr({
   owner: string;
   repo: string;
   baseBranch: string;
-}) {
+}): Promise<string | undefined> {
   try {
     const response = await DashboardApiClient.postCreatePr({
       owner,
@@ -20,7 +20,6 @@ export async function handleCreatePr({
       title: "Visual Editor: Update",
     });
     if (response.success) {
-      console.log("Successfully created PR:", response.prUrl);
       window.open(response.prUrl, "_blank");
       try {
         // No need to await this, we just want to try to generate a PR description.
@@ -34,6 +33,7 @@ export async function handleCreatePr({
         // Silently fail if we can't generate a PR description.
         console.error("Error generating PR description:", error);
       }
+      return response.prUrl;
     } else {
       console.error("Failed to create PR:", response.error);
       // This is a hack to open the PR in a new tab if it already exists
@@ -52,6 +52,7 @@ export async function handleCreatePr({
   } catch (error) {
     console.error("Error creating PR:", error);
   }
+  return undefined;
 }
 
 export async function handleGeneratePrDescription({
@@ -65,15 +66,10 @@ export async function handleGeneratePrDescription({
   repo: string;
   baseBranch: string;
 }) {
-  const response = await DashboardApiClient.generatePrDescription({
+  await DashboardApiClient.generatePrDescription({
     owner,
     repo,
     branch,
     baseBranch,
   });
-  if (response.success) {
-    console.log("Successfully generated PR description:", response.newTitle);
-  } else {
-    console.error("Failed to generate PR description:", response.error);
-  }
 }

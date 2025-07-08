@@ -4,20 +4,20 @@ import { ChevronDown, ChevronsUpDown, Lock, Tag } from "lucide-react";
 
 import { slugToHref } from "@fern-api/docs-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useIsDesktop } from "@fern-ui/react-commons";
+
+import { FernLinkDropdown } from "../FernLinkDropdown";
+import { FernSelectionItem } from "../FernSelectionItem";
 import {
   Availability,
   AvailabilityBadge,
   AvailabilityFullyQualifiedDisplayNames,
-  cn,
-} from "@fern-docs/components";
+} from "../badges";
+import { cn } from "../cn";
 import {
   useCurrentVersionId,
   useCurrentVersionSlug,
-} from "@fern-docs/components/state/navigation";
-import { useIsDesktop } from "@fern-ui/react-commons";
-
-import { FernSelectionItem } from "../../../../components/src/FernSelectionItem";
-import { FernLinkDropdown } from "../FernLinkDropdown";
+} from "../state/navigation";
 
 export interface VersionDropdownItem {
   versionId: string;

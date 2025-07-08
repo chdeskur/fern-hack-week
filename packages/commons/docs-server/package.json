@@ -47,6 +47,7 @@
     "@fern-api/docs-utils": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/edge-config": "workspace:*",
+    "@fern-platform/fdr-utils": "workspace:*",
     "@radix-ui/colors": "^3.0.0",
     "@slack/web-api": "^6.9.0",
     "@types/react": "19.0.10",

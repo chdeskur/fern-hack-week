@@ -17,7 +17,7 @@ export default function PageTitle({
   fileName,
   initialText,
 }: PageTitle.Props) {
-  const [text, setText] = useState(initialText);
+  const [text, setText] = useState(initialText ?? "");
 
   const { stageChanges } = useMdxState();
 

@@ -17,3 +17,14 @@ export function useUserGithubRepos() {
     })
   );
 }
+
+export function useUserGithubReposPage(page: number) {
+  const queryKey = ReactQueryKey.userGithubRepos(page);
+
+  return convertQueryResultToLoadable(
+    useQuery({
+      queryKey: queryKey,
+      queryFn: () => DashboardApiClient.getUserGithubRepos({ page }),
+    })
+  );
+}

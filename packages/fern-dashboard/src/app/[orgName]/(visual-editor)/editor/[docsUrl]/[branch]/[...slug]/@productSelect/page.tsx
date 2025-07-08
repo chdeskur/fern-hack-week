@@ -4,6 +4,7 @@ import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import { getFallbackProduct } from "@fern-api/docs-server/handle-node-fallbacks";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
+import { ProductDropdown } from "@fern-docs/components/header/ProductDropdown";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { DocsUrl } from "@/utils/types";
@@ -28,7 +29,7 @@ export default async function ProductSelectPage({
     loader.getEdgeFlags(),
     loader.getRoot(),
   ]);
-  const _useDenseLayout = layout.isHeaderDisabled;
+  const useDenseLayout = layout.isHeaderDisabled;
 
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
 
@@ -38,11 +39,10 @@ export default async function ProductSelectPage({
   }
 
   return (
-    <div>Product Select: {fallbackProduct.id}</div>
-    // <ProductDropdown
-    //   loader={loader}
-    //   fallbackProduct={fallbackProduct}
-    //   useDenseLayout={useDenseLayout}
-    // />
+    <ProductDropdown
+      loader={loader}
+      fallbackProduct={fallbackProduct}
+      useDenseLayout={useDenseLayout}
+    />
   );
 }

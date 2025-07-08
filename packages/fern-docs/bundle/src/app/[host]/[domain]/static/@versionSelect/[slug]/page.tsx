@@ -4,9 +4,9 @@ import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { getFallbackProduct, getFallbackVersion } from "@fern-api/docs-server";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { slugjoin } from "@fern-api/fdr-sdk/navigation";
+import { VersionDropdown } from "@fern-docs/components/header/VersionDropdown";
 
 import { getFernToken } from "@/app/fern-token";
-import { VersionDropdown } from "@/components/header/VersionDropdown";
 
 export default async function VersionSelectPage({
   params,

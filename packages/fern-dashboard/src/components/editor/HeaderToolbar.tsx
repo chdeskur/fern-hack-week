@@ -1,13 +1,9 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-import {
-  ArrowUturnLeftIcon,
-  ArrowUturnRightIcon,
-} from "@heroicons/react/24/outline";
-import { ArrowLeftIcon, Globe, SettingsIcon } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 
 import { getLoadableValue } from "@fern-ui/loadable";
 
@@ -22,6 +18,14 @@ import { DocsUrl } from "@/utils/types";
 import { GithubLogo } from "../auth/GithubLogo";
 import { ProfileImage } from "../layout/ProfileImage";
 import { Button } from "../ui/button";
+import {
+  ErrorNoBaseBranchToast,
+  ErrorNoBranchToast,
+  ErrorNoGithubSourceToast,
+  SuccessfulCommitToast,
+  WarningNoChangesToast,
+} from "./EditorToasts";
+import { ErrorFullCommitToast } from "./EditorToasts";
 
 export function HeaderToolbar({
   orgName,
@@ -43,19 +47,19 @@ export function HeaderToolbar({
   }
 
   const [isCommitting, setIsCommitting] = useState(false);
+  const [prUrl, setPrUrl] = useState<string | undefined>(undefined);
 
-  async function handleCommitPress() {
-    console.log("handleCommitPress", branch, githubSource);
+  const handleCommitPress = useCallback(async () => {
     if (githubSource?.owner == null || githubSource.repo == null) {
-      console.log("No github source found");
+      ErrorNoGithubSourceToast();
       return;
     }
     if (branch == null) {
-      console.log("No branch found");
+      ErrorNoBranchToast();
       return;
     }
     if (Object.keys(changedMdxFiles).length === 0) {
-      console.log("No changes to commit");
+      WarningNoChangesToast();
       return;
     }
     setIsCommitting(true);
@@ -72,33 +76,36 @@ export function HeaderToolbar({
         })),
       });
       if (response.success) {
-        console.log("Successfully committed changes:", response.commitSha);
+        SuccessfulCommitToast();
       } else {
-        console.error("Failed to commit changes:", response.error);
+        ErrorFullCommitToast();
       }
     } catch (error) {
-      console.error("Error committing changes:", error);
+      ErrorFullCommitToast();
+      console.error("Error committing changes:", error); // TODO: errors should be logged to Sentry, not to console
     } finally {
       setIsCommitting(false);
     }
-  }
+  }, [githubSource, branch, changedMdxFiles]);
 
-  async function handleCreatePrPress() {
+  const handleCreatePrPress = useCallback(async () => {
     if (githubSource?.owner == null || githubSource.repo == null) {
-      console.log("No github source found");
+      ErrorNoGithubSourceToast();
       return;
     }
     if (githubSource.baseBranch == null) {
-      console.log("No base branch found");
+      ErrorNoBaseBranchToast();
       return;
     }
-    await handleCreatePr({
+
+    const newPrUrl = await handleCreatePr({
       branch,
       owner: githubSource.owner,
       repo: githubSource.repo,
       baseBranch: githubSource.baseBranch,
     });
-  }
+    setPrUrl(newPrUrl);
+  }, [githubSource, branch]);
 
   return (
     <div className="bg-background z-50 flex flex-wrap items-center justify-center gap-2 border-b border-gray-500 px-2 py-2 shadow-sm md:py-1">
@@ -110,14 +117,14 @@ export function HeaderToolbar({
         </Button>
         <p className="text-gray-900">{branch}</p>
       </div>
+      {/* TODO: Add undo/redo/settings buttons
       <div className="flex items-center gap-2">
-        <ProfileImage
+         <ProfileImage
           picture={picture}
           name={name}
           className="ring-primary border-3 border-white ring-2"
         />
         <div className="bg-(--grayscale-a2) border-border rounded-full border px-3 py-0.5">
-          {/* TODO: Add undo button functionality */}
           <Button
             variant="ghost"
             className="cursor-not-allowed"
@@ -126,7 +133,6 @@ export function HeaderToolbar({
           >
             <ArrowUturnLeftIcon />
           </Button>
-          {/* TODO: Add redo button functionality */}
           <Button
             variant="ghost"
             className="cursor-not-allowed"
@@ -135,7 +141,6 @@ export function HeaderToolbar({
           >
             <ArrowUturnRightIcon />
           </Button>
-          {/* TODO: Add settings button functionality */}
           <Button
             variant="ghost"
             className="cursor-not-allowed"
@@ -144,38 +149,57 @@ export function HeaderToolbar({
           >
             <SettingsIcon />
           </Button>
-        </div>
-      </div>
-      <div className="flex flex-1 shrink-0 items-center justify-between gap-1 lg:justify-end">
+        </div> 
+      </div> */}
+      <div className="flex flex-1 shrink-0 items-center justify-between gap-3 lg:justify-end">
         {/* TODO: Add preview button functionality */}
-        <Button
+        {/* <Button
           variant="ghost"
           size="sm"
           className="text-(--grayscale-a10) cursor-not-allowed"
         >
           <Globe />
           Preview
-        </Button>
+        </Button> */}
         {/* <Button variant="ghost">Files</Button> */}
-
+        <ProfileImage
+          picture={picture}
+          name={name}
+          className="ring-primary border-3 border-white ring-2"
+        />
         <div className="flex">
           <Button
             loading={isCommitting}
-            disabled={isCommitting || Object.keys(changedMdxFiles).length === 0}
+            disabled={
+              isCommitting || Object.keys(changedMdxFiles)?.length === 0
+            }
             className="rounded-r-none border-r-0"
             onClick={() => void handleCommitPress()}
           >
             <GithubLogo />
             Commit
           </Button>
-          <Button
-            variant="outline"
-            className="rounded-l-none border-l-0"
-            onClick={() => void handleCreatePrPress()}
-          >
-            <GithubLogo />
-            Publish
-          </Button>
+          {prUrl ? (
+            <Button
+              variant="outline"
+              className="rounded-l-none border-l-0"
+              asChild
+            >
+              <a href={prUrl} target="_blank">
+                <GithubLogo />
+                View PR
+              </a>
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="rounded-l-none border-l-0"
+              onClick={() => void handleCreatePrPress()}
+            >
+              <GithubLogo />
+              Create PR
+            </Button>
+          )}
         </div>
       </div>
     </div>

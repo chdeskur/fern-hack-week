@@ -7,6 +7,9 @@ import handler from "./handler";
 
 export declare namespace getUserGithubRepos {
   export type Response = ResolvedReturnType<typeof handler>;
+  export interface Request {
+    page?: number;
+  }
 }
 
 export async function GET(req: NextRequest) {
@@ -16,5 +19,18 @@ export async function GET(req: NextRequest) {
   }
   const { userId } = maybeSessionData.data;
 
-  return NextResponse.json(await handler(userId));
+  // Parse page parameter from query string
+  const { searchParams } = new URL(req.url);
+  const pageParam = searchParams.get("page");
+  const page = pageParam ? parseInt(pageParam, 10) : 1;
+
+  // Validate page parameter
+  if (isNaN(page) || page < 1) {
+    return NextResponse.json(
+      { error: "Invalid page parameter. Must be a positive integer." },
+      { status: 400 }
+    );
+  }
+
+  return NextResponse.json(await handler(userId, page));
 }

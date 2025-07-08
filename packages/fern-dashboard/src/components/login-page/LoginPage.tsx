@@ -52,14 +52,14 @@ export const LoginPage = () => {
               </div>
             </div>
           </div>
-          <div className="relative flex flex-1">
+          <div className="relative mb-2 flex flex-1">
             <LoginImage />
           </div>
-          <div className="bg-background/75 absolute bottom-0 left-0 right-0 flex flex-col gap-4 p-8">
-            <div className="text-gray-1000 text-center text-sm">
+          <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-4 p-8">
+            <div className="text-gray-1000 text-left text-sm">
               Giving API superpowers to world-class companies
             </div>
-            <div className="flex items-center justify-center sm:gap-3 md:gap-6 lg:gap-8">
+            <div className="flex items-center sm:gap-3 md:gap-6 lg:gap-8">
               <SquareLogo />
               <WebflowLogo />
               <IntercomLogo />

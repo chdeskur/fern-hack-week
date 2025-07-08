@@ -4,6 +4,8 @@ import Image from "next/image";
 
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 
+import { useLocationHref } from "@fern-docs/components/hooks/useLocationHref";
+
 import { GithubLogo } from "../auth/GithubLogo";
 import { LoginButton } from "../auth/LoginButton";
 import { Button } from "../ui/button";
@@ -12,6 +14,8 @@ import { GradientBackground } from "./GradientBackground";
 import { LogoCard } from "./LogoCard";
 
 export function AuthorizeGithubModal() {
+  const currentLocation = useLocationHref();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -57,6 +61,7 @@ export function AuthorizeGithubModal() {
                 connection: "github",
                 connection_scope: "read:user,read:org,repo",
               }}
+              returnTo={currentLocation}
             >
               <GithubLogo />
               Authorize GitHub

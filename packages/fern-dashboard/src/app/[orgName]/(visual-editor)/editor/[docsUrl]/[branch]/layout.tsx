@@ -41,7 +41,7 @@ export default async function AuthedLayout({
     >
       <MdxStateProvider>
         <BranchProvider branch={branch}>
-          <div className="bg-background flex w-full flex-col overflow-hidden">
+          <div className="bg-background noise flex w-full flex-col overflow-hidden">
             <HeaderToolbar
               orgName={orgName}
               session={session}
