@@ -8,6 +8,7 @@ export function MarkdownContent({
   children,
   components,
   citations,
+  plugins,
 }: {
   children: string;
   components?: Components;
@@ -17,6 +18,7 @@ export function MarkdownContent({
     text: string;
     url: string;
   }[];
+  plugins?: string[];
 }) {
   /*
     Claude 3.5 sometimes doesn't create footnote definitions correctly
@@ -65,10 +67,20 @@ export function MarkdownContent({
     }
   }
 
+  const remarkPlugins = [];
+  if (plugins) {
+    if (plugins.includes("remarkGfm")) {
+      remarkPlugins.push(remarkGfm);
+    }
+    if (plugins.includes("remarkTest")) {
+      remarkPlugins.push(remarkTest);
+    }
+  }
+
   return (
     <Markdown
       components={components}
-      remarkPlugins={[remarkGfm, remarkTest]}
+      remarkPlugins={remarkPlugins}
       remarkRehypeOptions={{}}
     >
       {cleanedContent.replaceAll("```[^", "```\n[^")}

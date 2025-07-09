@@ -408,7 +408,7 @@ const DesktopAskAIChat = ({
                     size="iconXs"
                     variant="outline"
                     onClick={() => {
-                      chat.stop();
+                      void chat.stop();
                       chat.setMessages([]);
                       resetConversationId();
                     }}
@@ -483,9 +483,7 @@ const DesktopAskAIChat = ({
                 node,
                 ...props
               }: PropsWithElement<React.ComponentProps<"p">>) => (
-                <p {...props} className="mb-0">
-                  {children}
-                </p>
+                <p {...props}>{children}</p>
               ),
             }),
             [darkCodeEnabled]
@@ -511,7 +509,7 @@ const DesktopAskAIChat = ({
         onValueChange={setInput}
         isLoading={chat.status !== "ready"}
         stop={() => {
-          chat.stop();
+          void chat.stop();
         }}
         onSend={askAI}
         onKeyDown={useEventCallback((e) => {
@@ -730,7 +728,12 @@ const AskAICommandItems = memo<{
                   <article>
                     <div className="bg-(color:--grayscale-a3) rounded-6 relative mb-2 ml-auto w-fit max-w-[70%] whitespace-pre-wrap px-5 py-2">
                       <section className="prose cursor-auto text-sm">
-                        <MarkdownContent components={components}>
+                        <MarkdownContent
+                          components={{
+                            ...components,
+                            ...HideHeadersInUserMessage(),
+                          }}
+                        >
                           {message.user?.content ?? "_No user message_"}
                         </MarkdownContent>
                       </section>
@@ -779,6 +782,7 @@ const AskAICommandItems = memo<{
                               },
                             }}
                             citations={message.assistant.citations ?? []}
+                            plugins={["remarkGfm", "remarkTest"]}
                           >
                             {message.assistant.content}
                           </MarkdownContent>
@@ -844,4 +848,21 @@ function FootnoteCommands({
       ))}
     </>
   );
+}
+
+function HideHeadersInUserMessage() {
+  return {
+    h1: ({ children }: PropsWithElement<React.ComponentProps<"h1">>) =>
+      children,
+    h2: ({ children }: PropsWithElement<React.ComponentProps<"h2">>) =>
+      children,
+    h3: ({ children }: PropsWithElement<React.ComponentProps<"h3">>) =>
+      children,
+    h4: ({ children }: PropsWithElement<React.ComponentProps<"h4">>) =>
+      children,
+    h5: ({ children }: PropsWithElement<React.ComponentProps<"h5">>) =>
+      children,
+    h6: ({ children }: PropsWithElement<React.ComponentProps<"h6">>) =>
+      children,
+  };
 }
