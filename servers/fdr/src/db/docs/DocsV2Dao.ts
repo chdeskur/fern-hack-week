@@ -627,6 +627,7 @@ async function createOrUpdateDocsDefinition({
       algoliaIndex: null,
       isPreview,
       authType,
+      isArchived: false,
       hasPublicS3Assets: authType === "PUBLIC",
     },
     update: {
@@ -636,7 +637,6 @@ async function createOrUpdateDocsDefinition({
       isPreview,
       authType,
       hasPublicS3Assets: authType === "PUBLIC",
-      isArchived: false,
     },
   });
 }
