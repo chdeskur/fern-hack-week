@@ -642,7 +642,9 @@ export class ReadmeGenerator {
     maven: FernGeneratorCli.MavenPublishInfo;
   }): void {
     writer.write("[![Maven Central]");
-    writer.write(`(https://img.shields.io/maven-central/v/${maven.artifact})]`);
+    writer.write(
+      `(https://img.shields.io/maven-central/v/${maven.group}/${maven.artifact})]`
+    );
     writer.writeLine(
       `(https://central.sonatype.com/artifact/${maven.group}/${maven.artifact})`
     );
