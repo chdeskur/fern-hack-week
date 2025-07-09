@@ -8,14 +8,14 @@ import { GithubProtectedArea } from "@/components/docs-page/GithubProtectedArea"
 import { GithubSource } from "@/components/docs-page/GithubSource";
 import { PosthogFeatureFlag } from "@/components/posthog/feature-flags/flags";
 import { FeatureFlaggedServerSide } from "@/components/posthog/feature-flags/server-side";
-
-import { parseDocsUrlParam } from "../../../../../utils/parseDocsUrlParam";
+import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
+import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function Page(props: {
-  params: Promise<{ orgName: Auth0OrgName; docsUrl: string }>;
+  params: Promise<{ orgName: Auth0OrgName; docsUrl: EncodedDocsUrl }>;
 }) {
-  const { orgName, docsUrl: docsUrlParam } = await props.params;
-  const docsUrl = parseDocsUrlParam({ docsUrl: docsUrlParam });
+  const { orgName, docsUrl: encodedDocsUrl } = await props.params;
+  const docsUrl = parseDocsUrlParam({ docsUrl: encodedDocsUrl });
   const session = await getCurrentSession();
 
   if (!session) {
@@ -23,7 +23,7 @@ export default async function Page(props: {
   }
 
   const sourceRepo = await getDocsGithubSourceHandler({
-    url: docsUrl,
+    url: encodedDocsUrl,
     token: session.accessToken,
     userId: session.user.sub,
   });

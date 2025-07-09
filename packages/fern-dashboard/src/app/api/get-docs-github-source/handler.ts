@@ -21,7 +21,10 @@ export default async function getDocsGithubSourceHandler({
   token: string;
   userId: Auth0UserID;
 }): Promise<GithubSourceRepo> {
-  const docsUrlMetadata = await getDocsUrlMetadata({ url, token });
+  const docsUrlMetadata = await getDocsUrlMetadata({
+    url: decodeURIComponent(url),
+    token,
+  });
   if (!docsUrlMetadata.ok) {
     // the docs url is user-supplied (parsed from the page url) so it's ok if it
     // doesn't exist

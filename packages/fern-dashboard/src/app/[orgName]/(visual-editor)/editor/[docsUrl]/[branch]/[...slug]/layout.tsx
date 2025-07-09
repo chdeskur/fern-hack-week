@@ -19,7 +19,7 @@ import { Auth0OrgName } from "@/app/services/auth0/types";
 import { PreviewHeader } from "@/components/docs-preview/PreviewHeader";
 import { EditorLinkInterceptor } from "@/components/editor/EditorLinkInterceptor";
 import { EditorRoutingProvider } from "@/providers/EditorRoutingContext";
-import { DocsUrl } from "@/utils/types";
+import { EncodedDocsUrl } from "@/utils/types";
 
 import "./index.css";
 
@@ -32,7 +32,11 @@ export default async function VisualEditorPreviewLayout({
   sidebar,
   logo,
 }: Readonly<{
-  params: Promise<{ orgName: Auth0OrgName; docsUrl: DocsUrl; branch: string }>;
+  params: Promise<{
+    orgName: Auth0OrgName;
+    docsUrl: EncodedDocsUrl;
+    branch: string;
+  }>;
   children: React.JSX.Element;
   headertabs: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -100,7 +104,6 @@ export default async function VisualEditorPreviewLayout({
                 orgName,
                 docsUrl,
                 branch,
-                isEditorMode: true,
               }}
             >
               <div id="preview-container">

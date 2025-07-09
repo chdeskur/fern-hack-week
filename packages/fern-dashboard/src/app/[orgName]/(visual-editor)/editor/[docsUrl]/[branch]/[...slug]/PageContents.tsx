@@ -43,12 +43,12 @@ export default function PageContents({
       <PageTitle
         className="w-full max-w-2xl"
         fileName={fileName}
-        initialText={String(title)}
+        initialText={title ? String(title) : undefined}
       />
       <PageSubtitle
         className="w-full max-w-2xl"
         fileName={fileName}
-        initialText={String(subtitle)}
+        initialText={subtitle ? String(subtitle) : undefined}
       />
       <PageEditor
         className="w-full max-w-2xl"

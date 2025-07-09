@@ -6,7 +6,6 @@ interface EditorRoutingContextValue {
   orgName: string;
   docsUrl: string;
   branch: string;
-  isEditorMode: boolean;
 }
 
 const EditorRoutingContext = createContext<EditorRoutingContextValue | null>(

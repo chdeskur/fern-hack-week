@@ -13,6 +13,7 @@
   @import "../../../../../../../../../fern-docs/bundle/src/components/css/components.scss";
 
   @apply font-body text-body bg-background overflow-auto text-base;
+  @apply h-full;
 
   .fern-background-image {
     overflow: hidden;
@@ -26,8 +27,12 @@
     @apply sticky top-0;
   }
 
+  #fern-sidebar[data-state="fixed"] {
+    position: absolute;
+  }
+
   /* This makes sure that the main content is not pushed down by the header, since the header is no longer fixed in this layout. */
   main {
-    @apply mt-0;
+    @apply mt-0 h-full;
   }
 }

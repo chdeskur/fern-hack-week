@@ -11,12 +11,12 @@ import { SidebarRootNode } from "@fern-docs/components/sidebar/nodes/SidebarRoot
 import { HiddenSidebar } from "@fern-docs/components/theming/HiddenSidebar";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
-import { DocsUrl } from "@/utils/types";
+import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function SidebarPage({
   params,
 }: {
-  params: Promise<{ docsUrl: DocsUrl; slug: string }>;
+  params: Promise<{ docsUrl: EncodedDocsUrl; slug: string }>;
 }) {
   const { docsUrl, slug } = await params;
   const session = await getCurrentSession();

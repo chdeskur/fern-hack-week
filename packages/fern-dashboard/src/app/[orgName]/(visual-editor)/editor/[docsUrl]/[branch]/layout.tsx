@@ -7,7 +7,8 @@ import { GithubExtendedAccessProtectedRoute } from "@/components/auth/GithubExte
 import { HeaderToolbar } from "@/components/editor/HeaderToolbar";
 import { BranchProvider } from "@/providers/BranchContext";
 import { MdxStateProvider } from "@/providers/MdxStateContext";
-import { DocsUrl } from "@/utils/types";
+import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
+import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function AuthedLayout({
   params,
@@ -15,12 +16,13 @@ export default async function AuthedLayout({
 }: Readonly<{
   params: Promise<{
     orgName: Auth0OrgName;
-    docsUrl: DocsUrl;
+    docsUrl: EncodedDocsUrl;
     branch: string;
   }>;
   children: React.JSX.Element;
 }>) {
-  const { orgName, docsUrl, branch } = await params;
+  const { orgName, docsUrl: encodedDocsUrl, branch } = await params;
+  const docsUrl = parseDocsUrlParam({ docsUrl: encodedDocsUrl });
   const session = await getCurrentSession();
 
   if (!session) {

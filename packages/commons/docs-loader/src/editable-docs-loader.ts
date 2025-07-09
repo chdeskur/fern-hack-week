@@ -174,14 +174,13 @@ class EditableDocsLoaderImpl implements EditableDocsLoader {
 
 export const createEditableDocsLoader = async (
   host: string,
-  docsUrl: string,
+  encodedDocsUrl: string,
   fern_token?: string
 ) => {
   // TODO: derive the domain from the workspace
   const docsLoader = await createCachedDocsLoader(
     host,
-    docsUrl,
-    // process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? "fern.docs.buildwithfern.com",
+    decodeURIComponent(encodedDocsUrl),
     fern_token
   );
   return new EditableDocsLoaderImpl(docsLoader);

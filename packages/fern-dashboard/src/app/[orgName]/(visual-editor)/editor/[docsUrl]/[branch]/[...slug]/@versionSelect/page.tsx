@@ -10,12 +10,12 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { VersionDropdown } from "@fern-docs/components/header/VersionDropdown";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
-import { DocsUrl } from "@/utils/types";
+import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function VersionSelectPage({
   params,
 }: {
-  params: Promise<{ docsUrl: DocsUrl; slug: string }>;
+  params: Promise<{ docsUrl: EncodedDocsUrl; slug: string }>;
 }) {
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;

@@ -7,12 +7,12 @@ import { AbstractLogo } from "@fern-docs/components/abstract/logo";
 import { getFrontmatter } from "@fern-docs/mdx";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
-import { DocsUrl } from "@/utils/types";
+import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function LogoPage({
   params,
 }: {
-  params: Promise<{ docsUrl: DocsUrl; slug: string }>;
+  params: Promise<{ docsUrl: EncodedDocsUrl; slug: string }>;
 }) {
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;

@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
         pathname: "/u/**",
         search: "?v=4",
       },
+      {
+        protocol: "https",
+        hostname: "files.buildwithfern.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   webpack: (webpackConfig) => {

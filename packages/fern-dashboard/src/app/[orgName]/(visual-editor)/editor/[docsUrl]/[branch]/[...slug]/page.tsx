@@ -8,18 +8,18 @@ import { SetCurrentNavigationNode } from "@fern-docs/components/state/navigation
 import { mdxToHtml } from "@fern-docs/mdx";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
-import { DocsUrl } from "@/utils/types";
+import { Auth0OrgName } from "@/app/services/auth0/types";
+import { ROOT_SLUG_ALIAS, constructEditorSlug } from "@/utils/editor-routing";
+import { EncodedDocsUrl } from "@/utils/types";
 
 import PageContents from "./PageContents";
-
-const ROOT_SLUG_ALIAS = "root";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{
-    orgName: string;
-    docsUrl: DocsUrl;
+    orgName: Auth0OrgName;
+    docsUrl: EncodedDocsUrl;
     branch: string;
     slug: string[];
   }>;
@@ -47,7 +47,14 @@ export default async function Page({
   // If the page is not found, redirect to the root (index) page
   if (foundNode.type !== "found") {
     if (foundNode.redirect) {
-      redirect(foundNode.redirect);
+      redirect(
+        constructEditorSlug({
+          orgName,
+          docsUrl,
+          branchName: branch,
+          slug: foundNode.redirect,
+        })
+      );
     }
     if (slug === root.slug) {
       // TODO: fix this so that we can redirect to the root page. right now, the root slug is not always the
@@ -55,7 +62,14 @@ export default async function Page({
       notFound();
     }
     // only redirect to root if the slug is not the root slug, otherwise we'll get a redirect loop
-    redirect(`/${orgName}/editor/${docsUrl}/${branch}/${ROOT_SLUG_ALIAS}`);
+    redirect(
+      constructEditorSlug({
+        orgName,
+        docsUrl,
+        branchName: branch,
+        slug: ROOT_SLUG_ALIAS,
+      })
+    );
   }
 
   const pageId = getPageId(foundNode.node);

@@ -13,7 +13,8 @@ import {
 import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DashboardApiClient } from "@/app/services/dashboard-api/client";
-import { DocsUrl } from "@/utils/types";
+import { ROOT_SLUG_ALIAS, constructEditorSlug } from "@/utils/editor-routing";
+import { DocsUrl, EncodedDocsUrl } from "@/utils/types";
 
 import {
   ErrorCreateBranchToast,
@@ -71,7 +72,14 @@ export function CreateBranchButton({
     }
     setIsLoading(false);
     router.refresh();
-    router.push(`/${orgName}/editor/${docsUrl}/${branchName}/root`);
+    router.push(
+      constructEditorSlug({
+        orgName,
+        docsUrl: encodeURIComponent(docsUrl) as EncodedDocsUrl,
+        branchName,
+        slug: ROOT_SLUG_ALIAS,
+      })
+    );
   }, [sourceRepo, session.user.name, orgName, docsUrl, router]);
 
   return (
