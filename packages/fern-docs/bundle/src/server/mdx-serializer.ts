@@ -84,7 +84,7 @@ export function createCachedMdxSerializer(
         const authState = await loader.getAuthState();
 
         try {
-          if (useNextMdx) {
+          if (useNextMdx && !content.includes("twoslash")) {
             try {
               const result = await internalSerializeNextMdxRemote(content, {
                 loader,
