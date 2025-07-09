@@ -22,6 +22,7 @@ import {
   ErrorNoBaseBranchToast,
   ErrorNoBranchToast,
   ErrorNoGithubSourceToast,
+  ErrorStillSyncingToast,
   SuccessfulCommitToast,
   WarningNoChangesToast,
 } from "./EditorToasts";
@@ -37,7 +38,7 @@ export function HeaderToolbar({
   docsUrl: DocsUrl;
 }) {
   const { name, picture } = session.user;
-  const { changedMdxFiles } = useMdxState();
+  const { changedMdxFiles, mdxSyncedStatus } = useMdxState();
   const { branch } = useBranch();
   const githubSource = getLoadableValue(useGithubSourceRepo(docsUrl));
 
@@ -60,6 +61,10 @@ export function HeaderToolbar({
     }
     if (Object.keys(changedMdxFiles).length === 0) {
       WarningNoChangesToast();
+      return;
+    }
+    if (Object.values(mdxSyncedStatus).some((status) => status !== "SYNCED")) {
+      ErrorStillSyncingToast();
       return;
     }
     setIsCommitting(true);
@@ -86,7 +91,7 @@ export function HeaderToolbar({
     } finally {
       setIsCommitting(false);
     }
-  }, [githubSource, branch, changedMdxFiles]);
+  }, [githubSource, branch, changedMdxFiles, mdxSyncedStatus]);
 
   const handleCreatePrPress = useCallback(async () => {
     if (githubSource?.owner == null || githubSource.repo == null) {
@@ -171,7 +176,11 @@ export function HeaderToolbar({
           <Button
             loading={isCommitting}
             disabled={
-              isCommitting || Object.keys(changedMdxFiles)?.length === 0
+              isCommitting ||
+              Object.keys(changedMdxFiles)?.length === 0 ||
+              Object.values(mdxSyncedStatus).some(
+                (status) => status !== "SYNCED"
+              )
             }
             className="rounded-r-none border-r-0"
             onClick={() => void handleCommitPress()}

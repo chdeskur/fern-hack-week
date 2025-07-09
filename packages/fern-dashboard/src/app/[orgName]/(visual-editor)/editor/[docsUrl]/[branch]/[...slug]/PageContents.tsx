@@ -12,47 +12,60 @@ import PageTitle from "./PageTitle";
 
 export declare namespace PageContents {
   export interface Props {
-    fileName: string;
+    filename: string;
     initialHtml: MdxToHtmlResponse["html"];
-    frontmatter: MdxToHtmlResponse["frontmatter"];
-    customElements: MdxToHtmlResponse["customElements"];
+    initialFrontmatter: MdxToHtmlResponse["frontmatter"];
+    initialCustomElements: MdxToHtmlResponse["customElements"];
   }
 }
 
 export default function PageContents({
-  fileName,
+  filename,
   initialHtml,
-  frontmatter,
-  customElements,
+  initialFrontmatter,
+  initialCustomElements,
 }: PageContents.Props) {
-  const { title, subtitle } = frontmatter ?? {};
+  const { title, subtitle } = initialFrontmatter ?? {};
 
-  const { updateDependencies } = useMdxState();
+  const { updateDependencies, changedMdxFiles, syncChanges } = useMdxState();
 
+  // Set up initial mdx dependencies
   useEffect(() => {
-    // Set up initial mdx dependencies
-    updateDependencies(fileName, {
+    updateDependencies(filename, {
       html: initialHtml,
-      frontmatter: frontmatter,
-      customElements: customElements,
+      frontmatter: initialFrontmatter,
+      customElements: initialCustomElements,
     });
-  }, [fileName, initialHtml, frontmatter, customElements, updateDependencies]);
+  }, [
+    filename,
+    initialHtml,
+    initialFrontmatter,
+    initialCustomElements,
+    updateDependencies,
+  ]);
+
+  const changedMdxFile = changedMdxFiles[filename];
+
+  // Watch for changes and sync to server
+  useEffect(() => {
+    syncChanges(filename);
+  }, [changedMdxFile, filename, syncChanges]);
 
   return (
     <>
       <PageTitle
         className="w-full max-w-2xl"
-        fileName={fileName}
+        filename={filename}
         initialText={title ? String(title) : undefined}
       />
       <PageSubtitle
         className="w-full max-w-2xl"
-        fileName={fileName}
+        filename={filename}
         initialText={subtitle ? String(subtitle) : undefined}
       />
       <PageEditor
         className="w-full max-w-2xl"
-        fileName={fileName}
+        filename={filename}
         initialHtml={initialHtml}
       />
     </>

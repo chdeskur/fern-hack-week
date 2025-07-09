@@ -96,10 +96,11 @@ export default async function Page({
           productIsDefault={foundNode.isCurrentProductDefault}
         />
         <PageContents
-          fileName={page?.filename ?? ""}
+          // TODO: If there is no filename, it is an error we should surface
+          filename={page?.filename ?? ""}
           initialHtml={html}
-          frontmatter={frontmatter}
-          customElements={customElements}
+          initialFrontmatter={frontmatter}
+          initialCustomElements={customElements}
         />
       </div>
     </AbstractLayoutEvaluatorContent>

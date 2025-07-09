@@ -6,51 +6,81 @@ import {
   useCallback,
   useContext,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
 import { MdxToHtmlResponse, htmlToMdx } from "@fern-docs/mdx";
 
-type FilePath = string;
+import { setMdxFile } from "@/app/actions/setMdxFile";
+import { DocsUrl } from "@/utils/types";
+
+type Filename = string;
 type Markdown = string;
+type SyncedStatus = "STAGED" | "SYNCING" | "SYNCED" | "ERROR";
+
+// Amount of time to wait before syncing mdx changes to the server
+export const DEBOUNCE_TIMEOUT_DELAY = 300;
+
 interface MdxDependencies {
   html?: MdxToHtmlResponse["html"];
   frontmatter?: MdxToHtmlResponse["frontmatter"];
   customElements?: MdxToHtmlResponse["customElements"];
+  /**
+   * Flag if the file should be considered changed.
+   * This is used to determine if content changes should be committed to repo.
+   */
   changed?: boolean;
 }
 
 export const MdxStateContext = createContext<{
-  changedMdxFiles: Record<FilePath, Markdown>;
-  updateDependencies: (filePath: FilePath, state: MdxDependencies) => void;
-  stageChanges: (filePath: FilePath, state: MdxDependencies) => void;
+  changedMdxFiles: Record<Filename, Markdown>;
+  mdxSyncedStatus: Record<Filename, SyncedStatus>;
+  updateDependencies: (filename: Filename, state: MdxDependencies) => void;
+  stageChanges: (filename: Filename, state: MdxDependencies) => void;
+  syncChanges: (filename: Filename) => Promise<void>;
 }>({
   changedMdxFiles: {},
+  mdxSyncedStatus: {},
   updateDependencies: () => undefined,
   stageChanges: () => undefined,
+  syncChanges: () => Promise.resolve(),
 });
 
-export function MdxStateProvider({ children }: { children: ReactNode }) {
+export function MdxStateProvider({
+  children,
+  docsUrl,
+}: {
+  children: ReactNode;
+  docsUrl: DocsUrl;
+}) {
   const [mdxDepsStore, setMdxDepsStore] = useState<
-    Record<FilePath, MdxDependencies>
+    Record<Filename, MdxDependencies>
   >({});
 
-  // Stablilize updateMdxState identity to prevent unnecessary re-renders
+  const [mdxSyncedStatus, setMdxSyncedStatus] = useState<
+    Record<Filename, SyncedStatus>
+  >({});
+
+  // Track debounce timeouts for each file to prevent excessive syncs
+  const debounceTimeouts = useRef<Record<string, NodeJS.Timeout | null>>({});
+
+  // Stablilize updateDependencies identity to prevent unnecessary re-renders
   const updateDependencies = useCallback(
-    (filePath: FilePath, state: MdxDependencies) => {
+    (filename: Filename, state: MdxDependencies) => {
       setMdxDepsStore((prev) => ({
         ...prev,
-        [filePath]: {
-          html: state.html ?? prev[filePath]?.html,
+        [filename]: {
+          html: state.html ?? prev[filename]?.html,
           frontmatter: {
             // Merge existing frontmatter with new frontmatter
-            ...prev[filePath]?.frontmatter,
+            ...prev[filename]?.frontmatter,
             // Only override frontmatter properties that are newly provided
             ...state.frontmatter,
           },
           customElements:
-            state.customElements ?? prev[filePath]?.customElements,
-          changed: state.changed ?? prev[filePath]?.changed,
+            state.customElements ?? prev[filename]?.customElements,
+          changed: state.changed ?? prev[filename]?.changed,
         },
       }));
     },
@@ -59,23 +89,28 @@ export function MdxStateProvider({ children }: { children: ReactNode }) {
 
   // Alias for updateDependencies that sets the changed flag to true by default
   const stageChanges = useCallback(
-    (filePath: FilePath, state: MdxDependencies) => {
-      updateDependencies(filePath, { ...state, changed: true });
+    (filename: Filename, state: MdxDependencies) => {
+      updateDependencies(filename, { ...state, changed: true });
+      // Immediately mark file as staged when changes are made
+      setMdxSyncedStatus((prev) => ({
+        ...prev,
+        [filename]: "STAGED",
+      }));
     },
     [updateDependencies]
   );
 
   // Build a map of changed files (changed flag is true) and their contents
   const changedMdxFiles = useMemo(() => {
-    return Object.entries(mdxDepsStore).reduce<Record<FilePath, Markdown>>(
-      (acc, [filePath, state]) => {
+    return Object.entries(mdxDepsStore).reduce<Record<Filename, Markdown>>(
+      (acc, [filename, state]) => {
         if (
           state.changed &&
           state.html &&
           state.frontmatter &&
           state.customElements
         ) {
-          acc[filePath] = htmlToMdx(
+          acc[filename] = htmlToMdx(
             state.html,
             state.frontmatter,
             state.customElements
@@ -87,9 +122,56 @@ export function MdxStateProvider({ children }: { children: ReactNode }) {
     );
   }, [mdxDepsStore]);
 
+  // Sync changes to the server via debounced setMdxFile server action
+  const syncChanges = useCallback(
+    async (filename: Filename) => {
+      // Get content of file to sync
+      const content = changedMdxFiles[filename];
+      // Verify there is content to sync
+      if (typeof content !== "undefined") {
+        // Clear any existing timeout for this file
+        const timeout = debounceTimeouts.current[filename];
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        // Set timeout to sync changes to the server
+        debounceTimeouts.current[filename] = setTimeout(() => {
+          setMdxSyncedStatus((prev) => ({
+            ...prev,
+            [filename]: "SYNCING",
+          }));
+          setMdxFile(docsUrl, filename, content)
+            .then(() => {
+              // If successful, mark file as synced
+              setMdxSyncedStatus((prev) => ({
+                ...prev,
+                [filename]: "SYNCED",
+              }));
+            })
+            .catch(() => {
+              // If error, mark file as error
+              setMdxSyncedStatus((prev) => ({
+                ...prev,
+                [filename]: "ERROR",
+              }));
+            });
+          // Always clear the timeout on run
+          debounceTimeouts.current[filename] = null;
+        }, DEBOUNCE_TIMEOUT_DELAY);
+      }
+    },
+    [docsUrl, changedMdxFiles]
+  );
+
   return (
     <MdxStateContext.Provider
-      value={{ changedMdxFiles, updateDependencies, stageChanges }}
+      value={{
+        changedMdxFiles,
+        mdxSyncedStatus,
+        updateDependencies,
+        stageChanges,
+        syncChanges,
+      }}
     >
       {children}
     </MdxStateContext.Provider>

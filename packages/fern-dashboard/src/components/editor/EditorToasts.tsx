@@ -42,6 +42,10 @@ export function WarningNoChangesToast() {
   toast.warning("No changes to commit!");
 }
 
+export function ErrorStillSyncingToast() {
+  toast.error("Your changes are still syncing. Please try again.");
+}
+
 export function ErrorCreateBranchToast() {
   toast.error("Failed to create branch. Please try again.");
 }

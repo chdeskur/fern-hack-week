@@ -7,14 +7,14 @@ import { useMdxState } from "@/providers/MdxStateContext";
 export declare namespace PageSubtitle {
   export interface Props {
     className?: string;
-    fileName: string;
+    filename: string;
     initialText?: string;
   }
 }
 
 export default function PageSubtitle({
   className,
-  fileName,
+  filename,
   initialText,
 }: PageSubtitle.Props) {
   const [text, setText] = useState(initialText);
@@ -24,7 +24,7 @@ export default function PageSubtitle({
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const nextText = e.target.value;
     setText(nextText);
-    stageChanges(fileName, { frontmatter: { subtitle: nextText } });
+    stageChanges(filename, { frontmatter: { subtitle: nextText } });
   }
 
   return (

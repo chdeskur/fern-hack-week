@@ -41,7 +41,7 @@ export default async function AuthedLayout({
       owner={sourceRepo.owner}
       repo={sourceRepo.repo}
     >
-      <MdxStateProvider>
+      <MdxStateProvider docsUrl={docsUrl}>
         <BranchProvider branch={branch}>
           <div className="bg-background noise flex w-full flex-col overflow-hidden">
             <HeaderToolbar

@@ -7,14 +7,14 @@ import { useMdxState } from "@/providers/MdxStateContext";
 export declare namespace PageTitle {
   export interface Props {
     className?: string;
-    fileName: string;
+    filename: string;
     initialText?: string;
   }
 }
 
 export default function PageTitle({
   className,
-  fileName,
+  filename,
   initialText,
 }: PageTitle.Props) {
   const [text, setText] = useState(initialText ?? "");
@@ -24,7 +24,7 @@ export default function PageTitle({
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const nextText = e.target.value;
     setText(nextText);
-    stageChanges(fileName, { frontmatter: { title: nextText } });
+    stageChanges(filename, { frontmatter: { title: nextText } });
   }
 
   return (
