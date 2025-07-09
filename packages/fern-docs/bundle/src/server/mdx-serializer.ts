@@ -84,26 +84,61 @@ export function createCachedMdxSerializer(
         const authState = await loader.getAuthState();
 
         try {
-          return useNextMdx
-            ? await internalSerializeNextMdxRemote(content, {
+          if (useNextMdx) {
+            try {
+              const result = await internalSerializeNextMdxRemote(content, {
                 loader,
                 scope: {
                   authed: authState.authed,
                   user: authState.authed ? authState.user : undefined,
                   ...scope,
                 },
-              })
-            : await internalSerializeMdx(content, {
-                filename,
-                loader,
-                toc,
-                scope: {
-                  authed: authState.authed,
-                  user: authState.authed ? authState.user : undefined,
-                  ...scope,
-                },
-                replaceHref,
               });
+
+              if (result && containsInvalidAwait(result.code)) {
+                throw new Error(
+                  "NextMdxRemote generated invalid code with await statements, trying regular MDX serialization"
+                );
+              }
+
+              return result;
+            } catch (_nextMdxError) {
+              try {
+                const result = await internalSerializeMdx(content, {
+                  filename,
+                  loader,
+                  toc,
+                  scope: {
+                    authed: authState.authed,
+                    user: authState.authed ? authState.user : undefined,
+                    ...scope,
+                  },
+                  replaceHref,
+                });
+                return result;
+              } catch (fallbackError) {
+                console.error(
+                  "Both engines failed serializing mdx",
+                  fallbackError
+                );
+
+                return undefined;
+              }
+            }
+          } else {
+            const result = await internalSerializeMdx(content, {
+              filename,
+              loader,
+              toc,
+              scope: {
+                authed: authState.authed,
+                user: authState.authed ? authState.user : undefined,
+                ...scope,
+              },
+              replaceHref,
+            });
+            return result;
+          }
         } catch (error) {
           console.error("Error serializing mdx", error);
 
@@ -143,4 +178,10 @@ function isPlainText(content: string): boolean {
   }
 
   return /^[a-zA-Z0-9\s.,'"!?]*$/.test(content);
+}
+
+function containsInvalidAwait(code: string): boolean {
+  // Check if the code contains await statements that would cause issues
+  // when evaluated by new Function()
+  return code.includes("await import(") || code.includes("await require(");
 }
