@@ -1,17 +1,30 @@
+import dynamic from "next/dynamic";
 import React from "react";
 
 import { ErrorBoundary } from "@/components/error-boundary";
 
-import { MdxComponent } from "../bundler/component";
-
-type MarkdownText = string | { code: string; jsxElements: string[] };
+type MarkdownText =
+  | string
+  | { code: string; jsxElements: string[]; scope?: Record<string, unknown> };
 
 export declare namespace MdxContent {
   export interface Props {
     mdx: MarkdownText | MarkdownText[] | undefined;
     fallback?: React.ReactNode;
+    useNextMdx?: boolean;
   }
 }
+
+const MdxBundlerComponent = dynamic(
+  () => import("../bundler/component").then((mod) => mod.MdxComponent),
+  { ssr: true }
+);
+
+const NextMdxRemoteComponent = dynamic(
+  () =>
+    import("../bundler/component").then((mod) => mod.NextMdxRemoteComponent),
+  { ssr: true }
+);
 
 function isMdxEmpty(mdx: MarkdownText | MarkdownText[] | undefined): boolean {
   if (!mdx) {
@@ -33,7 +46,7 @@ function isMdxEmpty(mdx: MarkdownText | MarkdownText[] | undefined): boolean {
   return mdx.code.trim().length === 0;
 }
 
-export function MdxContent({ mdx, fallback }: MdxContent.Props) {
+export function MdxContent({ mdx, fallback, useNextMdx }: MdxContent.Props) {
   if (isMdxEmpty(mdx) || mdx == null) {
     return fallback;
   }
@@ -46,15 +59,19 @@ export function MdxContent({ mdx, fallback }: MdxContent.Props) {
     return (
       <>
         {mdx.map((mdx, index) => (
-          <MdxContent key={index} mdx={mdx} />
+          <MdxContent key={index} mdx={mdx} useNextMdx={useNextMdx} />
         ))}
       </>
     );
   }
 
+  const MdxComponent = useNextMdx
+    ? NextMdxRemoteComponent
+    : MdxBundlerComponent;
+
   return (
     <ErrorBoundary>
-      <MdxComponent {...mdx} />
+      <MdxComponent {...mdx} scope={mdx.scope ?? {}} />
     </ErrorBoundary>
   );
 }

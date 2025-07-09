@@ -51,6 +51,7 @@
     "@fern-api/docs-server": "workspace:*",
     "@fern-api/docs-utils": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/next-mdx-remote": "^5.0.0",
     "@fern-api/template-resolver": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/components": "workspace:*",

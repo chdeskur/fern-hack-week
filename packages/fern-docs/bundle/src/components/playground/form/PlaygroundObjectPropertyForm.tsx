@@ -172,7 +172,11 @@ export const PlaygroundObjectPropertiesFormInternal =
           tooltip:
             property.description != null ? (
               // todo: server-side render this
-              <Markdown size="xs" mdx={property.description} />
+              <Markdown
+                size="xs"
+                mdx={property.description}
+                useNextMdx={false}
+              />
             ) : undefined,
         })
       );

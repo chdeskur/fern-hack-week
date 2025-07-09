@@ -7,6 +7,8 @@ import _jsx_runtime from "react/jsx-runtime";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import { getMDXExport } from "mdx-bundler/client";
 
+import { MDXRemote } from "@fern-api/next-mdx-remote";
+
 import { ErrorBoundary } from "@/components/error-boundary";
 
 import { createMdxComponents } from "../components";
@@ -36,20 +38,52 @@ export const MdxComponent = React.memo<{
   (prev, next) => prev.code === next.code
 );
 
+export const NextMdxRemoteComponent = React.memo<{
+  scope: Record<string, unknown>;
+  code: string;
+  frontmatter?: Record<string, unknown>;
+  jsxElements: string[];
+}>(
+  function NextMdxRemoteComponent({ scope, code, frontmatter, jsxElements }) {
+    return (
+      <ErrorBoundary>
+        <MDXProvider components={createMdxComponents(jsxElements)}>
+          <MDXRemote
+            scope={scope}
+            frontmatter={frontmatter}
+            compiledSource={code}
+            lazy={false}
+          />
+        </MDXProvider>
+      </ErrorBoundary>
+    );
+  },
+  (prev, next) => prev.code === next.code
+);
+
 export const MdxAside = React.memo<{
   code: string;
   jsxElements: string[];
+  useNextMdx?: boolean;
 }>(
-  function MdxAside({ code, jsxElements }) {
+  function MdxAside({ code, jsxElements, useNextMdx }) {
     const { Aside } = getMDXExport(code, globals) ?? {};
     if (Aside == null) {
       return null;
     }
     return (
       <ErrorBoundary>
-        <MDXProvider components={createMdxComponents(jsxElements)}>
-          <Aside />
-        </MDXProvider>
+        {useNextMdx ? (
+          <NextMdxRemoteComponent
+            code={code}
+            scope={{}}
+            jsxElements={jsxElements}
+          />
+        ) : (
+          <MDXProvider components={createMdxComponents(jsxElements)}>
+            <Aside />
+          </MDXProvider>
+        )}
       </ErrorBoundary>
     );
   },

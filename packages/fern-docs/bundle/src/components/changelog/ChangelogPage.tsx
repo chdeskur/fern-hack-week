@@ -133,7 +133,11 @@ export async function ChangelogPageOverview({
         slug={node.slug}
         showRssFeedButton={showRssFeedButton}
       />
-      <Markdown mdx={mdx} fallback={page?.markdown} />
+      <Markdown
+        mdx={mdx}
+        fallback={page?.markdown}
+        useNextMdx={mdx?.engine === "next-remote"}
+      />
     </>
   );
 }
@@ -161,6 +165,7 @@ export async function ChangelogPageEntry({
   return (
     <Markdown
       mdx={mdx}
+      useNextMdx={mdx?.engine === "next-remote"}
       title={
         title != null ? (
           <h2>
@@ -169,7 +174,10 @@ export async function ChangelogPageEntry({
               className="not-prose"
               scroll={true}
             >
-              <MdxContent mdx={title} />
+              <MdxContent
+                mdx={title}
+                useNextMdx={mdx?.engine === "next-remote"}
+              />
             </FernLink>
           </h2>
         ) : undefined

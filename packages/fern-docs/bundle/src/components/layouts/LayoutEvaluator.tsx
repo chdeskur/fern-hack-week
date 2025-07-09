@@ -86,13 +86,21 @@ export async function LayoutEvaluator({
       pageHeader={pageHeader}
       aside={
         hasAside ? (
-          <MdxAside code={mdx.code} jsxElements={mdx.jsxElements} />
+          <MdxAside
+            code={mdx.code}
+            jsxElements={mdx.jsxElements}
+            useNextMdx={mdx?.engine === "next-remote"}
+          />
         ) : undefined
       }
       footer={footer}
       builtWithFern={<BuiltWithFern className="mx-auto my-8 w-fit" />}
     >
-      <MdxContent mdx={mdx} fallback={markdown} />
+      <MdxContent
+        mdx={mdx}
+        fallback={markdown}
+        useNextMdx={mdx?.engine === "next-remote"}
+      />
     </AbstractLayoutEvaluatorContent>
   );
 }

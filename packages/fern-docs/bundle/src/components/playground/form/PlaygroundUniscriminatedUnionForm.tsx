@@ -75,7 +75,11 @@ export const PlaygroundUniscriminatedUnionForm =
               tooltip:
                 variant.description != null ? (
                   // todo: server-side render this
-                  <Markdown size="xs" mdx={variant.description} />
+                  <Markdown
+                    size="xs"
+                    mdx={variant.description}
+                    useNextMdx={false}
+                  />
                 ) : undefined,
             };
           }

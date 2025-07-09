@@ -23,11 +23,12 @@ export declare namespace Markdown {
      * Fallback content to render if the MDX is empty
      */
     fallback?: ReactNode;
+    useNextMdx?: boolean;
   }
 }
 
 export const Markdown = memo<Markdown.Props>(
-  ({ title, mdx, className, size, fallback }) => {
+  ({ title, mdx, className, size, fallback, useNextMdx }) => {
     // If the MDX is empty, return null
     if (
       !fallback &&
@@ -39,7 +40,7 @@ export const Markdown = memo<Markdown.Props>(
     return (
       <Prose className={className} size={size} pre={typeof mdx === "string"}>
         {title}
-        <MdxContent mdx={mdx} fallback={fallback} />
+        <MdxContent mdx={mdx} fallback={fallback} useNextMdx={useNextMdx} />
       </Prose>
     );
   }

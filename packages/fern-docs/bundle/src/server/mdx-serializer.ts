@@ -10,6 +10,7 @@ import { cacheSeed } from "@fern-api/docs-server/cache-seed";
 import { Frontmatter } from "@fern-api/fdr-sdk/docs";
 
 import { serializeMdx as internalSerializeMdx } from "@/mdx/bundler/serialize";
+import { serializeMdxImpl as internalSerializeNextMdxRemote } from "@/mdx/bundler/serializeWithNextMdxRemote";
 import { RehypeLinksOptions } from "@/mdx/plugins/rehype-links";
 
 export type MdxSerializerOptions = {
@@ -43,6 +44,7 @@ export type MdxSerializer = (
       code: string;
       frontmatter?: Partial<Frontmatter>;
       jsxElements: string[];
+      engine: "esbuild" | "next-remote";
     }
   | undefined
 >;
@@ -54,9 +56,11 @@ export function createCachedMdxSerializer(
   {
     scope,
     replaceHref,
+    useNextMdx,
   }: {
     scope?: Record<string, unknown>;
     replaceHref?: RehypeLinksOptions["replaceHref"];
+    useNextMdx?: boolean;
   } = {}
 ) {
   const domain = loader.domain;
@@ -80,21 +84,26 @@ export function createCachedMdxSerializer(
         const authState = await loader.getAuthState();
 
         try {
-          return await internalSerializeMdx(
-            content,
-            {
-              filename,
-              loader,
-              toc,
-              scope: {
-                authed: authState.authed,
-                user: authState.authed ? authState.user : undefined,
-                ...scope,
-              },
-              replaceHref,
-            },
-            domain
-          );
+          return useNextMdx
+            ? await internalSerializeNextMdxRemote(content, {
+                loader,
+                scope: {
+                  authed: authState.authed,
+                  user: authState.authed ? authState.user : undefined,
+                  ...scope,
+                },
+              })
+            : await internalSerializeMdx(content, {
+                filename,
+                loader,
+                toc,
+                scope: {
+                  authed: authState.authed,
+                  user: authState.authed ? authState.user : undefined,
+                  ...scope,
+                },
+                replaceHref,
+              });
         } catch (error) {
           console.error("Error serializing mdx", error);
 

@@ -37,8 +37,6 @@ export default async function SharedLayout({
   logo: React.ReactNode;
 }) {
   const isLocalEnvironment = isLocal() || isSelfHosted();
-  const serialize = createCachedMdxSerializer(loader);
-  setMdxSerializer(serialize);
 
   const [config, edgeFlags, colors, layout, root] = await Promise.all([
     loader.getConfig(),
@@ -49,6 +47,11 @@ export default async function SharedLayout({
   ]);
   const theme = edgeFlags.isCohereTheme ? "cohere" : "default";
   const announcementText = config.announcement?.text;
+
+  const serialize = createCachedMdxSerializer(loader, {
+    useNextMdx: edgeFlags.isNextMdxRef,
+  });
+  setMdxSerializer(serialize);
 
   const hasProductsOrVersions =
     root.child.type === "productgroup" || root.child.type === "versioned";

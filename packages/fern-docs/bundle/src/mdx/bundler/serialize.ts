@@ -71,6 +71,8 @@ export interface SerializeMdxResponse {
   code: string;
   frontmatter?: Partial<FernDocs.Frontmatter>;
   jsxElements: string[];
+  scope?: Record<string, unknown>;
+  engine: "next-remote" | "esbuild";
 }
 
 async function serializeMdxImpl(
@@ -288,7 +290,7 @@ async function serializeMdxImpl(
   // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
   // const { jsxElements } = toTree(content, { sanitize: false });
 
-  return { code: bundled.code, frontmatter, jsxElements };
+  return { code: bundled.code, frontmatter, jsxElements, engine: "esbuild" };
 }
 
 export function serializeMdx(
@@ -340,7 +342,6 @@ function rehypeLog() {
     // console.debug(JSON.stringify(tree));
   };
 }
-
 function getMdxBundlerService() {
   return (
     process.env.NEXT_PUBLIC_MDX_BUNDLER_ORIGIN ??
@@ -350,7 +351,7 @@ function getMdxBundlerService() {
 
 // if no domain is provided, store in a twoslash cache
 // if block fails to process, returns the original code, unformatted
-async function processTwoslashBlocks(content: string): Promise<string> {
+export async function processTwoslashBlocks(content: string): Promise<string> {
   if (
     !content.includes("twoslash") ||
     process.env.NEXT_PUBLIC_TWOSLASH_ENABLED !== "1"

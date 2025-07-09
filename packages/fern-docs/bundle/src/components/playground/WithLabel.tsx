@@ -123,7 +123,14 @@ export const WithLabelInternal: FC<
           {description != null && (
             <FernTooltip
               // todo: server-side render this
-              content={<Markdown mdx={description} size="xs" />}
+              content={
+                <Markdown
+                  mdx={description}
+                  size="xs"
+                  useNextMdx={false}
+                  fallback={description}
+                />
+              }
               delayDuration={0}
             >
               <HelpCircle className="text-(color:--grayscale-a11) size-4 self-center" />

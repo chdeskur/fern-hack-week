@@ -19,6 +19,7 @@ export const WebhookResponseSection: React.FC = () => {
           fallback={STATUS_200_TEXT}
           size="sm"
           className="mt-3 text-start"
+          useNextMdx={false}
         />
       </div>
     </div>

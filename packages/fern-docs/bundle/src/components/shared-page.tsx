@@ -157,6 +157,7 @@ export default async function SharedPage({
       path: found.node.slug,
     },
     replaceHref,
+    useNextMdx: edgeFlags.isNextMdxRef,
   });
 
   const neighborsPromise = getNeighbors(loader, serialize, found);

@@ -31,7 +31,11 @@ export const PlaygroundEnumForm = memo<PlaygroundEnumFormProps>((props) => {
           type: "value",
           label: enumValue.value,
           helperText: (
-            <Markdown mdx={enumValue.description} className="!text-xs" />
+            <Markdown
+              mdx={enumValue.description}
+              className="!text-xs"
+              useNextMdx={false}
+            />
           ),
           value: enumValue.value,
           // tooltip:
