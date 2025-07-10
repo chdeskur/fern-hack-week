@@ -26,6 +26,9 @@
       "path": "../../commons/fdr-utils"
     },
     {
+      "path": "../../fai-sdk"
+    },
+    {
       "path": "../../fdr-sdk"
     },
     {

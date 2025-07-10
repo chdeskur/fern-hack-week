@@ -18,8 +18,11 @@ import {
 import z from "zod";
 
 import { postToSlack, track } from "@fern-api/docs-server";
-import { turbopufferApiKey } from "@fern-api/docs-server/env-variables";
-import { postNewQueryToFai } from "@fern-api/docs-server/postNewQueryToFai";
+import {
+  getFaiOrigin,
+  turbopufferApiKey,
+} from "@fern-api/docs-server/env-variables";
+import { FernFaiClient } from "@fern-api/fai-sdk";
 
 import {
   convertTpufRecordsToDocuments,
@@ -87,7 +90,7 @@ export async function runRouteForAnthropic({
   });
 
   const documentIdsToIgnore: string[] = [];
-  let timeToFirstToken: number | null = null;
+  let timeToFirstToken: number | undefined = undefined;
   let responseText = "";
 
   const uiMessageStream = createUIMessageStream({
@@ -164,15 +167,19 @@ export async function runRouteForAnthropic({
         onFinish: async (e) => {
           const end = Date.now();
           const queryId = crypto.randomUUID();
-          await postNewQueryToFai({
-            queryId,
+          const faiClient = new FernFaiClient({
+            baseUrl: getFaiOrigin(),
+            token: () => "",
+          });
+          await faiClient.createQuery({
+            query_id: queryId,
+            conversation_id: conversationId,
             domain,
-            conversationId,
             text: responseText,
             role: "ASSISTANT",
             source: chatSource.toUpperCase(),
-            createdAt: new Date(end),
-            timeToFirstToken,
+            created_at: new Date(end).toISOString(),
+            time_to_first_token: timeToFirstToken,
           });
           track("ask_ai", {
             languageModel: languageModel.valueOf().toString(),

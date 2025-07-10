@@ -1,0 +1,30 @@
+docs: APIs for the FAI (Acorn) Service
+
+imports:
+  commons: ./commons.yml
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    createQuery:
+      docs: Log a new query to the FAI DB
+      path: /queries
+      method: POST
+      request:
+        name: CreateQueryRequest
+        body:
+          properties:
+            query_id: string
+            conversation_id: string
+            domain: string
+            text: string
+            role: string
+            source: string
+            created_at: datetime
+            time_to_first_token:
+              type: optional<double>
+              docs: Time in seconds until first token was received. Only specified for Assistant responses.
+      errors:
+        - commons.BadRequestError
+        - commons.InternalError

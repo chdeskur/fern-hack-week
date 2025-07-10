@@ -73,6 +73,7 @@ COPY shared shared
 COPY fern fern
 COPY docs_bundle.tar.gz .
 
+RUN pnpm config set package-manager-strict false
 
 RUN pnpm turbo --filter=@fern-api/fdr-sdk compile && \
     pnpm turbo --filter=@fern-platform/fdr codegen && \
