@@ -17,6 +17,5 @@ export async function setMdxFile(
     docsUrl,
     session?.accessToken
   );
-  console.log("setMdxFile", filename, content);
   return loader.setMdxFile(filename, content);
 }

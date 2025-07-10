@@ -23,7 +23,7 @@ const FRONTMATTER_YAML_OPTIONS: yaml.DumpOptions = {
 // Custom element data
 export interface CustomElement {
   type: string;
-  name: string;
+  name?: string;
   content: string;
 }
 
@@ -151,14 +151,14 @@ function isValidFrontmatter(
 // Get node info in a type-safe way
 function getNodeInfo(node: any) {
   if (!node.type || typeof node.type !== "string") {
-    throw new Error("Node does not have a valid type");
+    throw new Error("mdast node does not have a valid type");
   }
-  if (!node.name || typeof node.name !== "string") {
-    throw new Error("Node does not have a valid name");
+  if (node.name && typeof node.name !== "string") {
+    throw new Error("mdast node name is not of type string");
   }
   return {
-    type: node.type,
-    name: node.name,
+    type: node.type as string,
+    name: node.name as string | undefined,
   };
 }
 
@@ -187,7 +187,7 @@ function mdxCustomElementNode(
   hash: string,
   content: string,
   type: string,
-  name: string
+  name?: string
 ) {
   return {
     type: "element" as const,
@@ -196,7 +196,7 @@ function mdxCustomElementNode(
     properties: {
       "data-hash": hash,
       "data-type": type,
-      "data-name": name,
+      ...(name ? { "data-name": name } : {}),
     },
     children: [
       {
