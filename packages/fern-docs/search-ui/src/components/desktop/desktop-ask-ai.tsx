@@ -27,6 +27,8 @@ import { useAtomValue } from "jotai";
 import {
   ArrowLeft,
   ArrowUp,
+  CircleAlert,
+  RotateCcw,
   Sparkles,
   SquarePen,
   StopCircle,
@@ -410,6 +412,7 @@ const DesktopAskAIChat = ({
                     onClick={() => {
                       void chat.stop();
                       chat.setMessages([]);
+                      chat.error = undefined;
                       resetConversationId();
                     }}
                   >
@@ -428,6 +431,8 @@ const DesktopAskAIChat = ({
 
         <AskAICommandItems
           messages={chat.messages}
+          error={chat.error}
+          regenerate={() => void chat.regenerate()}
           onSelectHit={onSelectHit}
           prefetch={prefetch}
           components={useMemo(
@@ -511,6 +516,13 @@ const DesktopAskAIChat = ({
         stop={() => {
           void chat.stop();
         }}
+        error={chat.error}
+        onError={() => {
+          void chat.stop();
+          chat.setMessages([]);
+          chat.error = undefined;
+          resetConversationId();
+        }}
         onSend={askAI}
         onKeyDown={useEventCallback((e) => {
           if (e.key === "ArrowUp" || e.key === "ArrowDown") {
@@ -527,6 +539,8 @@ const DesktopAskAIChat = ({
 const AskAIComposer = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<typeof TextArea> & {
+    error?: Error;
+    onError?: () => void;
     isLoading?: boolean;
     stop?: () => void;
     onSend?: (message: string) => void;
@@ -535,7 +549,7 @@ const AskAIComposer = forwardRef<
   }
 >(
   (
-    { isLoading, stop, onSend, onPopState, actions, ...props },
+    { error, onError, isLoading, stop, onSend, onPopState, actions, ...props },
     forwardedRef
   ) => {
     const value = typeof props.value === "string" ? props.value : "";
@@ -611,7 +625,9 @@ const AskAIComposer = forwardRef<
             content={
               isOverLimit
                 ? `Message must be ${MAX_AI_CHAT_MESSAGE_LENGTH} characters or fewer`
-                : undefined
+                : error
+                  ? "An error occurred - click to reset the conversation."
+                  : undefined
             }
             side="top"
           >
@@ -620,10 +636,27 @@ const AskAIComposer = forwardRef<
                 size="icon"
                 className="rounded-full"
                 variant="default"
-                onClick={isLoading ? stop : () => onSend?.(value)}
+                onClick={
+                  error
+                    ? () => {
+                        onError?.();
+                        if (canSubmit) {
+                          onSend?.(value);
+                        }
+                      }
+                    : isLoading
+                      ? () => stop?.()
+                      : () => onSend?.(value)
+                }
                 disabled={!isLoading && !canSubmit}
               >
-                {isLoading ? <StopCircle /> : <ArrowUp />}
+                {error ? (
+                  <CircleAlert />
+                ) : isLoading ? (
+                  <StopCircle />
+                ) : (
+                  <ArrowUp />
+                )}
               </Button>
             </span>
           </FernTooltip>
@@ -637,6 +670,8 @@ AskAIComposer.displayName = "AskAIComposer";
 
 const AskAICommandItems = memo<{
   messages: UIMessage[];
+  error?: Error;
+  regenerate: () => void;
   onSelectHit?: (path: string) => void;
   components?: Components;
   isLoading?: boolean;
@@ -648,6 +683,8 @@ const AskAICommandItems = memo<{
 }>(
   ({
     messages,
+    error,
+    regenerate,
     onSelectHit,
     components = {},
     userScrolled = true,
@@ -807,6 +844,29 @@ const AskAICommandItems = memo<{
             </ChatbotTurnContextProvider>
           );
         })}
+        {error && (
+          <div className="flex flex-col items-center justify-center gap-2 p-2">
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-(color:--red-a10)">An error occurred.</p>
+              <Button variant="outline" onClick={() => regenerate()}>
+                <RotateCcw />
+                Retry
+              </Button>
+            </div>
+            <p className="text-(color:--grayscale-a10) text-center text-sm">
+              If this issue persists, please{" "}
+              <a
+                href="https://buildwithfern.com/learn#get-support"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-(color:--accent-a10) underline transition-colors"
+              >
+                contact us
+              </a>
+              .
+            </p>
+          </div>
+        )}
       </>
     );
   }
