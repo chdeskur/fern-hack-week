@@ -70,6 +70,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
       switch (example?.exampleCall.responseBody?.type) {
         case "json":
         case "filename": {
+          if (endpoint.protocol?.type === "grpc") {
+            return "Example Response";
+          }
           const title =
             example.exampleCall.name ??
             ApiDefinition.getMessageForStatus(
@@ -90,7 +93,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
           return "Response";
       }
     },
-    [endpoint.method]
+    [endpoint.method, endpoint.protocol?.type]
   );
 
   const errorSelector =
@@ -158,61 +161,73 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
           }}
         />
       )}
-      <CodeSnippetExample
-        title={
-          <EndpointUrlWithOverflow
-            path={endpoint.path}
-            method={endpoint.method}
-            environmentId={environmentId}
-            baseUrl={baseUrl}
-            hideCopyButton={true}
-          />
-        }
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        tryIt={
-          <>
-            {node != null && (
-              <PlaygroundButtonTray
-                state={node}
+      {endpoint.protocol?.type === "grpc" ? (
+        <JsonCodeSnippetExample
+          title={"Example Request"}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          json={endpoint.examples?.[0]?.requestBody?.value}
+          slug={node?.slug ?? ""}
+          isResponse={false}
+        />
+      ) : (
+        <CodeSnippetExample
+          title={
+            <EndpointUrlWithOverflow
+              path={endpoint.path}
+              method={endpoint.method}
+              environmentId={environmentId}
+              baseUrl={baseUrl}
+              hideCopyButton={true}
+            />
+          }
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          tryIt={
+            <>
+              {node != null && (
+                <PlaygroundButtonTray
+                  state={node}
 
-                // example={selectedExample?.exampleCall}
-              />
-            )}
-          </>
-        }
-        languageDropdown={
-          <>
-            {languages.length > 1 && (
-              <CodeExampleClientDropdown
-                languages={languages}
-                value={selectedExampleKey.language}
-                onValueChange={(language) => {
-                  setSelectedExampleKey((prev) => ({
-                    ...prev,
-                    language,
-                  }));
-                }}
-              />
-            )}
-          </>
-        }
-        code={resolveEnvironmentUrlInCodeSnippet(
-          endpoint,
-          selectedExample?.code ?? "",
-          baseUrl
-        )}
-        language={selectedExampleKey.language}
-        json={selectedExample?.code ?? ""}
-        jsonStartLine={
-          selectedExampleKey.language === "curl"
-            ? lineNumberOf(selectedExample?.code ?? "", "-d '{")
-            : undefined
-        }
-        slug={node?.slug ?? ""}
-        isResponse={false}
-      />
+                  // example={selectedExample?.exampleCall}
+                />
+              )}
+            </>
+          }
+          languageDropdown={
+            <>
+              {languages.length > 1 && (
+                <CodeExampleClientDropdown
+                  languages={languages}
+                  value={selectedExampleKey.language}
+                  onValueChange={(language) => {
+                    setSelectedExampleKey((prev) => ({
+                      ...prev,
+                      language,
+                    }));
+                  }}
+                />
+              )}
+            </>
+          }
+          code={resolveEnvironmentUrlInCodeSnippet(
+            endpoint,
+            selectedExample?.code ?? "",
+            baseUrl
+          )}
+          language={selectedExampleKey.language}
+          json={selectedExample?.code ?? ""}
+          jsonStartLine={
+            selectedExampleKey.language === "curl"
+              ? lineNumberOf(selectedExample?.code ?? "", "-d '{")
+              : undefined
+          }
+          slug={node?.slug ?? ""}
+          isResponse={false}
+        />
+      )}
       {selectedExample != null &&
         selectedExample.exampleCall.responseStatusCode >= 400 && (
           <JsonCodeSnippetExample
