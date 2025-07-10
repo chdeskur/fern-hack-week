@@ -9,7 +9,6 @@ export default function RootPage() {
         justifyContent: "center",
         height: "100vh",
         textAlign: "center",
-        userSelect: "all",
       }}
     >
       <h1 style={{ marginBottom: "1rem" }}>Hey Fernie!</h1>
@@ -20,6 +19,8 @@ export default function RootPage() {
             backgroundColor: "#f0f0f0",
             padding: "0.25rem 0.5rem",
             borderRadius: "0.25rem",
+            userSelect: "text",
+            cursor: "text",
           }}
         >
           /api/fern-docs/preview?host=
