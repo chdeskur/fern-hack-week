@@ -6,7 +6,7 @@ const CSP_HEADER = `
   script-src 'self' 'unsafe-inline' 'unsafe-eval' *.usepylon.com *.posthog.com *.pusher.com d3vl36l12sfx26.cloudfront.net;
   connect-src 'self' * ws:;
   style-src 'self' 'unsafe-inline' *.usepylon.com *.posthog.com;
-  font-src 'self' pylon-avatars.s3.us-west-1.amazonaws.com *.usepylon.com;
+  font-src 'self' pylon-avatars.s3.us-west-1.amazonaws.com *.usepylon.com *.buildwithfern.com;
   img-src 'self' *;
 `.replace(/\n/g, "");
 

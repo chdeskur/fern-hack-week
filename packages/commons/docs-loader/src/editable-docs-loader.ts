@@ -1,13 +1,15 @@
-import { AuthEdgeConfig } from "@fern-api/docs-auth";
-import { AuthState } from "@fern-api/docs-server";
-import { FernFonts } from "@fern-api/docs-server";
-import { DocsLoader } from "@fern-api/docs-server/docs-loader";
-import { EdgeFlags, FernColorTheme } from "@fern-api/docs-utils";
-import { HttpMethod } from "@fern-api/docs-utils";
-import { FileData } from "@fern-api/docs-utils/types/file-data";
-import { FernLayoutConfig } from "@fern-api/docs-utils/types/layout-config";
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import {
+import { cache } from "react";
+
+import type { AuthEdgeConfig } from "@fern-api/docs-auth";
+import type { AuthState } from "@fern-api/docs-server";
+import type { FernFonts } from "@fern-api/docs-server";
+import type { DocsLoader } from "@fern-api/docs-server/docs-loader";
+import type { EdgeFlags, FernColorTheme } from "@fern-api/docs-utils";
+import type { HttpMethod } from "@fern-api/docs-utils";
+import type { FileData } from "@fern-api/docs-utils/types/file-data";
+import type { FernLayoutConfig } from "@fern-api/docs-utils/types/layout-config";
+import type { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type {
   ApiDefinition,
   ApiDefinitionId,
   AuthScheme,
@@ -18,7 +20,7 @@ import {
   TypeDefinition,
   TypeId,
 } from "@fern-api/fdr-sdk/api-definition";
-import {
+import type {
   EndpointNode,
   NavigationNode,
   RootNode,
@@ -79,6 +81,7 @@ class EditableDocsLoaderImpl implements EditableDocsLoader {
   async getMdxBundlerFiles(): Promise<Record<string, string>> {
     return this.modifiedMdxFiles;
   }
+
   async getPrunedApi(
     id: string,
     ...nodes: PruningNodeType[]
@@ -172,16 +175,21 @@ class EditableDocsLoaderImpl implements EditableDocsLoader {
   }
 }
 
-export const createEditableDocsLoader = async (
-  host: string,
-  encodedDocsUrl: string,
-  fern_token?: string
-) => {
-  // TODO: derive the domain from the workspace
-  const docsLoader = await createCachedDocsLoader(
-    host,
-    decodeURIComponent(encodedDocsUrl),
-    fern_token
-  );
-  return new EditableDocsLoaderImpl(docsLoader);
-};
+export const createEditableDocsLoader = cache(
+  async (host: string, encodedDocsUrl: string, fern_token?: string) => {
+    // TODO: derive the domain from the workspace
+    const docsLoader = await createCachedDocsLoader(
+      host,
+      decodeURIComponent(encodedDocsUrl),
+      fern_token,
+      {
+        // For editable docs, we want shorter TTL and force revalidation
+        kvTtl: 300, // 5 minutes
+        forceRevalidate: true, // clears cache on first load
+        cacheKeySuffix: "editable",
+      }
+    );
+
+    return new EditableDocsLoaderImpl(docsLoader);
+  }
+);

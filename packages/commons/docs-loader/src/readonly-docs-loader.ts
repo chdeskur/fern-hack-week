@@ -6,12 +6,12 @@ import { cache } from "react";
 import { kv } from "@vercel/kv";
 import { Semaphore } from "es-toolkit/compat";
 import { mapValues } from "es-toolkit/object";
-import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
+import { type AsyncOrSync, UnreachableCaseError } from "ts-essentials";
 
-import { AuthEdgeConfig } from "@fern-api/docs-auth";
+import type { AuthEdgeConfig } from "@fern-api/docs-auth";
 import {
-  AuthState,
-  FernFonts,
+  type AuthState,
+  type FernFonts,
   cacheSeed,
   cleanBasePath,
   createGetAuthState,
@@ -25,8 +25,8 @@ import {
 } from "@fern-api/docs-server";
 import { loadWithUrl as uncachedLoadWithUrl } from "@fern-api/docs-server";
 import {
-  DocsLoader,
-  DocsMetadata,
+  type DocsLoader,
+  type DocsMetadata,
   DocsMetadataSchema,
 } from "@fern-api/docs-server/docs-loader";
 import {
@@ -38,41 +38,57 @@ import {
   DEFAULT_PAGE_WIDTH,
   DEFAULT_SELF_HOSTED_EDGE_FLAGS,
   DEFAULT_SIDEBAR_WIDTH,
-  EdgeFlags,
+  type EdgeFlags,
   FERN_DOCS_ORIGINS,
-  FernColorTheme,
+  type FernColorTheme,
   withoutStaging,
 } from "@fern-api/docs-utils";
-import { HttpMethod } from "@fern-api/docs-utils";
-import { FileData } from "@fern-api/docs-utils/types/file-data";
+import type { HttpMethod } from "@fern-api/docs-utils";
+import type { FileData } from "@fern-api/docs-utils/types/file-data";
 import {
-  ApiDefinition,
-  DocsV1Read,
-  DocsV2Read,
+  type ApiDefinition,
+  type DocsV1Read,
+  type DocsV2Read,
   FernNavigation,
 } from "@fern-api/fdr-sdk";
 import {
   ApiDefinitionV1ToLatest,
-  AuthScheme,
-  EnvironmentId,
-  ObjectProperty,
-  PruningNodeType,
-  TypeDefinition,
+  type AuthScheme,
+  type EnvironmentId,
+  type ObjectProperty,
+  type PruningNodeType,
+  type TypeDefinition,
   backfillSnippets,
   prune,
 } from "@fern-api/fdr-sdk/api-definition";
 import {
   ApiDefinitionId,
   EndpointId,
-  PageId,
-  Slug,
-  TypeId,
+  type PageId,
+  type Slug,
+  type TypeId,
 } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, isPlainObject } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 
 const loadWithUrl = uncachedLoadWithUrl;
+
+// Add cache configuration interface
+export interface CacheConfig {
+  /** TTL in seconds for KV cache entries */
+  kvTtl?: number;
+  /** Whether to force revalidation of all caches */
+  forceRevalidate?: boolean;
+  /** Custom cache key suffix for isolation */
+  cacheKeySuffix?: string;
+}
+
+const DEFAULT_CACHE_CONFIG: Required<CacheConfig> = {
+  kvTtl: 0, // no expiration by default
+  forceRevalidate: false,
+  cacheKeySuffix: "",
+};
 
 function assertDocsDomain(domain: string) {
   if (FERN_DOCS_ORIGINS.includes(domain) || domain.endsWith(".vercel.app")) {
@@ -82,17 +98,37 @@ function assertDocsDomain(domain: string) {
 }
 
 const setMonitor = new Semaphore(10);
-function kvSet(domain: string, key: string, value: unknown) {
+
+function kvSet(
+  domain: string,
+  key: string,
+  value: unknown,
+  ttl?: number,
+  cacheKeySuffix?: string
+) {
   if (isLocal() || isSelfHosted()) {
     return;
   }
 
+  const finalKey = cacheKeySuffix ? `${key}:${cacheKeySuffix}` : key;
+
   after(async () => {
     await setMonitor.acquire();
     try {
-      await kv.hset(domain, { [key]: value });
+      if (ttl && ttl > 0) {
+        await kv.hset(domain, { [finalKey]: value });
+        // Set expiration for the hash field (note: Redis doesn't support per-field TTL in hashes)
+        // So we'll use a separate key for TTL tracking
+        await kv.setex(
+          `${domain}:ttl:${finalKey}`,
+          ttl,
+          Date.now() + ttl * 1000
+        );
+      } else {
+        await kv.hset(domain, { [finalKey]: value });
+      }
     } catch (error) {
-      console.warn(`Failed to set kv key ${key}: ${value}`, error);
+      console.warn(`Failed to set kv key ${finalKey}: ${value}`, error);
     } finally {
       setMonitor.release();
     }
@@ -100,20 +136,61 @@ function kvSet(domain: string, key: string, value: unknown) {
 }
 
 const getMonitor = new Semaphore(10);
-async function kvGet<T>(domain: string, key: string): Promise<T | null> {
+
+async function kvGet<T>(
+  domain: string,
+  key: string,
+  cacheKeySuffix?: string
+): Promise<T | null> {
   if (isLocal() || isSelfHosted()) {
     return null;
   }
 
-  await getMonitor.acquire();
+  const finalKey = cacheKeySuffix ? `${key}:${cacheKeySuffix}` : key;
 
+  await getMonitor.acquire();
   try {
-    return await kv.hget<T>(domain, key);
+    // Check if the key has expired
+    const ttlKey = `${domain}:ttl:${finalKey}`;
+    const expiration = await kv.get<number>(ttlKey);
+
+    if (expiration && Date.now() > expiration) {
+      // Key has expired, delete it
+      await kv.hdel(domain, finalKey);
+      await kv.del(ttlKey);
+      return null;
+    }
+
+    return await kv.hget<T>(domain, finalKey);
   } catch (error) {
-    console.warn(`Failed to get kv key ${key}`, error);
+    console.warn(`Failed to get kv key ${finalKey}`, error);
     return null;
   } finally {
     getMonitor.release();
+  }
+}
+
+async function clearKvCache(domain: string) {
+  if (isLocal() || isSelfHosted()) {
+    return;
+  }
+
+  try {
+    // Clear KV cache for domain
+    const keys = await kv.hkeys(domain);
+    if (keys.length > 0) {
+      await kv.hdel(domain, ...keys);
+    }
+
+    // Clear TTL tracking keys
+    const ttlKeys = await kv.keys(`${domain}:ttl:*`);
+    if (ttlKeys.length > 0) {
+      await kv.del(...ttlKeys);
+    }
+
+    console.log(`KV cache cleared for domain: ${domain}`);
+  } catch (error) {
+    console.error(`Failed to clear KV cache for domain ${domain}:`, error);
   }
 }
 
@@ -123,7 +200,6 @@ const cachedGetEdgeFlags = cache(async (domain: string) => {
   } else if (isSelfHosted()) {
     return DEFAULT_SELF_HOSTED_EDGE_FLAGS;
   }
-
   return await getEdgeFlags(domain);
 });
 
@@ -132,11 +208,11 @@ export const getMetadataFromResponse = async (
   responsePromise: AsyncOrSync<DocsV2Read.LoadDocsForUrlResponse>
 ): Promise<DocsMetadata> => {
   assertDocsDomain(domain);
-
   const [response, docsUrlMetadata] = await Promise.all([
     responsePromise,
     getDocsUrlMetadata(domain),
   ]);
+
   return {
     domain: response.baseUrl.domain,
     basePath: cleanBasePath(response.baseUrl.basePath),
@@ -146,17 +222,19 @@ export const getMetadataFromResponse = async (
   };
 };
 
-export const getMetadata = cache(
-  async (domain: string): Promise<DocsMetadata> => {
+export const getMetadata = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string): Promise<DocsMetadata> => {
     "use cache";
-
     unstable_cacheTag(domain, "getMetadata");
-
     assertDocsDomain(domain);
 
     try {
       const cached = DocsMetadataSchema.safeParse(
-        await kvGet<DocsMetadata>(domain, "metadata")
+        await kvGet<DocsMetadata>(
+          domain,
+          "metadata",
+          cacheConfig.cacheKeySuffix
+        )
       );
       if (cached.success) {
         console.log("[getMetadata] cache hit:", cached.data);
@@ -168,21 +246,30 @@ export const getMetadata = cache(
         error
       );
     }
+
     const metadata = await getMetadataFromResponse(domain, loadWithUrl(domain));
-    kvSet(domain, "metadata", metadata);
+    kvSet(
+      domain,
+      "metadata",
+      metadata,
+      cacheConfig.kvTtl,
+      cacheConfig.cacheKeySuffix
+    );
     console.log("[getMetadata] cache miss:", metadata);
     return metadata;
-  }
-);
+  });
 
-const getFiles = cache(
-  async (domain: string): Promise<Record<string, FileData>> => {
+const getFiles = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string): Promise<Record<string, FileData>> => {
     "use cache";
-
     unstable_cacheTag(domain, "getFiles");
 
     try {
-      const cached = await kvGet<Record<string, FileData>>(domain, "files");
+      const cached = await kvGet<Record<string, FileData>>(
+        domain,
+        "files",
+        cacheConfig.cacheKeySuffix
+      );
       if (cached) {
         return cached;
       }
@@ -221,17 +308,21 @@ const getFiles = cache(
       }
       throw new UnreachableCaseError(file);
     });
-    kvSet(domain, "files", files);
+
+    kvSet(
+      domain,
+      "files",
+      files,
+      cacheConfig.kvTtl,
+      cacheConfig.cacheKeySuffix
+    );
     return files;
-  }
-);
+  });
 
 // the api reference may be too large to cache, so we don't cache it in the KV store
 const getApi = async (domain: string, id: string) => {
   "use cache";
-
   unstable_cacheTag(domain, "getApi", id);
-
   const response = await loadWithUrl(domain);
   const latest = response.definition.apisV2[ApiDefinitionId(id)];
   if (latest != null) {
@@ -246,19 +337,25 @@ const getApi = async (domain: string, id: string) => {
   return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
 };
 
-const createGetPrunedApiCached = (domain: string) =>
+const createGetPrunedApiCached = (
+  domain: string,
+  cacheConfig: Required<CacheConfig>
+) =>
   unstable_cache(
     async (
       id: string,
       ...nodes: PruningNodeType[]
     ): Promise<ApiDefinition.ApiDefinition> => {
       const flagsPromise = cachedGetEdgeFlags(domain);
-
       // if there is only one node, and it's an endpoint, try to load from cache
       try {
         if (nodes.length === 1 && nodes[0]) {
           const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
-          const cached = await kvGet<ApiDefinition.ApiDefinition>(domain, key);
+          const cached = await kvGet<ApiDefinition.ApiDefinition>(
+            domain,
+            key,
+            cacheConfig.cacheKeySuffix
+          );
           if (cached != null) {
             return await backfillSnippets(cached, await flagsPromise);
           }
@@ -272,7 +369,6 @@ const createGetPrunedApiCached = (domain: string) =>
 
       const api = await getApi(domain, id);
       const pruned = prune(api, ...nodes);
-
       for (const endpointK of Object.keys(pruned.endpoints)) {
         if (
           pruned.endpoints[EndpointId(endpointK)]?.environments?.length === 0
@@ -286,16 +382,20 @@ const createGetPrunedApiCached = (domain: string) =>
           });
         }
       }
-
       // if there is only one node, and it's an endpoint, try to cache the result
       if (nodes.length === 1 && nodes[0]) {
         const key = `api:${id}:${createEndpointCacheKey(nodes[0])}`;
-        kvSet(domain, key, pruned);
+        kvSet(
+          domain,
+          key,
+          pruned,
+          cacheConfig.kvTtl,
+          cacheConfig.cacheKeySuffix
+        );
       }
-
       return backfillSnippets(pruned, await flagsPromise);
     },
-    [domain, cacheSeed()],
+    [domain, cacheSeed(), cacheConfig.cacheKeySuffix],
     { tags: [domain, "api"] }
   );
 
@@ -328,48 +428,54 @@ const getAllApisForDomain = async (
   );
 };
 
-const getEndpointById = async (
-  domain: string,
-  apiDefinitionId: string,
-  endpointId: EndpointId
-): Promise<{
-  endpoint: ApiDefinition.EndpointDefinition;
-  nodes: FernNavigation.EndpointNode[];
-  globalHeaders: ObjectProperty[];
-  authSchemes: AuthScheme[];
-  types: Record<TypeId, TypeDefinition>;
-}> => {
-  "use cache";
+const getEndpointById =
+  (cacheConfig: Required<CacheConfig>) =>
+  async (
+    domain: string,
+    apiDefinitionId: string,
+    endpointId: EndpointId
+  ): Promise<{
+    endpoint: ApiDefinition.EndpointDefinition;
+    nodes: FernNavigation.EndpointNode[];
+    globalHeaders: ObjectProperty[];
+    authSchemes: AuthScheme[];
+    types: Record<TypeId, TypeDefinition>;
+  }> => {
+    "use cache";
+    unstable_cacheTag(domain, "getEndpointById", apiDefinitionId, endpointId);
 
-  unstable_cacheTag(domain, "getEndpointById", apiDefinitionId, endpointId);
+    const api = await createGetPrunedApiCached(domain, cacheConfig)(
+      apiDefinitionId,
+      {
+        type: "endpoint",
+        endpointId,
+      }
+    );
 
-  const api = await createGetPrunedApiCached(domain)(apiDefinitionId, {
-    type: "endpoint",
-    endpointId,
-  });
-  const endpoint = api.endpoints[endpointId];
-  if (endpoint == null) {
-    console.error("Could not find endpoint with ID", endpointId);
-    notFound();
-  }
-  const root = await unsafe_getFullRoot(domain);
-  return {
-    endpoint,
-    nodes: FernNavigation.NodeCollector.collect(root)
-      .getNodesInOrder()
-      .filter(FernNavigation.hasMetadata)
-      .filter(
-        (node): node is FernNavigation.EndpointNode =>
-          node.type === "endpoint" &&
-          node.apiDefinitionId === api.id &&
-          node.endpointId === endpoint.id
-      ),
-    globalHeaders: api.globalHeaders ?? [],
-    authSchemes:
-      endpoint.auth?.map((id) => api.auths[id]).filter(isNonNullish) ?? [],
-    types: api.types,
+    const endpoint = api.endpoints[endpointId];
+    if (endpoint == null) {
+      console.error("Could not find endpoint with ID", endpointId);
+      notFound();
+    }
+
+    const root = await unsafe_getFullRoot(domain);
+    return {
+      endpoint,
+      nodes: FernNavigation.NodeCollector.collect(root)
+        .getNodesInOrder()
+        .filter(FernNavigation.hasMetadata)
+        .filter(
+          (node): node is FernNavigation.EndpointNode =>
+            node.type === "endpoint" &&
+            node.apiDefinitionId === api.id &&
+            node.endpointId === endpoint.id
+        ),
+      globalHeaders: api.globalHeaders ?? [],
+      authSchemes:
+        endpoint.auth?.map((id) => api.auths[id]).filter(isNonNullish) ?? [],
+      types: api.types,
+    };
   };
-};
 
 const getEndpointByLocator = async (
   domain: string,
@@ -408,7 +514,6 @@ const getEndpointByLocator = async (
       };
     }
   }
-
   console.error(`Could not find endpoint ${method} ${path}`);
   notFound();
 };
@@ -418,7 +523,6 @@ export function convertResponseToRootNode(
   edgeFlags: EdgeFlags
 ) {
   let root: FernNavigation.RootNode | undefined;
-
   if (response.definition.config.root) {
     root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
       response.definition.config.root
@@ -468,287 +572,379 @@ const unsafe_getFullRoot = async (domain: string) => {
   return root;
 };
 
-const unsafe_getRootCached = cache(async (domain: string) => {
-  return await unstable_cache(
-    unsafe_getFullRoot,
-    ["unsafe_getRoot", cacheSeed()],
-    { tags: [domain, "unsafe_getRoot"] }
-  )(domain);
-});
+const unsafe_getRootCached = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string) => {
+    return await unstable_cache(
+      async (domain: string) => {
+        try {
+          const cached = await kvGet<FernNavigation.RootNode>(
+            domain,
+            "root",
+            cacheConfig.cacheKeySuffix
+          );
+          if (cached != null) {
+            return cached;
+          }
+        } catch (error) {
+          console.warn(
+            `Failed to get full root for ${domain}, fallback to uncached`,
+            error
+          );
+        }
+
+        // Get fresh data
+        const root = await unsafe_getFullRoot(domain);
+
+        // Cache the result
+        kvSet(
+          domain,
+          "root",
+          root,
+          cacheConfig.kvTtl,
+          cacheConfig.cacheKeySuffix
+        );
+
+        return root;
+      },
+      ["unsafe_getRoot", cacheSeed(), cacheConfig.cacheKeySuffix],
+      { tags: [domain, "unsafe_getRoot"] }
+    )(domain);
+  });
 
 const getRoot = async (
   domain: string,
   authState: AuthState,
-  authConfig: AuthEdgeConfig | undefined
+  authConfig: AuthEdgeConfig | undefined,
+  cacheConfig: Required<CacheConfig>
 ) => {
-  let root = await unsafe_getRootCached(domain);
-
+  let root = await unsafe_getRootCached(cacheConfig)(domain);
   if (authConfig) {
     root = pruneWithAuthState(authState, authConfig, root);
   }
-
   FernNavigation.utils.mutableUpdatePointsTo(root);
-
   return root;
 };
 
-const getRootCached = cache(
-  async (
-    domain: string,
-    authState: AuthState,
-    authConfig: AuthEdgeConfig | undefined
-  ) => {
-    return await unstable_cache(getRoot, [domain, cacheSeed()], {
-      tags: [domain, "getRoot"],
-    })(domain, authState, authConfig);
-  }
-);
+const getRootCached = (cacheConfig: Required<CacheConfig>) =>
+  cache(
+    async (
+      domain: string,
+      authState: AuthState,
+      authConfig: AuthEdgeConfig | undefined
+    ) => {
+      return await unstable_cache(
+        (
+          domain: string,
+          authState: AuthState,
+          authConfig: AuthEdgeConfig | undefined
+        ) => getRoot(domain, authState, authConfig, cacheConfig),
+        [domain, cacheSeed(), cacheConfig.cacheKeySuffix],
+        { tags: [domain, "getRoot"] }
+      )(domain, authState, authConfig);
+    }
+  );
 
-const getNavigationNode = cache(
-  async (
-    domain: string,
-    id: string,
-    authState: AuthState,
-    authConfig: AuthEdgeConfig | undefined
-  ) => {
-    const root = await getRootCached(domain, authState, authConfig);
-    const collector = FernNavigation.NodeCollector.collect(root);
-    const node = collector.get(FernNavigation.NodeId(id));
-    if (node == null) {
-      console.error(`Could not find node ${id} for domain ${domain}`);
+const getNavigationNode = (cacheConfig: Required<CacheConfig>) =>
+  cache(
+    async (
+      domain: string,
+      id: string,
+      authState: AuthState,
+      authConfig: AuthEdgeConfig | undefined
+    ) => {
+      const root = await getRootCached(cacheConfig)(
+        domain,
+        authState,
+        authConfig
+      );
+      const collector = FernNavigation.NodeCollector.collect(root);
+      const node = collector.get(FernNavigation.NodeId(id));
+      if (node == null) {
+        console.error(`Could not find node ${id} for domain ${domain}`);
+        notFound();
+      }
+      return node;
+    }
+  );
+
+const getConfig = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string) => {
+    try {
+      const cached = await kvGet<
+        Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
+      >(domain, "config", cacheConfig.cacheKeySuffix);
+      if (cached != null) {
+        return cached;
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to get config for ${domain}, fallback to uncached`,
+        error
+      );
+    }
+
+    const response = await loadWithUrl(domain);
+    const { navigation, root, ...config } = response.definition.config;
+    kvSet(
+      domain,
+      "config",
+      config,
+      cacheConfig.kvTtl,
+      cacheConfig.cacheKeySuffix
+    );
+    return config;
+  });
+
+const getPage = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string, pageId: string) => {
+    try {
+      const page = await kvGet<DocsV1Read.PageContent>(
+        domain,
+        `page:${pageId}`,
+        cacheConfig.cacheKeySuffix
+      );
+      if (page != null && isPlainObject(page) && "markdown" in page) {
+        return {
+          filename: pageId,
+          markdown: page.markdown,
+          editThisPageUrl: page.editThisPageUrl,
+        };
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to get page for ${domain}:${pageId}, fallback to uncached`,
+        error
+      );
+    }
+
+    const response = await loadWithUrl(domain);
+    const page = response.definition.pages[pageId as PageId];
+    if (page == null) {
+      console.error(`Could not find page with ID ${pageId}`);
       notFound();
     }
-    return node;
-  }
-);
 
-const getConfig = cache(async (domain: string) => {
-  try {
-    const cached = await kvGet<
-      Omit<DocsV1Read.DocsDefinition["config"], "navigation" | "root">
-    >(domain, "config");
-    if (cached != null) {
-      return cached;
-    }
-  } catch (error) {
-    console.warn(
-      `Failed to get config for ${domain}, fallback to uncached`,
-      error
-    );
-  }
-  const response = await loadWithUrl(domain);
-  const { navigation, root, ...config } = response.definition.config;
-  kvSet(domain, "config", config);
-  return config;
-});
-
-const getPage = cache(async (domain: string, pageId: string) => {
-  try {
-    const page = await kvGet<DocsV1Read.PageContent>(domain, `page:${pageId}`);
-    if (page != null && isPlainObject(page) && "markdown" in page) {
-      return {
-        filename: pageId,
-        markdown: page.markdown,
-        editThisPageUrl: page.editThisPageUrl,
-      };
-    }
-  } catch (error) {
-    console.warn(
-      `Failed to get page for ${domain}:${pageId}, fallback to uncached`,
-      error
-    );
-  }
-  const response = await loadWithUrl(domain);
-  const page = response.definition.pages[pageId as PageId];
-  if (page == null) {
-    console.error(`Could not find page with ID ${pageId}`);
-    notFound();
-  }
-  kvSet(domain, `page:${pageId}`, page);
-  return {
-    filename: pageId,
-    markdown: page.markdown,
-    editThisPageUrl: page.editThisPageUrl,
-  };
-});
-
-const getMdxBundlerFiles = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain, "getMdxBundlerFiles");
-
-  try {
-    const cached = await kvGet<Record<string, string>>(
+    kvSet(
       domain,
-      "mdx-bundler-files"
+      `page:${pageId}`,
+      page,
+      cacheConfig.kvTtl,
+      cacheConfig.cacheKeySuffix
     );
-    if (cached) {
-      return cached;
+    return {
+      filename: pageId,
+      markdown: page.markdown,
+      editThisPageUrl: page.editThisPageUrl,
+    };
+  });
+
+const getMdxBundlerFiles = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string) => {
+    "use cache";
+    unstable_cacheTag(domain, "getMdxBundlerFiles");
+
+    try {
+      const cached = await kvGet<Record<string, string>>(
+        domain,
+        "mdx-bundler-files",
+        cacheConfig.cacheKeySuffix
+      );
+      if (cached) {
+        return cached;
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to get mdx bundler files for ${domain}, fallback to uncached`,
+        error
+      );
     }
-  } catch (error) {
-    console.warn(
-      `Failed to get mdx bundler files for ${domain}, fallback to uncached`,
-      error
+
+    const response = await loadWithUrl(domain);
+    const files = response.definition.jsFiles ?? {};
+    kvSet(
+      domain,
+      "mdx-bundler-files",
+      files,
+      cacheConfig.kvTtl,
+      cacheConfig.cacheKeySuffix
     );
-  }
-  const response = await loadWithUrl(domain);
-  const files = response.definition.jsFiles ?? {};
-  kvSet(domain, "mdx-bundler-files", files);
-  return files;
-});
+    return files;
+  });
 
-const getColors = cache(async (domain: string) => {
-  "use cache";
+const getColors = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string) => {
+    "use cache";
+    unstable_cacheTag(domain, "getColors");
 
-  unstable_cacheTag(domain, "getColors");
-
-  try {
-    const cached = await kvGet<{
-      light: FernColorTheme | undefined;
-      dark: FernColorTheme | undefined;
-    }>(domain, "colors");
-    if (cached) {
-      return cached;
+    try {
+      const cached = await kvGet<{
+        light: FernColorTheme | undefined;
+        dark: FernColorTheme | undefined;
+      }>(domain, "colors", cacheConfig.cacheKeySuffix);
+      if (cached) {
+        return cached;
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to get colors for ${domain}, fallback to uncached`,
+        error
+      );
     }
-  } catch (error) {
-    console.warn(
-      `Failed to get colors for ${domain}, fallback to uncached`,
-      error
-    );
-  }
-  const [config, files] = await Promise.all([
-    getConfig(domain),
-    getFiles(domain),
-  ]);
-  if (!config) {
-    return { light: undefined, dark: undefined };
-  }
 
-  if (!config.colorsV3) {
-    return { light: undefined, dark: undefined };
-  }
+    const [config, files] = await Promise.all([
+      getConfig(cacheConfig)(domain),
+      getFiles(cacheConfig)(domain),
+    ]);
 
-  const light =
-    config.colorsV3.type === "light"
-      ? config.colorsV3
-      : config.colorsV3.type === "darkAndLight"
-        ? config.colorsV3.light
-        : undefined;
-
-  const dark =
-    config.colorsV3.type === "dark"
-      ? config.colorsV3
-      : config.colorsV3.type === "darkAndLight"
-        ? config.colorsV3.dark
-        : undefined;
-
-  const colors = {
-    light: light
-      ? {
-          logo: light.logo ? files[light.logo] : undefined,
-          backgroundImage: light.backgroundImage
-            ? files[light.backgroundImage]
-            : undefined,
-          ...generateFernColorPalette({
-            appearance: "light",
-            background: toOklch(light.background),
-            accent: toOklch(light.accentPrimary),
-            border: toOklch(light.border),
-            sidebarBackground: toOklch(light.sidebarBackground),
-            headerBackground: toOklch(light.headerBackground),
-            cardBackground: toOklch(light.cardBackground),
-          }),
-          backgroundGradient: light.background.type === "gradient",
-        }
-      : undefined,
-    dark: dark
-      ? {
-          logo: dark.logo ? files[dark.logo] : undefined,
-          backgroundImage: dark.backgroundImage
-            ? files[dark.backgroundImage]
-            : undefined,
-          ...generateFernColorPalette({
-            appearance: "dark",
-            background: toOklch(dark.background),
-            accent: toOklch(dark.accentPrimary),
-            border: toOklch(dark.border),
-            sidebarBackground: toOklch(dark.sidebarBackground),
-            headerBackground: toOklch(dark.headerBackground),
-            cardBackground: toOklch(dark.cardBackground),
-          }),
-          backgroundGradient: dark.background.type === "gradient",
-        }
-      : undefined,
-  };
-  kvSet(domain, "colors", colors);
-  return colors;
-});
-
-const getFonts = cache(async (domain: string) => {
-  "use cache";
-
-  unstable_cacheTag(domain, "getFonts");
-
-  try {
-    const cached = await kvGet<FernFonts>(domain, "fonts");
-    if (cached != null) {
-      return cached;
+    if (!config) {
+      return { light: undefined, dark: undefined };
     }
-  } catch (error) {
-    console.warn(
-      `Failed to get fonts for ${domain}, fallback to uncached`,
-      error
+
+    if (!config.colorsV3) {
+      return { light: undefined, dark: undefined };
+    }
+
+    const light =
+      config.colorsV3.type === "light"
+        ? config.colorsV3
+        : config.colorsV3.type === "darkAndLight"
+          ? config.colorsV3.light
+          : undefined;
+
+    const dark =
+      config.colorsV3.type === "dark"
+        ? config.colorsV3
+        : config.colorsV3.type === "darkAndLight"
+          ? config.colorsV3.dark
+          : undefined;
+
+    const colors = {
+      light: light
+        ? {
+            logo: light.logo ? files[light.logo] : undefined,
+            backgroundImage: light.backgroundImage
+              ? files[light.backgroundImage]
+              : undefined,
+            ...generateFernColorPalette({
+              appearance: "light",
+              background: toOklch(light.background),
+              accent: toOklch(light.accentPrimary),
+              border: toOklch(light.border),
+              sidebarBackground: toOklch(light.sidebarBackground),
+              headerBackground: toOklch(light.headerBackground),
+              cardBackground: toOklch(light.cardBackground),
+            }),
+            backgroundGradient: light.background.type === "gradient",
+          }
+        : undefined,
+      dark: dark
+        ? {
+            logo: dark.logo ? files[dark.logo] : undefined,
+            backgroundImage: dark.backgroundImage
+              ? files[dark.backgroundImage]
+              : undefined,
+            ...generateFernColorPalette({
+              appearance: "dark",
+              background: toOklch(dark.background),
+              accent: toOklch(dark.accentPrimary),
+              border: toOklch(dark.border),
+              sidebarBackground: toOklch(dark.sidebarBackground),
+              headerBackground: toOklch(dark.headerBackground),
+              cardBackground: toOklch(dark.cardBackground),
+            }),
+            backgroundGradient: dark.background.type === "gradient",
+          }
+        : undefined,
+    };
+
+    kvSet(
+      domain,
+      "colors",
+      colors,
+      cacheConfig.kvTtl,
+      cacheConfig.cacheKeySuffix
     );
-  }
-  const response = await loadWithUrl(domain);
-  const fonts = generateFonts(
-    response.definition.config.typographyV2,
-    await getFiles(domain)
-  );
-  kvSet(domain, "fonts", fonts);
-  return fonts;
-});
+    return colors;
+  });
 
-const getLayout = cache(async (domain: string) => {
-  "use cache";
+const getFonts = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string) => {
+    "use cache";
+    unstable_cacheTag(domain, "getFonts");
 
-  unstable_cacheTag(domain, "getLayout");
+    try {
+      const cached = await kvGet<FernFonts>(
+        domain,
+        "fonts",
+        cacheConfig.cacheKeySuffix
+      );
+      if (cached != null) {
+        return cached;
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to get fonts for ${domain}, fallback to uncached`,
+        error
+      );
+    }
 
-  const config = await getConfig(domain);
-  if (!config) {
-    console.error("Could not find config for domain", domain);
-    notFound();
-  }
+    const response = await loadWithUrl(domain);
+    const fonts = generateFonts(
+      response.definition.config.typographyV2,
+      await getFiles(cacheConfig)(domain)
+    );
+    kvSet(
+      domain,
+      "fonts",
+      fonts,
+      cacheConfig.kvTtl,
+      cacheConfig.cacheKeySuffix
+    );
+    return fonts;
+  });
 
-  const logoHeight = config.logoHeight ?? DEFAULT_LOGO_HEIGHT;
-  const sidebarWidth =
-    toPx(config.layout?.sidebarWidth) ?? DEFAULT_SIDEBAR_WIDTH;
-  const contentWidth =
-    toPx(config.layout?.contentWidth) ?? DEFAULT_CONTENT_WIDTH;
-  const pageWidth =
-    config.layout?.pageWidth?.type === "full"
-      ? undefined
-      : (toPx(config.layout?.pageWidth) ??
-        calcDefaultPageWidth(sidebarWidth, contentWidth));
-  const headerHeight =
-    toPx(config.layout?.headerHeight) ?? DEFAULT_HEADER_HEIGHT;
-  const tabsPlacement = config.layout?.disableHeader
-    ? "SIDEBAR"
-    : (config.layout?.tabsPlacement ?? defaultTabsPlacement(domain));
-  const searchbarPlacement = config.layout?.disableHeader
-    ? "SIDEBAR"
-    : (config.layout?.searchbarPlacement ?? defaultSearchbarPlacement(domain));
-  return {
-    logoHeight,
-    sidebarWidth,
-    headerHeight,
-    pageWidth,
-    contentWidth,
-    tabsPlacement,
-    searchbarPlacement,
-    isHeaderDisabled: config.layout?.disableHeader ?? false,
-  };
-});
+const getLayout = (cacheConfig: Required<CacheConfig>) =>
+  cache(async (domain: string) => {
+    "use cache";
+    unstable_cacheTag(domain, "getLayout");
+
+    const config = await getConfig(cacheConfig)(domain);
+    if (!config) {
+      console.error("Could not find config for domain", domain);
+      notFound();
+    }
+
+    const logoHeight = config.logoHeight ?? DEFAULT_LOGO_HEIGHT;
+    const sidebarWidth =
+      toPx(config.layout?.sidebarWidth) ?? DEFAULT_SIDEBAR_WIDTH;
+    const contentWidth =
+      toPx(config.layout?.contentWidth) ?? DEFAULT_CONTENT_WIDTH;
+    const pageWidth =
+      config.layout?.pageWidth?.type === "full"
+        ? undefined
+        : (toPx(config.layout?.pageWidth) ??
+          calcDefaultPageWidth(sidebarWidth, contentWidth));
+    const headerHeight =
+      toPx(config.layout?.headerHeight) ?? DEFAULT_HEADER_HEIGHT;
+    const tabsPlacement = config.layout?.disableHeader
+      ? "SIDEBAR"
+      : (config.layout?.tabsPlacement ?? defaultTabsPlacement(domain));
+    const searchbarPlacement = config.layout?.disableHeader
+      ? "SIDEBAR"
+      : (config.layout?.searchbarPlacement ??
+        defaultSearchbarPlacement(domain));
+
+    return {
+      logoHeight,
+      sidebarWidth,
+      headerHeight,
+      pageWidth,
+      contentWidth,
+      tabsPlacement,
+      searchbarPlacement,
+      isHeaderDisabled: config.layout?.disableHeader ?? false,
+    };
+  });
 
 function defaultTabsPlacement(domain: string) {
   if (domain.includes("cohere")) {
@@ -795,12 +991,20 @@ const getAuthConfig = getAuthEdgeConfig;
 export const createCachedDocsLoader = async (
   host: string,
   domain: string,
-  fern_token?: string
-): Promise<DocsLoader> => {
+  fern_token?: string,
+  cacheConfig?: CacheConfig
+): Promise<DocsLoader & { clearKvCache: () => Promise<void> }> => {
   assertDocsDomain(domain);
 
+  const config = { ...DEFAULT_CACHE_CONFIG, ...cacheConfig };
+
+  // Force revalidation if requested - only clear KV cache here
+  if (config.forceRevalidate) {
+    await clearKvCache(domain);
+  }
+
   const authConfig = getAuthConfig(domain);
-  const metadata = getMetadata(withoutStaging(domain));
+  const metadata = getMetadata(config)(withoutStaging(domain));
 
   const getAuthState = cache(async (pathname?: string) => {
     const { getAuthState } = await createGetAuthState(
@@ -810,7 +1014,6 @@ export const createCachedDocsLoader = async (
       await authConfig,
       await metadata
     );
-
     return await getAuthState(pathname);
   });
 
@@ -819,14 +1022,14 @@ export const createCachedDocsLoader = async (
     fern_token,
     getAuthConfig: () => authConfig,
     getMetadata: () => metadata,
-    getFiles: () => getFiles(domain),
-    getMdxBundlerFiles: () => getMdxBundlerFiles(domain),
-    getPrunedApi: cache(createGetPrunedApiCached(domain)),
+    getFiles: () => getFiles(config)(domain),
+    getMdxBundlerFiles: () => getMdxBundlerFiles(config)(domain),
+    getPrunedApi: cache(createGetPrunedApiCached(domain, config)),
     getEndpointById: cache(
       unstable_cache(
         (apiDefinitionId: string, endpointId: EndpointId) =>
-          getEndpointById(domain, apiDefinitionId, endpointId),
-        [domain, cacheSeed()],
+          getEndpointById(config)(domain, apiDefinitionId, endpointId),
+        [domain, cacheSeed(), config.cacheKeySuffix],
         { tags: [domain, "endpointById"] }
       )
     ),
@@ -834,26 +1037,32 @@ export const createCachedDocsLoader = async (
       unstable_cache(
         (method: HttpMethod, path: string, example?: string) =>
           getEndpointByLocator(domain, method, path, example),
-        [domain, cacheSeed()],
+        [domain, cacheSeed(), config.cacheKeySuffix],
         { tags: [domain, "endpointByLocator"] }
       )
     ),
     getRoot: async () =>
-      getRootCached(domain, await getAuthState(), await authConfig),
+      getRootCached(config)(domain, await getAuthState(), await authConfig),
     getNavigationNode: async (id: string) =>
-      getNavigationNode(domain, id, await getAuthState(), await authConfig),
-    unsafe_getFullRoot: () => unsafe_getRootCached(domain),
-    getConfig: () => getConfig(domain),
-    getPage: (pageId) => getPage(domain, pageId),
-    getColors: () => getColors(domain),
-    getLayout: () => getLayout(domain),
-    getFonts: () => getFonts(domain),
+      getNavigationNode(config)(
+        domain,
+        id,
+        await getAuthState(),
+        await authConfig
+      ),
+    unsafe_getFullRoot: () => unsafe_getRootCached(config)(domain),
+    getConfig: () => getConfig(config)(domain),
+    getPage: (pageId) => getPage(config)(domain, pageId),
+    getColors: () => getColors(config)(domain),
+    getLayout: () => getLayout(config)(domain),
+    getFonts: () => getFonts(config)(domain),
     getAuthState,
     getEdgeFlags: () => cachedGetEdgeFlags(domain),
     getBaseUrl: async () => {
       const m = await metadata;
       return `https://${m.domain}${m.basePath}`;
     },
+    clearKvCache: () => clearKvCache(domain),
   };
 };
 
@@ -861,6 +1070,7 @@ function toOklch(color: object | undefined): string | undefined {
   if (!color || !isPlainObject(color)) {
     return undefined;
   }
+
   if (
     "r" in color &&
     typeof color.r === "number" &&
