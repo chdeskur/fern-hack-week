@@ -13,18 +13,33 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { GradientBackground } from "./GradientBackground";
 import { LogoCard } from "./LogoCard";
 
-export function AuthorizeGithubModal() {
+export function AuthorizeGithubModal({
+  open,
+  persistent = false,
+  hideTrigger = false,
+  customMessage,
+}: {
+  open?: boolean;
+  persistent?: boolean;
+  hideTrigger?: boolean;
+  customMessage?: string;
+}) {
   const currentLocation = useLocationHref();
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button size="sm" className="w-fit">
-          <GithubLogo />
-          Authorize GitHub
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="border-border fixed inset-0 z-50 flex flex-col items-center justify-center gap-0 border bg-white pt-0">
+    <Dialog open={open}>
+      {!hideTrigger && (
+        <DialogTrigger asChild>
+          <Button size="sm" className="w-fit">
+            <GithubLogo />
+            Authorize GitHub
+          </Button>
+        </DialogTrigger>
+      )}
+      <DialogContent
+        className="border-border fixed inset-0 z-50 flex flex-col items-center justify-center gap-0 border bg-white pt-0"
+        persistent={persistent}
+      >
         <div className="border-border relative flex h-[170px] w-full flex-col justify-center border-b">
           <GradientBackground className="absolute left-0 top-0 w-full" />
           <div className="z-1 flex items-center justify-center gap-4">
@@ -48,14 +63,16 @@ export function AuthorizeGithubModal() {
         <div className="flex w-full max-w-md flex-col gap-6 p-8">
           <div className="text-center">
             <p className="font-bold">
-              Fern requires additional permissions to edit and publish your docs
-              site
+              {customMessage ||
+                "Fern requires additional permissions to edit and publish your docs site"}
             </p>
           </div>
           <div className="flex justify-center gap-2">
-            <DialogTrigger asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogTrigger>
+            {!persistent && (
+              <DialogTrigger asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogTrigger>
+            )}
             <LoginButton
               additionalParams={{
                 connection: "github",

@@ -14,7 +14,7 @@ import { NavbarSectionTitle } from "./NavbarSectionTitle";
 
 export function Navbar() {
   return (
-    <div className="flex flex-col justify-between md:w-64 md:py-6 md:pl-4 md:transition-[width] lg:w-72">
+    <div className="lg:w-74 flex flex-col justify-between md:w-64 md:py-6 md:pl-4 md:transition-[width]">
       <div className="flex overflow-y-auto md:flex-col md:pb-4">
         <FeatureFlaggedServerSide flag={PosthogFeatureFlag.ENABLE_DOCS_PAGE}>
           <DocsNavbarItems />

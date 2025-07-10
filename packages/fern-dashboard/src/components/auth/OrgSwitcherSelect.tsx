@@ -71,9 +71,8 @@ export const OrgSwitcherSelect = ({
             }}
           >
             <OrgLogo organization={organization} />
-            <span className="hidden md:inline">
-              {organization.display_name}
-            </span>
+
+            {organization.display_name}
           </SelectItem>
         ))}
       </SelectContent>
