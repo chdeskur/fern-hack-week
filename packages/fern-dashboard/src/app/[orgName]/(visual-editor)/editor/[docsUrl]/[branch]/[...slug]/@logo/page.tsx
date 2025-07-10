@@ -1,3 +1,5 @@
+import { headers } from "next/headers";
+
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import { createFileResolver } from "@fern-api/docs-server/file-resolver";
 import { withLogo } from "@fern-api/docs-server/withLogo";
@@ -16,8 +18,9 @@ export default async function LogoPage({
 }) {
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;
+  const headersObj = await headers();
   const loader = await createEditableDocsLoader(
-    "localhost:3000",
+    headersObj.get("host") ?? "localhost:3000",
     docsUrl,
     session?.accessToken
   );

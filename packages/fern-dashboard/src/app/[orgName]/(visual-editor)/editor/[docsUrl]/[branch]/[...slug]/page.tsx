@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
@@ -31,11 +32,12 @@ export default async function Page({
   }
 
   const { orgName, docsUrl, branch, slug: slugArray } = await params;
+  const headersObj = await headers();
   const slugAlias = slugArray.join("/");
 
   // TODO: dynamically read host value
   const loader = await createEditableDocsLoader(
-    "localhost:3000",
+    headersObj.get("host") ?? "localhost:3000",
     docsUrl,
     session?.accessToken
   );

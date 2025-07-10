@@ -1,5 +1,7 @@
 import "server-only";
 
+import { headers } from "next/headers";
+
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import {
   getFallbackProduct,
@@ -19,8 +21,9 @@ export default async function VersionSelectPage({
 }) {
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;
+  const headersObj = await headers();
   const loader = await createEditableDocsLoader(
-    "localhost:3000",
+    headersObj.get("host") ?? "localhost:3000",
     docsUrl,
     session?.accessToken
   );
