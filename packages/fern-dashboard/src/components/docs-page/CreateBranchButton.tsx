@@ -70,7 +70,6 @@ export function CreateBranchButton({
       setIsLoading(false);
       return;
     }
-    setIsLoading(false);
     router.refresh();
     router.push(
       constructEditorSlug({
@@ -80,6 +79,7 @@ export function CreateBranchButton({
         slug: ROOT_SLUG_ALIAS,
       })
     );
+    setIsLoading(false);
   }, [sourceRepo, session.user.name, orgName, docsUrl, router]);
 
   return (

@@ -6,6 +6,7 @@ import { getMyOrganizations } from "@/app/api/get-my-organizations/route";
 import { getOrgInvitations } from "@/app/api/get-org-invitations/route";
 import { getOrgMembers } from "@/app/api/get-org-members/route";
 import { getUserGithubRepos } from "@/app/api/get-user-git-repos/route";
+import { validateGithubBranch } from "@/app/api/get-validate-github-branch/route";
 import { getGitHubPermissions } from "@/app/api/github-permissions/route";
 import { getHomepageImageUrl } from "@/app/api/homepage-images/get/route";
 import { postDocsGithubSource } from "@/app/api/post-docs-github-source/route";
@@ -61,6 +62,11 @@ export const DashboardApiClient = {
   postDocsGithubSource: (request: postDocsGithubSource.Request) =>
     typedFetch<postDocsGithubSource.Response>(
       "/api/post-docs-github-source",
+      request
+    ),
+  validateGithubBranch: (request: validateGithubBranch.Request) =>
+    typedFetch<validateGithubBranch.Response>(
+      "/api/get-validate-github-branch",
       request
     ),
 };

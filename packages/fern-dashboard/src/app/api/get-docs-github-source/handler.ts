@@ -36,7 +36,11 @@ export default async function getDocsGithubSourceHandler({
       "Failed to load docs URL metadata",
       JSON.stringify(docsUrlMetadata.error)
     );
-    throw new Error("Failed to load docs URL metadata");
+    throw new Error(
+      `Unable to find that domain. Please check that the domain "${decodeURIComponent(
+        url
+      )}" is correct.`
+    );
   }
 
   if (docsUrlMetadata.body.gitUrl == null) {
