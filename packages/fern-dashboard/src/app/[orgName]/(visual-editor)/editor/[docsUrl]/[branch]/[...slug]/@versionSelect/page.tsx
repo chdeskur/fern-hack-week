@@ -1,7 +1,5 @@
 import "server-only";
 
-import { headers } from "next/headers";
-
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import {
   getFallbackProduct,
@@ -12,6 +10,7 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { VersionDropdown } from "@fern-docs/components/header/VersionDropdown";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function VersionSelectPage({
@@ -21,9 +20,9 @@ export default async function VersionSelectPage({
 }) {
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;
-  const headersObj = await headers();
+  const host = await getHostFromHeaders();
   const loader = await createEditableDocsLoader(
-    headersObj.get("host") ?? "localhost:3000",
+    host,
     docsUrl,
     session?.accessToken
   );

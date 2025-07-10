@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import React from "react";
 
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
@@ -20,6 +19,7 @@ import { Auth0OrgName } from "@/app/services/auth0/types";
 import { PreviewHeader } from "@/components/docs-preview/PreviewHeader";
 import { EditorLinkInterceptor } from "@/components/editor/EditorLinkInterceptor";
 import { EditorRoutingProvider } from "@/providers/EditorRoutingContext";
+import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
 
 import "./index.css";
@@ -48,9 +48,9 @@ export default async function VisualEditorPreviewLayout({
   const { orgName, docsUrl, branch } = await params;
 
   const session = await getCurrentSession();
-  const headersObj = await headers();
+  const host = await getHostFromHeaders();
   const loader = await createEditableDocsLoader(
-    headersObj.get("host") ?? "localhost:3000",
+    host,
     docsUrl,
     session?.accessToken
   );

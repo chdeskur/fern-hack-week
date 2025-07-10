@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
@@ -11,6 +10,7 @@ import { mdxToHtml } from "@fern-docs/mdx";
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
 import { ROOT_SLUG_ALIAS, constructEditorSlug } from "@/utils/editor-routing";
+import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
 
 import PageContents from "./PageContents";
@@ -32,12 +32,11 @@ export default async function Page({
   }
 
   const { orgName, docsUrl, branch, slug: slugArray } = await params;
-  const headersObj = await headers();
+  const host = await getHostFromHeaders();
   const slugAlias = slugArray.join("/");
 
-  // TODO: dynamically read host value
   const loader = await createEditableDocsLoader(
-    headersObj.get("host") ?? "localhost:3000",
+    host,
     docsUrl,
     session?.accessToken
   );

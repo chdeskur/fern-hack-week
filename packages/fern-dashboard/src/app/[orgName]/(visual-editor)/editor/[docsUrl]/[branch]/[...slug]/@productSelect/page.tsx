@@ -1,7 +1,5 @@
 import "server-only";
 
-import { headers } from "next/headers";
-
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import { getFallbackProduct } from "@fern-api/docs-server/handle-node-fallbacks";
 import { FernNavigation } from "@fern-api/fdr-sdk";
@@ -9,6 +7,7 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { ProductDropdown } from "@fern-docs/components/header/ProductDropdown";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function ProductSelectPage({
@@ -18,9 +17,9 @@ export default async function ProductSelectPage({
 }) {
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;
-  const headersObj = await headers();
+  const host = await getHostFromHeaders();
   const loader = await createEditableDocsLoader(
-    headersObj.get("host") ?? "localhost:3000",
+    host,
     docsUrl,
     session?.accessToken
   );

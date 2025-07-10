@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import {
   getIsSidebarFixed,
@@ -13,6 +11,7 @@ import { SidebarRootNode } from "@fern-docs/components/sidebar/nodes/SidebarRoot
 import { HiddenSidebar } from "@fern-docs/components/theming/HiddenSidebar";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function SidebarPage({
@@ -22,9 +21,9 @@ export default async function SidebarPage({
 }) {
   const { docsUrl, slug } = await params;
   const session = await getCurrentSession();
-  const headersObj = await headers();
+  const host = await getHostFromHeaders();
   const loader = await createEditableDocsLoader(
-    headersObj.get("host") ?? "localhost:3000",
+    host,
     docsUrl,
     session?.accessToken
   );

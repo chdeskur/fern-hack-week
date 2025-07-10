@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import { createFileResolver } from "@fern-api/docs-server/file-resolver";
 import { withLogo } from "@fern-api/docs-server/withLogo";
@@ -9,6 +7,7 @@ import { AbstractLogo } from "@fern-docs/components/abstract/logo";
 import { getFrontmatter } from "@fern-docs/mdx";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function LogoPage({
@@ -18,9 +17,9 @@ export default async function LogoPage({
 }) {
   const session = await getCurrentSession();
   const { docsUrl, slug } = await params;
-  const headersObj = await headers();
+  const host = await getHostFromHeaders();
   const loader = await createEditableDocsLoader(
-    headersObj.get("host") ?? "localhost:3000",
+    host,
     docsUrl,
     session?.accessToken
   );

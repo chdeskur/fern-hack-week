@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 import { createEditableDocsLoader } from "@fern-api/docs-loader";
 import { getHeaderTabs } from "@fern-api/docs-server/handle-node-fallbacks";
 import { FernNavigation } from "@fern-api/fdr-sdk";
@@ -7,6 +5,7 @@ import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { HeaderTabsList } from "@fern-docs/components/HeaderTabsList";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
+import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
 
 export default async function HeaderTabsPage({
@@ -16,9 +15,9 @@ export default async function HeaderTabsPage({
 }) {
   const { docsUrl, slug } = await params;
   const session = await getCurrentSession();
-  const headersObj = await headers();
+  const host = await getHostFromHeaders();
   const loader = await createEditableDocsLoader(
-    headersObj.get("host") ?? "localhost:3000",
+    host,
     docsUrl,
     session?.accessToken
   );
