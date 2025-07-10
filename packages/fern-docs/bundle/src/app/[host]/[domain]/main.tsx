@@ -22,6 +22,7 @@ import { MdxSerializer } from "@/server/mdx-serializer";
 export async function DocsMainContent({
   loader,
   serialize,
+  serializeNextMdx,
   node,
   parents,
   neighbors,
@@ -29,6 +30,7 @@ export async function DocsMainContent({
 }: {
   loader: DocsLoader;
   serialize: MdxSerializer;
+  serializeNextMdx?: MdxSerializer;
   node: FernNavigation.NavigationNodePage;
   parents: readonly FernNavigation.NavigationNodeParent[];
   neighbors?: {
@@ -99,7 +101,7 @@ export async function DocsMainContent({
     return (
       <ApiEndpointPage
         loader={loader}
-        serialize={serialize}
+        serialize={serializeNextMdx ?? serialize}
         node={node}
         breadcrumb={breadcrumb}
         bottomNavigation={bottomNavigation}

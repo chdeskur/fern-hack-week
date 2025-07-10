@@ -157,10 +157,27 @@ export default async function SharedPage({
       path: found.node.slug,
     },
     replaceHref,
-    useNextMdx: edgeFlags.isNextMdxRef,
+    useNextMdx: false,
   });
 
-  const neighborsPromise = getNeighbors(loader, serialize, found);
+  const serializeNextMdx = edgeFlags.isNextMdxRef
+    ? createCachedMdxSerializer(loader, {
+        scope: {
+          product: found?.currentProduct?.productId,
+          version: found?.currentVersion?.versionId,
+          tab: found?.currentTab?.title,
+          path: found.node.slug,
+        },
+        replaceHref,
+        useNextMdx: true,
+      })
+    : undefined;
+
+  const neighborsPromise = getNeighbors(
+    loader,
+    serializeNextMdx ?? serialize,
+    found
+  );
 
   // if the current node requires authentication and the user is not authenticated, redirect to the auth page
   if (found.node.authed && !authState.authed) {
@@ -227,6 +244,7 @@ export default async function SharedPage({
       <DocsMainContent
         loader={loader}
         serialize={serialize}
+        serializeNextMdx={serializeNextMdx}
         node={found.node}
         parents={found.parents}
         neighbors={await neighborsPromise}
