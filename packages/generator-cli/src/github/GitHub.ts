@@ -1,3 +1,5 @@
+import { Octokit } from "@octokit/rest";
+
 import { cwd, resolve } from "@fern-api/fs-utils";
 import { cloneRepository } from "@fern-api/github";
 import { ClonedRepository } from "@fern-api/github/src/ClonedRepository";
@@ -45,7 +47,72 @@ export class GitHub {
   }
 
   public async pr(): Promise<void> {
-    console.log("TODO: Implement PR");
+    try {
+      const wd = cwd();
+      const sourceDirectory = resolve(wd, this.githubConfig.sourceDirectory);
+
+      const repository = await cloneRepository({
+        githubRepository: this.githubConfig.uri,
+        installationToken: this.githubConfig.token,
+      });
+
+      const baseBranch =
+        this.githubConfig.branch ?? (await repository.getDefaultBranch());
+
+      const now = new Date();
+      const formattedDate = now
+        .toISOString()
+        .replace("T", "_")
+        .replace(/:/g, "-")
+        .replace(/\..+/, "");
+      const prBranch = `fern-bot/${formattedDate}`;
+      await repository.checkout(baseBranch);
+      await repository.pull(baseBranch);
+      await repository.checkout(prBranch);
+
+      const fernIgnore = await repository.getFernignore();
+      await repository.overwriteLocalContents(sourceDirectory);
+      await repository.add(".");
+      await this.restoreFernignoreFiles(repository, fernIgnore);
+      await repository.commit("SDK Generation");
+      await repository.push();
+
+      const octokit = new Octokit({
+        auth: this.githubConfig.token,
+      });
+      // Use octokit directly to create the pull request
+      const [owner, repo] = this.githubConfig.uri.split("/");
+      if (!owner || !repo) {
+        throw new Error(`Invalid repository URI: ${this.githubConfig.uri}`);
+      }
+      const head = `${owner}:${prBranch}`;
+      try {
+        await octokit.pulls.create({
+          owner,
+          repo,
+          title: "SDK Generation",
+          body: "Automated SDK generation by Fern",
+          head,
+          base: baseBranch,
+          draft: false,
+        });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        if (
+          typeof e?.message === "string" &&
+          e.message.includes("A pull request already exists for")
+        ) {
+          // PR already exists, do nothing or log as needed
+          console.error(`A pull request already exists for ${head}`);
+        } else {
+          throw e;
+        }
+      }
+    } catch (error) {
+      // TODO: migrate this to use @fern-api/logger
+      console.error("Error during GitHub PR flow:", error);
+      throw error;
+    }
   }
 
   public async release(): Promise<void> {
