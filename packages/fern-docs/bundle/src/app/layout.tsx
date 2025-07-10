@@ -13,7 +13,6 @@ import { WebSocketRefresh } from "@/components/websocket-refresh";
 import "./globals.css";
 
 const secrets = [
-  "BRAINTRUST_API_KEY",
   "ALGOLIA_API_KEY",
   "ALGOLIA_SEARCH_API_KEY",
   "ALGOLIA_WRITE_API_KEY",

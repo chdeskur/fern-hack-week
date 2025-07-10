@@ -31,6 +31,7 @@ async def create_query(query: QueryApi, db: AsyncSession = Depends(get_db)) -> J
             conversation_id=query.conversation_id,
             text=query.text,
             role=query.role,
+            source=query.source,
             created_at=query.created_at,
             time_to_first_token=query.time_to_first_token,
         )

@@ -6,6 +6,7 @@ export const postNewQueryToFai = async ({
   conversationId,
   text,
   role,
+  source,
   createdAt,
   timeToFirstToken,
 }: {
@@ -14,6 +15,7 @@ export const postNewQueryToFai = async ({
   conversationId: string;
   text: string;
   role: string;
+  source: string;
   createdAt: Date;
   timeToFirstToken: number | null;
 }): Promise<void> => {
@@ -29,6 +31,7 @@ export const postNewQueryToFai = async ({
         conversation_id: conversationId,
         text,
         role,
+        source,
         created_at: createdAt.toISOString(),
         time_to_first_token: timeToFirstToken,
       }),

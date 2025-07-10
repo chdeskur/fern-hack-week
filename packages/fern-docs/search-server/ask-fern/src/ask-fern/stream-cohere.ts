@@ -11,7 +11,6 @@ import {
   stepCountIs,
   streamText,
 } from "ai";
-import { traced } from "braintrust";
 import z from "zod";
 
 import { postToSlack, track } from "@fern-api/docs-server";
@@ -90,108 +89,99 @@ export async function runRouteForCohere({
     })
     .filter(isNonNullish) as ModelMessage[];
 
-  return traced(async (span) => {
-    span.log({
-      metadata: {
-        domain,
-        source: chatSource,
-        conversationId: conversationId,
-      },
-    });
+  let timeToFirstToken: number | null = null;
+  let responseText = "";
 
-    let timeToFirstToken: number | null = null;
-    let responseText = "";
-
-    const uiMessageStream = createUIMessageStream({
-      execute({ writer }) {
-        const result = streamText({
-          model: languageModel,
-          system: systemPrompt,
-          messages: modelMessages,
-          maxRetries: 3,
-          stopWhen: stepCountIs(10),
-          includeRawChunks: true,
-          onChunk: (chunk) => {
-            // handle cohere citation chunks
-            const rawCitationChunk =
-              rawCitationChunkFormatSchema.safeParse(chunk);
-            if (rawCitationChunk.success) {
-              const citation = rawCitationChunk.data.chunk.rawValue;
-              writer.write({
-                type: "data-citation",
-                data: {
-                  url: citation.delta.message.citations.sources[0]?.document
-                    .title,
-                  start: citation.delta.message.citations.start,
-                  end: citation.delta.message.citations.end,
-                  text: citation.delta.message.citations.text,
-                },
-              });
-            }
-            if (chunk.chunk.type === "text" && chunk.chunk.text.length > 0) {
-              if (timeToFirstToken == null) {
-                timeToFirstToken = Date.now() - start;
-              }
-              responseText += chunk.chunk.text;
-            }
-          },
-          onError: (event) => {
-            const error = event.error;
-            if (error == null) {
-              return;
-            }
-
-            let errorKind = "UnknownError";
-            if (NoSuchToolError.isInstance(error)) {
-              errorKind = "NoSuchToolError";
-            }
-
-            const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${JSON.stringify(error)}'`;
-            console.error(msg);
-            postToSlack(
-              "#search-notifs",
-              `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${JSON.stringify(error)}\``
-            );
-          },
-          onFinish: async (e) => {
-            const end = Date.now();
-            const queryId = crypto.randomUUID();
-            await postNewQueryToFai({
-              queryId,
-              domain,
-              conversationId,
-              text: responseText,
-              role: "ASSISTANT",
-              createdAt: new Date(end),
-              timeToFirstToken,
+  const uiMessageStream = createUIMessageStream({
+    execute({ writer }) {
+      const result = streamText({
+        model: languageModel,
+        system: systemPrompt,
+        messages: modelMessages,
+        maxRetries: 3,
+        stopWhen: stepCountIs(10),
+        includeRawChunks: true,
+        onChunk: (chunk) => {
+          // handle cohere citation chunks
+          const rawCitationChunk =
+            rawCitationChunkFormatSchema.safeParse(chunk);
+          if (rawCitationChunk.success) {
+            const citation = rawCitationChunk.data.chunk.rawValue;
+            writer.write({
+              type: "data-citation",
+              data: {
+                url: citation.delta.message.citations.sources[0]?.document
+                  .title,
+                start: citation.delta.message.citations.start,
+                end: citation.delta.message.citations.end,
+                text: citation.delta.message.citations.text,
+              },
             });
-            track("ask_ai", {
-              languageModel: languageModel.valueOf().toString(),
-              embeddingModel: embeddingModel.modelId,
-              durationMs: end - start,
-              domain,
-              namespace: turbopufferNamespace,
-              numToolCalls: e.toolCalls.length,
-              finishReason: e.finishReason,
-              ...e.usage,
-            });
-            e.warnings?.forEach((warning) => {
-              console.warn(warning);
-            });
-          },
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-          },
-        });
+          }
+          if (chunk.chunk.type === "text" && chunk.chunk.text.length > 0) {
+            if (timeToFirstToken == null) {
+              timeToFirstToken = Date.now() - start;
+            }
+            responseText += chunk.chunk.text;
+          }
+        },
+        onError: (event) => {
+          const error = event.error;
+          if (error == null) {
+            return;
+          }
 
-        writer.merge(result.toUIMessageStream());
-      },
-    });
+          let errorKind = "UnknownError";
+          if (NoSuchToolError.isInstance(error)) {
+            errorKind = "NoSuchToolError";
+          }
 
-    return createUIMessageStreamResponse({ stream: uiMessageStream });
+          const msg = `encountered a ${errorKind} for query '${lastUserMessage}: ${JSON.stringify(error)}'`;
+          console.error(msg);
+          postToSlack(
+            "#search-notifs",
+            `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${JSON.stringify(error)}\``
+          );
+        },
+        onFinish: async (e) => {
+          const end = Date.now();
+          const queryId = crypto.randomUUID();
+          await postNewQueryToFai({
+            queryId,
+            domain,
+            conversationId,
+            text: responseText,
+            role: "ASSISTANT",
+            source: chatSource.toUpperCase(),
+            createdAt: new Date(end),
+            timeToFirstToken,
+          });
+          track("ask_ai", {
+            languageModel: languageModel.valueOf().toString(),
+            embeddingModel: embeddingModel.modelId,
+            durationMs: end - start,
+            domain,
+            namespace: turbopufferNamespace,
+            numToolCalls: e.toolCalls.length,
+            finishReason: e.finishReason,
+            ...e.usage,
+          });
+          e.warnings?.forEach((warning) => {
+            console.warn(warning);
+          });
+        },
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
+
+      writer.merge(result.toUIMessageStream());
+    },
   });
+
+  return createUIMessageStreamResponse({ stream: uiMessageStream });
 }
 
 async function runQueryTurbopuffer(

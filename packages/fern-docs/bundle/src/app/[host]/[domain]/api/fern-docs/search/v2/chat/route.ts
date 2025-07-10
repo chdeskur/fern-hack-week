@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { createOpenAI } from "@ai-sdk/openai";
 import { UIMessage } from "ai";
-import { initLogger } from "braintrust";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { openaiApiKey } from "@fern-api/docs-server/env-variables";
@@ -57,11 +56,6 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  initLogger({
-    projectName: "Braintrust Evaluation",
-    apiKey: process.env.BRAINTRUST_API_KEY,
-  });
-
   const {
     messages,
     source,
@@ -82,7 +76,7 @@ export async function POST(req: NextRequest) {
   }
 
   const config = await loader.getConfig();
-  const chatSource = source ?? "chat";
+  const chatSource = source ?? "CHAT";
 
   const modelId = config.aiChatConfig?.model ?? "claude-3.5";
   let modelProvider: ModelProvider = "anthropic";
@@ -100,6 +94,7 @@ export async function POST(req: NextRequest) {
     conversationId,
     text: lastUserMessage,
     role: "USER",
+    source: chatSource.toUpperCase(),
     createdAt,
     timeToFirstToken: null,
   });

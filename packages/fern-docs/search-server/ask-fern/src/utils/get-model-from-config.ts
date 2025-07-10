@@ -2,7 +2,6 @@ import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createCohere } from "@ai-sdk/cohere";
 import { LanguageModel } from "ai";
-import { wrapAISDKModel } from "braintrust";
 
 import {
   anthropicApiKey,
@@ -45,12 +44,12 @@ export function getLanguageModel(model: string | undefined): LanguageModel {
   if (model === "command-a" || model === "command-r-plus") {
     // TODO: remove command-r-plus once fern generate change is resolved
     const cohere = createCohere({ apiKey: cohereApiKey() });
-    return wrapAISDKModel(cohere("command-a-03-2025"));
+    return cohere("command-a-03-2025");
   }
 
   if (model === "claude-4") {
     const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-    return wrapAISDKModel(anthropic("claude-4-sonnet-20250514"));
+    return anthropic("claude-4-sonnet-20250514");
   }
 
   const modelConfig = getModelConfig(model ?? DEFAULT_MODEL_ID);
@@ -60,5 +59,5 @@ export function getLanguageModel(model: string | undefined): LanguageModel {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
 
-  return wrapAISDKModel(bedrock(modelConfig.modelId));
+  return bedrock(modelConfig.modelId);
 }

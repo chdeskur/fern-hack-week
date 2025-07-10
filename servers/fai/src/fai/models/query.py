@@ -16,6 +16,7 @@ class QueryApi(BaseModel):
     domain: str
     text: str
     role: str
+    source: str
     created_at: datetime
     time_to_first_token: Optional[float] = None
 
@@ -28,6 +29,7 @@ class Query(Base):
     domain = Column(String, nullable=False)
     text = Column(String, nullable=False)
     role = Column(String, nullable=False)
+    source = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False)
     time_to_first_token = Column(Float, nullable=True)
 
@@ -38,6 +40,7 @@ class Query(Base):
             domain=self.domain,
             text=self.text,
             role=self.role,
+            source=self.source,
             created_at=self.created_at,
             time_to_first_token=self.time_to_first_token,
         )

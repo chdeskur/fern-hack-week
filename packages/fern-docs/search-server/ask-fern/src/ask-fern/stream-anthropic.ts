@@ -15,7 +15,6 @@ import {
   streamText,
   tool,
 } from "ai";
-import { traced } from "braintrust";
 import z from "zod";
 
 import { postToSlack, track } from "@fern-api/docs-server";
@@ -87,129 +86,120 @@ export async function runRouteForAnthropic({
     promptTemplate,
   });
 
-  return traced(async (span) => {
-    span.log({
-      metadata: {
-        domain,
-        source: chatSource,
-        conversationId: conversationId,
-      },
-    });
+  const documentIdsToIgnore: string[] = [];
+  let timeToFirstToken: number | null = null;
+  let responseText = "";
 
-    const documentIdsToIgnore: string[] = [];
-    let timeToFirstToken: number | null = null;
-    let responseText = "";
-
-    const uiMessageStream = createUIMessageStream({
-      execute({ writer }) {
-        const result = streamText({
-          model: languageModel,
-          system: systemPrompt,
-          messages: modelMessages,
-          maxRetries: 3,
-          stopWhen: stepCountIs(10),
-          tools: {
-            search: tool({
-              description:
-                "Search the knowledge base for the user's query. Semantic search is enabled.",
-              inputSchema: z.object({
-                query: z.string(),
-              }),
-              async execute({ query }) {
-                const response = await runQueryTurbopuffer(query, {
-                  embeddingModel,
-                  namespace: turbopufferNamespace,
-                  topK: 5,
-                  documentIdsToIgnore: documentIdsToIgnore,
-                });
-                documentIdsToIgnore.push(...response.map((hit) => hit.id));
-                return JSON.stringify(
-                  response.map((hit) => {
-                    const { domain, pathname, hash, document } = hit.attributes;
-                    const url = `https://${domain}${pathname}${hash ?? ""}`;
-                    if (document.length > 20000) {
-                      return {
-                        ...hit.attributes,
-                        url,
-                        document: document.slice(0, 20000),
-                      };
-                    }
-                    return { url, ...hit.attributes };
-                  })
-                );
-              },
+  const uiMessageStream = createUIMessageStream({
+    execute({ writer }) {
+      const result = streamText({
+        model: languageModel,
+        system: systemPrompt,
+        messages: modelMessages,
+        maxRetries: 3,
+        stopWhen: stepCountIs(10),
+        tools: {
+          search: tool({
+            description:
+              "Search the knowledge base for the user's query. Semantic search is enabled.",
+            inputSchema: z.object({
+              query: z.string(),
             }),
-          },
-          onChunk: (chunk) => {
-            if (chunk.chunk.type === "text" && chunk.chunk.text.length > 0) {
-              if (timeToFirstToken == null) {
-                timeToFirstToken = Date.now() - start;
-              }
-              responseText += chunk.chunk.text;
+            async execute({ query }) {
+              const response = await runQueryTurbopuffer(query, {
+                embeddingModel,
+                namespace: turbopufferNamespace,
+                topK: 5,
+                documentIdsToIgnore: documentIdsToIgnore,
+              });
+              documentIdsToIgnore.push(...response.map((hit) => hit.id));
+              return JSON.stringify(
+                response.map((hit) => {
+                  const { domain, pathname, hash, document } = hit.attributes;
+                  const url = `https://${domain}${pathname}${hash ?? ""}`;
+                  if (document.length > 20000) {
+                    return {
+                      ...hit.attributes,
+                      url,
+                      document: document.slice(0, 20000),
+                    };
+                  }
+                  return { url, ...hit.attributes };
+                })
+              );
+            },
+          }),
+        },
+        onChunk: (chunk) => {
+          if (chunk.chunk.type === "text" && chunk.chunk.text.length > 0) {
+            if (timeToFirstToken == null) {
+              timeToFirstToken = Date.now() - start;
             }
-          },
-          onError: (event) => {
-            const error = event.error;
-            if (error == null) {
-              return;
-            }
+            responseText += chunk.chunk.text;
+          }
+        },
+        onError: (event) => {
+          const error = event.error;
+          if (error == null) {
+            return;
+          }
 
-            let errorKind = "UnknownError";
-            if (NoSuchToolError.isInstance(error)) {
-              errorKind = "NoSuchToolError";
-            }
+          let errorKind = "UnknownError";
+          if (NoSuchToolError.isInstance(error)) {
+            errorKind = "NoSuchToolError";
+          }
 
-            console.error(
-              `Encountered a ${errorKind} for query '${lastUserMessage}: ${JSON.stringify(error)}'`
-            );
-            let errorString = JSON.stringify(error);
-            if (errorString.length > 1000) {
-              errorString = errorString.slice(0, 1000) + "...";
-            }
-            postToSlack(
-              "#search-notifs",
-              `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${errorString}\``
-            );
-          },
-          onFinish: async (e) => {
-            const end = Date.now();
-            const queryId = crypto.randomUUID();
-            await postNewQueryToFai({
-              queryId,
-              domain,
-              conversationId,
-              text: responseText,
-              role: "ASSISTANT",
-              createdAt: new Date(end),
-              timeToFirstToken,
-            });
-            track("ask_ai", {
-              languageModel: languageModel.valueOf().toString(),
-              embeddingModel: embeddingModel.modelId,
-              durationMs: end - start,
-              domain,
-              namespace: turbopufferNamespace,
-              numToolCalls: e.toolCalls.length,
-              finishReason: e.finishReason,
-              ...e.usage,
-            });
-            e.warnings?.forEach((warning) => {
-              console.warn(warning);
-            });
-          },
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-          },
-        });
+          console.error(
+            `Encountered a ${errorKind} for query '${lastUserMessage}: ${JSON.stringify(error)}'`
+          );
+          let errorString = JSON.stringify(error);
+          if (errorString.length > 1000) {
+            errorString = errorString.slice(0, 1000) + "...";
+          }
+          postToSlack(
+            "#search-notifs",
+            `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${errorString}\``
+          );
+        },
+        onFinish: async (e) => {
+          const end = Date.now();
+          const queryId = crypto.randomUUID();
+          await postNewQueryToFai({
+            queryId,
+            domain,
+            conversationId,
+            text: responseText,
+            role: "ASSISTANT",
+            source: chatSource.toUpperCase(),
+            createdAt: new Date(end),
+            timeToFirstToken,
+          });
+          track("ask_ai", {
+            languageModel: languageModel.valueOf().toString(),
+            embeddingModel: embeddingModel.modelId,
+            durationMs: end - start,
+            domain,
+            namespace: turbopufferNamespace,
+            numToolCalls: e.toolCalls.length,
+            finishReason: e.finishReason,
+            ...e.usage,
+          });
+          e.warnings?.forEach((warning) => {
+            console.warn(warning);
+          });
+        },
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
 
-        writer.merge(result.toUIMessageStream());
-      },
-    });
-
-    return createUIMessageStreamResponse({ stream: uiMessageStream });
+      writer.merge(result.toUIMessageStream());
+    },
   });
+
+  return createUIMessageStreamResponse({ stream: uiMessageStream });
 }
 
 async function runQueryTurbopuffer(

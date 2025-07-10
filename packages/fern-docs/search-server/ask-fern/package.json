@@ -39,7 +39,6 @@
     "@fern-docs/search-utils": "workspace:*",
     "@turbopuffer/turbopuffer": "^0.5.11",
     "ai": "5.0.0-beta.2",
-    "braintrust": "^0.0.207",
     "es-toolkit": "^1.32.0",
     "gpt-tokenizer": "2.9.0",
     "zod": "^3.25.49"

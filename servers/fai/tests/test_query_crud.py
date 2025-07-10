@@ -12,15 +12,16 @@ def test_create_query(fai_docker: None, docker_ip: str) -> None:
         conversation_id="test-convo-1",
         domain="test-domain",
         text="test query",
-        role="user",
-        created_at=datetime.datetime.now(),  # Remove isoformat() call since model_dump will handle serialization
+        role="USER",
+        source="CHAT",
+        created_at=datetime.datetime.now(),
         time_to_first_token=0.5,
     )
 
     print(f"Sending POST request with: {query_data}")
     response = requests.post(
         f"http://{docker_ip}:8080/queries",
-        json=query_data.model_dump(mode="json"),  # Use mode='json' to properly serialize datetime
+        json=query_data.model_dump(mode="json"),
         timeout=5,
     )
 
