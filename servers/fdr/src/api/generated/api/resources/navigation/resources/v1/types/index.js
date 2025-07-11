@@ -34,6 +34,7 @@ export * from "./PlaygroundButtonSettings";
 export * from "./EndpointNode";
 export * from "./WebSocketNode";
 export * from "./WebhookNode";
+export * from "./GrpcNode";
 export * from "./ApiPackageNode";
 export * from "./WithNodeId";
 export * from "./WithPermissions";

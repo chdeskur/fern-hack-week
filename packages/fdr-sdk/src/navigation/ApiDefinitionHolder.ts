@@ -87,4 +87,11 @@ export class ApiDefinitionHolder {
   ): FernNavigation.WebhookId {
     return FernNavigation.WebhookId(`${subpackageId}.${webhook.id}`);
   }
+
+  public static createGrpcId(
+    grpcEndpoint: APIV1Read.EndpointDefinition,
+    subpackageId: string = ROOT_PACKAGE_ID
+  ): FernNavigation.GrpcId {
+    return FernNavigation.GrpcId(`${subpackageId}.${grpcEndpoint.id}`);
+  }
 }

@@ -56,14 +56,7 @@ types:
   GrpcProtocol:
     properties:
       methodName: string
-      methodType: optional<GrpcMethodType>
-
-  GrpcMethodType:
-    enum:
-      - UNARY
-      - CLIENT_STREAM
-      - SERVER_STREAM
-      - BIDIRECTIONAL_STREAM
+      methodType: optional<rootCommons.GrpcMethod>
   
   EndpointSnippetTemplates:
     properties:

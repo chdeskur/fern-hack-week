@@ -44,6 +44,7 @@ export class ApiReferenceNavigationConverter {
   #visitedEndpoints = new Set<FernNavigation.V1.EndpointId>();
   #visitedWebSockets = new Set<FernNavigation.V1.WebSocketId>();
   #visitedWebhooks = new Set<FernNavigation.V1.WebhookId>();
+  #visitedGrpcs = new Set<FernNavigation.V1.GrpcId>();
   #visitedSubpackages = new Set<string>();
   #idgen: NodeIdGenerator;
   private constructor(
@@ -166,6 +167,38 @@ export class ApiReferenceNavigationConverter {
     });
   }
 
+  private convertGrpcNode(
+    grpcId: FernNavigation.V1.GrpcId,
+    grpcEndpoint: APIV1Read.EndpointDefinition,
+    grpcMethodType: APIV1Read.GrpcMethod,
+    parentSlug: SlugGenerator
+  ): FernNavigation.V1.GrpcNode {
+    return this.#idgen.with(grpcId, (id) => {
+      return {
+        id,
+        type: "grpc",
+        title:
+          grpcEndpoint.name ??
+          stringifyEndpointPathParts(grpcEndpoint.path.parts),
+        grpcId,
+        slug: parentSlug.apply(grpcEndpoint).get(),
+        icon: undefined,
+        hidden: undefined,
+        method: grpcMethodType,
+        apiDefinitionId: this.apiDefinitionId,
+        availability: FernNavigation.V1.convertAvailability(
+          grpcEndpoint.availability
+        ),
+        isResponseStream: grpcEndpoint.response?.type.type === "stream",
+        playground: undefined,
+        authed: undefined,
+        viewers: undefined,
+        orphaned: undefined,
+        featureFlags: undefined,
+      };
+    });
+  }
+
   private convertWebSocketNode(
     webSocketId: FernNavigation.V1.WebSocketId,
     webSocket: APIV1Read.WebSocketChannel,
@@ -237,15 +270,36 @@ export class ApiReferenceNavigationConverter {
     }
 
     package_.endpoints.forEach((endpoint) => {
-      const endpointId = ApiDefinitionHolder.createEndpointId(
-        endpoint,
-        subpackageId
-      );
-      if (this.#visitedEndpoints.has(endpointId)) {
-        return;
+      if (
+        endpoint.protocol?.type === "grpc" &&
+        endpoint.protocol.methodType != null
+      ) {
+        const grpcId = ApiDefinitionHolder.createGrpcId(endpoint, subpackageId);
+        if (this.#visitedGrpcs.has(grpcId)) {
+          return;
+        }
+        children.push(
+          this.convertGrpcNode(
+            grpcId,
+            endpoint,
+            endpoint.protocol.methodType,
+            parentSlug
+          )
+        );
+        this.#visitedGrpcs.add(grpcId);
+      } else {
+        const endpointId = ApiDefinitionHolder.createEndpointId(
+          endpoint,
+          subpackageId
+        );
+        if (this.#visitedEndpoints.has(endpointId)) {
+          return;
+        }
+        children.push(
+          this.convertEndpointNode(endpointId, endpoint, parentSlug)
+        );
+        this.#visitedEndpoints.add(endpointId);
       }
-      children.push(this.convertEndpointNode(endpointId, endpoint, parentSlug));
-      this.#visitedEndpoints.add(endpointId);
     });
 
     package_.websockets.forEach((webSocket) => {

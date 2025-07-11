@@ -7,7 +7,6 @@ export * from "./Protocol.js";
 export * from "./RestProtocol.js";
 export * from "./OpenRpcProtocol.js";
 export * from "./GrpcProtocol.js";
-export * from "./GrpcMethodType.js";
 export * from "./EndpointSnippetTemplates.js";
 export * from "./HttpRequest.js";
 export * from "./HttpRequestBodyShape.js";

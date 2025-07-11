@@ -407,6 +407,8 @@ export function createEndpointCacheKey(pruneType: PruningNodeType) {
       return `websocket:${pruneType.webSocketId}`;
     case "webhook":
       return `webhook:${pruneType.webhookId}`;
+    case "grpc":
+      return `grpc:${pruneType.grpcId}`;
     default:
       throw new UnreachableCaseError(pruneType);
   }
@@ -1120,6 +1122,11 @@ export function createPruneKey(
       return {
         type: "webhook",
         webhookId: node.webhookId,
+      };
+    case "grpc":
+      return {
+        type: "grpc",
+        grpcId: node.grpcId,
       };
     default:
       throw new Error(`Unknown node type: ${node}`);

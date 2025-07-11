@@ -66,6 +66,7 @@ types:
       - EndpointPairNode
       - WebSocketNode
       - WebhookNode
+      - GrpcNode
       - PageNode
       - LinkNode
 
@@ -297,6 +298,16 @@ types:
       method: commons.HttpMethod
       webhookId: commons.WebhookId
       # note: webhooks do not have a playground
+
+  GrpcNode:
+    extends:
+      - WithNodeMetadata
+      - WithApiDefinitionId
+    properties:
+      type: literal<"grpc">
+      method: commons.GrpcMethod
+      grpcId: commons.GrpcId
+      # note: grpc methods do not have a playground
 
   ApiPackageNode:
     extends:

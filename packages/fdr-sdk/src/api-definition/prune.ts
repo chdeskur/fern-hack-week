@@ -5,7 +5,8 @@ import { ApiTypeIdVisitor } from "./typeid-visitor";
 export type PruningNodeType =
   | { type: "endpoint"; endpointId: Latest.EndpointId }
   | { type: "webSocket"; webSocketId: Latest.WebSocketId }
-  | { type: "webhook"; webhookId: Latest.WebhookId };
+  | { type: "webhook"; webhookId: Latest.WebhookId }
+  | { type: "grpc"; grpcId: Latest.GrpcId };
 
 class ApiDefinitionPruner {
   static instances = new WeakMap<Latest.ApiDefinition, ApiDefinitionPruner>();

@@ -1,6 +1,6 @@
 "use client";
 
-import { HttpOrWss } from "@fern-api/docs-utils";
+import { HttpOrWssOrGrpc } from "@fern-api/docs-utils";
 import {
   EndpointDefinition,
   WebSocketChannel,
@@ -16,7 +16,7 @@ export function EndpointUrlWithPlaygroundBaseUrl({
 }: {
   endpoint: WebSocketChannel | EndpointDefinition;
   className?: string;
-  method?: HttpOrWss;
+  method?: HttpOrWssOrGrpc;
 }) {
   const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
   return (

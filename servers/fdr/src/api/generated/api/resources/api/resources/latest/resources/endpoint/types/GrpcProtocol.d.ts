@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface GrpcProtocol {
     methodName: string;
-    methodType: FernRegistry.api.latest.GrpcMethodType | undefined;
+    methodType: FernRegistry.GrpcMethod | undefined;
 }

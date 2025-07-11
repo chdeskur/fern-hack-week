@@ -36,6 +36,7 @@ export function getApiReferenceId(
     endpointPair: (node) => node.nonStream.apiDefinitionId,
     webSocket: RETURN_API_DEFINITION_ID,
     webhook: RETURN_API_DEFINITION_ID,
+    grpc: RETURN_API_DEFINITION_ID,
     apiPackage: RETURN_API_DEFINITION_ID,
     unversioned: RETURN_UNDEFINED,
     landingPage: RETURN_UNDEFINED,

@@ -23,6 +23,7 @@ export function followRedirect(
     endpoint: (node) => node.slug,
     webSocket: (node) => node.slug,
     webhook: (node) => node.slug,
+    grpc: (node) => node.slug,
     landingPage: (node) => node.slug,
 
     // nodes with overview

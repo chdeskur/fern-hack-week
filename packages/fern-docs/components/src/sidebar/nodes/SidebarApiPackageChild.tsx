@@ -40,15 +40,14 @@ export function SidebarApiPackageChild({
         <SidebarLinkNode icon={processIcon(node)} node={node} depth={depth} />
       );
     case "endpoint":
+    case "webSocket":
+    case "webhook":
+    case "grpc":
       return <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />;
     case "endpointPair":
       return (
         <SidebarEndpointPairNode node={node} depth={depth} shallow={shallow} />
       );
-    case "webSocket":
-      return <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />;
-    case "webhook":
-      return <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />;
     case "apiPackage":
       return (
         <SidebarApiPackageNode

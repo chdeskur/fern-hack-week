@@ -1,11 +1,11 @@
 import { forwardRef } from "react";
 
-import { HttpOrWss } from "@fern-api/docs-utils";
+import { HttpOrWssOrGrpc } from "@fern-api/docs-utils";
 
 import { UIColor } from "../colors";
 import { Badge, BadgeProps } from "./badge";
 
-const METHOD_COLOR_SCHEMES: Record<HttpOrWss, UIColor> = {
+const METHOD_COLOR_SCHEMES: Record<HttpOrWssOrGrpc, UIColor> = {
   GET: "green",
   DELETE: "red",
   POST: "blue",
@@ -16,12 +16,16 @@ const METHOD_COLOR_SCHEMES: Record<HttpOrWss, UIColor> = {
   CONNECT: "sky",
   TRACE: "purple",
   WSS: "green",
+  UNARY: "gray",
+  CLIENT_STREAM: "gray",
+  SERVER_STREAM: "gray",
+  BIDIRECTIONAL_STREAM: "gray",
 };
 
 /**
  * Abbreviated method names for smaller (fixed-width) badges.
  */
-const ABBREVIATED_METHODS: Record<HttpOrWss, string> = {
+const ABBREVIATED_METHODS: Record<HttpOrWssOrGrpc, string> = {
   GET: "GET",
   DELETE: "DEL",
   POST: "POST",
@@ -32,15 +36,19 @@ const ABBREVIATED_METHODS: Record<HttpOrWss, string> = {
   CONNECT: "CON",
   TRACE: "TRACE",
   WSS: "WSS",
+  UNARY: "UNARY",
+  CLIENT_STREAM: "CS",
+  SERVER_STREAM: "SS",
+  BIDIRECTIONAL_STREAM: "BIDI",
 };
 
-export interface HttpOrWSSBadgeProps extends Omit<BadgeProps, "color"> {
-  method: HttpOrWss;
+export interface HttpOrWSSOrGrpcBadgeProps extends Omit<BadgeProps, "color"> {
+  method: HttpOrWssOrGrpc;
 }
 
 export const HttpMethodBadge = forwardRef<
   HTMLSpanElement & HTMLButtonElement,
-  HttpOrWSSBadgeProps
+  HttpOrWSSOrGrpcBadgeProps
 >((props, ref) => {
   const { method, ...rest } = props;
   return (

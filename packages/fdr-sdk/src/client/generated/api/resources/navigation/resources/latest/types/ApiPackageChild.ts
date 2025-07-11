@@ -10,5 +10,6 @@ export type ApiPackageChild =
     | FernRegistry.navigation.latest.EndpointPairNode
     | FernRegistry.navigation.latest.WebSocketNode
     | FernRegistry.navigation.latest.WebhookNode
+    | FernRegistry.navigation.latest.GrpcNode
     | FernRegistry.navigation.latest.PageNode
     | FernRegistry.navigation.latest.LinkNode;
