@@ -75,7 +75,7 @@ const AccordionContent = React.forwardRef<
   return (
     <AccordionPrimitive.Content
       ref={composeRefs(ref, collapseProps.ref)}
-      className={cn("fern-collapsible flex flex-col", className)}
+      className={cn("flex flex-col", className)}
       {...props}
       onAnimationStart={composeEventHandlers(
         props.onAnimationStart,
