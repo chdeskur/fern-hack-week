@@ -55,7 +55,7 @@ export function CreateBranchButton({
     const branchName =
       new Date().toISOString().split("T")[0] +
       "-" +
-      session.user.name?.toLowerCase().replace(" ", "_") +
+      session.user.name?.toLowerCase().replaceAll(" ", "_") +
       "-" +
       randomHexString;
 
