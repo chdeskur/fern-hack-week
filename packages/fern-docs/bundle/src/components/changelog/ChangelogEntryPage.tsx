@@ -7,7 +7,6 @@ import { slugToHref } from "@fern-api/docs-utils";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { Badge } from "@fern-docs/components";
 import { FernLink } from "@fern-docs/components/FernLink";
-import { Separator } from "@fern-docs/components/Separator";
 import { AsideAwareDiv } from "@fern-docs/components/layouts/AsideAwareDiv";
 import { SetLayout } from "@fern-docs/components/state/layout";
 
@@ -41,7 +40,6 @@ export default function ChangelogEntryPage({
           <ChangelogContentLayout as="section" className="mb-8">
             {overview}
           </ChangelogContentLayout>
-          <Separator className="max-w-content-width mx-auto my-12" />
           <ChangelogContentLayout
             as="article"
             id={node.date}

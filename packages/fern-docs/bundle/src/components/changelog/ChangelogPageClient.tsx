@@ -10,7 +10,6 @@ import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Badge } from "@fern-docs/components";
 import { FernLink } from "@fern-docs/components/FernLink";
-import { Separator } from "@fern-docs/components/Separator";
 import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
 import { AsideAwareDiv } from "@fern-docs/components/layouts/AsideAwareDiv";
 import { TableOfContentsLayout } from "@fern-docs/components/layouts/TableOfContentsLayout";
@@ -159,7 +158,6 @@ export default function ChangelogPageClient({
             {visibleEntries.map((entry) => {
               return (
                 <Fragment key={entry.id}>
-                  <Separator className="max-w-content-width mx-auto my-12" />
                   <ChangelogContentLayout
                     as="article"
                     id={entry.date}
