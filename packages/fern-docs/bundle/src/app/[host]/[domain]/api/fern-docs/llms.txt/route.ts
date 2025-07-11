@@ -125,14 +125,14 @@ async function getLlmsTxt(
         pageInfos.push({
           pageId,
           nodeTitle: node.title,
-          slug: node.slug,
+          slug: node.canonicalSlug ?? node.slug,
         });
       }
     }
 
     if (FernNavigation.isApiLeaf(node)) {
       endpointPageInfos.push({
-        slug: node.slug,
+        slug: node.canonicalSlug ?? node.slug,
         nodeTitle: node.title,
         apiDefinitionId: node.apiDefinitionId,
         endpointId: node.type === "endpoint" ? node.endpointId : undefined,
