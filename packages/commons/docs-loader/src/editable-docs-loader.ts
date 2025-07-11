@@ -183,9 +183,8 @@ export const createEditableDocsLoader = cache(
       decodeURIComponent(encodedDocsUrl),
       fern_token,
       {
-        // For editable docs, we want shorter TTL and force revalidation
-        kvTtl: 300, // 5 minutes
-        forceRevalidate: true, // clears cache on first load
+        // For editable docs, we want shorter TTL so that cache stays fresh
+        kvTtl: 60 * 60, // 1 hour
         cacheKeySuffix: "editable",
       }
     );

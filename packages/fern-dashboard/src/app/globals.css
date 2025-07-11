@@ -314,3 +314,7 @@
   background-position: 5px 0;
   background-size: 5rem 10rem;
 }
+
+.dashboard-link {
+  @apply text-gray-1100 hover:border-b-gray-1100 inline-flex min-w-0 max-w-full items-center gap-1 whitespace-nowrap border-b border-b-transparent;
+}

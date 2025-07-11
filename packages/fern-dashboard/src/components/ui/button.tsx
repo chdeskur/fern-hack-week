@@ -38,7 +38,7 @@ const buttonVariants = cva(
 );
 
 const spinnerVariants = cva(
-  "absolute inset-0 m-auto size-6 animate-spin rounded-full border-[3px] border-t-transparent",
+  "absolute inset-0 m-auto size-4 animate-spin rounded-full border-[2px] border-t-transparent",
   {
     variants: {
       variant: {
@@ -73,7 +73,7 @@ function Button({
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }), {
-        "relative !text-transparent": loading,
+        relative: loading,
       })}
       disabled={disabled}
       {...props}

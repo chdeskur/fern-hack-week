@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-import { Edit } from "lucide-react";
+import { Cog } from "lucide-react";
 
 import { getLoadableValue } from "@fern-ui/loadable";
 
@@ -13,11 +13,10 @@ import { useGithubSourceRepo } from "@/state/useGithubSourceRepo";
 import { DocsUrl } from "@/utils/types";
 
 import { GithubLogo } from "../auth/GithubLogo";
-import { ExternalHoverLink } from "../ui/ExternalHoverLink";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
-import { CreateBranchButton } from "./CreateBranchButton";
 import { useGithubPermissions } from "./GithubPermissionsContext";
+import { GoToEditorButton } from "./GoToEditorButton";
 import { SetGithubSourcePopover } from "./SetGithubSource";
 
 export function GithubSource({
@@ -47,35 +46,55 @@ export function GithubSource({
     }
   }, [docsUrl, githubSource]);
 
+  const [isDomainHovered, setIsDomainHovered] = useState(false);
+
   return (
     <>
       {isLoading ? (
         <Skeleton className="h-4 w-24" />
       ) : (
         <>
-          <div className="flex flex-wrap items-center gap-1">
+          <div
+            className="flex flex-wrap items-center gap-2"
+            onMouseEnter={() => setIsDomainHovered(true)}
+            onMouseLeave={() =>
+              // Added delay to make the Edit button visible for a bit longer (easier UX to click)
+              setTimeout(() => setIsDomainHovered(false), 500)
+            }
+          >
             {!!githubUrl && (
               <div className="flex items-center gap-2">
                 <GithubLogo />
-                <ExternalHoverLink href={githubUrl} displayHref={repoName} />
+                <a href={githubUrl} className="dashboard-link">
+                  <span className="truncate">{repoName}</span>
+                </a>
               </div>
             )}
-            <SetGithubSourcePopover docsUrl={docsUrl} setIsSaving={setIsSaving}>
-              {githubUrl ? (
-                <Button size="sm" variant="outline" disabled={isSaving}>
-                  <Edit />
-                  Edit
-                </Button>
-              ) : (
-                <Button size="sm" className="w-fit" disabled={isSaving}>
-                  <GithubLogo />
-                  {isSaving ? "Saving..." : "Connect Repo"}
-                </Button>
-              )}
-            </SetGithubSourcePopover>
+            {isDomainHovered && (
+              <SetGithubSourcePopover
+                docsUrl={docsUrl}
+                setIsSaving={setIsSaving}
+              >
+                {githubUrl ? (
+                  <Button
+                    size="iconSm"
+                    variant="ghost"
+                    disabled={isSaving}
+                    className="size-4 p-0"
+                  >
+                    <Cog />
+                  </Button>
+                ) : (
+                  <Button size="sm" className="w-fit" disabled={isSaving}>
+                    <GithubLogo />
+                    {isSaving ? "Saving..." : "Connect Repo"}
+                  </Button>
+                )}
+              </SetGithubSourcePopover>
+            )}
           </div>
-          {!!githubUrl && (
-            <CreateBranchButton
+          {!!githubUrl && githubSource && (
+            <GoToEditorButton
               orgName={orgName}
               docsUrl={docsUrl}
               session={session}
