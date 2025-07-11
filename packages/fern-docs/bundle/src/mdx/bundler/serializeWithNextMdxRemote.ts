@@ -25,19 +25,27 @@ import {
   remarkSanitizeAcorn,
 } from "@fern-docs/mdx/plugins";
 
+import { rehypeAccordionNestedHeaders } from "../plugins/rehype-accordion-nested-headers";
+import { rehypeAccordions } from "../plugins/rehype-accordions";
+import { rehypeButtons } from "../plugins/rehype-buttons";
+import { rehypeCards } from "../plugins/rehype-cards";
 import { rehypeCodeBlock } from "../plugins/rehype-code-block";
 import { rehypeFiles } from "../plugins/rehype-files";
-import { rehypeLinks } from "../plugins/rehype-links";
+import { RehypeLinksOptions, rehypeLinks } from "../plugins/rehype-links";
+import { rehypeMigrateJsx } from "../plugins/rehype-migrate-jsx";
+import { rehypeParamField } from "../plugins/rehype-param-field";
+import { rehypeSteps } from "../plugins/rehype-steps";
+import { rehypeTabs } from "../plugins/rehype-tabs";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
-import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { remarkExtractTitle } from "../plugins/remark-extract-title";
-import { SerializeMdxResponse, processTwoslashBlocks } from "./serialize";
+import { SerializeMdxResponse } from "./serialize";
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 function withDefaultMdxOptions(
   frontmatter: FernDocs.Frontmatter,
-  files: Record<string, FileData>
+  files: Record<string, FileData>,
+  replaceHref?: RehypeLinksOptions["replaceHref"]
 ): SerializeOptions["mdxOptions"] {
   const remarkRehypeOptions = {
     handlers: {
@@ -56,27 +64,55 @@ function withDefaultMdxOptions(
 
   const rehypePlugins: PluggableList = [
     rehypeSqueezeParagraphs,
+    rehypeKatex,
+    [rehypeFiles, { files }],
+    rehypeMdxClassStyle,
+    rehypeCodeBlock,
+    rehypeSteps,
+    rehypeAccordions,
+    rehypeTabs,
+    rehypeCards,
+    rehypeParamField,
+    [
+      rehypeSlug,
+      { additionalJsxElements: ["Step", "Accordion", "Tab", "ParamField"] },
+    ],
+    [rehypeLinks, { replaceHref }],
+    rehypeAccordionNestedHeaders,
     [
       rehypeExpressionToMd,
       {
         mdxJsxElementAllowlist: {
           Frame: ["caption"],
           Tab: ["title"],
-          Card: ["title", "icon"],
-          Callout: ["title", "icon"],
+          Card: ["title"],
+          Callout: ["title"],
           Step: ["title"],
           Accordion: ["title"],
         },
       },
     ],
-    rehypeMdxClassStyle,
-    [rehypeFiles, { files }],
-    [rehypeLinks],
+    rehypeButtons,
+    [
+      rehypeMigrateJsx,
+      {
+        a: "A",
+        h1: "H1",
+        h2: "H2",
+        h3: "H3",
+        h4: "H4",
+        h5: "H5",
+        h6: "H6",
+        img: "Image",
+        iframe: "IFrame",
+        li: "Li",
+        ol: "Ol",
+        strong: "Strong",
+        table: "Table",
+        ul: "Ul",
+      },
+    ],
     rehypeAcornErrorBoundary,
-    rehypeSlug,
-    rehypeKatex,
-    rehypeCodeBlock,
-    rehypeFernComponents,
     rehypeExtractAsides,
   ];
 
@@ -107,9 +143,11 @@ export async function serializeMdxImpl(
   {
     loader,
     scope,
+    replaceHref,
   }: {
     loader?: Partial<Pick<DocsLoader, "getFiles" | "getMdxBundlerFiles">>;
     scope?: Record<string, unknown>;
+    replaceHref?: RehypeLinksOptions["replaceHref"];
   } = {}
 ): Promise<SerializeMdxResponse> {
   content = sanitizeBreaks(content);
@@ -119,15 +157,13 @@ export async function serializeMdxImpl(
     const { data: frontmatter, content: contentWithoutFrontmatter } =
       getFrontmatter(content);
 
-    content = await processTwoslashBlocks(content);
-
     const files = (await loader?.getFiles?.()) ?? {};
 
     const result = await serialize<
       Record<string, unknown>,
       FernDocs.Frontmatter
     >(contentWithoutFrontmatter, {
-      mdxOptions: withDefaultMdxOptions(frontmatter, files),
+      mdxOptions: withDefaultMdxOptions(frontmatter, files, replaceHref),
       parseFrontmatter: false, // this is parsed above via getFrontmatter
     });
 

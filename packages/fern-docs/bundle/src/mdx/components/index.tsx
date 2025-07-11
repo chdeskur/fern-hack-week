@@ -41,6 +41,7 @@ import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { Icon } from "./icon/Icon";
 import { If } from "./if";
+import { IFrame } from "./iframe/IFrame";
 import { Json } from "./json";
 import { Mermaid } from "./mermaid";
 import { ParamField } from "./parameters/ParamField";
@@ -124,6 +125,7 @@ const HTML_COMPONENTS = {
   h5: (props: ComponentProps<"h5">) => HeadingRenderer(5, props),
   h6: (props: ComponentProps<"h6">) => HeadingRenderer(6, props),
   img: Image,
+  iframe: IFrame,
   li: Li,
   ol: Ol,
   strong: Strong,
@@ -140,6 +142,7 @@ const ALIASED_HTML_COMPONENTS = {
   H5: (props: ComponentProps<"h5">) => HeadingRenderer(5, props),
   H6: (props: ComponentProps<"h6">) => HeadingRenderer(6, props),
   Image,
+  IFrame,
   Li,
   Ol,
   Strong,

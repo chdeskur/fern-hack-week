@@ -93,6 +93,7 @@ export function createCachedMdxSerializer(
                   user: authState.authed ? authState.user : undefined,
                   ...scope,
                 },
+                replaceHref,
               });
 
               if (result && containsInvalidAwait(result.code)) {

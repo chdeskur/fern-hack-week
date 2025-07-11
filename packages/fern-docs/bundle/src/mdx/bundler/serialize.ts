@@ -212,6 +212,7 @@ async function serializeMdxImpl(
             h5: "H5",
             h6: "H6",
             img: "Image",
+            iframe: "IFrame",
             li: "Li",
             ol: "Ol",
             strong: "Strong",
