@@ -1,4 +1,6 @@
 export { browseAllObjectsForFilters } from "./browse-all-objects";
+export { createAlgoliaRecords } from "./records/create-algolia-records";
+
 export * from "./constants";
 export * from "./create-search-filters";
 export * from "./edge";

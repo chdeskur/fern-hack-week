@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+export NEXT_PUBLIC_MEILISEARCH_ORIGIN="http://localhost:7700"
+export NEXT_PUBLIC_MEILISEARCH_API_KEY="fern123!"
+
 ENV_LOCAL_PATH="packages/fern-docs/bundle/.env.local"
 ENV_LOCAL_BACKUP="packages/fern-docs/bundle/.env.local.bak"
 

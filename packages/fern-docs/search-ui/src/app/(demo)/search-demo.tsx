@@ -12,6 +12,7 @@ import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-keyword";
 import { useIsMobile } from "@fern-ui/react-commons";
 
 import {
+  AlgoliaSearchClientRoot,
   CommandActions,
   CommandEmpty,
   CommandGroupFilters,
@@ -21,7 +22,6 @@ import {
   DesktopSearchButton,
   DesktopSearchDialog,
   MobileCommand,
-  SearchClientRoot,
 } from "@/components";
 import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
@@ -117,7 +117,7 @@ export function DemoInstantSearchClient({
   }
 
   return (
-    <SearchClientRoot
+    <AlgoliaSearchClientRoot
       appId={appId}
       apiKey={apiKey}
       domain={domain}
@@ -174,7 +174,7 @@ export function DemoInstantSearchClient({
           </DesktopCommandWithAskAI>
         </DesktopSearchDialog>
       )}
-    </SearchClientRoot>
+    </AlgoliaSearchClientRoot>
   );
 }
 

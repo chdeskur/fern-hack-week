@@ -1,9 +1,9 @@
 import { execa } from "execa";
 import path from "path";
 
-export const SELF_HOSTED_CONTAINER_NAME = "fern-self-hosted-test";
+export const SELF_HOSTED_CONTAINER_NAME = "fern-self-hosted";
 const SELF_HOSTED_IMAGE_NAME = "fern-self-hosted";
-const SELF_HOSTED_TAG = "test";
+const SELF_HOSTED_TAG = "latest";
 const SELF_HOSTED_IMAGE_TAG_NAME = `${SELF_HOSTED_IMAGE_NAME}:${SELF_HOSTED_TAG}`;
 const SELF_HOSTED_CONTAINER_PORT = 5433;
 
@@ -33,11 +33,7 @@ export async function setup() {
   await removeContainer(SELF_HOSTED_CONTAINER_NAME);
   await removeImage(SELF_HOSTED_IMAGE_TAG_NAME);
 
-  await execa(
-    "pnpm",
-    ["docker:build", SELF_HOSTED_IMAGE_NAME, SELF_HOSTED_TAG],
-    { stdio: "inherit" }
-  );
+  await execa("pnpm", ["docker:build"], { stdio: "inherit" });
   const { stdout: containerId } = await execa("docker", [
     "run",
     "--name",
@@ -46,7 +42,7 @@ export async function setup() {
     "-p",
     `${SELF_HOSTED_CONTAINER_PORT}:5432`,
     "-v",
-    `${FERN_DIR}:/app/fern`,
+    `${FERN_DIR}:/fern`,
     SELF_HOSTED_IMAGE_TAG_NAME,
   ]);
   await sleep(10000);

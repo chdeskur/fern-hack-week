@@ -1040,6 +1040,9 @@ importers:
       '@fern-docs/search-ui':
         specifier: workspace:*
         version: link:../search-ui
+      '@fern-docs/search-utils':
+        specifier: workspace:*
+        version: link:../search-server/utils
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
@@ -1184,6 +1187,9 @@ importers:
       mdx-bundler:
         specifier: ^10.1.1
         version: 10.1.1(esbuild@0.25.0)
+      meilisearch:
+        specifier: ^0.51.0
+        version: 0.51.0
       mermaid:
         specifier: ^11.6.0
         version: 11.6.0
@@ -2036,6 +2042,9 @@ importers:
       html-entities:
         specifier: ^2.5.2
         version: 2.5.2
+      meilisearch:
+        specifier: ^0.51.0
+        version: 0.51.0
       ts-essentials:
         specifier: ^10.0.4
         version: 10.0.4(typescript@5.7.3)
@@ -2134,6 +2143,9 @@ importers:
       '@fern-ui/react-commons':
         specifier: workspace:*
         version: link:../../commons/react-commons
+      '@meilisearch/instant-meilisearch':
+        specifier: ^0.27.0
+        version: 0.27.0
       '@radix-ui/primitive':
         specifier: ^1.1.1
         version: 1.1.1
@@ -2203,6 +2215,9 @@ importers:
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@19.0.0)
+      meilisearch:
+        specifier: ^0.51.0
+        version: 0.51.0
       next-themes:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2441,12 +2456,25 @@ importers:
 
   servers/fdr:
     dependencies:
+      '@prisma/client':
+        specifier: 5.13.0
+        version: 5.13.0(prisma@5.13.0)
+    devDependencies:
       '@aws-sdk/client-s3':
         specifier: ^3.744.0
         version: 3.744.0
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.744.0
         version: 3.744.0
+      '@babel/core':
+        specifier: ^7.26.9
+        version: 7.26.10
+      '@babel/preset-env':
+        specifier: ^7.26.0
+        version: 7.26.0(@babel/core@7.26.10)
+      '@babel/preset-typescript':
+        specifier: ^7.26.0
+        version: 7.26.0(@babel/core@7.26.10)
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../packages/fdr-sdk
@@ -2480,9 +2508,9 @@ importers:
       '@fern-fern/revalidation-sdk':
         specifier: 0.0.9
         version: 0.0.9
-      '@prisma/client':
-        specifier: 5.13.0
-        version: 5.13.0(prisma@5.13.0)
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
       '@sentry/cli':
         specifier: ^2.31.0
         version: 2.31.2
@@ -2495,82 +2523,6 @@ importers:
       '@slack/web-api':
         specifier: ^6.9.0
         version: 6.12.0
-      '@ungap/url-search-params':
-        specifier: 0.2.2
-        version: 0.2.2
-      algoliasearch:
-        specifier: ^4.24.0
-        version: 4.24.0
-      compression:
-        specifier: ^1.7.4
-        version: 1.7.4
-      cors:
-        specifier: ^2.8.5
-        version: 2.8.5
-      date-fns:
-        specifier: ^4.1.0
-        version: 4.1.0
-      es-toolkit:
-        specifier: ^1.32.0
-        version: 1.32.0
-      express:
-        specifier: ^4.21.2
-        version: 4.21.2
-      gray-matter:
-        specifier: ^4.0.3
-        version: 4.0.3
-      html-to-text:
-        specifier: ^9.0.5
-        version: 9.0.5
-      httpsnippet:
-        specifier: ^3.0.1
-        version: 3.0.1
-      ioredis:
-        specifier: ^5.4.1
-        version: 5.4.1
-      latest-version:
-        specifier: ^9.0.0
-        version: 9.0.0
-      marked:
-        specifier: ^5.1.0
-        version: 5.1.2
-      node-cron:
-        specifier: ^3.0.2
-        version: 3.0.3
-      path-resolver:
-        specifier: '*'
-        version: 0.0.2
-      redis:
-        specifier: ^4.7.0
-        version: 4.7.0
-      semver:
-        specifier: ^7.6.2
-        version: 7.6.2
-      undici:
-        specifier: ^6.20.1
-        version: 6.20.1
-      url-join:
-        specifier: 5.0.0
-        version: 5.0.0
-      uuid:
-        specifier: ^9.0.0
-        version: 9.0.1
-      winston:
-        specifier: ^3.10.0
-        version: 3.13.0
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.26.9
-        version: 7.26.10
-      '@babel/preset-env':
-        specifier: ^7.26.0
-        version: 7.26.0(@babel/core@7.26.10)
-      '@babel/preset-typescript':
-        specifier: ^7.26.0
-        version: 7.26.0(@babel/core@7.26.10)
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../packages/configs
       '@types/compression':
         specifier: ^1.7.5
         version: 1.7.5
@@ -2601,30 +2553,96 @@ importers:
       '@types/uuid':
         specifier: ^9.0.1
         version: 9.0.8
+      '@ungap/url-search-params':
+        specifier: 0.2.2
+        version: 0.2.2
       '@yarnpkg/pnpify':
         specifier: ^4.0.1
         version: 4.1.0(typanion@3.14.0)
+      algoliasearch:
+        specifier: ^4.24.0
+        version: 4.24.0
+      compression:
+        specifier: ^1.7.4
+        version: 1.7.4
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.5
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       dotenv-cli:
         specifier: ^6.0.0
         version: 6.0.0
+      es-toolkit:
+        specifier: ^1.32.0
+        version: 1.32.0
       execa:
         specifier: ^9.5.1
         version: 9.5.1
+      express:
+        specifier: ^4.21.2
+        version: 4.21.2
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
+      html-to-text:
+        specifier: ^9.0.5
+        version: 9.0.5
+      httpsnippet:
+        specifier: ^3.0.1
+        version: 3.0.1
+      ioredis:
+        specifier: ^5.4.1
+        version: 5.4.1
+      latest-version:
+        specifier: ^9.0.0
+        version: 9.0.0
+      marked:
+        specifier: ^5.1.0
+        version: 5.1.2
+      node-cron:
+        specifier: ^3.0.2
+        version: 3.0.3
       nodemon:
         specifier: ^3.0.0
         version: 3.1.0
+      path-resolver:
+        specifier: '*'
+        version: 0.0.2
       prisma:
         specifier: 5.13.0
         version: 5.13.0
+      redis:
+        specifier: ^4.6.13
+        version: 4.7.0
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(@swc/core@1.5.7(@swc/helpers@0.5.15))(jiti@2.4.2)(postcss@8.5.2)(tsx@4.9.3)(typescript@5.7.3)(yaml@2.8.0)
       tsx:
         specifier: ^4.7.1
         version: 4.9.3
       typescript:
         specifier: 5.7.3
         version: 5.7.3
+      undici:
+        specifier: ^6.20.1
+        version: 6.20.1
+      url-join:
+        specifier: 5.0.0
+        version: 5.0.0
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.1
       vitest:
         specifier: ^3.0.5
         version: 3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@22.15.29)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.9.3)(yaml@2.8.0)
+      winston:
+        specifier: ^3.10.0
+        version: 3.13.0
 
   servers/fdr-deploy:
     dependencies:
@@ -5377,6 +5395,9 @@ packages:
 
   '@mediapipe/tasks-vision@0.10.17':
     resolution: {integrity: sha512-CZWV/q6TTe8ta61cZXjfnnHsfWIdFhms03M9T7Cnd5y2mdpylJM0rF1qRq+wsQVRMLz1OYPVEBU9ph2Bx8cxrg==}
+
+  '@meilisearch/instant-meilisearch@0.27.0':
+    resolution: {integrity: sha512-wydZj3FLElIpK6Ceu5RfihgFMHkxB8HWhwWfRfubb3JR08phttU14DKdNk98RC5iTPwRzUQSk1cl+/gBmUGBUg==}
 
   '@mermaid-js/parser@0.4.0':
     resolution: {integrity: sha512-wla8XOWvQAwuqy+gxiZqY+c7FokraOTHRWMsbB4AgRx9Sy7zKslNyejy7E+a77qHfey5GXw/ik3IXv/NHMJgaA==}
@@ -14926,6 +14947,9 @@ packages:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
 
+  meilisearch@0.51.0:
+    resolution: {integrity: sha512-IuNsYyT8r/QLhU33XDZdXWUT6cA/nACCHHZc+NHkNuaU55LELRxff1uBJhpJcwjYaAPEEmeWrzBhYl2XlhJdAg==}
+
   memfs@3.5.3:
     resolution: {integrity: sha512-UERzLsxzllchadvbPs5aolHh65ISpKpM+ccLbOJ8/vvpBKmAWf+la7dXFy7Mr0ySHbdHrFv5kGFCUHHe6GFEmw==}
     engines: {node: '>= 4.0.0'}
@@ -23944,6 +23968,10 @@ snapshots:
 
   '@mediapipe/tasks-vision@0.10.17': {}
 
+  '@meilisearch/instant-meilisearch@0.27.0':
+    dependencies:
+      meilisearch: 0.51.0
+
   '@mermaid-js/parser@0.4.0':
     dependencies:
       langium: 3.3.1
@@ -29550,15 +29578,6 @@ snapshots:
       msw: 2.10.3(@types/node@22.15.29)(typescript@5.7.3)
       vite: 5.4.14(@types/node@22.15.29)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)
 
-  '@vitest/mocker@3.0.5(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
-    dependencies:
-      '@vitest/spy': 3.0.5
-      estree-walker: 3.0.3
-      magic-string: 0.30.17
-    optionalDependencies:
-      msw: 2.10.3(@types/node@18.19.33)(typescript@5.7.3)
-      vite: 6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
-
   '@vitest/mocker@3.0.5(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
     dependencies:
       '@vitest/spy': 3.0.5
@@ -29568,23 +29587,23 @@ snapshots:
       msw: 2.10.3(@types/node@18.19.33)(typescript@5.7.3)
       vite: 6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
 
-  '@vitest/mocker@3.0.5(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
+  '@vitest/mocker@3.0.5(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
     dependencies:
       '@vitest/spy': 3.0.5
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      msw: 2.10.3(@types/node@22.15.29)(typescript@5.7.3)
-      vite: 6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
+      msw: 2.10.3(@types/node@18.19.33)(typescript@5.7.3)
+      vite: 6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
 
-  '@vitest/mocker@3.0.5(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.9.3)(yaml@2.8.0))':
+  '@vitest/mocker@3.0.5(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
     dependencies:
       '@vitest/spy': 3.0.5
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
       msw: 2.10.3(@types/node@22.15.29)(typescript@5.7.3)
-      vite: 6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.9.3)(yaml@2.8.0)
+      vite: 6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
 
   '@vitest/mocker@3.0.7(msw@2.10.3(@types/node@18.19.76)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
     dependencies:
@@ -29604,23 +29623,23 @@ snapshots:
       msw: 2.10.3(@types/node@18.19.87)(typescript@5.7.3)
       vite: 6.1.0(@types/node@18.19.87)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
 
-  '@vitest/mocker@3.1.3(msw@2.10.3(@types/node@20.17.43)(typescript@5.7.3))(vite@6.1.0(@types/node@20.17.43)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@vitest/mocker@3.1.3(msw@2.10.3(@types/node@20.17.43)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
     dependencies:
       '@vitest/spy': 3.1.3
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
       msw: 2.10.3(@types/node@20.17.43)(typescript@5.7.3)
-      vite: 6.1.0(@types/node@20.17.43)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
 
-  '@vitest/mocker@3.1.3(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
+  '@vitest/mocker@3.1.3(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))':
     dependencies:
       '@vitest/spy': 3.1.3
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
       msw: 2.10.3(@types/node@22.15.29)(typescript@5.7.3)
-      vite: 6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
+      vite: 6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0)
 
   '@vitest/pretty-format@2.0.5':
     dependencies:
@@ -37246,6 +37265,8 @@ snapshots:
 
   media-typer@0.3.0: {}
 
+  meilisearch@0.51.0: {}
+
   memfs@3.5.3:
     dependencies:
       fs-monkey: 1.0.6
@@ -39320,6 +39341,15 @@ snapshots:
       jiti: 2.4.2
       postcss: 8.5.2
       tsx: 4.19.3
+      yaml: 2.8.0
+
+  postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.2)(tsx@4.9.3)(yaml@2.8.0):
+    dependencies:
+      lilconfig: 3.1.1
+    optionalDependencies:
+      jiti: 2.4.2
+      postcss: 8.5.2
+      tsx: 4.9.3
       yaml: 2.8.0
 
   postcss-loader@8.1.1(postcss@8.5.2)(typescript@5.7.3)(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)):
@@ -42410,6 +42440,34 @@ snapshots:
       - tsx
       - yaml
 
+  tsup@8.3.5(@swc/core@1.5.7(@swc/helpers@0.5.15))(jiti@2.4.2)(postcss@8.5.2)(tsx@4.9.3)(typescript@5.7.3)(yaml@2.8.0):
+    dependencies:
+      bundle-require: 5.0.0(esbuild@0.25.0)
+      cac: 6.7.14
+      chokidar: 4.0.3
+      consola: 3.2.3
+      debug: 4.4.0
+      esbuild: 0.25.0
+      joycon: 3.1.1
+      picocolors: 1.1.1
+      postcss-load-config: 6.0.1(jiti@2.4.2)(postcss@8.5.2)(tsx@4.9.3)(yaml@2.8.0)
+      resolve-from: 5.0.0
+      rollup: 4.34.8
+      source-map: 0.8.0-beta.0
+      sucrase: 3.35.0
+      tinyexec: 0.3.2
+      tinyglobby: 0.2.13
+      tree-kill: 1.2.2
+    optionalDependencies:
+      '@swc/core': 1.5.7(@swc/helpers@0.5.15)
+      postcss: 8.5.2
+      typescript: 5.7.3
+    transitivePeerDependencies:
+      - jiti
+      - supports-color
+      - tsx
+      - yaml
+
   tsx@4.19.3:
     dependencies:
       esbuild: 0.25.0
@@ -43416,7 +43474,7 @@ snapshots:
   vitest@3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 3.0.5
-      '@vitest/mocker': 3.0.5(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.33)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      '@vitest/mocker': 3.0.5(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))
       '@vitest/pretty-format': 3.0.5
       '@vitest/runner': 3.0.5
       '@vitest/snapshot': 3.0.5
@@ -43498,7 +43556,7 @@ snapshots:
   vitest@3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@22.15.29)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0):
     dependencies:
       '@vitest/expect': 3.0.5
-      '@vitest/mocker': 3.0.5(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))
+      '@vitest/mocker': 3.0.5(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))
       '@vitest/pretty-format': 3.0.5
       '@vitest/runner': 3.0.5
       '@vitest/snapshot': 3.0.5
@@ -43539,7 +43597,7 @@ snapshots:
   vitest@3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@22.15.29)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.9.3)(yaml@2.8.0):
     dependencies:
       '@vitest/expect': 3.0.5
-      '@vitest/mocker': 3.0.5(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.9.3)(yaml@2.8.0))
+      '@vitest/mocker': 3.0.5(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))
       '@vitest/pretty-format': 3.0.5
       '@vitest/runner': 3.0.5
       '@vitest/snapshot': 3.0.5
@@ -43663,7 +43721,7 @@ snapshots:
   vitest@3.1.3(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@20.17.43)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@20.17.43)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 3.1.3
-      '@vitest/mocker': 3.1.3(msw@2.10.3(@types/node@20.17.43)(typescript@5.7.3))(vite@6.1.0(@types/node@20.17.43)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+      '@vitest/mocker': 3.1.3(msw@2.10.3(@types/node@20.17.43)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))
       '@vitest/pretty-format': 3.1.3
       '@vitest/runner': 3.1.3
       '@vitest/snapshot': 3.1.3
@@ -43705,7 +43763,7 @@ snapshots:
   vitest@3.1.3(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@22.15.29)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0):
     dependencies:
       '@vitest/expect': 3.1.3
-      '@vitest/mocker': 3.1.3(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@22.15.29)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))
+      '@vitest/mocker': 3.1.3(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(vite@6.1.0(@types/node@18.19.76)(jiti@2.4.2)(less@4.2.0)(lightningcss@1.29.1)(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.8.0))
       '@vitest/pretty-format': 3.1.3
       '@vitest/runner': 3.1.3
       '@vitest/snapshot': 3.1.3

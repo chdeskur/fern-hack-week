@@ -1875,6 +1875,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_systemservices/companies.getCompanies",
+    "distinct": "endpoint_systemservices/companies.getCompanies",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/companies",
     "endpoint_path_alternates": [
@@ -1930,6 +1931,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_systemservices/helloworld.getHelloWorld",
+    "distinct": "endpoint_systemservices/helloworld.getHelloWorld",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/helloworld",
     "endpoint_path_alternates": [
@@ -1985,6 +1987,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-catalog.getCatalog",
+    "distinct": "endpoint_ticketing/service-catalog.getCatalog",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/catalog/:storeCode",
     "endpoint_path_alternates": [
@@ -2040,6 +2043,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-capacity.getCapacity",
+    "distinct": "endpoint_ticketing/service-capacity.getCapacity",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/capacity/search",
     "endpoint_path_alternates": [
@@ -2095,6 +2099,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-ticket.getTicket",
+    "distinct": "endpoint_ticketing/service-ticket.getTicket",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/ticket/:ticketNumber",
     "endpoint_path_alternates": [
@@ -2150,6 +2155,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-ticket.revokeTicket",
+    "distinct": "endpoint_ticketing/service-ticket.revokeTicket",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/ticket/:ticketNumber/revoke",
     "endpoint_path_alternates": [
@@ -2205,6 +2211,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-ticket.validateArrival",
+    "distinct": "endpoint_ticketing/service-ticket.validateArrival",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/ticket/:ticketNumber/validateArrival",
     "endpoint_path_alternates": [
@@ -2260,6 +2267,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-ticket.validateDeparture",
+    "distinct": "endpoint_ticketing/service-ticket.validateDeparture",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/ticket/:ticketNumber/validateDeparture",
     "endpoint_path_alternates": [
@@ -2315,6 +2323,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-ticket.validateMemberArrival",
+    "distinct": "endpoint_ticketing/service-ticket.validateMemberArrival",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/ticket/:memberNumber/validateMemberArrival",
     "endpoint_path_alternates": [
@@ -2370,6 +2379,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-ticket.sendToWallet",
+    "distinct": "endpoint_ticketing/service-ticket.sendToWallet",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/ticket/:ticketNumber/sendToWallet",
     "endpoint_path_alternates": [
@@ -2425,6 +2435,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-ticket.exchangeForCoupon",
+    "distinct": "endpoint_ticketing/service-ticket.exchangeForCoupon",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/ticket/:ticketNumber/exchangeForCoupon",
     "endpoint_path_alternates": [
@@ -2480,6 +2491,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-reservations.createReservation",
+    "distinct": "endpoint_ticketing/service-reservations.createReservation",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/reservation",
     "endpoint_path_alternates": [
@@ -2535,6 +2547,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-reservations.updateReservation",
+    "distinct": "endpoint_ticketing/service-reservations.updateReservation",
     "method": "PUT",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/reservation/:token",
     "endpoint_path_alternates": [
@@ -2590,6 +2603,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-reservations.cancelReservation",
+    "distinct": "endpoint_ticketing/service-reservations.cancelReservation",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/reservation/:token/cancel",
     "endpoint_path_alternates": [
@@ -2645,6 +2659,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-reservations.preConfirmReservation",
+    "distinct": "endpoint_ticketing/service-reservations.preConfirmReservation",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/reservation/:token/pre-confirm",
     "endpoint_path_alternates": [
@@ -2700,6 +2715,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-reservations.confirmReservation",
+    "distinct": "endpoint_ticketing/service-reservations.confirmReservation",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/reservation/:token/confirm",
     "endpoint_path_alternates": [
@@ -2755,6 +2771,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-reservations.getReservation",
+    "distinct": "endpoint_ticketing/service-reservations.getReservation",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/reservation/:token",
     "endpoint_path_alternates": [
@@ -2810,6 +2827,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_ticketing/service-reservations.getTickets",
+    "distinct": "endpoint_ticketing/service-reservations.getTickets",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/ticketing/reservation/:token/tickets",
     "endpoint_path_alternates": [
@@ -2865,6 +2883,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-catalog.getCatalog",
+    "distinct": "endpoint_memberships/service-catalog.getCatalog",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/membership/catalog/:storeCode",
     "endpoint_path_alternates": [
@@ -2920,6 +2939,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-membership.createMembership",
+    "distinct": "endpoint_memberships/service-membership.createMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership",
     "endpoint_path_alternates": [
@@ -2975,6 +2995,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-membership.getMembershipId",
+    "distinct": "endpoint_memberships/service-membership.getMembershipId",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/id/:membershipId",
     "endpoint_path_alternates": [
@@ -3030,6 +3051,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-membership.getMembershipNumber",
+    "distinct": "endpoint_memberships/service-membership.getMembershipNumber",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/number/:membershipNumber",
     "endpoint_path_alternates": [
@@ -3085,6 +3107,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-membership.blockMembership",
+    "distinct": "endpoint_memberships/service-membership.blockMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/block",
     "endpoint_path_alternates": [
@@ -3140,6 +3163,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-membership.unblockMembership",
+    "distinct": "endpoint_memberships/service-membership.unblockMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/unblock",
     "endpoint_path_alternates": [
@@ -3195,6 +3219,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-membership.getMembers",
+    "distinct": "endpoint_memberships/service-membership.getMembers",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/members",
     "endpoint_path_alternates": [
@@ -3250,6 +3275,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.getMemberId",
+    "distinct": "endpoint_memberships/service-member.getMemberId",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/id/:memberId",
     "endpoint_path_alternates": [
@@ -3305,6 +3331,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.getMemberNumber",
+    "distinct": "endpoint_memberships/service-member.getMemberNumber",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/number/:memberNumber",
     "endpoint_path_alternates": [
@@ -3360,6 +3387,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.addMember",
+    "distinct": "endpoint_memberships/service-member.addMember",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/:membershipId/add",
     "endpoint_path_alternates": [
@@ -3415,6 +3443,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.updateMember",
+    "distinct": "endpoint_memberships/service-member.updateMember",
     "method": "PUT",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/:memberId",
     "endpoint_path_alternates": [
@@ -3470,6 +3499,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.getMemberImage",
+    "distinct": "endpoint_memberships/service-member.getMemberImage",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/:memberId/image",
     "endpoint_path_alternates": [
@@ -3525,6 +3555,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.setMemberImage",
+    "distinct": "endpoint_memberships/service-member.setMemberImage",
     "method": "PUT",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/:memberId/image",
     "endpoint_path_alternates": [
@@ -3580,6 +3611,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.findMembers",
+    "distinct": "endpoint_memberships/service-member.findMembers",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member",
     "endpoint_path_alternates": [
@@ -3635,6 +3667,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.blockMember",
+    "distinct": "endpoint_memberships/service-member.blockMember",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/:memberId/block",
     "endpoint_path_alternates": [
@@ -3690,6 +3723,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-member.unblockMember",
+    "distinct": "endpoint_memberships/service-member.unblockMember",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/member/:memberId/unblock",
     "endpoint_path_alternates": [
@@ -3745,6 +3779,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-card.getCardId",
+    "distinct": "endpoint_memberships/service-card.getCardId",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/card/id/:cardId",
     "endpoint_path_alternates": [
@@ -3800,6 +3835,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-card.getCardNumber",
+    "distinct": "endpoint_memberships/service-card.getCardNumber",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/card/number/:cardNumber",
     "endpoint_path_alternates": [
@@ -3855,6 +3891,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-card.addCard",
+    "distinct": "endpoint_memberships/service-card.addCard",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/:membershipId/member/:memberId/card",
     "endpoint_path_alternates": [
@@ -3910,6 +3947,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-card.replaceCard",
+    "distinct": "endpoint_memberships/service-card.replaceCard",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/:membershipId/member/:memberId/card/:cardId/replace",
     "endpoint_path_alternates": [
@@ -3965,6 +4003,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-card.registerArrival",
+    "distinct": "endpoint_memberships/service-card.registerArrival",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/card/:cardNumber/register-arrival",
     "endpoint_path_alternates": [
@@ -4020,6 +4059,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-card.sendToWallet",
+    "distinct": "endpoint_memberships/service-card.sendToWallet",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/card/:cardNumber/sendToWallet",
     "endpoint_path_alternates": [
@@ -4075,6 +4115,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.getMembershipHistory",
+    "distinct": "endpoint_memberships/service-lifecycle.getMembershipHistory",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/history",
     "endpoint_path_alternates": [
@@ -4130,6 +4171,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.activateMembership",
+    "distinct": "endpoint_memberships/service-lifecycle.activateMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/activate",
     "endpoint_path_alternates": [
@@ -4185,6 +4227,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.cancelMembership",
+    "distinct": "endpoint_memberships/service-lifecycle.cancelMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/cancel",
     "endpoint_path_alternates": [
@@ -4240,6 +4283,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.getRenewalOptions",
+    "distinct": "endpoint_memberships/service-lifecycle.getRenewalOptions",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/renew/options",
     "endpoint_path_alternates": [
@@ -4295,6 +4339,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.renewMembership",
+    "distinct": "endpoint_memberships/service-lifecycle.renewMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/renew",
     "endpoint_path_alternates": [
@@ -4350,6 +4395,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.getUpgradeOptions",
+    "distinct": "endpoint_memberships/service-lifecycle.getUpgradeOptions",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/upgrade/options",
     "endpoint_path_alternates": [
@@ -4405,6 +4451,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.upgradeMembership",
+    "distinct": "endpoint_memberships/service-lifecycle.upgradeMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/upgrade",
     "endpoint_path_alternates": [
@@ -4460,6 +4507,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.getExtendOptions",
+    "distinct": "endpoint_memberships/service-lifecycle.getExtendOptions",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/extend/options",
     "endpoint_path_alternates": [
@@ -4515,6 +4563,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-lifecycle.extendMembership",
+    "distinct": "endpoint_memberships/service-lifecycle.extendMembership",
     "method": "POST",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/membership/:membershipId/extend",
     "endpoint_path_alternates": [
@@ -4570,6 +4619,7 @@
     "api_type": "http",
     "api_definition_id": "e08c5491-f85f-4c3a-8402-21f1e34c253d",
     "api_endpoint_id": "endpoint_memberships/service-misc.resolveIdentifier",
+    "distinct": "endpoint_memberships/service-misc.resolveIdentifier",
     "method": "GET",
     "endpoint_path": "/:saasguid/:saasenv/:company/memberships/misc/:identifier/resolve",
     "endpoint_path_alternates": [

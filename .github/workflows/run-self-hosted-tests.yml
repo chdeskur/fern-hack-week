@@ -25,6 +25,9 @@ jobs:
           WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
           WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
+      - name: Build FDR CJS
+        run: pnpm --filter @fern-platform/fdr build:tsup:cjs          
+        
       - name: Build docs bundle
         run: pnpm docs:self-hosted-bundle:build
 

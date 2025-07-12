@@ -1522,6 +1522,7 @@
     "api_type": "http",
     "api_definition_id": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
     "api_endpoint_id": "subpackage_detections.getDetection",
+    "distinct": "subpackage_detections.getDetection",
     "method": "GET",
     "endpoint_path": "/api/v2/detections/:id",
     "endpoint_path_alternates": [
@@ -1575,6 +1576,7 @@
     "api_type": "http",
     "api_definition_id": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
     "api_endpoint_id": "subpackage_events.createEventSync",
+    "distinct": "subpackage_events.createEventSync",
     "method": "POST",
     "endpoint_path": "/api/v2/events/sync/:event_type_name",
     "endpoint_path_alternates": [
@@ -1630,6 +1632,7 @@
     "api_type": "http",
     "api_definition_id": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
     "api_endpoint_id": "subpackage_events.createEventAsync",
+    "distinct": "subpackage_events.createEventAsync",
     "method": "POST",
     "endpoint_path": "/api/v2/events/async/:event_type_name",
     "endpoint_path_alternates": [
@@ -1685,6 +1688,7 @@
     "api_type": "http",
     "api_definition_id": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
     "api_endpoint_id": "subpackage_eventTypes.getEventTypes",
+    "distinct": "subpackage_eventTypes.getEventTypes",
     "method": "GET",
     "endpoint_path": "/api/v2/event-types",
     "endpoint_path_alternates": [
@@ -1738,6 +1742,7 @@
     "api_type": "http",
     "api_definition_id": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
     "api_endpoint_id": "subpackage_eventTypes.createEventType",
+    "distinct": "subpackage_eventTypes.createEventType",
     "method": "POST",
     "endpoint_path": "/api/v2/event-types",
     "endpoint_path_alternates": [
@@ -1791,6 +1796,7 @@
     "api_type": "http",
     "api_definition_id": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
     "api_endpoint_id": "subpackage_eventTypes.patchEventType",
+    "distinct": "subpackage_eventTypes.patchEventType",
     "method": "PATCH",
     "endpoint_path": "/api/v2/event-types/:id",
     "endpoint_path_alternates": [

@@ -638,6 +638,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazon.createSession",
+    "distinct": "endpoint_integrations/amazon.createSession",
     "method": "POST",
     "endpoint_path": "/v1/amazon/session",
     "endpoint_path_alternates": [
@@ -702,6 +703,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazon.getBuyAgainItems",
+    "distinct": "endpoint_integrations/amazon.getBuyAgainItems",
     "method": "GET",
     "endpoint_path": "/v1/amazon/items/buy-again",
     "endpoint_path_alternates": [
@@ -766,6 +768,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazon.buyNow",
+    "distinct": "endpoint_integrations/amazon.buyNow",
     "method": "POST",
     "endpoint_path": "/v1/amazon/items/buy-now",
     "endpoint_path_alternates": [
@@ -830,6 +833,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazon.addToCart",
+    "distinct": "endpoint_integrations/amazon.addToCart",
     "method": "POST",
     "endpoint_path": "/v1/amazon/items/add-to-cart",
     "endpoint_path_alternates": [
@@ -894,6 +898,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazon.search",
+    "distinct": "endpoint_integrations/amazon.search",
     "method": "GET",
     "endpoint_path": "/v1/amazon/items/search",
     "endpoint_path_alternates": [
@@ -958,6 +963,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazonBusiness.createSession",
+    "distinct": "endpoint_integrations/amazonBusiness.createSession",
     "method": "POST",
     "endpoint_path": "/v1/amazon-business/session",
     "endpoint_path_alternates": [
@@ -1022,6 +1028,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazonBusiness.getOrders",
+    "distinct": "endpoint_integrations/amazonBusiness.getOrders",
     "method": "GET",
     "endpoint_path": "/v1/amazon-business/orders",
     "endpoint_path_alternates": [
@@ -1086,6 +1093,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazonBusiness.getBuyAgainItems",
+    "distinct": "endpoint_integrations/amazonBusiness.getBuyAgainItems",
     "method": "GET",
     "endpoint_path": "/v1/amazon-business/items/buy-again",
     "endpoint_path_alternates": [
@@ -1150,6 +1158,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazonBusiness.buyNow",
+    "distinct": "endpoint_integrations/amazonBusiness.buyNow",
     "method": "POST",
     "endpoint_path": "/v1/amazon-business/items/buy-now",
     "endpoint_path_alternates": [
@@ -1214,6 +1223,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/amazonSeller.createSession",
+    "distinct": "endpoint_integrations/amazonSeller.createSession",
     "method": "POST",
     "endpoint_path": "/v1/amazon-seller/session",
     "endpoint_path_alternates": [
@@ -1278,6 +1288,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.createSession",
+    "distinct": "endpoint_integrations/dispatchMe.createSession",
     "method": "POST",
     "endpoint_path": "/v1/dispatch-me/session",
     "endpoint_path_alternates": [
@@ -1342,6 +1353,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.editCustomer",
+    "distinct": "endpoint_integrations/dispatchMe.editCustomer",
     "method": "PUT",
     "endpoint_path": "/v1/dispatch-me/customers/:customerId",
     "endpoint_path_alternates": [
@@ -1405,6 +1417,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.createCustomer",
+    "distinct": "endpoint_integrations/dispatchMe.createCustomer",
     "method": "POST",
     "endpoint_path": "/v1/dispatch-me/customers",
     "endpoint_path_alternates": [
@@ -1468,6 +1481,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.getCustomers",
+    "distinct": "endpoint_integrations/dispatchMe.getCustomers",
     "method": "GET",
     "endpoint_path": "/v1/dispatch-me/customers",
     "endpoint_path_alternates": [
@@ -1531,6 +1545,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.getAccountOrganizations",
+    "distinct": "endpoint_integrations/dispatchMe.getAccountOrganizations",
     "method": "GET",
     "endpoint_path": "/v1/dispatch-me/organizations",
     "endpoint_path_alternates": [
@@ -1594,6 +1609,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.getJobs",
+    "distinct": "endpoint_integrations/dispatchMe.getJobs",
     "method": "GET",
     "endpoint_path": "/v1/dispatch-me/jobs",
     "endpoint_path_alternates": [
@@ -1657,6 +1673,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.getUsers",
+    "distinct": "endpoint_integrations/dispatchMe.getUsers",
     "method": "GET",
     "endpoint_path": "/v1/dispatch-me/users",
     "endpoint_path_alternates": [
@@ -1720,6 +1737,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.createAppointment",
+    "distinct": "endpoint_integrations/dispatchMe.createAppointment",
     "method": "POST",
     "endpoint_path": "/v1/dispatch-me/appointments",
     "endpoint_path_alternates": [
@@ -1783,6 +1801,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/dispatchMe.createNote",
+    "distinct": "endpoint_integrations/dispatchMe.createNote",
     "method": "POST",
     "endpoint_path": "/v1/dispatch-me/notes",
     "endpoint_path_alternates": [
@@ -1846,6 +1865,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/facebook.createSession",
+    "distinct": "endpoint_integrations/facebook.createSession",
     "method": "POST",
     "endpoint_path": "/v1/facebook/session",
     "endpoint_path_alternates": [
@@ -1910,6 +1930,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/facebook.postGroupMessage",
+    "distinct": "endpoint_integrations/facebook.postGroupMessage",
     "method": "POST",
     "endpoint_path": "/v1/facebook/groups/:groupId/message",
     "endpoint_path_alternates": [
@@ -1974,6 +1995,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/facebook.joinGroup",
+    "distinct": "endpoint_integrations/facebook.joinGroup",
     "method": "POST",
     "endpoint_path": "/v1/facebook/groups/:groupId/join",
     "endpoint_path_alternates": [
@@ -2038,6 +2060,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/facebook.searchGroups",
+    "distinct": "endpoint_integrations/facebook.searchGroups",
     "method": "GET",
     "endpoint_path": "/v1/facebook/groups",
     "endpoint_path_alternates": [
@@ -2102,6 +2125,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/instagram.createSession",
+    "distinct": "endpoint_integrations/instagram.createSession",
     "method": "POST",
     "endpoint_path": "/v1/instagram/session",
     "endpoint_path_alternates": [
@@ -2166,6 +2190,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.createSession",
+    "distinct": "endpoint_integrations/linkedin.createSession",
     "method": "POST",
     "endpoint_path": "/v1/linkedin/session",
     "endpoint_path_alternates": [
@@ -2230,6 +2255,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.getConnectionInvitations",
+    "distinct": "endpoint_integrations/linkedin.getConnectionInvitations",
     "method": "GET",
     "endpoint_path": "/v1/linkedin/invitations",
     "endpoint_path_alternates": [
@@ -2294,6 +2320,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.acceptConnectionInvitation",
+    "distinct": "endpoint_integrations/linkedin.acceptConnectionInvitation",
     "method": "POST",
     "endpoint_path": "/v1/linkedin/invitations/accept",
     "endpoint_path_alternates": [
@@ -2358,6 +2385,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.createPost",
+    "distinct": "endpoint_integrations/linkedin.createPost",
     "method": "POST",
     "endpoint_path": "/v1/linkedin/posts",
     "endpoint_path_alternates": [
@@ -2422,6 +2450,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.search",
+    "distinct": "endpoint_integrations/linkedin.search",
     "method": "GET",
     "endpoint_path": "/v1/linkedin/search",
     "endpoint_path_alternates": [
@@ -2486,6 +2515,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.getConnections",
+    "distinct": "endpoint_integrations/linkedin.getConnections",
     "method": "GET",
     "endpoint_path": "/v1/linkedin/connections",
     "endpoint_path_alternates": [
@@ -2550,6 +2580,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.sendMessage",
+    "distinct": "endpoint_integrations/linkedin.sendMessage",
     "method": "POST",
     "endpoint_path": "/v1/linkedin/messages",
     "endpoint_path_alternates": [
@@ -2614,6 +2645,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/linkedin.getMessages",
+    "distinct": "endpoint_integrations/linkedin.getMessages",
     "method": "GET",
     "endpoint_path": "/v1/linkedin/messages/:profileName",
     "endpoint_path_alternates": [
@@ -2678,6 +2710,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.createSession",
+    "distinct": "endpoint_integrations/ppp.createSession",
     "method": "POST",
     "endpoint_path": "/v1/ppp/session",
     "endpoint_path_alternates": [
@@ -2742,6 +2775,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.createCustomer",
+    "distinct": "endpoint_integrations/ppp.createCustomer",
     "method": "POST",
     "endpoint_path": "/v1/ppp/customers",
     "endpoint_path_alternates": [
@@ -2806,6 +2840,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.searchCustomerDetails",
+    "distinct": "endpoint_integrations/ppp.searchCustomerDetails",
     "method": "GET",
     "endpoint_path": "/v1/ppp/customers/search",
     "endpoint_path_alternates": [
@@ -2870,6 +2905,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.createAppointment",
+    "distinct": "endpoint_integrations/ppp.createAppointment",
     "method": "POST",
     "endpoint_path": "/v1/ppp/appointments",
     "endpoint_path_alternates": [
@@ -2934,6 +2970,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getBillingTerms",
+    "distinct": "endpoint_integrations/ppp.getBillingTerms",
     "method": "GET",
     "endpoint_path": "/v1/ppp/billing-terms",
     "endpoint_path_alternates": [
@@ -2998,6 +3035,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getInvoiceTypes",
+    "distinct": "endpoint_integrations/ppp.getInvoiceTypes",
     "method": "GET",
     "endpoint_path": "/v1/ppp/invoice-types",
     "endpoint_path_alternates": [
@@ -3062,6 +3100,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getCustomerTypes",
+    "distinct": "endpoint_integrations/ppp.getCustomerTypes",
     "method": "GET",
     "endpoint_path": "/v1/ppp/customer-types",
     "endpoint_path_alternates": [
@@ -3126,6 +3165,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getArrivalWindow",
+    "distinct": "endpoint_integrations/ppp.getArrivalWindow",
     "method": "GET",
     "endpoint_path": "/v1/ppp/arrival-window",
     "endpoint_path_alternates": [
@@ -3190,6 +3230,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getServiceCallType",
+    "distinct": "endpoint_integrations/ppp.getServiceCallType",
     "method": "GET",
     "endpoint_path": "/v1/ppp/service-call-type",
     "endpoint_path_alternates": [
@@ -3254,6 +3295,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getDiagnosticFee",
+    "distinct": "endpoint_integrations/ppp.getDiagnosticFee",
     "method": "GET",
     "endpoint_path": "/v1/ppp/diagnostic-fee",
     "endpoint_path_alternates": [
@@ -3318,6 +3360,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getServiceCallStatus",
+    "distinct": "endpoint_integrations/ppp.getServiceCallStatus",
     "method": "GET",
     "endpoint_path": "/v1/ppp/service-call-status",
     "endpoint_path_alternates": [
@@ -3382,6 +3425,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getLeadSource",
+    "distinct": "endpoint_integrations/ppp.getLeadSource",
     "method": "GET",
     "endpoint_path": "/v1/ppp/lead-source",
     "endpoint_path_alternates": [
@@ -3446,6 +3490,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getBoardIds",
+    "distinct": "endpoint_integrations/ppp.getBoardIds",
     "method": "GET",
     "endpoint_path": "/v1/ppp/board-ids",
     "endpoint_path_alternates": [
@@ -3510,6 +3555,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getTechnicians",
+    "distinct": "endpoint_integrations/ppp.getTechnicians",
     "method": "GET",
     "endpoint_path": "/v1/ppp/technicians",
     "endpoint_path_alternates": [
@@ -3574,6 +3620,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/ppp.getCalendar",
+    "distinct": "endpoint_integrations/ppp.getCalendar",
     "method": "GET",
     "endpoint_path": "/v1/ppp/calendar",
     "endpoint_path_alternates": [
@@ -3638,6 +3685,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/servicebox.createSession",
+    "distinct": "endpoint_integrations/servicebox.createSession",
     "method": "POST",
     "endpoint_path": "/v1/servicebox/session",
     "endpoint_path_alternates": [
@@ -3702,6 +3750,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/servicebox.getReceptionnaires",
+    "distinct": "endpoint_integrations/servicebox.getReceptionnaires",
     "method": "GET",
     "endpoint_path": "/v1/servicebox/receptionnaires",
     "endpoint_path_alternates": [
@@ -3766,6 +3815,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/servicebox.getEquippes",
+    "distinct": "endpoint_integrations/servicebox.getEquippes",
     "method": "GET",
     "endpoint_path": "/v1/servicebox/equippes",
     "endpoint_path_alternates": [
@@ -3830,6 +3880,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/servicebox.getBarGraph",
+    "distinct": "endpoint_integrations/servicebox.getBarGraph",
     "method": "GET",
     "endpoint_path": "/v1/servicebox/bar-graph",
     "endpoint_path_alternates": [
@@ -3894,6 +3945,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/servicebox.getCalendar",
+    "distinct": "endpoint_integrations/servicebox.getCalendar",
     "method": "GET",
     "endpoint_path": "/v1/servicebox/calendar",
     "endpoint_path_alternates": [
@@ -3958,6 +4010,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/toast.createSession",
+    "distinct": "endpoint_integrations/toast.createSession",
     "method": "POST",
     "endpoint_path": "/v1/toast/session",
     "endpoint_path_alternates": [
@@ -4022,6 +4075,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/toast.getMenu",
+    "distinct": "endpoint_integrations/toast.getMenu",
     "method": "GET",
     "endpoint_path": "/v1/toast/menus",
     "endpoint_path_alternates": [
@@ -4085,6 +4139,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/uber.createSession",
+    "distinct": "endpoint_integrations/uber.createSession",
     "method": "POST",
     "endpoint_path": "/v1/uber/session",
     "endpoint_path_alternates": [
@@ -4149,6 +4204,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/uber.orderRide",
+    "distinct": "endpoint_integrations/uber.orderRide",
     "method": "POST",
     "endpoint_path": "/v1/uber/ride",
     "endpoint_path_alternates": [
@@ -4212,6 +4268,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/venmo.createSession",
+    "distinct": "endpoint_integrations/venmo.createSession",
     "method": "POST",
     "endpoint_path": "/v1/venmo/session",
     "endpoint_path_alternates": [
@@ -4276,6 +4333,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/venmo.getTransactions",
+    "distinct": "endpoint_integrations/venmo.getTransactions",
     "method": "GET",
     "endpoint_path": "/v1/venmo/transactions",
     "endpoint_path_alternates": [
@@ -4339,6 +4397,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.createSession",
+    "distinct": "endpoint_integrations/vin.createSession",
     "method": "POST",
     "endpoint_path": "/v1/vin/session",
     "endpoint_path_alternates": [
@@ -4403,6 +4462,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.createSalesAppointment",
+    "distinct": "endpoint_integrations/vin.createSalesAppointment",
     "method": "POST",
     "endpoint_path": "/v1/vin/sales/appointments",
     "endpoint_path_alternates": [
@@ -4467,6 +4527,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.getAppointments",
+    "distinct": "endpoint_integrations/vin.getAppointments",
     "method": "GET",
     "endpoint_path": "/v1/vin/sales/appointments",
     "endpoint_path_alternates": [
@@ -4531,6 +4592,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.getUsers",
+    "distinct": "endpoint_integrations/vin.getUsers",
     "method": "GET",
     "endpoint_path": "/v1/vin/users",
     "endpoint_path_alternates": [
@@ -4595,6 +4657,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.getDealers",
+    "distinct": "endpoint_integrations/vin.getDealers",
     "method": "GET",
     "endpoint_path": "/v1/vin/dealers",
     "endpoint_path_alternates": [
@@ -4659,6 +4722,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.searchCustomers",
+    "distinct": "endpoint_integrations/vin.searchCustomers",
     "method": "GET",
     "endpoint_path": "/v1/vin/customers",
     "endpoint_path_alternates": [
@@ -4723,6 +4787,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.getVehicles",
+    "distinct": "endpoint_integrations/vin.getVehicles",
     "method": "GET",
     "endpoint_path": "/v1/vin/vehicles",
     "endpoint_path_alternates": [
@@ -4787,6 +4852,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/vin.createCustomer",
+    "distinct": "endpoint_integrations/vin.createCustomer",
     "method": "POST",
     "endpoint_path": "/v1/vin/customers",
     "endpoint_path_alternates": [
@@ -4851,6 +4917,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/whatsapp.createSession",
+    "distinct": "endpoint_integrations/whatsapp.createSession",
     "method": "POST",
     "endpoint_path": "/v1/whatsapp/session",
     "endpoint_path_alternates": [
@@ -4915,6 +4982,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/whatsapp.sendMessage",
+    "distinct": "endpoint_integrations/whatsapp.sendMessage",
     "method": "POST",
     "endpoint_path": "/v1/whatsapp/messages",
     "endpoint_path_alternates": [
@@ -4979,6 +5047,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/whatsapp.changeStatus",
+    "distinct": "endpoint_integrations/whatsapp.changeStatus",
     "method": "POST",
     "endpoint_path": "/v1/whatsapp/status",
     "endpoint_path_alternates": [
@@ -5043,6 +5112,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/whatsapp.readMessages",
+    "distinct": "endpoint_integrations/whatsapp.readMessages",
     "method": "GET",
     "endpoint_path": "/v1/whatsapp/messages/:phoneNumber",
     "endpoint_path_alternates": [
@@ -5107,6 +5177,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/x.createSession",
+    "distinct": "endpoint_integrations/x.createSession",
     "method": "POST",
     "endpoint_path": "/v1/x/session",
     "endpoint_path_alternates": [
@@ -5171,6 +5242,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/x.getFollowers",
+    "distinct": "endpoint_integrations/x.getFollowers",
     "method": "GET",
     "endpoint_path": "/v1/x/followers",
     "endpoint_path_alternates": [
@@ -5235,6 +5307,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_integrations/x.getFollowingTweets",
+    "distinct": "endpoint_integrations/x.getFollowingTweets",
     "method": "GET",
     "endpoint_path": "/v1/x/posts/following",
     "endpoint_path_alternates": [
@@ -5295,6 +5368,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_link.createLinkToken",
+    "distinct": "endpoint_link.createLinkToken",
     "method": "POST",
     "endpoint_path": "/v1/link/token",
     "endpoint_path_alternates": [
@@ -5355,6 +5429,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_linked-accounts.getLinkedAccounts",
+    "distinct": "endpoint_linked-accounts.getLinkedAccounts",
     "method": "GET",
     "endpoint_path": "/v1/linked-accounts",
     "endpoint_path_alternates": [
@@ -5414,6 +5489,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_linked-accounts.getLinkedAccount",
+    "distinct": "endpoint_linked-accounts.getLinkedAccount",
     "method": "GET",
     "endpoint_path": "/v1/linked-accounts/:linkedAccountId",
     "endpoint_path_alternates": [
@@ -5473,6 +5549,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_linked-accounts.deleteLinkedAccount",
+    "distinct": "endpoint_linked-accounts.deleteLinkedAccount",
     "method": "DELETE",
     "endpoint_path": "/v1/linked-accounts/:linkedAccountId",
     "endpoint_path_alternates": [
@@ -5532,6 +5609,7 @@
     "api_type": "http",
     "api_definition_id": "0cead0e0-caf2-4fff-8e42-cf483e3f8c8a",
     "api_endpoint_id": "endpoint_linked-accounts.getToken",
+    "distinct": "endpoint_linked-accounts.getToken",
     "method": "POST",
     "endpoint_path": "/v1/linked-accounts/token",
     "endpoint_path_alternates": [

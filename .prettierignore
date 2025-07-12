@@ -7,7 +7,7 @@ build
 .yarn
 .husky
 generated
-bundle.c?js
+*.cjs
 .pnp*
 .next
 ../tests/**/*

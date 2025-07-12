@@ -1,33 +1,47 @@
-FROM node:20.18-alpine3.20 AS base
+FROM node:20.18-bullseye
 
+RUN npm install -g turbo@2.0.1
+COPY . .
+RUN turbo prune @fern-docs/bundle --docker
+
+COPY servers/self-hosted/run.sh /run.sh
 
 # -----------  Start Postgres setup  -----------
 
-RUN apk update && apk add --no-cache postgresql curl
+RUN apt-get update && \
+    apt-get install -y postgresql postgresql-contrib && \
+    rm -rf /var/lib/apt/lists/*
 
-
-# Set up Postgres data directory and configuration
-RUN mkdir -p /var/lib/postgresql/data && \
-    mkdir -p /run/postgresql && \
-    chown -R postgres:postgres /var/lib/postgresql && \
-    chown -R postgres:postgres /run/postgresql
-
-# Switch to postgres user & initialize the database
-USER postgres
-RUN initdb -D /var/lib/postgresql/data
 EXPOSE 5432
+
+# Set default Postgres user and password
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+ENV DATABASE_NAME=fdr
+
+RUN service postgresql start && \
+    su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'postgres';\"" && \
+    su - postgres -c "createdb fdr" && \
+    service postgresql stop
+
+RUN sed -i "s/local   all             postgres                                peer/local   all             postgres                                md5/" /etc/postgresql/*/main/pg_hba.conf
+
+ENV DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fdr
+
+RUN npm install -g prisma
+
+COPY servers/fdr/prisma /prisma
 
 # -----------  End Postgres setup  -----------
 
-USER root
-
 # ----------- Start MINIO setup  -----------
 
-RUN wget https://dl.min.io/server/minio/release/linux-amd64/minio && \
+RUN apt-get update && \
+    apt-get install -y wget && \
+    wget https://dl.min.io/server/minio/release/linux-amd64/minio && \
     chmod +x minio && \
     mv minio /usr/local/bin/ && \
-    addgroup -S minio-user && \
-    adduser -S minio-user -G minio-user && \
+    useradd -m -s /bin/bash minio-user && \
     mkdir -p /data && \
     chown -R minio-user:minio-user /data && \
     wget https://dl.min.io/client/mc/release/linux-amd64/mc && \
@@ -35,81 +49,56 @@ RUN wget https://dl.min.io/server/minio/release/linux-amd64/minio && \
     mv mc /usr/local/bin/
 
 ENV MINIO_VOLUMES="/data" \
-    MINIO_SERVER_URL="http://localhost:9000" \
+    MINIO_URL="http://localhost:9000" \
     MINIO_ROOT_USER="minioadmin" \
-    MINIO_ROOT_PASSWORD="minioadmin"
+    MINIO_ROOT_PASSWORD="minioadmin" \
+    MINIO_USERNAME="minioadmin" \
+    MINIO_PASSWORD="minioadmin" \
+    MINIO_BUCKET_NAME_SUFFIX="docs.buildwithfern.com"
+
+EXPOSE 9000 9001
 
 # ----------- End MINIO setup  -----------
 
-# ----------- Setup FDR  -----------
-FROM base AS builder
-RUN apk add --no-cache libc6-compat && \
-    apk update
 
-# Produce a pruned version of the monorepo
-WORKDIR /app
-RUN npm install -g turbo@2.0.1
-COPY . .
-RUN turbo prune @fern-platform/fdr @fern-docs/bundle @fern-docs/edge-config --docker
+# ----------- Start MeiliSearch setup -----------
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -L https://install.meilisearch.com | sh
 
-# Add lockfile and package.json's
-FROM base AS installer
-RUN apk add --no-cache libc6-compat unzip bash && \
-    apk update && \
-    npm install -g pnpm@v9.4.0
+EXPOSE 7700
+# ----------- End MeiliSearch setup -----------
 
-WORKDIR /app
+# ----------- Start FDR setup -----------
+ENV LOCAL_MODE_OVERRIDE=true
+COPY servers/fdr/cjs /fdr
+COPY servers/fdr/prisma /fdr/prisma
 
-# Only copy the necessary files for dependency installation first
-COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/pnpm-lock.yaml .
-RUN pnpm install
+WORKDIR /fdr
+RUN echo '{"name":"temp","version":"1.0.0","dependencies":{"@prisma/client":"5.13.0"},"devDependencies":{"prisma":"5.13.0"}}' > package.json
+RUN npm install
+RUN npx prisma generate
 
-# Copy the rest of the files
-COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
-COPY shared shared
-COPY fern fern
+# ----------- End FDR setup -----------
+WORKDIR /
+
+# ----------- Start fern cli installation -----------
+RUN npm install -g fern-api
+# ----------- End fern cli installation -----------
+
+# ----------- Start nextapp setup -----------
 COPY docs_bundle.tar.gz .
 
+RUN npm install -g pnpm@v9.4.0
 RUN pnpm config set package-manager-strict false
-
-RUN pnpm turbo --filter=@fern-api/fdr-sdk compile && \
-    pnpm turbo --filter=@fern-platform/fdr codegen && \
-    pnpm turbo --filter=@fern-platform/fdr compile
-
-# Final stage
-FROM base AS runner
-WORKDIR /app
-
-RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc && \
-    chmod +x mc && \
-    mv mc /usr/local/bin/ && \
-    apk add --no-cache jq && \
-    npm install -g prisma fern-api@latest pnpm
-
-RUN fern upgrade
-
-# Copy the built FDR application
-COPY --from=installer /app .
-
-# Copy both FDR and self-hosted directories
-COPY servers/fdr /app/servers/fdr
-COPY servers/self-hosted /app/servers/self-hosted
-
-COPY servers/self-hosted/.env /app/servers/self-hosted/.env
-COPY --from=installer /app/servers/fdr/prisma/schema.prisma /app/servers/fdr/prisma/schema.prisma
-
-# Copy and extract the docs bundle
-
-# Setup Nextapp dependencies
-COPY --from=installer /app/docs_bundle.tar.gz /app/self-hosted.tar.gz
-RUN mkdir -p /app/nextapp && \
-    tar -xzf /app/self-hosted.tar.gz -C /app/nextapp && \
-    cd /app/nextapp && \
+RUN mkdir -p /nextapp && \
+    tar -xzf docs_bundle.tar.gz -C /nextapp && \
+    cd /nextapp && \
     pnpm add esbuild
 
-# ------------ End FDR setup ------------
+# ----------- End nextapp setup -------------
 
-ENTRYPOINT ["/bin/sh", "/app/servers/self-hosted/scripts/run_self_hosted.sh"]
+RUN apt-get update && apt-get install -y jq
+    
+ENTRYPOINT ["/bin/bash", "/run.sh"]
+

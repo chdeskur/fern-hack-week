@@ -40,6 +40,8 @@ describe("Self-hosted docs has a running Postgres instance", () => {
 
     const { stdout: dbList } = await execa("docker", [
       "exec",
+      "-e",
+      "PGPASSWORD=postgres",
       containerId,
       "psql",
       "-U",
@@ -54,6 +56,8 @@ describe("Self-hosted docs has a running Postgres instance", () => {
 
     const { stdout: tableList } = await execa("docker", [
       "exec",
+      "-e",
+      "PGPASSWORD=postgres",
       containerId,
       "psql",
       "-U",

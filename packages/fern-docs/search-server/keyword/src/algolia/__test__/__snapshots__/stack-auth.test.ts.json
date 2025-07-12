@@ -8985,6 +8985,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_.apiV1",
+    "distinct": "endpoint_.apiV1",
     "method": "GET",
     "endpoint_path": "",
     "endpoint_path_alternates": [
@@ -9038,6 +9039,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.listContactChannels",
+    "distinct": "endpoint_contactChannels.listContactChannels",
     "method": "GET",
     "endpoint_path": "/contact-channels",
     "endpoint_path_alternates": [
@@ -9092,6 +9094,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.createAContactChannel",
+    "distinct": "endpoint_contactChannels.createAContactChannel",
     "method": "POST",
     "endpoint_path": "/contact-channels",
     "endpoint_path_alternates": [
@@ -9146,6 +9149,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.verifyAnEmail",
+    "distinct": "endpoint_contactChannels.verifyAnEmail",
     "method": "POST",
     "endpoint_path": "/contact-channels/verify",
     "endpoint_path_alternates": [
@@ -9201,6 +9205,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.checkEmailVerificationCode",
+    "distinct": "endpoint_contactChannels.checkEmailVerificationCode",
     "method": "POST",
     "endpoint_path": "/contact-channels/verify/check-code",
     "endpoint_path_alternates": [
@@ -9256,6 +9261,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.getAContactChannel",
+    "distinct": "endpoint_contactChannels.getAContactChannel",
     "method": "GET",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id",
     "endpoint_path_alternates": [
@@ -9310,6 +9316,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.deleteAContactChannel",
+    "distinct": "endpoint_contactChannels.deleteAContactChannel",
     "method": "DELETE",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id",
     "endpoint_path_alternates": [
@@ -9364,6 +9371,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.updateAContactChannel",
+    "distinct": "endpoint_contactChannels.updateAContactChannel",
     "method": "PATCH",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id",
     "endpoint_path_alternates": [
@@ -9418,6 +9426,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.sendContactChannelVerificationCode",
+    "distinct": "endpoint_contactChannels.sendContactChannelVerificationCode",
     "method": "POST",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id/send-verification-code",
     "endpoint_path_alternates": [
@@ -9473,6 +9482,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_oauth.oAuthTokenEndpoints",
+    "distinct": "endpoint_oauth.oAuthTokenEndpoints",
     "method": "POST",
     "endpoint_path": "/auth/oauth/token",
     "endpoint_path_alternates": [
@@ -9528,6 +9538,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_oauth.oAuthAuthorizeEndpoint",
+    "distinct": "endpoint_oauth.oAuthAuthorizeEndpoint",
     "method": "GET",
     "endpoint_path": "/auth/oauth/authorize/:provider_id",
     "endpoint_path_alternates": [
@@ -9581,6 +9592,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.signInWithACode",
+    "distinct": "endpoint_otp.signInWithACode",
     "method": "POST",
     "endpoint_path": "/auth/otp/sign-in",
     "endpoint_path_alternates": [
@@ -9636,6 +9648,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.sendSignInCode",
+    "distinct": "endpoint_otp.sendSignInCode",
     "method": "POST",
     "endpoint_path": "/auth/otp/send-sign-in-code",
     "endpoint_path_alternates": [
@@ -9691,6 +9704,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.mfaSignIn",
+    "distinct": "endpoint_otp.mfaSignIn",
     "method": "POST",
     "endpoint_path": "/auth/mfa/sign-in",
     "endpoint_path_alternates": [
@@ -9746,6 +9760,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.checkSignInCode",
+    "distinct": "endpoint_otp.checkSignInCode",
     "method": "POST",
     "endpoint_path": "/auth/otp/sign-in/check-code",
     "endpoint_path_alternates": [
@@ -9801,6 +9816,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.updatePassword",
+    "distinct": "endpoint_password.updatePassword",
     "method": "POST",
     "endpoint_path": "/auth/password/update",
     "endpoint_path_alternates": [
@@ -9856,6 +9872,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.signUpWithEmailAndPassword",
+    "distinct": "endpoint_password.signUpWithEmailAndPassword",
     "method": "POST",
     "endpoint_path": "/auth/password/sign-up",
     "endpoint_path_alternates": [
@@ -9911,6 +9928,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.signInWithEmailAndPassword",
+    "distinct": "endpoint_password.signInWithEmailAndPassword",
     "method": "POST",
     "endpoint_path": "/auth/password/sign-in",
     "endpoint_path_alternates": [
@@ -9966,6 +9984,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.setPassword",
+    "distinct": "endpoint_password.setPassword",
     "method": "POST",
     "endpoint_path": "/auth/password/set",
     "endpoint_path_alternates": [
@@ -10021,6 +10040,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.sendResetPasswordCode",
+    "distinct": "endpoint_password.sendResetPasswordCode",
     "method": "POST",
     "endpoint_path": "/auth/password/send-reset-code",
     "endpoint_path_alternates": [
@@ -10076,6 +10096,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.resetPasswordWithACode",
+    "distinct": "endpoint_password.resetPasswordWithACode",
     "method": "POST",
     "endpoint_path": "/auth/password/reset",
     "endpoint_path_alternates": [
@@ -10131,6 +10152,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.checkResetPasswordCode",
+    "distinct": "endpoint_password.checkResetPasswordCode",
     "method": "POST",
     "endpoint_path": "/auth/password/reset/check-code",
     "endpoint_path_alternates": [
@@ -10186,6 +10208,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_permissions.listTeamPermissions",
+    "distinct": "endpoint_permissions.listTeamPermissions",
     "method": "GET",
     "endpoint_path": "/team-permissions",
     "endpoint_path_alternates": [
@@ -10241,6 +10264,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_projects.getTheCurrentProject",
+    "distinct": "endpoint_projects.getTheCurrentProject",
     "method": "GET",
     "endpoint_path": "/projects/current",
     "endpoint_path_alternates": [
@@ -10296,6 +10320,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_sessions.signOutOfTheCurrentSession",
+    "distinct": "endpoint_sessions.signOutOfTheCurrentSession",
     "method": "DELETE",
     "endpoint_path": "/auth/sessions/current",
     "endpoint_path_alternates": [
@@ -10351,6 +10376,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_sessions.refreshAccessToken",
+    "distinct": "endpoint_sessions.refreshAccessToken",
     "method": "POST",
     "endpoint_path": "/auth/sessions/current/refresh",
     "endpoint_path_alternates": [
@@ -10406,6 +10432,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.listTeams",
+    "distinct": "endpoint_teams.listTeams",
     "method": "GET",
     "endpoint_path": "/teams",
     "endpoint_path_alternates": [
@@ -10461,6 +10488,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.createATeam",
+    "distinct": "endpoint_teams.createATeam",
     "method": "POST",
     "endpoint_path": "/teams",
     "endpoint_path_alternates": [
@@ -10516,6 +10544,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.listTeamMembersProfiles",
+    "distinct": "endpoint_teams.listTeamMembersProfiles",
     "method": "GET",
     "endpoint_path": "/team-member-profiles",
     "endpoint_path_alternates": [
@@ -10571,6 +10600,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.getATeam",
+    "distinct": "endpoint_teams.getATeam",
     "method": "GET",
     "endpoint_path": "/teams/:team_id",
     "endpoint_path_alternates": [
@@ -10626,6 +10656,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.deleteATeam",
+    "distinct": "endpoint_teams.deleteATeam",
     "method": "DELETE",
     "endpoint_path": "/teams/:team_id",
     "endpoint_path_alternates": [
@@ -10681,6 +10712,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.updateATeam",
+    "distinct": "endpoint_teams.updateATeam",
     "method": "PATCH",
     "endpoint_path": "/teams/:team_id",
     "endpoint_path_alternates": [
@@ -10736,6 +10768,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
+    "distinct": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
     "method": "POST",
     "endpoint_path": "/team-invitations/send-code",
     "endpoint_path_alternates": [
@@ -10791,6 +10824,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.inviteAUserToATeam",
+    "distinct": "endpoint_teams.inviteAUserToATeam",
     "method": "POST",
     "endpoint_path": "/team-invitations/accept",
     "endpoint_path_alternates": [
@@ -10846,6 +10880,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.removeAUserFromATeam",
+    "distinct": "endpoint_teams.removeAUserFromATeam",
     "method": "DELETE",
     "endpoint_path": "/team-memberships/:team_id/:user_id",
     "endpoint_path_alternates": [
@@ -10901,6 +10936,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.getATeamMemberProfile",
+    "distinct": "endpoint_teams.getATeamMemberProfile",
     "method": "GET",
     "endpoint_path": "/team-member-profiles/:team_id/:user_id",
     "endpoint_path_alternates": [
@@ -10956,6 +10992,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.updateYourTeamMemberProfile",
+    "distinct": "endpoint_teams.updateYourTeamMemberProfile",
     "method": "PATCH",
     "endpoint_path": "/team-member-profiles/:team_id/:user_id",
     "endpoint_path_alternates": [
@@ -11011,6 +11048,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.getTeamInvitationDetails",
+    "distinct": "endpoint_teams.getTeamInvitationDetails",
     "method": "POST",
     "endpoint_path": "/team-invitations/accept/details",
     "endpoint_path_alternates": [
@@ -11066,6 +11104,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
+    "distinct": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
     "method": "POST",
     "endpoint_path": "/team-invitations/accept/check-code",
     "endpoint_path_alternates": [
@@ -11121,6 +11160,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_users.getCurrentUser",
+    "distinct": "endpoint_users.getCurrentUser",
     "method": "GET",
     "endpoint_path": "/users/me",
     "endpoint_path_alternates": [
@@ -11176,6 +11216,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_users.deleteCurrentUser",
+    "distinct": "endpoint_users.deleteCurrentUser",
     "method": "DELETE",
     "endpoint_path": "/users/me",
     "endpoint_path_alternates": [
@@ -11231,6 +11272,7 @@
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_users.updateCurrentUser",
+    "distinct": "endpoint_users.updateCurrentUser",
     "method": "PATCH",
     "endpoint_path": "/users/me",
     "endpoint_path_alternates": [
@@ -11282,6 +11324,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_.apiV1",
+    "distinct": "endpoint_.apiV1",
     "method": "GET",
     "endpoint_path": "",
     "endpoint_path_alternates": [
@@ -11335,6 +11378,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.listContactChannels",
+    "distinct": "endpoint_contactChannels.listContactChannels",
     "method": "GET",
     "endpoint_path": "/contact-channels",
     "endpoint_path_alternates": [
@@ -11389,6 +11433,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.createAContactChannel",
+    "distinct": "endpoint_contactChannels.createAContactChannel",
     "method": "POST",
     "endpoint_path": "/contact-channels",
     "endpoint_path_alternates": [
@@ -11443,6 +11488,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.verifyAnEmail",
+    "distinct": "endpoint_contactChannels.verifyAnEmail",
     "method": "POST",
     "endpoint_path": "/contact-channels/verify",
     "endpoint_path_alternates": [
@@ -11498,6 +11544,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.checkEmailVerificationCode",
+    "distinct": "endpoint_contactChannels.checkEmailVerificationCode",
     "method": "POST",
     "endpoint_path": "/contact-channels/verify/check-code",
     "endpoint_path_alternates": [
@@ -11553,6 +11600,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.getAContactChannel",
+    "distinct": "endpoint_contactChannels.getAContactChannel",
     "method": "GET",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id",
     "endpoint_path_alternates": [
@@ -11607,6 +11655,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.deleteAContactChannel",
+    "distinct": "endpoint_contactChannels.deleteAContactChannel",
     "method": "DELETE",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id",
     "endpoint_path_alternates": [
@@ -11661,6 +11710,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.updateAContactChannel",
+    "distinct": "endpoint_contactChannels.updateAContactChannel",
     "method": "PATCH",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id",
     "endpoint_path_alternates": [
@@ -11715,6 +11765,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.sendContactChannelVerificationCode",
+    "distinct": "endpoint_contactChannels.sendContactChannelVerificationCode",
     "method": "POST",
     "endpoint_path": "/contact-channels/:user_id/:contact_channel_id/send-verification-code",
     "endpoint_path_alternates": [
@@ -11770,6 +11821,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_oauth.oAuthTokenEndpoints",
+    "distinct": "endpoint_oauth.oAuthTokenEndpoints",
     "method": "POST",
     "endpoint_path": "/auth/oauth/token",
     "endpoint_path_alternates": [
@@ -11825,6 +11877,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_oauth.oAuthAuthorizeEndpoint",
+    "distinct": "endpoint_oauth.oAuthAuthorizeEndpoint",
     "method": "GET",
     "endpoint_path": "/auth/oauth/authorize/:provider_id",
     "endpoint_path_alternates": [
@@ -11878,6 +11931,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.signInWithACode",
+    "distinct": "endpoint_otp.signInWithACode",
     "method": "POST",
     "endpoint_path": "/auth/otp/sign-in",
     "endpoint_path_alternates": [
@@ -11933,6 +11987,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.sendSignInCode",
+    "distinct": "endpoint_otp.sendSignInCode",
     "method": "POST",
     "endpoint_path": "/auth/otp/send-sign-in-code",
     "endpoint_path_alternates": [
@@ -11988,6 +12043,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.mfaSignIn",
+    "distinct": "endpoint_otp.mfaSignIn",
     "method": "POST",
     "endpoint_path": "/auth/mfa/sign-in",
     "endpoint_path_alternates": [
@@ -12043,6 +12099,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.checkSignInCode",
+    "distinct": "endpoint_otp.checkSignInCode",
     "method": "POST",
     "endpoint_path": "/auth/otp/sign-in/check-code",
     "endpoint_path_alternates": [
@@ -12098,6 +12155,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.updatePassword",
+    "distinct": "endpoint_password.updatePassword",
     "method": "POST",
     "endpoint_path": "/auth/password/update",
     "endpoint_path_alternates": [
@@ -12153,6 +12211,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.signUpWithEmailAndPassword",
+    "distinct": "endpoint_password.signUpWithEmailAndPassword",
     "method": "POST",
     "endpoint_path": "/auth/password/sign-up",
     "endpoint_path_alternates": [
@@ -12208,6 +12267,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.signInWithEmailAndPassword",
+    "distinct": "endpoint_password.signInWithEmailAndPassword",
     "method": "POST",
     "endpoint_path": "/auth/password/sign-in",
     "endpoint_path_alternates": [
@@ -12263,6 +12323,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.setPassword",
+    "distinct": "endpoint_password.setPassword",
     "method": "POST",
     "endpoint_path": "/auth/password/set",
     "endpoint_path_alternates": [
@@ -12318,6 +12379,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.sendResetPasswordCode",
+    "distinct": "endpoint_password.sendResetPasswordCode",
     "method": "POST",
     "endpoint_path": "/auth/password/send-reset-code",
     "endpoint_path_alternates": [
@@ -12373,6 +12435,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.resetPasswordWithACode",
+    "distinct": "endpoint_password.resetPasswordWithACode",
     "method": "POST",
     "endpoint_path": "/auth/password/reset",
     "endpoint_path_alternates": [
@@ -12428,6 +12491,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.checkResetPasswordCode",
+    "distinct": "endpoint_password.checkResetPasswordCode",
     "method": "POST",
     "endpoint_path": "/auth/password/reset/check-code",
     "endpoint_path_alternates": [
@@ -12483,6 +12547,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_permissions.listTeamPermissionsOfAUser",
+    "distinct": "endpoint_permissions.listTeamPermissionsOfAUser",
     "method": "GET",
     "endpoint_path": "/team-permissions",
     "endpoint_path_alternates": [
@@ -12538,6 +12603,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_permissions.grantATeamPermissionToAUser",
+    "distinct": "endpoint_permissions.grantATeamPermissionToAUser",
     "method": "POST",
     "endpoint_path": "/team-permissions/:team_id/:user_id/:permission_id",
     "endpoint_path_alternates": [
@@ -12593,6 +12659,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_permissions.revokeATeamPermissionFromAUser",
+    "distinct": "endpoint_permissions.revokeATeamPermissionFromAUser",
     "method": "DELETE",
     "endpoint_path": "/team-permissions/:team_id/:user_id/:permission_id",
     "endpoint_path_alternates": [
@@ -12648,6 +12715,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_projects.getTheCurrentProject",
+    "distinct": "endpoint_projects.getTheCurrentProject",
     "method": "GET",
     "endpoint_path": "/projects/current",
     "endpoint_path_alternates": [
@@ -12703,6 +12771,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_sessions.createSession",
+    "distinct": "endpoint_sessions.createSession",
     "method": "POST",
     "endpoint_path": "/auth/sessions",
     "endpoint_path_alternates": [
@@ -12758,6 +12827,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_sessions.signOutOfTheCurrentSession",
+    "distinct": "endpoint_sessions.signOutOfTheCurrentSession",
     "method": "DELETE",
     "endpoint_path": "/auth/sessions/current",
     "endpoint_path_alternates": [
@@ -12813,6 +12883,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_sessions.refreshAccessToken",
+    "distinct": "endpoint_sessions.refreshAccessToken",
     "method": "POST",
     "endpoint_path": "/auth/sessions/current/refresh",
     "endpoint_path_alternates": [
@@ -12868,6 +12939,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.listTeams",
+    "distinct": "endpoint_teams.listTeams",
     "method": "GET",
     "endpoint_path": "/teams",
     "endpoint_path_alternates": [
@@ -12923,6 +12995,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.createATeam",
+    "distinct": "endpoint_teams.createATeam",
     "method": "POST",
     "endpoint_path": "/teams",
     "endpoint_path_alternates": [
@@ -12978,6 +13051,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.listTeamMembersProfiles",
+    "distinct": "endpoint_teams.listTeamMembersProfiles",
     "method": "GET",
     "endpoint_path": "/team-member-profiles",
     "endpoint_path_alternates": [
@@ -13033,6 +13107,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.getATeam",
+    "distinct": "endpoint_teams.getATeam",
     "method": "GET",
     "endpoint_path": "/teams/:team_id",
     "endpoint_path_alternates": [
@@ -13088,6 +13163,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.deleteATeam",
+    "distinct": "endpoint_teams.deleteATeam",
     "method": "DELETE",
     "endpoint_path": "/teams/:team_id",
     "endpoint_path_alternates": [
@@ -13143,6 +13219,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.updateATeam",
+    "distinct": "endpoint_teams.updateATeam",
     "method": "PATCH",
     "endpoint_path": "/teams/:team_id",
     "endpoint_path_alternates": [
@@ -13198,6 +13275,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
+    "distinct": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
     "method": "POST",
     "endpoint_path": "/team-invitations/send-code",
     "endpoint_path_alternates": [
@@ -13253,6 +13331,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.inviteAUserToATeam",
+    "distinct": "endpoint_teams.inviteAUserToATeam",
     "method": "POST",
     "endpoint_path": "/team-invitations/accept",
     "endpoint_path_alternates": [
@@ -13308,6 +13387,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.addAUserToATeam",
+    "distinct": "endpoint_teams.addAUserToATeam",
     "method": "POST",
     "endpoint_path": "/team-memberships/:team_id/:user_id",
     "endpoint_path_alternates": [
@@ -13362,6 +13442,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.removeAUserFromATeam",
+    "distinct": "endpoint_teams.removeAUserFromATeam",
     "method": "DELETE",
     "endpoint_path": "/team-memberships/:team_id/:user_id",
     "endpoint_path_alternates": [
@@ -13416,6 +13497,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.getATeamMemberProfile",
+    "distinct": "endpoint_teams.getATeamMemberProfile",
     "method": "GET",
     "endpoint_path": "/team-member-profiles/:team_id/:user_id",
     "endpoint_path_alternates": [
@@ -13471,6 +13553,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.updateATeamMemberProfile",
+    "distinct": "endpoint_teams.updateATeamMemberProfile",
     "method": "PATCH",
     "endpoint_path": "/team-member-profiles/:team_id/:user_id",
     "endpoint_path_alternates": [
@@ -13526,6 +13609,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.getTeamInvitationDetails",
+    "distinct": "endpoint_teams.getTeamInvitationDetails",
     "method": "POST",
     "endpoint_path": "/team-invitations/accept/details",
     "endpoint_path_alternates": [
@@ -13581,6 +13665,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
+    "distinct": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
     "method": "POST",
     "endpoint_path": "/team-invitations/accept/check-code",
     "endpoint_path_alternates": [
@@ -13636,6 +13721,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.listUsers",
+    "distinct": "endpoint_users.listUsers",
     "method": "GET",
     "endpoint_path": "/users",
     "endpoint_path_alternates": [
@@ -13691,6 +13777,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.createUser",
+    "distinct": "endpoint_users.createUser",
     "method": "POST",
     "endpoint_path": "/users",
     "endpoint_path_alternates": [
@@ -13746,6 +13833,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.getCurrentUser",
+    "distinct": "endpoint_users.getCurrentUser",
     "method": "GET",
     "endpoint_path": "/users/me",
     "endpoint_path_alternates": [
@@ -13801,6 +13889,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.deleteCurrentUser",
+    "distinct": "endpoint_users.deleteCurrentUser",
     "method": "DELETE",
     "endpoint_path": "/users/me",
     "endpoint_path_alternates": [
@@ -13856,6 +13945,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.updateCurrentUser",
+    "distinct": "endpoint_users.updateCurrentUser",
     "method": "PATCH",
     "endpoint_path": "/users/me",
     "endpoint_path_alternates": [
@@ -13911,6 +14001,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.getUser",
+    "distinct": "endpoint_users.getUser",
     "method": "GET",
     "endpoint_path": "/users/:user_id",
     "endpoint_path_alternates": [
@@ -13966,6 +14057,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.deleteUser",
+    "distinct": "endpoint_users.deleteUser",
     "method": "DELETE",
     "endpoint_path": "/users/:user_id",
     "endpoint_path_alternates": [
@@ -14021,6 +14113,7 @@
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.updateUser",
+    "distinct": "endpoint_users.updateUser",
     "method": "PATCH",
     "endpoint_path": "/users/:user_id",
     "endpoint_path_alternates": [

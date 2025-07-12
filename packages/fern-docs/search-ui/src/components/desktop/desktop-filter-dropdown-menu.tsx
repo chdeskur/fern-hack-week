@@ -6,7 +6,7 @@ import { Badge } from "@fern-docs/components/badges";
 
 import { FacetFilter } from "../../types";
 import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";
-import { useFacets } from "../search-client";
+import { useFacets } from "../search/algolia-search-client";
 import {
   DropdownMenu,
   DropdownMenuContent,

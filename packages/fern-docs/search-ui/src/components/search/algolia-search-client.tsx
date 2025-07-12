@@ -1,40 +1,30 @@
 "use client";
 
 import {
-  Dispatch,
-  KeyboardEventHandler,
   PropsWithChildren,
   ReactNode,
-  SetStateAction,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
-  useRef,
 } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 
 import { LiteClient, liteClient } from "algoliasearch/lite";
 import { uniq } from "es-toolkit/array";
-import { useAtom, useSetAtom } from "jotai";
-import { RESET, atomWithDefault } from "jotai/utils";
-import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
-import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
+import { getDevice, getPlatform } from "@fern-api/ui-core-utils";
 import type { FacetName, FacetsResponse } from "@fern-docs/search-keyword";
-import {
-  useDeepCompareEffectNoCheck,
-  useEventCallback,
-  useLazyRef,
-} from "@fern-ui/react-commons";
+import { useLazyRef } from "@fern-ui/react-commons";
 
-import { FacetFilter, isFacetName } from "../types";
-import { toAlgoliaFacetFilters } from "../utils/facet-filters";
+import { FacetFilter } from "../../types";
+import { toAlgoliaFacetFilters } from "../../utils/facet-filters";
+import { FacetFiltersProvider } from "./FacetFiltersProvider";
+import { FacetFiltersContext, useFacetFilters } from "./useFacetFilters";
 
-function SearchClientRoot({
+function AlgoliaSearchClientRoot({
   children,
   fetchFacets,
   initialFilters,
@@ -82,7 +72,7 @@ function SearchClientRoot({
         fetchFacets={fetchFacets}
         initialFilters={initialFilters}
       >
-        <InstantSearchWrapper
+        <AlgoliaInstantSearchWrapper
           authenticatedUserToken={authenticatedUserToken}
           analyticsTags={uniq([
             getPlatform(),
@@ -92,7 +82,7 @@ function SearchClientRoot({
           ])}
         >
           {children}
-        </InstantSearchWrapper>
+        </AlgoliaInstantSearchWrapper>
       </FacetFiltersProvider>
     </SearchClientProvider>
   );
@@ -156,97 +146,6 @@ function useSearchClient(): {
   }
   return value;
 }
-
-const FacetFiltersContext = createContext({
-  atom: atomWithDefault<readonly FacetFilter[]>(() => []),
-  preloadFacets: (_: readonly FacetFilter[]): Promise<FacetsResponse> =>
-    Promise.resolve({}),
-  fetchFacets: (_: readonly string[]): Promise<FacetsResponse> =>
-    Promise.resolve({}),
-});
-
-/**
- * Provides a context for facet filters. This should be used within PreloadFacetsProvider.
- */
-function FacetFiltersProvider({
-  children,
-  initialFilters,
-  fetchFacets,
-}: {
-  children: ReactNode;
-  initialFilters?: Partial<Record<FacetName, string>>;
-  fetchFacets: (filters: readonly string[]) => Promise<FacetsResponse>;
-}): ReactNode {
-  const preloadFacets = useCallback(
-    (filters: readonly FacetFilter[]) =>
-      preload(
-        ["facets", ...toAlgoliaFacetFilters(filters)],
-        ([_, ...filters]) => fetchFacets(filters)
-      ),
-    [fetchFacets]
-  );
-
-  const initialFiltersGetter = useEventCallback(() =>
-    toFacetFilters(initialFilters)
-  );
-  const ref = useRef(atomWithDefault(initialFiltersGetter));
-  const setFilters = useSetAtom(ref.current);
-
-  // preload facets on initial render so that they're cached before the user runs `cmdk`
-  useDeepCompareEffectNoCheck(() => {
-    const filters = toFacetFilters(initialFilters);
-    void preloadFacets(filters);
-    setFilters(filters);
-  }, [initialFilters]);
-
-  const value = useMemo(
-    () => ({ atom: ref.current, preloadFacets, fetchFacets }),
-    [preloadFacets, fetchFacets]
-  );
-  return (
-    <FacetFiltersContext.Provider value={value}>
-      {children}
-    </FacetFiltersContext.Provider>
-  );
-}
-
-/**
- * Returns the facet filters and functions to manipulate them.
- */
-function useFacetFilters(
-  atom?: ReturnType<typeof atomWithDefault<readonly FacetFilter[]>>
-): {
-  filters: readonly FacetFilter[];
-  setFilters: Dispatch<SetStateAction<readonly FacetFilter[]>>;
-  clearFilters: () => void;
-  resetFilters: () => void;
-  popFilter: () => void;
-  handlePopState: KeyboardEventHandler<HTMLElement>;
-} {
-  const contextAtom = useContext(FacetFiltersContext).atom;
-
-  const [filters, setFilters] = useAtom(atom ?? contextAtom);
-  return useMemo(() => {
-    const clearFilters = () => setFilters([]);
-    const resetFilters = () => setFilters(RESET);
-    const popFilter = () => setFilters((prev) => prev.slice(0, -1));
-    return {
-      filters,
-      setFilters,
-      clearFilters,
-      resetFilters,
-      popFilter,
-      handlePopState: (e) => {
-        if (e.metaKey || e.ctrlKey) {
-          clearFilters();
-        } else {
-          popFilter();
-        }
-      },
-    };
-  }, [filters, setFilters]);
-}
-
 /**
  * Returns a function to trigger preloading of facets for the given filters.
  */
@@ -275,26 +174,9 @@ function useFacets(filters: readonly FacetFilter[]): {
 }
 
 /**
- * Converts the given initial filters to facet filters.
- */
-function toFacetFilters(
-  initialFilters: Partial<Record<FacetName, string>> = EMPTY_OBJECT
-): readonly FacetFilter[] {
-  const toRet: FacetFilter[] = [];
-
-  Object.entries(initialFilters).forEach(([facet, value]) => {
-    if (isFacetName(facet) && value) {
-      toRet.push({ facet, value });
-    }
-  });
-
-  return toRet;
-}
-
-/**
  * Wraps the InstantSearchNext component
  */
-function InstantSearchWrapper({
+function AlgoliaInstantSearchWrapper({
   authenticatedUserToken,
   children,
   analyticsTags,
@@ -338,8 +220,7 @@ function InstantSearchWrapper({
 }
 
 export {
-  SearchClientRoot,
-  useFacetFilters,
+  AlgoliaSearchClientRoot,
   useFacets,
   usePreloadFacets,
   useSearchClient,

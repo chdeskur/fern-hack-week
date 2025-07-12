@@ -7,19 +7,20 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { useSearchBox } from "react-instantsearch";
 
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { ArrowLeft } from "lucide-react";
 
+import { isSelfHosted } from "@fern-api/docs-server";
 import { Button } from "@fern-docs/components/button";
 import { Kbd } from "@fern-docs/components/kbd";
 import { tunnel, usePlatformKbdShortcut } from "@fern-ui/react-commons";
 
 import * as Command from "../cmdk";
-import { useFacetFilters } from "../search-client";
+import { useFacetFilters } from "../search/useFacetFilters";
+import { useSearchBox } from "../search/useSearchBox";
 import {
   Tooltip,
   TooltipContent,

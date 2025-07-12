@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { useSearchBox } from "react-instantsearch";
 
 import { Sparkles } from "lucide-react";
 
 import { Badge } from "@fern-docs/components/badges";
 
 import * as Command from "../cmdk";
+import { useSearchBox } from "../search/useSearchBox";
 
 export const CommandAskAIGroup = forwardRef<
   HTMLDivElement,

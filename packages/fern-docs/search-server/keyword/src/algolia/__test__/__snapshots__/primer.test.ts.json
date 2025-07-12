@@ -5539,6 +5539,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
+    "distinct": "subpackage_clientSessionApi.retrieveClientSideToken",
     "method": "GET",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -5597,6 +5598,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
+    "distinct": "subpackage_clientSessionApi.createClientSideToken",
     "method": "POST",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -5655,6 +5657,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
+    "distinct": "subpackage_clientSessionApi.updateClientSideToken",
     "method": "PATCH",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -5713,6 +5716,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
+    "distinct": "subpackage_paymentsApi.listPayments",
     "method": "GET",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -5776,6 +5780,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
+    "distinct": "subpackage_paymentsApi.createPayment",
     "method": "POST",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -5834,6 +5839,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.authorizePayment",
+    "distinct": "subpackage_paymentsApi.authorizePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/authorize",
     "endpoint_path_alternates": [
@@ -5894,6 +5900,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
+    "distinct": "subpackage_paymentsApi.capturePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/capture",
     "endpoint_path_alternates": [
@@ -5953,6 +5960,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
+    "distinct": "subpackage_paymentsApi.cancelPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/cancel",
     "endpoint_path_alternates": [
@@ -6011,6 +6019,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
+    "distinct": "subpackage_paymentsApi.refundPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/refund",
     "endpoint_path_alternates": [
@@ -6070,6 +6079,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
+    "distinct": "subpackage_paymentsApi.resumePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/resume",
     "endpoint_path_alternates": [
@@ -6127,6 +6137,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.adjustAuthorization",
+    "distinct": "subpackage_paymentsApi.adjustAuthorization",
     "method": "POST",
     "endpoint_path": "/payments/:id/adjust-authorization",
     "endpoint_path_alternates": [
@@ -6187,6 +6198,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
+    "distinct": "subpackage_paymentsApi.getPaymentById",
     "method": "GET",
     "endpoint_path": "/payments/:id",
     "endpoint_path_alternates": [
@@ -6244,6 +6256,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+    "distinct": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/vault",
     "endpoint_path_alternates": [
@@ -6302,6 +6315,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+    "distinct": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "method": "GET",
     "endpoint_path": "/payment-instruments",
     "endpoint_path_alternates": [
@@ -6358,6 +6372,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+    "distinct": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "method": "DELETE",
     "endpoint_path": "/payment-instruments/:paymentMethodToken",
     "endpoint_path_alternates": [
@@ -6415,6 +6430,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+    "distinct": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/default",
     "endpoint_path_alternates": [
@@ -6472,6 +6488,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment",
+    "distinct": "subpackage_observabilityApiBeta.external_payment",
     "method": "POST",
     "endpoint_path": "/observability/payments",
     "endpoint_path_alternates": [
@@ -6528,6 +6545,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment_update",
+    "distinct": "subpackage_observabilityApiBeta.external_payment_update",
     "method": "PATCH",
     "endpoint_path": "/observability/payments/:paymentId",
     "endpoint_path_alternates": [
@@ -6584,6 +6602,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer",
+    "distinct": "subpackage_loyaltyApi.get_loyalty_customer",
     "method": "GET",
     "endpoint_path": "/loyalty-customers/:id",
     "endpoint_path_alternates": [
@@ -6641,6 +6660,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
+    "distinct": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
     "method": "GET",
     "endpoint_path": "/loyalty-transactions",
     "endpoint_path_alternates": [
@@ -6699,6 +6719,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.post_loyalty_transaction",
+    "distinct": "subpackage_loyaltyApi.post_loyalty_transaction",
     "method": "POST",
     "endpoint_path": "/loyalty-transactions",
     "endpoint_path_alternates": [
@@ -6921,6 +6942,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
+    "distinct": "subpackage_clientSessionApi.retrieveClientSideToken",
     "method": "GET",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -6979,6 +7001,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
+    "distinct": "subpackage_clientSessionApi.createClientSideToken",
     "method": "POST",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -7037,6 +7060,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
+    "distinct": "subpackage_clientSessionApi.updateClientSideToken",
     "method": "PATCH",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -7095,6 +7119,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
+    "distinct": "subpackage_paymentsApi.listPayments",
     "method": "GET",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -7158,6 +7183,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
+    "distinct": "subpackage_paymentsApi.createPayment",
     "method": "POST",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -7216,6 +7242,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.authorizePayment",
+    "distinct": "subpackage_paymentsApi.authorizePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/authorize",
     "endpoint_path_alternates": [
@@ -7276,6 +7303,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
+    "distinct": "subpackage_paymentsApi.capturePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/capture",
     "endpoint_path_alternates": [
@@ -7335,6 +7363,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
+    "distinct": "subpackage_paymentsApi.cancelPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/cancel",
     "endpoint_path_alternates": [
@@ -7393,6 +7422,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
+    "distinct": "subpackage_paymentsApi.refundPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/refund",
     "endpoint_path_alternates": [
@@ -7452,6 +7482,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
+    "distinct": "subpackage_paymentsApi.resumePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/resume",
     "endpoint_path_alternates": [
@@ -7509,6 +7540,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.adjustAuthorization",
+    "distinct": "subpackage_paymentsApi.adjustAuthorization",
     "method": "POST",
     "endpoint_path": "/payments/:id/adjust-authorization",
     "endpoint_path_alternates": [
@@ -7569,6 +7601,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
+    "distinct": "subpackage_paymentsApi.getPaymentById",
     "method": "GET",
     "endpoint_path": "/payments/:id",
     "endpoint_path_alternates": [
@@ -7626,6 +7659,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+    "distinct": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/vault",
     "endpoint_path_alternates": [
@@ -7684,6 +7718,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+    "distinct": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "method": "GET",
     "endpoint_path": "/payment-instruments",
     "endpoint_path_alternates": [
@@ -7740,6 +7775,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+    "distinct": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "method": "DELETE",
     "endpoint_path": "/payment-instruments/:paymentMethodToken",
     "endpoint_path_alternates": [
@@ -7797,6 +7833,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+    "distinct": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/default",
     "endpoint_path_alternates": [
@@ -7854,6 +7891,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment",
+    "distinct": "subpackage_observabilityApiBeta.external_payment",
     "method": "POST",
     "endpoint_path": "/observability/payments",
     "endpoint_path_alternates": [
@@ -7910,6 +7948,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment_update",
+    "distinct": "subpackage_observabilityApiBeta.external_payment_update",
     "method": "PATCH",
     "endpoint_path": "/observability/payments/:paymentId",
     "endpoint_path_alternates": [
@@ -7966,6 +8005,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer",
+    "distinct": "subpackage_loyaltyApi.get_loyalty_customer",
     "method": "GET",
     "endpoint_path": "/loyalty-customers/:id",
     "endpoint_path_alternates": [
@@ -8023,6 +8063,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
+    "distinct": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
     "method": "GET",
     "endpoint_path": "/loyalty-transactions",
     "endpoint_path_alternates": [
@@ -8081,6 +8122,7 @@
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.post_loyalty_transaction",
+    "distinct": "subpackage_loyaltyApi.post_loyalty_transaction",
     "method": "POST",
     "endpoint_path": "/loyalty-transactions",
     "endpoint_path_alternates": [
@@ -8303,6 +8345,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
+    "distinct": "subpackage_clientSessionApi.retrieveClientSideToken",
     "method": "GET",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -8361,6 +8404,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
+    "distinct": "subpackage_clientSessionApi.createClientSideToken",
     "method": "POST",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -8419,6 +8463,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
+    "distinct": "subpackage_clientSessionApi.updateClientSideToken",
     "method": "PATCH",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -8477,6 +8522,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
+    "distinct": "subpackage_paymentsApi.listPayments",
     "method": "GET",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -8540,6 +8586,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
+    "distinct": "subpackage_paymentsApi.createPayment",
     "method": "POST",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -8598,6 +8645,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.authorizePayment",
+    "distinct": "subpackage_paymentsApi.authorizePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/authorize",
     "endpoint_path_alternates": [
@@ -8658,6 +8706,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
+    "distinct": "subpackage_paymentsApi.capturePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/capture",
     "endpoint_path_alternates": [
@@ -8716,6 +8765,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
+    "distinct": "subpackage_paymentsApi.cancelPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/cancel",
     "endpoint_path_alternates": [
@@ -8773,6 +8823,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
+    "distinct": "subpackage_paymentsApi.refundPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/refund",
     "endpoint_path_alternates": [
@@ -8831,6 +8882,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
+    "distinct": "subpackage_paymentsApi.resumePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/resume",
     "endpoint_path_alternates": [
@@ -8888,6 +8940,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.adjustAuthorization",
+    "distinct": "subpackage_paymentsApi.adjustAuthorization",
     "method": "POST",
     "endpoint_path": "/payments/:id/adjust-authorization",
     "endpoint_path_alternates": [
@@ -8947,6 +9000,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
+    "distinct": "subpackage_paymentsApi.getPaymentById",
     "method": "GET",
     "endpoint_path": "/payments/:id",
     "endpoint_path_alternates": [
@@ -9004,6 +9058,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+    "distinct": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/vault",
     "endpoint_path_alternates": [
@@ -9062,6 +9117,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+    "distinct": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "method": "GET",
     "endpoint_path": "/payment-instruments",
     "endpoint_path_alternates": [
@@ -9118,6 +9174,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+    "distinct": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "method": "DELETE",
     "endpoint_path": "/payment-instruments/:paymentMethodToken",
     "endpoint_path_alternates": [
@@ -9175,6 +9232,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+    "distinct": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/default",
     "endpoint_path_alternates": [
@@ -9232,6 +9290,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment",
+    "distinct": "subpackage_observabilityApiBeta.external_payment",
     "method": "POST",
     "endpoint_path": "/observability/payments",
     "endpoint_path_alternates": [
@@ -9288,6 +9347,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment_update",
+    "distinct": "subpackage_observabilityApiBeta.external_payment_update",
     "method": "PATCH",
     "endpoint_path": "/observability/payments/:paymentId",
     "endpoint_path_alternates": [
@@ -9344,6 +9404,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer",
+    "distinct": "subpackage_loyaltyApi.get_loyalty_customer",
     "method": "GET",
     "endpoint_path": "/loyalty-customers/:id",
     "endpoint_path_alternates": [
@@ -9401,6 +9462,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
+    "distinct": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
     "method": "GET",
     "endpoint_path": "/loyalty-transactions",
     "endpoint_path_alternates": [
@@ -9459,6 +9521,7 @@
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_loyaltyApi.post_loyalty_transaction",
+    "distinct": "subpackage_loyaltyApi.post_loyalty_transaction",
     "method": "POST",
     "endpoint_path": "/loyalty-transactions",
     "endpoint_path_alternates": [
@@ -9681,6 +9744,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
+    "distinct": "subpackage_clientSessionApi.retrieveClientSideToken",
     "method": "GET",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -9739,6 +9803,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
+    "distinct": "subpackage_clientSessionApi.createClientSideToken",
     "method": "POST",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -9797,6 +9862,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
+    "distinct": "subpackage_clientSessionApi.updateClientSideToken",
     "method": "PATCH",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -9855,6 +9921,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
+    "distinct": "subpackage_paymentsApi.listPayments",
     "method": "GET",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -9918,6 +9985,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
+    "distinct": "subpackage_paymentsApi.createPayment",
     "method": "POST",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -9976,6 +10044,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
+    "distinct": "subpackage_paymentsApi.capturePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/capture",
     "endpoint_path_alternates": [
@@ -10034,6 +10103,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
+    "distinct": "subpackage_paymentsApi.cancelPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/cancel",
     "endpoint_path_alternates": [
@@ -10091,6 +10161,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
+    "distinct": "subpackage_paymentsApi.refundPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/refund",
     "endpoint_path_alternates": [
@@ -10149,6 +10220,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
+    "distinct": "subpackage_paymentsApi.resumePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/resume",
     "endpoint_path_alternates": [
@@ -10206,6 +10278,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
+    "distinct": "subpackage_paymentsApi.getPaymentById",
     "method": "GET",
     "endpoint_path": "/payments/:id",
     "endpoint_path_alternates": [
@@ -10263,6 +10336,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+    "distinct": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/vault",
     "endpoint_path_alternates": [
@@ -10321,6 +10395,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+    "distinct": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "method": "GET",
     "endpoint_path": "/payment-instruments",
     "endpoint_path_alternates": [
@@ -10377,6 +10452,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+    "distinct": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "method": "DELETE",
     "endpoint_path": "/payment-instruments/:paymentMethodToken",
     "endpoint_path_alternates": [
@@ -10434,6 +10510,7 @@
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+    "distinct": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:paymentMethodToken/default",
     "endpoint_path_alternates": [
@@ -10491,6 +10568,7 @@
     "api_type": "http",
     "api_definition_id": "3e1141df-b4bc-4dab-9542-53cf91851645",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_status_webhook_event",
+    "distinct": "subpackage_paymentWebhooks.payment_status_webhook_event",
     "method": "POST",
     "endpoint_path": "/payment-status",
     "endpoint_path_alternates": [
@@ -10551,6 +10629,7 @@
     "api_type": "http",
     "api_definition_id": "3e1141df-b4bc-4dab-9542-53cf91851645",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_refund_webhook_event",
+    "distinct": "subpackage_paymentWebhooks.payment_refund_webhook_event",
     "method": "POST",
     "endpoint_path": "/payment-refund",
     "endpoint_path_alternates": [
@@ -10605,6 +10684,7 @@
     "api_type": "http",
     "api_definition_id": "3e1141df-b4bc-4dab-9542-53cf91851645",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
+    "distinct": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
     "method": "POST",
     "endpoint_path": "/dispute-opened",
     "endpoint_path_alternates": [
@@ -10665,6 +10745,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
+    "distinct": "subpackage_clientSessionApi.createClientSideToken",
     "method": "POST",
     "endpoint_path": "/client-session",
     "endpoint_path_alternates": [
@@ -10723,6 +10804,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
+    "distinct": "subpackage_paymentsApi.listPayments",
     "method": "GET",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -10786,6 +10868,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
+    "distinct": "subpackage_paymentsApi.createPayment",
     "method": "POST",
     "endpoint_path": "/payments",
     "endpoint_path_alternates": [
@@ -10844,6 +10927,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
+    "distinct": "subpackage_paymentsApi.capturePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/capture",
     "endpoint_path_alternates": [
@@ -10902,6 +10986,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
+    "distinct": "subpackage_paymentsApi.cancelPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/cancel",
     "endpoint_path_alternates": [
@@ -10959,6 +11044,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
+    "distinct": "subpackage_paymentsApi.refundPayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/refund",
     "endpoint_path_alternates": [
@@ -11017,6 +11103,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
+    "distinct": "subpackage_paymentsApi.resumePayment",
     "method": "POST",
     "endpoint_path": "/payments/:id/resume",
     "endpoint_path_alternates": [
@@ -11074,6 +11161,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
+    "distinct": "subpackage_paymentsApi.getPaymentById",
     "method": "GET",
     "endpoint_path": "/payments/:id",
     "endpoint_path_alternates": [
@@ -11131,6 +11219,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
+    "distinct": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:token/vault",
     "endpoint_path_alternates": [
@@ -11188,6 +11277,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
+    "distinct": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
     "method": "GET",
     "endpoint_path": "/payment-instruments",
     "endpoint_path_alternates": [
@@ -11244,6 +11334,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
+    "distinct": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
     "method": "DELETE",
     "endpoint_path": "/payment-instruments/:token",
     "endpoint_path_alternates": [
@@ -11301,6 +11392,7 @@
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
+    "distinct": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
     "method": "POST",
     "endpoint_path": "/payment-instruments/:token/default",
     "endpoint_path_alternates": [

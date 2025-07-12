@@ -11,6 +11,7 @@ import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-path
 import { useFernUser } from "@fern-docs/components/state/fern-user";
 import { useCurrentVersionId } from "@fern-docs/components/state/navigation";
 import {
+  AlgoliaSearchClientRoot,
   CommandActions,
   CommandEmpty,
   CommandGroupFilters,
@@ -20,12 +21,11 @@ import {
   DesktopCommand,
   DesktopCommandWithAskAI,
   DesktopSearchDialog,
+  MeiliSearchClientRoot,
   SEARCH_INDEX,
-  SearchClientRoot,
 } from "@fern-docs/search-ui";
 import { useEventCallback, useLazyRef } from "@fern-ui/react-commons";
 
-import { Feedback } from "@/components/feedback/Feedback";
 import { useApiRoute } from "@/components/hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
 import { useSetTheme, useThemeSwitchEnabled } from "@/hooks/use-theme";
@@ -37,6 +37,8 @@ import {
   useIsDefaultSearchFilterOff,
 } from "@/state/search";
 import { atomWithStorageString } from "@/state/utils/atomWithStorageString";
+
+import { Feedback } from "./feedback/Feedback";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -180,8 +182,36 @@ export const SearchV2 = React.memo(function SearchV2({
     </>
   );
 
+  if (process.env.NEXT_PUBLIC_IS_SELF_HOSTED === "1") {
+    return (
+      <MeiliSearchClientRoot
+        host={
+          typeof window !== "undefined"
+            ? `${window.location.origin}/_search`
+            : "/_search"
+        }
+        apiKey={""}
+        indexName={SEARCH_INDEX}
+        fetchFacets={facetFetcher}
+        initialFilters={
+          shouldApplyVersionFilter
+            ? { "version.title": currentVersion }
+            : undefined
+        }
+      >
+        <DesktopSearchDialog open={open} onOpenChange={setOpen}>
+          <DesktopCommand
+            onEscapeKeyDown={() => setOpen(false)}
+            className="shadow-xl"
+          >
+            {children}
+          </DesktopCommand>
+        </DesktopSearchDialog>
+      </MeiliSearchClientRoot>
+    );
+  }
   return (
-    <SearchClientRoot
+    <AlgoliaSearchClientRoot
       appId={appId}
       apiKey={apiKey}
       domain={domain}
@@ -242,7 +272,7 @@ export const SearchV2 = React.memo(function SearchV2({
           </DesktopCommand>
         )}
       </DesktopSearchDialog>
-    </SearchClientRoot>
+    </AlgoliaSearchClientRoot>
   );
 }, isEqual);
 

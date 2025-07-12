@@ -19,6 +19,9 @@ jobs:
 
       - name: Compile
         run: pnpm compile
+        
+      - name: Build FDR CJS
+        run: pnpm --filter @fern-platform/fdr build:tsup:cjs
 
       - name: Build self-hosted bundle
         run: pnpm docs:self-hosted-bundle:build

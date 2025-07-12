@@ -53,13 +53,17 @@ searchInitializedAtom.onMount = (setInitialized) => {
     return;
   }
 
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return;
   }
 
   const initialize = () => {
     setInitialized(true);
   };
+
+  if (isSelfHosted()) {
+    initialize();
+  }
 
   // enable other components to initialize the search state
   window.addEventListener("search:initialized", initialize);

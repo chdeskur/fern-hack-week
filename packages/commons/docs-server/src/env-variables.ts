@@ -1,5 +1,15 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
+export function meilisearchApiKey(): string {
+  return getEnvVariable("NEXT_PUBLIC_MEILISEARCH_API_KEY");
+}
+
+export function meilisearchOrigin(): string {
+  return (
+    getEnvVariable("NEXT_PUBLIC_MEILISEARCH_ORIGIN") ?? "http://localhost:7700"
+  );
+}
+
 export function algoliaAppId(): string {
   return getEnvVariable("ALGOLIA_APP_ID");
 }

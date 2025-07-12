@@ -15228,6 +15228,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_.execute-prompt",
+    "distinct": "endpoint_.execute-prompt",
     "method": "POST",
     "endpoint_path": "/v1/execute-prompt",
     "endpoint_path_alternates": [
@@ -15288,6 +15289,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_.execute-prompt-stream",
+    "distinct": "endpoint_.execute-prompt-stream",
     "method": "POST",
     "endpoint_path": "/v1/execute-prompt-stream",
     "endpoint_path_alternates": [
@@ -15349,6 +15351,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_.submit-completion-actuals",
+    "distinct": "endpoint_.submit-completion-actuals",
     "method": "POST",
     "endpoint_path": "/v1/submit-completion-actuals",
     "endpoint_path_alternates": [
@@ -15406,6 +15409,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_deployments.retrieve_provider_payload",
+    "distinct": "endpoint_deployments.retrieve_provider_payload",
     "method": "POST",
     "endpoint_path": "/v1/deployments/provider-payload",
     "endpoint_path_alternates": [
@@ -15470,6 +15474,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_sandboxes.deploy_prompt",
+    "distinct": "endpoint_sandboxes.deploy_prompt",
     "method": "POST",
     "endpoint_path": "/v1/sandboxes/:id/prompts/:prompt_variant_id/deploy",
     "endpoint_path_alternates": [
@@ -15529,6 +15534,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_sandboxes.upsert_sandbox_scenario",
+    "distinct": "endpoint_sandboxes.upsert_sandbox_scenario",
     "method": "POST",
     "endpoint_path": "/v1/sandboxes/:id/scenarios",
     "endpoint_path_alternates": [
@@ -15589,6 +15595,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_sandboxes.delete_sandbox_scenario",
+    "distinct": "endpoint_sandboxes.delete_sandbox_scenario",
     "method": "DELETE",
     "endpoint_path": "/v1/sandboxes/:id/scenarios/:scenario_id",
     "endpoint_path_alternates": [
@@ -15647,6 +15654,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_deployments.list",
+    "distinct": "endpoint_deployments.list",
     "method": "GET",
     "endpoint_path": "/v1/deployments",
     "endpoint_path_alternates": [
@@ -15707,6 +15715,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_deployments.retrieve",
+    "distinct": "endpoint_deployments.retrieve",
     "method": "GET",
     "endpoint_path": "/v1/deployments/:id",
     "endpoint_path_alternates": [
@@ -15767,6 +15776,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_deployments.retrieve_deployment_release_tag",
+    "distinct": "endpoint_deployments.retrieve_deployment_release_tag",
     "method": "GET",
     "endpoint_path": "/v1/deployments/:id/release-tags/:name",
     "endpoint_path_alternates": [
@@ -15827,6 +15837,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_deployments.update_deployment_release_tag",
+    "distinct": "endpoint_deployments.update_deployment_release_tag",
     "method": "PATCH",
     "endpoint_path": "/v1/deployments/:id/release-tags/:name",
     "endpoint_path_alternates": [
@@ -15883,6 +15894,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_.execute-workflow",
+    "distinct": "endpoint_.execute-workflow",
     "method": "POST",
     "endpoint_path": "/v1/execute-workflow",
     "endpoint_path_alternates": [
@@ -15940,6 +15952,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_.execute-workflow-stream",
+    "distinct": "endpoint_.execute-workflow-stream",
     "method": "POST",
     "endpoint_path": "/v1/execute-workflow-stream",
     "endpoint_path_alternates": [
@@ -15999,6 +16012,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_.submit-workflow-execution-actuals",
+    "distinct": "endpoint_.submit-workflow-execution-actuals",
     "method": "POST",
     "endpoint_path": "/v1/submit-workflow-execution-actuals",
     "endpoint_path_alternates": [
@@ -16057,6 +16071,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_workflowSandboxes.deploy_workflow",
+    "distinct": "endpoint_workflowSandboxes.deploy_workflow",
     "method": "POST",
     "endpoint_path": "/v1/workflow-sandboxes/:id/workflows/:workflow_id/deploy",
     "endpoint_path_alternates": [
@@ -16116,6 +16131,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_workflowDeployments.list",
+    "distinct": "endpoint_workflowDeployments.list",
     "method": "GET",
     "endpoint_path": "/v1/workflow-deployments",
     "endpoint_path_alternates": [
@@ -16176,6 +16192,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_workflowDeployments.retrieve",
+    "distinct": "endpoint_workflowDeployments.retrieve",
     "method": "GET",
     "endpoint_path": "/v1/workflow-deployments/:id",
     "endpoint_path_alternates": [
@@ -16236,6 +16253,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_workflowDeployments.retrieve_workflow_release_tag",
+    "distinct": "endpoint_workflowDeployments.retrieve_workflow_release_tag",
     "method": "GET",
     "endpoint_path": "/v1/workflow-deployments/:id/release-tags/:name",
     "endpoint_path_alternates": [
@@ -16296,6 +16314,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_workflowDeployments.update_workflow_release_tag",
+    "distinct": "endpoint_workflowDeployments.update_workflow_release_tag",
     "method": "PATCH",
     "endpoint_path": "/v1/workflow-deployments/:id/release-tags/:name",
     "endpoint_path_alternates": [
@@ -16352,6 +16371,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_.search",
+    "distinct": "endpoint_.search",
     "method": "POST",
     "endpoint_path": "/v1/search",
     "endpoint_path_alternates": [
@@ -16411,6 +16431,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.add_document",
+    "distinct": "endpoint_documentIndexes.add_document",
     "method": "POST",
     "endpoint_path": "/v1/document-indexes/:id/documents/:document_id",
     "endpoint_path_alternates": [
@@ -16465,6 +16486,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.create",
+    "distinct": "endpoint_documentIndexes.create",
     "method": "POST",
     "endpoint_path": "/v1/document-indexes",
     "endpoint_path_alternates": [
@@ -16521,6 +16543,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.retrieve",
+    "distinct": "endpoint_documentIndexes.retrieve",
     "method": "GET",
     "endpoint_path": "/v1/document-indexes/:id",
     "endpoint_path_alternates": [
@@ -16577,6 +16600,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.list",
+    "distinct": "endpoint_documentIndexes.list",
     "method": "GET",
     "endpoint_path": "/v1/document-indexes",
     "endpoint_path_alternates": [
@@ -16633,6 +16657,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.partialUpdate",
+    "distinct": "endpoint_documentIndexes.partialUpdate",
     "method": "PATCH",
     "endpoint_path": "/v1/document-indexes/:id",
     "endpoint_path_alternates": [
@@ -16689,6 +16714,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.update",
+    "distinct": "endpoint_documentIndexes.update",
     "method": "PUT",
     "endpoint_path": "/v1/document-indexes/:id",
     "endpoint_path_alternates": [
@@ -16745,6 +16771,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.destroy",
+    "distinct": "endpoint_documentIndexes.destroy",
     "method": "DELETE",
     "endpoint_path": "/v1/document-indexes/:id",
     "endpoint_path_alternates": [
@@ -16799,6 +16826,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documentIndexes.remove_document",
+    "distinct": "endpoint_documentIndexes.remove_document",
     "method": "DELETE",
     "endpoint_path": "/v1/document-indexes/:id/documents/:document_id",
     "endpoint_path_alternates": [
@@ -16853,6 +16881,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documents.upload",
+    "distinct": "endpoint_documents.upload",
     "method": "POST",
     "endpoint_path": "/v1/upload-document",
     "endpoint_path_alternates": [
@@ -16912,6 +16941,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documents.retrieve",
+    "distinct": "endpoint_documents.retrieve",
     "method": "GET",
     "endpoint_path": "/v1/documents/:id",
     "endpoint_path_alternates": [
@@ -16968,6 +16998,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documents.list",
+    "distinct": "endpoint_documents.list",
     "method": "GET",
     "endpoint_path": "/v1/documents",
     "endpoint_path_alternates": [
@@ -17024,6 +17055,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documents.partialUpdate",
+    "distinct": "endpoint_documents.partialUpdate",
     "method": "PATCH",
     "endpoint_path": "/v1/documents/:id",
     "endpoint_path_alternates": [
@@ -17080,6 +17112,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_documents.destroy",
+    "distinct": "endpoint_documents.destroy",
     "method": "DELETE",
     "endpoint_path": "/v1/documents/:id",
     "endpoint_path_alternates": [
@@ -17138,6 +17171,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_testSuites.list_test_suite_test_cases",
+    "distinct": "endpoint_testSuites.list_test_suite_test_cases",
     "method": "GET",
     "endpoint_path": "/v1/test-suites/:id/test-cases",
     "endpoint_path_alternates": [
@@ -17198,6 +17232,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_testSuites.upsert_test_suite_test_case",
+    "distinct": "endpoint_testSuites.upsert_test_suite_test_case",
     "method": "POST",
     "endpoint_path": "/v1/test-suites/:id/test-cases",
     "endpoint_path_alternates": [
@@ -17258,6 +17293,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_testSuites.test_suite_test_cases_bulk",
+    "distinct": "endpoint_testSuites.test_suite_test_cases_bulk",
     "method": "POST",
     "endpoint_path": "/v1/test-suites/:id/test-cases-bulk",
     "endpoint_path_alternates": [
@@ -17318,6 +17354,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_testSuites.delete_test_suite_test_case",
+    "distinct": "endpoint_testSuites.delete_test_suite_test_case",
     "method": "DELETE",
     "endpoint_path": "/v1/test-suites/:id/test-cases/:test_case_id",
     "endpoint_path_alternates": [
@@ -17376,6 +17413,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_testSuiteRuns.create",
+    "distinct": "endpoint_testSuiteRuns.create",
     "method": "POST",
     "endpoint_path": "/v1/test-suite-runs",
     "endpoint_path_alternates": [
@@ -17436,6 +17474,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_testSuiteRuns.retrieve",
+    "distinct": "endpoint_testSuiteRuns.retrieve",
     "method": "GET",
     "endpoint_path": "/v1/test-suite-runs/:id",
     "endpoint_path_alternates": [
@@ -17496,6 +17535,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_testSuiteRuns.listExecutions",
+    "distinct": "endpoint_testSuiteRuns.listExecutions",
     "method": "GET",
     "endpoint_path": "/v1/test-suite-runs/:id/executions",
     "endpoint_path_alternates": [
@@ -17551,6 +17591,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_folderEntities.add_entity_to_folder",
+    "distinct": "endpoint_folderEntities.add_entity_to_folder",
     "method": "POST",
     "endpoint_path": "/v1/folders/:folder_id/add-entity",
     "endpoint_path_alternates": [
@@ -17605,6 +17646,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_folderEntities.list",
+    "distinct": "endpoint_folderEntities.list",
     "method": "GET",
     "endpoint_path": "/v1/folder-entities",
     "endpoint_path_alternates": [
@@ -17661,6 +17703,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_workspaceSecrets.retrieve",
+    "distinct": "endpoint_workspaceSecrets.retrieve",
     "method": "GET",
     "endpoint_path": "/v1/workspace-secrets/:id",
     "endpoint_path_alternates": [
@@ -17717,6 +17760,7 @@
     "api_type": "http",
     "api_definition_id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
     "api_endpoint_id": "endpoint_workspaceSecrets.partialUpdate",
+    "distinct": "endpoint_workspaceSecrets.partialUpdate",
     "method": "PATCH",
     "endpoint_path": "/v1/workspace-secrets/:id",
     "endpoint_path_alternates": [

@@ -124,6 +124,7 @@ export const BaseRecordSchema = z.object({
     .describe(
       "The position of this record within the page, which is used to sort before distinct, so that the root node is preferred over a deeply nested node"
     ),
+  distinct: z.string().optional(),
 });
 
 const HierarchySchema = z

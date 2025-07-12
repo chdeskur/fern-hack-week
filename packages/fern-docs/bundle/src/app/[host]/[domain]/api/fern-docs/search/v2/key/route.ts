@@ -22,10 +22,26 @@ import {
 export const maxDuration = 10;
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return NextResponse.json(
       "search key is not accessible in local preview mode",
       { status: 400 }
+    );
+  }
+
+  if (isSelfHosted()) {
+    // Return a mock Algolia key for self-hosted environments
+    return NextResponse.json(
+      {
+        appId: "selfhosted-appid",
+        apiKey: "selfhosted-apikey",
+      },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
     );
   }
 

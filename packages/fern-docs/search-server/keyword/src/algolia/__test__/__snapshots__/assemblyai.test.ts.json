@@ -308,6 +308,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_files.upload",
+    "distinct": "endpoint_files.upload",
     "method": "POST",
     "endpoint_path": "/v2/upload",
     "endpoint_path_alternates": [
@@ -364,6 +365,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.submit",
+    "distinct": "endpoint_transcripts.submit",
     "method": "POST",
     "endpoint_path": "/v2/transcript",
     "endpoint_path_alternates": [
@@ -420,6 +422,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.get",
+    "distinct": "endpoint_transcripts.get",
     "method": "GET",
     "endpoint_path": "/v2/transcript/:transcript_id",
     "endpoint_path_alternates": [
@@ -476,6 +479,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.getSentences",
+    "distinct": "endpoint_transcripts.getSentences",
     "method": "GET",
     "endpoint_path": "/v2/transcript/:transcript_id/sentences",
     "endpoint_path_alternates": [
@@ -532,6 +536,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.getParagraphs",
+    "distinct": "endpoint_transcripts.getParagraphs",
     "method": "GET",
     "endpoint_path": "/v2/transcript/:transcript_id/paragraphs",
     "endpoint_path_alternates": [
@@ -588,6 +593,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.getSubtitles",
+    "distinct": "endpoint_transcripts.getSubtitles",
     "method": "GET",
     "endpoint_path": "/v2/transcript/:transcript_id/:subtitle_format",
     "endpoint_path_alternates": [
@@ -642,6 +648,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.getRedactedAudio",
+    "distinct": "endpoint_transcripts.getRedactedAudio",
     "method": "GET",
     "endpoint_path": "/v2/transcript/:transcript_id/redacted-audio",
     "endpoint_path_alternates": [
@@ -698,6 +705,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.wordSearch",
+    "distinct": "endpoint_transcripts.wordSearch",
     "method": "GET",
     "endpoint_path": "/v2/transcript/:transcript_id/word-search",
     "endpoint_path_alternates": [
@@ -754,6 +762,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.list",
+    "distinct": "endpoint_transcripts.list",
     "method": "GET",
     "endpoint_path": "/v2/transcript",
     "endpoint_path_alternates": [
@@ -810,6 +819,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_transcripts.delete",
+    "distinct": "endpoint_transcripts.delete",
     "method": "DELETE",
     "endpoint_path": "/v2/transcript/:transcript_id",
     "endpoint_path_alternates": [
@@ -866,6 +876,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_lemur.task",
+    "distinct": "endpoint_lemur.task",
     "method": "POST",
     "endpoint_path": "/lemur/v3/generate/task",
     "endpoint_path_alternates": [
@@ -922,6 +933,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_lemur.summary",
+    "distinct": "endpoint_lemur.summary",
     "method": "POST",
     "endpoint_path": "/lemur/v3/generate/summary",
     "endpoint_path_alternates": [
@@ -978,6 +990,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_lemur.questionAnswer",
+    "distinct": "endpoint_lemur.questionAnswer",
     "method": "POST",
     "endpoint_path": "/lemur/v3/generate/question-answer",
     "endpoint_path_alternates": [
@@ -1034,6 +1047,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_lemur.actionItems",
+    "distinct": "endpoint_lemur.actionItems",
     "method": "POST",
     "endpoint_path": "/lemur/v3/generate/action-items",
     "endpoint_path_alternates": [
@@ -1090,6 +1104,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_lemur.purgeRequestData",
+    "distinct": "endpoint_lemur.purgeRequestData",
     "method": "DELETE",
     "endpoint_path": "/lemur/v3/:request_id",
     "endpoint_path_alternates": [
@@ -1146,6 +1161,7 @@
     "api_type": "http",
     "api_definition_id": "72c824a6-ca97-4592-a585-266e983022de",
     "api_endpoint_id": "endpoint_realtime.createTemporaryToken",
+    "distinct": "endpoint_realtime.createTemporaryToken",
     "method": "POST",
     "endpoint_path": "/v2/realtime/token",
     "endpoint_path_alternates": [

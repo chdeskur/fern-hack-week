@@ -9,8 +9,6 @@ import {
   fdrEnvironment,
   fernToken_admin,
 } from "@fern-api/docs-server/env-variables";
-import { isLocal } from "@fern-api/docs-server/isLocal";
-import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { Gate, withBasicTokenAnonymous } from "@fern-api/docs-server/withRbac";
 import { getDocsDomainEdge } from "@fern-api/docs-server/xfernhost/edge";
 import { slugToHref, withoutStaging } from "@fern-api/docs-utils";
@@ -24,12 +22,12 @@ import {
 export const maxDuration = 800; // 13 minutes
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  if (isLocal() || isSelfHosted()) {
-    return NextResponse.json(
-      "algolia indexing is not accessible in local preview mode",
-      { status: 400 }
-    );
-  }
+  // if (isLocal() || isSelfHosted()) {
+  //   return NextResponse.json(
+  //     "algolia indexing is not accessible in local preview mode",
+  //     { status: 400 }
+  //   );
+  // }
 
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);

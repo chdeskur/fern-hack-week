@@ -17555,6 +17555,7 @@
     "api_type": "http",
     "api_definition_id": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
     "api_endpoint_id": "endpoint_.extractData",
+    "distinct": "endpoint_.extractData",
     "method": "POST",
     "endpoint_path": "/extract",
     "endpoint_path_alternates": [
@@ -17618,6 +17619,7 @@
     "api_type": "http",
     "api_definition_id": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
     "api_endpoint_id": "endpoint_.extractData",
+    "distinct": "endpoint_.extractData",
     "method": "POST",
     "endpoint_path": "/extract",
     "endpoint_path_alternates": [

@@ -1,7 +1,7 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createCohere } from "@ai-sdk/cohere";
 import { createOpenAI } from "@ai-sdk/openai";
-import type { LanguageModelV1 } from "@ai-sdk/provider";
+import type { LanguageModelV2 } from "@ai-sdk/provider";
 
 const anthropic = createAnthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -22,7 +22,7 @@ type Model =
   | "claude-3-5-sonnet"
   | "claude-3-5-haiku";
 
-const models: Record<Model, LanguageModelV1> = {
+const models: Record<Model, LanguageModelV2> = {
   "gpt-4o": openai.languageModel("gpt-4o"),
   "gpt-4o-mini": openai.languageModel("gpt-4o-mini"),
   "command-r-plus": cohere.languageModel("command-r-plus"),

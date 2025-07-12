@@ -8,7 +8,7 @@ export type FacetsResponse = Partial<
   Record<FacetName, { value: string; count: number }[]>
 >;
 
-async function fetchFacetValues(opts: {
+export async function fetchFacetValuesFromAlgolia(opts: {
   client: Algoliasearch;
   filters: string[];
 }): Promise<Partial<Record<FacetName, { value: string; count: number }[]>>> {
@@ -61,5 +61,3 @@ async function fetchFacetValues(opts: {
 
   return response;
 }
-
-export { fetchFacetValues };

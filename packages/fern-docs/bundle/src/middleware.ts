@@ -122,6 +122,25 @@ export const middleware: NextMiddleware = async (request) => {
   }
 
   /**
+   * Rewrite /_search/* to MeiliSearch
+   */
+  if (pathname.includes("/_search/")) {
+    const searchPath = withoutBasepath("/_search/");
+    const cleanedPath = searchPath.replace("_search/", "");
+    const meiliUrl = `${process.env.NEXT_PUBLIC_MEILISEARCH_ORIGIN}/${cleanedPath}`;
+    // Clone headers and override Authorization
+    const newHeaders = new Headers(headers);
+    newHeaders.set(
+      "Authorization",
+      `Bearer ${process.env.NEXT_PUBLIC_MEILISEARCH_API_KEY}`
+    );
+
+    return NextResponse.rewrite(meiliUrl, {
+      request: { headers: newHeaders },
+    });
+  }
+
+  /**
    * Rewrite /api/fern-docs/revalidate-all/v3 to /api/fern-docs/revalidate?regenerate=true
    */
   if (pathname.endsWith("/api/fern-docs/revalidate-all/v3")) {

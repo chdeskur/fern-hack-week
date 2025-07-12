@@ -32,6 +32,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/aiprise/aiprise_webhook_api.verify",
+    "distinct": "endpoint_api/aiprise/aiprise_webhook_api.verify",
     "method": "POST",
     "endpoint_path": "/aiprise/webhook/verification/callback",
     "endpoint_path_alternates": [
@@ -81,6 +82,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/dev/dev.uploadEor",
+    "distinct": "endpoint_api/dev/dev.uploadEor",
     "method": "POST",
     "endpoint_path": "/dev/eor",
     "endpoint_path_alternates": [
@@ -129,6 +131,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/services/file.attachDocumentToEmployment",
+    "distinct": "endpoint_api/services/file.attachDocumentToEmployment",
     "method": "POST",
     "endpoint_path": "//contracts/:contractID/generic-document",
     "endpoint_path_alternates": [
@@ -177,6 +180,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/services/file.deleteDocumentFromEmployment",
+    "distinct": "endpoint_api/services/file.deleteDocumentFromEmployment",
     "method": "DELETE",
     "endpoint_path": "//contracts/:contractID/generic-document/:s3Key",
     "endpoint_path_alternates": [
@@ -225,6 +229,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/services/file.loadGenericDocumentFromEmployment",
+    "distinct": "endpoint_api/services/file.loadGenericDocumentFromEmployment",
     "method": "GET",
     "endpoint_path": "//contracts/:contractID/generic-document/:s3Key/file-url",
     "endpoint_path_alternates": [
@@ -275,6 +280,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/services/file.loadPayslipFromEorEmployment",
+    "distinct": "endpoint_api/services/file.loadPayslipFromEorEmployment",
     "method": "GET",
     "endpoint_path": "//contracts/eor/:contractID/payslips/:s3Key/fileUrl",
     "endpoint_path_alternates": [
@@ -325,6 +331,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/services/file.loadPayInFromEorEmployment",
+    "distinct": "endpoint_api/services/file.loadPayInFromEorEmployment",
     "method": "GET",
     "endpoint_path": "//companies/:companyId/contracts/eor/pay-in/:s3Key/file-url",
     "endpoint_path_alternates": [
@@ -379,6 +386,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
+    "distinct": "endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
     "method": "PUT",
     "endpoint_path": "/companies/:companyId/accounting/settings",
     "endpoint_path_alternates": [
@@ -431,6 +439,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
+    "distinct": "endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/accounting/info",
     "endpoint_path_alternates": [
@@ -485,6 +494,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
+    "distinct": "endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/accounting/account-mapping",
     "endpoint_path_alternates": [
@@ -539,6 +549,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
+    "distinct": "endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/accounting/authorize",
     "endpoint_path_alternates": [
@@ -591,6 +602,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
+    "distinct": "endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/bank/account",
     "endpoint_path_alternates": [
@@ -646,6 +658,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
+    "distinct": "endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
     "method": "POST",
     "endpoint_path": "/bank/account/update",
     "endpoint_path_alternates": [
@@ -700,6 +713,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.generateBankSignup",
+    "distinct": "endpoint_api/thera/bank/bank_api.generateBankSignup",
     "method": "POST",
     "endpoint_path": "/bank/account/signup/link",
     "endpoint_path_alternates": [
@@ -755,6 +769,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.completeBankSignup",
+    "distinct": "endpoint_api/thera/bank/bank_api.completeBankSignup",
     "method": "POST",
     "endpoint_path": "/bank/account/signup/complete",
     "endpoint_path_alternates": [
@@ -808,6 +823,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.reattachStripeMandate",
+    "distinct": "endpoint_api/thera/bank/bank_api.reattachStripeMandate",
     "method": "POST",
     "endpoint_path": "/bank/stripe/attach",
     "endpoint_path_alternates": [
@@ -861,6 +877,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPaymentMethods",
+    "distinct": "endpoint_api/thera/bank/bank_api.getPaymentMethods",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/payment-methods",
     "endpoint_path_alternates": [
@@ -916,6 +933,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.deletePaymentMethod",
+    "distinct": "endpoint_api/thera/bank/bank_api.deletePaymentMethod",
     "method": "DELETE",
     "endpoint_path": "/companies/:companyId/payment-methods/:paymentMethodId",
     "endpoint_path_alternates": [
@@ -969,6 +987,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
+    "distinct": "endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/payment-methods/:paymentMethodId/select-for-w2",
     "endpoint_path_alternates": [
@@ -1022,6 +1041,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.verifyBankSignup",
+    "distinct": "endpoint_api/thera/bank/bank_api.verifyBankSignup",
     "method": "POST",
     "endpoint_path": "/bank/account/signup/verify",
     "endpoint_path_alternates": [
@@ -1077,6 +1097,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.setAutoPay",
+    "distinct": "endpoint_api/thera/bank/bank_api.setAutoPay",
     "method": "POST",
     "endpoint_path": "/company/:companyId/teams/:teamId/autopay",
     "endpoint_path_alternates": [
@@ -1130,6 +1151,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
     "method": "GET",
     "endpoint_path": "/worker/supported-withdrawal-method-currencies",
     "endpoint_path_alternates": [
@@ -1185,6 +1207,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
+    "distinct": "endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
     "method": "GET",
     "endpoint_path": "/worker/supported-bank-transfer-currencies",
     "endpoint_path_alternates": [
@@ -1240,6 +1263,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
     "method": "GET",
     "endpoint_path": "/workers/:userId/withdrawal-methods/:paymentMethodId/withdrawal-limits",
     "endpoint_path_alternates": [
@@ -1295,6 +1319,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
     "method": "GET",
     "endpoint_path": "/worker/withdrawal-minimum-by-currency",
     "endpoint_path_alternates": [
@@ -1350,6 +1375,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
     "method": "GET",
     "endpoint_path": "/workers/:userId/withdrawal-methods/:paymentMethodId/withdrawal-minimum",
     "endpoint_path_alternates": [
@@ -1405,6 +1431,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
+    "distinct": "endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
     "method": "POST",
     "endpoint_path": "/worker/supported-withdrawal-methods",
     "endpoint_path_alternates": [
@@ -1460,6 +1487,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
+    "distinct": "endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
     "method": "POST",
     "endpoint_path": "/worker/:userId/withdrawal-method",
     "endpoint_path_alternates": [
@@ -1515,6 +1543,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
+    "distinct": "endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
     "method": "DELETE",
     "endpoint_path": "/worker/:userId/withdrawal-method/:withdrawalMethodId",
     "endpoint_path_alternates": [
@@ -1569,6 +1598,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
+    "distinct": "endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
     "method": "PATCH",
     "endpoint_path": "/worker/:userId/withdrawal-method/:withdrawalMethodId",
     "endpoint_path_alternates": [
@@ -1623,6 +1653,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/workers/:userId/payout-preview",
     "endpoint_path_alternates": [
@@ -1677,6 +1708,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
+    "distinct": "endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/workers/:userId/payout",
     "endpoint_path_alternates": [
@@ -1731,6 +1763,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerBalance",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWorkerBalance",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/workers/:userId/balances",
     "endpoint_path_alternates": [
@@ -1785,6 +1818,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerTransactions",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWorkerTransactions",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/workers/:userId/transactions",
     "endpoint_path_alternates": [
@@ -1839,6 +1873,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalDeliveryEstimate",
+    "distinct": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalDeliveryEstimate",
     "method": "GET",
     "endpoint_path": "/workers/withdrawals/delivery-estimate/:withdrawalId",
     "endpoint_path_alternates": [
@@ -1893,6 +1928,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPayInHistory",
+    "distinct": "endpoint_api/thera/bank/bank_api.getPayInHistory",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/pay-ins",
     "endpoint_path_alternates": [
@@ -1947,6 +1983,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPayInDetails",
+    "distinct": "endpoint_api/thera/bank/bank_api.getPayInDetails",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/pay-ins/:payInId",
     "endpoint_path_alternates": [
@@ -2001,6 +2038,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
+    "distinct": "endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
     "method": "DELETE",
     "endpoint_path": "/companies/:companyId/pay-ins/off-platform/:payInId",
     "endpoint_path_alternates": [
@@ -2056,6 +2094,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getCurrencyConversion",
+    "distinct": "endpoint_api/thera/bank/bank_api.getCurrencyConversion",
     "method": "GET",
     "endpoint_path": "/currency/convert",
     "endpoint_path_alternates": [
@@ -2110,6 +2149,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
+    "distinct": "endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/workers/:userId/auto-withdrawals",
     "endpoint_path_alternates": [
@@ -2164,6 +2204,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
+    "distinct": "endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
     "method": "POST",
     "endpoint_path": "/bank/check/payment-method",
     "endpoint_path_alternates": [
@@ -2216,6 +2257,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
+    "distinct": "endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
     "method": "POST",
     "endpoint_path": "/bank/stripe/payment-method",
     "endpoint_path_alternates": [
@@ -2268,6 +2310,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.getMoniteToken",
+    "distinct": "endpoint_api/thera/company/company_api.getMoniteToken",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/monite/token",
     "endpoint_path_alternates": [
@@ -2322,6 +2365,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.inviteContractor",
+    "distinct": "endpoint_api/thera/company/company_api.inviteContractor",
     "method": "POST",
     "endpoint_path": "/companies/employees",
     "endpoint_path_alternates": [
@@ -2377,6 +2421,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.inviteManager",
+    "distinct": "endpoint_api/thera/company/company_api.inviteManager",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/managers",
     "endpoint_path_alternates": [
@@ -2432,6 +2477,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.editManagerRoles",
+    "distinct": "endpoint_api/thera/company/company_api.editManagerRoles",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/managers/:userId",
     "endpoint_path_alternates": [
@@ -2487,6 +2533,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.editOrgRoles",
+    "distinct": "endpoint_api/thera/company/company_api.editOrgRoles",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/admins",
     "endpoint_path_alternates": [
@@ -2542,6 +2589,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.removeManager",
+    "distinct": "endpoint_api/thera/company/company_api.removeManager",
     "method": "DELETE",
     "endpoint_path": "/companies/:companyId/managers/:userId",
     "endpoint_path_alternates": [
@@ -2597,6 +2645,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.changeContractTeam",
+    "distinct": "endpoint_api/thera/company/company_api.changeContractTeam",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/contracts/:contractId/team",
     "endpoint_path_alternates": [
@@ -2652,6 +2701,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.getTeams",
+    "distinct": "endpoint_api/thera/company/company_api.getTeams",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/teams",
     "endpoint_path_alternates": [
@@ -2707,6 +2757,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.getManagers",
+    "distinct": "endpoint_api/thera/company/company_api.getManagers",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/managers",
     "endpoint_path_alternates": [
@@ -2762,6 +2813,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.createTeam",
+    "distinct": "endpoint_api/thera/company/company_api.createTeam",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/teams",
     "endpoint_path_alternates": [
@@ -2817,6 +2869,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.deleteTeam",
+    "distinct": "endpoint_api/thera/company/company_api.deleteTeam",
     "method": "DELETE",
     "endpoint_path": "/companies/:companyId/teams/:teamId",
     "endpoint_path_alternates": [
@@ -2872,6 +2925,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.editTeam",
+    "distinct": "endpoint_api/thera/company/company_api.editTeam",
     "method": "PATCH",
     "endpoint_path": "/companies/:companyId/teams/:teamId",
     "endpoint_path_alternates": [
@@ -2927,6 +2981,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
+    "distinct": "endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
     "method": "GET",
     "endpoint_path": "/users/:userId/affiliations",
     "endpoint_path_alternates": [
@@ -2982,6 +3037,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.checkCanCreateAccount",
+    "distinct": "endpoint_api/thera/company/company_api.checkCanCreateAccount",
     "method": "GET",
     "endpoint_path": "/check-can-create-account",
     "endpoint_path_alternates": [
@@ -3037,6 +3093,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.addEorEmployee",
+    "distinct": "endpoint_api/thera/company/company_api.addEorEmployee",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/eor",
     "endpoint_path_alternates": [
@@ -3092,6 +3149,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.getContractorCsv",
+    "distinct": "endpoint_api/thera/company/company_api.getContractorCsv",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/contractors/csv",
     "endpoint_path_alternates": [
@@ -3147,6 +3205,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_api.getContractsCSV",
+    "distinct": "endpoint_api/thera/company/company_api.getContractsCSV",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/contracts/csv",
     "endpoint_path_alternates": [
@@ -3202,6 +3261,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
+    "distinct": "endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
     "method": "POST",
     "endpoint_path": "/company/w2Payroll",
     "endpoint_path_alternates": [
@@ -3254,6 +3314,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
+    "distinct": "endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/w2/toggle-onboarding-flow-complete",
     "endpoint_path_alternates": [
@@ -3307,6 +3368,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
+    "distinct": "endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/w2/payroll/setup",
     "endpoint_path_alternates": [
@@ -3360,6 +3422,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
+    "distinct": "endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/us-contractors/tax-info",
     "endpoint_path_alternates": [
@@ -3414,6 +3477,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
+    "distinct": "endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
     "method": "PUT",
     "endpoint_path": "/companies/:companyId/us-contractors/:userId/tax-info",
     "endpoint_path_alternates": [
@@ -3468,6 +3532,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
+    "distinct": "endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
     "method": "POST",
     "endpoint_path": "/companies/:companyID/contractors/csv",
     "endpoint_path_alternates": [
@@ -3522,6 +3587,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
+    "distinct": "endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
     "method": "POST",
     "endpoint_path": "/companies/:companyID/invoices/csv",
     "endpoint_path_alternates": [
@@ -3576,6 +3642,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
+    "distinct": "endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
     "method": "POST",
     "endpoint_path": "/disbursement",
     "endpoint_path_alternates": [
@@ -3631,6 +3698,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
+    "distinct": "endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
     "method": "POST",
     "endpoint_path": "/disbursement/invoices/:invoiceId/approve",
     "endpoint_path_alternates": [
@@ -3684,6 +3752,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
+    "distinct": "endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
     "method": "POST",
     "endpoint_path": "/disbursement/invoices/:invoiceId/deduction",
     "endpoint_path_alternates": [
@@ -3739,6 +3808,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
+    "distinct": "endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
     "method": "DELETE",
     "endpoint_path": "/disbursement/invoices/:invoiceId/deduction/:deductionId",
     "endpoint_path_alternates": [
@@ -3794,6 +3864,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
+    "distinct": "endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
     "method": "GET",
     "endpoint_path": "/companies/:companyID/invoices/csv",
     "endpoint_path_alternates": [
@@ -3849,6 +3920,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
+    "distinct": "endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
     "method": "POST",
     "endpoint_path": "/webhook/disbursement/invoice",
     "endpoint_path_alternates": [
@@ -3904,6 +3976,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/document/document_api.getW9Document",
+    "distinct": "endpoint_api/thera/document/document_api.getW9Document",
     "method": "GET",
     "endpoint_path": "/w9-document",
     "endpoint_path_alternates": [
@@ -3958,6 +4031,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
+    "distinct": "endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/1099-nec-document",
     "endpoint_path_alternates": [
@@ -4012,6 +4086,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
+    "distinct": "endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
     "method": "POST",
     "endpoint_path": "/1099-nec-document/file",
     "endpoint_path_alternates": [
@@ -4066,6 +4141,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/email/email_api.sendLoginEmail",
+    "distinct": "endpoint_api/thera/email/email_api.sendLoginEmail",
     "method": "POST",
     "endpoint_path": "/email/login",
     "endpoint_path_alternates": [
@@ -4118,6 +4194,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/email/email_api.updateUserEmail",
+    "distinct": "endpoint_api/thera/email/email_api.updateUserEmail",
     "method": "PUT",
     "endpoint_path": "/user/:userId/update-email",
     "endpoint_path_alternates": [
@@ -4171,6 +4248,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
+    "distinct": "endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
     "method": "DELETE",
     "endpoint_path": "/contracts/:contractId/pay-cycle/recurrences/:recurrenceId",
     "endpoint_path_alternates": [
@@ -4223,6 +4301,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/employment/employment_api.estimateContract",
+    "distinct": "endpoint_api/thera/employment/employment_api.estimateContract",
     "method": "POST",
     "endpoint_path": "/contracts/estimate",
     "endpoint_path_alternates": [
@@ -4278,6 +4357,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/employment/employment_api.deleteContract",
+    "distinct": "endpoint_api/thera/employment/employment_api.deleteContract",
     "method": "DELETE",
     "endpoint_path": "/contracts/:contractId",
     "endpoint_path_alternates": [
@@ -4331,6 +4411,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/employment/employment_api.cancelContractTermination",
+    "distinct": "endpoint_api/thera/employment/employment_api.cancelContractTermination",
     "method": "POST",
     "endpoint_path": "/contracts/:contractId/termination-cancellation",
     "endpoint_path_alternates": [
@@ -4384,6 +4465,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/employment/employment_api.getPayCycle",
+    "distinct": "endpoint_api/thera/employment/employment_api.getPayCycle",
     "method": "GET",
     "endpoint_path": "/contracts/:contractId/payCycle/:baseDate",
     "endpoint_path_alternates": [
@@ -4439,6 +4521,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/misc/misc.regularCron",
+    "distinct": "endpoint_api/thera/misc/misc.regularCron",
     "method": "POST",
     "endpoint_path": "/webhook/regular-cron",
     "endpoint_path_alternates": [
@@ -4494,6 +4577,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/misc/misc.autoPayCron",
+    "distinct": "endpoint_api/thera/misc/misc.autoPayCron",
     "method": "POST",
     "endpoint_path": "/webhook/autopay-invoices-cron",
     "endpoint_path_alternates": [
@@ -4547,6 +4631,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
+    "distinct": "endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
     "method": "POST",
     "endpoint_path": "/webhook/autopay-email-cron",
     "endpoint_path_alternates": [
@@ -4600,6 +4685,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/misc/misc.contractRenewalCron",
+    "distinct": "endpoint_api/thera/misc/misc.contractRenewalCron",
     "method": "POST",
     "endpoint_path": "/webhook/contract-renewal-cron",
     "endpoint_path_alternates": [
@@ -4655,6 +4741,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
+    "distinct": "endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/w2-payroll/off-cycle-checks",
     "endpoint_path_alternates": [
@@ -4709,6 +4796,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
+    "distinct": "endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
     "method": "POST",
     "endpoint_path": "/companies/:companyID/w2-payroll/on-cycle-checks/approve",
     "endpoint_path_alternates": [
@@ -4763,6 +4851,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
+    "distinct": "endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
     "method": "GET",
     "endpoint_path": "/companies/:companyID/w2-payroll/on-cycle-checks",
     "endpoint_path_alternates": [
@@ -4817,6 +4906,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
+    "distinct": "endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
     "method": "POST",
     "endpoint_path": "/companies/:companyID/w2-payroll/on-cycle-checks/cancel",
     "endpoint_path_alternates": [
@@ -4869,6 +4959,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId/pto/associate-contractors",
     "endpoint_path_alternates": [
@@ -4922,6 +5013,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId/pto/request",
     "endpoint_path_alternates": [
@@ -4974,6 +5066,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/timeoff-policy",
     "endpoint_path_alternates": [
@@ -5029,6 +5122,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId",
     "endpoint_path_alternates": [
@@ -5084,6 +5178,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
     "method": "PUT",
     "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId",
     "endpoint_path_alternates": [
@@ -5139,6 +5234,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
     "method": "DELETE",
     "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId",
     "endpoint_path_alternates": [
@@ -5194,6 +5290,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/time-off-history",
     "endpoint_path_alternates": [
@@ -5249,6 +5346,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/users/:userId/time-off-history",
     "endpoint_path_alternates": [
@@ -5304,6 +5402,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/timeoff-policies/:policyId/contractors-details",
     "endpoint_path_alternates": [
@@ -5359,6 +5458,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/contractors/:userId/timeoff-policies",
     "endpoint_path_alternates": [
@@ -5414,6 +5514,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId/time-off/:timeOffId/status-update",
     "endpoint_path_alternates": [
@@ -5469,6 +5570,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/time-off/bulk-status-update/:status",
     "endpoint_path_alternates": [
@@ -5522,6 +5624,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
+    "distinct": "endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
     "method": "PUT",
     "endpoint_path": "/companies/:companyId/users/:userId/time-off/:timeOffId",
     "endpoint_path_alternates": [
@@ -5577,6 +5680,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
+    "distinct": "endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/banking-details",
     "endpoint_path_alternates": [
@@ -5632,6 +5736,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.getNaicsCodes",
+    "distinct": "endpoint_api/thera/tp/tp_api.getNaicsCodes",
     "method": "GET",
     "endpoint_path": "/naics-codes",
     "endpoint_path_alternates": [
@@ -5687,6 +5792,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
+    "distinct": "endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/process-funds",
     "endpoint_path_alternates": [
@@ -5742,6 +5848,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
+    "distinct": "endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/create-counterparty",
     "endpoint_path_alternates": [
@@ -5797,6 +5904,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
+    "distinct": "endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/fetch-accounts",
     "endpoint_path_alternates": [
@@ -5852,6 +5960,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.getTpAccount",
+    "distinct": "endpoint_api/thera/tp/tp_api.getTpAccount",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/fetch-accounts/:accountId",
     "endpoint_path_alternates": [
@@ -5907,6 +6016,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
+    "distinct": "endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
     "method": "POST",
     "endpoint_path": "/companies/:companyId/transfer-fbo-omnibus",
     "endpoint_path_alternates": [
@@ -5962,6 +6072,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.transactionHistory",
+    "distinct": "endpoint_api/thera/tp/tp_api.transactionHistory",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/fetch-transactions/:accountId",
     "endpoint_path_alternates": [
@@ -6017,6 +6128,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
+    "distinct": "endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
     "method": "GET",
     "endpoint_path": "/companies/:companyId/tp-transaction/:transactionId",
     "endpoint_path_alternates": [
@@ -6072,6 +6184,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/tp/tp_api.externalTransferFund",
+    "distinct": "endpoint_api/thera/tp/tp_api.externalTransferFund",
     "method": "POST",
     "endpoint_path": "/webhook/tp/external-transfer-funds",
     "endpoint_path_alternates": [
@@ -6127,6 +6240,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/user/user_api.setUserComplianceSetting",
+    "distinct": "endpoint_api/thera/user/user_api.setUserComplianceSetting",
     "method": "POST",
     "endpoint_path": "/company/:companyId/user/:userId",
     "endpoint_path_alternates": [
@@ -6180,6 +6294,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/user/user_api.getComplianceUserSetting",
+    "distinct": "endpoint_api/thera/user/user_api.getComplianceUserSetting",
     "method": "GET",
     "endpoint_path": "/company/:companyId/user",
     "endpoint_path_alternates": [
@@ -6235,6 +6350,7 @@
     "api_type": "http",
     "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
     "api_endpoint_id": "endpoint_api/thera/user/user_api.getUser",
+    "distinct": "endpoint_api/thera/user/user_api.getUser",
     "method": "GET",
     "endpoint_path": "/user",
     "endpoint_path_alternates": [

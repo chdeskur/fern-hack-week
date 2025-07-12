@@ -10,7 +10,6 @@ import { compact } from "es-toolkit/array";
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { DocsLoader } from "@fern-api/docs-server/docs-loader";
 import { isLocal } from "@fern-api/docs-server/isLocal";
-import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { FeatureFlagProvider } from "@fern-docs/components/feature-flags/FeatureFlagProvider";
@@ -52,7 +51,7 @@ export default async function Layout({
   params: Promise<{ host: string; domain: string }>;
 }) {
   const { host, domain } = await params;
-  const isLocalEnvironment = isLocal() || isSelfHosted();
+  const isLocalEnvironment = isLocal();
   const loader = await createCachedDocsLoader(host, domain);
   const [
     { basePath },

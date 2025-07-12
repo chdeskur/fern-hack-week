@@ -72,6 +72,7 @@ export function createEndpointBaseRecordHttp({
     api_type: "http",
     api_definition_id: node.apiDefinitionId,
     api_endpoint_id: node.endpointId,
+    distinct: node.endpointId,
     method: node.method,
     endpoint_path,
     endpoint_path_alternates: [

@@ -6859,6 +6859,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.list-tools",
+    "distinct": "endpoint_tools.list-tools",
     "method": "GET",
     "endpoint_path": "/v0/evi/tools",
     "endpoint_path_alternates": [
@@ -6919,6 +6920,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.list-tools",
+    "distinct": "endpoint_tools.list-tools",
     "method": "GET",
     "endpoint_path": "/v0/evi/tools",
     "endpoint_path_alternates": [
@@ -6976,6 +6978,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.create-tool",
+    "distinct": "endpoint_tools.create-tool",
     "method": "POST",
     "endpoint_path": "/v0/evi/tools",
     "endpoint_path_alternates": [
@@ -7036,6 +7039,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.create-tool",
+    "distinct": "endpoint_tools.create-tool",
     "method": "POST",
     "endpoint_path": "/v0/evi/tools",
     "endpoint_path_alternates": [
@@ -7093,6 +7097,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.list-tool-versions",
+    "distinct": "endpoint_tools.list-tool-versions",
     "method": "GET",
     "endpoint_path": "/v0/evi/tools/:id",
     "endpoint_path_alternates": [
@@ -7153,6 +7158,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.list-tool-versions",
+    "distinct": "endpoint_tools.list-tool-versions",
     "method": "GET",
     "endpoint_path": "/v0/evi/tools/:id",
     "endpoint_path_alternates": [
@@ -7210,6 +7216,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.create-tool-version",
+    "distinct": "endpoint_tools.create-tool-version",
     "method": "POST",
     "endpoint_path": "/v0/evi/tools/:id",
     "endpoint_path_alternates": [
@@ -7270,6 +7277,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.create-tool-version",
+    "distinct": "endpoint_tools.create-tool-version",
     "method": "POST",
     "endpoint_path": "/v0/evi/tools/:id",
     "endpoint_path_alternates": [
@@ -7327,6 +7335,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.delete-tool",
+    "distinct": "endpoint_tools.delete-tool",
     "method": "DELETE",
     "endpoint_path": "/v0/evi/tools/:id",
     "endpoint_path_alternates": [
@@ -7381,6 +7390,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.update-tool-name",
+    "distinct": "endpoint_tools.update-tool-name",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/tools/:id",
     "endpoint_path_alternates": [
@@ -7435,6 +7445,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.get-tool-version",
+    "distinct": "endpoint_tools.get-tool-version",
     "method": "GET",
     "endpoint_path": "/v0/evi/tools/:id/version/:version",
     "endpoint_path_alternates": [
@@ -7495,6 +7506,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.get-tool-version",
+    "distinct": "endpoint_tools.get-tool-version",
     "method": "GET",
     "endpoint_path": "/v0/evi/tools/:id/version/:version",
     "endpoint_path_alternates": [
@@ -7552,6 +7564,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.delete-tool-version",
+    "distinct": "endpoint_tools.delete-tool-version",
     "method": "DELETE",
     "endpoint_path": "/v0/evi/tools/:id/version/:version",
     "endpoint_path_alternates": [
@@ -7606,6 +7619,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.update-tool-description",
+    "distinct": "endpoint_tools.update-tool-description",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/tools/:id/version/:version",
     "endpoint_path_alternates": [
@@ -7666,6 +7680,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_tools.update-tool-description",
+    "distinct": "endpoint_tools.update-tool-description",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/tools/:id/version/:version",
     "endpoint_path_alternates": [
@@ -7723,6 +7738,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.list-prompts",
+    "distinct": "endpoint_prompts.list-prompts",
     "method": "GET",
     "endpoint_path": "/v0/evi/prompts",
     "endpoint_path_alternates": [
@@ -7783,6 +7799,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.list-prompts",
+    "distinct": "endpoint_prompts.list-prompts",
     "method": "GET",
     "endpoint_path": "/v0/evi/prompts",
     "endpoint_path_alternates": [
@@ -7840,6 +7857,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.create-prompt",
+    "distinct": "endpoint_prompts.create-prompt",
     "method": "POST",
     "endpoint_path": "/v0/evi/prompts",
     "endpoint_path_alternates": [
@@ -7900,6 +7918,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.create-prompt",
+    "distinct": "endpoint_prompts.create-prompt",
     "method": "POST",
     "endpoint_path": "/v0/evi/prompts",
     "endpoint_path_alternates": [
@@ -7957,6 +7976,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.list-prompt-versions",
+    "distinct": "endpoint_prompts.list-prompt-versions",
     "method": "GET",
     "endpoint_path": "/v0/evi/prompts/:id",
     "endpoint_path_alternates": [
@@ -8017,6 +8037,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.list-prompt-versions",
+    "distinct": "endpoint_prompts.list-prompt-versions",
     "method": "GET",
     "endpoint_path": "/v0/evi/prompts/:id",
     "endpoint_path_alternates": [
@@ -8074,6 +8095,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.create-prompt-verison",
+    "distinct": "endpoint_prompts.create-prompt-verison",
     "method": "POST",
     "endpoint_path": "/v0/evi/prompts/:id",
     "endpoint_path_alternates": [
@@ -8134,6 +8156,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.create-prompt-verison",
+    "distinct": "endpoint_prompts.create-prompt-verison",
     "method": "POST",
     "endpoint_path": "/v0/evi/prompts/:id",
     "endpoint_path_alternates": [
@@ -8191,6 +8214,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.delete-prompt",
+    "distinct": "endpoint_prompts.delete-prompt",
     "method": "DELETE",
     "endpoint_path": "/v0/evi/prompts/:id",
     "endpoint_path_alternates": [
@@ -8245,6 +8269,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.update-prompt-name",
+    "distinct": "endpoint_prompts.update-prompt-name",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/prompts/:id",
     "endpoint_path_alternates": [
@@ -8299,6 +8324,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.get-prompt-version",
+    "distinct": "endpoint_prompts.get-prompt-version",
     "method": "GET",
     "endpoint_path": "/v0/evi/prompts/:id/version/:version",
     "endpoint_path_alternates": [
@@ -8359,6 +8385,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.get-prompt-version",
+    "distinct": "endpoint_prompts.get-prompt-version",
     "method": "GET",
     "endpoint_path": "/v0/evi/prompts/:id/version/:version",
     "endpoint_path_alternates": [
@@ -8416,6 +8443,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.delete-prompt-version",
+    "distinct": "endpoint_prompts.delete-prompt-version",
     "method": "DELETE",
     "endpoint_path": "/v0/evi/prompts/:id/version/:version",
     "endpoint_path_alternates": [
@@ -8470,6 +8498,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.update-prompt-description",
+    "distinct": "endpoint_prompts.update-prompt-description",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/prompts/:id/version/:version",
     "endpoint_path_alternates": [
@@ -8530,6 +8559,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_prompts.update-prompt-description",
+    "distinct": "endpoint_prompts.update-prompt-description",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/prompts/:id/version/:version",
     "endpoint_path_alternates": [
@@ -8587,6 +8617,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.list-custom-voices",
+    "distinct": "endpoint_customVoices.list-custom-voices",
     "method": "GET",
     "endpoint_path": "/v0/evi/custom_voices",
     "endpoint_path_alternates": [
@@ -8647,6 +8678,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.list-custom-voices",
+    "distinct": "endpoint_customVoices.list-custom-voices",
     "method": "GET",
     "endpoint_path": "/v0/evi/custom_voices",
     "endpoint_path_alternates": [
@@ -8704,6 +8736,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.create-custom-voice",
+    "distinct": "endpoint_customVoices.create-custom-voice",
     "method": "POST",
     "endpoint_path": "/v0/evi/custom_voices",
     "endpoint_path_alternates": [
@@ -8764,6 +8797,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.create-custom-voice",
+    "distinct": "endpoint_customVoices.create-custom-voice",
     "method": "POST",
     "endpoint_path": "/v0/evi/custom_voices",
     "endpoint_path_alternates": [
@@ -8821,6 +8855,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.get-custom-voice",
+    "distinct": "endpoint_customVoices.get-custom-voice",
     "method": "GET",
     "endpoint_path": "/v0/evi/custom_voices/:id",
     "endpoint_path_alternates": [
@@ -8881,6 +8916,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.get-custom-voice",
+    "distinct": "endpoint_customVoices.get-custom-voice",
     "method": "GET",
     "endpoint_path": "/v0/evi/custom_voices/:id",
     "endpoint_path_alternates": [
@@ -8938,6 +8974,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.create-custom-voice-version",
+    "distinct": "endpoint_customVoices.create-custom-voice-version",
     "method": "POST",
     "endpoint_path": "/v0/evi/custom_voices/:id",
     "endpoint_path_alternates": [
@@ -8998,6 +9035,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.create-custom-voice-version",
+    "distinct": "endpoint_customVoices.create-custom-voice-version",
     "method": "POST",
     "endpoint_path": "/v0/evi/custom_voices/:id",
     "endpoint_path_alternates": [
@@ -9055,6 +9093,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.delete-custom-voice",
+    "distinct": "endpoint_customVoices.delete-custom-voice",
     "method": "DELETE",
     "endpoint_path": "/v0/evi/custom_voices/:id",
     "endpoint_path_alternates": [
@@ -9109,6 +9148,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_customVoices.update-custom-voice-name",
+    "distinct": "endpoint_customVoices.update-custom-voice-name",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/custom_voices/:id",
     "endpoint_path_alternates": [
@@ -9163,6 +9203,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.list-configs",
+    "distinct": "endpoint_configs.list-configs",
     "method": "GET",
     "endpoint_path": "/v0/evi/configs",
     "endpoint_path_alternates": [
@@ -9223,6 +9264,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.list-configs",
+    "distinct": "endpoint_configs.list-configs",
     "method": "GET",
     "endpoint_path": "/v0/evi/configs",
     "endpoint_path_alternates": [
@@ -9280,6 +9322,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.create-config",
+    "distinct": "endpoint_configs.create-config",
     "method": "POST",
     "endpoint_path": "/v0/evi/configs",
     "endpoint_path_alternates": [
@@ -9340,6 +9383,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.create-config",
+    "distinct": "endpoint_configs.create-config",
     "method": "POST",
     "endpoint_path": "/v0/evi/configs",
     "endpoint_path_alternates": [
@@ -9397,6 +9441,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.list-config-versions",
+    "distinct": "endpoint_configs.list-config-versions",
     "method": "GET",
     "endpoint_path": "/v0/evi/configs/:id",
     "endpoint_path_alternates": [
@@ -9457,6 +9502,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.list-config-versions",
+    "distinct": "endpoint_configs.list-config-versions",
     "method": "GET",
     "endpoint_path": "/v0/evi/configs/:id",
     "endpoint_path_alternates": [
@@ -9514,6 +9560,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.create-config-version",
+    "distinct": "endpoint_configs.create-config-version",
     "method": "POST",
     "endpoint_path": "/v0/evi/configs/:id",
     "endpoint_path_alternates": [
@@ -9574,6 +9621,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.create-config-version",
+    "distinct": "endpoint_configs.create-config-version",
     "method": "POST",
     "endpoint_path": "/v0/evi/configs/:id",
     "endpoint_path_alternates": [
@@ -9631,6 +9679,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.delete-config",
+    "distinct": "endpoint_configs.delete-config",
     "method": "DELETE",
     "endpoint_path": "/v0/evi/configs/:id",
     "endpoint_path_alternates": [
@@ -9685,6 +9734,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.update-config-name",
+    "distinct": "endpoint_configs.update-config-name",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/configs/:id",
     "endpoint_path_alternates": [
@@ -9739,6 +9789,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.get-config-version",
+    "distinct": "endpoint_configs.get-config-version",
     "method": "GET",
     "endpoint_path": "/v0/evi/configs/:id/version/:version",
     "endpoint_path_alternates": [
@@ -9799,6 +9850,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.get-config-version",
+    "distinct": "endpoint_configs.get-config-version",
     "method": "GET",
     "endpoint_path": "/v0/evi/configs/:id/version/:version",
     "endpoint_path_alternates": [
@@ -9856,6 +9908,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.delete-config-version",
+    "distinct": "endpoint_configs.delete-config-version",
     "method": "DELETE",
     "endpoint_path": "/v0/evi/configs/:id/version/:version",
     "endpoint_path_alternates": [
@@ -9910,6 +9963,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.update-config-description",
+    "distinct": "endpoint_configs.update-config-description",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/configs/:id/version/:version",
     "endpoint_path_alternates": [
@@ -9970,6 +10024,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_configs.update-config-description",
+    "distinct": "endpoint_configs.update-config-description",
     "method": "PATCH",
     "endpoint_path": "/v0/evi/configs/:id/version/:version",
     "endpoint_path_alternates": [
@@ -10027,6 +10082,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chats.list-chats",
+    "distinct": "endpoint_chats.list-chats",
     "method": "GET",
     "endpoint_path": "/v0/evi/chats",
     "endpoint_path_alternates": [
@@ -10087,6 +10143,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chats.list-chats",
+    "distinct": "endpoint_chats.list-chats",
     "method": "GET",
     "endpoint_path": "/v0/evi/chats",
     "endpoint_path_alternates": [
@@ -10144,6 +10201,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chats.list-chat-events",
+    "distinct": "endpoint_chats.list-chat-events",
     "method": "GET",
     "endpoint_path": "/v0/evi/chats/:id",
     "endpoint_path_alternates": [
@@ -10204,6 +10262,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chats.list-chat-events",
+    "distinct": "endpoint_chats.list-chat-events",
     "method": "GET",
     "endpoint_path": "/v0/evi/chats/:id",
     "endpoint_path_alternates": [
@@ -10261,6 +10320,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chats.get-audio",
+    "distinct": "endpoint_chats.get-audio",
     "method": "GET",
     "endpoint_path": "/v0/evi/chats/:id/audio",
     "endpoint_path_alternates": [
@@ -10321,6 +10381,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chats.get-audio",
+    "distinct": "endpoint_chats.get-audio",
     "method": "GET",
     "endpoint_path": "/v0/evi/chats/:id/audio",
     "endpoint_path_alternates": [
@@ -10378,6 +10439,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.list-chat-groups",
+    "distinct": "endpoint_chatGroups.list-chat-groups",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups",
     "endpoint_path_alternates": [
@@ -10438,6 +10500,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.list-chat-groups",
+    "distinct": "endpoint_chatGroups.list-chat-groups",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups",
     "endpoint_path_alternates": [
@@ -10495,6 +10558,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.get-chat-group",
+    "distinct": "endpoint_chatGroups.get-chat-group",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups/:id",
     "endpoint_path_alternates": [
@@ -10555,6 +10619,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.get-chat-group",
+    "distinct": "endpoint_chatGroups.get-chat-group",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups/:id",
     "endpoint_path_alternates": [
@@ -10612,6 +10677,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.list-chat-group-events",
+    "distinct": "endpoint_chatGroups.list-chat-group-events",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups/:id/events",
     "endpoint_path_alternates": [
@@ -10672,6 +10738,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.list-chat-group-events",
+    "distinct": "endpoint_chatGroups.list-chat-group-events",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups/:id/events",
     "endpoint_path_alternates": [
@@ -10729,6 +10796,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.get-audio",
+    "distinct": "endpoint_chatGroups.get-audio",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups/:id/audio",
     "endpoint_path_alternates": [
@@ -10789,6 +10857,7 @@
     "api_type": "http",
     "api_definition_id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
     "api_endpoint_id": "endpoint_chatGroups.get-audio",
+    "distinct": "endpoint_chatGroups.get-audio",
     "method": "GET",
     "endpoint_path": "/v0/evi/chat_groups/:id/audio",
     "endpoint_path_alternates": [
@@ -10900,6 +10969,7 @@
     "api_type": "http",
     "api_definition_id": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
     "api_endpoint_id": "endpoint_batch.list-jobs",
+    "distinct": "endpoint_batch.list-jobs",
     "method": "GET",
     "endpoint_path": "/v0/batch/jobs",
     "endpoint_path_alternates": [
@@ -10955,6 +11025,7 @@
     "api_type": "http",
     "api_definition_id": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
     "api_endpoint_id": "endpoint_batch.start-inference-job",
+    "distinct": "endpoint_batch.start-inference-job",
     "method": "POST",
     "endpoint_path": "/v0/batch/jobs",
     "endpoint_path_alternates": [
@@ -11010,6 +11081,7 @@
     "api_type": "http",
     "api_definition_id": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
     "api_endpoint_id": "endpoint_batch.get-job-details",
+    "distinct": "endpoint_batch.get-job-details",
     "method": "GET",
     "endpoint_path": "/v0/batch/jobs/:id",
     "endpoint_path_alternates": [
@@ -11065,6 +11137,7 @@
     "api_type": "http",
     "api_definition_id": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
     "api_endpoint_id": "endpoint_batch.get-job-predictions",
+    "distinct": "endpoint_batch.get-job-predictions",
     "method": "GET",
     "endpoint_path": "/v0/batch/jobs/:id/predictions",
     "endpoint_path_alternates": [
@@ -11120,6 +11193,7 @@
     "api_type": "http",
     "api_definition_id": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
     "api_endpoint_id": "endpoint_batch.get-job-artifacts",
+    "distinct": "endpoint_batch.get-job-artifacts",
     "method": "GET",
     "endpoint_path": "/v0/batch/jobs/:id/artifacts",
     "endpoint_path_alternates": [
@@ -11175,6 +11249,7 @@
     "api_type": "http",
     "api_definition_id": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
     "api_endpoint_id": "endpoint_batch.start-inference-job-from-local-file",
+    "distinct": "endpoint_batch.start-inference-job-from-local-file",
     "method": "POST",
     "endpoint_path": "/v0/batch/jobs",
     "endpoint_path_alternates": [
@@ -11284,6 +11359,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.list-files",
+    "distinct": "endpoint_files.list-files",
     "method": "GET",
     "endpoint_path": "/v0/registry/files",
     "endpoint_path_alternates": [
@@ -11343,6 +11419,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.list-files",
+    "distinct": "endpoint_files.list-files",
     "method": "GET",
     "endpoint_path": "/v0/registry/files",
     "endpoint_path_alternates": [
@@ -11399,6 +11476,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.create-files",
+    "distinct": "endpoint_files.create-files",
     "method": "POST",
     "endpoint_path": "/v0/registry/files",
     "endpoint_path_alternates": [
@@ -11458,6 +11536,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.create-files",
+    "distinct": "endpoint_files.create-files",
     "method": "POST",
     "endpoint_path": "/v0/registry/files",
     "endpoint_path_alternates": [
@@ -11518,6 +11597,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.create-files",
+    "distinct": "endpoint_files.create-files",
     "method": "POST",
     "endpoint_path": "/v0/registry/files",
     "endpoint_path_alternates": [
@@ -11574,6 +11654,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.upload-file",
+    "distinct": "endpoint_files.upload-file",
     "method": "POST",
     "endpoint_path": "/v0/registry/files/upload",
     "endpoint_path_alternates": [
@@ -11633,6 +11714,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.upload-file",
+    "distinct": "endpoint_files.upload-file",
     "method": "POST",
     "endpoint_path": "/v0/registry/files/upload",
     "endpoint_path_alternates": [
@@ -11689,6 +11771,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.get-file",
+    "distinct": "endpoint_files.get-file",
     "method": "GET",
     "endpoint_path": "/v0/registry/files/:id",
     "endpoint_path_alternates": [
@@ -11748,6 +11831,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.get-file",
+    "distinct": "endpoint_files.get-file",
     "method": "GET",
     "endpoint_path": "/v0/registry/files/:id",
     "endpoint_path_alternates": [
@@ -11804,6 +11888,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.delete-file",
+    "distinct": "endpoint_files.delete-file",
     "method": "DELETE",
     "endpoint_path": "/v0/registry/files/:id",
     "endpoint_path_alternates": [
@@ -11863,6 +11948,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.delete-file",
+    "distinct": "endpoint_files.delete-file",
     "method": "DELETE",
     "endpoint_path": "/v0/registry/files/:id",
     "endpoint_path_alternates": [
@@ -11919,6 +12005,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.update-file-name",
+    "distinct": "endpoint_files.update-file-name",
     "method": "PATCH",
     "endpoint_path": "/v0/registry/files/:id",
     "endpoint_path_alternates": [
@@ -11978,6 +12065,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.update-file-name",
+    "distinct": "endpoint_files.update-file-name",
     "method": "PATCH",
     "endpoint_path": "/v0/registry/files/:id",
     "endpoint_path_alternates": [
@@ -12034,6 +12122,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.get-file-predictions",
+    "distinct": "endpoint_files.get-file-predictions",
     "method": "GET",
     "endpoint_path": "/v0/registry/files/:id/predictions",
     "endpoint_path_alternates": [
@@ -12093,6 +12182,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_files.get-file-predictions",
+    "distinct": "endpoint_files.get-file-predictions",
     "method": "GET",
     "endpoint_path": "/v0/registry/files/:id/predictions",
     "endpoint_path_alternates": [
@@ -12149,6 +12239,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-datasets",
+    "distinct": "endpoint_datasets.list-datasets",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets",
     "endpoint_path_alternates": [
@@ -12208,6 +12299,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-datasets",
+    "distinct": "endpoint_datasets.list-datasets",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets",
     "endpoint_path_alternates": [
@@ -12264,6 +12356,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.create-dataset",
+    "distinct": "endpoint_datasets.create-dataset",
     "method": "POST",
     "endpoint_path": "/v0/registry/datasets",
     "endpoint_path_alternates": [
@@ -12323,6 +12416,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.create-dataset",
+    "distinct": "endpoint_datasets.create-dataset",
     "method": "POST",
     "endpoint_path": "/v0/registry/datasets",
     "endpoint_path_alternates": [
@@ -12379,6 +12473,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.get-dataset",
+    "distinct": "endpoint_datasets.get-dataset",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/:id",
     "endpoint_path_alternates": [
@@ -12438,6 +12533,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.get-dataset",
+    "distinct": "endpoint_datasets.get-dataset",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/:id",
     "endpoint_path_alternates": [
@@ -12494,6 +12590,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.create-dataset-version",
+    "distinct": "endpoint_datasets.create-dataset-version",
     "method": "POST",
     "endpoint_path": "/v0/registry/datasets/:id",
     "endpoint_path_alternates": [
@@ -12553,6 +12650,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.create-dataset-version",
+    "distinct": "endpoint_datasets.create-dataset-version",
     "method": "POST",
     "endpoint_path": "/v0/registry/datasets/:id",
     "endpoint_path_alternates": [
@@ -12609,6 +12707,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.delete-dataset",
+    "distinct": "endpoint_datasets.delete-dataset",
     "method": "DELETE",
     "endpoint_path": "/v0/registry/datasets/:id",
     "endpoint_path_alternates": [
@@ -12668,6 +12767,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.delete-dataset",
+    "distinct": "endpoint_datasets.delete-dataset",
     "method": "DELETE",
     "endpoint_path": "/v0/registry/datasets/:id",
     "endpoint_path_alternates": [
@@ -12724,6 +12824,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-dataset-versions",
+    "distinct": "endpoint_datasets.list-dataset-versions",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/:id/versions",
     "endpoint_path_alternates": [
@@ -12783,6 +12884,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-dataset-versions",
+    "distinct": "endpoint_datasets.list-dataset-versions",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/:id/versions",
     "endpoint_path_alternates": [
@@ -12839,6 +12941,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-dataset-files",
+    "distinct": "endpoint_datasets.list-dataset-files",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/:id/files",
     "endpoint_path_alternates": [
@@ -12898,6 +13001,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-dataset-files",
+    "distinct": "endpoint_datasets.list-dataset-files",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/:id/files",
     "endpoint_path_alternates": [
@@ -12954,6 +13058,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.get-dataset-version",
+    "distinct": "endpoint_datasets.get-dataset-version",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/version/:id",
     "endpoint_path_alternates": [
@@ -13013,6 +13118,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.get-dataset-version",
+    "distinct": "endpoint_datasets.get-dataset-version",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/version/:id",
     "endpoint_path_alternates": [
@@ -13069,6 +13175,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-dataset-version-files",
+    "distinct": "endpoint_datasets.list-dataset-version-files",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/version/:id/files",
     "endpoint_path_alternates": [
@@ -13128,6 +13235,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_datasets.list-dataset-version-files",
+    "distinct": "endpoint_datasets.list-dataset-version-files",
     "method": "GET",
     "endpoint_path": "/v0/registry/datasets/version/:id/files",
     "endpoint_path_alternates": [
@@ -13184,6 +13292,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.list-models",
+    "distinct": "endpoint_models.list-models",
     "method": "GET",
     "endpoint_path": "/v0/registry/models",
     "endpoint_path_alternates": [
@@ -13243,6 +13352,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.list-models",
+    "distinct": "endpoint_models.list-models",
     "method": "GET",
     "endpoint_path": "/v0/registry/models",
     "endpoint_path_alternates": [
@@ -13299,6 +13409,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.get-model-details",
+    "distinct": "endpoint_models.get-model-details",
     "method": "GET",
     "endpoint_path": "/v0/registry/models/:id",
     "endpoint_path_alternates": [
@@ -13358,6 +13469,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.get-model-details",
+    "distinct": "endpoint_models.get-model-details",
     "method": "GET",
     "endpoint_path": "/v0/registry/models/:id",
     "endpoint_path_alternates": [
@@ -13414,6 +13526,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.update-model-name",
+    "distinct": "endpoint_models.update-model-name",
     "method": "PATCH",
     "endpoint_path": "/v0/registry/models/:id",
     "endpoint_path_alternates": [
@@ -13473,6 +13586,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.update-model-name",
+    "distinct": "endpoint_models.update-model-name",
     "method": "PATCH",
     "endpoint_path": "/v0/registry/models/:id",
     "endpoint_path_alternates": [
@@ -13529,6 +13643,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.list-model-versions",
+    "distinct": "endpoint_models.list-model-versions",
     "method": "GET",
     "endpoint_path": "/v0/registry/models/version",
     "endpoint_path_alternates": [
@@ -13588,6 +13703,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.list-model-versions",
+    "distinct": "endpoint_models.list-model-versions",
     "method": "GET",
     "endpoint_path": "/v0/registry/models/version",
     "endpoint_path_alternates": [
@@ -13644,6 +13760,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.get-model-version",
+    "distinct": "endpoint_models.get-model-version",
     "method": "GET",
     "endpoint_path": "/v0/registry/models/version/:id",
     "endpoint_path_alternates": [
@@ -13703,6 +13820,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.get-model-version",
+    "distinct": "endpoint_models.get-model-version",
     "method": "GET",
     "endpoint_path": "/v0/registry/models/version/:id",
     "endpoint_path_alternates": [
@@ -13759,6 +13877,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.update-model-description",
+    "distinct": "endpoint_models.update-model-description",
     "method": "PATCH",
     "endpoint_path": "/v0/registry/models/version/:id",
     "endpoint_path_alternates": [
@@ -13818,6 +13937,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_models.update-model-description",
+    "distinct": "endpoint_models.update-model-description",
     "method": "PATCH",
     "endpoint_path": "/v0/registry/models/version/:id",
     "endpoint_path_alternates": [
@@ -13874,6 +13994,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_jobs.start-training-job",
+    "distinct": "endpoint_jobs.start-training-job",
     "method": "POST",
     "endpoint_path": "/v0/registry/v0/batch/jobs/tl/train",
     "endpoint_path_alternates": [
@@ -13929,6 +14050,7 @@
     "api_type": "http",
     "api_definition_id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
     "api_endpoint_id": "endpoint_jobs.start-custom-models-inference-job",
+    "distinct": "endpoint_jobs.start-custom-models-inference-job",
     "method": "POST",
     "endpoint_path": "/v0/registry/v0/batch/jobs/tl/inference",
     "endpoint_path_alternates": [

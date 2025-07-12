@@ -1,5 +1,4 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { useSearchBox } from "react-instantsearch";
 
 import { ListFilter } from "lucide-react";
 
@@ -11,7 +10,9 @@ import {
   toFilterOptions,
 } from "../../utils/facet-display";
 import * as Command from "../cmdk";
-import { useFacetFilters, useFacets, usePreloadFacets } from "../search-client";
+import { useFacets, usePreloadFacets } from "../search/algolia-search-client";
+import { useFacetFilters } from "../search/useFacetFilters";
+import { useSearchBox } from "../search/useSearchBox";
 
 export const CommandGroupFilters = forwardRef<
   HTMLDivElement,

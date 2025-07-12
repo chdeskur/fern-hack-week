@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactNode } from "react";
 
-import { useFacetFilters } from "../search-client";
+import { useFacetFilters } from "../search/useFacetFilters";
 
 /**
  * If facet filters are present, then actions are hidden.

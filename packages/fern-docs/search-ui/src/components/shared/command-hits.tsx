@@ -10,7 +10,7 @@ import {
 import { AlgoliaRecordHit } from "../../types";
 import * as Command from "../cmdk";
 import { PageIcon } from "../icons/page";
-import { useFacetFilters } from "../search-client";
+import { useFacetFilters } from "../search/useFacetFilters";
 import {
   Tooltip,
   TooltipContent,

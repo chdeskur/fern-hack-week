@@ -593,6 +593,7 @@
     "api_type": "http",
     "api_definition_id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
     "api_endpoint_id": "endpoint_tools._data_frame",
+    "distinct": "endpoint_tools._data_frame",
     "method": "GET",
     "endpoint_path": "/api/v0/tools/file/data-frame",
     "endpoint_path_alternates": [
@@ -648,6 +649,7 @@
     "api_type": "http",
     "api_definition_id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
     "api_endpoint_id": "endpoint_tools._raw_data",
+    "distinct": "endpoint_tools._raw_data",
     "method": "GET",
     "endpoint_path": "/api/v0/tools/file/raw-data",
     "endpoint_path_alternates": [

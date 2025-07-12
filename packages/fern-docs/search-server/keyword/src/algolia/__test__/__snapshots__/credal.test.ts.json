@@ -1243,6 +1243,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.createCopilot",
+    "distinct": "endpoint_copilots.createCopilot",
     "method": "POST",
     "endpoint_path": "/v0/copilots/createCopilot",
     "endpoint_path_alternates": [
@@ -1295,6 +1296,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.createConversation",
+    "distinct": "endpoint_copilots.createConversation",
     "method": "POST",
     "endpoint_path": "/v0/copilots/createConversation",
     "endpoint_path_alternates": [
@@ -1346,6 +1348,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.provideMessageFeedback",
+    "distinct": "endpoint_copilots.provideMessageFeedback",
     "method": "POST",
     "endpoint_path": "/v0/copilots/provideMessageFeedback",
     "endpoint_path_alternates": [
@@ -1394,6 +1397,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.sendMessage",
+    "distinct": "endpoint_copilots.sendMessage",
     "method": "POST",
     "endpoint_path": "/v0/copilots/sendMessage",
     "endpoint_path_alternates": [
@@ -1444,6 +1448,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.streamMessage",
+    "distinct": "endpoint_copilots.streamMessage",
     "method": "POST",
     "endpoint_path": "/v0/copilots/streamMessage",
     "endpoint_path_alternates": [
@@ -1501,6 +1506,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.streamMessage",
+    "distinct": "endpoint_copilots.streamMessage",
     "method": "POST",
     "endpoint_path": "/v0/copilots/streamMessage",
     "endpoint_path_alternates": [
@@ -1555,6 +1561,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.addCollectionToCopilot",
+    "distinct": "endpoint_copilots.addCollectionToCopilot",
     "method": "POST",
     "endpoint_path": "/v0/copilots/addCollectionToCopilot",
     "endpoint_path_alternates": [
@@ -1605,6 +1612,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.removeCollectionFromCopilot",
+    "distinct": "endpoint_copilots.removeCollectionFromCopilot",
     "method": "POST",
     "endpoint_path": "/v0/copilots/removeCollectionFromCopilot",
     "endpoint_path_alternates": [
@@ -1655,6 +1663,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.updateConfiguration",
+    "distinct": "endpoint_copilots.updateConfiguration",
     "method": "POST",
     "endpoint_path": "/v0/copilots/updateConfiguration",
     "endpoint_path_alternates": [
@@ -1705,6 +1714,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.deleteCopilot",
+    "distinct": "endpoint_copilots.deleteCopilot",
     "method": "DELETE",
     "endpoint_path": "/v0/copilots/deleteCopilot",
     "endpoint_path_alternates": [
@@ -1756,6 +1766,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCatalog.uploadDocumentContents",
+    "distinct": "endpoint_documentCatalog.uploadDocumentContents",
     "method": "POST",
     "endpoint_path": "/v0/catalog/uploadDocumentContents",
     "endpoint_path_alternates": [
@@ -1806,6 +1817,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCatalog.metadata",
+    "distinct": "endpoint_documentCatalog.metadata",
     "method": "PATCH",
     "endpoint_path": "/v0/catalog/metadata",
     "endpoint_path_alternates": [
@@ -1855,6 +1867,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.addDocumentsToCollection",
+    "distinct": "endpoint_documentCollections.addDocumentsToCollection",
     "method": "POST",
     "endpoint_path": "/v0/documentCollections/addDocumentsToCollection",
     "endpoint_path_alternates": [
@@ -1904,6 +1917,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.removeDocumentsFromCollection",
+    "distinct": "endpoint_documentCollections.removeDocumentsFromCollection",
     "method": "DELETE",
     "endpoint_path": "/v0/documentCollections/removeDocumentsFromCollection",
     "endpoint_path_alternates": [
@@ -1954,6 +1968,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.createCollection",
+    "distinct": "endpoint_documentCollections.createCollection",
     "method": "POST",
     "endpoint_path": "/v0/documentCollections/createCollection",
     "endpoint_path_alternates": [
@@ -2006,6 +2021,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.deleteCollection",
+    "distinct": "endpoint_documentCollections.deleteCollection",
     "method": "DELETE",
     "endpoint_path": "/v0/documentCollections/deleteCollection",
     "endpoint_path_alternates": [
@@ -2058,6 +2074,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.createMongoCollectionSync",
+    "distinct": "endpoint_documentCollections.createMongoCollectionSync",
     "method": "POST",
     "endpoint_path": "/v0/documentCollections/mongodb/createMongoSync",
     "endpoint_path_alternates": [
@@ -2110,6 +2127,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.updateMongoCollectionSync",
+    "distinct": "endpoint_documentCollections.updateMongoCollectionSync",
     "method": "POST",
     "endpoint_path": "/v0/documentCollections/mongodb/updateMongoSync",
     "endpoint_path_alternates": [
@@ -2162,6 +2180,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_permissionsService.checkResourceAuthorizationForUser",
+    "distinct": "endpoint_permissionsService.checkResourceAuthorizationForUser",
     "method": "POST",
     "endpoint_path": "/v0/permissions/checkResourceAuthorizationForUser",
     "endpoint_path_alternates": [
@@ -2214,6 +2233,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_permissionsService.checkBulkResourcesAuthorizationForUser",
+    "distinct": "endpoint_permissionsService.checkBulkResourcesAuthorizationForUser",
     "method": "POST",
     "endpoint_path": "/v0/permissions/checkBulkResourcesAuthorizationForUser",
     "endpoint_path_alternates": [
@@ -2266,6 +2286,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_permissionsService.listCachedAuthorizedResourcesForUser",
+    "distinct": "endpoint_permissionsService.listCachedAuthorizedResourcesForUser",
     "method": "POST",
     "endpoint_path": "/v0/permissions/listCachedAuthorizedResourcesForUser",
     "endpoint_path_alternates": [
@@ -2318,6 +2339,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_search.searchDocumentCollection",
+    "distinct": "endpoint_search.searchDocumentCollection",
     "method": "POST",
     "endpoint_path": "/v0/search/searchDocumentCollection",
     "endpoint_path_alternates": [
@@ -2369,6 +2391,7 @@
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_users.metadata",
+    "distinct": "endpoint_users.metadata",
     "method": "PATCH",
     "endpoint_path": "/v0/users/metadata",
     "endpoint_path_alternates": [

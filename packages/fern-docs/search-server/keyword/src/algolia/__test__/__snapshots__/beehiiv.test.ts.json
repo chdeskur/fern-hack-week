@@ -567,6 +567,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automationJourneys.create",
+    "distinct": "endpoint_automationJourneys.create",
     "method": "POST",
     "endpoint_path": "/publications/:publicationId/automations/:automationId/journeys",
     "endpoint_path_alternates": [
@@ -622,6 +623,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automationJourneys.index",
+    "distinct": "endpoint_automationJourneys.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/automations/:automationId/journeys",
     "endpoint_path_alternates": [
@@ -677,6 +679,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automationJourneys.show",
+    "distinct": "endpoint_automationJourneys.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/automations/:automationId/journeys/:automationJourneyId",
     "endpoint_path_alternates": [
@@ -732,6 +735,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automations.index",
+    "distinct": "endpoint_automations.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/automations",
     "endpoint_path_alternates": [
@@ -786,6 +790,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automations.show",
+    "distinct": "endpoint_automations.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/automations/:automationId",
     "endpoint_path_alternates": [
@@ -840,6 +845,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.index",
+    "distinct": "endpoint_bulkSubscriptionUpdates.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/bulk_subscription_updates",
     "endpoint_path_alternates": [
@@ -895,6 +901,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.show",
+    "distinct": "endpoint_bulkSubscriptionUpdates.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/bulk_subscription_updates/:id",
     "endpoint_path_alternates": [
@@ -950,6 +957,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.put",
+    "distinct": "endpoint_bulkSubscriptionUpdates.put",
     "method": "PUT",
     "endpoint_path": "/publications/:publicationId/subscriptions/bulk_actions",
     "endpoint_path_alternates": [
@@ -1005,6 +1013,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.patch",
+    "distinct": "endpoint_bulkSubscriptionUpdates.patch",
     "method": "PATCH",
     "endpoint_path": "/publications/:publicationId/subscriptions/bulk_actions",
     "endpoint_path_alternates": [
@@ -1060,6 +1069,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.put-status",
+    "distinct": "endpoint_bulkSubscriptionUpdates.put-status",
     "method": "PUT",
     "endpoint_path": "/publications/:publicationId/subscriptions",
     "endpoint_path_alternates": [
@@ -1109,6 +1119,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.patch-status",
+    "distinct": "endpoint_bulkSubscriptionUpdates.patch-status",
     "method": "PATCH",
     "endpoint_path": "/publications/:publicationId/subscriptions",
     "endpoint_path_alternates": [
@@ -1158,6 +1169,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.create",
+    "distinct": "endpoint_customFields.create",
     "method": "POST",
     "endpoint_path": "/publications/:publicationId/custom_fields",
     "endpoint_path_alternates": [
@@ -1213,6 +1225,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.show",
+    "distinct": "endpoint_customFields.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/custom_fields/:id",
     "endpoint_path_alternates": [
@@ -1268,6 +1281,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.index",
+    "distinct": "endpoint_customFields.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/custom_fields",
     "endpoint_path_alternates": [
@@ -1323,6 +1337,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.put",
+    "distinct": "endpoint_customFields.put",
     "method": "PUT",
     "endpoint_path": "/publications/:publicationId/custom_fields/:id",
     "endpoint_path_alternates": [
@@ -1378,6 +1393,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.patch",
+    "distinct": "endpoint_customFields.patch",
     "method": "PATCH",
     "endpoint_path": "/publications/:publicationId/custom_fields/:id",
     "endpoint_path_alternates": [
@@ -1433,6 +1449,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.delete",
+    "distinct": "endpoint_customFields.delete",
     "method": "DELETE",
     "endpoint_path": "/publications/:publicationId/custom_fields/:id",
     "endpoint_path_alternates": [
@@ -1488,6 +1505,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_posts.index",
+    "distinct": "endpoint_posts.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/posts",
     "endpoint_path_alternates": [
@@ -1543,6 +1561,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_posts.show",
+    "distinct": "endpoint_posts.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/posts/:postId",
     "endpoint_path_alternates": [
@@ -1598,6 +1617,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_posts.delete",
+    "distinct": "endpoint_posts.delete",
     "method": "DELETE",
     "endpoint_path": "/publications/:publicationId/posts/:postId",
     "endpoint_path_alternates": [
@@ -1653,6 +1673,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_publications.index",
+    "distinct": "endpoint_publications.index",
     "method": "GET",
     "endpoint_path": "/publications",
     "endpoint_path_alternates": [
@@ -1708,6 +1729,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_publications.show",
+    "distinct": "endpoint_publications.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId",
     "endpoint_path_alternates": [
@@ -1763,6 +1785,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_referralProgram.show",
+    "distinct": "endpoint_referralProgram.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/referral_program",
     "endpoint_path_alternates": [
@@ -1818,6 +1841,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.index",
+    "distinct": "endpoint_segments.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/segments",
     "endpoint_path_alternates": [
@@ -1873,6 +1897,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.show",
+    "distinct": "endpoint_segments.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/segments/:segmentId",
     "endpoint_path_alternates": [
@@ -1927,6 +1952,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.expand_results",
+    "distinct": "endpoint_segments.expand_results",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/segments/:segmentId/results",
     "endpoint_path_alternates": [
@@ -1982,6 +2008,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.delete",
+    "distinct": "endpoint_segments.delete",
     "method": "DELETE",
     "endpoint_path": "/publications/:publicationId/segments/:segmentId",
     "endpoint_path_alternates": [
@@ -2036,6 +2063,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.create",
+    "distinct": "endpoint_subscriptions.create",
     "method": "POST",
     "endpoint_path": "/publications/:publicationId/subscriptions",
     "endpoint_path_alternates": [
@@ -2091,6 +2119,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.index",
+    "distinct": "endpoint_subscriptions.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/subscriptions",
     "endpoint_path_alternates": [
@@ -2146,6 +2175,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.get-by-email",
+    "distinct": "endpoint_subscriptions.get-by-email",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/subscriptions/by_email/:email",
     "endpoint_path_alternates": [
@@ -2201,6 +2231,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.get-by-id",
+    "distinct": "endpoint_subscriptions.get-by-id",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/subscriptions/:subscriptionId",
     "endpoint_path_alternates": [
@@ -2256,6 +2287,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.put",
+    "distinct": "endpoint_subscriptions.put",
     "method": "PUT",
     "endpoint_path": "/publications/:publicationId/subscriptions/:subscriptionId",
     "endpoint_path_alternates": [
@@ -2311,6 +2343,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.patch",
+    "distinct": "endpoint_subscriptions.patch",
     "method": "PATCH",
     "endpoint_path": "/publications/:publicationId/subscriptions/:subscriptionId",
     "endpoint_path_alternates": [
@@ -2366,6 +2399,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.delete",
+    "distinct": "endpoint_subscriptions.delete",
     "method": "DELETE",
     "endpoint_path": "/publications/:publicationId/subscriptions/:subscriptionId",
     "endpoint_path_alternates": [
@@ -2421,6 +2455,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptionTags.create",
+    "distinct": "endpoint_subscriptionTags.create",
     "method": "POST",
     "endpoint_path": "/publications/:publicationId/subscriptions/:subscriptionId/tags",
     "endpoint_path_alternates": [
@@ -2476,6 +2511,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.create",
+    "distinct": "endpoint_tiers.create",
     "method": "POST",
     "endpoint_path": "/publications/:publicationId/tiers",
     "endpoint_path_alternates": [
@@ -2531,6 +2567,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.index",
+    "distinct": "endpoint_tiers.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/tiers",
     "endpoint_path_alternates": [
@@ -2586,6 +2623,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.show",
+    "distinct": "endpoint_tiers.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/tiers/:tierId",
     "endpoint_path_alternates": [
@@ -2641,6 +2679,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.put",
+    "distinct": "endpoint_tiers.put",
     "method": "PUT",
     "endpoint_path": "/publications/:publicationId/tiers/:tierId",
     "endpoint_path_alternates": [
@@ -2696,6 +2735,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.patch",
+    "distinct": "endpoint_tiers.patch",
     "method": "PATCH",
     "endpoint_path": "/publications/:publicationId/tiers/:tierId",
     "endpoint_path_alternates": [
@@ -2751,6 +2791,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.create",
+    "distinct": "endpoint_webhooks.create",
     "method": "POST",
     "endpoint_path": "/publications/:publicationId/webhooks",
     "endpoint_path_alternates": [
@@ -2806,6 +2847,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.index",
+    "distinct": "endpoint_webhooks.index",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/webhooks",
     "endpoint_path_alternates": [
@@ -2861,6 +2903,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.show",
+    "distinct": "endpoint_webhooks.show",
     "method": "GET",
     "endpoint_path": "/publications/:publicationId/webhooks/:endpointId",
     "endpoint_path_alternates": [
@@ -2917,6 +2960,7 @@
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.delete",
+    "distinct": "endpoint_webhooks.delete",
     "method": "DELETE",
     "endpoint_path": "/publications/:publicationId/webhooks/:endpointId",
     "endpoint_path_alternates": [

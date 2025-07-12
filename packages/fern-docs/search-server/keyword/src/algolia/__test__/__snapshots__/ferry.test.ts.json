@@ -107,6 +107,7 @@
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.CreateAppointmentTask",
+    "distinct": "endpoint_.CreateAppointmentTask",
     "method": "POST",
     "endpoint_path": "/api/v1/appointment-tasks/create",
     "endpoint_path_alternates": [
@@ -158,6 +159,7 @@
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.GetAppointmentTask",
+    "distinct": "endpoint_.GetAppointmentTask",
     "method": "GET",
     "endpoint_path": "/api/v1/appointment-tasks/:appointmentTaskId",
     "endpoint_path_alternates": [
@@ -209,6 +211,7 @@
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.CancelAppointmentTask",
+    "distinct": "endpoint_.CancelAppointmentTask",
     "method": "POST",
     "endpoint_path": "/api/v1/appointment-tasks/:appointmentTaskId/cancel",
     "endpoint_path_alternates": [
@@ -258,6 +261,7 @@
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.GetAllAppointmentTasks",
+    "distinct": "endpoint_.GetAllAppointmentTasks",
     "method": "GET",
     "endpoint_path": "/api/v1/appointment-tasks",
     "endpoint_path_alternates": [
