@@ -4,7 +4,7 @@
   "globalEnv": [],
   "tasks": {
     "build": {
-      "env": []
+      "env": ["NEXT_RUNTIME", "SENTRY_AUTH_TOKEN"]
     },
     "compile": {
       "outputs": ["tsconfig.tsbuildinfo"],
@@ -13,7 +13,8 @@
     "dashboard:build": {
       "dependsOn": ["compile"],
       "outputs": [".next/**", "!.next/cache/**"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"]
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": ["SENTRY_AUTH_TOKEN"]
     },
     "dashboard:dev": {
       "dependsOn": ["^build", "^compile"]
