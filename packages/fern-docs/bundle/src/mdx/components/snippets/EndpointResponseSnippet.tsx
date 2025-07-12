@@ -1,5 +1,6 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
+import { cn } from "@fern-docs/components";
 
 import { useExampleSelection } from "@/components/api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "@/components/api-reference/examples/CodeSnippetExample";
@@ -8,6 +9,7 @@ export function EndpointResponseSnippet({
   example,
   endpointDefinition,
   slug,
+  className,
 }: {
   /**
    * The endpoint locator to use for the request snippet.
@@ -25,6 +27,7 @@ export function EndpointResponseSnippet({
    * The slug of the endpoint.
    */
   slug: string;
+  className?: string;
 }) {
   if (endpointDefinition == null) {
     return null;
@@ -35,6 +38,7 @@ export function EndpointResponseSnippet({
       endpoint={endpointDefinition}
       example={example}
       slug={slug}
+      className={className}
     />
   );
 }
@@ -43,10 +47,12 @@ function EndpointResponseSnippetInternal({
   endpoint,
   example,
   slug,
+  className,
 }: {
   slug: string;
   endpoint: EndpointDefinition;
   example: string | undefined;
+  className?: string;
 }) {
   const { selectedExample } = useExampleSelection(endpoint, example);
 
@@ -59,7 +65,7 @@ function EndpointResponseSnippetInternal({
   const responseJsonString = JSON.stringify(responseJson, null, 2);
 
   return (
-    <div className="mb-5 mt-3">
+    <div className={cn("mb-5 mt-3", className)}>
       <CodeSnippetExample
         title="Response"
         // actions={undefined}

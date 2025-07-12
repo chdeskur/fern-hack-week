@@ -30,6 +30,7 @@ export declare namespace Callout {
     intent: string;
     title?: string;
     icon?: unknown;
+    className?: string;
   }
 }
 
@@ -46,10 +47,12 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
   title,
   children,
   icon,
+  className,
 }) => {
   const intent = parseIntent(intentRaw);
+  const combinedClassName = cn("fern-callout", className);
   return (
-    <div data-intent={intent} className="fern-callout">
+    <div data-intent={intent} className={combinedClassName}>
       <div className="flex items-start space-x-4">
         <div className="[&_svg]:size-icon-md mt-0.5 w-4">
           {typeof icon === "string" ? (

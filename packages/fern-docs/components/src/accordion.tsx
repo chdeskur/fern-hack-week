@@ -70,12 +70,12 @@ AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 const AccordionContent = React.forwardRef<
   React.ComponentRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, asChild, ...props }, ref) => {
+>(({ children, asChild, ...props }, ref) => {
   const collapseProps = useFernCollapseOverflow();
   return (
     <AccordionPrimitive.Content
       ref={composeRefs(ref, collapseProps.ref)}
-      className={cn("flex flex-col", className)}
+      className={"flex flex-col"}
       {...props}
       onAnimationStart={composeEventHandlers(
         props.onAnimationStart,

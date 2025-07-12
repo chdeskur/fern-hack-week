@@ -17,17 +17,21 @@ export interface TabProps {
   toc?: boolean;
   children: ReactNode;
   language?: string;
+  className?: string;
 }
 
 export interface TabGroupProps {
   toc?: boolean;
+  className?: string;
 }
 
 export function TabGroup({
   children,
+  className,
 }: {
   toc?: boolean;
   children?: ReactNode;
+  className?: string;
 }) {
   const items = unwrapChildren(children, Tab);
 
@@ -79,7 +83,12 @@ export function TabGroup({
 
   return (
     <RadixTabs.Root value={activeTab} onValueChange={handleTabChange}>
-      <RadixTabs.List className="border-border-default mb-6 mt-4 flex gap-4 overflow-x-auto overflow-y-hidden border-b first:-mt-3">
+      <RadixTabs.List
+        className={cn(
+          "border-border-default mb-6 mt-4 flex gap-4 overflow-x-auto overflow-y-hidden border-b first:-mt-3",
+          className
+        )}
+      >
         {items.map(({ props: { title = "Untitled", id = "" } }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
@@ -102,6 +111,7 @@ export function TabGroup({
 export function Tab({
   id = "",
   children,
+  className,
 }: {
   /**
    * the title of the tab
@@ -125,12 +135,13 @@ export function Tab({
    * the children of the tab
    */
   children?: ReactNode;
+  className?: string;
 }) {
   return (
     <RadixTabs.Content
       key={id}
       value={id}
-      className="border:content-[''] before:mb-4 before:block"
+      className={cn("border:content-[''] before:mb-4 before:block", className)}
     >
       {children}
     </RadixTabs.Content>

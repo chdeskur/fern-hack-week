@@ -12,7 +12,8 @@ export function Download({
   children,
   src,
   filename,
-}: PropsWithChildren<{ src?: string; filename?: string }>) {
+  className,
+}: PropsWithChildren<{ src?: string; filename?: string; className?: string }>) {
   if (!src) {
     return children;
   }
@@ -52,6 +53,7 @@ export function Download({
   ) {
     return React.cloneElement(children, {
       href: src,
+      className,
       download: filename || true,
       onClick: (e) => {
         void (async () => {
@@ -67,6 +69,7 @@ export function Download({
 
   return (
     <A
+      className={className}
       href={src}
       download={filename || true}
       onClick={(e) => {

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import { cn } from "@fern-docs/components";
 import * as AccordionComponent from "@fern-docs/components";
 import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
 
@@ -8,9 +9,10 @@ import { unwrapChildren } from "../../common/unwrap-children";
 export interface AccordionGroupProps {
   children: React.ReactNode;
   toc?: boolean;
+  className?: string;
 }
 
-export function AccordionGroup({ children }: AccordionGroupProps) {
+export function AccordionGroup({ children, className }: AccordionGroupProps) {
   const [activeTabs, setActiveTabs] = React.useState<string[]>([]);
   const anchor = useCurrentAnchor();
   const [updatedUrl, setUpdatedUrl] = React.useState<string | null>(null);
@@ -91,7 +93,7 @@ export function AccordionGroup({ children }: AccordionGroupProps) {
       type="multiple"
       value={activeTabs}
       onValueChange={handleValueChange}
-      className="m-mdx"
+      className={cn("m-mdx", className)}
     >
       {children}
     </AccordionComponent.Accordion>
@@ -103,6 +105,7 @@ export function Accordion({
   id = "",
   children,
   nestedHeaders,
+  className,
 }: {
   /**
    * the title of the accordion
@@ -126,6 +129,10 @@ export function Accordion({
    * the headers nested within the accordion
    */
   nestedHeaders?: string[];
+  /**
+   * the class name of the accordion
+   */
+  className?: string;
 }) {
   if (!children) {
     return null;
@@ -135,11 +142,12 @@ export function Accordion({
       id={id}
       value={id}
       nestedHeaders={nestedHeaders}
+      className={className}
     >
-      <AccordionComponent.AccordionTrigger>
+      <AccordionComponent.AccordionTrigger className={className}>
         {title}
       </AccordionComponent.AccordionTrigger>
-      <AccordionComponent.AccordionContent>
+      <AccordionComponent.AccordionContent className={className}>
         <div className="px-5">{children}</div>
       </AccordionComponent.AccordionContent>
     </AccordionComponent.AccordionItem>

@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
+import { cn } from "@fern-docs/components";
 import { useCurrentVersionSlug } from "@fern-docs/components/state/navigation";
 
 import { ApiReferenceButton } from "@/components/ApiReferenceButton";
@@ -15,6 +16,7 @@ export function EndpointRequestSnippet({
   example,
   endpointDefinition,
   slugs,
+  className,
 }: {
   /**
    * The endpoint locator to use for the request snippet.
@@ -32,6 +34,7 @@ export function EndpointRequestSnippet({
    * @internal the rehype-endpoint-examples-snippets plugin will set this
    */
   slugs?: string[];
+  className?: string;
 }) {
   if (endpointDefinition == null) {
     return null;
@@ -42,6 +45,7 @@ export function EndpointRequestSnippet({
       endpoint={endpointDefinition}
       slugs={slugs ?? []}
       example={example}
+      className={className}
     />
   );
 }
@@ -50,10 +54,12 @@ function EndpointRequestSnippetInternal({
   endpoint,
   example,
   slugs,
+  className,
 }: {
   endpoint: ApiDefinition.EndpointDefinition;
   example: string | undefined;
   slugs: string[];
+  className?: string;
 }): ReactElement<any> | null {
   const slug = useCurrentSlug(slugs);
   const {
@@ -70,7 +76,7 @@ function EndpointRequestSnippetInternal({
   }
 
   return (
-    <div className="mb-5 mt-3">
+    <div className={cn("mb-5 mt-3", className)}>
       <CodeSnippetExample
         title={
           <EndpointUrlWithOverflow

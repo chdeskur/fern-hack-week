@@ -30,6 +30,7 @@ type EndpointSchemaSnippetProps = {
    * @internal the rehype-endpoint-schema-snippets plugin will set this
    */
   types?: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+  className?: string;
 };
 
 export function EndpointSchemaSnippet({
@@ -37,6 +38,7 @@ export function EndpointSchemaSnippet({
   endpointDefinition,
   selector,
   types,
+  className,
 }: EndpointSchemaSnippetProps) {
   const currentSlug = useCurrentSlug();
   if (endpoint == null || endpointDefinition == null || types == null) {
@@ -51,6 +53,7 @@ export function EndpointSchemaSnippet({
           endpointDefinition={endpointDefinition}
           selector={selector}
           types={types}
+          className={className}
         />
       </TypeDefinitionSlotsServer>
     </TypeDefinitionRoot>
@@ -80,13 +83,13 @@ function shouldShowSection(
 
 export const EndpointSchemaSnippetInternal: React.FC<
   React.PropsWithChildren<EndpointSchemaSnippetProps>
-> = ({ selector, endpoint, endpointDefinition, types }) => {
+> = ({ selector, endpoint, endpointDefinition, types, className }) => {
   if (endpoint == null || endpointDefinition == null || types == null) {
     return null;
   }
 
   return (
-    <div>
+    <div className={className}>
       {shouldShowSection(selector, "request.path") &&
         endpointDefinition.pathParameters?.length && (
           <TypeDefinitionAnchorPart part="path">

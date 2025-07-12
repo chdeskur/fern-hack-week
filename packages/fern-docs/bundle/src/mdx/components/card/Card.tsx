@@ -21,6 +21,7 @@ export declare namespace Card {
     children?: string;
     href?: string;
     iconPosition?: "top" | "left";
+    className?: string;
 
     // in-development:
     badge?: string;
@@ -38,13 +39,15 @@ export const Card: React.FC<Card.Props> = ({
   children,
   href,
   badge,
+  className,
 }) => {
   if (isNaN(iconSize)) {
     iconSize = 8;
   }
 
-  const className = cn(
-    "not-prose rounded-3 relative block border p-6 text-base"
+  const combinedClassName = cn(
+    "not-prose rounded-3 relative block border p-6 text-base",
+    className
   );
 
   const content = (
@@ -92,12 +95,12 @@ export const Card: React.FC<Card.Props> = ({
 
   if (href != null) {
     return (
-      <FernLinkCard className={className} scroll={true} href={href}>
+      <FernLinkCard className={combinedClassName} scroll={true} href={href}>
         <NoZoom>
           <DisableFernAnchor>{content}</DisableFernAnchor>
         </NoZoom>
       </FernLinkCard>
     );
   }
-  return <FernCard className={className}>{content}</FernCard>;
+  return <FernCard className={combinedClassName}>{content}</FernCard>;
 };
