@@ -49,4 +49,11 @@
       @apply bg-background h-10 p-3;
     }
   }
+
+  /* set max-width for code blocks */
+  .bg-card-background,
+  .fern-callout,
+  .fern-card {
+    max-width: calc(var(--content-width) * 0.8) !important;
+  }
 }
