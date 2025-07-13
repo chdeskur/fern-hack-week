@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { postToSlack } from "@fern-api/docs-server";
+import { isLocal } from "@fern-api/docs-server";
 import { track } from "@fern-api/docs-server/analytics/posthog";
 import {
   algoliaAppId,
@@ -22,12 +23,12 @@ import {
 export const maxDuration = 800; // 13 minutes
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  // if (isLocal() || isSelfHosted()) {
-  //   return NextResponse.json(
-  //     "algolia indexing is not accessible in local preview mode",
-  //     { status: 400 }
-  //   );
-  // }
+  if (isLocal()) {
+    return NextResponse.json(
+      "algolia indexing is not accessible in local preview mode",
+      { status: 400 }
+    );
+  }
 
   const host = req.nextUrl.host;
   const domain = getDocsDomainEdge(req);

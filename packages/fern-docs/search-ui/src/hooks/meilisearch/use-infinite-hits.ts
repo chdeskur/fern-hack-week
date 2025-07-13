@@ -23,6 +23,7 @@ interface MeilisearchHit {
   [key: string]: any;
 }
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 interface MeilisearchResponse {
   hits: MeilisearchHit[];
   query: string;
@@ -52,7 +53,6 @@ export function useMeilisearchInfiniteHits(): ReturnType<
 
   const query = useSearchQuery();
 
-  console.log("[Meilisearch] query", query);
   const { filters } = useFacetFilters();
 
   // Prevent infinite requests by tracking last query/filters
@@ -72,7 +72,7 @@ export function useMeilisearchInfiniteHits(): ReturnType<
     const filterClauses: string[] = [];
     for (const filter of filters) {
       const { facet, value } = filter;
-      if (value !== undefined && value !== null && value !== "") {
+      if (value !== undefined && value != null && value !== "") {
         filterClauses.push(`${facet} = "${value}"`);
       }
     }
@@ -88,12 +88,6 @@ export function useMeilisearchInfiniteHits(): ReturnType<
       lastQueryRef.current !== query ||
       lastFiltersRef.current !== filtersString
     ) {
-      console.log("[Meilisearch] Resetting state due to query/filters change", {
-        prevQuery: lastQueryRef.current,
-        newQuery: query,
-        prevFilters: lastFiltersRef.current,
-        newFilters: filtersString,
-      });
       setAllHits([]);
       setCurrentPage(0);
       setTotalHits(0);
@@ -102,26 +96,15 @@ export function useMeilisearchInfiniteHits(): ReturnType<
       lastQueryRef.current = query;
       lastFiltersRef.current = filtersString;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, filters]);
 
   // Fetch hits from Meilisearch, distinct on api_endpoint_page
   const fetchHits = useCallback(
     async (page: number, append: boolean = false) => {
       if (isLoading) {
-        console.log(
-          "[Meilisearch] fetchHits called but already loading, aborting"
-        );
         return;
       }
       setIsLoading(true);
-      console.log("[Meilisearch] Fetching hits", {
-        page,
-        append,
-        query,
-        filters,
-        isLoading,
-      });
 
       try {
         const index = client.index("docs");
@@ -144,14 +127,10 @@ export function useMeilisearchInfiniteHits(): ReturnType<
           searchParams.filter = filterString;
         }
 
-        console.log("[Meilisearch] Search params", searchParams);
-
         const response = await index.search<MeilisearchHit>(
           query,
           searchParams
         );
-
-        console.log("[Meilisearch] Search response", response);
 
         const newHits = (response.hits || []).map((hit, index) => ({
           ...hit,
@@ -182,18 +161,9 @@ export function useMeilisearchInfiniteHits(): ReturnType<
 
         if (append) {
           setAllHits((prev) => {
-            const combined = [...prev, ...newHits];
-            console.log("[Meilisearch] Appending hits", {
-              prevCount: prev.length,
-              newCount: newHits.length,
-              total: combined.length,
-            });
-            return combined;
+            return [...prev, ...newHits];
           });
         } else {
-          console.log("[Meilisearch] Setting new hits", {
-            newCount: newHits.length,
-          });
           setAllHits(newHits);
         }
 
@@ -201,18 +171,11 @@ export function useMeilisearchInfiniteHits(): ReturnType<
           response.estimatedTotalHits / HITS_PER_PAGE
         );
         setHasMore(page + 1 < totalPages);
-        console.log("[Meilisearch] Set hasMore", {
-          hasMore: page + 1 < totalPages,
-          page,
-          totalPages,
-        });
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Meilisearch error:", error);
         setHasMore(false);
       } finally {
         setIsLoading(false);
-        console.log("[Meilisearch] Fetch complete, isLoading set to false");
       }
     },
     // Only depend on query/filters stringified, not objects themselves
@@ -225,16 +188,7 @@ export function useMeilisearchInfiniteHits(): ReturnType<
   useEffect(() => {
     // Only fetch if query or filters are not empty
     if (query || Object.keys(filters).length > 0) {
-      console.log(
-        "[Meilisearch] useEffect: triggering fetchHits for initial/query/filter change",
-        { query, filters }
-      );
       fetchHits(0, false);
-    } else {
-      console.log(
-        "[Meilisearch] useEffect: not fetching, query and filters empty",
-        { query, filters }
-      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, JSON.stringify(filters), fetchHits]);
@@ -242,32 +196,20 @@ export function useMeilisearchInfiniteHits(): ReturnType<
   // Show more function for infinite scroll
   const showMore = useCallback(() => {
     if (!hasMore || isLoading) {
-      console.log("[Meilisearch] showMore: not loading more", {
-        hasMore,
-        isLoading,
-      });
       return;
     }
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    console.log("[Meilisearch] showMore: loading next page", { nextPage });
     fetchHits(nextPage, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, hasMore, isLoading, fetchHits]);
 
   // Show previous function (for going back)
   const showPrevious = useCallback(() => {
     if (currentPage <= 0) {
-      console.log("[Meilisearch] showPrevious: already at first page", {
-        currentPage,
-      });
       return;
     }
     const prevPage = currentPage - 1;
     setCurrentPage(prevPage);
-    console.log("[Meilisearch] showPrevious: going to previous page", {
-      prevPage,
-    });
     // Optionally, you could re-fetch up to prevPage, but for now just slice
     // fetchHits(0, false);
   }, [currentPage]);
@@ -276,32 +218,30 @@ export function useMeilisearchInfiniteHits(): ReturnType<
   const sendEvent: SendEventForHits = useCallback(() => {
     // Meilisearch doesn't have built-in analytics like Algolia
     // You could implement your own analytics here
-    console.log("[Meilisearch] sendEvent called (noop)");
   }, []);
 
   // Bind event function
   const bindEvent = useCallback(() => {
-    console.log("[Meilisearch] bindEvent called");
     return "";
   }, []);
 
-  const totalPages = Math.ceil(totalHits / HITS_PER_PAGE);
+  // const totalPages = Math.ceil(totalHits / HITS_PER_PAGE);
   const currentPageHits = allHits.slice(
     currentPage * HITS_PER_PAGE,
     (currentPage + 1) * HITS_PER_PAGE
   );
 
   // Debug: log state changes
-  useEffect(() => {
-    console.log("[Meilisearch] State changed", {
-      allHitsCount: allHits.length,
-      isLoading,
-      currentPage,
-      totalHits,
-      hasMore,
-      results,
-    });
-  }, [allHits, isLoading, currentPage, totalHits, hasMore, results]);
+  // useEffect(() => {
+  //   console.log("[Meilisearch] State changed", {
+  //     allHitsCount: allHits.length,
+  //     isLoading,
+  //     currentPage,
+  //     totalHits,
+  //     hasMore,
+  //     results,
+  //   });
+  // }, [allHits, isLoading, currentPage, totalHits, hasMore, results]);
 
   return {
     hits: allHits,
@@ -354,17 +294,11 @@ function convertSnippeting(
 // Also implement the simpler hooks for completeness
 export function useMeilisearchHits(): AlgoliaRecordHit[] {
   const { hits } = useMeilisearchInfiniteHits();
-  console.log(
-    "[Meilisearch] useMeilisearchHits called, hits count:",
-    hits.length
-  );
   return hits as AlgoliaRecordHit[];
 }
 
 export function useMeilisearchSendEvent(): SendEventForHits {
   return () => {
     // Implement your own analytics tracking here if needed
-    // eslint-disable-next-line no-console
-    console.log("Meilisearch: sendEvent called");
   };
 }
