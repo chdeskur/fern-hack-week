@@ -4,7 +4,6 @@ import React from "react";
 
 import { Rss } from "lucide-react";
 
-import { CopyToClipboardButton } from "@fern-docs/components/CopyToClipboardButton";
 import { FernButton } from "@fern-docs/components/FernButton";
 
 export function RSSFeedButton() {
@@ -13,19 +12,20 @@ export function RSSFeedButton() {
     return `${currentUrl}.rss`;
   };
 
+  const handleClick = () => {
+    const rssUrl = getRssUrl();
+    window.open(rssUrl, "_blank");
+  };
+
   return (
-    <CopyToClipboardButton content={getRssUrl}>
-      {(onClick) => (
-        <FernButton
-          variant="outlined"
-          onClick={onClick}
-          rounded
-          className="fern-rss-feed-button"
-          rightIcon={<Rss className="text-(color:--accent-a11) size-3.5" />}
-        >
-          Subscribe via <span className="text-(color:--accent-a11)">RSS</span>
-        </FernButton>
-      )}
-    </CopyToClipboardButton>
+    <FernButton
+      variant="outlined"
+      onClick={handleClick}
+      rounded
+      className="fern-rss-feed-button"
+      rightIcon={<Rss className="text-(color:--accent-a11) size-3.5" />}
+    >
+      Subscribe via <span className="text-(color:--accent-a11)">RSS</span>
+    </FernButton>
   );
 }
