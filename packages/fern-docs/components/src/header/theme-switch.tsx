@@ -20,11 +20,13 @@ export function ThemeSwitch({
   variant = "outline",
   size = "default",
   iconOnly = false,
+  disabled = false,
 }: {
   className?: string;
   variant?: "outline" | "ghost";
   size?: "sm" | "default";
   iconOnly?: boolean;
+  disabled?: boolean;
 }) {
   const { setTheme, theme = "system", forcedTheme } = useTheme();
   const mounted = useMounted();
@@ -44,6 +46,7 @@ export function ThemeSwitch({
       <Button
         variant={variant}
         size={iconOnly ? (size === "default" ? "icon" : "iconSm") : size}
+        disabled={disabled}
       >
         {selectedOption?.icon}
         {!iconOnly && selectedOption?.label}

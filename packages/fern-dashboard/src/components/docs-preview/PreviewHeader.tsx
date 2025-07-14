@@ -1,7 +1,9 @@
 "use client";
 
+import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
 import { AbstractHeaderContent } from "@fern-docs/components/abstract/AbstractHeaderContent";
 import { FERN_SEARCH_BUTTON_ID } from "@fern-docs/components/constants";
+import { ThemeSwitch } from "@fern-docs/components/header/theme-switch";
 import { DesktopSearchButton } from "@fern-docs/search-ui/components/desktop/desktop-search-button";
 
 export function PreviewHeader({
@@ -26,6 +28,19 @@ export function PreviewHeader({
       productSelect={productSelect}
       navbarLinks={navbarLinks}
       showSearchBar={showSearchBar}
+      themeSwitch={
+        <FernTooltipProvider>
+          <FernTooltip
+            content="Theme switch is disabled in editor"
+            side="bottom"
+            variant="dashboard"
+          >
+            <span className="pointer-events-auto ml-2 w-fit">
+              <ThemeSwitch iconOnly variant="ghost" disabled />
+            </span>
+          </FernTooltip>
+        </FernTooltipProvider>
+      }
       searchBar={
         <DesktopSearchButton
           id={FERN_SEARCH_BUTTON_ID}

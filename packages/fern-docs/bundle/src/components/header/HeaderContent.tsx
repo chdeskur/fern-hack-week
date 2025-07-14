@@ -4,6 +4,7 @@ import { CSSProperties } from "react";
 import React from "react";
 
 import { AbstractHeaderContent } from "@fern-docs/components/abstract/AbstractHeaderContent";
+import { ThemeSwitch } from "@fern-docs/components/header/theme-switch";
 
 import { SearchV2Trigger } from "@/state/search";
 
@@ -46,6 +47,7 @@ export function HeaderContent({
           isSearchInSidebar={false}
         />
       }
+      themeSwitch={<ThemeSwitch iconOnly variant="ghost" className="ml-2" />}
     />
   );
 }

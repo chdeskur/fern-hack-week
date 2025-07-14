@@ -8,7 +8,6 @@ import { useIsDesktop } from "@fern-ui/react-commons";
 import { FernButtonGroup } from "../FernButton";
 import { cn } from "../cn";
 import { MobileMenuButton } from "../header/MobileButtons";
-import { ThemeSwitch } from "../header/theme-switch";
 
 export function AbstractHeaderContent({
   logo,
@@ -21,6 +20,7 @@ export function AbstractHeaderContent({
   loginButton,
   forceHeader = false,
   searchBar,
+  themeSwitch,
 }: {
   logo: React.ReactNode;
   versionSelect: React.ReactNode;
@@ -32,6 +32,7 @@ export function AbstractHeaderContent({
   loginButton?: React.ReactNode;
   forceHeader?: boolean;
   searchBar: React.ReactNode;
+  themeSwitch: React.ReactNode;
 }) {
   const isDesktop = useIsDesktop();
   return (
@@ -69,7 +70,7 @@ export function AbstractHeaderContent({
           <nav className="fern-header-navbar-links" aria-label="Navbar links">
             {navbarLinks}
             {loginButton}
-            <ThemeSwitch iconOnly variant="ghost" className="ml-2" />
+            {themeSwitch}
           </nav>
         </FernButtonGroup>
 
