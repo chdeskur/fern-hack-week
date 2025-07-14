@@ -2,7 +2,6 @@ docs: APIs for the FAI (Acorn) Service
 
 imports:
   commons: ./commons.yml
-  conversations: ./conversations.yml
 
 service:
   auth: false
@@ -18,10 +17,10 @@ service:
         name: GetHistogramAnalyticsRequest
         query-parameters:
           start_date:
-            type: string
+            type: datetime
             docs: The start date of the period to retrieve analytics for
           end_date:
-            type: string
+            type: datetime
             docs: The end date of the period to retrieve analytics for
           groupBy:
             type: GroupBy

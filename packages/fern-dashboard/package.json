@@ -38,6 +38,7 @@
     "@fern-api/docs-loader": "workspace:*",
     "@fern-api/docs-server": "workspace:*",
     "@fern-api/docs-utils": "workspace:*",
+    "@fern-api/fai-sdk": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.13.4-7-g5ff8ee8",
     "@fern-docs/components": "workspace:*",

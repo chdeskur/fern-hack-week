@@ -4,8 +4,8 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from fai.models.query import Query
-from fai.models.query import QueryApi
+from fai.api_models.query import QueryApi
+from fai.db_models.query import Query
 from src.fai.app import fai_app
 from src.fai.dependencies import get_db
 from src.settings import LOGGER

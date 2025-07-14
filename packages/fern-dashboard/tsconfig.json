@@ -22,6 +22,9 @@
   ],
   "references": [
     {
+      "path": "../fai-sdk"
+    },
+    {
       "path": "../fdr-sdk"
     },
     {

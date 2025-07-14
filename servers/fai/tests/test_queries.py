@@ -2,7 +2,7 @@ import datetime
 
 import requests
 
-from src.fai.models.query import QueryApi
+from src.fai.api_models.query import QueryApi
 
 
 def test_create_query(fai_docker: None, docker_ip: str) -> None:

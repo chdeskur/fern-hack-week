@@ -1,24 +1,10 @@
-from datetime import datetime
-from typing import Optional
-
-from pydantic import BaseModel
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 from sqlalchemy import Float
 from sqlalchemy import String
 
+from src.fai.api_models.query import QueryApi
 from src.fai.db import Base
-
-
-class QueryApi(BaseModel):
-    query_id: str
-    conversation_id: str
-    domain: str
-    text: str
-    role: str
-    source: str
-    created_at: datetime
-    time_to_first_token: Optional[float] = None
 
 
 class Query(Base):

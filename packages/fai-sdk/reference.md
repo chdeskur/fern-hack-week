@@ -31,8 +31,8 @@ Retrieve the usage histogram analytics for a given period
 
 ```typescript
 await client.analytics.getHistogramAnalytics("domain", {
-    start_date: "start_date",
-    end_date: "end_date",
+    start_date: "2024-01-15T09:30:00Z",
+    end_date: "2024-01-15T09:30:00Z",
     groupBy: "DAY",
 });
 ```

@@ -1,6 +1,6 @@
 import asyncio
 
-from fai.models.query import Query
+from fai.db_models.query import Query
 from src.fai.db import Base
 from src.fai.db import engine
 
