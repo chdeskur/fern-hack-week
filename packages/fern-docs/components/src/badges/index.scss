@@ -64,6 +64,15 @@
     &[data-badge-type="http-method"].small {
       font-size: 0.625rem;
       width: 2.25rem;
+
+      &[data-http-method="UNARY"],
+      &[data-http-method="CLIENT_STREAM"],
+      &[data-http-method="SERVER_STREAM"],
+      &[data-http-method="BIDIRECTIONAL_STREAM"] {
+        background-color: black;
+        color: white;
+        border: 0.5px solid white;
+      }
     }
 
     &[data-badge-type="http-method"].large {

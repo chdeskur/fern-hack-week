@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { HttpOrWssOrGrpc, isGrpcMethod } from "@fern-api/docs-utils";
+import { HttpOrWssOrGrpc } from "@fern-api/docs-utils";
 
 import { UIColor } from "../colors";
 import { Badge, BadgeProps } from "./badge";
@@ -58,8 +58,6 @@ export const HttpMethodBadge = forwardRef<
       data-badge-type="http-method"
       data-http-method={method}
       color={METHOD_COLOR_SCHEMES[method]}
-      variant={isGrpcMethod(method) ? "grpc" : undefined}
-      size={isGrpcMethod(method) ? "sm" : undefined}
     >
       {props.children ??
         (rest.size === "sm" ? ABBREVIATED_METHODS[method] : method)}
