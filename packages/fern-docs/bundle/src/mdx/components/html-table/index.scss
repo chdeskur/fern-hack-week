@@ -28,6 +28,13 @@
     tbody > tr:has(td[rowspan]):not(:has(~ tr > td[rowspan])) > td[rowspan] {
       @apply border-b-0;
     }
+
+    /* set max-width for code blocks */
+    .bg-card-background,
+    .fern-callout,
+    .fern-card {
+      max-width: calc(var(--content-width) * 0.8) !important;
+    }
   }
 
   .fern-table-root.fullscreen .fern-table thead th {
@@ -48,12 +55,5 @@
     .fern-table td {
       @apply bg-background h-10 p-3;
     }
-  }
-
-  /* set max-width for code blocks */
-  .bg-card-background,
-  .fern-callout,
-  .fern-card {
-    max-width: calc(var(--content-width) * 0.8) !important;
   }
 }
