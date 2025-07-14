@@ -7,12 +7,18 @@
 
 @source "../../../../../../../components";
 
+:root {
+  --header-toolbar-height: 54px;
+  --preview-container-height: calc(
+    100vh - var(--header-height) - var(--header-toolbar-height)
+  );
+}
 #preview-container {
   @apply relative;
   @import "../../../../../../../../../fern-docs/bundle/src/components/css/base.scss";
   @import "../../../../../../../../../fern-docs/bundle/src/components/css/components.scss";
 
-  @apply font-body text-body bg-background overflow-auto text-base;
+  @apply font-body text-body bg-background text-base;
   @apply h-full;
 
   .fern-background-image {
@@ -29,6 +35,8 @@
 
   #fern-sidebar[data-state="fixed"] {
     position: absolute;
+    @apply top-0;
+    height: var(--preview-container-height);
   }
 
   /* This makes sure that the main content is not pushed down by the header, since the header is no longer fixed in this layout. */

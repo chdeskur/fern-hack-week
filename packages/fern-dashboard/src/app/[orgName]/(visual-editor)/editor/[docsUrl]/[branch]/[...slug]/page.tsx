@@ -88,7 +88,7 @@ export default async function Page({
     // This is a temporary solution, as I anticipate we will want the TOC to be dynamic based
     // on the tiptap editor's content.
     <AbstractLayoutEvaluatorContent tableOfContents={[]}>
-      <div className="flex w-full flex-col gap-2 py-12">
+      <div className="flex h-[var(--preview-container-height)] w-full flex-col gap-2 overflow-scroll py-12">
         <SetCurrentNavigationNode
           nodeId={foundNode.node.id}
           sidebarRootNodeId={foundNode.sidebar?.id}

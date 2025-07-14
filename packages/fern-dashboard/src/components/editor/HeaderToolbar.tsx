@@ -113,7 +113,7 @@ export function HeaderToolbar({
   }, [githubSource, branch]);
 
   return (
-    <div className="bg-background z-50 flex h-[54px] flex-wrap items-center justify-center gap-2 border-b border-gray-500 px-2 py-2 shadow-sm md:py-1">
+    <div className="bg-background flex h-[var(--header-toolbar-height)] flex-wrap items-center justify-center gap-2 border-b border-gray-500 px-2 py-2 shadow-sm md:py-1">
       <div className="flex flex-1 items-center gap-2 text-left">
         <Button className="px-2" variant="ghost" size="iconSm" asChild>
           <a href={`/${orgName}/docs/${encodeURIComponent(docsUrl)}`}>
