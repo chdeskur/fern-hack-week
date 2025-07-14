@@ -1,10 +1,12 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, Globe } from "lucide-react";
 
+import { FernTooltipProvider } from "@fern-docs/components";
+import { FernTooltip } from "@fern-docs/components";
 import { getLoadableValue } from "@fern-ui/loadable";
 
 import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
@@ -85,32 +87,40 @@ export function HeaderToolbar({
       } else {
         ErrorFullCommitToast();
       }
+
+      if (response.success && !prUrl) {
+        if (githubSource.baseBranch == null) {
+          ErrorNoBaseBranchToast();
+          return;
+        }
+        const newPrUrl = await handleCreatePr({
+          branch,
+          owner: githubSource.owner,
+          repo: githubSource.repo,
+          baseBranch: githubSource.baseBranch,
+        });
+        setPrUrl(newPrUrl);
+      }
     } catch (error) {
       ErrorFullCommitToast();
       console.error("Error committing changes:", error); // TODO: errors should be logged to Sentry, not to console
     } finally {
       setIsCommitting(false);
     }
-  }, [githubSource, branch, changedMdxFiles, mdxSyncedStatus]);
+  }, [githubSource, branch, changedMdxFiles, mdxSyncedStatus, prUrl]);
 
-  const handleCreatePrPress = useCallback(async () => {
-    if (githubSource?.owner == null || githubSource.repo == null) {
-      ErrorNoGithubSourceToast();
-      return;
+  const commitDisabledReason = useMemo(() => {
+    if (isCommitting) {
+      return "Disabled while committing";
     }
-    if (githubSource.baseBranch == null) {
-      ErrorNoBaseBranchToast();
-      return;
+    if (Object.keys(changedMdxFiles)?.length === 0) {
+      return "No changes to commit";
     }
-
-    const newPrUrl = await handleCreatePr({
-      branch,
-      owner: githubSource.owner,
-      repo: githubSource.repo,
-      baseBranch: githubSource.baseBranch,
-    });
-    setPrUrl(newPrUrl);
-  }, [githubSource, branch]);
+    if (Object.values(mdxSyncedStatus).some((status) => status !== "SYNCED")) {
+      return "Commit disabled while changes are syncing";
+    }
+    return null;
+  }, [isCommitting, changedMdxFiles, mdxSyncedStatus]);
 
   return (
     <div className="bg-background flex h-[var(--header-toolbar-height)] flex-wrap items-center justify-center gap-2 border-b border-gray-500 px-2 py-2 shadow-sm md:py-1">
@@ -123,7 +133,7 @@ export function HeaderToolbar({
         <p className="text-gray-900">{branch}</p>
       </div>
       {/* TODO: Add undo/redo/settings buttons
-      <div className="flex items-center gap-2">
+       <div className="flex items-center gap-2">
          <ProfileImage
           picture={picture}
           name={name}
@@ -167,48 +177,60 @@ export function HeaderToolbar({
           Preview
         </Button> */}
         {/* <Button variant="ghost">Files</Button> */}
-        <ProfileImage
-          picture={picture}
-          name={name}
-          className="ring-primary border-3 border-white ring-2"
-        />
-        <div className="flex">
-          <Button
-            loading={isCommitting}
-            disabled={
-              isCommitting ||
-              Object.keys(changedMdxFiles)?.length === 0 ||
-              Object.values(mdxSyncedStatus).some(
-                (status) => status !== "SYNCED"
-              )
-            }
-            className="rounded-r-none border-r-0"
-            onClick={() => void handleCommitPress()}
+        <FernTooltipProvider>
+          <FernTooltip
+            content={`Editing as ${name}`}
+            delayDuration={0}
+            variant="dashboard"
           >
-            <GithubLogo />
-            Commit
-          </Button>
-          {prUrl ? (
-            <Button
-              variant="outline"
-              className="rounded-l-none border-l-0"
-              asChild
+            <span className="pointer-events-auto">
+              <ProfileImage
+                picture={picture}
+                name={name}
+                className="ring-primary border-3 border-white ring-2"
+              />
+            </span>
+          </FernTooltip>
+        </FernTooltipProvider>
+
+        <div className="flex gap-1">
+          <FernTooltipProvider>
+            <FernTooltip
+              content={prUrl ? undefined : "Commit changes to view PR"}
+              delayDuration={200}
+              variant="dashboard"
             >
-              <a href={prUrl} target="_blank">
+              {/* Additional span is needed since disabled buttons don't have pointer events */}
+              <span className="pointer-events-auto">
+                <Button disabled={!prUrl} variant="ghost" asChild={!!prUrl}>
+                  <a
+                    href={prUrl}
+                    target="_blank"
+                    className="flex items-center gap-2"
+                  >
+                    <Globe />
+                    View PR
+                  </a>
+                </Button>
+              </span>
+            </FernTooltip>
+          </FernTooltipProvider>
+          <FernTooltipProvider>
+            <FernTooltip
+              content={commitDisabledReason}
+              delayDuration={0}
+              variant="dashboard"
+            >
+              <Button
+                loading={isCommitting}
+                disabled={!!commitDisabledReason}
+                onClick={() => void handleCommitPress()}
+              >
                 <GithubLogo />
-                View PR
-              </a>
-            </Button>
-          ) : (
-            <Button
-              variant="outline"
-              className="rounded-l-none border-l-0"
-              onClick={() => void handleCreatePrPress()}
-            >
-              <GithubLogo />
-              Create PR
-            </Button>
-          )}
+                Commit
+              </Button>
+            </FernTooltip>
+          </FernTooltipProvider>
         </div>
       </div>
     </div>

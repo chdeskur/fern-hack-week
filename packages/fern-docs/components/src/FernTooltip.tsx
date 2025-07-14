@@ -22,18 +22,6 @@ const tooltipVariants = cva(
   }
 );
 
-const arrowVariants = cva({
-  variants: {
-    variant: {
-      default: "hidden",
-      dashboard: "fill-[#252529]",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-}) as typeof tooltipVariants;
-
 interface FernTooltipProps
   extends Tooltip.TooltipProps,
     Omit<Tooltip.TooltipContentProps, "content"> {
@@ -75,7 +63,7 @@ export const FernTooltip: FC<FernTooltipProps> = ({
         >
           {content}
           {variant === "dashboard" && (
-            <Tooltip.Arrow className={arrowVariants({ variant })} />
+            <Tooltip.Arrow className="fill-[#252529]" />
           )}
         </Tooltip.Content>
       </Tooltip.Portal>

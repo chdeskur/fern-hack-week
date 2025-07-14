@@ -20,7 +20,6 @@ export async function handleCreatePr({
       title: "Visual Editor: Update",
     });
     if (response.success) {
-      window.open(response.prUrl, "_blank");
       try {
         // No need to await this, we just want to try to generate a PR description.
         void handleGeneratePrDescription({
@@ -36,18 +35,6 @@ export async function handleCreatePr({
       return response.prUrl;
     } else {
       console.error("Failed to create PR:", response.error);
-      // This is a hack to open the PR in a new tab if it already exists
-      // once state is managed, and if PR exists, should not enter this function.
-      // TODO: instead raise error (ie PR already exists)
-      if (
-        typeof response.error === "string" &&
-        response.error.includes("A pull request already exists")
-      ) {
-        window.open(
-          `https://github.com/fern-api/fern/compare/main...${branch}`,
-          "_blank"
-        );
-      }
     }
   } catch (error) {
     console.error("Error creating PR:", error);
