@@ -10,7 +10,7 @@ const SearchResult = z.object({
   title: z.string(),
   url: z.string(),
   icon: z.string().optional(),
-  type: z.string(),
+  type: z.string().optional(),
   api_type: z.string().optional(),
 });
 
@@ -33,6 +33,7 @@ export interface SqueezedMessage {
       text: string;
       url: string;
     }[];
+    sources?: SearchResult[];
     parts?: UIMessagePart<UIDataTypes, UITools>[]; // vercel does not export types
   };
 }
@@ -126,6 +127,24 @@ export function squeezeMessages(messages: UIMessage[]): SqueezedMessage[] {
         })
         .filter(isNonNullish);
 
+      const sources: SearchResult[] = message.parts
+        ?.filter((part) => part.type === "data-sources")
+        .map((part) => {
+          if (part.type !== "data-sources") {
+            return undefined;
+          }
+          const parsedPart = sourcePartSchema.safeParse(part);
+          if (parsedPart.success) {
+            return parsedPart.data;
+          } else {
+            return undefined;
+          }
+        })
+        .filter(isNonNullish)
+        .flatMap((part) => part.data);
+
+      lastMessage.assistant.sources = sources;
+
       lastMessage.assistant.citations = lastMessage.assistant.citations?.concat(
         citationParts.map((part) => {
           return {
@@ -154,6 +173,10 @@ export function combineSearchResults(
         part.type === "tool-search" || part.type === "tool-output-available"
     ) as ToolUIPart[];
 
+  const sources: SearchResult[] = messages.flatMap(
+    (message) => message.assistant?.sources || []
+  );
+
   return toolUIParts
     .flatMap((part) => {
       return part.state === "output-available"
@@ -165,6 +188,7 @@ export function combineSearchResults(
     .map((part) => {
       return SearchResult.safeParse(part).data;
     })
+    .concat(sources)
     .filter(isNonNullish);
 }
 
@@ -176,6 +200,11 @@ const citationPartSchema = z.object({
     text: z.string(),
     url: z.string(),
   }),
+});
+
+const sourcePartSchema = z.object({
+  type: z.literal("data-sources"),
+  data: z.array(SearchResult),
 });
 
 type CitationPart = z.infer<typeof citationPartSchema>;

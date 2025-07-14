@@ -58,6 +58,12 @@ export async function runRouteForCohere({
     namespace: turbopufferNamespace,
     topK: 3,
   });
+  const searchResultSources = searchResults.map((hit) => {
+    return {
+      title: hit.attributes.title,
+      url: `https://${hit.attributes.domain}${hit.attributes.pathname}${hit.attributes.hash ?? ""}`,
+    };
+  });
 
   const systemPrompt = createChatSystemPrompt({
     modelProvider: "cohere",
@@ -97,6 +103,10 @@ export async function runRouteForCohere({
 
   const uiMessageStream = createUIMessageStream({
     execute({ writer }) {
+      writer.write({
+        type: "data-sources",
+        data: searchResultSources,
+      });
       const result = streamText({
         model: languageModel,
         system: systemPrompt,

@@ -80,6 +80,13 @@ export async function runRouteForAnthropic({
     topK: 3,
   });
 
+  const searchResultSources = searchResults.map((hit) => {
+    return {
+      title: hit.attributes.title,
+      url: `https://${hit.attributes.domain}${hit.attributes.pathname}${hit.attributes.hash ?? ""}`,
+    };
+  });
+
   const systemPromptDocuments = convertTpufRecordsToDocuments(searchResults);
   const systemPrompt = createChatSystemPrompt({
     modelProvider: "anthropic",
@@ -95,6 +102,11 @@ export async function runRouteForAnthropic({
 
   const uiMessageStream = createUIMessageStream({
     execute({ writer }) {
+      writer.write({
+        type: "data-sources",
+        data: searchResultSources,
+      });
+
       const result = streamText({
         model: languageModel,
         system: systemPrompt,

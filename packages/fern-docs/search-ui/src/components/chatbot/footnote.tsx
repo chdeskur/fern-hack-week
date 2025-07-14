@@ -163,7 +163,7 @@ export function FootnotesSection({
             <a href={url} target="_blank" rel="noreferrer">
               <PageIcon
                 icon={icon}
-                type={api_type ?? type}
+                type={api_type ?? type ?? "page"}
                 isSubPage={url.includes("#")}
               />
               {title}
