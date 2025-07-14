@@ -40,8 +40,18 @@ export interface MdxToHtmlResponse {
   customElements: CustomElements;
 }
 
+interface MdxToHtmlOptions {
+  // Whether to treat MDX code blocks as custom elements for now – avoids lossiness in "code meta" props
+  treatCodeBlocksAsCustomElements?: boolean;
+}
+
 // Convert mdx to html, frontmatter, and custom elements
-export function mdxToHtml(rootContent: string): MdxToHtmlResponse {
+export function mdxToHtml(
+  rootContent: string,
+  options?: MdxToHtmlOptions
+): MdxToHtmlResponse {
+  const { treatCodeBlocksAsCustomElements = false } = options ?? {};
+
   // Get mdast from root mdx content
   const mdast = fromMarkdown(rootContent, {
     extensions: [mdxjs(), fm(["yaml"])],
@@ -77,6 +87,9 @@ export function mdxToHtml(rootContent: string): MdxToHtmlResponse {
       mdxFlowExpression: customElementHandler,
       mdxTextExpression: customElementHandler,
       mdxjsEsm: customElementHandler,
+      ...(treatCodeBlocksAsCustomElements
+        ? { code: customElementHandler }
+        : {}),
     },
   });
 

@@ -79,7 +79,9 @@ export default async function Page({
 
   const page = pageId && (await loader.getPage(pageId));
   const mdx = page?.markdown ?? "";
-  const { html, frontmatter, customElements } = mdxToHtml(mdx);
+  const { html, frontmatter, customElements } = mdxToHtml(mdx, {
+    treatCodeBlocksAsCustomElements: true,
+  });
 
   return (
     // TODO: Currently, we are force-hiding the table of contents is within Visual Editor.
