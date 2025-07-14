@@ -9,6 +9,7 @@ import { mdxToHtml } from "@fern-docs/mdx";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
+import { CustomElementNodeViewClient } from "@/components/editor/extension-custom-element/CustomElementNodeViewClient";
 import { ROOT_SLUG_ALIAS, constructEditorSlug } from "@/utils/editor-routing";
 import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
@@ -83,11 +84,16 @@ export default async function Page({
     treatCodeBlocksAsCustomElements: true,
   });
 
+  console.log("FOUNDNODE:", foundNode);
+
   return (
     // TODO: Currently, we are force-hiding the table of contents is within Visual Editor.
     // This is a temporary solution, as I anticipate we will want the TOC to be dynamic based
     // on the tiptap editor's content.
-    <AbstractLayoutEvaluatorContent tableOfContents={[]}>
+    <AbstractLayoutEvaluatorContent
+      tableOfContents={[]}
+      frontmatter={frontmatter}
+    >
       <div className="flex h-[var(--preview-container-height)] w-full flex-col gap-2 overflow-scroll py-12">
         <SetCurrentNavigationNode
           nodeId={foundNode.node.id}
@@ -100,13 +106,19 @@ export default async function Page({
           versionIsDefault={foundNode.isCurrentVersionDefault}
           productIsDefault={foundNode.isCurrentProductDefault}
         />
-        <PageContents
-          // TODO: If there is no filename, it is an error we should surface
-          filename={page?.filename ?? ""}
-          initialHtml={html}
-          initialFrontmatter={frontmatter}
-          initialCustomElements={customElements}
-        />
+        {foundNode.node.type !== "page" ? (
+          <CustomElementNodeViewClient>
+            This page is not visible in the editor.
+          </CustomElementNodeViewClient>
+        ) : (
+          <PageContents
+            // TODO: If there is no filename, it is an error we should surface
+            filename={page?.filename ?? ""}
+            initialHtml={html}
+            initialFrontmatter={frontmatter}
+            initialCustomElements={customElements}
+          />
+        )}
       </div>
     </AbstractLayoutEvaluatorContent>
   );
