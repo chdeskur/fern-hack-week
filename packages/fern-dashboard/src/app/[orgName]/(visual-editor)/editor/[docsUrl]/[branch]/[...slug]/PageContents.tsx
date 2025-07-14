@@ -52,22 +52,22 @@ export default function PageContents({
   }, [changedMdxFile, filename, syncChanges]);
 
   return (
-    <>
+    <div className="max-w-content-width mx-auto w-full">
       <PageTitle
-        className="w-full max-w-2xl"
+        className="w-full"
         filename={filename}
         initialText={title ? String(title) : undefined}
       />
       <PageSubtitle
-        className="w-full max-w-2xl"
+        className="w-full"
         filename={filename}
         initialText={subtitle ? String(subtitle) : undefined}
       />
       <PageEditor
-        className="w-full max-w-2xl"
+        className="w-full"
         filename={filename}
         initialHtml={initialHtml}
       />
-    </>
+    </div>
   );
 }

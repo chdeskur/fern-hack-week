@@ -204,7 +204,9 @@ export default async function VisualEditorPreviewLayout({
                   hasProductsOrVersions={hasProductsOrVersions}
                   // announcement={<div>Announcement</div>}
                 >
-                  {children}
+                  <div className="flex h-[var(--preview-container-height)] flex-1 justify-center overflow-y-scroll">
+                    {children}
+                  </div>
                 </AbstractDefaultDocs>
               </div>
             </EditorRoutingProvider>

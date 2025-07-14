@@ -84,8 +84,6 @@ export default async function Page({
     treatCodeBlocksAsCustomElements: true,
   });
 
-  console.log("FOUNDNODE:", foundNode);
-
   return (
     // TODO: Currently, we are force-hiding the table of contents is within Visual Editor.
     // This is a temporary solution, as I anticipate we will want the TOC to be dynamic based
@@ -94,7 +92,7 @@ export default async function Page({
       tableOfContents={[]}
       frontmatter={frontmatter}
     >
-      <div className="flex h-[var(--preview-container-height)] w-full flex-col gap-2 overflow-scroll py-12">
+      <div className="flex w-full flex-col gap-2 py-12">
         <SetCurrentNavigationNode
           nodeId={foundNode.node.id}
           sidebarRootNodeId={foundNode.sidebar?.id}
