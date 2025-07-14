@@ -4,6 +4,7 @@ import { DocsLoader, createPruneKey } from "@fern-api/docs-loader";
 import {
   ApiDefinition,
   createEndpointContext,
+  createGrpcContext,
   createWebSocketContext,
   createWebhookContext,
   prune,
@@ -13,6 +14,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
 import { EndpointContent } from "./endpoints/EndpointContent";
+import { GrpcContent } from "./grpcs/GrpcContent";
 import { WebhookContent } from "./webhooks/WebhookContent";
 import { WebSocketContent } from "./websockets/WebSocket";
 
@@ -111,6 +113,22 @@ async function ApiEndpointContent({
         />
       );
     }
+    case "grpc": {
+      const context = createGrpcContext(node, prune(apiDefinition, node));
+      if (!context) {
+        throw new Error(`Could not create grpc context for ${node.id}`);
+      }
+      return (
+        <GrpcContent
+          serialize={serialize}
+          breadcrumb={breadcrumb}
+          context={context}
+          action={action}
+          bottomNavigation={bottomNavigation}
+        />
+      );
+    }
+
     default:
       return null;
   }

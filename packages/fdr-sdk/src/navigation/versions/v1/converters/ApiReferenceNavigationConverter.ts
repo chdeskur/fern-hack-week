@@ -186,10 +186,8 @@ export class ApiReferenceNavigationConverter {
         hidden: undefined,
         method: grpcMethodType,
         apiDefinitionId: this.apiDefinitionId,
-        availability: FernNavigation.V1.convertAvailability(
-          grpcEndpoint.availability
-        ),
-        isResponseStream: grpcEndpoint.response?.type.type === "stream",
+        availability: undefined,
+        isResponseStream: false,
         playground: undefined,
         authed: undefined,
         viewers: undefined,
@@ -417,6 +415,7 @@ export class ApiReferenceNavigationConverter {
     const endpoints = new Map<string, APIV1Read.EndpointDefinition>();
     const webSockets = new Map<string, APIV1Read.WebSocketChannel>();
     const webhooks = new Map<string, APIV1Read.WebhookDefinition>();
+    const grpc = new Map<string, APIV1Read.EndpointDefinition>();
     subpackage.endpoints.forEach((endpoint) => {
       endpoints.set(endpoint.id, endpoint);
     });
@@ -425,6 +424,11 @@ export class ApiReferenceNavigationConverter {
     });
     subpackage.webhooks.forEach((webhook) => {
       webhooks.set(webhook.id, webhook);
+    });
+    subpackage.endpoints.forEach((endpoint) => {
+      if (endpoint.protocol?.type === "grpc") {
+        grpc.set(endpoint.id, endpoint);
+      }
     });
     items.forEach((item) => {
       visitDiscriminatedUnion(item, "type")._visit({
@@ -458,14 +462,31 @@ export class ApiReferenceNavigationConverter {
             );
             return;
           }
-          const endpointId = ApiDefinitionHolder.createEndpointId(
-            endpoint,
-            targetSubpackageId
-          );
-          children.push(
-            this.convertEndpointNode(endpointId, endpoint, parentSlug)
-          );
-          this.#visitedEndpoints.add(endpointId);
+
+          if (endpoint.protocol?.type === "grpc") {
+            const grpcId = ApiDefinitionHolder.createGrpcId(
+              endpoint,
+              targetSubpackageId
+            );
+            children.push(
+              this.convertGrpcNode(
+                grpcId,
+                endpoint,
+                endpoint.protocol.methodType ?? "UNARY",
+                parentSlug
+              )
+            );
+            this.#visitedGrpcs.add(grpcId);
+          } else {
+            const endpointId = ApiDefinitionHolder.createEndpointId(
+              endpoint,
+              targetSubpackageId
+            );
+            children.push(
+              this.convertEndpointNode(endpointId, endpoint, parentSlug)
+            );
+            this.#visitedEndpoints.add(endpointId);
+          }
         },
         websocketId: (oldWebSocketId) => {
           const webSocket = webSockets.get(oldWebSocketId.value);

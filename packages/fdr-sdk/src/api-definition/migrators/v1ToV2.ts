@@ -85,6 +85,13 @@ export class ApiDefinitionV1ToLatest {
     return V2.WebhookId(`${subpackageId}.${webhook.id}`);
   }
 
+  static createGrpcEndpointId(
+    grpc: APIV1Read.EndpointDefinition,
+    subpackageId: string = ROOT_PACKAGE_ID
+  ): V2.EndpointId {
+    return V2.EndpointId(`${subpackageId}.${grpc.id}`);
+  }
+
   private endpoints: Record<V2.EndpointId, V2.EndpointDefinition> = {};
   private websockets: Record<V2.WebSocketId, V2.WebSocketChannel> = {};
   private webhooks: Record<V2.WebhookId, V2.WebhookDefinition> = {};
@@ -108,10 +115,16 @@ export class ApiDefinitionV1ToLatest {
           this.v1.subpackages
         );
         pkg.endpoints.forEach((endpoint) => {
-          const id = ApiDefinitionV1ToLatest.createEndpointId(
-            endpoint,
-            subpackageId
-          );
+          let id =
+            endpoint.protocol?.type === "grpc"
+              ? ApiDefinitionV1ToLatest.createGrpcEndpointId(
+                  endpoint,
+                  subpackageId
+                )
+              : ApiDefinitionV1ToLatest.createEndpointId(
+                  endpoint,
+                  subpackageId
+                );
           this.endpoints[id] = this.migrateEndpoint(id, endpoint, namespace);
         });
         pkg.websockets.forEach((webSocket) => {

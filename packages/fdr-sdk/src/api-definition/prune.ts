@@ -1,5 +1,6 @@
 import { LARGE_LOOP_TOLERANCE } from "./const";
 import type * as Latest from "./latest";
+import { EndpointId } from "./latest";
 import { ApiTypeIdVisitor } from "./typeid-visitor";
 
 export type PruningNodeType =
@@ -64,6 +65,15 @@ class ApiDefinitionPruner {
         const found = this.api.webhooks[node.webhookId];
         if (found) {
           toRet.webhooks[node.webhookId] = found;
+          found.namespace?.forEach((subpackageId) =>
+            namespaces.add(subpackageId)
+          );
+        }
+      } else if (node.type === "grpc") {
+        const grpcIdAsEndpointId = EndpointId(node.grpcId);
+        const found = this.api.endpoints[grpcIdAsEndpointId];
+        if (found) {
+          toRet.endpoints[grpcIdAsEndpointId] = found;
           found.namespace?.forEach((subpackageId) =>
             namespaces.add(subpackageId)
           );

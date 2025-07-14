@@ -1,5 +1,6 @@
 import type {
   EndpointNode,
+  GrpcNode,
   TypeId,
   WebSocketNode,
   WebhookNode,
@@ -8,6 +9,7 @@ import type {
   ApiDefinition,
   AuthScheme,
   EndpointDefinition,
+  EndpointId,
   ObjectProperty,
   TypeDefinition,
   WebSocketChannel,
@@ -94,6 +96,31 @@ export function createWebhookContext(
   return {
     node,
     webhook,
+    types: api.types,
+  };
+}
+
+export type GrpcContext = {
+  node: GrpcNode;
+  grpc: EndpointDefinition;
+  types: Record<TypeId, TypeDefinition>;
+};
+
+export function createGrpcContext(
+  node: GrpcNode | undefined,
+  apiDefinition: ApiDefinition | undefined
+): GrpcContext | undefined {
+  if (!node) {
+    return undefined;
+  }
+  const api = apiDefinition != null ? prune(apiDefinition, node) : undefined;
+  const grpc = api?.endpoints[node.grpcId as unknown as EndpointId];
+  if (!grpc) {
+    return undefined;
+  }
+  return {
+    node,
+    grpc,
     types: api.types,
   };
 }
