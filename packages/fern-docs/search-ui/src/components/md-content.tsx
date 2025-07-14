@@ -77,13 +77,17 @@ export function MarkdownContent({
     }
   }
 
+  // note: for code snippets, if you put a footnote on the same line as the code block end
+  // it will break the code rendering, so we clean manually by moving the footnote to a new line
+  cleanedContent = cleanedContent.replace(/```[ \t]*\[\^/g, "```\n[^");
+
   return (
     <Markdown
       components={components}
       remarkPlugins={remarkPlugins}
       remarkRehypeOptions={{}}
     >
-      {cleanedContent.replaceAll("```[^", "```\n[^")}
+      {cleanedContent}
     </Markdown>
   );
 }
