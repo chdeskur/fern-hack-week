@@ -5,36 +5,7 @@
 import { mockServerPool } from "../mock-server/MockServerPool.js";
 import { FernFaiClient } from "../../src/Client";
 
-describe("FernFaiClient", () => {
-    test("createQuery", async () => {
-        const server = mockServerPool.createServer();
-        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
-        const rawRequestBody = {
-            query_id: "query_id",
-            conversation_id: "conversation_id",
-            domain: "domain",
-            text: "text",
-            role: "role",
-            source: "source",
-            created_at: "2024-01-15T09:30:00Z",
-            time_to_first_token: undefined,
-        };
-
-        server.mockEndpoint().post("/queries").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
-
-        const response = await client.createQuery({
-            query_id: "query_id",
-            conversation_id: "conversation_id",
-            domain: "domain",
-            text: "text",
-            role: "role",
-            source: "source",
-            created_at: "2024-01-15T09:30:00Z",
-            time_to_first_token: undefined,
-        });
-        expect(response).toEqual(undefined);
-    });
-
+describe("Conversations", () => {
     test("getConversations", async () => {
         const server = mockServerPool.createServer();
         const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
@@ -65,7 +36,7 @@ describe("FernFaiClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.getConversations("domain");
+        const response = await client.conversations.getConversations("domain");
         expect(response).toEqual([
             {
                 conversation_id: "conversation_id",
@@ -122,7 +93,7 @@ describe("FernFaiClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.getConversationById("conversation_id");
+        const response = await client.conversations.getConversationById("conversation_id");
         expect(response).toEqual({
             conversation_id: "conversation_id",
             created_at: "2024-01-15T09:30:00Z",
@@ -136,43 +107,6 @@ describe("FernFaiClient", () => {
                     role: "role",
                     text: "text",
                     created_at: "2024-01-15T09:30:00Z",
-                },
-            ],
-        });
-    });
-
-    test("getHistogramAnalytics", async () => {
-        const server = mockServerPool.createServer();
-        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
-
-        const rawResponseBody = {
-            bars: [
-                { label: "label", conversationCount: 1 },
-                { label: "label", conversationCount: 1 },
-            ],
-        };
-        server
-            .mockEndpoint()
-            .get("/analytics/histogram/domain")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.getHistogramAnalytics("domain", {
-            start_date: "start_date",
-            end_date: "end_date",
-            groupBy: "DAY",
-        });
-        expect(response).toEqual({
-            bars: [
-                {
-                    label: "label",
-                    conversationCount: 1,
-                },
-                {
-                    label: "label",
-                    conversationCount: 1,
                 },
             ],
         });

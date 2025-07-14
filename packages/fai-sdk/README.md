@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { FernFaiClient } from "@fern-api/fai-sdk";
 
 const client = new FernFaiClient({ token: "YOUR_TOKEN" });
-await client.createQuery({
+await client.queries.createQuery({
     query_id: "query_id",
     conversation_id: "conversation_id",
     domain: "domain",
@@ -43,7 +43,7 @@ following namespace:
 ```typescript
 import { FernFai } from "@fern-api/fai-sdk";
 
-const request: FernFai.CreateQueryRequest = {
+const request: FernFai.GetHistogramAnalyticsRequest = {
     ...
 };
 ```
@@ -57,7 +57,7 @@ will be thrown.
 import { FernFaiError } from "@fern-api/fai-sdk";
 
 try {
-    await client.createQuery(...);
+    await client.queries.createQuery(...);
 } catch (err) {
     if (err instanceof FernFaiError) {
         console.log(err.statusCode);
@@ -75,7 +75,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.createQuery(..., {
+const response = await client.queries.createQuery(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -97,7 +97,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.createQuery(..., {
+const response = await client.queries.createQuery(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -107,7 +107,7 @@ const response = await client.createQuery(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.createQuery(..., {
+const response = await client.queries.createQuery(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -118,7 +118,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.createQuery(..., {
+const response = await client.queries.createQuery(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -130,7 +130,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.createQuery(...).withRawResponse();
+const { data, rawResponse } = await client.queries.createQuery(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

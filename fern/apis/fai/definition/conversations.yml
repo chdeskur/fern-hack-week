@@ -1,3 +1,46 @@
+docs: FAI Conversations API
+
+imports:
+  commons: ./commons.yml
+
+service:
+  auth: false
+  base-path: /conversations
+  endpoints:
+    getConversations:
+      docs: Retrieve all paginated chat conversations
+      path: /{domain}
+      method: GET
+      path-parameters:
+        domain: string
+      request:
+        name: GetConversationsRequest
+        query-parameters:
+          source:
+            type: optional<ConversationSource>
+            docs: The type of conversation to retrieve
+          page:
+            type: optional<integer>
+            docs: The page number to retrieve
+          limit:
+            type: optional<integer>
+            docs: The number of conversations to retrieve per page
+      response: Conversations
+      errors:
+        - commons.BadRequestError
+        - commons.InternalError
+
+    getConversationById:
+      docs: Retrieve a complete conversation by conversation id
+      path: /{conversation_id}
+      method: GET
+      path-parameters:
+        conversation_id: string
+      response: Conversation
+      errors:
+        - commons.BadRequestError
+        - commons.InternalError
+  
 types:
   Conversation:
     properties:
@@ -18,13 +61,3 @@ types:
       role: string
       text: string
       created_at: datetime
-
-  HistogramAnalytics:
-    properties:
-      bars: list<HistogramAnalyticsBar>
-
-  HistogramAnalyticsBar:
-    properties:
-      label: string
-      conversationCount: integer
-  

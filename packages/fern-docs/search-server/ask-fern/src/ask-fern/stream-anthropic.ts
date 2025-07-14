@@ -171,7 +171,7 @@ export async function runRouteForAnthropic({
             baseUrl: getFaiOrigin(),
             token: () => "",
           });
-          await faiClient.createQuery({
+          await faiClient.queries.createQuery({
             query_id: queryId,
             conversation_id: conversationId,
             domain,

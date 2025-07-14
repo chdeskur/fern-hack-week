@@ -153,7 +153,7 @@ export async function runRouteForCohere({
             baseUrl: getFaiOrigin(),
             token: () => "",
           });
-          await faiClient.createQuery({
+          await faiClient.queries.createQuery({
             query_id: queryId,
             conversation_id: conversationId,
             domain,

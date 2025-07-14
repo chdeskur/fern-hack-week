@@ -1,0 +1,48 @@
+docs: APIs for the FAI (Acorn) Service
+
+imports:
+  commons: ./commons.yml
+  conversations: ./conversations.yml
+
+service:
+  auth: false
+  base-path: /analytics
+  endpoints:
+    getHistogramAnalytics:
+      docs: Retrieve the usage histogram analytics for a given period
+      path: /histogram/{domain}
+      method: GET
+      path-parameters:
+        domain: string
+      request:
+        name: GetHistogramAnalyticsRequest
+        query-parameters:
+          start_date:
+            type: string
+            docs: The start date of the period to retrieve analytics for
+          end_date:
+            type: string
+            docs: The end date of the period to retrieve analytics for
+          groupBy:
+            type: GroupBy
+            docs: The field to group the analytics by
+      response: HistogramAnalytics
+      errors:
+        - commons.BadRequestError
+        - commons.InternalError
+
+types:
+  GroupBy:
+    enum:
+      - "DAY"
+      - "MONTH"
+
+  HistogramAnalytics:
+    properties:
+      bars: list<HistogramAnalyticsBar>
+
+  HistogramAnalyticsBar:
+    properties:
+      label: string
+      conversationCount: integer
+  
