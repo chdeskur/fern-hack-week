@@ -41,12 +41,7 @@ export default function TiptapEditor({
         preserveWhitespace: "full",
       }}
       editorContainerProps={{ className }}
-      // We need to set immediatelyRender to true so that the original formatting is preserved in the custom element previews
-      // Tiptap will complain about this in dev mode, claiming that SSR has been detected
-      // However, we are not rendering this component on the server (see "use client" above)
-      // It seems this error is getting thrown due to the way that Tiptap is checking for SSR, as it considers all Next apps to be SSR
-      // See isNext flag definition here: https://github.com/ueberdosis/tiptap/blob/1d4d9283d840e53ef5f129478841b0b933140335/packages/react/src/useEditor.ts#L11
-      immediatelyRender={true}
+      immediatelyRender={false}
       onUpdate={onUpdate}
     >
       {!disableFloatingMenu && <FloatingMenu />}

@@ -1,6 +1,14 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { ReplaceStep } from "@tiptap/pm/transform";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+
+import { CustomElementNodeView } from "./CustomElementNodeView";
+
+/**
+ * The tag name for the custom element node. Also used as the node name and the plugin key.
+ */
+const TAG = "custom-element";
 
 export interface CustomElementOptions {
   /**
@@ -11,34 +19,13 @@ export interface CustomElementOptions {
   HTMLAttributes: Record<string, any>;
 }
 
-declare module "@tiptap/core" {
-  interface Commands<ReturnType> {
-    customElement: {
-      /**
-       * Set a custom element.
-       * @example editor.commands.setCustomElement()
-       */
-      setCustomElement: () => ReturnType;
-    };
-  }
-}
-
 /**
  * This extension allows you to create custom elements.
  */
 export const CustomElement = Node.create<CustomElementOptions>({
-  name: "custom-element",
+  name: TAG,
 
   priority: 1000,
-
-  addOptions() {
-    return {
-      HTMLAttributes: {
-        class:
-          "border-l-1 min-h-13 relative mb-4 block w-full select-none overflow-hidden whitespace-pre rounded-r-xl border-red-500 bg-red-100 p-3 after:absolute after:right-2 after:top-2 after:flex after:h-9 after:items-center after:justify-center after:rounded-lg after:bg-white after:px-2 after:content-['Unsupported_content']",
-      },
-    };
-  },
 
   group: "block",
 
@@ -56,9 +43,6 @@ export const CustomElement = Node.create<CustomElementOptions>({
    */
   addAttributes() {
     return {
-      contenteditable: {
-        default: false,
-      },
       "data-hash": {
         default: null,
       },
@@ -68,35 +52,40 @@ export const CustomElement = Node.create<CustomElementOptions>({
       "data-name": {
         default: null,
       },
+      /**
+       * Set contenteditable to false to prevent the custom element from being edited.
+       */
+      contenteditable: {
+        default: false,
+      },
     };
   },
 
+  addNodeView() {
+    return ReactNodeViewRenderer(CustomElementNodeView, {
+      as: "custom-element",
+      attrs: ({ node }) => ({
+        ...node.attrs,
+      }),
+    });
+  },
+
   parseHTML() {
-    return [{ tag: "custom-element" }];
+    return [{ tag: TAG }];
   },
 
   renderHTML({ HTMLAttributes }) {
     return [
-      "custom-element",
+      TAG,
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
       0,
     ];
   },
 
-  addCommands() {
-    return {
-      setCustomElement:
-        () =>
-        ({ commands }) => {
-          return commands.setNode(this.name);
-        },
-    };
-  },
-
   addProseMirrorPlugins() {
     return [
       new Plugin({
-        key: new PluginKey("custom-element"),
+        key: new PluginKey(TAG),
         /**
          * This plugin is used to prevent the custom element node from being replaced (deleted).
          * @see https://github.com/ueberdosis/tiptap/issues/181#issuecomment-1213455982
@@ -115,7 +104,7 @@ export const CustomElement = Node.create<CustomElementOptions>({
             const oldStart = step.from;
             const oldEnd = step.to;
             state.doc.nodesBetween(oldStart, oldEnd, (node) => {
-              if (node.type.name === "custom-element") {
+              if (node.type.name === TAG) {
                 result = false;
               }
             });
