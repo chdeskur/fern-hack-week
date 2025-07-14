@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { HttpOrWssOrGrpc } from "@fern-api/docs-utils";
+import { HttpOrWssOrGrpc, isGrpcMethod } from "@fern-api/docs-utils";
 
 import { UIColor } from "../colors";
 import { Badge, BadgeProps } from "./badge";
@@ -37,9 +37,9 @@ const ABBREVIATED_METHODS: Record<HttpOrWssOrGrpc, string> = {
   TRACE: "TRACE",
   WSS: "WSS",
   UNARY: "UNARY",
-  CLIENT_STREAM: "CS",
-  SERVER_STREAM: "SS",
-  BIDIRECTIONAL_STREAM: "BIDI",
+  CLIENT_STREAM: "STREAM",
+  SERVER_STREAM: "STREAM",
+  BIDIRECTIONAL_STREAM: "STREAM",
 };
 
 export interface HttpOrWSSOrGrpcBadgeProps extends Omit<BadgeProps, "color"> {
@@ -58,6 +58,8 @@ export const HttpMethodBadge = forwardRef<
       data-badge-type="http-method"
       data-http-method={method}
       color={METHOD_COLOR_SCHEMES[method]}
+      variant={isGrpcMethod(method) ? "grpc" : undefined}
+      size={isGrpcMethod(method) ? "sm" : undefined}
     >
       {props.children ??
         (rest.size === "sm" ? ABBREVIATED_METHODS[method] : method)}

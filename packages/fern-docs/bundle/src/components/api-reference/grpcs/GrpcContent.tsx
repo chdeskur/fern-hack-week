@@ -9,7 +9,6 @@ import { ReferenceLayout } from "@fern-docs/components/layouts/ReferenceLayout";
 
 import { PageHeader } from "@/components/PageHeader";
 import { FooterLayout } from "@/components/layouts/FooterLayout";
-import { PlaygroundKeyboardTrigger } from "@/components/playground/PlaygroundKeyboardTrigger";
 import { MdxServerComponentProseSuspense } from "@/mdx/components/server-component";
 import { MdxSerializer } from "@/server/mdx-serializer";
 
@@ -66,7 +65,6 @@ export async function GrpcContent({
         }
         footer={<FooterLayout bottomNavigation={bottomNavigation} />}
       >
-        <PlaygroundKeyboardTrigger />
         <MdxServerComponentProseSuspense mdx={grpc.description} />
       </ReferenceLayout>
     </GrpcContextProvider>

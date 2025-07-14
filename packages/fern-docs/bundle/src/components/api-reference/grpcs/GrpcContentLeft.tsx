@@ -10,12 +10,12 @@ import {
   createEndpointRequestDescriptionFallback,
 } from "../endpoints/EndpointRequestSection";
 import { EndpointResponseSection } from "../endpoints/EndpointResponseSection";
-import { EndpointSection } from "../endpoints/EndpointSection";
 import { ResponseSummaryFallback } from "../endpoints/response-summary-fallback";
 import {
   TypeDefinitionAnchorPart,
   TypeDefinitionResponse,
 } from "../type-definitions/TypeDefinitionContext";
+import { GrpcSection } from "./GrpcSection";
 
 export interface HoveringProps {
   isHovering: boolean;
@@ -30,8 +30,12 @@ export async function GrpcContentLeft({
     <>
       <TypeDefinitionAnchorPart part="request">
         {grpc.requests?.[0] != null && (
-          <EndpointSection
-            title="Request"
+          <GrpcSection
+            title={
+              isStreaming(grpc.protocol, "request")
+                ? "Stream Request"
+                : "Request"
+            }
             titleOverride={
               isGrpcTypeAlias(grpc.requests[0], grpc.protocol?.type)
                 ? types[grpc.requests[0].body.value.id]?.displayName
@@ -55,14 +59,18 @@ export async function GrpcContentLeft({
                 types={types}
               />
             </TypeDefinitionAnchorPart>
-          </EndpointSection>
+          </GrpcSection>
         )}
       </TypeDefinitionAnchorPart>
       <TypeDefinitionResponse>
         <TypeDefinitionAnchorPart part="response">
           {grpc.responses?.[0] != null && (
-            <EndpointSection
-              title="Response"
+            <GrpcSection
+              title={
+                isStreaming(grpc.protocol, "response")
+                  ? "Stream Response"
+                  : "Response"
+              }
               titleOverride={
                 isGrpcTypeAlias(grpc.responses[0], grpc.protocol?.type)
                   ? types[grpc.responses[0].body.value.id]?.displayName
@@ -88,7 +96,7 @@ export async function GrpcContentLeft({
                   types={types}
                 />
               </TypeDefinitionAnchorPart>
-            </EndpointSection>
+            </GrpcSection>
           )}
         </TypeDefinitionAnchorPart>
       </TypeDefinitionResponse>
@@ -124,4 +132,17 @@ function isGrpcTypeAlias(
   }
 
   return "statusCode" in item;
+}
+
+function isStreaming(
+  protocol: ApiDefinition.Protocol | undefined,
+  location: "request" | "response"
+): boolean {
+  if (protocol?.type !== "grpc") return false;
+  if (protocol.methodType === "BIDIRECTIONAL_STREAM") return true;
+  if (location === "request" && protocol.methodType === "CLIENT_STREAM")
+    return true;
+  if (location === "response" && protocol.methodType === "SERVER_STREAM")
+    return true;
+  return false;
 }

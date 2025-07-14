@@ -33,6 +33,13 @@ export const GrpcMethod: Record<GrpcMethod, GrpcMethod> = {
   BIDIRECTIONAL_STREAM: "BIDIRECTIONAL_STREAM",
 } as const;
 
+export function isGrpcMethod(method: unknown): method is GrpcMethod {
+  return (
+    typeof method === "string" &&
+    Object.prototype.hasOwnProperty.call(GrpcMethod, method)
+  );
+}
+
 export const HttpMethodOrder = [
   "GET",
   "POST",

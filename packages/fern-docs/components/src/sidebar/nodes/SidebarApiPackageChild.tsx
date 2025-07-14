@@ -49,6 +49,13 @@ export function SidebarApiPackageChild({
         <SidebarEndpointPairNode node={node} depth={depth} shallow={shallow} />
       );
     case "apiPackage":
+      {
+        (() => {
+          if (node.children.every((child) => child.type === "grpc")) {
+            node.icon = "fa-regular fa-layer-group";
+          }
+        })();
+      }
       return (
         <SidebarApiPackageNode
           node={node}
