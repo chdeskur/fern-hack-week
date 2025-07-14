@@ -1,0 +1,30 @@
+types:
+  Conversation:
+    properties:
+      conversation_id: string
+      created_at: datetime
+      turns: list<ConversationTurn>
+
+  Conversations:
+    type: list<Conversation>
+
+  ConversationSource:
+    enum:
+      - "CHAT"
+      - "MCP"
+
+  ConversationTurn:
+    properties:
+      role: string
+      text: string
+      created_at: datetime
+
+  HistogramAnalytics:
+    properties:
+      bars: list<HistogramAnalyticsBar>
+
+  HistogramAnalyticsBar:
+    properties:
+      label: string
+      conversationCount: integer
+  

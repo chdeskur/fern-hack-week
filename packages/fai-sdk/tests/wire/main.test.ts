@@ -34,4 +34,147 @@ describe("FernFaiClient", () => {
         });
         expect(response).toEqual(undefined);
     });
+
+    test("getConversations", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = [
+            {
+                conversation_id: "conversation_id",
+                created_at: "2024-01-15T09:30:00Z",
+                turns: [
+                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
+                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
+                ],
+            },
+            {
+                conversation_id: "conversation_id",
+                created_at: "2024-01-15T09:30:00Z",
+                turns: [
+                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
+                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
+                ],
+            },
+        ];
+        server
+            .mockEndpoint()
+            .get("/conversations/domain")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.getConversations("domain");
+        expect(response).toEqual([
+            {
+                conversation_id: "conversation_id",
+                created_at: "2024-01-15T09:30:00Z",
+                turns: [
+                    {
+                        role: "role",
+                        text: "text",
+                        created_at: "2024-01-15T09:30:00Z",
+                    },
+                    {
+                        role: "role",
+                        text: "text",
+                        created_at: "2024-01-15T09:30:00Z",
+                    },
+                ],
+            },
+            {
+                conversation_id: "conversation_id",
+                created_at: "2024-01-15T09:30:00Z",
+                turns: [
+                    {
+                        role: "role",
+                        text: "text",
+                        created_at: "2024-01-15T09:30:00Z",
+                    },
+                    {
+                        role: "role",
+                        text: "text",
+                        created_at: "2024-01-15T09:30:00Z",
+                    },
+                ],
+            },
+        ]);
+    });
+
+    test("getConversationById", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            conversation_id: "conversation_id",
+            created_at: "2024-01-15T09:30:00Z",
+            turns: [
+                { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
+                { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
+            ],
+        };
+        server
+            .mockEndpoint()
+            .get("/conversations/conversation_id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.getConversationById("conversation_id");
+        expect(response).toEqual({
+            conversation_id: "conversation_id",
+            created_at: "2024-01-15T09:30:00Z",
+            turns: [
+                {
+                    role: "role",
+                    text: "text",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    role: "role",
+                    text: "text",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        });
+    });
+
+    test("getHistogramAnalytics", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            bars: [
+                { label: "label", conversationCount: 1 },
+                { label: "label", conversationCount: 1 },
+            ],
+        };
+        server
+            .mockEndpoint()
+            .get("/analytics/histogram/domain")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.getHistogramAnalytics("domain", {
+            start_date: "start_date",
+            end_date: "end_date",
+            groupBy: "DAY",
+        });
+        expect(response).toEqual({
+            bars: [
+                {
+                    label: "label",
+                    conversationCount: 1,
+                },
+                {
+                    label: "label",
+                    conversationCount: 1,
+                },
+            ],
+        });
+    });
 });

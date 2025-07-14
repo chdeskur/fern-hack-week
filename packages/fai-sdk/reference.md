@@ -1,6 +1,6 @@
 # Reference
 
-<details><summary><code>client.<a href="/src/Client.ts">createQuery</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">getHistogramAnalytics</a>(domain, { ...params }) -> FernFai.HistogramAnalytics</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Log a new query to the FAI DB
+Retrieve the usage histogram analytics for a given period
 
 </dd>
 </dl>
@@ -28,15 +28,10 @@ Log a new query to the FAI DB
 <dd>
 
 ```typescript
-await client.createQuery({
-    query_id: "query_id",
-    conversation_id: "conversation_id",
-    domain: "domain",
-    text: "text",
-    role: "role",
-    source: "source",
-    created_at: "2024-01-15T09:30:00Z",
-    time_to_first_token: undefined,
+await client.getHistogramAnalytics("domain", {
+    start_date: "start_date",
+    end_date: "end_date",
+    groupBy: "DAY",
 });
 ```
 
@@ -53,7 +48,15 @@ await client.createQuery({
 <dl>
 <dd>
 
-**request:** `FernFai.CreateQueryRequest`
+**domain:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FernFai.GetHistogramAnalyticsRequest`
 
 </dd>
 </dl>

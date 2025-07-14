@@ -13,7 +13,7 @@ export declare namespace FernFaiClient {
         environment?: core.Supplier<environments.FernFaiEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -36,14 +36,14 @@ export declare namespace FernFaiClient {
 export class FernFaiClient {
     protected readonly _options: FernFaiClient.Options;
 
-    constructor(_options: FernFaiClient.Options) {
+    constructor(_options: FernFaiClient.Options = {}) {
         this._options = {
             ..._options,
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern-api/fai-sdk",
-                    "X-Fern-SDK-Version": "0.0.13",
+                    "X-Fern-SDK-Version": "0.0.18",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -140,7 +140,275 @@ export class FernFaiClient {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string> {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+    /**
+     * Retrieve all paginated chat conversations
+     *
+     * @param {string} domain
+     * @param {FernFai.GetConversationsRequest} request
+     * @param {FernFaiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link FernFai.BadRequestError}
+     * @throws {@link FernFai.InternalError}
+     *
+     * @example
+     *     await client.getConversations("domain")
+     */
+    public getConversations(
+        domain: string,
+        request: FernFai.GetConversationsRequest = {},
+        requestOptions?: FernFaiClient.RequestOptions,
+    ): core.HttpResponsePromise<FernFai.Conversations> {
+        return core.HttpResponsePromise.fromPromise(this.__getConversations(domain, request, requestOptions));
+    }
+
+    private async __getConversations(
+        domain: string,
+        request: FernFai.GetConversationsRequest = {},
+        requestOptions?: FernFaiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<FernFai.Conversations>> {
+        const { source, page, limit } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (source != null) {
+            _queryParams["source"] = source;
+        }
+
+        if (page != null) {
+            _queryParams["page"] = page.toString();
+        }
+
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernFaiEnvironment.Prod,
+                `/conversations/${encodeURIComponent(domain)}`,
+            ),
+            method: "GET",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as FernFai.Conversations, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as any)?.["error"]) {
+                case "BadRequestError":
+                    throw new FernFai.BadRequestError(_response.error.body as string, _response.rawResponse);
+                case "InternalError":
+                    throw new FernFai.InternalError(_response.error.body as string, _response.rawResponse);
+                default:
+                    throw new errors.FernFaiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FernFaiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FernFaiTimeoutError("Timeout exceeded when calling GET /conversations/{domain}.");
+            case "unknown":
+                throw new errors.FernFaiError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Retrieve a complete conversation by conversation id
+     *
+     * @param {string} conversationId
+     * @param {FernFaiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link FernFai.BadRequestError}
+     * @throws {@link FernFai.InternalError}
+     *
+     * @example
+     *     await client.getConversationById("conversation_id")
+     */
+    public getConversationById(
+        conversationId: string,
+        requestOptions?: FernFaiClient.RequestOptions,
+    ): core.HttpResponsePromise<FernFai.Conversation> {
+        return core.HttpResponsePromise.fromPromise(this.__getConversationById(conversationId, requestOptions));
+    }
+
+    private async __getConversationById(
+        conversationId: string,
+        requestOptions?: FernFaiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<FernFai.Conversation>> {
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernFaiEnvironment.Prod,
+                `/conversations/${encodeURIComponent(conversationId)}`,
+            ),
+            method: "GET",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as FernFai.Conversation, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as any)?.["error"]) {
+                case "BadRequestError":
+                    throw new FernFai.BadRequestError(_response.error.body as string, _response.rawResponse);
+                case "InternalError":
+                    throw new FernFai.InternalError(_response.error.body as string, _response.rawResponse);
+                default:
+                    throw new errors.FernFaiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FernFaiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FernFaiTimeoutError(
+                    "Timeout exceeded when calling GET /conversations/{conversation_id}.",
+                );
+            case "unknown":
+                throw new errors.FernFaiError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Retrieve the usage histogram analytics for a given period
+     *
+     * @param {string} domain
+     * @param {FernFai.GetHistogramAnalyticsRequest} request
+     * @param {FernFaiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link FernFai.BadRequestError}
+     * @throws {@link FernFai.InternalError}
+     *
+     * @example
+     *     await client.getHistogramAnalytics("domain", {
+     *         start_date: "start_date",
+     *         end_date: "end_date",
+     *         groupBy: "DAY"
+     *     })
+     */
+    public getHistogramAnalytics(
+        domain: string,
+        request: FernFai.GetHistogramAnalyticsRequest,
+        requestOptions?: FernFaiClient.RequestOptions,
+    ): core.HttpResponsePromise<FernFai.HistogramAnalytics> {
+        return core.HttpResponsePromise.fromPromise(this.__getHistogramAnalytics(domain, request, requestOptions));
+    }
+
+    private async __getHistogramAnalytics(
+        domain: string,
+        request: FernFai.GetHistogramAnalyticsRequest,
+        requestOptions?: FernFaiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<FernFai.HistogramAnalytics>> {
+        const { start_date: startDate, end_date: endDate, groupBy } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["start_date"] = startDate;
+        _queryParams["end_date"] = endDate;
+        _queryParams["groupBy"] = groupBy;
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernFaiEnvironment.Prod,
+                `/analytics/histogram/${encodeURIComponent(domain)}`,
+            ),
+            method: "GET",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as FernFai.HistogramAnalytics, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as any)?.["error"]) {
+                case "BadRequestError":
+                    throw new FernFai.BadRequestError(_response.error.body as string, _response.rawResponse);
+                case "InternalError":
+                    throw new FernFai.InternalError(_response.error.body as string, _response.rawResponse);
+                default:
+                    throw new errors.FernFaiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FernFaiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FernFaiTimeoutError(
+                    "Timeout exceeded when calling GET /analytics/histogram/{domain}.",
+                );
+            case "unknown":
+                throw new errors.FernFaiError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }
