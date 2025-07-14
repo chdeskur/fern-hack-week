@@ -13,6 +13,9 @@ const CSP_HEADER = `
 `.replace(/\n/g, "");
 
 const nextConfig: NextConfig = {
+  outputFileTracingExcludes: {
+    "./": ["**/*.map"],
+  },
   transpilePackages: [
     /**
      * Monorepo packages that are not transpiled by default.
@@ -100,7 +103,10 @@ export default withSentryConfig(nextConfig, {
   tunnelRoute: "/monitoring",
 
   sourcemaps: {
-    disable: true,
+    // Note: maybe we can use these to reduce the size of the source maps, has to be tested
+    // assets: "./.next/**/*.{js,js.map}",
+    // ignore: ["**/node_modules/**"],
+    deleteSourcemapsAfterUpload: true,
   },
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
