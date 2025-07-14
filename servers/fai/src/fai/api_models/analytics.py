@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 class HistogramAnalyticsBarApi(BaseModel):
     label: str
+    queryCount: int
     conversationCount: int
 
 

@@ -43,5 +43,6 @@ types:
   HistogramAnalyticsBar:
     properties:
       label: string
+      queryCount: integer
       conversationCount: integer
   

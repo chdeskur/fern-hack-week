@@ -9,8 +9,9 @@ from src.fai.db import Base
 
 class Query(Base):
     __tablename__ = "queries"
+    __table_args__ = {"extend_existing": True}
 
-    query_id = Column(String, primary_key=True, index=True)
+    query_id = Column(String, primary_key=True)
     conversation_id = Column(String, nullable=False)
     domain = Column(String, nullable=False)
     text = Column(String, nullable=False)

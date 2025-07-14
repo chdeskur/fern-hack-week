@@ -4,5 +4,6 @@
 
 export interface HistogramAnalyticsBar {
     label: string;
+    queryCount: number;
     conversationCount: number;
 }

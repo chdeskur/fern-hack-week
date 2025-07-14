@@ -12,8 +12,8 @@ describe("Analytics", () => {
 
         const rawResponseBody = {
             bars: [
-                { label: "label", conversationCount: 1 },
-                { label: "label", conversationCount: 1 },
+                { label: "label", queryCount: 1, conversationCount: 1 },
+                { label: "label", queryCount: 1, conversationCount: 1 },
             ],
         };
         server
@@ -33,10 +33,12 @@ describe("Analytics", () => {
             bars: [
                 {
                     label: "label",
+                    queryCount: 1,
                     conversationCount: 1,
                 },
                 {
                     label: "label",
+                    queryCount: 1,
                     conversationCount: 1,
                 },
             ],
