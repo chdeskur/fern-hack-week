@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useCallback } from "react";
+import { preload } from "react-dom";
 
 import {
   ExclamationCircleIcon,
@@ -65,12 +66,16 @@ export function GoToEditorButton({
     });
   }, [orgName, docsUrl, newBranchName]);
 
-  // Prefetch the editor URL when the component mounts or dependencies change
+  // Preload the editor data and URL in the background
   useEffect(() => {
     if (!disabled) {
+      DashboardApiClient.preloadEditorData({
+        docsUrl,
+      });
       router.prefetch(editorSlug);
+      preload(editorSlug, { as: "document", crossOrigin: "anonymous" });
     }
-  }, [router, editorSlug, disabled]);
+  }, [docsUrl, disabled, router, editorSlug]);
 
   const createBranch = useCallback(() => {
     if (sourceRepo?.owner == null || sourceRepo.repo == null) {

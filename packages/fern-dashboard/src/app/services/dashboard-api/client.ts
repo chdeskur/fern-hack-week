@@ -13,6 +13,7 @@ import { postDocsGithubSource } from "@/app/api/post-docs-github-source/route";
 import { postGitCommit } from "@/app/api/post-git-commit/route";
 import { postCreateBranch } from "@/app/api/post-git-create-branch/route";
 import { postCreatePr } from "@/app/api/post-git-create-pr/route";
+import { preloadEditorData } from "@/app/api/preload-editor-data/route";
 
 export const DashboardApiClient = {
   getMyDocsSites: (
@@ -69,6 +70,8 @@ export const DashboardApiClient = {
       "/api/get-validate-github-branch",
       request
     ),
+  preloadEditorData: (request: preloadEditorData.Request) =>
+    typedFetch<preloadEditorData.Response>("/api/preload-editor-data", request),
 };
 
 async function typedFetch<T>(

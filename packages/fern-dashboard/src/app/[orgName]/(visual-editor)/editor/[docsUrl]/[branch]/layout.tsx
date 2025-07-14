@@ -1,35 +1,45 @@
 import { redirect } from "next/navigation";
+import type React from "react";
 
 import getDocsGithubSourceHandler from "@/app/api/get-docs-github-source/handler";
-import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
-import { Auth0OrgName } from "@/app/services/auth0/types";
+import {
+  Auth0SessionData,
+  getCurrentSession,
+} from "@/app/services/auth0/getCurrentSession";
+import type { Auth0OrgName } from "@/app/services/auth0/types";
 import { GithubExtendedAccessProtectedRoute } from "@/components/auth/GithubExtendedAccessProtectedRoute";
 import { HeaderToolbar } from "@/components/editor/HeaderToolbar";
 import { BranchProvider } from "@/providers/BranchContext";
 import { MdxStateProvider } from "@/providers/MdxStateContext";
 import { throwDigestibleError } from "@/utils/errors";
 import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
-import { EncodedDocsUrl } from "@/utils/types";
+import type { DocsUrl, EncodedDocsUrl } from "@/utils/types";
 
-export default async function EditorLayout({
-  params,
+export const experimental_ppr = true;
+
+// Static shell that renders immediately
+function EditorShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-background noise flex w-full flex-col overflow-hidden">
+      {children}
+    </div>
+  );
+}
+
+// Only the dynamic parts that need data fetching
+async function DynamicEditorContent({
+  orgName,
+  docsUrl,
+  branch,
+  session,
   children,
-}: Readonly<{
-  params: Promise<{
-    orgName: Auth0OrgName;
-    docsUrl: EncodedDocsUrl;
-    branch: string;
-  }>;
+}: {
+  orgName: Auth0OrgName;
+  docsUrl: DocsUrl;
+  branch: string;
+  session: Auth0SessionData;
   children: React.JSX.Element;
-}>) {
-  const { orgName, docsUrl: encodedDocsUrl, branch } = await params;
-  const docsUrl = parseDocsUrlParam({ docsUrl: encodedDocsUrl });
-  const session = await getCurrentSession();
-
-  if (!session) {
-    redirect("/");
-  }
-
+}) {
   const sourceRepo = await getDocsGithubSourceHandler({
     url: docsUrl,
     token: session.accessToken,
@@ -54,21 +64,6 @@ export default async function EditorLayout({
     );
   }
 
-  // TODO: validate branch elsewhere
-  // const response = await validateGithubBranchHandler({
-  //   owner: sourceRepo.owner,
-  //   repo: sourceRepo.repo,
-  //   branchName: branch,
-  //   userId: session.user.sub,
-  // });
-
-  // if (!response.exists) {
-  //   throwDigestibleError(
-  //     `We were unable to find your working branch. Please confirm that the Github branch "${branch}" exists and has not been deleted.`,
-  //     "BRANCH_NOT_FOUND"
-  //   );
-  // }
-
   return (
     <GithubExtendedAccessProtectedRoute
       orgName={orgName}
@@ -77,16 +72,47 @@ export default async function EditorLayout({
     >
       <MdxStateProvider docsUrl={docsUrl}>
         <BranchProvider branch={branch}>
-          <div className="bg-background noise flex w-full flex-col overflow-hidden">
-            <HeaderToolbar
-              orgName={orgName}
-              session={session}
-              docsUrl={docsUrl}
-            />
-            {children}
-          </div>
+          <HeaderToolbar
+            orgName={orgName}
+            session={session}
+            docsUrl={docsUrl}
+          />
+          {children}
         </BranchProvider>
       </MdxStateProvider>
     </GithubExtendedAccessProtectedRoute>
+  );
+}
+
+export default async function EditorLayout({
+  params,
+  children,
+}: Readonly<{
+  params: Promise<{
+    orgName: Auth0OrgName;
+    docsUrl: EncodedDocsUrl;
+    branch: string;
+  }>;
+  children: React.JSX.Element;
+}>) {
+  const { orgName, docsUrl: encodedDocsUrl, branch } = await params;
+  const docsUrl = parseDocsUrlParam({ docsUrl: encodedDocsUrl });
+
+  const session = await getCurrentSession();
+  if (!session) {
+    redirect("/");
+  }
+
+  return (
+    <EditorShell>
+      <DynamicEditorContent
+        orgName={orgName}
+        docsUrl={docsUrl}
+        branch={branch}
+        session={session}
+      >
+        {children}
+      </DynamicEditorContent>
+    </EditorShell>
   );
 }

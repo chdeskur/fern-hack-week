@@ -1,7 +1,5 @@
 import { User } from "@auth0/nextjs-auth0/types";
-import { PlusIcon } from "@heroicons/react/24/outline";
 
-import { Button } from "../ui/button";
 import { DocsZeroStateImage } from "./DocsZeroStateImage";
 
 export declare namespace DocsZeroState {
@@ -28,12 +26,12 @@ export async function DocsZeroState({ user }: DocsZeroState.Props) {
           <div className="border-border flex h-[300px] justify-center overflow-hidden border-b">
             <DocsZeroStateImage />
           </div>
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <Button>
               <PlusIcon />
               Create your first Docs site
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

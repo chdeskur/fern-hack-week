@@ -42,7 +42,7 @@ export function GitHubWidget({
   id?: string;
 }) {
   const href = `https://api.github.com/repos/${repo}`;
-  preload(href, { as: "fetch" });
+  preload(href, { as: "fetch", crossOrigin: "anonymous" });
 
   const { data } = useSWRImmutable<GitHubInfo | null>(
     href,

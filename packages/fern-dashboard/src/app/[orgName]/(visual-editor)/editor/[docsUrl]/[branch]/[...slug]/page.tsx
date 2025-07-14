@@ -15,6 +15,8 @@ import { EncodedDocsUrl } from "@/utils/types";
 
 import PageContents from "./PageContents";
 
+export const experimental_ppr = false;
+
 export default async function Page({
   params,
 }: {

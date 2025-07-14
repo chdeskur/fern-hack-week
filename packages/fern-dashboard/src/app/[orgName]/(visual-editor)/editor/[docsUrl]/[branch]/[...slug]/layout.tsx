@@ -24,6 +24,8 @@ import { EncodedDocsUrl } from "@/utils/types";
 
 import "./index.css";
 
+export const experimental_ppr = true;
+
 export default async function VisualEditorPreviewLayout({
   params,
   children,
