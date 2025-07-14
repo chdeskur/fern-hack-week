@@ -14,8 +14,10 @@ import { ERROR_DIGEST_MESSAGES } from "@/utils/errors";
 
 export default function Error({
   error,
+  reset,
 }: {
   error: Error & { digest?: string };
+  reset: () => void;
 }) {
   useEffect(() => {
     Sentry.captureException(error);
@@ -37,6 +39,9 @@ export default function Error({
         <div className="flex gap-2">
           <Button asChild>
             <Link href={`/${orgName}/docs`}>Return home</Link>
+          </Button>
+          <Button variant="outline" onClick={reset}>
+            Try again
           </Button>
         </div>
       </div>
