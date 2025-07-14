@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { PylonScript } from "@/components/pylon/PylonScript";
 import { HIDE_PYLON_CLASS_NAME } from "@/components/pylon/constants";
@@ -37,6 +38,7 @@ export default async function RootLayout({
           HIDE_PYLON_CLASS_NAME
         )}
       >
+        <SpeedInsights />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
