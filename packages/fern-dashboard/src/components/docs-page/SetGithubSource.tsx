@@ -123,8 +123,22 @@ export function SetGithubSourcePopover({
     [docsUrl, queryClient, setIsSaving]
   );
 
+  const searchQueryIsUrl = useMemo(() => {
+    return (
+      searchQuery.startsWith("https://") || searchQuery.startsWith("http://")
+    );
+  }, [searchQuery]);
+
   return (
-    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+    <Popover
+      open={isPopoverOpen}
+      onOpenChange={(open) => {
+        setIsPopoverOpen(open);
+        if (!open) {
+          setSearchQuery("");
+        }
+      }}
+    >
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent className="border-border w-80 border p-0" align="start">
         <div className="flex flex-col">
@@ -132,7 +146,7 @@ export function SetGithubSourcePopover({
             <div className="border-border flex flex-1 items-center rounded-md border px-3">
               <SearchIcon className="h-4 w-4 shrink-0 opacity-50" />
               <Input
-                placeholder="Search repositories..."
+                placeholder="Enter URL or search repositories..."
                 onChange={(e) => debouncedSetSearchQuery(e.target.value)}
                 className="border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
               />
@@ -140,13 +154,24 @@ export function SetGithubSourcePopover({
           </div>
           <div className="max-h-60 overflow-y-auto">
             {filteredRepos.length === 0 ? (
-              <div className="p-4 text-center text-sm text-gray-500">
-                {isLoading
-                  ? "Loading repositories..."
-                  : searchQuery
-                    ? "No repositories found"
-                    : "No repositories available"}
-              </div>
+              <>
+                {searchQueryIsUrl ? (
+                  <button
+                    onClick={() => void handleRepoSelect(searchQuery)}
+                    className="hover:bg-accent hover:text-primary m-1 cursor-pointer break-all rounded-md px-2 py-1 text-sm text-gray-800"
+                  >
+                    + Use {searchQuery};
+                  </button>
+                ) : (
+                  <div className="p-4 text-center text-sm text-gray-500">
+                    {isLoading
+                      ? "Loading repositories..."
+                      : searchQuery
+                        ? "No repositories found"
+                        : "No repositories available"}
+                  </div>
+                )}
+              </>
             ) : (
               <>
                 {filteredRepos.map((repo) => (

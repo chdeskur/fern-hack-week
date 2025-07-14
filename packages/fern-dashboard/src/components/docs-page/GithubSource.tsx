@@ -57,41 +57,42 @@ export function GithubSource({
           <div
             className="flex flex-wrap items-center gap-2"
             onMouseEnter={() => setIsDomainHovered(true)}
-            onMouseLeave={() =>
-              // Added delay to make the Edit button visible for a bit longer (easier UX to click)
-              setTimeout(() => setIsDomainHovered(false), 500)
-            }
           >
-            {!!githubUrl && (
-              <div className="flex items-center gap-2">
-                <GithubLogo />
-                <a href={githubUrl} className="dashboard-link">
-                  <span className="truncate">{repoName}</span>
-                </a>
-              </div>
-            )}
-            {isDomainHovered && (
-              <SetGithubSourcePopover
-                docsUrl={docsUrl}
-                setIsSaving={setIsSaving}
-              >
-                {githubUrl ? (
-                  <Button
-                    size="iconSm"
-                    variant="ghost"
-                    disabled={isSaving}
-                    className="size-4 p-0"
-                  >
-                    <Cog />
-                  </Button>
-                ) : (
+            <div className="flex items-center gap-2">
+              {githubUrl ? (
+                <>
+                  <GithubLogo />
+                  <a href={githubUrl} className="dashboard-link">
+                    <span className="truncate">{repoName}</span>
+                  </a>
+                  {isDomainHovered && (
+                    <SetGithubSourcePopover
+                      docsUrl={docsUrl}
+                      setIsSaving={setIsSaving}
+                    >
+                      <Button
+                        size="iconSm"
+                        variant="ghost"
+                        disabled={isSaving}
+                        className="size-4 p-0"
+                      >
+                        <Cog />
+                      </Button>
+                    </SetGithubSourcePopover>
+                  )}
+                </>
+              ) : (
+                <SetGithubSourcePopover
+                  docsUrl={docsUrl}
+                  setIsSaving={setIsSaving}
+                >
                   <Button size="sm" className="w-fit" disabled={isSaving}>
                     <GithubLogo />
                     {isSaving ? "Saving..." : "Connect Repo"}
                   </Button>
-                )}
-              </SetGithubSourcePopover>
-            )}
+                </SetGithubSourcePopover>
+              )}
+            </div>
           </div>
           {!!githubUrl && githubSource && (
             <GoToEditorButton
