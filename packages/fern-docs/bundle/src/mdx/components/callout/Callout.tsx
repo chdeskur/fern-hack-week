@@ -144,7 +144,7 @@ export function NoteCallout({
   );
 }
 
-export function LaunchNoteCallout({
+export function LaunchCallout({
   children,
   ...props
 }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement<any> {

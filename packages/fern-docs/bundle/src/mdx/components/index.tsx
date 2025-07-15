@@ -21,7 +21,7 @@ import {
   CheckCallout,
   ErrorCallout,
   InfoCallout,
-  LaunchNoteCallout,
+  LaunchCallout,
   NoteCallout,
   SuccessCallout,
   TipCallout,
@@ -100,7 +100,8 @@ const FERN_COMPONENTS = {
   Note: NoteCallout,
   Tip: TipCallout,
   Check: CheckCallout,
-  LaunchNote: LaunchNoteCallout,
+  Launch: LaunchCallout,
+  LaunchNote: LaunchCallout, // legacy alias
 };
 
 // internal-use only
