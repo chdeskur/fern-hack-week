@@ -76,6 +76,7 @@
     "puppeteer-core": "^24.4.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "recharts": "^2.15.4",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
     "sonner": "^2.0.3",
