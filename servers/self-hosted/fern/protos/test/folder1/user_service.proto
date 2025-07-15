@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package test.folder1;
+
+import "test/folder1/user_types.proto";
+import "google/protobuf/empty.proto";
+
+service UserService {
+  // Create a new user
+  rpc CreateUser(CreateUserRequest) returns (User);
+
+  // Get user by ID
+  rpc GetUser(GetUserRequest) returns (User);
+
+  // Update user information
+  rpc UpdateUser(UpdateUserRequest) returns (User);
+
+  // Delete user
+  rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty);
+
+  // List users with pagination
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+}
+
+message CreateUserRequest {
+  string email = 1;
+  string full_name = 2;
+  UserPreferences preferences = 3;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message UpdateUserRequest {
+  string user_id = 1;
+  optional string email = 2;
+  optional string full_name = 3;
+  optional UserPreferences preferences = 4;
+}
+
+message DeleteUserRequest {
+  string user_id = 1;
+}
+
+message ListUsersRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  string next_page_token = 2;
+} 

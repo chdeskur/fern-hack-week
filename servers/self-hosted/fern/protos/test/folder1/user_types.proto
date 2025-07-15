@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package test.folder1;
+
+message User {
+  string id = 1;
+  string email = 2;
+  string full_name = 3;
+  UserStatus status = 4;
+  repeated string roles = 5;
+  UserPreferences preferences = 6;
+}
+
+message UserPreferences {
+  bool email_notifications = 1;
+  string theme = 2;
+  string language = 3;
+}
+
+enum UserStatus {
+  USER_STATUS_UNSPECIFIED = 0;
+  USER_STATUS_ACTIVE = 1;
+  USER_STATUS_INACTIVE = 2;
+  USER_STATUS_SUSPENDED = 3;
+} 

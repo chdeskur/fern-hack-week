@@ -101,6 +101,11 @@ RUN mkdir -p /nextapp && \
 # ----------- End nextapp setup -------------
 
 RUN apt-get update && apt-get install -y jq
-    
+
+# ----------- Start Buf CLI setup -----------
+RUN wget https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_64 -O /usr/local/bin/buf && \
+    chmod +x /usr/local/bin/buf
+# ----------- End Buf CLI setup -----------
+
 ENTRYPOINT ["/bin/bash", "/run.sh"]
 

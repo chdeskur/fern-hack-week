@@ -2,6 +2,11 @@
 api:
   specs:
     - openapi: openapi.yaml
+    - proto:
+        root: ./protos/
+        target: ./protos/test/folder1/user_service.proto
+        local-generation: true
+
 default-group: local
 groups:
   local:
