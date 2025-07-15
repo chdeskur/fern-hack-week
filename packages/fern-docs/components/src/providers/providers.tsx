@@ -7,7 +7,13 @@ import { Toaster } from "../FernToast";
 import { JotaiProvider } from "../state/jotai-provider";
 import StyledJsxRegistry from "./registry";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  children,
+  loaderColor,
+}: {
+  children: React.ReactNode;
+  loaderColor?: string;
+}) {
   return (
     <StyledJsxRegistry>
       <JotaiProvider>
@@ -15,7 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <Toaster />
           <ProgressProvider
             height="3px"
-            color="var(--accent)"
+            color={loaderColor ?? "var(--accent)"}
             options={{ showSpinner: false }}
             disableSameURL
             delay={300}

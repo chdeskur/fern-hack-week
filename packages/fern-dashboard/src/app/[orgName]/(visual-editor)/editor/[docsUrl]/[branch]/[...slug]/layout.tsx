@@ -78,7 +78,7 @@ export default async function VisualEditorPreviewLayout({
     getSidebarRootNodeIdToChildToParentsMap(sidebarRootNodes);
 
   return (
-    <Providers>
+    <Providers loaderColor="var(--color-primary)">
       <FernThemeProvider
         hasLight={Boolean(colors.light)}
         hasDark={Boolean(colors.dark)}
