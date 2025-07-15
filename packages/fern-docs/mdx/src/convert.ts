@@ -228,16 +228,11 @@ export function htmlToMdx(
   originalElements: OriginalElements,
   changedNodes?: ChangedNodes
 ): HtmlToMdxResponse {
-  console.log("html", html);
-  console.log("changedNodes", changedNodes);
-
   // Get hast from html
   const hast = fromHtml(html);
 
   // Default handler for base elements
   const baseElementHandler: ToMdastHandle = (state, element) => {
-    console.log("state", state);
-    console.log("element", element);
     if (
       element.properties?.dataHash &&
       typeof element.properties.dataHash === "string" &&
@@ -298,9 +293,6 @@ export function htmlToMdx(
     const content = customElement.content;
     finalMdx = finalMdx.replace(placeholder, content);
   });
-
-  console.log("mdx", mdx);
-  console.log("finalMdx", finalMdx);
 
   return { mdx: finalMdx };
 }

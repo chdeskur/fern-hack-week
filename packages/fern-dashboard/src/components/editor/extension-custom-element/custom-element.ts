@@ -37,6 +37,8 @@ export const CustomElement = Node.create<CustomElementOptions>({
 
   selectable: false,
 
+  code: true,
+
   /**
    * The data attributes are used to store the original content of the custom element.
    * @example <custom-element data-hash="..." data-type="..." data-name="..." />
