@@ -80,8 +80,8 @@ export default async function Page({
 
   const page = pageId && (await loader.getPage(pageId));
   const mdx = page?.markdown ?? "";
-  const { html, frontmatter, customElements } = mdxToHtml(mdx, {
-    treatCodeBlocksAsCustomElements: true,
+  const { html, frontmatter, originalElements } = mdxToHtml(mdx, {
+    treatAsCustomElement: ["code"],
   });
 
   return (
@@ -114,7 +114,7 @@ export default async function Page({
             filename={page?.filename ?? ""}
             initialHtml={html}
             initialFrontmatter={frontmatter}
-            initialCustomElements={customElements}
+            initialOriginalElements={originalElements}
           />
         )}
       </div>

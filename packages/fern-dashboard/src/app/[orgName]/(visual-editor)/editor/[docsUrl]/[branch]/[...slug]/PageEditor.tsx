@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 
 import { EditorEvents } from "@tiptap/react";
+
+import { getChangedNodesFromHtml } from "@fern-docs/mdx";
 
 import TiptapEditor from "@/components/editor/TiptapEditor";
 import { useMdxState } from "@/providers/MdxStateContext";
@@ -23,9 +25,22 @@ export default function PageEditor({
 }: PageEditor.Props) {
   const { stageChanges } = useMdxState();
 
+  const originalTiptapHtml = useRef(initialHtml);
+
+  function onTiptapEditorCreate(props: EditorEvents["create"]) {
+    const latestTiptapHtml = props.editor.getHTML();
+    originalTiptapHtml.current = latestTiptapHtml;
+  }
+
   function onTiptapEditorUpdate(props: EditorEvents["update"]) {
-    const html = props.editor.getHTML();
-    stageChanges(filename, { html });
+    const latestTiptapHtml = props.editor.getHTML();
+    if (originalTiptapHtml.current) {
+      const changedNodes = getChangedNodesFromHtml(
+        originalTiptapHtml.current,
+        latestTiptapHtml
+      );
+      stageChanges(filename, { html: latestTiptapHtml, changedNodes });
+    }
   }
 
   // TODO: add a loading state, possibly as a Suspense boundary
@@ -34,6 +49,7 @@ export default function PageEditor({
       <TiptapEditor
         className={className}
         content={initialHtml}
+        onCreate={onTiptapEditorCreate}
         onUpdate={onTiptapEditorUpdate}
       />
     )

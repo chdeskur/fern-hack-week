@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-import { MdxToHtmlResponse, htmlToMdx } from "@fern-docs/mdx";
+import { ChangedNodes, MdxToHtmlResponse, htmlToMdx } from "@fern-docs/mdx";
 
 import { setMdxFile } from "@/app/actions/setMdxFile";
 import { DocsUrl } from "@/utils/types";
@@ -25,12 +25,17 @@ export const DEBOUNCE_TIMEOUT_DELAY = 300;
 interface MdxDependencies {
   html?: MdxToHtmlResponse["html"];
   frontmatter?: MdxToHtmlResponse["frontmatter"];
-  customElements?: MdxToHtmlResponse["customElements"];
+  originalElements?: MdxToHtmlResponse["originalElements"];
   /**
    * Flag if the file should be considered changed.
    * This is used to determine if content changes should be committed to repo.
    */
   changed?: boolean;
+  /**
+   * Map of specific node that have changed.
+   * This is used to determine if we should use the original MDX content formatting from originalElements.
+   */
+  changedNodes?: ChangedNodes;
 }
 
 export const MdxStateContext = createContext<{
@@ -78,9 +83,13 @@ export function MdxStateProvider({
             // Only override frontmatter properties that are newly provided
             ...state.frontmatter,
           },
-          customElements:
-            state.customElements ?? prev[filename]?.customElements,
+          originalElements:
+            state.originalElements ?? prev[filename]?.originalElements,
           changed: state.changed ?? prev[filename]?.changed,
+          changedNodes: {
+            ...prev[filename]?.changedNodes,
+            ...state.changedNodes,
+          },
         },
       }));
     },
@@ -108,12 +117,13 @@ export function MdxStateProvider({
           state.changed &&
           state.html &&
           state.frontmatter &&
-          state.customElements
+          state.originalElements
         ) {
           acc[filename] = htmlToMdx(
             state.html,
             state.frontmatter,
-            state.customElements
+            state.originalElements,
+            state.changedNodes
           ).mdx;
         }
         return acc;

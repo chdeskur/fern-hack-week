@@ -6,15 +6,17 @@ import StarterKit from "@tiptap/starter-kit";
 import BubbleMenu from "./BubbleMenu";
 import FloatingMenu from "./FloatingMenu";
 import CustomElement from "./extension-custom-element";
+import GlobalDataHashAttribute from "./extension-global-data-hash-attribute";
 
 // Configure Tiptap extensions
-const extensions = [StarterKit, CustomElement];
+const extensions = [StarterKit, CustomElement, GlobalDataHashAttribute];
 export declare namespace TiptapEditor {
   export interface Props {
     className?: string;
     disableFloatingMenu?: boolean;
     disableBubbleMenu?: boolean;
     content?: EditorProviderProps["content"];
+    onCreate?: EditorProviderProps["onCreate"];
     onUpdate?: EditorProviderProps["onUpdate"];
   }
 }
@@ -25,6 +27,7 @@ export default function TiptapEditor({
   disableFloatingMenu,
   disableBubbleMenu,
   content,
+  onCreate,
   onUpdate,
 }: TiptapEditor.Props) {
   return (
@@ -42,6 +45,7 @@ export default function TiptapEditor({
       }}
       editorContainerProps={{ className }}
       immediatelyRender={false}
+      onCreate={onCreate}
       onUpdate={onUpdate}
     >
       {!disableFloatingMenu && <FloatingMenu />}

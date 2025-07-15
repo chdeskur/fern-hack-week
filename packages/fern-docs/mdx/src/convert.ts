@@ -1,15 +1,27 @@
 import { createHash } from "crypto";
+import { Root as HastRoot } from "hast";
 import { fromHtml } from "hast-util-from-html";
 import { toHtml } from "hast-util-to-html";
-import { toMdast } from "hast-util-to-mdast";
+import {
+  Handle as ToMdastHandle,
+  toMdast,
+  defaultHandlers as toMdastDefaultHandlers,
+} from "hast-util-to-mdast";
 import yaml from "js-yaml";
+import { Parents as MdastParents } from "mdast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import {
   frontmatterFromMarkdown,
   frontmatterToMarkdown,
 } from "mdast-util-frontmatter";
 import { mdxFromMarkdown, mdxToMarkdown } from "mdast-util-mdx";
-import { State as ToHastState, toHast } from "mdast-util-to-hast";
+import {
+  Handler as ToHastHandler,
+  Handlers as ToHastHandlers,
+  State as ToHastState,
+  toHast,
+  defaultHandlers as toHastDefaultHandlers,
+} from "mdast-util-to-hast";
 import { toMarkdown } from "mdast-util-to-markdown";
 import { frontmatter as fm } from "micromark-extension-frontmatter";
 import { mdxjs } from "micromark-extension-mdxjs";
@@ -20,15 +32,59 @@ const FRONTMATTER_YAML_OPTIONS: yaml.DumpOptions = {
   lineWidth: -1,
 };
 
-// Custom element data
-export interface CustomElement {
+// Mdast dodes that have default handlers
+// Note: toHastDefaultHandlers does NOT support math or inlineMath nodes by default
+type ToHastDefaultHandlersType = keyof typeof toHastDefaultHandlers;
+
+// Hast nodes that have default handlers
+type ToMdastDefaultHandlersType = keyof typeof toMdastDefaultHandlers;
+
+// All mdast node types that toHast can handle
+// Note: toHast does NOT support toml by default
+type AllElementsType = keyof ToHastHandlers;
+
+// Nodes we should not treat as custom elements
+// Note: since toHast does not support math or inlineMath nodes by default, we treat them as custom elements
+type BaseElementsType = Exclude<
+  AllElementsType,
+  | "mdxJsxFlowElement"
+  | "mdxJsxTextElement"
+  | "mdxFlowExpression"
+  | "mdxTextExpression"
+  | "mdxjsEsm"
+  | "math"
+  | "inlineMath"
+>;
+
+// Non-custom nodes that can be hashed
+// TODO: ensure that this is comprehensive of all nodes that are not hashable
+type HashableBaseElementsType = Exclude<BaseElementsType, "root" | "yaml">;
+
+// Type guard to check if a base element type is hashable
+function isHashableBaseElementsType(
+  type: BaseElementsType
+): type is HashableBaseElementsType {
+  return type !== "root" && type !== "yaml";
+}
+
+// Nodes to treat as custom elements
+type CustomElementsType = Exclude<AllElementsType, BaseElementsType>;
+
+// Hash of a node
+export type NodeHash = string;
+
+// Original element data
+export interface OriginalElement {
   type: string;
   name?: string;
   content: string;
 }
 
-// Map of custom elements by hash
-export type CustomElements = Record<string, CustomElement>;
+// Map of original elements by hash
+export type OriginalElements = Record<NodeHash, OriginalElement>;
+
+// Map of changed nodes by hash
+export type ChangedNodes = Record<NodeHash, boolean>;
 
 // Frontmatter included in mdx
 export type Frontmatter = Record<string, unknown>;
@@ -37,20 +93,22 @@ export type Frontmatter = Record<string, unknown>;
 export interface MdxToHtmlResponse {
   html: string;
   frontmatter: Frontmatter;
-  customElements: CustomElements;
+  originalElements: OriginalElements;
 }
 
 interface MdxToHtmlOptions {
-  // Whether to treat MDX code blocks as custom elements for now – avoids lossiness in "code meta" props
-  treatCodeBlocksAsCustomElements?: boolean;
+  /**
+   * Whether to treat an mdast node type as a custom element for now e.g. avoid lossiness in code block "meta" props
+   */
+  treatAsCustomElement?: BaseElementsType[];
 }
 
-// Convert mdx to html, frontmatter, and custom elements
+// Convert mdx to html, frontmatter, and original elements
 export function mdxToHtml(
   rootContent: string,
   options?: MdxToHtmlOptions
 ): MdxToHtmlResponse {
-  const { treatCodeBlocksAsCustomElements = false } = options ?? {};
+  const { treatAsCustomElement = [] } = options ?? {};
 
   // Get mdast from root mdx content
   const mdast = fromMarkdown(rootContent, {
@@ -67,36 +125,94 @@ export function mdxToHtml(
     ? parsedFrontmatter
     : {};
 
-  // Map of custom elements by hash, including jsxElements, expressions, and esm
-  // Note: this will only include top-level custom elements, not nested ones
-  const customElements: Record<string, CustomElement> = {};
+  // Map of original elements by hash, including jsxElements, expressions, and esm
+  // Note: this will only include top-level elements, not nested ones
+  const originalElements: OriginalElements = {};
+
+  // Default handler for base elements
+  function baseElementHandler(
+    state: ToHastState,
+    node: any,
+    parents?: MdastParents
+  ) {
+    const { type, name } = getNodeInfo(node);
+    const nodeType = type as BaseElementsType;
+    if (!isHashableBaseElementsType(nodeType)) {
+      // Early return if the node is not hashable
+      return getToHastDefaultHandler(nodeType)(state, node, parents);
+    }
+    const { hash, content } = getNodeContent(node, rootContent);
+    originalElements[hash] = { content, type, name };
+    return mdxBaseElementNode(
+      hash,
+      content,
+      nodeType,
+      name,
+      state,
+      node,
+      parents
+    );
+  }
 
   // Default handler for custom elements
-  function customElementHandler(_: ToHastState, node: any) {
-    const { hash, content } = getNodeContent(node, rootContent);
+  function customElementHandler(_: ToHastState, node: any, __?: MdastParents) {
     const { type, name } = getNodeInfo(node);
-    customElements[hash] = { content, type, name };
-    return mdxCustomElementNode(hash, content, type, name);
+    const nodeType = type as CustomElementsType;
+    const { hash, content } = getNodeContent(node, rootContent);
+    originalElements[hash] = { content, type, name };
+    return mdxCustomElementNode(hash, content, nodeType, name);
   }
 
   // Get hast from mdast (and handle custom elements)
   const hast = toHast(mdast, {
     handlers: {
-      mdxJsxFlowElement: customElementHandler,
-      mdxJsxTextElement: customElementHandler,
-      mdxFlowExpression: customElementHandler,
-      mdxTextExpression: customElementHandler,
-      mdxjsEsm: customElementHandler,
-      ...(treatCodeBlocksAsCustomElements
-        ? { code: customElementHandler }
-        : {}),
+      ...({
+        blockquote: baseElementHandler,
+        break: baseElementHandler,
+        code: baseElementHandler,
+        definition: baseElementHandler,
+        delete: baseElementHandler,
+        emphasis: baseElementHandler,
+        footnoteDefinition: baseElementHandler,
+        footnoteReference: baseElementHandler,
+        heading: baseElementHandler,
+        html: baseElementHandler,
+        image: baseElementHandler,
+        imageReference: baseElementHandler,
+        inlineCode: baseElementHandler,
+        link: baseElementHandler,
+        linkReference: baseElementHandler,
+        list: baseElementHandler,
+        listItem: baseElementHandler,
+        paragraph: baseElementHandler,
+        root: baseElementHandler,
+        strong: baseElementHandler,
+        table: baseElementHandler,
+        tableCell: baseElementHandler,
+        tableRow: baseElementHandler,
+        text: baseElementHandler,
+        thematicBreak: baseElementHandler,
+        yaml: baseElementHandler,
+      } as Record<BaseElementsType, ToHastHandler>),
+      ...({
+        mdxJsxFlowElement: customElementHandler,
+        mdxJsxTextElement: customElementHandler,
+        mdxFlowExpression: customElementHandler,
+        mdxTextExpression: customElementHandler,
+        mdxjsEsm: customElementHandler,
+        math: customElementHandler,
+        inlineMath: customElementHandler,
+        ...Object.fromEntries(
+          treatAsCustomElement.map((type) => [type, customElementHandler])
+        ),
+      } as Record<CustomElementsType, ToHastHandler>),
     },
   });
 
   // Get html from hast
   const html = toHtml(hast);
 
-  return { html, frontmatter, customElements };
+  return { html, frontmatter, originalElements };
 }
 
 // Response from htmlToMdx
@@ -105,27 +221,63 @@ export interface HtmlToMdxResponse {
 }
 
 // Convert html to mdx
-// TODO: Clean up this function
+// TODO: we might be able to further optimize by refactoring this and getChangedNodesFromHtml
 export function htmlToMdx(
   html: string,
   frontmatter: Frontmatter,
-  customElements: CustomElements
+  originalElements: OriginalElements,
+  changedNodes?: ChangedNodes
 ): HtmlToMdxResponse {
+  console.log("html", html);
+  console.log("changedNodes", changedNodes);
+
   // Get hast from html
   const hast = fromHtml(html);
 
+  // Default handler for base elements
+  const baseElementHandler: ToMdastHandle = (state, element) => {
+    console.log("state", state);
+    console.log("element", element);
+    if (
+      element.properties?.dataHash &&
+      typeof element.properties.dataHash === "string" &&
+      !changedNodes?.[element.properties.dataHash]
+    ) {
+      // Use hash as placeholder, which will be replaced with actual content
+      const placeholder = getCustomElementPlaceholder(
+        String(element.properties.dataHash)
+      );
+
+      return { type: "text", value: placeholder + "\n\n" } as any;
+    }
+    return getToMdastDefaultHandler(element.tagName as any)(state, element);
+  };
+
+  // Default handler for custom elements
+  const customElementHandler: ToMdastHandle = (_, element) => {
+    // Use hash as placeholder, which will be replaced with actual content
+    const placeholder = getCustomElementPlaceholder(
+      String(element.properties.dataHash)
+    );
+
+    return { type: "text", value: placeholder + "\n\n" } as any;
+  };
+
   // Get mdast from hast (and handle custom elements)
+  // TODO: fix types
   const mdast = toMdast(hast, {
     handlers: {
-      ["custom-element"]: function (_, element) {
-        // Use hash as placeholder, which will be replaced with actual content
-        const placeholder = getCustomElementPlaceholder(
-          String(element.properties.dataHash)
-        );
-
-        return { type: "text", value: placeholder };
-      },
-    },
+      // TODO: add full set of base elements
+      p: baseElementHandler,
+      h1: baseElementHandler,
+      h2: baseElementHandler,
+      h3: baseElementHandler,
+      h4: baseElementHandler,
+      h5: baseElementHandler,
+      h6: baseElementHandler,
+      ["custom-element"]: customElementHandler,
+    } as any,
+    newlines: true,
   });
 
   // Get mdx from mdast
@@ -141,11 +293,14 @@ export function htmlToMdx(
   }
 
   // Replace custom element placeholders with actual content
-  Object.entries(customElements).forEach(([hash, customElement]) => {
+  Object.entries(originalElements).forEach(([hash, customElement]) => {
     const placeholder = getCustomElementPlaceholder(hash);
     const content = customElement.content;
     finalMdx = finalMdx.replace(placeholder, content);
   });
+
+  console.log("mdx", mdx);
+  console.log("finalMdx", finalMdx);
 
   return { mdx: finalMdx };
 }
@@ -162,6 +317,7 @@ function isValidFrontmatter(
 }
 
 // Get node info in a type-safe way
+// TODO: consider writing type guards for the node, since toHast does not type it by default
 function getNodeInfo(node: any) {
   if (!node.type || typeof node.type !== "string") {
     throw new Error("mdast node does not have a valid type");
@@ -176,31 +332,178 @@ function getNodeInfo(node: any) {
 }
 
 // Get node content in a type-safe way
+// TODO: consider writing type guards for the node, since toHast does not type it by default
 function getNodeContent(node: any, rootContent: string) {
-  if (!node.position?.start.offset || !node.position?.end.offset) {
+  if (
+    node.position?.start.offset == null ||
+    node.position?.end.offset == null
+  ) {
     throw new Error("Node does not have valid position offset(s)");
   }
   const content = rootContent.slice(
     node.position.start.offset,
     node.position.end.offset
   );
-  const hash = createHash("sha256").update(content).digest("hex");
+  const hash: NodeHash = createHash("sha256").update(content).digest("hex");
 
   return { content, hash };
 }
 
+// TODO: we might be able to further optimize by refactoring this and htmlToMdx
+export function getChangedNodesFromHtml(
+  originalHtml: string,
+  latestHtml: string
+): ChangedNodes {
+  const originalHast = fromHtml(originalHtml);
+  const latestHast = fromHtml(latestHtml);
+
+  const originalMap = getNodeMapFromHast(originalHast);
+  const latestMap = getNodeMapFromHast(latestHast);
+
+  // Default to all nodes being changed until we can compare them
+  const changedNodes: ChangedNodes = {
+    ...Object.fromEntries(Object.keys(originalMap).map((hash) => [hash, true])),
+    ...Object.fromEntries(Object.keys(latestMap).map((hash) => [hash, true])),
+  };
+
+  // Compare nodes with the same hash
+  for (const hash of Object.keys(originalMap)) {
+    if (hash in latestMap) {
+      // Compare the node contents
+      const originalNode = originalMap[hash];
+      const latestNode = latestMap[hash];
+      const { content: originalContent } = getNodeContent(
+        originalNode,
+        originalHtml
+      );
+      const { content: latestContent } = getNodeContent(latestNode, latestHtml);
+      changedNodes[hash] = originalContent !== latestContent;
+    }
+  }
+  return changedNodes;
+}
+
+// Helper to get first-level elements with data-hash (dataHash) under root -> html -> body
+// TODO: consider writing type guards for the hast nodes, since toHast does not type it by default
+function getNodeMapFromHast(hast: HastRoot) {
+  const map: Record<NodeHash, any> = {};
+  let bodyChildren: any[] | undefined;
+  if (hast && Array.isArray(hast.children)) {
+    // Find the <html> element
+    const htmlNode = hast.children.find(
+      (node) => node.type === "element" && node.tagName === "html"
+    );
+    if (
+      htmlNode &&
+      htmlNode.type === "element" &&
+      Array.isArray(htmlNode.children)
+    ) {
+      // Find the <body> element inside <html>
+      const bodyNode = htmlNode.children.find(
+        (node) => node.type === "element" && node.tagName === "body"
+      );
+      if (
+        bodyNode &&
+        bodyNode.type === "element" &&
+        Array.isArray(bodyNode.children)
+      ) {
+        bodyChildren = bodyNode.children;
+      }
+    }
+  }
+  if (bodyChildren) {
+    for (const node of bodyChildren) {
+      if (
+        node &&
+        node.type === "element" &&
+        node.properties &&
+        typeof node.properties.dataHash === "string"
+      ) {
+        map[node.properties.dataHash] = node;
+      }
+    }
+  }
+  return map;
+}
+
 // Get a placeholder for a custom element
 // Note: be careful not to use any characters that the serializer will escape
-function getCustomElementPlaceholder(hash: string) {
-  return hash;
+function getCustomElementPlaceholder(hash: NodeHash) {
+  return `PLACEHOLDER${hash}`;
+}
+
+// Get the toHast default handler in a type-safe way
+function getToHastDefaultHandler(type: ToHastDefaultHandlersType) {
+  return toHastDefaultHandlers[type];
+}
+
+// Get the toMarkdown default handler in a type-safe way
+function getToMdastDefaultHandler(type: ToMdastDefaultHandlersType) {
+  return toMdastDefaultHandlers[type];
+}
+
+// Create node for a base element
+function mdxBaseElementNode(
+  hash: NodeHash,
+  _: string,
+  type: HashableBaseElementsType,
+  __: string | undefined,
+  state: ToHastState,
+  node: any,
+  parents?: MdastParents
+) {
+  const defaultNode = getToHastDefaultHandler(type)(state, node, parents);
+  switch (typeof defaultNode) {
+    case "object": {
+      if (Array.isArray(defaultNode)) {
+        // Expects defaultNode: ElementContent[]
+        return defaultNode.map(() => null);
+      } else if (defaultNode.type === "element") {
+        // Expects defaultNode: Element
+        // Note: we add a data-hash property to the element for the client's reference
+        return {
+          ...defaultNode,
+          properties: {
+            ...defaultNode.properties,
+            "data-hash": hash,
+          },
+        };
+      } else if (
+        defaultNode.type === "comment" ||
+        defaultNode.type === "text" ||
+        defaultNode.type === "raw"
+      ) {
+        // Expects defaultNode: Comment | Text | Raw
+        // Note: these are nodes we don't need to hash, so we return them as is
+        return defaultNode;
+      } else if (
+        defaultNode.type === "root" ||
+        defaultNode.type === "mdxTextExpression" ||
+        defaultNode.type === "mdxJsxTextElement" ||
+        defaultNode.type === "mdxJsxFlowElement" ||
+        defaultNode.type === "mdxFlowExpression"
+      ) {
+        // Expects defaultNode: Root | MdxTextExpressionHast | MdxFlowExpressionHast | MdxJsxFlowElementHast | MdxJsxTextElementHast
+        // Note: since we handle these nodes in mdxToHtml, we don't expect to see them here
+        console.warn(`Unexpected defaultNode type: ${defaultNode.type}`);
+        return defaultNode;
+      } else {
+        throw new Error(`Unknown defaultNode type: ${defaultNode}`);
+      }
+    }
+    case "undefined":
+    default: {
+      return defaultNode;
+    }
+  }
 }
 
 // Create node for a custom element
 function mdxCustomElementNode(
-  hash: string,
+  hash: NodeHash,
   content: string,
-  type: string,
-  name?: string
+  type: CustomElementsType,
+  name: string | undefined
 ) {
   return {
     type: "element" as const,

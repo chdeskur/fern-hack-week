@@ -15,7 +15,7 @@ export declare namespace PageContents {
     filename: string;
     initialHtml: MdxToHtmlResponse["html"];
     initialFrontmatter: MdxToHtmlResponse["frontmatter"];
-    initialCustomElements: MdxToHtmlResponse["customElements"];
+    initialOriginalElements: MdxToHtmlResponse["originalElements"];
   }
 }
 
@@ -23,7 +23,7 @@ export default function PageContents({
   filename,
   initialHtml,
   initialFrontmatter,
-  initialCustomElements,
+  initialOriginalElements,
 }: PageContents.Props) {
   const { title, subtitle } = initialFrontmatter ?? {};
 
@@ -34,13 +34,13 @@ export default function PageContents({
     updateDependencies(filename, {
       html: initialHtml,
       frontmatter: initialFrontmatter,
-      customElements: initialCustomElements,
+      originalElements: initialOriginalElements,
     });
   }, [
     filename,
     initialHtml,
     initialFrontmatter,
-    initialCustomElements,
+    initialOriginalElements,
     updateDependencies,
   ]);
 
