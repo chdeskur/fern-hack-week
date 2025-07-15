@@ -179,6 +179,7 @@ function ChartTooltipContent({
     >
       {!nestLabel ? tooltipLabel : null}
       <div className="text-foreground flex justify-between gap-2 text-xs">
+        <span className="mr-2 font-semibold">{label}</span>
         <span className="font-mono">
           {payload[0]?.value} {name}
         </span>

@@ -8,12 +8,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowRight, MessageSquare } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { FernFai } from "@fern-api/fai-sdk";
 
-import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+
+import { ConversationsDataTableHeader } from "./ConversationsDataTableHeader";
 
 interface ConversationsDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,30 +35,8 @@ export function ConversationsDataTable<TData, TValue>({
 
   return (
     <div className="rounded-md p-4">
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <MessageSquare className="h-5 w-5" />
-          <span className="text-lg font-semibold">Conversations</span>
-        </div>
-        <div>
-          <Input
-            placeholder="Search..."
-            value={
-              (table
-                .getColumn("firstUserMessage")
-                ?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn("firstUserMessage")
-                ?.setFilterValue(event.target.value)
-            }
-            className="h-9 max-w-sm rounded-full"
-            autoFocus
-          />
-        </div>
-      </div>
-      <div className="">
+      <ConversationsDataTableHeader table={table} />
+      <div className="min-h-[400px]">
         <Table className="table-fixed">
           <TableBody>
             {table.getRowModel().rows?.length ? (
@@ -116,7 +95,10 @@ export const columns: ColumnDef<FernFai.Conversation>[] = [
     cell: ({ row }) => {
       const text = row.getValue("firstUserMessage") as string;
       return (
-        <div className="truncate" title={text}>
+        <div
+          className="truncate hover:text-clip hover:whitespace-normal"
+          title={text}
+        >
           {text}
         </div>
       );
@@ -128,7 +110,7 @@ export const columns: ColumnDef<FernFai.Conversation>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue("created_at") as string);
       return (
-        <div className="font-medium">
+        <div>
           {date.toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -145,7 +127,7 @@ export const columns: ColumnDef<FernFai.Conversation>[] = [
     id: "actions",
     cell: () => {
       return (
-        <div className="text-gray-1100 flex flex-row items-center">
+        <div className="text-radix-gray-11 flex flex-row items-center">
           View
           <ArrowRight className="ml-1 h-3 w-3" />
         </div>
