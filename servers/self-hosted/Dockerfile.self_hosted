@@ -63,8 +63,9 @@ EXPOSE 9000 9001
 
 # ----------- Start MeiliSearch setup -----------
 RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -L https://install.meilisearch.com | sh
+    apt-get install -y curl wget && \
+    curl -L https://github.com/meilisearch/meilisearch/releases/latest/download/meilisearch-linux-aarch64 -o /usr/local/bin/meilisearch && \
+    chmod +x /usr/local/bin/meilisearch
 
 EXPOSE 7700
 # ----------- End MeiliSearch setup -----------
