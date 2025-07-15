@@ -3,19 +3,23 @@
 import {
   Bar,
   BarChart,
+  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
 } from "recharts";
 
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
+import { RenderType } from "./AnalyticsPageClient";
+import { parseLabel } from "./parse-label";
+
 interface AnalyticsHistogramProps {
   chartData: {
     label: string;
-    queryCount: number;
+    count: number;
   }[];
+  renderType: RenderType;
   chartConfig: {
     queries: {
       label: string;
@@ -26,19 +30,54 @@ interface AnalyticsHistogramProps {
 
 export function AnalyticsHistogram({
   chartData,
+  renderType,
   chartConfig,
 }: AnalyticsHistogramProps) {
   return (
     <div
-      style={{ width: "80%", height: "auto", minWidth: "0", minHeight: "0" }}
+      style={{ width: "100%", height: "auto", minWidth: "0", minHeight: "0" }}
     >
       <ChartContainer config={chartConfig}>
         <ResponsiveContainer>
-          <BarChart data={chartData}>
-            <XAxis dataKey="label" />
-            <YAxis />
-            <Tooltip content={<ChartTooltipContent />} />
-            <Bar dataKey="queryCount" name="Queries" />
+          <BarChart data={chartData} barSize={40}>
+            <defs>
+              <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#008700" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#008700" stopOpacity={0.0} />
+              </linearGradient>
+
+              <linearGradient id="barGradientHover" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#008700" stopOpacity={1.0} />
+                <stop offset="95%" stopColor="#008700" stopOpacity={0.0} />
+              </linearGradient>
+            </defs>
+
+            <CartesianGrid strokeDasharray="4 4" vertical={false} />
+            <XAxis
+              dataKey="label"
+              stroke="#ccc"
+              tick={{ fill: "#666" }}
+              tickFormatter={parseLabel}
+            />
+            <Tooltip
+              content={
+                <ChartTooltipContent
+                  name={
+                    renderType === "QUESTIONS" ? "Questions" : "Conversations"
+                  }
+                  hideLabel
+                />
+              }
+            />
+            <Bar
+              dataKey="count"
+              name={renderType === "QUESTIONS" ? "Questions" : "Conversations"}
+              fill="url(#barGradient)"
+              activeBar={{
+                fill: "url(#barGradientHover)",
+              }}
+              radius={[8, 8, 0, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       </ChartContainer>

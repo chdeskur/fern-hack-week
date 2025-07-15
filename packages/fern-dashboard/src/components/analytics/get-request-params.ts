@@ -3,6 +3,7 @@ import { FernFai } from "@fern-api/fai-sdk";
 export enum TimeRange {
   LAST_WEEK = "LAST_WEEK",
   LAST_MONTH = "LAST_MONTH",
+  LAST_YEAR = "LAST_YEAR",
 }
 
 const getToday = (): string => {
@@ -13,6 +14,14 @@ const getToday = (): string => {
 const getLastWeekStart = (): string => {
   const date = new Date();
   date.setDate(date.getDate() - 7);
+  return date.toISOString();
+};
+
+const getLastYearStart = (): string => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 1);
+  date.setMonth(0);
+  date.setDate(1);
   return date.toISOString();
 };
 
@@ -41,6 +50,13 @@ export const getRequestParams = (
         start_date: getLastMonthStart(),
         end_date: endDate,
         groupBy: "WEEK",
+      };
+
+    case TimeRange.LAST_YEAR:
+      return {
+        start_date: getLastYearStart(),
+        end_date: endDate,
+        groupBy: "MONTH",
       };
   }
 };

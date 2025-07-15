@@ -65,8 +65,8 @@ async def get_histogram_analytics(
         }
 
         data = []
+        current = st
         if groupBy == "DAY":
-            current = st
             while current <= ed:
                 label = current.strftime("%Y-%m-%d")
                 count = counts_by_label.get(label, {"conversationCount": 0, "queryCount": 0})
@@ -75,14 +75,29 @@ async def get_histogram_analytics(
                 )
                 current += timedelta(days=1)
         else:
-            data = [
-                {
-                    "label": row.label.strftime("%Y-%m-%d"),
-                    "conversationCount": row.conversationCount,
-                    "queryCount": row.queryCount,
-                }
-                for row in rows
-            ]
+            if groupBy == "WEEK":
+                current = current - timedelta(days=current.weekday())
+                step = timedelta(weeks=1)
+            elif groupBy == "MONTH":
+                current = current.replace(day=1)
+
+            while current <= ed:
+                label = current.strftime("%Y-%m-%d")
+                count = counts_by_label.get(label, {"conversationCount": 0, "queryCount": 0})
+                data.append(
+                    {
+                        "label": label,
+                        "conversationCount": count["conversationCount"],
+                        "queryCount": count["queryCount"],
+                    }
+                )
+                if groupBy == "MONTH":
+                    if current.month == 12:
+                        current = current.replace(year=current.year + 1, month=1, day=1)
+                    else:
+                        current = current.replace(month=current.month + 1, day=1)
+                else:
+                    current += step
 
         LOGGER.info(f"Retrieved histogram data for domain: {domain}, groupBy: {groupBy}")
         return JSONResponse(content=jsonable_encoder({"bars": data}))
