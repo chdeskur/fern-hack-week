@@ -187,7 +187,7 @@ export const SearchV2 = React.memo(function SearchV2({
       <MeiliSearchClientRoot
         host={
           typeof window !== "undefined"
-            ? `${window.location.origin}/_search`
+            ? `${window.location.origin}${window.location.pathname.replace(/\/?$/, "/_search")}`
             : "/_search"
         }
         apiKey={""}
