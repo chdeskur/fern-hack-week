@@ -41,102 +41,9 @@ export class Conversations {
     }
 
     /**
-     * Retrieve all paginated chat conversations
-     *
-     * @param {string} domain
-     * @param {FernFai.GetConversationsRequest} request
-     * @param {Conversations.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link FernFai.BadRequestError}
-     * @throws {@link FernFai.InternalError}
-     *
-     * @example
-     *     await client.conversations.getConversations("domain")
-     */
-    public getConversations(
-        domain: string,
-        request: FernFai.GetConversationsRequest = {},
-        requestOptions?: Conversations.RequestOptions,
-    ): core.HttpResponsePromise<FernFai.Conversations> {
-        return core.HttpResponsePromise.fromPromise(this.__getConversations(domain, request, requestOptions));
-    }
-
-    private async __getConversations(
-        domain: string,
-        request: FernFai.GetConversationsRequest = {},
-        requestOptions?: Conversations.RequestOptions,
-    ): Promise<core.WithRawResponse<FernFai.Conversations>> {
-        const { source, page, limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (source != null) {
-            _queryParams["source"] = source;
-        }
-
-        if (page != null) {
-            _queryParams["page"] = page.toString();
-        }
-
-        if (limit != null) {
-            _queryParams["limit"] = limit.toString();
-        }
-
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.FernFaiEnvironment.Prod,
-                `/conversations/${encodeURIComponent(domain)}`,
-            ),
-            method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
-            queryParameters: _queryParams,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return { data: _response.body as FernFai.Conversations, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch ((_response.error.body as any)?.["error"]) {
-                case "BadRequestError":
-                    throw new FernFai.BadRequestError(_response.error.body as string, _response.rawResponse);
-                case "InternalError":
-                    throw new FernFai.InternalError(_response.error.body as string, _response.rawResponse);
-                default:
-                    throw new errors.FernFaiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FernFaiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.FernFaiTimeoutError("Timeout exceeded when calling GET /conversations/{domain}.");
-            case "unknown":
-                throw new errors.FernFaiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
-    }
-
-    /**
      * Retrieve a complete conversation by conversation id
      *
+     * @param {string} domain
      * @param {string} conversationId
      * @param {Conversations.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -144,16 +51,18 @@ export class Conversations {
      * @throws {@link FernFai.InternalError}
      *
      * @example
-     *     await client.conversations.getConversationById("conversation_id")
+     *     await client.conversations.getConversation("domain", "conversation_id")
      */
-    public getConversationById(
+    public getConversation(
+        domain: string,
         conversationId: string,
         requestOptions?: Conversations.RequestOptions,
     ): core.HttpResponsePromise<FernFai.Conversation> {
-        return core.HttpResponsePromise.fromPromise(this.__getConversationById(conversationId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getConversation(domain, conversationId, requestOptions));
     }
 
-    private async __getConversationById(
+    private async __getConversation(
+        domain: string,
         conversationId: string,
         requestOptions?: Conversations.RequestOptions,
     ): Promise<core.WithRawResponse<FernFai.Conversation>> {
@@ -162,7 +71,7 @@ export class Conversations {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.FernFaiEnvironment.Prod,
-                `/conversations/${encodeURIComponent(conversationId)}`,
+                `/conversations/${encodeURIComponent(domain)}/${encodeURIComponent(conversationId)}`,
             ),
             method: "GET",
             headers: mergeHeaders(
@@ -202,7 +111,7 @@ export class Conversations {
                 });
             case "timeout":
                 throw new errors.FernFaiTimeoutError(
-                    "Timeout exceeded when calling GET /conversations/{conversation_id}.",
+                    "Timeout exceeded when calling GET /conversations/{domain}/{conversation_id}.",
                 );
             case "unknown":
                 throw new errors.FernFaiError({

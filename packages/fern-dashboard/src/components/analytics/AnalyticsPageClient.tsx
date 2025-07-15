@@ -11,7 +11,7 @@ import { AnalyticsHistogram } from "./AnalyticsHistogram";
 import { TimeRangeSelect } from "./AnalyticsHistogramRangeSelector";
 import { AnalyticsHistogramTabBar } from "./AnalyticsHistogramTabBar";
 import { AnalyticsPageHeader } from "./AnalyticsPageHeader";
-import { ConversationsTable } from "./ConversationsTable";
+import { QueriesTable } from "./QueriesTable";
 import { TimeRange } from "./get-request-params";
 
 export type RenderType = "QUERIES" | "CONVERSATIONS";
@@ -21,11 +21,11 @@ const borderStyles =
 
 export function AnalyticsPageClient({
   baseDocsUrl,
-  initialConversationsData,
+  initialQueriesData,
   initialHistogramData,
 }: {
   baseDocsUrl: string;
-  initialConversationsData: FernFai.Conversation[];
+  initialQueriesData: FernFai.Query[];
   initialHistogramData: FernFai.HistogramAnalytics;
 }) {
   const [renderType, setRenderType] = useState<RenderType>("QUERIES");
@@ -79,8 +79,8 @@ export function AnalyticsPageClient({
           chartConfig={chartConfig}
         />
       </div>
-      <div className={cn(borderStyles)}>
-        <ConversationsTable conversations={initialConversationsData} />
+      <div className="border-gray-0 flex w-4/5 flex-col items-center rounded-2xl border p-4">
+        <QueriesTable queries={initialQueriesData} baseDocsUrl={baseDocsUrl} />
       </div>
     </div>
   );

@@ -6,74 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool.js";
 import { FernFaiClient } from "../../src/Client";
 
 describe("Conversations", () => {
-    test("getConversations", async () => {
-        const server = mockServerPool.createServer();
-        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
-
-        const rawResponseBody = [
-            {
-                conversation_id: "conversation_id",
-                created_at: "2024-01-15T09:30:00Z",
-                turns: [
-                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
-                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
-                ],
-            },
-            {
-                conversation_id: "conversation_id",
-                created_at: "2024-01-15T09:30:00Z",
-                turns: [
-                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
-                    { role: "role", text: "text", created_at: "2024-01-15T09:30:00Z" },
-                ],
-            },
-        ];
-        server
-            .mockEndpoint()
-            .get("/conversations/domain")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.conversations.getConversations("domain");
-        expect(response).toEqual([
-            {
-                conversation_id: "conversation_id",
-                created_at: "2024-01-15T09:30:00Z",
-                turns: [
-                    {
-                        role: "role",
-                        text: "text",
-                        created_at: "2024-01-15T09:30:00Z",
-                    },
-                    {
-                        role: "role",
-                        text: "text",
-                        created_at: "2024-01-15T09:30:00Z",
-                    },
-                ],
-            },
-            {
-                conversation_id: "conversation_id",
-                created_at: "2024-01-15T09:30:00Z",
-                turns: [
-                    {
-                        role: "role",
-                        text: "text",
-                        created_at: "2024-01-15T09:30:00Z",
-                    },
-                    {
-                        role: "role",
-                        text: "text",
-                        created_at: "2024-01-15T09:30:00Z",
-                    },
-                ],
-            },
-        ]);
-    });
-
-    test("getConversationById", async () => {
+    test("getConversation", async () => {
         const server = mockServerPool.createServer();
         const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
 
@@ -87,13 +20,13 @@ describe("Conversations", () => {
         };
         server
             .mockEndpoint()
-            .get("/conversations/conversation_id")
+            .get("/conversations/domain/conversation_id")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.conversations.getConversationById("conversation_id");
+        const response = await client.conversations.getConversation("domain", "conversation_id");
         expect(response).toEqual({
             conversation_id: "conversation_id",
             created_at: "2024-01-15T09:30:00Z",

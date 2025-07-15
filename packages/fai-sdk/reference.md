@@ -79,78 +79,7 @@ await client.analytics.getHistogramAnalytics("domain", {
 
 ## Conversations
 
-<details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client/Client.ts">getConversations</a>(domain, { ...params }) -> FernFai.Conversations</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all paginated chat conversations
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.conversations.getConversations("domain");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**domain:** `string`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `FernFai.GetConversationsRequest`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Conversations.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client/Client.ts">getConversationById</a>(conversationId) -> FernFai.Conversation</code></summary>
+<details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client/Client.ts">getConversation</a>(domain, conversationId) -> FernFai.Conversation</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +107,7 @@ Retrieve a complete conversation by conversation id
 <dd>
 
 ```typescript
-await client.conversations.getConversationById("conversation_id");
+await client.conversations.getConversation("domain", "conversation_id");
 ```
 
 </dd>
@@ -190,6 +119,14 @@ await client.conversations.getConversationById("conversation_id");
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**domain:** `string`
+
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -269,6 +206,77 @@ await client.queries.createQuery({
 <dd>
 
 **request:** `FernFai.CreateQueryRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Queries.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.queries.<a href="/src/api/resources/queries/client/Client.ts">getRecentQueries</a>(domain, { ...params }) -> FernFai.QueryPage</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all paginated recent queries
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.queries.getRecentQueries("domain");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain:** `string` — The domain to retrieve queries for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FernFai.GetRecentQueriesRequest`
 
 </dd>
 </dl>

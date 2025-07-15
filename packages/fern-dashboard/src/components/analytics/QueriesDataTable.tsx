@@ -12,19 +12,22 @@ import { ArrowRight } from "lucide-react";
 
 import { FernFai } from "@fern-api/fai-sdk";
 
+import { getConversation } from "@/app/actions/getConversation";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-import { ConversationsDataTableHeader } from "./ConversationsDataTableHeader";
+import { QueriesDataTableHeader } from "./QueriesDataTableHeader";
 
-interface ConversationsDataTableProps<TData, TValue> {
+interface QueriesDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  baseDocsUrl: string;
 }
 
-export function ConversationsDataTable<TData, TValue>({
+export function QueriesDataTable<TData, TValue>({
   columns,
   data,
-}: ConversationsDataTableProps<TData, TValue>) {
+  baseDocsUrl,
+}: QueriesDataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -35,16 +38,25 @@ export function ConversationsDataTable<TData, TValue>({
 
   return (
     <div className="rounded-md p-4">
-      <ConversationsDataTableHeader table={table} />
+      <QueriesDataTableHeader table={table} />
       <div className="min-h-[400px]">
         <Table className="table-fixed">
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table?.getRowModel()?.rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className="cursor-pointer border-none"
+                  onClick={async () => {
+                    const conversation = await getConversation({
+                      domain: baseDocsUrl,
+                      conversationId: (row.original as FernFai.Query)
+                        .conversation_id,
+                    });
+                    // TODO: Replace with side panel
+                    console.log(conversation);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -82,18 +94,13 @@ export function ConversationsDataTable<TData, TValue>({
   );
 }
 
-export const columns: ColumnDef<FernFai.Conversation>[] = [
+export const columns: ColumnDef<FernFai.Query>[] = [
   {
-    id: "firstUserMessage",
-    accessorFn: (conversation) => {
-      const firstUserTurn = conversation.turns.find(
-        (turn) => turn.role.toUpperCase() === "USER"
-      );
-      return firstUserTurn?.text ?? "";
-    },
-    header: "Conversations",
+    id: "query",
+    accessorFn: (query) => query.text,
+    header: "Query",
     cell: ({ row }) => {
-      const text = row.getValue("firstUserMessage") as string;
+      const text = row.getValue("query") as string;
       return (
         <div
           className="truncate hover:text-clip hover:whitespace-normal"

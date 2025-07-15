@@ -29,3 +29,38 @@ service:
       errors:
         - commons.BadRequestError
         - commons.InternalError
+
+    getRecentQueries:
+      docs: Retrieve all paginated recent queries
+      path: /queries/{domain}
+      method: GET
+      path-parameters:
+        domain:
+          type: string
+          docs: The domain to retrieve queries for
+      request:
+        name: GetRecentQueriesRequest
+        query-parameters:
+          page: optional<integer>
+          limit: optional<integer>
+      response: QueryPage
+      errors:
+        - commons.BadRequestError
+        - commons.InternalError
+
+types:
+  Query:
+    properties:
+      query_id: string
+      conversation_id: string
+      domain: string
+      text: string
+      role: string
+      source: string
+      created_at: datetime
+      time_to_first_token: optional<double>
+      
+  QueryPage:
+    properties:
+      queries: list<Query>
+      total: integer

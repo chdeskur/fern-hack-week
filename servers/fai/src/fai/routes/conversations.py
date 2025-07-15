@@ -15,65 +15,41 @@ from src.fai.dependencies import get_db
 from src.settings import LOGGER
 
 
-@fai_app.get("/conversations/{domain}")
-async def get_conversations(
+@fai_app.get("/conversations/{domain}/{conversation_id}")
+async def get_conversation(
     domain: str,
-    source: Optional[str] = "CHAT",
-    page: int = 1,
-    limit: int = 10,
+    conversation_id: str,
     db: AsyncSession = Depends(get_db),
 ) -> JSONResponse:
-    LOGGER.info(f"Retrieving conversations for domain {domain}")
+    LOGGER.info(f"Retrieving conversation {conversation_id} for domain {domain}")
     try:
-        # Step 1: Paginate the conversation IDs based on the latest query time
-        offset = (page - 1) * limit
-        paginated_conv_ids_stmt = (
-            select(Query.conversation_id)
-            .where(and_(Query.domain == domain, Query.source == source))
-            .group_by(Query.conversation_id)
-            .order_by(desc(func.max(Query.created_at)))
-            .offset(offset)
-            .limit(limit)
+        queries_stmt = (
+            select(Query)
+            .where(and_(Query.domain == domain, Query.conversation_id == conversation_id))
+            .order_by(Query.created_at)
         )
-
-        paginated_conv_ids_result = await db.execute(paginated_conv_ids_stmt)
-        paginated_conv_ids = [row[0] for row in paginated_conv_ids_result]
-
-        if not paginated_conv_ids:
-            return JSONResponse(content=jsonable_encoder({"conversations": []}))
-
-        # Step 2: Fetch all queries for the paginated conversation IDs
-        queries_stmt = select(Query).where(Query.conversation_id.in_(paginated_conv_ids)).order_by(Query.created_at)
         queries_result = await db.execute(queries_stmt)
         queries = queries_result.scalars().all()
 
-        # Step 3: Group queries by conversation_id to form conversations
-        conversations_map = {}
-        for query in queries:
-            if query.conversation_id not in conversations_map:
-                conversations_map[query.conversation_id] = {
-                    "conversation_id": query.conversation_id,
-                    "created_at": None,
-                    "turns": [],
-                }
+        if not queries:
+            return JSONResponse(status_code=404, content={"detail": "Conversation not found"})
 
+        turns = []
+        for query in queries:
             turn_data = {
                 "role": query.role,
                 "text": query.text,
                 "created_at": query.created_at.isoformat(),
             }
-            conversations_map[query.conversation_id]["turns"].append(turn_data)
+            turns.append(turn_data)
 
-        # Step 4: Reconstruct the list in the correct paginated order and set created_at
-        final_conversations = []
-        for conv_id in paginated_conv_ids:
-            conv_data = conversations_map[conv_id]
-            # The created_at of a conversation is the created_at of the last turn.
-            if conv_data["turns"]:
-                conv_data["created_at"] = conv_data["turns"][-1]["created_at"]
-            final_conversations.append(conv_data)
+        conversation = {
+            "conversation_id": conversation_id,
+            "created_at": turns[-1]["created_at"] if turns else None,
+            "turns": turns,
+        }
 
-        return JSONResponse(content=jsonable_encoder(final_conversations))
+        return JSONResponse(content=jsonable_encoder(conversation))
     except Exception as e:
-        LOGGER.exception("Failed to get conversations")
+        LOGGER.exception(f"Failed to get conversation {conversation_id}")
         return JSONResponse(status_code=500, content={"detail": str(e)})

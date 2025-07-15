@@ -15,13 +15,13 @@ export default async function AnalyticsPage({ docsUrl }: { docsUrl: string }) {
       baseDocsUrl,
       getRequestParams(TimeRange.LAST_WEEK)
     );
-  const conversationsData =
-    await client.conversations.getConversations(baseDocsUrl);
+
+  const queriesData = await client.queries.getRecentQueries(baseDocsUrl);
 
   return (
     <AnalyticsPageClient
       baseDocsUrl={baseDocsUrl}
-      initialConversationsData={conversationsData}
+      initialQueriesData={queriesData.queries}
       initialHistogramData={analyticsData}
     />
   );

@@ -36,23 +36,3 @@ def test_create_query(fai_docker: None, docker_ip: str) -> None:
     created_query = QueryApi(**response.json())
     print(f"Created query: {created_query}")
     assert created_query.query_id == query_data.query_id
-
-
-def test_list_queries(fai_docker: None, docker_ip: str) -> None:
-    """Test listing all queries and verifying presence of a known query."""
-    query_data = generate_unique_query_data()
-    create_resp = requests.post(
-        f"http://{docker_ip}:8080/queries",
-        json=query_data.model_dump(mode="json"),
-        timeout=5,
-    )
-    assert create_resp.status_code == 200
-
-    response = requests.get(f"http://{docker_ip}:8080/queries", timeout=5)
-    assert response.status_code == 200
-
-    queries = [QueryApi(**q) for q in response.json()]
-    assert queries, "Query list is empty"
-
-    ids = [q.query_id for q in queries]
-    assert query_data.query_id in ids, f"{query_data.query_id} not found in query list"
