@@ -29,13 +29,15 @@ export default function PageTitle({
 
   return (
     <div className={["flex", className].join(" ")}>
-      <input
-        className="mx-5 flex-1 text-3xl font-bold focus:outline-none"
-        name="title"
-        onChange={onChange}
-        placeholder="Add a title"
-        value={text}
-      />
+      <h1 className="fern-page-heading mb-3 h-fit w-full font-extrabold">
+        <input
+          className="mx-5 w-full flex-1 font-extrabold focus:outline-none"
+          name="title"
+          onChange={onChange}
+          placeholder="Add a title"
+          value={text}
+        />
+      </h1>
     </div>
   );
 }

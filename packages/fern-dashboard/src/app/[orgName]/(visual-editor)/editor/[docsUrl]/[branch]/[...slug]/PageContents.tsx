@@ -52,7 +52,7 @@ export default function PageContents({
   }, [changedMdxFile, filename, syncChanges]);
 
   return (
-    <div className="max-w-content-width mx-auto w-full">
+    <div className="max-w-content-width-wide mx-auto w-full">
       <PageTitle
         className="w-full"
         filename={filename}
