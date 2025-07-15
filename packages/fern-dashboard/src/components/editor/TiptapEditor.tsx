@@ -38,7 +38,7 @@ export default function TiptapEditor({
       }}
       parseOptions={{
         // Required to preserve formatting in custom element previews
-        preserveWhitespace: "full",
+        preserveWhitespace: true,
       }}
       editorContainerProps={{ className }}
       immediatelyRender={false}
