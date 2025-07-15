@@ -62,16 +62,14 @@ export function AnalyticsHistogram({
             <Tooltip
               content={
                 <ChartTooltipContent
-                  name={
-                    renderType === "QUESTIONS" ? "Questions" : "Conversations"
-                  }
+                  name={renderType === "QUERIES" ? "Queries" : "Conversations"}
                   hideLabel
                 />
               }
             />
             <Bar
               dataKey="count"
-              name={renderType === "QUESTIONS" ? "Questions" : "Conversations"}
+              name={renderType === "QUERIES" ? "Queries" : "Conversations"}
               fill="url(#barGradient)"
               activeBar={{
                 fill: "url(#barGradientHover)",

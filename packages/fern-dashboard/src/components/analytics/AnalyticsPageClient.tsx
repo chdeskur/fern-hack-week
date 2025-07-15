@@ -5,14 +5,19 @@ import { useEffect, useState } from "react";
 import { FernFai } from "@fern-api/fai-sdk";
 
 import { getDomainAnalytics } from "@/app/actions/getAnalytics";
+import { cn } from "@/utils/utils";
 
 import { AnalyticsHistogram } from "./AnalyticsHistogram";
 import { TimeRangeSelect } from "./AnalyticsHistogramRangeSelector";
 import { AnalyticsHistogramTabBar } from "./AnalyticsHistogramTabBar";
+import { AnalyticsPageHeader } from "./AnalyticsPageHeader";
 import { ConversationsTable } from "./ConversationsTable";
 import { TimeRange } from "./get-request-params";
 
-export type RenderType = "QUESTIONS" | "CONVERSATIONS";
+export type RenderType = "QUERIES" | "CONVERSATIONS";
+
+const borderStyles =
+  "border-gray-0 mb-4 flex w-4/5 flex-col items-center rounded-2xl border p-4";
 
 export function AnalyticsPageClient({
   baseDocsUrl,
@@ -23,7 +28,7 @@ export function AnalyticsPageClient({
   initialConversationsData: FernFai.Conversation[];
   initialHistogramData: FernFai.HistogramAnalytics;
 }) {
-  const [renderType, setRenderType] = useState<RenderType>("QUESTIONS");
+  const [renderType, setRenderType] = useState<RenderType>("QUERIES");
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.LAST_WEEK);
   const [histogramData, setHistogramData] = useState(initialHistogramData);
 
@@ -52,12 +57,15 @@ export function AnalyticsPageClient({
 
   const chartData = histogramData.bars.map((bar) => ({
     label: bar.label,
-    count: renderType === "QUESTIONS" ? bar.queryCount : bar.conversationCount,
+    count: renderType === "QUERIES" ? bar.queryCount : bar.conversationCount,
   }));
 
   return (
     <div className="flex w-full flex-col items-center p-4">
-      <div className="border-gray-0 mb-4 flex w-4/5 flex-col items-center rounded-2xl border p-4">
+      <div className={cn(borderStyles)}>
+        <AnalyticsPageHeader />
+      </div>
+      <div className={cn(borderStyles)}>
         <div className="border-gray-0 mb-4 flex w-full justify-between border-b">
           <AnalyticsHistogramTabBar
             renderType={renderType}
@@ -71,7 +79,7 @@ export function AnalyticsPageClient({
           chartConfig={chartConfig}
         />
       </div>
-      <div className="border-gray-0 flex w-4/5 flex-col items-center rounded-2xl border p-4">
+      <div className={cn(borderStyles)}>
         <ConversationsTable conversations={initialConversationsData} />
       </div>
     </div>

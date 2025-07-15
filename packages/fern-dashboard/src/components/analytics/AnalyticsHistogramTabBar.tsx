@@ -18,10 +18,10 @@ export function AnalyticsHistogramTabBar({
   return (
     <div className="flex">
       <AnalyticsHistogramTabItem
-        title="Questions"
+        title="Queries"
         icon={<SparklesIcon className="h-4 w-4" />}
-        isSelected={renderType === "QUESTIONS"}
-        onClick={() => onChangeRenderType("QUESTIONS")}
+        isSelected={renderType === "QUERIES"}
+        onClick={() => onChangeRenderType("QUERIES")}
       />
       <AnalyticsHistogramTabItem
         title="Conversations"
