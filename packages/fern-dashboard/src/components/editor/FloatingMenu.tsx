@@ -57,13 +57,16 @@ export default function FloatingMenu() {
         case "toggleQuote":
           editor.chain().focus().toggleBlockquote().run();
           break;
-        case "setLink":
-          // TODO: This should open an additional popover to edit the link
-          editor
-            .chain()
-            .focus()
-            .setLink({ href: "https://www.google.com" })
-            .run();
+        // TODO: Add link
+        // case "setLink":
+        //   // TODO: This should open an additional popover to edit the link
+        //   editor
+        //     .chain()
+        //     .focus()
+        //     .setLink({ href: "https://www.google.com" })
+        //     .run();
+        //   break;
+        default:
           break;
       }
     };
@@ -124,11 +127,13 @@ export default function FloatingMenu() {
           iconProps={{ variant: "MessageSquareQuote" }}
           onClick={menuItemClickHandler("toggleQuote")}
         />
+        {/* 
+        TODO: Add link
         <FloatingMenuItem
           title="Link"
           iconProps={{ variant: "Link" }}
           onClick={menuItemClickHandler("setLink")}
-        />
+        /> */}
       </div>
     </EditorFloatingMenu>
   );

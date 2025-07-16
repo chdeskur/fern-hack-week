@@ -89,14 +89,18 @@ export default function BubbleMenu() {
           iconProps={{ variant: "Underline" }}
           onClick={menuItemClickHandler("toggleUnderline")}
         />
-        {/* <BubbleMenuItem
+        {/* 
+        TODO: Add strikethrough
+        <BubbleMenuItem
           iconProps={{ variant: "Strikethrough" }}
           onClick={menuItemClickHandler("toggleStrike")}
         /> */}
-        <BubbleMenuItem
+        {/*
+        TODO: Add link
+         <BubbleMenuItem
           iconProps={{ variant: "Link" }}
           onClick={menuItemClickHandler("setLink")}
-        />
+        /> */}
         <BubbleMenuItem
           iconProps={{ variant: "Code" }}
           onClick={menuItemClickHandler("toggleCode")}
