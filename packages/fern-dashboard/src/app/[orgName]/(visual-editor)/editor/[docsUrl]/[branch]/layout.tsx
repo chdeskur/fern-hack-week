@@ -11,6 +11,7 @@ import type { Auth0OrgName } from "@/app/services/auth0/types";
 import { GithubExtendedAccessProtectedRoute } from "@/components/auth/GithubExtendedAccessProtectedRoute";
 import { HeaderToolbar } from "@/components/editor/HeaderToolbar";
 import { BranchProvider } from "@/providers/BranchContext";
+import { GitPRUrlProvider } from "@/providers/GitPRUrlContext";
 import { MdxStateProvider } from "@/providers/MdxStateContext";
 import { throwDigestibleError } from "@/utils/errors";
 import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
@@ -75,12 +76,14 @@ async function DynamicEditorContent({
       >
         <MdxStateProvider docsUrl={docsUrl}>
           <BranchProvider branch={branch}>
-            <HeaderToolbar
-              orgName={orgName}
-              session={session}
-              docsUrl={docsUrl}
-            />
-            {children}
+            <GitPRUrlProvider>
+              <HeaderToolbar
+                orgName={orgName}
+                session={session}
+                docsUrl={docsUrl}
+              />
+              {children}
+            </GitPRUrlProvider>
           </BranchProvider>
         </MdxStateProvider>
       </ThemeProvider>
