@@ -12,7 +12,8 @@ type FloatingMenuAction =
   | "toggleBulletList"
   | "toggleOrderedList"
   | "toggleQuote"
-  | "setLink";
+  | "setLink"
+  | "plainText";
 
 export default function FloatingMenu() {
   const { editor } = useCurrentEditor();
@@ -21,7 +22,23 @@ export default function FloatingMenu() {
     return () => {
       if (!editor) return;
 
+      // Remove the "/" character first
+      const { selection } = editor.state;
+      const { $from } = selection;
+
+      if ($from.parent.textContent.startsWith("/")) {
+        // Delete the "/" character
+        editor
+          .chain()
+          .focus()
+          .deleteRange({ from: $from.start(), to: $from.start() + 1 })
+          .run();
+      }
+
       switch (action) {
+        case "plainText":
+          // Just remove the "/" and stay in text mode
+          break;
         case "toggleHeading1":
           editor.chain().focus().toggleHeading({ level: 1 }).run();
           break;
@@ -60,19 +77,23 @@ export default function FloatingMenu() {
         const { selection } = state;
         const { $from } = selection;
 
-        // Check if we're at the start of an empty paragraph
+        // Check if we're at the start of a paragraph that begins with "/"
         return (
           editor.isFocused &&
           selection.empty &&
           $from.parent.type.name === "paragraph" &&
-          $from.parent.textContent === "" &&
-          $from.parentOffset === 0
+          $from.parent.textContent.startsWith("/") &&
+          $from.parentOffset === $from.parent.textContent.length
         );
       }}
     >
       <div className="border-1 text-gray-1100 rounded-2 flex min-w-60 flex-col border-gray-500 bg-white p-1 pt-2 shadow-sm">
         <FloatingMenuHeading title="Basics" />
-        <FloatingMenuItem title="Text" iconProps={{ variant: "Type" }} />
+        <FloatingMenuItem
+          title="Text"
+          iconProps={{ variant: "Type" }}
+          onClick={menuItemClickHandler("plainText")}
+        />
         <FloatingMenuItem
           title="Heading 1"
           iconProps={{ variant: "Heading1" }}

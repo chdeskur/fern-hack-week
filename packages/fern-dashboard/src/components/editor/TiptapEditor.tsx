@@ -1,6 +1,7 @@
 "use client";
 
-import { EditorProvider, EditorProviderProps } from "@tiptap/react";
+import Placeholder from "@tiptap/extension-placeholder";
+import { EditorProvider, EditorProviderProps, Extension } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
 import BubbleMenu from "./BubbleMenu";
@@ -9,7 +10,16 @@ import CustomElement from "./extension-custom-element";
 import GlobalDataHashAttribute from "./extension-global-data-hash-attribute";
 
 // Configure Tiptap extensions
-const extensions = [StarterKit, CustomElement, GlobalDataHashAttribute];
+const extensions = [
+  StarterKit,
+  CustomElement,
+  GlobalDataHashAttribute,
+  Placeholder.configure({
+    placeholder: "Write or press `/` for components",
+    emptyEditorClass: "is-empty",
+    emptyNodeClass: "is-empty",
+  }),
+] as Extension[];
 export declare namespace TiptapEditor {
   export interface Props {
     className?: string;
