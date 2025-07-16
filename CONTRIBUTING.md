@@ -57,6 +57,14 @@ To set a dev docs domain, add a `NEXT_PUBLIC_DOCS_DOMAIN` to `.env.local`. For i
 
 Finally, run `pnpm docs:dev`. This compiles and runs a NextJS app that communicates with our cloud production environment.
 
+### Dashboard UI
+
+Follow a similar set of steps as for setting up the docs UI above:
+
+- `vercel pull` from the `packages/fern-dashboard` directory, which will create `packages/fern-dashboard/.vercel/.env.development.local`
+- Then, copy that file (creating if necessary) to `packages/fern-dashboard/.env.local`
+- Finally, to run the dev server, run `pnpm turbo --filter=@fern-dashboard/ui dashboard:dev`
+
 ## Testing in Staging
 
 ### PR previews
