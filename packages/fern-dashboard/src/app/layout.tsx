@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -39,32 +38,26 @@ export default async function RootLayout({
         )}
       >
         <SpeedInsights />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ReactQueryProvider>
-            <PostHogProvider session={session}>
-              <ProgressProvider>{children}</ProgressProvider>
-            </PostHogProvider>
-          </ReactQueryProvider>
-          <Toaster
-            position="top-center"
-            richColors
-            toastOptions={{
-              classNames: {
-                icon: "!w-auto",
-                success: "!bg-green-300 !border-green-600 !text-primary",
-                content: "min-w-0",
-              },
-            }}
-            icons={{
-              success: <CheckCircleIcon className="text-primary size-6" />,
-            }}
-          />
-        </ThemeProvider>
+
+        <ReactQueryProvider>
+          <PostHogProvider session={session}>
+            <ProgressProvider>{children}</ProgressProvider>
+          </PostHogProvider>
+        </ReactQueryProvider>
+        <Toaster
+          position="top-center"
+          richColors
+          toastOptions={{
+            classNames: {
+              icon: "!w-auto",
+              success: "!bg-green-300 !border-green-600 !text-primary",
+              content: "min-w-0",
+            },
+          }}
+          icons={{
+            success: <CheckCircleIcon className="text-primary size-6" />,
+          }}
+        />
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+import { ThemeProvider } from "next-themes";
 import { redirect } from "next/navigation";
 import type React from "react";
 
@@ -70,16 +71,23 @@ async function DynamicEditorContent({
       owner={sourceRepo.owner}
       repo={sourceRepo.repo}
     >
-      <MdxStateProvider docsUrl={docsUrl}>
-        <BranchProvider branch={branch}>
-          <HeaderToolbar
-            orgName={orgName}
-            session={session}
-            docsUrl={docsUrl}
-          />
-          {children}
-        </BranchProvider>
-      </MdxStateProvider>
+      <ThemeProvider
+        attribute="class"
+        forcedTheme="light"
+        enableSystem={false}
+        disableTransitionOnChange
+      >
+        <MdxStateProvider docsUrl={docsUrl}>
+          <BranchProvider branch={branch}>
+            <HeaderToolbar
+              orgName={orgName}
+              session={session}
+              docsUrl={docsUrl}
+            />
+            {children}
+          </BranchProvider>
+        </MdxStateProvider>
+      </ThemeProvider>
     </GithubExtendedAccessProtectedRoute>
   );
 }

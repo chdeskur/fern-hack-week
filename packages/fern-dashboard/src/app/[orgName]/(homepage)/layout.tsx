@@ -1,3 +1,5 @@
+import { ThemeProvider } from "next-themes";
+
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { ServerSidePylonSetup } from "@/components/pylon/ServerSidePylonSetup";
@@ -17,7 +19,14 @@ export default async function AuthedLayout({
     <ProtectedRoute orgName={orgName}>
       <>
         <ServerSidePylonSetup />
-        <AppLayout>{children}</AppLayout>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AppLayout>{children}</AppLayout>
+        </ThemeProvider>
       </>
     </ProtectedRoute>
   );
