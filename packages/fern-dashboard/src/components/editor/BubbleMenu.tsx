@@ -71,7 +71,7 @@ export default function BubbleMenu() {
         return editor.isFocused && !selection.empty;
       }}
     >
-      <div className="border-1 text-gray-1100 flex items-center gap-px border-gray-500 bg-white p-2 shadow-sm">
+      <div className="border-1 rounded-2 text-gray-1100 flex items-center gap-px border-gray-500 bg-white p-1 shadow-sm">
         <BubbleMenuItem
           iconProps={{ variant: "Heading1" }}
           onClick={menuItemClickHandler("setNodeType")}
@@ -89,10 +89,10 @@ export default function BubbleMenu() {
           iconProps={{ variant: "Underline" }}
           onClick={menuItemClickHandler("toggleUnderline")}
         />
-        <BubbleMenuItem
+        {/* <BubbleMenuItem
           iconProps={{ variant: "Strikethrough" }}
           onClick={menuItemClickHandler("toggleStrike")}
-        />
+        /> */}
         <BubbleMenuItem
           iconProps={{ variant: "Link" }}
           onClick={menuItemClickHandler("setLink")}
@@ -126,7 +126,10 @@ function BubbleMenuItem({ iconProps, onClick }: BubbleMenuItem.Props) {
   const { size = 20, ...restIconProps } = iconProps;
 
   return (
-    <button className="cursor-pointer hover:bg-gray-300" onClick={onClick}>
+    <button
+      className="rounded-1 cursor-pointer p-1 transition-colors hover:bg-gray-300 hover:transition-none"
+      onClick={onClick}
+    >
       <div className="flex size-6 items-center justify-center">
         <Icon size={size} {...restIconProps} />
       </div>

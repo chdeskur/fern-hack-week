@@ -70,7 +70,7 @@ export default function FloatingMenu() {
         );
       }}
     >
-      <div className="border-1 text-gray-1100 flex min-w-60 flex-col border-gray-500 bg-white p-2 shadow-sm">
+      <div className="border-1 text-gray-1100 rounded-2 flex min-w-60 flex-col border-gray-500 bg-white p-1 pt-2 shadow-sm">
         <FloatingMenuHeading title="Basics" />
         <FloatingMenuItem title="Text" iconProps={{ variant: "Type" }} />
         <FloatingMenuItem
@@ -121,7 +121,7 @@ declare namespace FloatingMenuHeading {
 
 function FloatingMenuHeading({ title }: FloatingMenuHeading.Props) {
   return (
-    <div className="px-2 pb-2 pt-1 text-sm font-bold uppercase text-gray-800">
+    <div className="px-3 py-1 text-sm font-bold uppercase text-gray-800">
       {title}
     </div>
   );
@@ -144,7 +144,7 @@ function FloatingMenuItem({
 
   return (
     <button
-      className="flex h-8 cursor-pointer items-center gap-2 px-2 hover:bg-gray-300"
+      className="rounded-1 flex h-8 cursor-pointer items-center gap-2 px-3 transition-colors hover:bg-gray-300 hover:transition-none"
       onClick={onClick}
     >
       <div className="flex size-4 items-center justify-center">
