@@ -151,14 +151,15 @@ export default function ChangelogPageClient({
         <article className="max-w-full">
           <SetLayout value="guide" />
           <HideBuiltWithFern>
-            <ChangelogContentLayout as="section" className="mb-8">
+            <ChangelogContentLayout as="section">
               {overview}
             </ChangelogContentLayout>
 
-            {visibleEntries.map((entry) => {
+            {visibleEntries.map((entry, i) => {
               return (
                 <Fragment key={entry.id}>
                   <ChangelogContentLayout
+                    className={i === 0 ? "mt-8" : "mt-16"}
                     as="article"
                     id={entry.date}
                     stickyContent={
