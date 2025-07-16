@@ -44,4 +44,42 @@ describe("Analytics", () => {
             ],
         });
     });
+
+    test("getInsights", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            insights: [
+                { insightText: "insightText", numberOfQueries: 1, examples: ["examples", "examples"] },
+                { insightText: "insightText", numberOfQueries: 1, examples: ["examples", "examples"] },
+            ],
+        };
+        server
+            .mockEndpoint()
+            .get("/analytics/insights/domain")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.analytics.getInsights("domain", {
+            start_date: "2024-01-15T09:30:00Z",
+            end_date: "2024-01-15T09:30:00Z",
+        });
+        expect(response).toEqual({
+            insights: [
+                {
+                    insightText: "insightText",
+                    numberOfQueries: 1,
+                    examples: ["examples", "examples"],
+                },
+                {
+                    insightText: "insightText",
+                    numberOfQueries: 1,
+                    examples: ["examples", "examples"],
+                },
+            ],
+        });
+    });
 });

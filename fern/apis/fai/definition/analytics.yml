@@ -29,6 +29,25 @@ service:
       errors:
         - commons.BadRequestError
         - commons.InternalError
+    getInsights:
+      docs: Retrieve the insights for a given period
+      path: /insights/{domain}
+      method: GET
+      path-parameters:
+        domain: string
+      request:
+        name: GetInsightsRequest
+        query-parameters:
+          start_date:
+            type: datetime
+            docs: The start date of the period to retrieve analytics for
+          end_date:
+            type: datetime
+            docs: The end date of the period to retrieve analytics for
+      response: Insights
+      errors:
+        - commons.BadRequestError
+        - commons.InternalError
 
 types:
   GroupBy:
@@ -46,4 +65,14 @@ types:
       label: string
       queryCount: integer
       conversationCount: integer
+
+  Insights:
+    properties:
+      insights: list<Insight>
+
+  Insight:
+    properties:
+      insightText: string
+      numberOfQueries: integer
+      examples: list<string>
   

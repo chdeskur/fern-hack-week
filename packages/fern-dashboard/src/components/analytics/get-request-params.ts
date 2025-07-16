@@ -46,7 +46,7 @@ export const getRequestParams = (
       return {
         start_date: getLastMonthStart(),
         end_date: endDate,
-        groupBy: "WEEK",
+        groupBy: "DAY",
       };
 
     case TimeRange.LAST_YEAR:

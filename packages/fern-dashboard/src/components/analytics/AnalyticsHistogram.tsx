@@ -57,7 +57,15 @@ export function AnalyticsHistogram({
               dataKey="label"
               stroke="#ccc"
               tick={{ fill: "#666" }}
-              tickFormatter={parseLabel}
+              tickFormatter={(value, index) => {
+                if (chartData.length > 13) {
+                  return index % 3 === 0 || index === chartData.length - 1
+                    ? parseLabel(value)
+                    : "";
+                }
+                return parseLabel(value);
+              }}
+              interval={0}
             />
             <Tooltip
               content={

@@ -77,6 +77,80 @@ await client.analytics.getHistogramAnalytics("domain", {
 </dl>
 </details>
 
+<details><summary><code>client.analytics.<a href="/src/api/resources/analytics/client/Client.ts">getInsights</a>(domain, { ...params }) -> FernFai.Insights</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the insights for a given period
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analytics.getInsights("domain", {
+    start_date: "2024-01-15T09:30:00Z",
+    end_date: "2024-01-15T09:30:00Z",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FernFai.GetInsightsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analytics.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Conversations
 
 <details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client/Client.ts">getConversation</a>(domain, conversationId) -> FernFai.Conversation</code></summary>

@@ -131,6 +131,93 @@ export class Analytics {
         }
     }
 
+    /**
+     * Retrieve the insights for a given period
+     *
+     * @param {string} domain
+     * @param {FernFai.GetInsightsRequest} request
+     * @param {Analytics.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link FernFai.BadRequestError}
+     * @throws {@link FernFai.InternalError}
+     *
+     * @example
+     *     await client.analytics.getInsights("domain", {
+     *         start_date: "2024-01-15T09:30:00Z",
+     *         end_date: "2024-01-15T09:30:00Z"
+     *     })
+     */
+    public getInsights(
+        domain: string,
+        request: FernFai.GetInsightsRequest,
+        requestOptions?: Analytics.RequestOptions,
+    ): core.HttpResponsePromise<FernFai.Insights> {
+        return core.HttpResponsePromise.fromPromise(this.__getInsights(domain, request, requestOptions));
+    }
+
+    private async __getInsights(
+        domain: string,
+        request: FernFai.GetInsightsRequest,
+        requestOptions?: Analytics.RequestOptions,
+    ): Promise<core.WithRawResponse<FernFai.Insights>> {
+        const { start_date: startDate, end_date: endDate } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["start_date"] = startDate;
+        _queryParams["end_date"] = endDate;
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernFaiEnvironment.Prod,
+                `/analytics/insights/${encodeURIComponent(domain)}`,
+            ),
+            method: "GET",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as FernFai.Insights, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as any)?.["error"]) {
+                case "BadRequestError":
+                    throw new FernFai.BadRequestError(_response.error.body as string, _response.rawResponse);
+                case "InternalError":
+                    throw new FernFai.InternalError(_response.error.body as string, _response.rawResponse);
+                default:
+                    throw new errors.FernFaiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FernFaiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FernFaiTimeoutError("Timeout exceeded when calling GET /analytics/insights/{domain}.");
+            case "unknown":
+                throw new errors.FernFaiError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
