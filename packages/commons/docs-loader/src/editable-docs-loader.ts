@@ -176,7 +176,12 @@ class EditableDocsLoaderImpl implements EditableDocsLoader {
 }
 
 export const createEditableDocsLoader = cache(
-  async (host: string, encodedDocsUrl: string, fern_token?: string) => {
+  async (
+    host: string,
+    encodedDocsUrl: string,
+    fern_token?: string,
+    forceRevalidate?: boolean
+  ) => {
     // TODO: derive the domain from the workspace
     const docsLoader = await createCachedDocsLoader(
       host,
@@ -184,8 +189,9 @@ export const createEditableDocsLoader = cache(
       fern_token,
       {
         // For editable docs, we want shorter TTL so that cache stays fresh
-        kvTtl: 60 * 60, // 1 hour
+        kvTtl: 5 * 60, // 5 minutes
         cacheKeySuffix: "editable",
+        forceRevalidate,
       }
     );
 

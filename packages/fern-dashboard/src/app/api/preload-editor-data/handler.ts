@@ -19,7 +19,8 @@ export default async function preloadEditorData(request: {
     const loader = await createEditableDocsLoader(
       request.host, // Use the host from the request parameter instead of trying to get it from headers
       request.docsUrl,
-      session.accessToken
+      session.accessToken,
+      true // force revalidate when preloading
     );
 
     // Preload root and config in parallel
