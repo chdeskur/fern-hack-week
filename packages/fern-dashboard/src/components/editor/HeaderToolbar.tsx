@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
-import { ArrowLeftIcon, Globe } from "lucide-react";
+import { ArrowLeftIcon, GitBranch, Globe } from "lucide-react";
 
 import { FernTooltipProvider } from "@fern-docs/components";
 import { FernTooltip } from "@fern-docs/components";
@@ -130,7 +130,16 @@ export function HeaderToolbar({
             <ArrowLeftIcon />
           </a>
         </Button>
-        <p className="text-gray-900">{branch}</p>
+        <div className="flex items-center gap-1 rounded-md p-1 px-2 text-gray-900 transition-colors hover:bg-gray-300 hover:transition-none">
+          <a
+            href={`https://github.com/${githubSource?.owner}/${githubSource?.repo}/compare/${githubSource?.baseBranch}...${branch}`}
+            target="_blank"
+            className="flex items-center gap-1"
+          >
+            <GitBranch className="size-4" />
+            <p>{branch}</p>
+          </a>
+        </div>
       </div>
       {/* TODO: Add undo/redo/settings buttons
        <div className="flex items-center gap-2">
