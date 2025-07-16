@@ -44,7 +44,7 @@ export function QueriesDataTable<TData, TValue>({
     <div className="flex flex-row gap-6 rounded-md p-4">
       <div className="grow">
         <QueriesDataTableHeader table={table} />
-        <div className="min-h-[400px]">
+        <div className="max-h-[400px] min-h-[400px] overflow-y-auto">
           <Table className="table-fixed">
             <TableBody>
               {table?.getRowModel()?.rows?.length ? (

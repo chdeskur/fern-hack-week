@@ -43,6 +43,7 @@ service:
         query-parameters:
           page: optional<integer>
           limit: optional<integer>
+          cutoff_time: optional<datetime>
       response: QueryPage
       errors:
         - commons.BadRequestError

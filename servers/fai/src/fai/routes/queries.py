@@ -6,6 +6,7 @@ from fastapi import Depends
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sqlalchemy import desc
+from sqlalchemy import func
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -21,25 +22,34 @@ async def get_recent_queries(
     domain: str,
     page: int = 1,
     limit: int = 10,
-    older_than_minutes: int = 5,
+    start_time: datetime = datetime.now(),
     db: AsyncSession = Depends(get_db),
 ) -> JSONResponse:
     LOGGER.info("Listing queries")
     offset = (page - 1) * limit
-    time_threshold = datetime.utcnow() - timedelta(minutes=older_than_minutes)
+
     result = await db.execute(
         select(Query)
         .where(Query.domain == domain)
         .where(Query.role == "USER")
-        .where(Query.created_at < time_threshold)
+        .where(Query.created_at < start_time)
         .order_by(desc(Query.created_at))
         .offset(offset)
         .limit(limit)
     )
     queries = result.scalars().all()
     api_queries = [query.to_api() for query in queries]
+
+    total_result = await db.execute(
+        select(func.count(Query.query_id))
+        .where(Query.domain == domain)
+        .where(Query.role == "USER")
+        .where(Query.created_at < start_time)
+    )
+    total_count = total_result.scalar()
+
     return JSONResponse(
-        content=jsonable_encoder({"queries": [q.model_dump() for q in api_queries], "total": len(api_queries)})
+        content=jsonable_encoder({"queries": [q.model_dump() for q in api_queries], "total": total_count})
     )
 
 

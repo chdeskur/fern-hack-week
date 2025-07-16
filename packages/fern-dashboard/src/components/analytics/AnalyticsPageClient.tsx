@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { FernFai } from "@fern-api/fai-sdk";
 
 import { getDomainAnalytics } from "@/app/actions/getAnalytics";
+import { getQueries } from "@/app/actions/getQueries";
+import { Pagination } from "@/components/ui/pagination";
 import { cn } from "@/utils/utils";
 
 import { AnalyticsHistogram } from "./AnalyticsHistogram";
@@ -20,20 +22,32 @@ export type RenderType = "QUERIES" | "CONVERSATIONS";
 const borderStyles =
   "border-gray-0 mb-4 flex w-full flex-col items-center rounded-2xl border p-4";
 
+const ITEMS_PER_PAGE = 10;
+
 export function AnalyticsPageClient({
   baseDocsUrl,
   initialQueriesData,
   initialHistogramData,
+  initialTotalQueries,
+  cutoffTime,
 }: {
   baseDocsUrl: string;
   initialQueriesData: FernFai.Query[];
   initialHistogramData: FernFai.HistogramAnalytics;
+  initialTotalQueries: number;
+  cutoffTime: string;
 }) {
   const [renderType, setRenderType] = useState<RenderType>("QUERIES");
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.LAST_WEEK);
   const [histogramData, setHistogramData] = useState(initialHistogramData);
+  const [queriesData, setQueriesData] = useState(initialQueriesData);
   const [selectedConversation, setSelectedConversation] =
     useState<FernFai.Conversation | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageCache, setPageCache] = useState<Record<number, FernFai.Query[]>>(
+    {}
+  );
 
   useEffect(() => {
     async function fetchHistogramData() {
@@ -50,6 +64,45 @@ export function AnalyticsPageClient({
 
     void fetchHistogramData();
   }, [baseDocsUrl, timeRange]);
+
+  useEffect(() => {
+    setPageCache({});
+  }, [timeRange, cutoffTime]);
+
+  useEffect(() => {
+    async function fetchQueriesData() {
+      const cachedData = pageCache[currentPage];
+      if (cachedData) {
+        setQueriesData(cachedData);
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const response = await getQueries({
+          domain: baseDocsUrl,
+          page: currentPage,
+          limit: ITEMS_PER_PAGE,
+          cutoffTime,
+        });
+
+        setPageCache((prev) => ({
+          ...prev,
+          [currentPage]: response.queries,
+        }));
+
+        setQueriesData(response.queries);
+      } catch (error) {
+        console.error("Failed to fetch queries data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    void fetchQueriesData();
+  }, [baseDocsUrl, currentPage, timeRange, cutoffTime, pageCache]);
+
+  const totalPages = Math.ceil(initialTotalQueries / ITEMS_PER_PAGE);
 
   const chartConfig = {
     queries: {
@@ -90,10 +143,16 @@ export function AnalyticsPageClient({
         </div>
         <div className={cn(borderStyles, "w-full")}>
           <QueriesTable
-            queries={initialQueriesData}
+            queries={queriesData}
             baseDocsUrl={baseDocsUrl}
             onSelectConversation={setSelectedConversation}
             selectedConversation={selectedConversation}
+          />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            isLoading={isLoading}
           />
         </div>
       </div>

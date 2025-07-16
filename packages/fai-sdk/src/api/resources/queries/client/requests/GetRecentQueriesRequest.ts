@@ -9,4 +9,5 @@
 export interface GetRecentQueriesRequest {
     page?: number;
     limit?: number;
+    cutoff_time?: string;
 }
