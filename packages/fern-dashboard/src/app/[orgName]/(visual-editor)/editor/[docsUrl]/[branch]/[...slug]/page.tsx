@@ -9,7 +9,8 @@ import { mdxToHtml } from "@fern-docs/mdx";
 
 import { getCurrentSession } from "@/app/services/auth0/getCurrentSession";
 import { Auth0OrgName } from "@/app/services/auth0/types";
-import { CustomElementNodeViewClient } from "@/components/editor/extension-custom-element/CustomElementNodeViewClient";
+import { UnsupportedContent } from "@/components/editor/UnsupportedContent";
+import { OriginalElementsProvider } from "@/providers/OriginalElementsContext";
 import { ROOT_SLUG_ALIAS, constructEditorSlug } from "@/utils/editor-routing";
 import { getHostFromHeaders } from "@/utils/getHostFromHeaders";
 import { EncodedDocsUrl } from "@/utils/types";
@@ -105,17 +106,19 @@ export default async function Page({
           productIsDefault={foundNode.isCurrentProductDefault}
         />
         {foundNode.node.type !== "page" ? (
-          <CustomElementNodeViewClient>
+          <UnsupportedContent>
             This page is not visible in the editor.
-          </CustomElementNodeViewClient>
+          </UnsupportedContent>
         ) : (
-          <PageContents
-            // TODO: If there is no filename, it is an error we should surface
-            filename={page?.filename ?? ""}
-            initialHtml={html}
-            initialFrontmatter={frontmatter}
-            initialOriginalElements={originalElements}
-          />
+          <OriginalElementsProvider originalElements={originalElements}>
+            <PageContents
+              // TODO: If there is no filename, it is an error we should surface
+              filename={page?.filename ?? ""}
+              initialHtml={html}
+              initialFrontmatter={frontmatter}
+              initialOriginalElements={originalElements}
+            />
+          </OriginalElementsProvider>
         )}
       </div>
     </AbstractLayoutEvaluatorContent>

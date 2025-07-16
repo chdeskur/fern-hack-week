@@ -7,7 +7,10 @@
     "tailwindcss-animate",
     "clsx",
     "tailwind-merge",
-    "@tailwindcss/typography"
+    "@tailwindcss/typography",
+    "glslify-import",
+    "glslify-loader",
+    "raw-loader"
   ],
   "ignore-patterns": ["dist"]
 }

@@ -1,17 +1,71 @@
-import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
+import { useMemo } from "react";
 
-export type CustomElementNodeViewProps = Partial<NodeViewProps> & {
-  children?: React.ReactNode;
-};
-export const CustomElementNodeView = ({
-  node,
-  children,
-}: CustomElementNodeViewProps) => {
-  const { textContent } = node ?? {};
+import { useMDXComponents } from "@mdx-js/react";
+import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
+import { getMDXComponent } from "mdx-bundler/client";
+
+import { ErrorBoundary } from "@/docs/components/error-boundary";
+import { useOriginalElements } from "@/providers/OriginalElementsContext";
+
+import { UnsupportedContent } from "../UnsupportedContent";
+
+export const CustomElementNodeView = (props: NodeViewProps) => {
+  const { attrs, textContent } = props.node;
+  const hash = attrs["data-hash"];
+
+  const { originalElements } = useOriginalElements();
+  const originalElement = useMemo(
+    () => originalElements[hash],
+    [originalElements, hash]
+  );
+
+  const components = useMDXComponents();
+
+  const Component = useMemo(() => {
+    const Component = originalElement?.code
+      ? getMDXComponent(originalElement?.code)
+      : () => null;
+    return Component;
+  }, [originalElement?.code]);
+
+  /**
+   * Tiptap attempts to "best effort" render all basic HTML elements. This logic
+   * is used to remove that behavior for unsupported elements, rather than let tiptap
+   * try and fail.
+   */
+  const isUnsupportedHtml = useMemo(() => {
+    if (!originalElement?.code) return false;
+    return (
+      originalElement.code.includes("<video") ||
+      originalElement.code.includes("<iframe") ||
+      originalElement.code.includes("video") ||
+      originalElement.code.includes("iframe") ||
+      originalElement.code.includes("<canvas") ||
+      originalElement.code.includes("<embed") ||
+      originalElement.code.includes("embed") ||
+      originalElement.code.includes("ElevenLabsWaveform")
+    );
+  }, [originalElement?.code]);
+
+  if (isUnsupportedHtml) {
+    return (
+      <NodeViewWrapper>
+        <UnsupportedContent>{textContent}</UnsupportedContent>
+      </NodeViewWrapper>
+    );
+  }
 
   return (
-    <NodeViewWrapper className="border-l-1 min-h-13 relative mb-4 block w-full overflow-hidden !whitespace-pre-wrap rounded-r-xl border-gray-800 bg-gray-300/50 p-3 after:absolute after:right-2 after:top-2 after:flex after:h-9 after:items-center after:justify-center after:rounded-lg after:border after:border-red-500 after:bg-red-100 after:px-2 after:text-red-500 after:content-['Unsupported_content']">
-      {children ?? textContent}
-    </NodeViewWrapper>
+    <ErrorBoundary
+      fallback={
+        <NodeViewWrapper>
+          <UnsupportedContent>{textContent}</UnsupportedContent>
+        </NodeViewWrapper>
+      }
+    >
+      <NodeViewWrapper>
+        <Component components={components} />
+      </NodeViewWrapper>
+    </ErrorBoundary>
   );
 };

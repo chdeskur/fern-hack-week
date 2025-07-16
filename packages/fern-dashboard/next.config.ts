@@ -50,6 +50,19 @@ const nextConfig: NextConfig = {
   },
   webpack: (webpackConfig) => {
     webpackConfig.externals.push("sharp");
+    webpackConfig.module.rules.push({
+      test: /\.(glsl|vs|fs|vert|frag)$/,
+      exclude: /node_modules/,
+      use: [
+        "raw-loader",
+        {
+          loader: "glslify-loader",
+          options: {
+            transform: ["glslify-import"],
+          },
+        },
+      ],
+    });
     return webpackConfig;
   },
 

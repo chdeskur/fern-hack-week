@@ -5,10 +5,12 @@ import { useEffect } from "react";
 import { MdxToHtmlResponse } from "@fern-docs/mdx";
 
 import { useMdxState } from "@/providers/MdxStateContext";
+import { useOriginalElements } from "@/providers/OriginalElementsContext";
 
 import PageEditor from "./PageEditor";
 import PageSubtitle from "./PageSubtitle";
 import PageTitle from "./PageTitle";
+import { bundleOriginalElements } from "./bundleOriginalElements";
 
 export declare namespace PageContents {
   export interface Props {
@@ -29,7 +31,14 @@ export default function PageContents({
 
   const { updateDependencies, changedMdxFiles, syncChanges } = useMdxState();
 
-  // Set up initial mdx dependencies
+  const { originalElements, setOriginalElements } = useOriginalElements();
+
+  useEffect(() => {
+    void bundleOriginalElements(originalElements).then((bundled) => {
+      setOriginalElements(bundled);
+    });
+  }, [originalElements, setOriginalElements]);
+
   useEffect(() => {
     updateDependencies(filename, {
       html: initialHtml,

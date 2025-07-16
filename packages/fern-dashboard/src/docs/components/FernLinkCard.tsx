@@ -1,0 +1,22 @@
+import { LinkProps } from "next/link";
+import { PropsWithChildren, forwardRef } from "react";
+
+import { cn } from "@fern-docs/components";
+import { FernCardProps } from "@fern-docs/components";
+import { FernLink } from "@fern-docs/components/FernLink";
+
+export const FernLinkCard = forwardRef<
+  HTMLAnchorElement,
+  PropsWithChildren<FernCardProps & LinkProps>
+>(function FernLinkCard({ children, className, ...props }, ref) {
+  return (
+    <FernLink
+      className={cn("fern-card interactive", className)}
+      {...props}
+      href={props.href?.toString()}
+      ref={ref}
+    >
+      {children}
+    </FernLink>
+  );
+});

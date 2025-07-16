@@ -1,0 +1,67 @@
+@layer components {
+  .fern-mdx-link {
+    @apply text-(color:--accent-a11);
+    @apply font-semibold;
+
+    text-decoration-line: underline;
+    text-decoration-color: currentcolor;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: --spacing(1);
+
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 & {
+      font-weight: inherit !important;
+    }
+
+    svg.external-link-icon {
+      @apply ml-0.5 inline-block size-3.5 text-current opacity-70;
+    }
+
+    &:hover {
+      text-decoration-thickness: 2px !important;
+    }
+  }
+
+  .fern-api-property {
+    @apply space-y-4 py-4;
+
+    p:last-child {
+      @apply mb-0;
+    }
+  }
+
+  .fern-api-property-header {
+    @apply flex items-baseline gap-2;
+  }
+
+  .fern-api-property-key {
+    @apply text-body font-mono text-sm font-semibold;
+  }
+
+  .fern-api-property-meta {
+    @apply text-(color:--grayscale-a11) inline-flex items-baseline gap-2 text-xs;
+  }
+
+  .custom-backdrop [data-rmiz-modal-overlay="visible"] {
+    @apply bg-background-translucent;
+
+    @variant dark {
+      @apply bg-background-translucent;
+    }
+  }
+
+  .fern-page-heading {
+    @apply my-0 inline-block leading-tight;
+
+    text-wrap: balance;
+    word-wrap: break-word;
+  }
+
+  .fern-rss-feed-button .fern-button-content {
+    gap: 0.5rem;
+  }
+}
