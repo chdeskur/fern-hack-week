@@ -47,11 +47,7 @@ async function DynamicEditorContent({
     userId: session.user.sub,
   });
 
-  if (
-    sourceRepo.owner == null ||
-    sourceRepo.repo == null ||
-    sourceRepo.githubUrl == null
-  ) {
+  if (sourceRepo.owner == null || sourceRepo.repo == null) {
     throwDigestibleError(
       "We were unable to find the source repo for this domain. Please confirm that you have linked a repo to this domain.",
       "SOURCE_REPO_NOT_FOUND"

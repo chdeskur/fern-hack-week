@@ -54,24 +54,12 @@ export default async function getDocsGithubSourceHandler({
 
       const octokit = await getOctokit(userId);
       if (octokit == null) {
-        return {
-          githubUrl: docsUrlMetadata.body.gitUrl,
-          repoName: undefined,
-          owner: undefined,
-          repo: undefined,
-          baseBranch: undefined,
-        };
+        return EMPTY_RESPONSE;
       }
 
       const [owner, repo] = docsUrlMetadata.body.gitUrl.split("/").slice(-2);
       if (owner == null || repo == null) {
-        return {
-          githubUrl: docsUrlMetadata.body.gitUrl,
-          repoName: undefined,
-          owner: undefined,
-          repo: undefined,
-          baseBranch: undefined,
-        };
+        return EMPTY_RESPONSE;
       }
 
       try {
@@ -88,13 +76,7 @@ export default async function getDocsGithubSourceHandler({
         };
       } catch (error) {
         console.error("Failed to get repo info", error);
-        return {
-          githubUrl: docsUrlMetadata.body.gitUrl,
-          repoName: undefined,
-          owner: undefined,
-          repo: undefined,
-          baseBranch: undefined,
-        };
+        return EMPTY_RESPONSE;
       }
     },
     [`github-source-${url}-${userId}`],

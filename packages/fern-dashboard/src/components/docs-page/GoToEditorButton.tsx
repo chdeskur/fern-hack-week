@@ -102,43 +102,42 @@ export function GoToEditorButton({
   }, [sourceRepo, newBranchName]);
 
   return (
-    <div className="flex flex-row items-center gap-1">
-      <Button
-        size="sm"
-        className="text-primary hover:text-primary w-fit"
-        variant="outline"
-        onClick={() => {
-          setIsLoading(true);
-          createBranch();
-        }}
-        disabled={isLoading || disabled}
-        asChild
+    <FernTooltipProvider>
+      <FernTooltip
+        content={disabledReason}
+        variant="dashboard"
+        delayDuration={0}
+        className="bg-gray-1200 rounded-md text-white"
       >
-        <a href={editorSlug}>
-          {isLoading ? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            <>
-              <PencilSquareIcon />
-              Go to Editor
-            </>
+        <div className="flex flex-row items-center gap-1">
+          <Button
+            size="sm"
+            className="text-primary hover:text-primary w-fit"
+            variant="outline"
+            onClick={() => {
+              setIsLoading(true);
+              createBranch();
+            }}
+            disabled={isLoading || disabled}
+            asChild={!disabled}
+          >
+            <a href={editorSlug} className="flex flex-row items-center gap-1">
+              {isLoading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <>
+                  <PencilSquareIcon />
+                  Go to Editor
+                </>
+              )}
+            </a>
+          </Button>
+          {disabled && disabledReason && (
+            <ExclamationCircleIcon className="h-4 w-4 text-red-600" />
           )}
-        </a>
-      </Button>
-      {disabled && disabledReason && (
-        <FernTooltipProvider delayDuration={0}>
-          <FernTooltip content={disabledReason}>
-            <button
-              type="button"
-              className="cursor-help border-0 bg-transparent p-0"
-              aria-label="More information"
-            >
-              <ExclamationCircleIcon className="h-4 w-4 text-red-600" />
-            </button>
-          </FernTooltip>
-        </FernTooltipProvider>
-      )}
-    </div>
+        </div>
+      </FernTooltip>
+    </FernTooltipProvider>
     // NOTE: This is the UI we want when we have a way to preview branches.
     // <Button
     //   variant="outline"
