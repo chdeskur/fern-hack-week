@@ -1,3 +1,5 @@
+from datetime import datetime
+from datetime import timedelta
 from typing import Optional
 
 from fastapi import Depends
@@ -16,14 +18,20 @@ from src.settings import LOGGER
 
 @fai_app.get("/queries/{domain}")
 async def get_recent_queries(
-    domain: str, page: int = 1, limit: int = 10, db: AsyncSession = Depends(get_db)
+    domain: str,
+    page: int = 1,
+    limit: int = 10,
+    older_than_minutes: int = 5,
+    db: AsyncSession = Depends(get_db),
 ) -> JSONResponse:
     LOGGER.info("Listing queries")
     offset = (page - 1) * limit
+    time_threshold = datetime.utcnow() - timedelta(minutes=older_than_minutes)
     result = await db.execute(
         select(Query)
         .where(Query.domain == domain)
         .where(Query.role == "USER")
+        .where(Query.created_at < time_threshold)
         .order_by(desc(Query.created_at))
         .offset(offset)
         .limit(limit)

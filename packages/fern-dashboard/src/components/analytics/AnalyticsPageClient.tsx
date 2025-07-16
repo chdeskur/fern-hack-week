@@ -67,8 +67,8 @@ export function AnalyticsPageClient({
     <div className="flex w-full flex-row gap-4 p-4">
       <div
         className={cn(
-          "flex min-w-0 flex-col items-center",
-          selectedConversation ? "basis-2/3" : "flex-1"
+          "flex min-w-0 flex-col items-center transition-[flex] duration-500 ease-out",
+          selectedConversation ? "flex-[2]" : "flex-1"
         )}
       >
         <div className={cn(borderStyles, "w-full")}>
@@ -97,14 +97,22 @@ export function AnalyticsPageClient({
           />
         </div>
       </div>
-      {selectedConversation && (
-        <div className={cn(borderStyles, "min-w-0 basis-1/3")}>
-          <ConversationSidePanel
-            conversation={selectedConversation}
-            onClose={() => setSelectedConversation(null)}
-          />
-        </div>
-      )}
+
+      <div
+        className={cn(
+          "flex-shrink-0 overflow-hidden transition-[width,opacity] duration-500 ease-out",
+          selectedConversation ? "w-80 opacity-100" : "w-0 opacity-0"
+        )}
+      >
+        {selectedConversation && (
+          <div className={cn(borderStyles, "h-full w-80")}>
+            <ConversationSidePanel
+              conversation={selectedConversation}
+              onClose={() => setSelectedConversation(null)}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

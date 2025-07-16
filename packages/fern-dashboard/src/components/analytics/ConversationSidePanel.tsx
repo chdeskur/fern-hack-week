@@ -24,7 +24,7 @@ export function ConversationSidePanel({
         </div>
         <button
           onClick={onClose}
-          className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+          className="rounded-md p-1 text-gray-600 hover:cursor-pointer hover:text-gray-900"
         >
           <X className="h-6 w-6" />
         </button>
