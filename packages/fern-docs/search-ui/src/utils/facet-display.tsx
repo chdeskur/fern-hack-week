@@ -23,6 +23,12 @@ const FACET_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     OPTIONS: <HttpMethodBadge method="OPTIONS" variant="subtle" />,
     CONNECT: <HttpMethodBadge method="CONNECT" variant="subtle" />,
     TRACE: <HttpMethodBadge method="TRACE" variant="subtle" />,
+    UNARY: <HttpMethodBadge method="UNARY" variant="subtle" />,
+    CLIENT_STREAM: <HttpMethodBadge method="CLIENT_STREAM" variant="subtle" />,
+    SERVER_STREAM: <HttpMethodBadge method="SERVER_STREAM" variant="subtle" />,
+    BIDIRECTIONAL_STREAM: (
+      <HttpMethodBadge method="BIDIRECTIONAL_STREAM" variant="subtle" />
+    ),
   },
   availability: {
     Stable: (
@@ -106,6 +112,20 @@ const FACET_SMALL_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     OPTIONS: <HttpMethodBadge method="OPTIONS" size="sm" variant="outlined" />,
     CONNECT: <HttpMethodBadge method="CONNECT" size="sm" variant="outlined" />,
     TRACE: <HttpMethodBadge method="TRACE" size="sm" variant="outlined" />,
+    UNARY: <HttpMethodBadge method="UNARY" size="sm" variant="outlined" />,
+    CLIENT_STREAM: (
+      <HttpMethodBadge method="CLIENT_STREAM" size="sm" variant="outlined" />
+    ),
+    SERVER_STREAM: (
+      <HttpMethodBadge method="SERVER_STREAM" size="sm" variant="outlined" />
+    ),
+    BIDIRECTIONAL_STREAM: (
+      <HttpMethodBadge
+        method="BIDIRECTIONAL_STREAM"
+        size="sm"
+        variant="outlined"
+      />
+    ),
   },
   availability: {
     Stable: (
@@ -210,11 +230,16 @@ export const FACET_DISPLAY_NAME_MAP: Record<string, Record<string, string>> = {
     PATCH: "PATCH requests",
     DELETE: "DELETE requests",
     HEAD: "HEAD requests",
+    UNARY: "UNARY requests",
+    CLIENT_STREAM: "CLIENT STREAM requests",
+    SERVER_STREAM: "SERVER STREAM requests",
+    BIDIRECTIONAL_STREAM: "BIDIRECTIONAL STREAM requests",
   },
   api_type: {
     http: "HTTP",
     webhook: "webhooks",
     websocket: "WebSockets",
+    grpc: "gRPC",
   },
   type: {
     markdown: "guides",
@@ -252,11 +277,16 @@ export const FACET_DISPLAY_NAME_TITLE_CASE_MAP: Record<
     PATCH: "PATCH requests",
     DELETE: "DELETE requests",
     HEAD: "HEAD requests",
+    UNARY: "UNARY requests",
+    CLIENT_STREAM: "CLIENT STREAM requests",
+    SERVER_STREAM: "SERVER STREAM requests",
+    BIDIRECTIONAL_STREAM: "BIDIRECTIONAL STREAM requests",
   },
   api_type: {
     http: "HTTP",
     webhook: "Webhooks",
     websocket: "WebSockets",
+    grpc: "gRPC",
   },
   type: {
     markdown: "Guides",

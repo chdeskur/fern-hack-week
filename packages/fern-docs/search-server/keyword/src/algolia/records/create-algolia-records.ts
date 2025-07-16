@@ -5,11 +5,13 @@ import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 import { measureBytes } from "@fern-api/ui-core-utils";
 
 import { AlgoliaRecord } from "../types";
+import { createApiReferenceRecordGrpc } from "./create-api-reference-record-grpc";
 import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
 import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
 import { createApiReferenceRecordWebhook } from "./create-api-reference-record-webhook";
 import { createBaseRecord } from "./create-base-record";
 import { createChangelogRecord } from "./create-changelog-record";
+import { createEndpointBaseRecordGrpc } from "./create-endpoint-record-gprc";
 import { createEndpointBaseRecordHttp } from "./create-endpoint-record-http";
 import { createEndpointBaseRecordWebSocket } from "./create-endpoint-record-web-socket";
 import { createEndpointBaseRecordWebhook } from "./create-endpoint-record-webhook";
@@ -165,6 +167,31 @@ export function createAlgoliaRecords({
       );
       return;
     }
+
+    if (node.type === "grpc") {
+      const grpc = apiDefinition.endpoints[getGrpcIdAsEndpointId(node.grpcId)];
+      if (!grpc) {
+        console.error(
+          `API leaf node ${node.slug} has grpc id ${node.grpcId} but no grpc`
+        );
+        return;
+      }
+
+      const grpcMethodType =
+        grpc.protocol?.type === "grpc" && grpc.protocol.methodType
+          ? grpc.protocol.methodType
+          : "UNARY";
+
+      const grpcBase = createEndpointBaseRecordGrpc({
+        base,
+        node,
+        grpc,
+        grpcMethodType,
+        types: apiDefinition.types,
+      });
+      records.push(...createApiReferenceRecordGrpc({ grpcBase, grpc }));
+      return;
+    }
   });
 
   // const distinctSlugs = new Set<string>();
@@ -196,4 +223,10 @@ export function createAlgoliaRecords({
         size: measureBytes(record),
       })) ?? [],
   };
+}
+
+function getGrpcIdAsEndpointId(
+  grpcId: ApiDefinition.GrpcId
+): ApiDefinition.EndpointId {
+  return grpcId as unknown as ApiDefinition.EndpointId;
 }

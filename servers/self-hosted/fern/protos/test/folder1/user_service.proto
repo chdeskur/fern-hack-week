@@ -13,13 +13,13 @@ service UserService {
   rpc GetUser(GetUserRequest) returns (User);
 
   // Update user information
-  rpc UpdateUser(UpdateUserRequest) returns (User);
+  rpc UpdateUser(stream UpdateUserRequest) returns (stream User);
 
   // Delete user
-  rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty);
+  rpc DeleteUser(stream DeleteUserRequest) returns (google.protobuf.Empty);
 
   // List users with pagination
-  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc ListUsers(ListUsersRequest) returns (stream ListUsersResponse);
 }
 
 message CreateUserRequest {

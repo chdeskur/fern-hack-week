@@ -181,11 +181,22 @@ export const ChangelogRecordSchema = BaseRecordSchema.extend({
 const EndpointBaseRecordSchema = BaseRecordSchema.extend({
   api_definition_id: z.string(),
   api_endpoint_id: z.string(),
-  api_type: z.enum(["http", "webhook", "websocket"]),
-  method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"]),
+  api_type: z.enum(["http", "webhook", "websocket", "grpc"]),
+  method: z.enum([
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "HEAD",
+    "UNARY",
+    "CLIENT_STREAM",
+    "SERVER_STREAM",
+    "BIDIRECTIONAL_STREAM",
+  ]),
   endpoint_path: z.string(),
   endpoint_path_alternates: z.array(z.string()).optional(),
-  response_type: z.enum(["stream", "file", "json"]).optional(),
+  response_type: z.enum(["stream", "file", "json", "binary"]).optional(),
   environments: z
     .array(z.object({ id: z.string(), url: z.string() }))
     .optional(),

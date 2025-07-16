@@ -55,7 +55,8 @@ type SegmentType =
   | "parameter"
   | "http"
   | "webhook"
-  | "websocket";
+  | "websocket"
+  | "grpc";
 const SEGMENT_DISPLAY_NAMES: Record<SegmentType, string> = {
   markdown: "Guide",
   changelog: "Changelog",
@@ -63,6 +64,7 @@ const SEGMENT_DISPLAY_NAMES: Record<SegmentType, string> = {
   http: "Endpoint",
   webhook: "Webhook",
   websocket: "WebSocket",
+  grpc: "gRPC",
 };
 
 function HitContentWithTitle({
