@@ -11,13 +11,14 @@ import { AnalyticsHistogram } from "./AnalyticsHistogram";
 import { TimeRangeSelect } from "./AnalyticsHistogramRangeSelector";
 import { AnalyticsHistogramTabBar } from "./AnalyticsHistogramTabBar";
 import { AnalyticsPageHeader } from "./AnalyticsPageHeader";
+import { ConversationSidePanel } from "./ConversationSidePanel";
 import { QueriesTable } from "./QueriesTable";
 import { TimeRange } from "./get-request-params";
 
 export type RenderType = "QUERIES" | "CONVERSATIONS";
 
 const borderStyles =
-  "border-gray-0 mb-4 flex w-4/5 flex-col items-center rounded-2xl border p-4";
+  "border-gray-0 mb-4 flex w-full flex-col items-center rounded-2xl border p-4";
 
 export function AnalyticsPageClient({
   baseDocsUrl,
@@ -31,6 +32,8 @@ export function AnalyticsPageClient({
   const [renderType, setRenderType] = useState<RenderType>("QUERIES");
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.LAST_WEEK);
   const [histogramData, setHistogramData] = useState(initialHistogramData);
+  const [selectedConversation, setSelectedConversation] =
+    useState<FernFai.Conversation | null>(null);
 
   useEffect(() => {
     async function fetchHistogramData() {
@@ -61,27 +64,47 @@ export function AnalyticsPageClient({
   }));
 
   return (
-    <div className="flex w-full flex-col items-center p-4">
-      <div className={cn(borderStyles)}>
-        <AnalyticsPageHeader />
-      </div>
-      <div className={cn(borderStyles)}>
-        <div className="border-gray-0 mb-4 flex w-full justify-between border-b">
-          <AnalyticsHistogramTabBar
-            renderType={renderType}
-            onChangeRenderType={setRenderType}
-          />
-          <TimeRangeSelect value={timeRange} onChange={setTimeRange} />
+    <div className="flex w-full flex-row gap-4 p-4">
+      <div
+        className={cn(
+          "flex min-w-0 flex-col items-center",
+          selectedConversation ? "basis-2/3" : "flex-1"
+        )}
+      >
+        <div className={cn(borderStyles, "w-full")}>
+          <AnalyticsPageHeader />
         </div>
-        <AnalyticsHistogram
-          chartData={chartData}
-          renderType={renderType}
-          chartConfig={chartConfig}
-        />
+        <div className={cn(borderStyles, "w-full")}>
+          <div className="border-gray-0 mb-4 flex w-full justify-between border-b">
+            <AnalyticsHistogramTabBar
+              renderType={renderType}
+              onChangeRenderType={setRenderType}
+            />
+            <TimeRangeSelect value={timeRange} onChange={setTimeRange} />
+          </div>
+          <AnalyticsHistogram
+            chartData={chartData}
+            renderType={renderType}
+            chartConfig={chartConfig}
+          />
+        </div>
+        <div className={cn(borderStyles, "w-full")}>
+          <QueriesTable
+            queries={initialQueriesData}
+            baseDocsUrl={baseDocsUrl}
+            onSelectConversation={setSelectedConversation}
+            selectedConversation={selectedConversation}
+          />
+        </div>
       </div>
-      <div className="border-gray-0 flex w-4/5 flex-col items-center rounded-2xl border p-4">
-        <QueriesTable queries={initialQueriesData} baseDocsUrl={baseDocsUrl} />
-      </div>
+      {selectedConversation && (
+        <div className={cn(borderStyles, "min-w-0 basis-1/3")}>
+          <ConversationSidePanel
+            conversation={selectedConversation}
+            onClose={() => setSelectedConversation(null)}
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -21,12 +21,16 @@ interface QueriesDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   baseDocsUrl: string;
+  onSelectConversation: (conversation: FernFai.Conversation) => void;
+  selectedConversation: FernFai.Conversation | null;
 }
 
 export function QueriesDataTable<TData, TValue>({
   columns,
   data,
   baseDocsUrl,
+  onSelectConversation,
+  selectedConversation,
 }: QueriesDataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -37,58 +41,63 @@ export function QueriesDataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md p-4">
-      <QueriesDataTableHeader table={table} />
-      <div className="min-h-[400px]">
-        <Table className="table-fixed">
-          <TableBody>
-            {table?.getRowModel()?.rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="cursor-pointer border-none"
-                  onClick={async () => {
-                    const conversation = await getConversation({
-                      domain: baseDocsUrl,
-                      conversationId: (row.original as FernFai.Query)
-                        .conversation_id,
-                    });
-                    // TODO: Replace with side panel
-                    console.log(conversation);
-                  }}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className={
-                        cell.column.id === "created_at"
-                          ? "w-32"
-                          : cell.column.id === "actions"
-                            ? "w-16"
-                            : undefined
-                      }
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+    <div className="flex flex-row gap-6 rounded-md p-4">
+      <div className="grow">
+        <QueriesDataTableHeader table={table} />
+        <div className="min-h-[400px]">
+          <Table className="table-fixed">
+            <TableBody>
+              {table?.getRowModel()?.rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={
+                      selectedConversation?.conversation_id ===
+                        (row.original as FernFai.Query).conversation_id &&
+                      "selected"
+                    }
+                    className="data-[state=selected]:bg-accent cursor-pointer border-none"
+                    onClick={async () => {
+                      const conversation = await getConversation({
+                        domain: baseDocsUrl,
+                        conversationId: (row.original as FernFai.Query)
+                          .conversation_id,
+                      });
+                      onSelectConversation(conversation);
+                    }}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          cell.column.id === "created_at"
+                            ? "w-32"
+                            : cell.column.id === "actions"
+                              ? "w-16"
+                              : undefined
+                        }
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );
