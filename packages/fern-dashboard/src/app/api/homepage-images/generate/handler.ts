@@ -5,6 +5,7 @@ import sharp from "sharp";
 import { setTimeout } from "timers/promises";
 
 import { getS3Client } from "@/app/services/s3";
+import { isProduction } from "@/utils/environment";
 
 import { MaybeErrorResponse } from "../../utils/MaybeErrorResponse";
 import {
@@ -23,7 +24,7 @@ export default async function generateHomepageImages({
 }): Promise<MaybeErrorResponse> {
   let browser: Browser;
 
-  if (process.env.NODE_ENV === "production") {
+  if (isProduction()) {
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,

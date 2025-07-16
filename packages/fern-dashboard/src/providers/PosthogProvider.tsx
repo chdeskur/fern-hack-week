@@ -8,6 +8,7 @@ import { PostHogProvider as PHProvider } from "posthog-js/react";
 import { Auth0SessionData } from "@/app/services/auth0/getCurrentSession";
 import { PostHogIdentify } from "@/components/posthog/PostHogIdentify";
 import { PostHogPageView } from "@/components/posthog/PostHogPageView";
+import { isProduction } from "@/utils/environment";
 
 export declare namespace PostHogProvider {
   export interface Props {
@@ -29,7 +30,7 @@ export function PostHogProvider({ session, children }: PostHogProvider.Props) {
 
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
       api_host: "/ingest",
-      capture_pageview: false, // Disable automatic pageview capture, as we capture manually
+      capture_pageview: isProduction(),
     });
 
     if (!isPosthogTrackingEnabled) {
