@@ -66,7 +66,7 @@ EXPOSE 9000 9001
 # ----------- Start MeiliSearch setup -----------
 RUN apt-get update && \
     apt-get install -y curl && \
-    curl -L https://install.meilisearch.com | sh
+    bash -c 'for i in {1..5}; do curl -L https://install.meilisearch.com | sh && break || { echo "MeiliSearch install failed, retrying ($i/5)..."; sleep 5; }; done'
 
 EXPOSE 7700
 # ----------- End MeiliSearch setup -----------

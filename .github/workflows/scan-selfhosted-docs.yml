@@ -26,6 +26,9 @@ jobs:
       - name: Build self-hosted bundle
         run: pnpm docs:self-hosted-bundle:build
 
+      - name: Next.js Cache Init
+        uses: ./.github/actions/next-cache
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -37,3 +40,4 @@ jobs:
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin
       - name: Scan Docker image for vulnerabilities
         run: |
+          trivy image --format table --exit-code 1 --vuln-type os --no-progress --auto-refresh --severity HIGH,CRITICAL fern-self-hosted:latest
