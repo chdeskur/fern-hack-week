@@ -20,7 +20,7 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return new NextResponse(".md preview is not available in local preview", {
       status: 400,
     });
