@@ -93,7 +93,7 @@ function getConfigForLocalMode(): FdrConfig {
     redisEnabled: false,
     redisClusteringEnabled: false,
     applicationEnvironment: "local",
-    cdnPublicDocsUrl: "local",
+    cdnPublicDocsUrl: "_files",
   };
 }
 

@@ -15,7 +15,7 @@ export async function getFilesV2(
         const s3DownloadUrl =
           await app.services.s3.getPresignedDocsAssetsDownloadUrl({
             key: fileDbInfo.s3Key,
-            isPrivate: true, // for backcompat
+            isPrivate: !app.config.localModeOverride, // for backcompat
           });
         const readFile: DocsV1Read.File_ =
           fileDbInfo.type === "image"
@@ -39,7 +39,7 @@ export async function getFilesV2(
         const s3DownloadUrl =
           await app.services.s3.getPresignedDocsAssetsDownloadUrl({
             key: fileDbInfo.s3Key,
-            isPrivate: true, // for backcompat
+            isPrivate: !app.config.localModeOverride, // for backcompat
           });
         return [DocsV1Read.FileId(fileId), { type: "url", url: s3DownloadUrl }];
       }

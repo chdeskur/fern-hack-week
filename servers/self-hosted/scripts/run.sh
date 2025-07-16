@@ -55,6 +55,8 @@ echo "MinIO is ready!"
 # Initialize MinIO
 mc alias set minio ${MINIO_URL} ${MINIO_USERNAME} ${MINIO_PASSWORD}
 mc mb minio/${MINIO_BUCKET_NAME}
+# Make bucket public
+mc anonymous set download minio/${MINIO_BUCKET_NAME}
 
 # map custom domain to local machine
 echo "127.0.0.1 $ORG_NAME.docs.buildwithfern.com.localhost" >> /etc/hosts
