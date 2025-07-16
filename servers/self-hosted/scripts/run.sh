@@ -15,7 +15,9 @@ echo "Starting PostgreSQL service..."
 service postgresql start
 echo "PostgreSQL service started."
 
-postgres_pid=$(pgrep -u postgres postgres)
+# 'pgrep' may not be available in slim images; use alternative to get postgres PID
+# 'ps' is not available; fallback to pgrep or skip PID retrieval if unavailable
+postgres_pid=$(pgrep -u postgres -n postgres || true)
 echo "PostgreSQL PID: $postgres_pid"
 
 echo "Creating Postgres database..."

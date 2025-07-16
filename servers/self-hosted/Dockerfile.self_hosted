@@ -1,4 +1,4 @@
-FROM node:20.18-bullseye
+FROM node:20.18-bookworm-slim
 
 RUN npm install -g turbo@2.0.1
 COPY . .
@@ -6,7 +6,7 @@ RUN rm -rf fern/
 
 RUN turbo prune @fern-docs/bundle --docker
 
-COPY servers/self-hosted/run.sh /run.sh
+COPY servers/self-hosted/scripts /scripts
 
 # -----------  Start Postgres setup  -----------
 
@@ -107,5 +107,6 @@ RUN wget https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_
     chmod +x /usr/local/bin/buf
 # ----------- End Buf CLI setup -----------
 
-ENTRYPOINT ["/bin/bash", "/run.sh"]
+ENTRYPOINT ["/bin/bash", "/scripts/run.sh"]
+
 
