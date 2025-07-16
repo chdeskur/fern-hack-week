@@ -173,7 +173,7 @@ export async function runRouteForAnthropic({
           }
           postToSlack(
             "#search-notifs",
-            `:rotating_light: [${domain}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${errorString}\``
+            `:rotating_light: [${domain}] [source: ${chatSource}] [conversationId: ${conversationId}] \`Ask AI\` encountered a ${errorKind} for query '${lastUserMessage}': \`${errorString}\``
           );
         },
         onFinish: async (e) => {
