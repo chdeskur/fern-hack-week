@@ -21,6 +21,7 @@ import {
   getDocsUrlMetadata,
   isLocal,
   isSelfHosted,
+  provideRegistryService,
   pruneWithAuthState,
 } from "@fern-api/docs-server";
 import { loadWithUrl as uncachedLoadWithUrl } from "@fern-api/docs-server";
@@ -328,10 +329,17 @@ const getApi = async (domain: string, id: string) => {
   if (latest != null) {
     return latest;
   }
-  const v1 = response.definition.apis[ApiDefinitionId(id)];
+  let v1 = response.definition.apis[ApiDefinitionId(id)];
   if (v1 == null) {
-    console.error("Could not get API with ID", ApiDefinitionId(id));
-    notFound();
+    const response = await provideRegistryService().api.v1.read.getApi(
+      ApiDefinitionId(id)
+    );
+    if (response.ok) {
+      v1 = response.body;
+    } else {
+      console.error("Could not get API with ID", ApiDefinitionId(id));
+      notFound();
+    }
   }
   const flags = await cachedGetEdgeFlags(domain);
   return ApiDefinitionV1ToLatest.from(v1, flags).migrate();
