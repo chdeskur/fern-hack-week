@@ -517,7 +517,8 @@ const DesktopAskAIChat = ({
           void chat.stop();
         }}
         error={chat.error}
-        onError={() => {
+        onError={(e) => {
+          console.error(e);
           void chat.stop();
           chat.setMessages([]);
           chat.error = undefined;
@@ -540,7 +541,7 @@ const AskAIComposer = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<typeof TextArea> & {
     error?: Error;
-    onError?: () => void;
+    onError?: (e?: Error) => void;
     isLoading?: boolean;
     stop?: () => void;
     onSend?: (message: string) => void;

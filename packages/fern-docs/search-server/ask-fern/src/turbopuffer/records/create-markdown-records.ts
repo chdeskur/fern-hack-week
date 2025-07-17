@@ -51,6 +51,7 @@ export async function createMarkdownRecords({
       id: createHash("sha256").update(`${base.id}-${i}`).digest("hex"),
       attributes: {
         ...base.attributes,
+        url: `https://${base.attributes.domain}${base.attributes.pathname}${base.attributes.hash ?? ""}`,
         chunk: processedChunk,
         title: base.attributes.title,
         document: postProcessMarkdown(markdown),

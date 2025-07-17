@@ -7,6 +7,7 @@ export const TurbopufferRecordSchema = z.object({
     type: z.union([z.literal("markdown"), z.literal("api-reference")]),
     domain: z.string(),
     pathname: z.string(),
+    url: z.string().optional(),
     version: z.string().optional(),
     description: z.string().optional(),
     page_position: z.number().optional(),
@@ -46,6 +47,11 @@ export const FernTurbopufferAttributeSchema: Record<
     bm25: true,
   },
   type: {
+    type: "string",
+    filterable: true,
+    bm25: false,
+  },
+  url: {
     type: "string",
     filterable: true,
     bm25: false,

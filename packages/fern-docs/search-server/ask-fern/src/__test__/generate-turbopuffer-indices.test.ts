@@ -22,6 +22,7 @@ test("check generated turbopuffer index", { timeout: 60000 }, async () => {
 
   const file = await tmp.file();
   const json = JSON.stringify(unvectorizedRecords, undefined, 2);
+
   await writeFile(file.path, json);
 
   await expect(json).toMatchFileSnapshot(

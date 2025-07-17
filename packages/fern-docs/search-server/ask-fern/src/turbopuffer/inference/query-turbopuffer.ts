@@ -20,8 +20,9 @@ interface SemanticSearchOptions {
    */
   mode?: "semantic" | "bm25" | "hybrid";
 
-  // ignore these document ids; used to avoid tool-calls returning the same document over and over
+  // ignore these document ids & urls; used to avoid tool-calls returning the same document over and over
   documentIdsToIgnore?: string[];
+  urlsToIgnore?: string[];
 }
 
 export async function queryTurbopuffer(
@@ -34,6 +35,7 @@ export async function queryTurbopuffer(
     filters,
     mode = "hybrid",
     documentIdsToIgnore = [],
+    urlsToIgnore = [],
   }: SemanticSearchOptions
 ): Promise<TurbopufferRecord[]> {
   const tpuf = new Turbopuffer({
@@ -50,6 +52,12 @@ export async function queryTurbopuffer(
     id,
   ]);
 
+  const urlFilters: FilterCondition[] = urlsToIgnore.map((url) => [
+    "url",
+    "NotEq",
+    url,
+  ]);
+
   const versionFilters = filters
     ? filters.filter((f) => f.facet === "version.title")
     : [];
@@ -64,6 +72,7 @@ export async function queryTurbopuffer(
               return filter;
             }),
             ...documentIdFilters,
+            ...urlFilters,
           ],
         ]
       : documentIdFilters.length > 0

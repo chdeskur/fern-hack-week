@@ -25,6 +25,7 @@ import {
 import { FernFaiClient } from "@fern-api/fai-sdk";
 
 import {
+  TurbopufferRecord,
   convertTpufRecordsToDocuments,
   createChatSystemPrompt,
   queryTurbopuffer,
@@ -32,6 +33,9 @@ import {
 
 export const maxDuration = 60;
 export const revalidate = 0;
+
+const TOP_K = 5;
+const MAX_QUERY_ATTEMPTS = 5;
 
 export async function runRouteForAnthropic({
   domain,
@@ -74,11 +78,23 @@ export async function runRouteForAnthropic({
 
   const start = Date.now();
 
-  const searchResults = await runQueryTurbopuffer(lastUserMessage, {
+  const searchResultURLs = new Set<string>();
+  const searchResults: TurbopufferRecord[] = [];
+  const turbopufferResults = await runQueryTurbopuffer(lastUserMessage, {
     embeddingModel,
     namespace: turbopufferNamespace,
     topK: 3,
   });
+  for (const result of turbopufferResults) {
+    if (result.attributes.url) {
+      if (!searchResultURLs.has(result.attributes.url)) {
+        searchResultURLs.add(result.attributes.url);
+        searchResults.push(result);
+      }
+    } else {
+      searchResults.push(result);
+    }
+  }
 
   const searchResultSources = searchResults.map((hit) => {
     return {
@@ -97,6 +113,9 @@ export async function runRouteForAnthropic({
   });
 
   const documentIdsToIgnore: string[] = [];
+  const urlsToIgnore: string[] = searchResultSources.map(
+    (source) => source.url
+  );
   let timeToFirstToken: number | undefined = undefined;
   let responseText = "";
 
@@ -121,36 +140,41 @@ export async function runRouteForAnthropic({
               query: z.string(),
             }),
             async execute({ query }) {
-              const response = await runQueryTurbopuffer(query, {
-                embeddingModel,
-                namespace: turbopufferNamespace,
-                topK: 5,
-                documentIdsToIgnore: documentIdsToIgnore,
-              });
-              documentIdsToIgnore.push(...response.map((hit) => hit.id));
-
-              const mappedResponse = response.map((hit) => {
-                const { domain, pathname, hash, document } = hit.attributes;
-                const url = `https://${domain}${pathname}${hash ?? ""}`;
-                if (document.length > 20000) {
-                  return {
-                    ...hit.attributes,
-                    url,
-                    document: document.slice(0, 20000),
-                  };
+              const response = [];
+              for (let i = 0; i < MAX_QUERY_ATTEMPTS; i++) {
+                const result = await runQueryTurbopuffer(query, {
+                  embeddingModel,
+                  namespace: turbopufferNamespace,
+                  topK: TOP_K,
+                  documentIdsToIgnore: documentIdsToIgnore,
+                  urlsToIgnore: urlsToIgnore,
+                });
+                for (const hit of result) {
+                  const url =
+                    hit.attributes.url ??
+                    `https://${hit.attributes.domain}${hit.attributes.pathname}${hit.attributes.hash ?? ""}`;
+                  documentIdsToIgnore.push(hit.id);
+                  if (!urlsToIgnore.includes(url)) {
+                    urlsToIgnore.push(url);
+                    if (hit.attributes.document.length > 20000) {
+                      response.push({
+                        ...hit.attributes,
+                        url,
+                        document: hit.attributes.document.slice(0, 20000),
+                      });
+                    } else {
+                      response.push({ url, ...hit.attributes });
+                    }
+                    if (response.length >= TOP_K) {
+                      return response;
+                    }
+                  }
                 }
-                return { url, ...hit.attributes };
-              });
-
-              const responseURLs = new Set();
-              const dedupedResponse = []; // avoid sending the same document over and over
-              for (const hit of mappedResponse) {
-                if (!responseURLs.has(hit.url)) {
-                  responseURLs.add(hit.url);
-                  dedupedResponse.push(hit);
+                if (response.length >= TOP_K) {
+                  return response;
                 }
               }
-              return dedupedResponse;
+              return response;
             },
           }),
         },
@@ -237,6 +261,7 @@ async function runQueryTurbopuffer(
     namespace: string;
     topK?: number;
     documentIdsToIgnore?: string[];
+    urlsToIgnore?: string[];
   }
 ) {
   return query == null || query.trimStart().length === 0
@@ -253,5 +278,6 @@ async function runQueryTurbopuffer(
           return embedding.embedding;
         },
         documentIdsToIgnore: opts.documentIdsToIgnore,
+        urlsToIgnore: opts.urlsToIgnore,
       });
 }
