@@ -27,13 +27,8 @@ export function AnalyticsPageHeader() {
             Billing Period: {getBillingPeriod()}
           </span>
           <div className="group relative inline-block">
-            <Button
-              asChild
-              className="relative min-w-40 rounded-md border border-gray-500 bg-transparent text-black"
-            >
-              <a className="block rounded-md bg-white px-4 py-2 transition-colors group-hover:bg-transparent">
-                Get More Queries
-              </a>
+            <Button size="sm" variant="outline">
+              Get More Queries
             </Button>
           </div>
         </div>

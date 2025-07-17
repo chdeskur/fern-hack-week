@@ -38,7 +38,7 @@ export const TimeRangeSelect = ({ value, onChange }: TimeRangeSelectProps) => {
 
   return (
     <Select value={selected} onValueChange={handleChange}>
-      <SelectTrigger className="flex w-[180px] items-center gap-1">
+      <SelectTrigger className="flex min-w-[140px] items-center gap-1 px-2">
         <CalendarDaysIcon className="h-4 w-4" />
         <SelectValue placeholder="Select Time Range" />
       </SelectTrigger>

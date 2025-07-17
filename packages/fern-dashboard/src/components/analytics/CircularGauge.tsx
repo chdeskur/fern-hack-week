@@ -7,11 +7,13 @@ type CircularGaugeProps = {
 export default function CircularGauge({
   percentage,
   size = 100,
-  strokeWidth = 10,
+  strokeWidth = 20,
 }: CircularGaugeProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (percentage / 100) * circumference;
+  const strokeOffsetDeg = (strokeWidth / (2 * radius)) * (180 / Math.PI);
+  const rotation = 90 + strokeOffsetDeg;
 
   return (
     <div
@@ -30,13 +32,14 @@ export default function CircularGauge({
           </radialGradient>
         </defs>
         <circle
-          stroke="#e5e7eb"
+          stroke="#65D6491A"
           fill="transparent"
           strokeWidth={strokeWidth}
           r={radius}
           cx={size / 2}
           cy={size / 2}
-          transform={`rotate(90 ${size / 2} ${size / 2})`}
+          transform={`rotate(${rotation} ${size / 2} ${size / 2})`}
+          style={{ border: "0.08px solid #70E155" }}
         />
         <circle
           stroke="url(#circleGradient)"
@@ -48,11 +51,12 @@ export default function CircularGauge({
           r={radius}
           cx={size / 2}
           cy={size / 2}
-          transform={`rotate(90 ${size / 2} ${size / 2})`}
+          transform={`rotate(${rotation} ${size / 2} ${size / 2})`}
           className="transition-all duration-500"
+          style={{ border: "0.08px solid #70E155" }}
         />
       </svg>
-      <span className="text-radix-gray-9 absolute text-sm font-semibold">
+      <span className="text-radix-gray-9 absolute text-base font-semibold">
         {percentage}%
       </span>
     </div>

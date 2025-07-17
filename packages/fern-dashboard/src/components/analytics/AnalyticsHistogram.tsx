@@ -39,7 +39,11 @@ export function AnalyticsHistogram({
     >
       <ChartContainer config={chartConfig}>
         <ResponsiveContainer>
-          <BarChart data={chartData} barSize={40}>
+          <BarChart
+            data={chartData}
+            barSize={40}
+            margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+          >
             <defs>
               <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#008700" stopOpacity={0.2} />

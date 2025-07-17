@@ -16,7 +16,7 @@ export function AnalyticsHistogramTabBar({
   onChangeRenderType: (type: RenderType) => void;
 }) {
   return (
-    <div className="flex">
+    <div className="border-gray-0 flex min-w-0 flex-1 border-b">
       <AnalyticsHistogramTabItem
         title="Queries"
         icon={<SparklesIcon className="h-4 w-4" />}

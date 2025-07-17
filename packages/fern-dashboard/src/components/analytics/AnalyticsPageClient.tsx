@@ -19,8 +19,7 @@ import { TimeRange } from "./get-request-params";
 
 export type RenderType = "QUERIES" | "CONVERSATIONS";
 
-const borderStyles =
-  "border-gray-0 mb-4 flex w-full flex-col items-center rounded-2xl border p-4";
+const borderStyles = "mb-4 flex w-full flex-col items-center rounded-2xl p-4";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -127,8 +126,8 @@ export function AnalyticsPageClient({
         <div className={cn(borderStyles, "w-full")}>
           <AnalyticsPageHeader />
         </div>
-        <div className={cn(borderStyles, "w-full")}>
-          <div className="border-gray-0 mb-4 flex w-full justify-between border-b">
+        <div className={cn(borderStyles, "border-gray-0 w-full border")}>
+          <div className="mb-4 flex w-full justify-between gap-4">
             <AnalyticsHistogramTabBar
               renderType={renderType}
               onChangeRenderType={setRenderType}
@@ -141,7 +140,7 @@ export function AnalyticsPageClient({
             chartConfig={chartConfig}
           />
         </div>
-        <div className={cn(borderStyles, "w-full")}>
+        <div className={cn(borderStyles, "border-gray-0 w-full border")}>
           <QueriesTable
             queries={queriesData}
             baseDocsUrl={baseDocsUrl}
