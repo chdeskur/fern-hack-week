@@ -7,6 +7,7 @@ import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 
 import { isLocal } from "./isLocal";
 import { isSelfHosted } from "./isSelfHosted";
+import { loadDocsDefinitionFromMinIO } from "./loadDocsDefinitionFromMinIO";
 import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
 import { provideRegistryService } from "./registry";
 
@@ -52,20 +53,23 @@ export const loadWithUrl = cache(
 
         if (isSelfHosted()) {
           const docsUrl = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? "";
-          if (isSelfHosted() && !docsUrl) {
+          const docsBucketName = domain.replace(/^https?:\/\//, "");
+
+          if (!docsUrl) {
             notFound();
           }
 
-          const response =
-            await provideRegistryService().docs.v2.read.getDocsForUrl({
-              url: FdrAPI.Url(docsUrl),
-            });
-          if (response.ok) {
-            return response.body;
-          }
-          console.error("Failed to load docs", {
-            cause: response.error,
+          const response = await loadDocsDefinitionFromMinIO({
+            domain:
+              process.env.NEXT_PUBLIC_MINIO_BUCKET_HOST ??
+              "http://localhost:9000",
+            docsBucketName,
           });
+
+          if (response != null) {
+            return response;
+          }
+
           notFound();
         }
 
