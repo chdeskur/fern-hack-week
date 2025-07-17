@@ -1,16 +1,25 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 
 import { useMDXComponents } from "@mdx-js/react";
+import { CopyToClipboardButton } from "@fern-docs/components";
 
 interface TwoSlashProps {
   content: {
     code: string;
     jsxElements: string[];
+    value?: string;
   };
 }
 
+/**
+ * TwoSlash component renders a dynamic code block and provides a copy button.
+ * The copy button will copy the code as rendered in the DOM (if possible), or fall back to the raw code.
+ */
 export const TwoSlash: React.FC<TwoSlashProps> = ({ content }) => {
+  // Ref to the container so we can scope DOM queries for the copy button
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const Component = useMemo(() => {
     try {
       // Create the globals object with all necessary dependencies
@@ -74,5 +83,21 @@ export const TwoSlash: React.FC<TwoSlashProps> = ({ content }) => {
     }
   }, [content]);
 
-  return <Component />;
+  return (
+    <div
+      className="twoslash-container"
+      style={{ position: "relative" }}
+      ref={containerRef}
+    >
+      <CopyToClipboardButton
+        className="twoslash-copy-btn absolute top-2 right-2 z-10"
+        // Copies the code as rendered in the DOM, or falls back to the raw code.
+        content={() => {
+          // Use content.value if present, otherwise nothing
+          return content.value ?? "";
+        }}
+      />
+      <Component />
+    </div>
+  );
 };

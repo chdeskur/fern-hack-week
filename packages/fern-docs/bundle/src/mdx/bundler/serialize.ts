@@ -439,7 +439,7 @@ export async function processTwoslashBlocks(content: string): Promise<string> {
             }
 
             // Replace only this specific block
-            const twoSlashContent = `<TwoSlash content={${JSON.stringify(result)}} />`;
+            const twoSlashContent = `<TwoSlash content={${JSON.stringify({...result, value: block.codeContent})}} />`;
             content = content.replace(block.fullMatch, twoSlashContent);
           } catch (error) {
             console.error("Error processing twoslash block:", error);
