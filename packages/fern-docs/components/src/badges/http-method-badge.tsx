@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import { GrpcMethod, HttpOrWssOrGrpc } from "@fern-api/docs-utils";
 
 import { UIColor } from "../colors";
+import { FaIcon } from "../fa-icon";
 import { Badge, BadgeProps } from "./badge";
 
 const METHOD_COLOR_SCHEMES: Record<HttpOrWssOrGrpc, UIColor> = {
@@ -42,6 +43,12 @@ const ABBREVIATED_METHODS: Record<HttpOrWssOrGrpc, string> = {
   BIDIRECTIONAL_STREAM: "STREAM",
 };
 
+const GRPC_STREAM_ICONS: Partial<Record<HttpOrWssOrGrpc, string>> = {
+  CLIENT_STREAM: "fa-solid fa-arrow-up",
+  SERVER_STREAM: "fa-solid fa-arrow-down",
+  BIDIRECTIONAL_STREAM: "fa-solid fa-arrow-up-arrow-down",
+};
+
 export interface HttpOrWSSOrGrpcBadgeProps extends Omit<BadgeProps, "color"> {
   method: HttpOrWssOrGrpc;
 }
@@ -51,6 +58,8 @@ export const HttpMethodBadge = forwardRef<
   HttpOrWSSOrGrpcBadgeProps
 >((props, ref) => {
   const { method, ...rest } = props;
+  const icon = GRPC_STREAM_ICONS[method];
+
   return (
     <Badge
       ref={ref}
@@ -59,6 +68,7 @@ export const HttpMethodBadge = forwardRef<
       data-http-method={method}
       color={METHOD_COLOR_SCHEMES[method]}
     >
+      {icon && <FaIcon icon={icon} className="grpc-streaming-arrow" />}
       {props.children ??
         (rest.size === "sm" || method in GrpcMethod
           ? ABBREVIATED_METHODS[method]

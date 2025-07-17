@@ -46,7 +46,7 @@ export const CommandGroupFilters = forwardRef<
           ]}
         >
           <ListFilter />
-          <span className="flex-1">
+          <span className="flex flex-1 flex-row items-center gap-1">
             Filter to {getFacetDisplay(filter.facet, filter.value)}
           </span>
           <Badge size="sm" rounded>

@@ -52,18 +52,22 @@
       text-transform: uppercase;
     }
 
-    &[data-badge-type="http-method"] {
-      font-weight: 700;
-    }
-
     &.small[data-http-method="PATCH"],
     &.small[data-http-method="TRACE"] {
       letter-spacing: -0.025em;
     }
 
-    &[data-badge-type="http-method"].small {
-      font-size: 0.625rem;
-      width: 2.25rem;
+    &[data-badge-type="http-method"] {
+      font-weight: 700;
+
+      &.small {
+        font-size: 0.625rem;
+        width: 2.25rem;
+      }
+
+      &.large {
+        font-size: 0.75rem;
+      }
 
       &[data-http-method="UNARY"],
       &[data-http-method="CLIENT_STREAM"],
@@ -72,11 +76,35 @@
         background-color: black;
         color: white;
         border: 0.5px solid white;
-      }
-    }
+        display: inline-flex;
+        padding: 1px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: calc(0.25 * var(--spacing));
 
-    &[data-badge-type="http-method"].large {
-      font-size: 0.75rem;
+        &.small {
+          width: 3.25rem;
+
+          .grpc-streaming-arrow {
+            color: white !important;
+            width: 0.625rem;
+            height: 0.625rem;
+          }
+        }
+
+        &.large {
+          &[data-http-method="UNARY"] {
+            padding: 5px;
+          }
+
+          .grpc-streaming-arrow {
+            color: white !important;
+            width: 0.75rem;
+            height: 0.75rem;
+          }
+        }
+      }
     }
 
     & > svg {
