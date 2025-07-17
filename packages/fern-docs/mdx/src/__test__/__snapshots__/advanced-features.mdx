@@ -1,0 +1,474 @@
+# Advanced MDX Features Demonstration
+
+This document showcases **unusual** and *advanced* MDX features including ~~strikethrough~~, `inline code`, and <sup>superscript</sup> as well as <sub>subscript</sub> text.
+
+## Text Formatting Features
+
+### Emphasis and Strong Text
+
+* **Bold text** with `code` inside
+* *Italic text* with ~~strikethrough~~ mixed in
+* ***Bold italic*** combined formatting
+* `Code with **bold** and *italic* inside`
+
+### Special Characters and Escaping
+
+* HTML entities: & \< > " '
+* Unicode: 🚀 💻 ⚡ 🎯
+* RTL text: مرحبا بالعالم
+* Math symbols: α β γ δ ε
+
+## Advanced Lists
+
+### Task Lists
+
+* [x] Completed task with **bold** text
+* [ ] Pending task with `code`
+* [ ] Another task with ~~strikethrough~~
+
+### Definition Lists
+
+<dl>
+  <dt>
+    **Bold Term**
+  </dt>
+
+  <dd>
+    Definition with 
+
+    *italic*
+
+     and 
+
+    `code`
+  </dd>
+
+  <dt>
+    `CodeTerm`
+  </dt>
+
+  <dd>
+    Definition with 
+
+    ~~strikethrough~~
+
+     and 
+
+    <sup>superscript</sup>
+  </dd>
+</dl>
+
+### Nested Lists
+
+1. First level
+   * Second level with **bold**
+     * Third level with `code`
+       * Fourth level with ~~strikethrough~~
+2. Back to first level
+   * Mixed formatting: **bold**, *italic*, `code`, ~~strikethrough~~
+
+## Advanced Tables
+
+| Feature                      |       Description      |                Example | Status |
+| :--------------------------- | :--------------------: | ---------------------: | :----: |
+| **Bold**                     |        *Italic*        |                 `Code` |    ✅   |
+| ~~Strikethrough~~            | <sup>Superscript</sup> |   <sub>Subscript</sub> |    ❌   |
+| Mixed: **bold** and *italic* |  `Code with **bold**`  | ~~Strike with `code`~~ |   ⚠️   |
+
+### Complex Table with Nested Content
+
+| Component | Props         | Children     | Notes           |
+| --------- | ------------- | ------------ | --------------- |
+| `<div>`   | CSS classes   | Text content | Basic HTML      |
+| `<span>`  | Inline styles | Any content  | Inline elements |
+| `<p>`     | Text content  | None         | Paragraphs      |
+
+## Code Blocks
+
+### JavaScript with Syntax Highlighting
+
+```javascript
+// Simple function with template literals
+const processData = (data, options = {}) => {
+  const { 
+    transform = (x) => x, 
+    filter = () => true,
+    sort = (a, b) => a - b 
+  } = options;
+  
+  return data
+    .filter(filter)
+    .map(transform)
+    .sort(sort);
+};
+
+// Usage with simple props
+const result = processData(users, {
+  transform: (user) => ({
+    ...user,
+    fullName: `${user.firstName} ${user.lastName}`
+  }),
+  filter: (user) => user.active,
+  sort: (a, b) => a.name.localeCompare(b.name)
+});
+```
+
+### TypeScript with Generics
+
+```typescript
+interface ApiResponse<T> {
+  data: T;
+  status: 'success' | 'error';
+  message?: string;
+}
+
+class ApiClient<T> {
+  constructor(private baseUrl: string) {}
+  
+  async fetch<R = T>(endpoint: string): Promise<ApiResponse<R>> {
+    const response = await fetch(`${this.baseUrl}${endpoint}`);
+    return response.json();
+  }
+}
+
+// Usage
+const userClient = new ApiClient<User>('/api/users');
+const users = await userClient.fetch<User[]>('/list');
+```
+
+### CSS with Custom Properties
+
+```css
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+}
+
+.simple-component {
+  --component-padding: 1rem;
+  --component-border-radius: 0.5rem;
+  
+  padding: var(--component-padding);
+  border-radius: var(--component-border-radius);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.simple-component:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+```
+
+## Math Expressions
+
+### Inline Math
+
+The quadratic formula is: $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+
+### Block Math
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$
+
+### Complex Math
+
+$$
+\begin{align}
+\nabla \cdot \vec{E} &= \frac{\rho}{\epsilon_0} \\
+\nabla \cdot \vec{B} &= 0 \\
+\nabla \times \vec{E} &= -\frac{\partial \vec{B}}{\partial t} \\
+\nabla \times \vec{B} &= \mu_0\vec{J} + \mu_0\epsilon_0\frac{\partial \vec{E}}{\partial t}
+\end{align}
+$$
+
+## Simple JSX Components
+
+### Basic Component
+
+<div className="simple-component">
+  <h3>
+    **Simple Component**
+
+     with 
+
+    *mixed formatting*
+  </h3>
+
+  <p>
+    This component includes:
+  </p>
+
+  <ul>
+    <li>
+      **Basic HTML**
+
+       elements
+    </li>
+
+    <li>
+      *Mixed formatting*
+
+       in content
+    </li>
+
+    <li>
+      `Code snippets`
+
+       and 
+
+      ~~strikethrough~~
+    </li>
+
+    <li>
+      <sup>Superscript</sup>
+
+       and 
+
+      <sub>subscript</sub>
+    </li>
+  </ul>
+</div>
+
+### Fragment with Simple Content
+
+<>
+  <div className="conditional-content">
+    <h4>
+      **Fragment content**
+
+       with 
+
+      *formatting*
+    </h4>
+
+    <p>
+      This content uses React fragments.
+    </p>
+  </div>
+</>
+
+## Blockquotes and Citations
+
+> This is a **blockquote** with *mixed formatting* and `code`.
+>
+> It can span multiple lines and include:
+>
+> * Lists
+> * **Bold text**
+> * *Italic text*
+> * `Code snippets`
+> * ~~Strikethrough text~~
+
+> > Nested blockquotes are also supported
+> >
+> > With **complex** *formatting* and `code`
+
+<blockquote cite="https://example.com">
+  <p>
+    Blockquote with citation and 
+
+    <strong>HTML</strong>
+
+     elements.
+  </p>
+
+  <footer>
+    — 
+
+    <cite>Author Name</cite>
+  </footer>
+</blockquote>
+
+## Footnotes
+
+Here's a sentence with a footnote[^1] and another one[^2].
+
+[^1]: This is the first footnote with **bold** and *italic* text.
+
+[^2]: This is the second footnote with `code` and ~~strikethrough~~.
+
+## Comments
+
+{/* This is a JSX comment that should be handled properly */}
+
+{/* 
+  Multi-line JSX comment
+  with **bold** and *italic* text
+  and `code` snippets
+*/}
+
+{/* Another comment with special characters: & < > " ' */}
+
+## Advanced Links and References
+
+### Complex Links
+
+* [Link with **bold** text](https://example.com)
+* [Link with `code` text](https://example.com/code)
+* [Link with ~~strikethrough~~](https://example.com/strike)
+
+### Reference Links
+
+[Complex reference][ref1] with **formatting**.
+
+[ref1]: https://example.com "Title with **bold** and *italic*"
+
+## Inline HTML
+
+<div
+  style={{ 
+  background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4)',
+  padding: '20px',
+  borderRadius: '8px',
+  color: 'white',
+  margin: '20px 0'
+}}
+>
+  <h4>
+    **Inline HTML**
+
+     with React styles
+  </h4>
+
+  <p>
+    This div uses inline styles with:
+  </p>
+
+  <ul>
+    <li>
+      *Gradient backgrounds*
+    </li>
+
+    <li>
+      `Custom properties`
+    </li>
+
+    <li>
+      ~~Complex styling~~
+    </li>
+  </ul>
+</div>
+
+## Simple Event Handlers
+
+<div
+  onClick={() => alert('Clicked!')}
+  style={{ 
+    cursor: 'pointer',
+    padding: '10px',
+    border: '2px solid #007bff',
+    borderRadius: '4px',
+    backgroundColor: '#f8f9fa'
+  }}
+>
+  <p>
+    **Clickable div**
+
+     with event handlers
+  </p>
+
+  <p>
+    This demonstrates basic interactivity.
+  </p>
+</div>
+
+## Accessibility Features
+
+<div role="main" aria-label="Main content area">
+  <section aria-labelledby="section-title">
+    <h2 id="section-title">
+      **Accessible Section**
+    </h2>
+
+    <p>
+      This section includes proper ARIA attributes and semantic HTML.
+    </p>
+
+    <button aria-describedby="button-description" onClick={() => console.log('Accessible button clicked')}>
+      Accessible Button
+    </button>
+
+    <div id="button-description" aria-hidden="true">
+      This button performs an accessible action
+    </div>
+  </section>
+</div>
+
+## Simple Expressions
+
+<div>
+  <p>
+    **Dynamic content**
+
+     examples:
+  </p>
+
+  <ul>
+    <li>
+      Simple expression: 
+
+      {2 + 2}
+
+       \= 4
+    </li>
+
+    <li>
+      String template: 
+
+      {`Hello ${'World'}`}
+    </li>
+
+    <li>
+      Boolean: 
+
+      {true ? 'Yes' : 'No'}
+    </li>
+  </ul>
+</div>
+
+## Spread Operators
+
+<div
+  {...{
+    className: "spread-example",
+    "data-testid": "spread-component"
+  }}
+  style={{
+    '--custom-property': 'value',
+    '--another-property': 'another-value'
+  }}
+>
+  <p>
+    This div uses 
+
+    **spread operators**
+
+     and 
+
+    *complex props*
+
+    .
+  </p>
+
+  <p>
+    It demonstrates advanced React patterns with 
+
+    `template literals`
+
+    .
+  </p>
+</div>
+
+***
+
+*This document demonstrates **comprehensive** MDX features including ~~advanced~~ formatting, `code blocks`, and <sup>complex</sup> <sub>structures</sub>.*
