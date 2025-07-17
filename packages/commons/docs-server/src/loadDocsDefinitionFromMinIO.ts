@@ -32,6 +32,7 @@ export const loadDocsDefinitionFromMinIO = cache(
           secretAccessKey,
         },
         forcePathStyle: true,
+        region: "us-east-1", // MinIO dummy region
       });
 
       const command = new GetObjectCommand({
