@@ -105,10 +105,7 @@ Retrieve the insights for a given period
 <dd>
 
 ```typescript
-await client.analytics.getInsights("domain", {
-    start_date: "2024-01-15T09:30:00Z",
-    end_date: "2024-01-15T09:30:00Z",
-});
+await client.analytics.getInsights("domain");
 ```
 
 </dd>

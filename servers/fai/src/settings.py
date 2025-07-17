@@ -6,7 +6,9 @@ from typing import Any
 from typing import Dict
 from typing import Optional
 
+from anthropic import Anthropic
 from dotenv import load_dotenv
+from openai import OpenAI
 
 
 load_dotenv()
@@ -29,6 +31,11 @@ class Variables:
                     raise ValueError(f"Setup: Environment variable {attr_name} is not set.")
 
 
+class Config:
+    INSIGHTS_NUM_CLUSTERS: int = 8
+    EMBEDDING_BATCH_SIZE: int = 100
+
+
 class SingletonFactory:
     _instances: Dict[Any, Any] = {}
 
@@ -40,4 +47,7 @@ class SingletonFactory:
 
 
 VARIABLES = SingletonFactory.get_instance(Variables)
+CONFIG = SingletonFactory.get_instance(Config)
+openai_client = OpenAI(api_key=VARIABLES.OPENAI_API_KEY)
+anthropic_client = Anthropic(api_key=VARIABLES.ANTHROPIC_API_KEY)
 VARIABLES.validate_env_variables()

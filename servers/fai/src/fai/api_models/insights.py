@@ -3,10 +3,13 @@ from typing import List
 from pydantic import BaseModel
 
 
-class InsightApi(BaseModel):
+class InsightResponse(BaseModel):
     insightText: str
-    numberOfQueries: int
     examples: List[str]
+
+
+class InsightApi(InsightResponse):
+    numberOfQueries: int
 
 
 class InsightsApi(BaseModel):

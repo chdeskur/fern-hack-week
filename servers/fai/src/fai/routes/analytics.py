@@ -1,4 +1,6 @@
 from datetime import datetime
+from typing import List
+from typing import Optional
 
 from fastapi import Depends
 from fastapi.encoders import jsonable_encoder
@@ -6,12 +8,13 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.fai.api_models.query import QueryApi
 from src.fai.app import fai_app
 from src.fai.db_models.query import Query
 from src.fai.dependencies import get_db
-from src.fai.utils.fetch_grouped_data import fetch_grouped_data
-from src.fai.utils.fill_date_gaps import fill_date_gaps
-from src.fai.utils.get_insights_from_queries import get_insights_from_queries
+from src.fai.utils.histogram.fetch_grouped_data import fetch_grouped_data
+from src.fai.utils.histogram.fill_date_gaps import fill_date_gaps
+from src.fai.utils.insights.get_insights_from_queries import get_insights_from_queries
 from src.settings import LOGGER
 
 
@@ -49,25 +52,26 @@ async def get_histogram_analytics(
 @fai_app.get("/analytics/insights/{domain}")
 async def get_insights_analytics(
     domain: str,
-    start_date: str,
-    end_date: str,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
     db: AsyncSession = Depends(get_db),
 ) -> JSONResponse:
     try:
-        start = datetime.fromisoformat(start_date)
-        end = datetime.fromisoformat(end_date)
+        query = select(Query).where(Query.domain == domain).where(Query.role == "USER")
 
-        result = await db.execute(
-            select(Query)
-            .where(Query.domain == domain)
-            .where(Query.role == "USER")
-            .where(Query.created_at >= start)
-            .where(Query.created_at <= end)
-        )
+        if start_date is not None:
+            start = datetime.fromisoformat(start_date)
+            query = query.where(Query.created_at >= start)
 
+        if end_date is not None:
+            end = datetime.fromisoformat(end_date)
+            query = query.where(Query.created_at <= end)
+
+        result = await db.execute(query)
         queries = result.scalars().all()
-        api_queries = [query.to_api() for query in queries]
-        insights = await get_insights_from_queries(api_queries)
+
+        api_queries: List[QueryApi] = [query.to_api() for query in queries]
+        insights = get_insights_from_queries(domain, api_queries)
 
         return JSONResponse(content=jsonable_encoder(insights))
 
