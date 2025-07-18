@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useSetAtom } from "jotai";
 import { Check, ChevronDown, Copy } from "lucide-react";
 
+import { isSelfHosted } from "@fern-api/docs-server";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 
 import { capturePosthogEventInternal } from "@/components/analytics/posthog";
@@ -35,7 +36,7 @@ export function PageActionsDropdown({ markdown }: { markdown: string }) {
   if (useIsAskAiEnabled()) {
     options.push({ type: "separator" } as FernDropdown.SeparatorOption);
     options.push(openAISearchOption);
-  } else {
+  } else if (!isSelfHosted()) {
     options.push({ type: "separator" } as FernDropdown.SeparatorOption);
     options.push(OpenWithLLM({ domain, slug, llm: "ChatGPT" }));
     options.push({ type: "separator" } as FernDropdown.SeparatorOption);
