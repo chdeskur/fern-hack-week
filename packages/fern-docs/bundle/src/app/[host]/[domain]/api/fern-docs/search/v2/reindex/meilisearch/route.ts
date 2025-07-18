@@ -56,16 +56,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     await meiliIndex.deleteAllDocuments();
     // Optionally, you could wait for the deletion task to complete, but since we immediately addDocuments,
     // MeiliSearch will queue the operations in order.
-  } catch (err) {
-    return NextResponse.json(
-      {
-        error:
-          "Failed to delete existing documents in MeiliSearch before reindexing.",
-        details: err instanceof Error ? err.message : String(err),
-      },
-      { status: 500 }
-    );
-  }
+  } catch (err) {}
 
   // Set filterable attributes
   await meiliIndex.updateFilterableAttributes([
