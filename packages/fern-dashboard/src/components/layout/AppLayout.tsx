@@ -1,4 +1,5 @@
 import { getCurrentSessionOrThrow } from "@/app/services/auth0/getCurrentSession";
+import { Auth0OrgName } from "@/app/services/auth0/types";
 
 import { Navbar } from "../navbar/Navbar";
 import { Header } from "./Header";
@@ -7,12 +8,12 @@ import { Footer } from "./footer/Footer";
 export declare namespace AppLayout {
   export interface Props {
     children: React.JSX.Element;
+    orgName: Auth0OrgName;
   }
 }
 
-export async function AppLayout({ children }: AppLayout.Props) {
+export async function AppLayout({ children, orgName }: AppLayout.Props) {
   const session = await getCurrentSessionOrThrow();
-
   return (
     <div className="flex min-w-0 flex-1 flex-col">
       <Header session={session} />
@@ -25,7 +26,7 @@ export async function AppLayout({ children }: AppLayout.Props) {
             </div>
           </div>
         </div>
-        <Navbar />
+        <Navbar orgName={orgName} />
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ export default async function Page(props: {
     <FeatureFlaggedServerSide
       flag={PosthogFeatureFlag.ENABLE_DOCS_PAGE}
       redirectWhenDisabled
+      orgName={orgName}
     >
       <DocsSiteOverviewCard
         docsUrl={docsUrl}

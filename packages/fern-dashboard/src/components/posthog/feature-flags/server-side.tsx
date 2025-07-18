@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { getCurrentSessionOrThrow } from "@/app/services/auth0/getCurrentSession";
-import { Auth0UserID } from "@/app/services/auth0/types";
+import { Auth0OrgName, Auth0UserID } from "@/app/services/auth0/types";
 
 import { getServerSidePosthog } from "../getServerSidePosthog";
 import { PosthogFeatureFlag, PosthogFeatureFlags } from "./flags";
@@ -10,6 +10,7 @@ export declare namespace FeatureFlaggedServerSide {
   export interface Props {
     flag: PosthogFeatureFlag;
     redirectWhenDisabled?: boolean;
+    orgName: Auth0OrgName;
     children: React.JSX.Element;
   }
 }
@@ -17,17 +18,22 @@ export declare namespace FeatureFlaggedServerSide {
 export async function FeatureFlaggedServerSide({
   flag,
   redirectWhenDisabled = false,
+  orgName,
   children,
 }: FeatureFlaggedServerSide.Props) {
   const session = await getCurrentSessionOrThrow();
-  const isEnabled = await isFeatureFlagEnabledForUser(flag, session.user.sub);
+  const isEnabled = await isFeatureFlagEnabledForUser(
+    flag,
+    session.user.sub,
+    orgName
+  );
 
   if (isEnabled) {
     return children;
   }
 
   if (redirectWhenDisabled) {
-    redirect("/");
+    redirect(`/${orgName}/members`);
   }
 
   return null;
@@ -35,10 +41,15 @@ export async function FeatureFlaggedServerSide({
 
 export async function isFeatureFlagEnabledForUser(
   featureFlag: PosthogFeatureFlag,
-  userId: Auth0UserID
+  userId: Auth0UserID,
+  orgName: Auth0OrgName
 ) {
   const posthog = getServerSidePosthog();
-  return await posthog.isFeatureEnabled(featureFlag, userId);
+  return await posthog.isFeatureEnabled(featureFlag, userId, {
+    personProperties: {
+      orgName: orgName,
+    },
+  });
 }
 
 export async function getAllFeatureFlags(userId: Auth0UserID) {

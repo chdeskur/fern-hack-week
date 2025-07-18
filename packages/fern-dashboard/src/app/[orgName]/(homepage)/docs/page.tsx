@@ -35,6 +35,7 @@ export default async function Page({
     <FeatureFlaggedServerSide
       flag={PosthogFeatureFlag.ENABLE_DOCS_PAGE}
       redirectWhenDisabled
+      orgName={orgName}
     >
       <DocsZeroState user={session.user} />
     </FeatureFlaggedServerSide>

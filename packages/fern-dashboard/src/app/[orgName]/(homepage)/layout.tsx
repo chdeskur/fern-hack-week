@@ -25,7 +25,7 @@ export default async function AuthedLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AppLayout>{children}</AppLayout>
+          <AppLayout orgName={orgName}>{children}</AppLayout>
         </ThemeProvider>
       </>
     </ProtectedRoute>
