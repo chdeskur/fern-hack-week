@@ -2,6 +2,7 @@ import React, { useMemo, useRef } from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 
 import { useMDXComponents } from "@mdx-js/react";
+
 import { CopyToClipboardButton } from "@fern-docs/components";
 
 interface TwoSlashProps {
@@ -90,7 +91,7 @@ export const TwoSlash: React.FC<TwoSlashProps> = ({ content }) => {
       ref={containerRef}
     >
       <CopyToClipboardButton
-        className="twoslash-copy-btn absolute top-2 right-2 z-10"
+        className="twoslash-copy-btn absolute right-2 top-2 z-10"
         // Copies the code as rendered in the DOM, or falls back to the raw code.
         content={() => {
           // Use content.value if present, otherwise nothing

@@ -266,7 +266,12 @@ export class S3ServiceImpl implements S3Service {
     filepath: DocsV1Write.FilePath;
     isPrivate: boolean;
   }): Promise<{ url: string; key: string }> {
-    const key = this.constructS3DocsKey({ domain, time, filepath });
+    let key: string;
+    if (this.config.localModeOverride) {
+      key = this.constructS3DocsKeyWithoutTime({ domain, filepath });
+    } else {
+      key = this.constructS3DocsKey({ domain, time, filepath });
+    }
     const bucketName = isPrivate
       ? this.config.privateDocsS3.bucketName
       : this.config.publicDocsS3.bucketName;
@@ -341,12 +346,21 @@ export class S3ServiceImpl implements S3Service {
     time: string;
     sourceId: APIV1Write.SourceId;
   }): Promise<{ url: string; key: string }> {
-    const key = this.constructS3ApiDefinitionSourceKey({
-      orgId,
-      apiId,
-      time,
-      sourceId,
-    });
+    let key: string;
+    if (this.config.localModeOverride) {
+      key = this.constructS3ApiDefinitionSourceKeyWithoutTime({
+        orgId,
+        apiId,
+        sourceId,
+      });
+    } else {
+      key = this.constructS3ApiDefinitionSourceKey({
+        orgId,
+        apiId,
+        time,
+        sourceId,
+      });
+    }
     const bucketName = this.config.privateApiDefinitionSourceS3.bucketName;
     const input: PutObjectCommandInput = {
       Bucket: bucketName,
@@ -373,6 +387,16 @@ export class S3ServiceImpl implements S3Service {
     return `${domain}/${time}/${filepath}`;
   }
 
+  constructS3DocsKeyWithoutTime({
+    domain,
+    filepath,
+  }: {
+    domain: string;
+    filepath: DocsV1Write.FilePath;
+  }): string {
+    return `${domain}/${filepath}`;
+  }
+
   constructS3ApiDefinitionSourceKey({
     orgId,
     apiId,
@@ -385,5 +409,17 @@ export class S3ServiceImpl implements S3Service {
     sourceId: APIV1Write.SourceId;
   }): string {
     return `${orgId}/${apiId}/${time}/${sourceId}`;
+  }
+
+  constructS3ApiDefinitionSourceKeyWithoutTime({
+    orgId,
+    apiId,
+    sourceId,
+  }: {
+    orgId: FernRegistry.OrgId;
+    apiId: FernRegistry.ApiId;
+    sourceId: APIV1Write.SourceId;
+  }): string {
+    return `${orgId}/${apiId}/${sourceId}`;
   }
 }
