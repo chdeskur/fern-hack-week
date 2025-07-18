@@ -1,3 +1,4 @@
+import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { Sparkles, X } from "lucide-react";
 
 import { FernFai } from "@fern-api/fai-sdk";
@@ -16,10 +17,15 @@ export function ConversationSidePanel({
   return (
     <div className="flex w-full max-w-lg flex-col">
       <div className="flex items-center justify-between border-b px-4 py-6">
-        <div className="flex flex-col gap-1">
-          <h2 className="text-lg font-semibold">Conversation</h2>
-          <div className="text-sm text-gray-700">
-            {new Date(conversation.created_at).toLocaleString()}
+        <div className="flex items-start gap-4">
+          <div className="flex h-10 w-10 items-center justify-center">
+            <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />
+          </div>
+          <div className="flex flex-col gap-1">
+            <h2 className="text-lg font-semibold">Conversation</h2>
+            <div className="text-sm text-gray-700">
+              {new Date(conversation.created_at).toLocaleString()}
+            </div>
           </div>
         </div>
         <button

@@ -2,6 +2,7 @@ import { ThemeProvider } from "next-themes";
 
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { SidepanelProvider } from "@/components/layout/SidepanelContext";
 import { ServerSidePylonSetup } from "@/components/pylon/ServerSidePylonSetup";
 
 import { Auth0OrgName } from "../../services/auth0/types";
@@ -9,9 +10,11 @@ import { Auth0OrgName } from "../../services/auth0/types";
 export default async function AuthedLayout({
   params,
   children,
+  sidepanel,
 }: Readonly<{
   params: Promise<{ orgName: Auth0OrgName }>;
   children: React.JSX.Element;
+  sidepanel?: React.ReactNode;
 }>) {
   const { orgName } = await params;
 
@@ -25,7 +28,11 @@ export default async function AuthedLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AppLayout orgName={orgName}>{children}</AppLayout>
+          <SidepanelProvider>
+            <AppLayout sidepanel={sidepanel} orgName={orgName}>
+              {children}
+            </AppLayout>
+          </SidepanelProvider>
         </ThemeProvider>
       </>
     </ProtectedRoute>
