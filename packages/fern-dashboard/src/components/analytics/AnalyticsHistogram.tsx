@@ -12,11 +12,10 @@ import {
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
 import { RenderType } from "./AnalyticsPageClient";
-import { parseLabel } from "./parse-label";
 
 interface AnalyticsHistogramProps {
   chartData: {
-    label: string;
+    displayLabel: string;
     count: number;
   }[];
   renderType: RenderType;
@@ -58,16 +57,16 @@ export function AnalyticsHistogram({
 
             <CartesianGrid strokeDasharray="4 4" vertical={false} />
             <XAxis
-              dataKey="label"
+              dataKey="displayLabel"
               stroke="#ccc"
               tick={{ fill: "#666" }}
               tickFormatter={(value, index) => {
                 if (chartData.length > 13) {
                   return index % 3 === 0 || index === chartData.length - 1
-                    ? parseLabel(value)
+                    ? value
                     : "";
                 }
-                return parseLabel(value);
+                return value;
               }}
               interval={0}
             />

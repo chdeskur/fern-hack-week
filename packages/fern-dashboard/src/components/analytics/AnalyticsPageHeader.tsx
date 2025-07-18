@@ -1,3 +1,5 @@
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 import { Button } from "../ui/button";
 import CircularGauge from "./CircularGauge";
 
@@ -28,6 +30,7 @@ export function AnalyticsPageHeader() {
           </span>
           <div className="group relative inline-block">
             <Button size="sm" variant="outline">
+              <PlusIcon className="h-4 w-4" />
               Get More Queries
             </Button>
           </div>

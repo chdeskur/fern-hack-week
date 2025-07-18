@@ -16,6 +16,7 @@ import { AnalyticsPageHeader } from "./AnalyticsPageHeader";
 import { ConversationSidePanel } from "./ConversationSidePanel";
 import { QueriesTable } from "./QueriesTable";
 import { TimeRange } from "./get-request-params";
+import { parseLabel } from "./parse-label";
 
 export type RenderType = "QUERIES" | "CONVERSATIONS";
 
@@ -111,7 +112,7 @@ export function AnalyticsPageClient({
   };
 
   const chartData = histogramData.bars.map((bar) => ({
-    label: bar.label,
+    displayLabel: parseLabel(bar.label),
     count: renderType === "QUERIES" ? bar.queryCount : bar.conversationCount,
   }));
 

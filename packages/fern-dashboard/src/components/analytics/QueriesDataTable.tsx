@@ -111,10 +111,7 @@ export const columns: ColumnDef<FernFai.Query>[] = [
     cell: ({ row }) => {
       const text = row.getValue("query") as string;
       return (
-        <div
-          className="truncate hover:text-clip hover:whitespace-normal"
-          title={text}
-        >
+        <div className="truncate" title={text}>
           {text}
         </div>
       );
