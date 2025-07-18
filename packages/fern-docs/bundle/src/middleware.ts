@@ -262,6 +262,26 @@ export const middleware: NextMiddleware = async (request) => {
     );
   }
 
+  if (isSelfHosted()) {
+    // serve local files directly
+    if (pathname.startsWith("/_local/")) {
+      const origin = process.env.NEXT_PUBLIC_FDR_ORIGIN;
+      if (!origin) {
+        throw new Error(
+          "NEXT_PUBLIC_FDR_ORIGIN is required for local file handling"
+        );
+      }
+      const absoluteUrl = new URL(pathname, origin);
+      return NextResponse.redirect(absoluteUrl);
+    }
+
+    return rewrite(
+      withDomain(
+        `/static/${encodeURIComponent(conformTrailingSlash(pathname))}`
+      )
+    );
+  }
+
   const { getAuthState } = await createGetAuthStateEdge(request, (token) => {
     newToken = token;
   });
