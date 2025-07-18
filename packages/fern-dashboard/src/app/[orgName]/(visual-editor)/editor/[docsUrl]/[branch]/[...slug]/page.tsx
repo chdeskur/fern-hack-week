@@ -83,6 +83,7 @@ export default async function Page({
   const mdx = page?.markdown ?? "";
   const { html, frontmatter, originalElements } = mdxToHtml(mdx, {
     treatAsCustomElement: ["code"],
+    treatAsUnsupported: ["math"],
   });
 
   return (

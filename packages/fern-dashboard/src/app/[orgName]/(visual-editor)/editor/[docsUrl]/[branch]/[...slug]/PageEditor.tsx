@@ -25,7 +25,11 @@ export default function PageEditor({
 }: PageEditor.Props) {
   const { stageChanges } = useMdxState();
 
+  // Store the first normalized HTML string from the editor
   const originalTiptapHtml = useRef(initialHtml);
+  // Store whether this is the first update from the editor
+  // (Kind of a hack to make sure the HTML is normalized by Tiptap before we make it available for comparison)
+  const isFirstUpdate = useRef(false);
 
   function onTiptapEditorCreate(props: EditorEvents["create"]) {
     const latestTiptapHtml = props.editor.getHTML();
@@ -34,12 +38,14 @@ export default function PageEditor({
 
   function onTiptapEditorUpdate(props: EditorEvents["update"]) {
     const latestTiptapHtml = props.editor.getHTML();
-    if (originalTiptapHtml.current) {
+    if (originalTiptapHtml.current && !isFirstUpdate.current) {
       const changedNodes = getChangedNodesFromHtml(
         originalTiptapHtml.current,
         latestTiptapHtml
       );
       stageChanges(filename, { html: latestTiptapHtml, changedNodes });
+    } else {
+      isFirstUpdate.current = true;
     }
   }
 

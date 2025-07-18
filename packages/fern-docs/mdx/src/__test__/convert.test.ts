@@ -103,7 +103,6 @@ describe("mdxToHtml and htmlToMdx", () => {
       "# Hello World
 
       This is a test.
-
       "
     `);
   });
@@ -121,7 +120,6 @@ describe("mdxToHtml and htmlToMdx", () => {
       # Heading
 
       Some content.
-
       "
     `);
   });
@@ -131,7 +129,6 @@ describe("mdxToHtml and htmlToMdx", () => {
     const mdxResult = htmlToMdx(html, frontmatter, originalElements);
     expect(mdxResult.mdx).toMatchInlineSnapshot(`
       "# Hello <Custom value="foo" />
-
       "
     `);
   });
@@ -144,7 +141,7 @@ describe("mdxToHtml and htmlToMdx", () => {
     if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
     const file = path.join(snapshotDir, "complex-mdxToHtml.json");
     writeFileSync(file, JSON.stringify(result, null, 2));
-    expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(file);
+    await expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(file);
   });
 
   it("htmlToMdx: complex file snapshot", async () => {
@@ -154,13 +151,15 @@ describe("mdxToHtml and htmlToMdx", () => {
     if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
     const file = path.join(snapshotDir, "complex-htmlToMdx.json");
     writeFileSync(file, JSON.stringify(mdxResult, null, 2));
-    expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(file);
+    await expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(file);
   });
 });
 
 describe("Fixture files", () => {
   let faqMdx: string;
   let landingPageMdx: string;
+  let complexOverviewMdx: string;
+  let advancedFeaturesMdx: string;
 
   beforeAll(async () => {
     const fs = await import("fs/promises");
@@ -170,6 +169,14 @@ describe("Fixture files", () => {
     );
     landingPageMdx = await fs.readFile(
       path.join(__dirname, "fixtures/landing-page.mdx"),
+      "utf-8"
+    );
+    complexOverviewMdx = await fs.readFile(
+      path.join(__dirname, "fixtures/complex-overview.mdx"),
+      "utf-8"
+    );
+    advancedFeaturesMdx = await fs.readFile(
+      path.join(__dirname, "fixtures/advanced-features.mdx"),
       "utf-8"
     );
   });
@@ -285,6 +292,241 @@ describe("Fixture files", () => {
     });
   });
 
+  describe("complex-overview.mdx", () => {
+    it("htmlToMdx: round-trip conversion preserves structure", () => {
+      const { html, frontmatter, originalElements } =
+        mdxToHtml(complexOverviewMdx);
+      const mdxResult = htmlToMdx(html, frontmatter, originalElements);
+
+      expect(mdxResult.mdx).toBe(complexOverviewMdx);
+
+      // Verify the round-trip conversion produces valid MDX
+      expect(mdxResult.mdx).toContain("---");
+      expect(mdxResult.mdx).toContain("title: Speech to Text");
+      expect(mdxResult.mdx).toContain(
+        "subtitle: Learn how to turn spoken audio into text with ElevenLabs."
+      );
+      expect(mdxResult.mdx).toContain("---");
+      expect(mdxResult.mdx).toContain("## Overview");
+      expect(mdxResult.mdx).toContain(
+        "The ElevenLabs [Speech to Text (STT)](/docs/api-reference/speech-to-text) API"
+      );
+      expect(mdxResult.mdx).toContain("<CardGroup");
+      expect(mdxResult.mdx).toContain("<Card");
+      expect(mdxResult.mdx).toContain("<Info>");
+      expect(mdxResult.mdx).toContain("<Tabs>");
+      expect(mdxResult.mdx).toContain("<Tab");
+      expect(mdxResult.mdx).toContain("<AccordionGroup>");
+      expect(mdxResult.mdx).toContain("<Accordion");
+    });
+  });
+
+  describe("advanced-features.mdx", () => {
+    it("mdxToHtml: converts advanced features file correctly", () => {
+      const result = mdxToHtml(advancedFeaturesMdx);
+
+      // Verify frontmatter is extracted correctly
+      expect(result.frontmatter).toEqual({
+        title: "Advanced MDX Features Test",
+        subtitle: "A comprehensive test of unusual MDX features",
+        tags: ["test", "mdx", "advanced", "features"],
+        math: true,
+        comments: true,
+      });
+
+      // Verify HTML contains expected content
+      expect(result.html).toContain("data-hash");
+      expect(result.html).toContain("Advanced MDX Features Demonstration");
+      expect(result.html).toContain("~~strikethrough~~");
+
+      // Verify originalElements contains the expected structure
+      expect(Object.keys(result.originalElements).length).toBeGreaterThan(0);
+
+      // Check for specific advanced features
+      const elementValues = Object.values(result.originalElements);
+
+      // Check for strikethrough elements
+      const hasStrikethrough = elementValues.some((el) =>
+        el.content?.includes("~~strikethrough~~")
+      );
+      expect(hasStrikethrough).toBe(true);
+
+      // Check for superscript/subscript elements
+      const hasSuperscript = elementValues.some((el) =>
+        el.content?.includes("<sup>")
+      );
+      expect(hasSuperscript).toBe(true);
+
+      const hasSubscript = elementValues.some((el) =>
+        el.content?.includes("<sub>")
+      );
+      expect(hasSubscript).toBe(true);
+
+      // Check for math expressions
+      const hasMath = elementValues.some((el) =>
+        el.content?.includes("$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$")
+      );
+      expect(hasMath).toBe(true);
+
+      // Check for basic HTML elements
+      const hasDivElements = elementValues.some((el) =>
+        el.content?.includes("<div")
+      );
+      expect(hasDivElements).toBe(true);
+
+      // Check for task lists
+      const hasTaskList = elementValues.some(
+        (el) => el.content?.includes("[x]") || el.content?.includes("[ ]")
+      );
+      expect(hasTaskList).toBe(true);
+
+      // Check for definition lists
+      const hasDefinitionList = elementValues.some(
+        (el) =>
+          el.content?.includes("<dl>") ||
+          el.content?.includes("<dt>") ||
+          el.content?.includes("<dd>")
+      );
+      expect(hasDefinitionList).toBe(true);
+
+      // Check for footnotes
+      const hasFootnotes = elementValues.some(
+        (el) => el.content?.includes("[^1]") || el.content?.includes("[^2]")
+      );
+      expect(hasFootnotes).toBe(true);
+
+      // Check for comments
+      const hasComments = elementValues.some((el) =>
+        el.content?.includes("{/*")
+      );
+      expect(hasComments).toBe(true);
+    });
+
+    it("htmlToMdx: round-trip conversion preserves advanced features", () => {
+      const { html, frontmatter, originalElements } =
+        mdxToHtml(advancedFeaturesMdx);
+      const mdxResult = htmlToMdx(html, frontmatter, originalElements);
+
+      // Verify the round-trip conversion produces valid MDX
+      expect(mdxResult.mdx).toContain("---");
+      expect(mdxResult.mdx).toContain("title: Advanced MDX Features Test");
+      expect(mdxResult.mdx).toContain(
+        "subtitle: A comprehensive test of unusual MDX features"
+      );
+      expect(mdxResult.mdx).toContain("tags:");
+      expect(mdxResult.mdx).toContain("  - test");
+      expect(mdxResult.mdx).toContain("  - mdx");
+      expect(mdxResult.mdx).toContain("  - advanced");
+      expect(mdxResult.mdx).toContain("  - features");
+      expect(mdxResult.mdx).toContain("math: true");
+      expect(mdxResult.mdx).toContain("comments: true");
+      expect(mdxResult.mdx).toContain("---");
+
+      // Verify advanced features are preserved
+      expect(mdxResult.mdx).toContain("~~strikethrough~~");
+      expect(mdxResult.mdx).toContain("<sup>superscript</sup>");
+      expect(mdxResult.mdx).toContain("<sub>subscript</sub>");
+      expect(mdxResult.mdx).toContain("`inline code`");
+      expect(mdxResult.mdx).toContain("**bold**");
+      expect(mdxResult.mdx).toContain("*italic*");
+
+      // Verify basic HTML is preserved
+      expect(mdxResult.mdx).toContain("<div");
+      expect(mdxResult.mdx).toContain("className=");
+
+      // Verify math expressions are preserved
+      expect(mdxResult.mdx).toContain(
+        "$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$"
+      );
+      expect(mdxResult.mdx).toContain(
+        "\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}"
+      );
+
+      // Verify task lists are preserved
+      expect(mdxResult.mdx).toContain("[x] Completed task");
+      expect(mdxResult.mdx).toContain("[ ] Pending task");
+
+      // Verify definition lists are preserved
+      expect(mdxResult.mdx).toContain("<dl>");
+      expect(mdxResult.mdx).toContain("<dt>");
+      expect(mdxResult.mdx).toContain("<dd>");
+
+      // Verify footnotes are preserved
+      expect(mdxResult.mdx).toContain("[^1]");
+      expect(mdxResult.mdx).toContain("[^2]");
+
+      // Verify comments are preserved
+      expect(mdxResult.mdx).toContain("{/*");
+
+      // Verify complex tables are preserved
+      expect(mdxResult.mdx).toContain(
+        "| Feature | Description | Example | Status |"
+      );
+      expect(mdxResult.mdx).toContain(
+        "|:--------|:-----------:|--------:|:------:|"
+      );
+
+      // Verify code blocks are preserved
+      expect(mdxResult.mdx).toContain("```javascript");
+      expect(mdxResult.mdx).toContain("```typescript");
+      expect(mdxResult.mdx).toContain("```css");
+
+      // Verify blockquotes are preserved
+      expect(mdxResult.mdx).toContain("> This is a **blockquote**");
+
+      // Verify special characters and Unicode are preserved
+      expect(mdxResult.mdx).toContain("🚀 💻 ⚡ 🎯");
+      expect(mdxResult.mdx).toContain("مرحبا بالعالم");
+      expect(mdxResult.mdx).toContain("α β γ δ ε");
+    });
+
+    it("mdxToHtml: handles basic HTML and JSX elements", () => {
+      const result = mdxToHtml(advancedFeaturesMdx);
+
+      // Check for basic HTML elements
+      const htmlElements = Object.values(result.originalElements).filter(
+        (el) => el.content?.includes("<div") || el.content?.includes("<span")
+      );
+      expect(htmlElements.length).toBeGreaterThan(0);
+
+      // Check for JSX attributes
+      const jsxElements = Object.values(result.originalElements).filter(
+        (el) =>
+          el.content?.includes("className=") || el.content?.includes("onClick=")
+      );
+      expect(jsxElements.length).toBeGreaterThan(0);
+
+      // Check for spread operators
+      const spreadElements = Object.values(result.originalElements).filter(
+        (el) => el.content?.includes("...{")
+      );
+      expect(spreadElements.length).toBeGreaterThan(0);
+    });
+
+    it("mdxToHtml: preserves event handlers and expressions", () => {
+      const result = mdxToHtml(advancedFeaturesMdx);
+
+      // Check for event handlers
+      const eventHandlerElements = Object.values(
+        result.originalElements
+      ).filter((el) => el.content?.includes("onClick="));
+      expect(eventHandlerElements.length).toBeGreaterThan(0);
+
+      // Check for simple expressions
+      const expressionElements = Object.values(result.originalElements).filter(
+        (el) =>
+          el.content?.includes("{2 + 2}") || el.content?.includes("{true ?")
+      );
+      expect(expressionElements.length).toBeGreaterThan(0);
+
+      // Check for template literals
+      const templateElements = Object.values(result.originalElements).filter(
+        (el) => el.content?.includes("`${") || el.content?.includes("}`")
+      );
+      expect(templateElements.length).toBeGreaterThan(0);
+    });
+  });
+
   describe("Fixture files - file snapshots", () => {
     it("mdxToHtml: faq.mdx file snapshot", async () => {
       const result = mdxToHtml(faqMdx);
@@ -292,7 +534,7 @@ describe("Fixture files", () => {
       if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
       const file = path.join(snapshotDir, "faq-mdxToHtml.json");
       writeFileSync(file, JSON.stringify(result, null, 2));
-      expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(file);
+      await expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(file);
     });
 
     it("htmlToMdx: faq.mdx file snapshot", async () => {
@@ -302,7 +544,9 @@ describe("Fixture files", () => {
       if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
       const file = path.join(snapshotDir, "faq-htmlToMdx.json");
       writeFileSync(file, JSON.stringify(mdxResult, null, 2));
-      expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(file);
+      await expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(
+        file
+      );
     });
 
     it("mdxToHtml: landing-page.mdx file snapshot", async () => {
@@ -311,7 +555,7 @@ describe("Fixture files", () => {
       if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
       const file = path.join(snapshotDir, "landing-page-mdxToHtml.json");
       writeFileSync(file, JSON.stringify(result, null, 2));
-      expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(file);
+      await expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(file);
     });
 
     it("htmlToMdx: landing-page.mdx file snapshot", async () => {
@@ -321,7 +565,31 @@ describe("Fixture files", () => {
       if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
       const file = path.join(snapshotDir, "landing-page-htmlToMdx.json");
       writeFileSync(file, JSON.stringify(mdxResult, null, 2));
-      expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(file);
+      await expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(
+        file
+      );
+    });
+
+    it("mdxToHtml: advanced-features.mdx file snapshot", async () => {
+      const result = mdxToHtml(advancedFeaturesMdx);
+      const snapshotDir = path.join(__dirname, "__snapshots__");
+      if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
+      const file = path.join(snapshotDir, "advanced-features-mdxToHtml.json");
+      writeFileSync(file, JSON.stringify(result, null, 2));
+      await expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(file);
+    });
+
+    it("htmlToMdx: advanced-features.mdx file snapshot", async () => {
+      const { html, frontmatter, originalElements } =
+        mdxToHtml(advancedFeaturesMdx);
+      const mdxResult = htmlToMdx(html, frontmatter, originalElements);
+      const snapshotDir = path.join(__dirname, "__snapshots__");
+      if (!existsSync(snapshotDir)) mkdirSync(snapshotDir);
+      const file = path.join(snapshotDir, "advanced-features-htmlToMdx.json");
+      writeFileSync(file, JSON.stringify(mdxResult, null, 2));
+      await expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(
+        file
+      );
     });
   });
 });
