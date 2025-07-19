@@ -49,8 +49,8 @@ Rebuilding the docker container is slow and if you were to rebuild the container
 ```
 cd /fern-platform
 Run pnpm docs:self-hosted-bundle:build
+Run pnpm --filter=@fern-platform/fdr build:tsup:cjs
 Run pnpm --filter=@fern-platform/self-hosted docker:build
-
 Run pnpm --filter=@fern-platform/self-hosted docker:run
 ```
 
