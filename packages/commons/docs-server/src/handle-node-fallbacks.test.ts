@@ -6,7 +6,7 @@ import { NodeId } from "@fern-api/fdr-sdk/navigation";
 import {
   getFallbackProduct,
   getFallbackVersion,
-  getHeaderTabs,
+  getTabs,
 } from "./handle-node-fallbacks";
 import {
   createFoundNode,
@@ -195,7 +195,7 @@ describe("handle-node-fallbacks", () => {
     });
   });
 
-  describe("getHeaderTabs", () => {
+  describe("getTabs", () => {
     it("should return tabs from found node if available", () => {
       const tabNode = createTabNode("tab1", "Tab 1");
       const pageNode = createPageNode("test-page", "Test Page");
@@ -215,7 +215,7 @@ describe("handle-node-fallbacks", () => {
       };
       const root = createRootNode([productNode], "productgroup");
 
-      const result = getHeaderTabs(foundNode, root, "test-product/test-page");
+      const result = getTabs(foundNode, root, "test-product/test-page", false);
       expect(result).toEqual([tabNode]);
     });
 
@@ -236,7 +236,7 @@ describe("handle-node-fallbacks", () => {
       }
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getHeaderTabs(foundNode, root, "test-product/test-page");
+      const result = getTabs(foundNode, root, "test-product/test-page", false);
       expect(result).toEqual([tabNode]);
     });
 
@@ -257,7 +257,7 @@ describe("handle-node-fallbacks", () => {
       const root = createRootNode([productNode], "unversioned");
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getHeaderTabs(foundNode, root, "test-product/test-page");
+      const result = getTabs(foundNode, root, "test-product/test-page", false);
       expect(result).toEqual([tabNode]);
     });
 
@@ -280,10 +280,11 @@ describe("handle-node-fallbacks", () => {
       const root = createRootNode([productNode], "versioned");
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getHeaderTabs(
+      const result = getTabs(
         foundNode,
         root,
-        "test-product/v1/test-page"
+        "test-product/v1/test-page",
+        false
       );
       expect(result).toEqual([tabNode]);
     });
@@ -307,10 +308,11 @@ describe("handle-node-fallbacks", () => {
       const root = createRootNode([productNode], "versioned");
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getHeaderTabs(
+      const result = getTabs(
         foundNode,
         root,
-        "test-product/v1/test-page"
+        "test-product/v1/test-page",
+        false
       );
       expect(result).toEqual([tabNode]);
     });
@@ -334,8 +336,48 @@ describe("handle-node-fallbacks", () => {
       const root = createRootNode([productNode], "productgroup");
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getHeaderTabs(foundNode, root, "test-product/test-page");
+      const result = getTabs(foundNode, root, "test-product/test-page", false);
       expect(result).toBeNull();
+    });
+
+    it("should filter authenticated tabs when showHiddenNodes is false", () => {
+      const authedTab = createTabNode("authed-tab", "Authed Tab");
+      authedTab.authed = true;
+      const publicTab = createTabNode("public-tab", "Public Tab");
+      publicTab.authed = false;
+
+      const foundNode: FernNavigation.utils.Node = {
+        ...createFoundNode(
+          createPageNode("test-page", "Test Page"),
+          [createProductNode("test-product", "Test Product", false)],
+          createRootNode([], "productgroup")
+        ),
+        tabs: [authedTab, publicTab],
+      };
+      const root = createRootNode([], "productgroup");
+
+      const result = getTabs(foundNode, root, "test-product/test-page", false);
+      expect(result).toEqual([publicTab]);
+    });
+
+    it("should return all tabs including authenticated ones when showHiddenNodes is true", () => {
+      const authedTab = createTabNode("authed-tab", "Authed Tab");
+      authedTab.authed = true;
+      const publicTab = createTabNode("public-tab", "Public Tab");
+      publicTab.authed = false;
+
+      const foundNode: FernNavigation.utils.Node = {
+        ...createFoundNode(
+          createPageNode("test-page", "Test Page"),
+          [createProductNode("test-product", "Test Product", false)],
+          createRootNode([], "productgroup")
+        ),
+        tabs: [authedTab, publicTab],
+      };
+      const root = createRootNode([], "productgroup");
+
+      const result = getTabs(foundNode, root, "test-product/test-page", true);
+      expect(result).toEqual([authedTab, publicTab]);
     });
   });
 });

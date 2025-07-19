@@ -84,7 +84,7 @@ export const getFallbackVersion = (
   return null;
 };
 
-export const getHeaderTabs = (
+const getTabsInternal = (
   foundNode: FernNavigation.utils.Node,
   root: FernNavigation.RootNode,
   slug: string
@@ -125,4 +125,23 @@ export const getHeaderTabs = (
     }
   }
   return null;
+};
+
+export const getTabs = (
+  foundNode: FernNavigation.utils.Node,
+  root: FernNavigation.RootNode,
+  slug: string,
+  showHiddenNodes: boolean
+): FernNavigation.TabChild[] | null => {
+  const tabs = getTabsInternal(foundNode, root, slug);
+
+  if (showHiddenNodes) {
+    return tabs;
+  }
+
+  return (
+    tabs?.filter(
+      (tab) => (tab.type === "tab" || tab.type === "changelog") && !tab.authed
+    ) ?? null
+  );
 };
