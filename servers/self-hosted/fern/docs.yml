@@ -23,6 +23,8 @@ navigation:
         path: docs/pages/sdks.mdx
         slug: sdks
   - api: API Reference
+  - changelog: ./changelog
+    title: Changelog
 
 navbar-links:
   - type: minimal

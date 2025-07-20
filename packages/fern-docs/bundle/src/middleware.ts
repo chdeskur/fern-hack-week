@@ -127,12 +127,12 @@ export const middleware: NextMiddleware = async (request) => {
   if (pathname.includes("/_search/")) {
     const searchPath = withoutBasepath("/_search/");
     const cleanedPath = searchPath.replace("_search/", "");
-    const meiliUrl = `${process.env.NEXT_PUBLIC_MEILISEARCH_ORIGIN}/${cleanedPath}`;
+    const meiliUrl = `${process.env.NEXT_PUBLIC_MEILISEARCH_ORIGIN ?? "http://localhost:7700"}/${cleanedPath}`;
     // Clone headers and override Authorization
     const newHeaders = new Headers(headers);
     newHeaders.set(
       "Authorization",
-      `Bearer ${process.env.NEXT_PUBLIC_MEILISEARCH_API_KEY}`
+      `Bearer ${process.env.NEXT_PUBLIC_MEILISEARCH_API_KEY ?? "fern123!"}`
     );
 
     return NextResponse.rewrite(meiliUrl, {
@@ -242,7 +242,7 @@ export const middleware: NextMiddleware = async (request) => {
   let newToken: string | undefined;
 
   // ignore authentication in local preview
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     // serve local files directly
     if (pathname.startsWith("/_local/")) {
       const origin = process.env.NEXT_PUBLIC_FDR_ORIGIN;

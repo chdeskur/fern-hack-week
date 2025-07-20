@@ -15,7 +15,7 @@ import {
 
 export function useSearchHits(): AlgoliaRecordHit[] {
   if (isSelfHosted()) {
-    return useMeilisearchHits();
+    return useDeferredValue(useMeilisearchHits());
   }
   const { items } = useHits<AlgoliaRecord>();
   return useDeferredValue(items);

@@ -88,7 +88,8 @@ export function useMeilisearchInfiniteHits(): ReturnType<
       lastQueryRef.current !== query ||
       lastFiltersRef.current !== filtersString
     ) {
-      setAllHits([]);
+      // Don't clear hits when firing off a new search
+      // setAllHits([]); // <-- removed per instruction
       setCurrentPage(0);
       setTotalHits(0);
       setHasMore(true);
@@ -96,6 +97,7 @@ export function useMeilisearchInfiniteHits(): ReturnType<
       lastQueryRef.current = query;
       lastFiltersRef.current = filtersString;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, filters]);
 
   // Fetch hits from Meilisearch, distinct on api_endpoint_page

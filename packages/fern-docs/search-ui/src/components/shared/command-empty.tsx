@@ -19,9 +19,22 @@ export const CommandEmpty = forwardRef<
   }
 
   return (
-    <Command.Empty ref={ref} {...props}>
-      {children ?? <>No results found for &ldquo;{query}&rdquo;.</>}
-    </Command.Empty>
+    children ?? (
+      <div
+        {...props}
+        ref={ref}
+        data-cmdk-empty=""
+        role="presentation"
+        style={{
+          padding: "1.5rem 0",
+          textAlign: "center",
+          color: "var(--cmdk-empty-color, #888)",
+          ...props.style,
+        }}
+      >
+        No results found for &ldquo;{query}&rdquo;.
+      </div>
+    )
   );
 });
 
