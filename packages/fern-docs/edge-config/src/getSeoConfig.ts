@@ -2,10 +2,9 @@ import { isCustomDomain } from "@fern-api/docs-utils";
 
 import { getEdge } from "./getEdge";
 import { isLocal } from "./isLocal";
-import { isSelfHosted } from "./isSelfHosted";
 
 export async function getSeoDisabled(domain: string): Promise<boolean> {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return true;
   }
 

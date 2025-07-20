@@ -16,7 +16,7 @@ import { getCanonicalUrl, getSeoDisabled } from "@fern-docs/edge-config";
 export const runtime = "edge";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return {
       rules: {
         userAgent: "*",
@@ -28,6 +28,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   const headersList = await headers();
   const domain =
     headersList.get(HEADER_X_FERN_HOST) ?? headersList.get(HEADER_HOST);
+
   if (!domain) {
     return {
       rules: {

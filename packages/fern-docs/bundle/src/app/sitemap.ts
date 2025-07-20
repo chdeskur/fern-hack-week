@@ -17,7 +17,7 @@ import { getCanonicalUrl } from "@fern-docs/edge-config";
 import { getFernToken } from "./fern-token";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return [];
   }
 

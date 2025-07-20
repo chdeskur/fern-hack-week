@@ -16,7 +16,7 @@ export const uncachedGetDocsUrlMetadata = async (
   org: string;
   isPreview: boolean;
 }> => {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return {
       url: domain,
       org: domain.split(".")[0] ?? domain,
@@ -31,7 +31,7 @@ export const uncachedGetDocsUrlMetadata = async (
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${fernToken_admin()}`,
+          Authorization: isSelfHosted() ? "" : `Bearer ${fernToken_admin()}`,
         },
         body: JSON.stringify({ url: withoutStaging(domain) }),
       }
