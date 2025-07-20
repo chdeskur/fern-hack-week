@@ -215,7 +215,13 @@ describe("handle-node-fallbacks", () => {
       };
       const root = createRootNode([productNode], "productgroup");
 
-      const result = getTabs(foundNode, root, "test-product/test-page", false);
+      const result = getTabs(
+        foundNode,
+        root,
+        "test-product/test-page",
+        false,
+        []
+      );
       expect(result).toEqual([tabNode]);
     });
 
@@ -236,7 +242,13 @@ describe("handle-node-fallbacks", () => {
       }
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getTabs(foundNode, root, "test-product/test-page", false);
+      const result = getTabs(
+        foundNode,
+        root,
+        "test-product/test-page",
+        false,
+        []
+      );
       expect(result).toEqual([tabNode]);
     });
 
@@ -257,7 +269,13 @@ describe("handle-node-fallbacks", () => {
       const root = createRootNode([productNode], "unversioned");
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getTabs(foundNode, root, "test-product/test-page", false);
+      const result = getTabs(
+        foundNode,
+        root,
+        "test-product/test-page",
+        false,
+        []
+      );
       expect(result).toEqual([tabNode]);
     });
 
@@ -284,7 +302,8 @@ describe("handle-node-fallbacks", () => {
         foundNode,
         root,
         "test-product/v1/test-page",
-        false
+        false,
+        []
       );
       expect(result).toEqual([tabNode]);
     });
@@ -312,7 +331,8 @@ describe("handle-node-fallbacks", () => {
         foundNode,
         root,
         "test-product/v1/test-page",
-        false
+        false,
+        []
       );
       expect(result).toEqual([tabNode]);
     });
@@ -336,7 +356,13 @@ describe("handle-node-fallbacks", () => {
       const root = createRootNode([productNode], "productgroup");
       const foundNode: FernNavigation.utils.Node = createNotFoundNode();
 
-      const result = getTabs(foundNode, root, "test-product/test-page", false);
+      const result = getTabs(
+        foundNode,
+        root,
+        "test-product/test-page",
+        false,
+        []
+      );
       expect(result).toBeNull();
     });
 
@@ -356,7 +382,13 @@ describe("handle-node-fallbacks", () => {
       };
       const root = createRootNode([], "productgroup");
 
-      const result = getTabs(foundNode, root, "test-product/test-page", false);
+      const result = getTabs(
+        foundNode,
+        root,
+        "test-product/test-page",
+        false,
+        []
+      );
       expect(result).toEqual([publicTab]);
     });
 
@@ -376,7 +408,13 @@ describe("handle-node-fallbacks", () => {
       };
       const root = createRootNode([], "productgroup");
 
-      const result = getTabs(foundNode, root, "test-product/test-page", true);
+      const result = getTabs(
+        foundNode,
+        root,
+        "test-product/test-page",
+        true,
+        []
+      );
       expect(result).toEqual([authedTab, publicTab]);
     });
   });

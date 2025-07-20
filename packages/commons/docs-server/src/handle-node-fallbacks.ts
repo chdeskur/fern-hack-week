@@ -131,7 +131,8 @@ export const getTabs = (
   foundNode: FernNavigation.utils.Node,
   root: FernNavigation.RootNode,
   slug: string,
-  showHiddenNodes: boolean
+  showHiddenNodes: boolean,
+  roles: string[]
 ): FernNavigation.TabChild[] | null => {
   const tabs = getTabsInternal(foundNode, root, slug);
 
@@ -140,8 +141,20 @@ export const getTabs = (
   }
 
   return (
-    tabs?.filter(
-      (tab) => (tab.type === "tab" || tab.type === "changelog") && !tab.authed
-    ) ?? null
+    tabs?.filter((tab) => {
+      if (tab.type !== "tab" && tab.type !== "changelog") {
+        return false;
+      }
+
+      if (tab.authed) {
+        return false;
+      }
+
+      if (!tab.viewers || tab.viewers.length === 0) {
+        return true;
+      }
+
+      return tab.viewers.some((viewerRole) => roles.includes(viewerRole));
+    }) ?? null
   );
 };

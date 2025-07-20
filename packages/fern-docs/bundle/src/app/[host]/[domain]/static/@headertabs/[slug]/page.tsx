@@ -21,12 +21,20 @@ export default async function HeaderTabsPage({
 
   const root = await loader.getRoot();
 
+  const authState = await loader.getAuthState();
+
   const showAuthenticatedNodes = (await loader.getEdgeFlags())
     .isAuthenticatedPagesDiscoverable;
 
   const foundNode = FernNavigation.utils.findNode(root, slugjoin(slug));
 
-  const tabs = getTabs(foundNode, root, slug, showAuthenticatedNodes);
+  const tabs = getTabs(
+    foundNode,
+    root,
+    slug,
+    showAuthenticatedNodes,
+    authState.authed ? (authState.user.roles ?? []) : []
+  );
 
   if (tabs == null) {
     return null;

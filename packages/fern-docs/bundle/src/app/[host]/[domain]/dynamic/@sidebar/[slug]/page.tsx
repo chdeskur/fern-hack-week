@@ -34,8 +34,10 @@ export default async function SidebarPage({
 
   const root = await loader.getRoot();
 
+  const authState = await loader.getAuthState();
+
   // preload:
-  await Promise.all([loader.getLayout(), loader.getAuthState()]);
+  await loader.getLayout();
 
   const found = FernNavigation.utils.findNode(root, slugjoin(slug));
   if (found.type !== "found") {
@@ -48,7 +50,13 @@ export default async function SidebarPage({
 
   const isSingleOverviewPage = getIsSingleOverviewPage(found);
 
-  const tabs = getTabs(found, root, slug, showHiddenNodes);
+  const tabs = getTabs(
+    found,
+    root,
+    slug,
+    showHiddenNodes,
+    authState.authed ? (authState.user.roles ?? []) : []
+  );
 
   return (
     <>
