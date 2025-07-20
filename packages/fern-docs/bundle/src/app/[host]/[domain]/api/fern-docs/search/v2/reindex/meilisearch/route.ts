@@ -56,7 +56,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     await meiliIndex.deleteAllDocuments();
     // Optionally, you could wait for the deletion task to complete, but since we immediately addDocuments,
     // MeiliSearch will queue the operations in order.
-  } catch (err) {}
+  } catch (_err) {}
 
   // Set filterable attributes
   await meiliIndex.updateFilterableAttributes([
