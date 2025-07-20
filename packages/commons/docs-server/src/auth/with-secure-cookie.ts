@@ -101,7 +101,7 @@ export function withSecureCookie(
 export function withDeleteCookie(
   name: string,
   targetUrl: string,
-  tryFullHost: boolean
+  domain: string
 ): Omit<ResponseCookie, "value" | "expires"> {
   const url = new URL(targetUrl);
   return {
@@ -110,6 +110,6 @@ export function withDeleteCookie(
     sameSite: "lax" as const,
     secure: url.protocol === "https:",
     httpOnly: true,
-    domain: tryFullHost ? url.hostname : normalizeDomainForCookie(url.hostname),
+    domain: domain,
   };
 }

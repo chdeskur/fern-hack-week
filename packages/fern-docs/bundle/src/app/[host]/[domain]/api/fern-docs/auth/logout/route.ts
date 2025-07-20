@@ -5,7 +5,7 @@ import { FernNextResponse } from "@fern-api/docs-server/FernNextResponse";
 import { getAllowedRedirectUrls } from "@fern-api/docs-server/auth/allowed-redirects";
 import { preferPreview } from "@fern-api/docs-server/auth/origin";
 import { getReturnToQueryParam } from "@fern-api/docs-server/auth/return-to";
-import { withDeleteCookie } from "@fern-api/docs-server/auth/with-secure-cookie";
+import { normalizeDomainForCookie } from "@fern-api/docs-server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@fern-api/docs-server/auth/workos-session";
 import { isLocal } from "@fern-api/docs-server/isLocal";
 import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
@@ -62,24 +62,39 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     safeUrl(withDefaultProtocol(preferPreview(host, domain))) ??
     new URL(domain);
 
+  console.log("Request cookies:", req.cookies.getAll());
+  console.log("Cookie header:", req.headers.get("cookie"));
+
+  // try all cookies that could set auth
+  const cookiesToDelete = [
+    COOKIE_FERN_TOKEN,
+    COOKIE_ACCESS_TOKEN,
+    COOKIE_REFRESH_TOKEN,
+  ];
+
   const res = FernNextResponse.redirect(req, {
     destination: redirectLocation,
     allowedDestinations: getAllowedRedirectUrls(authConfig),
   });
 
-  const deleteCookieWithRetry = (cookieName: string) => {
-    const targetUrl = withDefaultProtocol(preferPreview(host, domain));
+  const cookieDeletions: string[] = [];
 
-    cookieJar.delete(withDeleteCookie(cookieName, targetUrl, false));
+  for (const cookieName of cookiesToDelete) {
+    const domainVariations = [
+      req.nextUrl.hostname,
+      `.${req.nextUrl.hostname}`,
+      normalizeDomainForCookie(req.nextUrl.hostname),
+    ];
 
-    if (cookieJar.get(cookieName)?.value) {
-      cookieJar.delete(withDeleteCookie(cookieName, targetUrl, true));
+    for (const domain of domainVariations) {
+      const cookieValue = `${cookieName}=; Max-Age=0; Path=/; ${domain ? `Domain=${domain}; ` : ""}SameSite=Lax; HttpOnly; ${req.nextUrl.protocol === "https" ? "Secure; " : ""}Expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      cookieDeletions.push(cookieValue);
     }
-  };
+  }
 
-  deleteCookieWithRetry(COOKIE_FERN_TOKEN);
-  deleteCookieWithRetry(COOKIE_ACCESS_TOKEN);
-  deleteCookieWithRetry(COOKIE_REFRESH_TOKEN);
+  for (const cookieValue of cookieDeletions) {
+    res.headers.append("Set-Cookie", cookieValue);
+  }
 
   return res;
 }

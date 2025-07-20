@@ -120,25 +120,10 @@ export function PlaygroundCardTriggerApiKeyInjected({
                   returnTo.toString()
                 );
 
-                // invalidate bearer token cookie
-                document.cookie =
-                  "fern_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                // invalidate access token cookie
-                document.cookie =
-                  "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
                 // remove bearer token from state
                 setBearerAuth({ token: "" });
 
-                fetch(url)
-                  .then(() => {
-                    window.location.reload();
-                  })
-                  .catch((error: unknown) => {
-                    console.error(
-                      `[playground-card-trigger-api-key-injected] ${JSON.stringify(error)}`
-                    );
-                  });
+                window.location.href = url.toString();
               }}
               size="normal"
               variant="outlined"
