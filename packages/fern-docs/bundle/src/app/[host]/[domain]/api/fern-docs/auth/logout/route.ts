@@ -62,9 +62,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     safeUrl(withDefaultProtocol(preferPreview(host, domain))) ??
     new URL(domain);
 
-  console.log("Request cookies:", req.cookies.getAll());
-  console.log("Cookie header:", req.headers.get("cookie"));
-
   // try all cookies that could set auth
   const cookiesToDelete = [
     COOKIE_FERN_TOKEN,
@@ -81,9 +78,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   for (const cookieName of cookiesToDelete) {
     const domainVariations = [
-      req.nextUrl.hostname,
-      `.${req.nextUrl.hostname}`,
-      normalizeDomainForCookie(req.nextUrl.hostname),
+      domain,
+      `.${domain}`,
+      normalizeDomainForCookie(domain),
     ];
 
     for (const domain of domainVariations) {
