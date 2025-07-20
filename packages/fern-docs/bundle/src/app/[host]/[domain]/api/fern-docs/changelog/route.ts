@@ -10,7 +10,6 @@ import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { FernNextResponse } from "@fern-api/docs-server/FernNextResponse";
 import { preferPreview } from "@fern-api/docs-server/auth/origin";
 import { isLocal } from "@fern-api/docs-server/isLocal";
-import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import {
   COOKIE_FERN_TOKEN,
   getRedirectForPath,
@@ -31,7 +30,7 @@ export async function GET(
   req: NextRequest,
   props: { params: Promise<{ host: string; domain: string }> }
 ): Promise<NextResponse> {
-  if (isLocal() || isSelfHosted()) {
+  if (isLocal()) {
     return new NextResponse(
       "changelog is not accessible in local preview mode",
       {
@@ -42,7 +41,11 @@ export async function GET(
 
   const { host, domain } = await props.params;
 
-  const path = slugToHref(req.nextUrl.searchParams.get("slug") ?? "");
+  const path = slugToHref(
+    req.nextUrl.searchParams.get("slug") ??
+      req.headers.get("x-fern-changelog-slug") ??
+      ""
+  );
   const format = getFormat(req);
 
   const fernToken = (await cookies()).get(COOKIE_FERN_TOKEN)?.value;
@@ -195,7 +198,9 @@ function isFormat(format: string): format is Format {
 }
 
 function getFormat(req: NextRequest): Format {
-  const format = req.nextUrl.searchParams.get("format");
+  const format =
+    req.nextUrl.searchParams.get("format") ??
+    req.headers.get("x-fern-changelog-format");
   if (!format || !isFormat(format)) {
     return "rss";
   }

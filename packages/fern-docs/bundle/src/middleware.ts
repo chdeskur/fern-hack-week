@@ -62,10 +62,15 @@ export const middleware: NextMiddleware = async (request) => {
 
   const rewrite = (
     newPathname: string,
-    search?: string | URLSearchParams | Record<string, string>
+    search?: string | URLSearchParams | Record<string, string>,
+    customHeaders?: HeadersInit
   ) => {
+    const mergedHeaders = customHeaders
+      ? new Headers(customHeaders)
+      : new Headers(headers);
+
     if (pathname === newPathname && !search) {
-      return NextResponse.next({ request: { headers } });
+      return NextResponse.next({ request: { headers: mergedHeaders } });
     }
     const destination = withPathname(
       request,
@@ -81,7 +86,7 @@ export const middleware: NextMiddleware = async (request) => {
     );
 
     return NextResponse.rewrite(destination, {
-      request: { headers },
+      request: { headers: mergedHeaders },
     });
   };
 
@@ -205,7 +210,15 @@ export const middleware: NextMiddleware = async (request) => {
   if (pathname.match(RSS_PATTERN)) {
     const format = pathname.match(RSS_PATTERN)?.[1] ?? "rss";
     const slug = removeLeadingSlash(withoutEnding(RSS_PATTERN));
-    return rewrite(withDomain("/api/fern-docs/changelog"), { format, slug });
+    // standalone mode does not support search params, so we need to use headers
+    return rewrite(
+      withDomain("/api/fern-docs/changelog"),
+      { format, slug },
+      {
+        "x-fern-changelog-slug": slug,
+        "x-fern-changelog-format": format,
+      }
+    );
   }
 
   /**
