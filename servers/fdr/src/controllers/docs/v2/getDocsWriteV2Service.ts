@@ -43,6 +43,38 @@ function pathnameIsMalformed(pathname: string): boolean {
   return false;
 }
 
+function truncateDomainName({
+  orgId,
+  docsRegistrationId,
+  domainSuffix,
+}: {
+  orgId: string;
+  docsRegistrationId: string;
+  domainSuffix: string;
+}): string {
+  const subdomainLimit = 63;
+  const fullDomain = `${orgId}-preview-${docsRegistrationId}.${domainSuffix}`;
+
+  if (fullDomain.length <= subdomainLimit) {
+    return fullDomain;
+  }
+
+  const prefix = `${orgId}-preview-`;
+  const suffix = `.${domainSuffix}`;
+  const availableSpace = subdomainLimit - prefix.length - suffix.length;
+
+  // keep 8 characters of obscurity for security
+  const minRegistrationIdLength = 8;
+  if (availableSpace < minRegistrationIdLength) {
+    throw new Error(
+      `Organization name "${orgId}" is too long to fit within ${subdomainLimit} character limit`
+    );
+  }
+
+  const truncatedRegistrationId = docsRegistrationId.slice(0, availableSpace);
+  return `${prefix}${truncatedRegistrationId}${suffix}`;
+}
+
 function validateAndParseFernDomainUrl({
   app,
   url,
@@ -148,11 +180,28 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         orgId: req.body.orgId,
       });
       const docsRegistrationId = DocsV1Write.DocsRegistrationId(uuidv4());
+
+      let truncatedDomain: string;
+      try {
+        truncatedDomain = truncateDomainName({
+          orgId: req.body.orgId,
+          docsRegistrationId,
+          domainSuffix: app.config.domainSuffix,
+        });
+      } catch (error) {
+        if (
+          error instanceof Error &&
+          error.message.includes("Organization name")
+        ) {
+          throw new InvalidUrlError(
+            "Organization name is too long to generate a valid secure preview link. Shorten organization name and try again."
+          );
+        }
+        throw error;
+      }
+
       const fernUrl = ParsedBaseUrl.parse(
-        urlJoin(
-          `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`,
-          req.body.basePath ?? ""
-        )
+        urlJoin(truncatedDomain, req.body.basePath ?? "")
       );
       const s3FileInfos =
         await app.services.s3.getPresignedDocsAssetsUploadUrls({

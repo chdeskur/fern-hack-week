@@ -163,12 +163,7 @@ export const baseMockFdrConfig: FdrConfig = {
     urlOverride: "http://s3-mock:9090",
   },
   venusUrl: "",
-  domainSuffix: ".docs.buildwithfern.com",
-  algoliaAppId: "",
-  algoliaAdminApiKey: "",
-  algoliaSearchIndex: "",
-  algoliaSearchApiKey: "",
-  algoliaSearchV2Domains: [],
+  domainSuffix: "docs.buildwithfern.com",
   slackToken: "",
   logLevel: "debug",
   // eslint-disable-next-line turbo/no-undeclared-env-vars

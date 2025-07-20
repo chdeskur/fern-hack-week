@@ -1,5 +1,5 @@
 import { uniqueId } from "es-toolkit/compat";
-import { inject } from "vitest";
+import { expect, inject } from "vitest";
 
 import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
@@ -28,6 +28,7 @@ export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
     announcement: undefined,
     navbarLinks: undefined,
     footerLinks: undefined,
+    hideNavLinks: undefined,
     logoHeight: undefined,
     logoHref: undefined,
     favicon: undefined,
@@ -40,6 +41,7 @@ export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
     integrations: undefined,
     css: undefined,
     js: undefined,
+    aiChatConfig: undefined,
     backgroundImage: undefined,
     logoV2: undefined,
     logo: undefined,
@@ -274,4 +276,80 @@ test.sequential("sets and retrieves docs url metadata", async () => {
   expect(metadataResponse.gitUrl).toEqual(githubUrl);
   expect(metadataResponse.org).toEqual(FdrAPI.OrgId("acme"));
   expect(metadataResponse.isPreviewUrl).toBe(false);
+});
+
+it("preview domain truncation - valid preview link", async () => {
+  const fdr = getClient({ authed: true, url: inject("url") });
+
+  const startDocsPreviewResponse = getAPIResponse(
+    await fdr.docs.v2.write.startDocsPreviewRegister({
+      orgId: FdrAPI.OrgId("short"),
+      filepaths: [
+        DocsV1Write.FilePath("logo.png"),
+        DocsV1Write.FilePath("guides/guide.mdx"),
+      ],
+    })
+  );
+
+  // check link is valid
+  expect(startDocsPreviewResponse.previewUrl).toBeDefined();
+  const previewUrl = new URL(startDocsPreviewResponse.previewUrl);
+  expect(previewUrl.hostname.length).toBeLessThanOrEqual(63);
+  expect(previewUrl.hostname).toMatch(
+    /^short-preview-[a-f0-9-]+\.docs\.buildwithfern\.com$/
+  );
+
+  await fdr.docs.v2.write.finishDocsRegister(
+    startDocsPreviewResponse.docsRegistrationId,
+    {
+      docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
+    }
+  );
+});
+
+it("preview domain truncation - requires truncation", async () => {
+  const fdr = getClient({ authed: true, url: inject("url") });
+
+  const startDocsPreviewResponse =
+    await fdr.docs.v2.write.startDocsPreviewRegister({
+      orgId: FdrAPI.OrgId("medium-org-name"),
+      filepaths: [
+        DocsV1Write.FilePath("logo.png"),
+        DocsV1Write.FilePath("guides/guide.mdx"),
+      ],
+    });
+
+  // this should trigger truncation logic, but still work
+  if (!startDocsPreviewResponse.ok) {
+    console.log(
+      "Error response:",
+      JSON.stringify(startDocsPreviewResponse.error, null, 2)
+    );
+  }
+  expect(startDocsPreviewResponse.ok).toBe(true);
+  if (startDocsPreviewResponse.ok) {
+    const previewUrl = new URL(startDocsPreviewResponse.body.previewUrl);
+    expect(previewUrl.hostname.length).toBeLessThanOrEqual(63);
+    expect(previewUrl.hostname).toMatch(
+      /^medium-org-name-preview-[a-f0-9-]{8,}\.docs\.buildwithfern\.com$/
+    );
+  }
+});
+
+it("preview domain truncation - errors out because too long", async () => {
+  const fdr = getClient({ authed: true, url: inject("url") });
+
+  const startDocsPreviewResponse =
+    await fdr.docs.v2.write.startDocsPreviewRegister({
+      orgId: FdrAPI.OrgId(
+        "extremely-long-organization-name-that-is-way-too-long-and-will-cause-an-error-because-it-exceeds-the-character-limit-by-a-lot"
+      ),
+      filepaths: [
+        DocsV1Write.FilePath("logo.png"),
+        DocsV1Write.FilePath("guides/guide.mdx"),
+      ],
+    });
+
+  // this should not work beceause org id is too long
+  expect(startDocsPreviewResponse.ok).toBe(false);
 });
