@@ -272,7 +272,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         const liveCustomUrls = [];
         for (const customUrl of docsRegistrationInfo.customUrls) {
           const isLive = await checkDNSConfigured(customUrl);
-          if (isLive) {
+          if (isLive || app.config.localModeOverride) {
             liveCustomUrls.push(customUrl);
           } else {
             app.logger.info(

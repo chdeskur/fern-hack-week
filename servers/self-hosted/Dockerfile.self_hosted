@@ -55,8 +55,7 @@ ENV MINIO_VOLUMES="/data" \
     MINIO_ROOT_USER="minioadmin" \
     MINIO_ROOT_PASSWORD="minioadmin" \
     MINIO_USERNAME="minioadmin" \
-    MINIO_PASSWORD="minioadmin" \
-    MINIO_BUCKET_NAME_SUFFIX="docs.buildwithfern.com"
+    MINIO_PASSWORD="minioadmin"
 
 EXPOSE 9000 9001
 
@@ -100,7 +99,7 @@ RUN mkdir -p /nextapp && \
 
 # ----------- End nextapp setup -------------
 
-RUN apt-get update && apt-get install -y jq
+RUN apt-get update && apt-get install -y jq yq
 
 # ----------- Start Buf CLI setup -----------
 RUN wget https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_64 -O /usr/local/bin/buf && \

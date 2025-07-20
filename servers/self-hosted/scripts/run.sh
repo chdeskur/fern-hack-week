@@ -7,8 +7,12 @@ if [ ! -d "/fern" ]; then
 fi
 
 export ORG_NAME=$(jq -r '.organization' < /fern/fern.config.json)
-export MINIO_BUCKET_NAME=${ORG_NAME}.${MINIO_BUCKET_NAME_SUFFIX}
-export NEXT_PUBLIC_DOCS_DOMAIN_URL=${ORG_NAME}.docs.buildwithfern.com
+CUSTOM_DOMAIN=$(yq '.instances[0]."custom-domain"' /fern/docs.yml 2>/dev/null | tr -d '"')
+if [ -n "$CUSTOM_DOMAIN" ] && [ "$CUSTOM_DOMAIN" != "null" ]; then
+    export NEXT_PUBLIC_DOCS_DOMAIN_URL="$CUSTOM_DOMAIN"
+else
+    export NEXT_PUBLIC_DOCS_DOMAIN_URL="${ORG_NAME}.docs.buildwithfern.com"
+fi
 
 # -----------  Start Postgres setup  -----------
 echo "Starting PostgreSQL service..."
@@ -54,13 +58,27 @@ echo "MinIO is ready!"
 
 # Initialize MinIO
 mc alias set minio ${MINIO_URL} ${MINIO_USERNAME} ${MINIO_PASSWORD}
-mc mb minio/${MINIO_BUCKET_NAME}
+
+# Always create the .docs.buildwithfern.com bucket
+mc mb minio/${ORG_NAME}.docs.buildwithfern.com
+mc anonymous set download minio/${ORG_NAME}.docs.buildwithfern.com
+export MINIO_BUCKET_NAME=${ORG_NAME}.docs.buildwithfern.com
+
+# Also create the custom domain bucket if specified and not null
+if [ -n "$CUSTOM_DOMAIN" ] && [ "$CUSTOM_DOMAIN" != "null" ]; then
+    mc mb minio/${CUSTOM_DOMAIN}
+    mc anonymous set download minio/${CUSTOM_DOMAIN}
+    export MINIO_BUCKET_NAME=${CUSTOM_DOMAIN}
+fi
+
 # Make bucket public
-mc anonymous set download minio/${MINIO_BUCKET_NAME}
 
 # map custom domain to local machine
 echo "127.0.0.1 $ORG_NAME.docs.buildwithfern.com.localhost" >> /etc/hosts
 echo "::1 $ORG_NAME.docs.buildwithfern.com.localhost" >> /etc/hosts
+echo "127.0.0.1 $CUSTOM_DOMAIN.localhost" >> /etc/hosts
+echo "::1 $CUSTOM_DOMAIN.localhost" >> /etc/hosts
+
 # -----------  End MINIO setup  -----------
 
 echo "Starting FDR server..."

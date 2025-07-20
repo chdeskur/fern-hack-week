@@ -1,6 +1,6 @@
 instances:
   - url: example-org.docs.buildwithfern.com
-    # custom-domain: plantstore.dev # specify your custom domain when you are ready to go live
+    custom-domain: plantstore.dev
 
 title: Ariel's Plant Store
 
