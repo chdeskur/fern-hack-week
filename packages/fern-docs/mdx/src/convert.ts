@@ -80,7 +80,9 @@ type AllElementsType =
   | "inlineMath";
 
 // Nodes we should not treat as custom elements
-// Note: since toHast does not support math or inlineMath nodes by default, we treat them as custom elements
+// Notes:
+// - Since toHast does not support math or inlineMath nodes by default, we treat them as custom elements
+// - We also treat html nodes as custom elements, since when we encounter them they are usually customer-provided components
 type BaseElementsType = Exclude<
   AllElementsType,
   | "mdxJsxFlowElement"
@@ -90,6 +92,7 @@ type BaseElementsType = Exclude<
   | "mdxjsEsm"
   | "math"
   | "inlineMath"
+  | "html"
 >;
 
 // Non-custom nodes that can be hashed
@@ -253,6 +256,7 @@ export function mdxToHtml(
         mdxjsEsm: customElementHandler,
         math: customElementHandler,
         inlineMath: customElementHandler,
+        html: customElementHandler,
         ...Object.fromEntries(
           treatAsCustomElement.map((type) => [type, customElementHandler])
         ),

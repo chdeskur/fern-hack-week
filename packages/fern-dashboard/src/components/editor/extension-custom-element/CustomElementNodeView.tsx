@@ -5,6 +5,7 @@ import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { getMDXComponent } from "mdx-bundler/client";
 
 import { ErrorBoundary } from "@/docs/components/error-boundary";
+import { MDX_COMPONENTS } from "@/docs/mdx/components";
 import { useOriginalElements } from "@/providers/OriginalElementsContext";
 
 import { UnsupportedContent } from "../UnsupportedContent";
@@ -22,38 +23,15 @@ export const CustomElementNodeView = (props: NodeViewProps) => {
   const components = useMDXComponents();
 
   const Component = useMemo(() => {
-    const Component = originalElement?.code
-      ? getMDXComponent(originalElement?.code)
-      : () => null;
+    // Check that there is code to render AND that the component is supported, otherwise render an unsupported content component
+    const Component =
+      originalElement?.code &&
+      originalElement?.name &&
+      typeof MDX_COMPONENTS[originalElement?.name] !== "undefined"
+        ? getMDXComponent(originalElement?.code)
+        : () => <UnsupportedContent>{textContent}</UnsupportedContent>;
     return Component;
-  }, [originalElement?.code]);
-
-  /**
-   * Tiptap attempts to "best effort" render all basic HTML elements. This logic
-   * is used to remove that behavior for unsupported elements, rather than let tiptap
-   * try and fail.
-   */
-  const isUnsupportedHtml = useMemo(() => {
-    if (!originalElement?.code) return false;
-    return (
-      originalElement.code.includes("<video") ||
-      originalElement.code.includes("<iframe") ||
-      originalElement.code.includes("video") ||
-      originalElement.code.includes("iframe") ||
-      originalElement.code.includes("<canvas") ||
-      originalElement.code.includes("<embed") ||
-      originalElement.code.includes("embed") ||
-      originalElement.code.includes("ElevenLabsWaveform")
-    );
-  }, [originalElement?.code]);
-
-  if (isUnsupportedHtml) {
-    return (
-      <NodeViewWrapper>
-        <UnsupportedContent>{textContent}</UnsupportedContent>
-      </NodeViewWrapper>
-    );
-  }
+  }, [originalElement?.code, originalElement?.name, textContent]);
 
   return (
     <ErrorBoundary
