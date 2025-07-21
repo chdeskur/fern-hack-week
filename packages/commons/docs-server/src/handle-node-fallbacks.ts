@@ -143,7 +143,7 @@ export const getTabs = (
   return (
     tabs?.filter((tab) => {
       if (tab.type !== "tab" && tab.type !== "changelog") {
-        return false;
+        return true; // link type
       }
 
       if (tab.authed) {
