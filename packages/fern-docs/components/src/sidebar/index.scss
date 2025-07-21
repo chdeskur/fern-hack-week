@@ -42,6 +42,10 @@
     }
   }
 
+  .fern-sidebar-link-title {
+    overflow-wrap: anywhere !important;
+  }
+
   .fern-sidebar-group {
     @apply list-none;
     @apply max-lg:-mx-4;
