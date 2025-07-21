@@ -4,7 +4,6 @@ import urljoin from "url-join";
 
 import { createCachedDocsLoader } from "@fern-api/docs-loader";
 import { isLocal } from "@fern-api/docs-server/isLocal";
-import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import {
   getDocsDomainApp,
   getDocsHostApp,

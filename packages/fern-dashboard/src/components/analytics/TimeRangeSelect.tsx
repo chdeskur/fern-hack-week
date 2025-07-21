@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { TimeRange } from "./get-request-params";
+import { TimeRange } from "./utils/get-request-params";
 
 export interface TimeRangeSelectProps {
   value?: TimeRange;

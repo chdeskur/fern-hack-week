@@ -5,7 +5,7 @@ import { FernFai } from "@fern-api/fai-sdk";
 import {
   TimeRange,
   getRequestParams,
-} from "@/components/analytics/get-request-params";
+} from "@/components/analytics/utils/get-request-params";
 
 import { getCurrentSessionOrThrow } from "../services/auth0/getCurrentSession";
 import { getFaiClient } from "../services/fai/getFaiClient";

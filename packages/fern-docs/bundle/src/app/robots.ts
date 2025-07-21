@@ -4,7 +4,6 @@ import { headers } from "next/headers";
 import urlJoin from "url-join";
 
 import { isLocal } from "@fern-api/docs-server/isLocal";
-import { isSelfHosted } from "@fern-api/docs-server/isSelfHosted";
 import {
   HEADER_HOST,
   HEADER_X_FERN_HOST,

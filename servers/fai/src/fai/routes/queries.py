@@ -21,7 +21,7 @@ from src.settings import LOGGER
 async def get_recent_queries(
     domain: str,
     page: int = 1,
-    limit: int = 10,
+    limit: int = 25,
     start_time: datetime = datetime.now(),
     db: AsyncSession = Depends(get_db),
 ) -> JSONResponse:

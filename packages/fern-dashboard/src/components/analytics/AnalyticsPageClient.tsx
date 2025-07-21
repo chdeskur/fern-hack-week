@@ -11,19 +11,18 @@ import { Pagination } from "@/components/ui/pagination";
 import { cn } from "@/utils/utils";
 
 import { AnalyticsHistogram } from "./AnalyticsHistogram";
-import { TimeRangeSelect } from "./AnalyticsHistogramRangeSelector";
 import { AnalyticsHistogramTabBar } from "./AnalyticsHistogramTabBar";
+import { ITEMS_PER_PAGE } from "./AnalyticsPage";
 import { AnalyticsPageHeader } from "./AnalyticsPageHeader";
 import { ConversationSidePanel } from "./ConversationSidePanel";
 import { QueriesTable } from "./QueriesTable";
-import { TimeRange } from "./get-request-params";
-import { parseLabel } from "./parse-label";
+import { TimeRangeSelect } from "./TimeRangeSelect";
+import { TimeRange } from "./utils/get-request-params";
+import { parseLabel } from "./utils/parse-label";
 
 export type RenderType = "QUERIES" | "CONVERSATIONS";
 
 const borderStyles = "mb-4 flex w-full flex-col items-center rounded-2xl p-4";
-
-const ITEMS_PER_PAGE = 10;
 
 export function AnalyticsPageClient({
   baseDocsUrl,
@@ -50,6 +49,7 @@ export function AnalyticsPageClient({
     {}
   );
   const { setContent, clear } = useSidepanel();
+  const totalPages = Math.ceil(initialTotalQueries / ITEMS_PER_PAGE);
 
   useEffect(() => {
     async function fetchHistogramData() {
@@ -121,8 +121,6 @@ export function AnalyticsPageClient({
       clear();
     }
   }
-
-  const totalPages = Math.ceil(initialTotalQueries / ITEMS_PER_PAGE);
 
   const chartConfig = {
     queries: {
