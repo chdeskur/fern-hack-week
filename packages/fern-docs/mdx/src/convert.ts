@@ -287,7 +287,8 @@ export function htmlToMdx(
     if (
       element.properties?.dataHash &&
       typeof element.properties.dataHash === "string" &&
-      !changedNodes?.[element.properties.dataHash]
+      typeof originalElements[element.properties.dataHash] !== "undefined" &&
+      changedNodes?.[element.properties.dataHash] === false
     ) {
       // Use hash as placeholder, which will be replaced with actual content
       const placeholder = getCustomElementPlaceholder(
@@ -460,6 +461,9 @@ export function htmlToMdx(
       frontmatterToMarkdown(["yaml"]),
       mathToMarkdown({ singleDollarTextMath: false }),
     ],
+    // TODO: float configurations up to make them more discoverable
+    // Use hyphen instead of asterisk for unordered lists
+    bullet: "-",
   });
 
   // Reinject frontmatter if it exists

@@ -21,6 +21,8 @@ export const GlobalDataHashAttribute = Node.create({
       attributes: {
         "data-hash": {
           default: null,
+          // Prevent this attribute from being inherited by new blocks when splitting
+          keepOnSplit: false,
           parseHTML: (element) => element.getAttribute("data-hash") || null,
           renderHTML: (attributes) => {
             if (attributes["data-hash"] == null) {

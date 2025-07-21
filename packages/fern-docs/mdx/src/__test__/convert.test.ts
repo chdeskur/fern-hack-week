@@ -211,7 +211,15 @@ describe("Fixture files", () => {
 
     it("htmlToMdx: round-trip conversion preserves structure", () => {
       const { html, frontmatter, originalElements } = mdxToHtml(faqMdx);
-      const mdxResult = htmlToMdx(html, frontmatter, originalElements);
+      const changedNodes = Object.fromEntries(
+        Object.entries(originalElements).map(([key, _]) => [key, false])
+      );
+      const mdxResult = htmlToMdx(
+        html,
+        frontmatter,
+        originalElements,
+        changedNodes
+      );
 
       // Verify the round-trip conversion produces valid MDX
       expect(mdxResult.mdx).toContain("---");
@@ -248,7 +256,15 @@ describe("Fixture files", () => {
 
     it("htmlToMdx: round-trip conversion preserves structure", () => {
       const { html, frontmatter, originalElements } = mdxToHtml(landingPageMdx);
-      const mdxResult = htmlToMdx(html, frontmatter, originalElements);
+      const changedNodes = Object.fromEntries(
+        Object.entries(originalElements).map(([key, _]) => [key, false])
+      );
+      const mdxResult = htmlToMdx(
+        html,
+        frontmatter,
+        originalElements,
+        changedNodes
+      );
 
       // Verify the round-trip conversion produces valid MDX
       expect(mdxResult.mdx).toContain("---");
@@ -296,7 +312,15 @@ describe("Fixture files", () => {
     it("htmlToMdx: round-trip conversion preserves structure", () => {
       const { html, frontmatter, originalElements } =
         mdxToHtml(complexOverviewMdx);
-      const mdxResult = htmlToMdx(html, frontmatter, originalElements);
+      const changedNodes = Object.fromEntries(
+        Object.entries(originalElements).map(([key, _]) => [key, false])
+      );
+      const mdxResult = htmlToMdx(
+        html,
+        frontmatter,
+        originalElements,
+        changedNodes
+      );
 
       expect(mdxResult.mdx).toBe(complexOverviewMdx);
 
@@ -405,7 +429,15 @@ describe("Fixture files", () => {
     it("htmlToMdx: round-trip conversion preserves advanced features", () => {
       const { html, frontmatter, originalElements } =
         mdxToHtml(advancedFeaturesMdx);
-      const mdxResult = htmlToMdx(html, frontmatter, originalElements);
+      const changedNodes = Object.fromEntries(
+        Object.entries(originalElements).map(([key, _]) => [key, false])
+      );
+      const mdxResult = htmlToMdx(
+        html,
+        frontmatter,
+        originalElements,
+        changedNodes
+      );
 
       // Verify the round-trip conversion produces valid MDX
       expect(mdxResult.mdx).toContain("---");
