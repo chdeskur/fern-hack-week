@@ -44,6 +44,7 @@ service:
           page: optional<integer>
           limit: optional<integer>
           cutoff_time: optional<datetime>
+          include_assistant: optional<boolean>
           start_date:
             type: optional<datetime>
             docs: The start date of the period to retrieve analytics for

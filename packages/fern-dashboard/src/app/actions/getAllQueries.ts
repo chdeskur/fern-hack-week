@@ -1,0 +1,46 @@
+"use server";
+
+import { FernFai } from "@fern-api/fai-sdk";
+
+import { getFaiClient } from "@/app/services/fai/getFaiClient";
+import {
+  TimeRange,
+  getRequestParams,
+} from "@/components/analytics/utils/get-request-params";
+
+export async function getAllQueries({
+  domain,
+  cutoffTime,
+  timeRange,
+}: {
+  domain: string;
+  cutoffTime: string;
+  timeRange: TimeRange;
+}): Promise<{ queries: FernFai.Query[]; total: number }> {
+  const client = getFaiClient({ token: "" });
+  const params = getRequestParams(timeRange);
+
+  let allQueries: FernFai.Query[] = [];
+  let page = 1;
+  const limit = 500;
+  let hasMore = true;
+
+  while (hasMore) {
+    const response = await client.queries.getRecentQueries(domain, {
+      page,
+      limit,
+      include_assistant: true,
+      cutoff_time: cutoffTime,
+      ...params,
+    });
+
+    allQueries = [...allQueries, ...response.queries];
+    hasMore = response.queries.length === limit;
+    page += 1;
+  }
+
+  return {
+    queries: allQueries,
+    total: allQueries.length,
+  };
+}

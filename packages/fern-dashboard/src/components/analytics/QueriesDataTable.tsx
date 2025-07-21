@@ -27,6 +27,8 @@ interface QueriesDataTableProps<TData, TValue> {
   selectedConversation: FernFai.Conversation | null;
   queryTimeRange: TimeRange;
   setQueryTimeRange: (range: TimeRange) => void;
+  onExport: () => void;
+  isExporting?: boolean;
 }
 
 export function QueriesDataTable<TData, TValue>({
@@ -37,6 +39,8 @@ export function QueriesDataTable<TData, TValue>({
   selectedConversation,
   queryTimeRange,
   setQueryTimeRange,
+  onExport,
+  isExporting,
 }: QueriesDataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -80,6 +84,8 @@ export function QueriesDataTable<TData, TValue>({
           table={table}
           queryTimeRange={queryTimeRange}
           setQueryTimeRange={setQueryTimeRange}
+          onExport={onExport}
+          isExporting={isExporting}
         />
         <div className="max-h-[400px] min-h-[400px] overflow-y-auto">
           <Table className="table-fixed">

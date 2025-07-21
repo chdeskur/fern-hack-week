@@ -4,6 +4,7 @@ import { MessageSquare } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 
+import { ExportButton } from "./ExportButton";
 import { TimeRangeOption, TimeRangeSelect } from "./TimeRangeSelect";
 import { TimeRange } from "./utils/get-request-params";
 
@@ -18,12 +19,16 @@ interface QueriesDataTableHeaderProps<TData> {
   table: Table<TData>;
   queryTimeRange: TimeRange;
   setQueryTimeRange: (range: TimeRange) => void;
+  onExport: () => void;
+  isExporting?: boolean;
 }
 
 export function QueriesDataTableHeader<TData>({
   table,
   queryTimeRange,
   setQueryTimeRange,
+  onExport,
+  isExporting,
 }: QueriesDataTableHeaderProps<TData>) {
   return (
     <div className="mb-4 flex items-center justify-between">
@@ -49,6 +54,7 @@ export function QueriesDataTableHeader<TData>({
           onChange={setQueryTimeRange}
           options={QUERIES_TIME_RANGE_OPTIONS}
         />
+        <ExportButton onClick={onExport} isLoading={isExporting} />
       </div>
     </div>
   );

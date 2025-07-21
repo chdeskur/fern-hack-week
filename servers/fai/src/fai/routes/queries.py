@@ -22,6 +22,7 @@ from src.settings import LOGGER
 async def get_recent_queries(
     domain: str,
     cutoff_time: datetime,
+    include_assistant: bool = False,
     start_date: Optional[datetime] = None,
     end_date: Optional[datetime] = None,
     page: int = 1,
@@ -39,12 +40,10 @@ async def get_recent_queries(
 
     offset = (page - 1) * limit
 
-    stmt = (
-        select(Query)
-        .where(Query.domain == domain)
-        .where(Query.role == "USER")
-        .where(Query.created_at < effective_end_time)
-    )
+    stmt = select(Query).where(Query.domain == domain).where(Query.created_at < effective_end_time)
+
+    if not include_assistant:
+        stmt = stmt.where(Query.role == "USER")
 
     if start_date is not None:
         stmt = stmt.where(Query.created_at >= start_date)
@@ -56,11 +55,11 @@ async def get_recent_queries(
     api_queries = [query.to_api() for query in queries]
 
     total_stmt = (
-        select(func.count(Query.query_id))
-        .where(Query.domain == domain)
-        .where(Query.role == "USER")
-        .where(Query.created_at < effective_end_time)
+        select(func.count(Query.query_id)).where(Query.domain == domain).where(Query.created_at < effective_end_time)
     )
+
+    if not include_assistant:
+        total_stmt = total_stmt.where(Query.role == "USER")
 
     if start_date is not None:
         total_stmt = total_stmt.where(Query.created_at >= start_date)

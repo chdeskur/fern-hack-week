@@ -148,6 +148,7 @@ export function AnalyticsPageClient({
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         isLoading={isLoading}
+        cutoffTime={cutoffTime}
         queryTimeRange={queryTimeRange}
         setQueryTimeRange={setQueryTimeRange}
       />
