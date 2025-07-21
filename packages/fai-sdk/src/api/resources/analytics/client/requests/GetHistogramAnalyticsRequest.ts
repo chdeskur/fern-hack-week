@@ -7,8 +7,6 @@ import * as FernFai from "../../../../index.js";
 /**
  * @example
  *     {
- *         start_date: "2024-01-15T09:30:00Z",
- *         end_date: "2024-01-15T09:30:00Z",
  *         groupBy: "DAY"
  *     }
  */
@@ -16,11 +14,11 @@ export interface GetHistogramAnalyticsRequest {
     /**
      * The start date of the period to retrieve analytics for
      */
-    start_date: string;
+    start_date?: string;
     /**
      * The end date of the period to retrieve analytics for
      */
-    end_date: string;
+    end_date?: string;
     /**
      * The field to group the analytics by
      */

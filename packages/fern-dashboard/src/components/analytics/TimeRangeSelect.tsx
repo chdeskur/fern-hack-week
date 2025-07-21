@@ -14,18 +14,22 @@ import {
 
 import { TimeRange } from "./utils/get-request-params";
 
+export interface TimeRangeOption {
+  label: string;
+  value: TimeRange;
+}
+
 export interface TimeRangeSelectProps {
   value?: TimeRange;
   onChange?: (value: TimeRange) => void;
+  options: TimeRangeOption[];
 }
 
-const TIME_RANGE_LABELS: Record<TimeRange, string> = {
-  LAST_WEEK: "Last Week",
-  LAST_MONTH: "Last Month",
-  LAST_YEAR: "Last Year",
-};
-
-export const TimeRangeSelect = ({ value, onChange }: TimeRangeSelectProps) => {
+export const TimeRangeSelect = ({
+  value,
+  onChange,
+  options,
+}: TimeRangeSelectProps) => {
   const [selected, setSelected] = useState<TimeRange>(
     value || TimeRange.LAST_WEEK
   );
@@ -43,9 +47,9 @@ export const TimeRangeSelect = ({ value, onChange }: TimeRangeSelectProps) => {
         <SelectValue placeholder="Select Time Range" />
       </SelectTrigger>
       <SelectContent>
-        {Object.entries(TIME_RANGE_LABELS).map(([value, label]) => (
-          <SelectItem key={value} value={value}>
-            {label}
+        {options.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
           </SelectItem>
         ))}
       </SelectContent>

@@ -10,4 +10,12 @@ export interface GetRecentQueriesRequest {
     page?: number;
     limit?: number;
     cutoff_time?: string;
+    /**
+     * The start date of the period to retrieve analytics for
+     */
+    start_date?: string;
+    /**
+     * The end date of the period to retrieve analytics for
+     */
+    end_date?: string;
 }

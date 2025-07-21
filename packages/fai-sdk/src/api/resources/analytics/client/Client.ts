@@ -52,8 +52,6 @@ export class Analytics {
      *
      * @example
      *     await client.analytics.getHistogramAnalytics("domain", {
-     *         start_date: "2024-01-15T09:30:00Z",
-     *         end_date: "2024-01-15T09:30:00Z",
      *         groupBy: "DAY"
      *     })
      */
@@ -72,8 +70,14 @@ export class Analytics {
     ): Promise<core.WithRawResponse<FernFai.HistogramAnalytics>> {
         const { start_date: startDate, end_date: endDate, groupBy } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams["start_date"] = startDate;
-        _queryParams["end_date"] = endDate;
+        if (startDate != null) {
+            _queryParams["start_date"] = startDate;
+        }
+
+        if (endDate != null) {
+            _queryParams["end_date"] = endDate;
+        }
+
         _queryParams["groupBy"] = groupBy;
         const _response = await core.fetcher({
             url: core.url.join(

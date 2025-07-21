@@ -1,95 +1,54 @@
 "use client";
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-} from "recharts";
+import { FernFai } from "@fern-api/fai-sdk";
 
-import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+import { cn } from "@/utils/utils";
 
-import { RenderType } from "./AnalyticsPageClient";
+import { AnalyticsHistogramChart } from "./AnalyticsHistogramChart";
+import { AnalyticsHistogramTabBar } from "./AnalyticsHistogramTabBar";
+import { BORDER_STYLES, RenderType } from "./AnalyticsPageClient";
+import { TimeRangeOption, TimeRangeSelect } from "./TimeRangeSelect";
+import { TimeRange } from "./utils/get-request-params";
+import { parseLabel } from "./utils/parse-label";
 
-interface AnalyticsHistogramProps {
-  chartData: {
-    displayLabel: string;
-    count: number;
-  }[];
-  renderType: RenderType;
-  chartConfig: {
-    queries: {
-      label: string;
-      color: string;
-    };
-  };
-}
+const ANALYTICS_TIME_RANGE_OPTIONS: TimeRangeOption[] = [
+  { label: "Last Week", value: TimeRange.LAST_WEEK },
+  { label: "Last Month", value: TimeRange.LAST_MONTH },
+  { label: "Last Year", value: TimeRange.LAST_YEAR },
+];
 
 export function AnalyticsHistogram({
-  chartData,
   renderType,
-  chartConfig,
-}: AnalyticsHistogramProps) {
+  setRenderType,
+  histogramTimeRange,
+  setHistogramTimeRange,
+  histogramData,
+}: {
+  renderType: RenderType;
+  setRenderType: (type: RenderType) => void;
+  histogramTimeRange: TimeRange;
+  setHistogramTimeRange: (range: TimeRange) => void;
+  histogramData: FernFai.HistogramAnalytics;
+}) {
+  const chartData = histogramData.bars.map((bar) => ({
+    displayLabel: parseLabel(bar.label),
+    count: renderType === "QUERIES" ? bar.queryCount : bar.conversationCount,
+  }));
+
   return (
-    <div
-      style={{ width: "100%", height: "auto", minWidth: "0", minHeight: "0" }}
-    >
-      <ChartContainer config={chartConfig}>
-        <ResponsiveContainer>
-          <BarChart
-            data={chartData}
-            barSize={40}
-            margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-          >
-            <defs>
-              <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#008700" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#008700" stopOpacity={0.0} />
-              </linearGradient>
-
-              <linearGradient id="barGradientHover" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#008700" stopOpacity={1.0} />
-                <stop offset="95%" stopColor="#008700" stopOpacity={0.0} />
-              </linearGradient>
-            </defs>
-
-            <CartesianGrid strokeDasharray="4 4" vertical={false} />
-            <XAxis
-              dataKey="displayLabel"
-              stroke="#ccc"
-              tick={{ fill: "#666" }}
-              tickFormatter={(value, index) => {
-                if (chartData.length > 13) {
-                  return index % 3 === 0 || index === chartData.length - 1
-                    ? value
-                    : "";
-                }
-                return value;
-              }}
-              interval={0}
-            />
-            <Tooltip
-              content={
-                <ChartTooltipContent
-                  name={renderType === "QUERIES" ? "Queries" : "Conversations"}
-                  hideLabel
-                />
-              }
-            />
-            <Bar
-              dataKey="count"
-              name={renderType === "QUERIES" ? "Queries" : "Conversations"}
-              fill="url(#barGradient)"
-              activeBar={{
-                fill: "url(#barGradientHover)",
-              }}
-              radius={[8, 8, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </ChartContainer>
+    <div className={cn(BORDER_STYLES, "border-gray-0 w-full border")}>
+      <div className="mb-4 flex w-full justify-between gap-4">
+        <AnalyticsHistogramTabBar
+          renderType={renderType}
+          onChangeRenderType={setRenderType}
+        />
+        <TimeRangeSelect
+          value={histogramTimeRange}
+          onChange={setHistogramTimeRange}
+          options={ANALYTICS_TIME_RANGE_OPTIONS}
+        />
+      </div>
+      <AnalyticsHistogramChart chartData={chartData} renderType={renderType} />
     </div>
   );
 }

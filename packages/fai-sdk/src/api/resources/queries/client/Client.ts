@@ -154,7 +154,7 @@ export class Queries {
         request: FernFai.GetRecentQueriesRequest = {},
         requestOptions?: Queries.RequestOptions,
     ): Promise<core.WithRawResponse<FernFai.QueryPage>> {
-        const { page, limit, cutoff_time: cutoffTime } = request;
+        const { page, limit, cutoff_time: cutoffTime, start_date: startDate, end_date: endDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
@@ -166,6 +166,14 @@ export class Queries {
 
         if (cutoffTime != null) {
             _queryParams["cutoff_time"] = cutoffTime;
+        }
+
+        if (startDate != null) {
+            _queryParams["start_date"] = startDate;
+        }
+
+        if (endDate != null) {
+            _queryParams["end_date"] = endDate;
         }
 
         const _response = await core.fetcher({

@@ -19,8 +19,12 @@ export async function getDomainAnalytics({
 }): Promise<FernFai.HistogramAnalytics> {
   const session = await getCurrentSessionOrThrow();
   const faiClient = getFaiClient({ token: session.accessToken });
+  const requestParams = getRequestParams(timeRange);
+  if (requestParams.start_date === undefined) {
+    throw new Error("All data is not supported for analytics");
+  }
   return await faiClient.analytics.getHistogramAnalytics(
     docsUrl,
-    getRequestParams(timeRange)
+    requestParams
   );
 }

@@ -44,6 +44,12 @@ service:
           page: optional<integer>
           limit: optional<integer>
           cutoff_time: optional<datetime>
+          start_date:
+            type: optional<datetime>
+            docs: The start date of the period to retrieve analytics for
+          end_date:
+            type: optional<datetime>
+            docs: The end date of the period to retrieve analytics for
       response: QueryPage
       errors:
         - commons.BadRequestError

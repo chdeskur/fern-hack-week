@@ -1,5 +1,6 @@
 from datetime import datetime
 from datetime import timedelta
+from datetime import timezone
 from typing import Optional
 
 from fastapi import Depends
@@ -20,32 +21,51 @@ from src.settings import LOGGER
 @fai_app.get("/queries/{domain}")
 async def get_recent_queries(
     domain: str,
+    cutoff_time: datetime,
+    start_date: Optional[datetime] = None,
+    end_date: Optional[datetime] = None,
     page: int = 1,
     limit: int = 25,
-    start_time: datetime = datetime.now(),
     db: AsyncSession = Depends(get_db),
 ) -> JSONResponse:
     LOGGER.info("Listing queries")
+
+    now = datetime.now(timezone.utc)
+    end_date = end_date.replace(tzinfo=timezone.utc) if end_date else now
+    start_date = start_date.replace(tzinfo=timezone.utc) if start_date else None
+    cutoff_time = cutoff_time.replace(tzinfo=timezone.utc)
+
+    effective_end_time = min(end_date, cutoff_time)
+
     offset = (page - 1) * limit
 
-    result = await db.execute(
+    stmt = (
         select(Query)
         .where(Query.domain == domain)
         .where(Query.role == "USER")
-        .where(Query.created_at < start_time)
-        .order_by(desc(Query.created_at))
-        .offset(offset)
-        .limit(limit)
+        .where(Query.created_at < effective_end_time)
     )
+
+    if start_date is not None:
+        stmt = stmt.where(Query.created_at >= start_date)
+
+    stmt = stmt.order_by(desc(Query.created_at)).offset(offset).limit(limit)
+
+    result = await db.execute(stmt)
     queries = result.scalars().all()
     api_queries = [query.to_api() for query in queries]
 
-    total_result = await db.execute(
+    total_stmt = (
         select(func.count(Query.query_id))
         .where(Query.domain == domain)
         .where(Query.role == "USER")
-        .where(Query.created_at < start_time)
+        .where(Query.created_at < effective_end_time)
     )
+
+    if start_date is not None:
+        total_stmt = total_stmt.where(Query.created_at >= start_date)
+
+    total_result = await db.execute(total_stmt)
     total_count = total_result.scalar()
 
     return JSONResponse(

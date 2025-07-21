@@ -17,10 +17,10 @@ service:
         name: GetHistogramAnalyticsRequest
         query-parameters:
           start_date:
-            type: datetime
+            type: optional<datetime>
             docs: The start date of the period to retrieve analytics for
           end_date:
-            type: datetime
+            type: optional<datetime>
             docs: The end date of the period to retrieve analytics for
           groupBy:
             type: GroupBy

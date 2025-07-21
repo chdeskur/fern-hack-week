@@ -17,6 +17,7 @@ import { getConversation } from "@/app/actions/getConversation";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 import { QueriesDataTableHeader } from "./QueriesDataTableHeader";
+import { TimeRange } from "./utils/get-request-params";
 
 interface QueriesDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -24,6 +25,8 @@ interface QueriesDataTableProps<TData, TValue> {
   baseDocsUrl: string;
   onSelectConversation: (conversation: FernFai.Conversation) => void;
   selectedConversation: FernFai.Conversation | null;
+  queryTimeRange: TimeRange;
+  setQueryTimeRange: (range: TimeRange) => void;
 }
 
 export function QueriesDataTable<TData, TValue>({
@@ -32,6 +35,8 @@ export function QueriesDataTable<TData, TValue>({
   baseDocsUrl,
   onSelectConversation,
   selectedConversation,
+  queryTimeRange,
+  setQueryTimeRange,
 }: QueriesDataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -71,7 +76,11 @@ export function QueriesDataTable<TData, TValue>({
   return (
     <div className="flex flex-row gap-6 rounded-md p-4">
       <div className="grow">
-        <QueriesDataTableHeader table={table} />
+        <QueriesDataTableHeader
+          table={table}
+          queryTimeRange={queryTimeRange}
+          setQueryTimeRange={setQueryTimeRange}
+        />
         <div className="max-h-[400px] min-h-[400px] overflow-y-auto">
           <Table className="table-fixed">
             <TableBody>
