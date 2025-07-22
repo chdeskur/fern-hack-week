@@ -1,42 +1,31 @@
-"use client";
-
 import { Auth0OrgName } from "@/app/services/auth0/types";
 
-import { FeatureFlaggedClientSide } from "../posthog/feature-flags/client-side";
-import {
-  PosthogFeatureFlag,
-  PosthogFeatureFlags,
-} from "../posthog/feature-flags/flags";
+import { PosthogFeatureFlag } from "../posthog/feature-flags/flags";
+import { FeatureFlaggedServerSide } from "../posthog/feature-flags/server-side";
 import { DocsSiteNavBarItem } from "./DocsSiteNavBarItem";
 
 export declare namespace DocsSiteNavBar {
   export interface Props {
     orgName: Auth0OrgName;
-    featureFlags: PosthogFeatureFlags;
   }
 }
 
-export function DocsSiteNavBar({
-  orgName,
-  featureFlags,
-}: DocsSiteNavBar.Props) {
+export async function DocsSiteNavBar({ orgName }: DocsSiteNavBar.Props) {
   return (
     <div className="flex">
       <DocsSiteNavBarItem title="Overview" href="" />
-      <FeatureFlaggedClientSide
+      <FeatureFlaggedServerSide
         flag={PosthogFeatureFlag.ENABLE_DOCS_ANALYTICS_TAB}
-        featureFlags={featureFlags}
         orgName={orgName}
       >
         <DocsSiteNavBarItem title="Analytics" href="analytics" />
-      </FeatureFlaggedClientSide>
-      <FeatureFlaggedClientSide
+      </FeatureFlaggedServerSide>
+      <FeatureFlaggedServerSide
         flag={PosthogFeatureFlag.ENABLE_DOCS_AI_SEARCH_TAB}
-        featureFlags={featureFlags}
         orgName={orgName}
       >
         <DocsSiteNavBarItem title="AI Search" href="ai-search" />
-      </FeatureFlaggedClientSide>
+      </FeatureFlaggedServerSide>
       <DocsSiteNavBarItem title="Settings" href="settings" />
     </div>
   );

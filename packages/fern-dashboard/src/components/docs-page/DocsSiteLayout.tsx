@@ -1,35 +1,23 @@
-"use client";
-
 import { Auth0OrgName } from "@/app/services/auth0/types";
-import { useDocsSite } from "@/state/useMyDocsSites";
 import { DocsUrl } from "@/utils/types";
 
-import { Page404 } from "../Page404";
 import { PageHeader } from "../layout/PageHeader";
-import { PosthogFeatureFlags } from "../posthog/feature-flags/flags";
+import { DocsSiteClientWrapper } from "./DocsSiteClientWrapper";
 import { DocsSiteNavBar } from "./DocsSiteNavBar";
 
 export declare namespace DocsSiteLayout {
   export interface Props {
     docsUrl: DocsUrl;
     orgName: Auth0OrgName;
-    featureFlags: PosthogFeatureFlags;
     children: React.JSX.Element;
   }
 }
 
-export function DocsSiteLayout({
+export async function DocsSiteLayout({
   docsUrl,
   orgName,
-  featureFlags,
   children,
 }: DocsSiteLayout.Props) {
-  const docsSite = useDocsSite(docsUrl);
-
-  if (docsSite.type === "loaded" && docsSite.value == null) {
-    return <Page404 />;
-  }
-
   return (
     <div className="flex min-w-0 flex-1 flex-col gap-3">
       <PageHeader
@@ -44,8 +32,12 @@ export function DocsSiteLayout({
         }
       />
       <div className="flex flex-col gap-4">
-        <DocsSiteNavBar orgName={orgName} featureFlags={featureFlags} />
-        <div className="flex">{children}</div>
+        <DocsSiteNavBar orgName={orgName} />
+        <div className="flex">
+          <DocsSiteClientWrapper docsUrl={docsUrl}>
+            {children}
+          </DocsSiteClientWrapper>
+        </div>
       </div>
     </div>
   );
