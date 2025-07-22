@@ -15,7 +15,15 @@ function getBillingPeriod() {
   return `${oneYearAgo.toLocaleDateString()} - ${now.toLocaleDateString()}`;
 }
 
-export function AnalyticsPageHeader() {
+export function AnalyticsPageHeader({
+  analyticsBillingEnabled,
+}: {
+  analyticsBillingEnabled: boolean;
+}) {
+  if (!analyticsBillingEnabled) {
+    return null;
+  }
+
   // TODO(eden): Use the actual fai usage data.
   return (
     <div className={cn(BORDER_STYLES, "w-full")}>

@@ -7,7 +7,13 @@ import { TimeRange } from "./utils/get-request-params";
 
 export const ITEMS_PER_PAGE = 25;
 
-export default async function AnalyticsPage({ docsUrl }: { docsUrl: string }) {
+export default async function AnalyticsPage({
+  docsUrl,
+  analyticsBillingEnabled,
+}: {
+  docsUrl: string;
+  analyticsBillingEnabled: boolean;
+}) {
   const client = getFaiClient({ token: "" });
   const baseDocsUrl = getBaseDocsUrl(docsUrl);
   const cutoffTime = new Date(Date.now()).toISOString();
@@ -29,6 +35,7 @@ export default async function AnalyticsPage({ docsUrl }: { docsUrl: string }) {
       initialHistogramData={analyticsData}
       initialTotalQueries={queriesData.total}
       cutoffTime={cutoffTime}
+      analyticsBillingEnabled={analyticsBillingEnabled}
     />
   );
 }

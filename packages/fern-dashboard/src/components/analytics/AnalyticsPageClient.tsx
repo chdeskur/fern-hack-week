@@ -28,12 +28,14 @@ export function AnalyticsPageClient({
   initialHistogramData,
   initialTotalQueries,
   cutoffTime,
+  analyticsBillingEnabled,
 }: {
   baseDocsUrl: string;
   initialQueriesData: FernFai.Query[];
   initialHistogramData: FernFai.HistogramAnalytics;
   initialTotalQueries: number;
   cutoffTime: string;
+  analyticsBillingEnabled: boolean;
 }) {
   const [renderType, setRenderType] = useState<RenderType>("QUERIES");
   const [histogramTimeRange, setHistogramTimeRange] = useState<TimeRange>(
@@ -131,7 +133,7 @@ export function AnalyticsPageClient({
 
   return (
     <div className={ANALYTICS_PAGE_STYLES}>
-      <AnalyticsPageHeader />
+      <AnalyticsPageHeader analyticsBillingEnabled={analyticsBillingEnabled} />
       <AnalyticsHistogram
         renderType={renderType}
         setRenderType={setRenderType}

@@ -19,7 +19,7 @@ export function ExportButton({
       variant="outline"
       onClick={onClick}
       disabled={disabled || isLoading}
-      className="flex items-center gap-2"
+      className="flex items-center gap-2 text-black"
     >
       <ArrowDownTrayIcon className="h-4 w-4" />
       {isLoading ? "Exporting..." : "Export CSV"}
