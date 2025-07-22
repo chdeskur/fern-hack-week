@@ -31,8 +31,5 @@ jobs:
       - name: Build docs bundle
         run: pnpm docs:self-hosted-bundle:build
 
-      - name: Next.js Cache Init
-        uses: ./.github/actions/next-cache
-
       - name: Run tests
         run: pnpm turbo build test:self-hosted --filter=@fern-platform/self-hosted
