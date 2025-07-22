@@ -2,7 +2,6 @@ import winston from "winston";
 
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 
-import { Cache } from "../../Cache";
 import { FernRegistryError } from "../../api/generated";
 import {
   UnauthorizedError,
@@ -10,10 +9,6 @@ import {
   UserNotInOrgError,
 } from "../../api/generated/api";
 import type { FdrApplication, FdrConfig } from "../../app";
-
-// cache should last duration of average generation
-const CACHE_TTL_SECONDS = 10 * 60;
-const MAX_CACHE_KEYS = 100;
 
 export type OrgIdsResponse = SuccessOrgIdsResponse | ErrorOrgIdsResponse;
 
@@ -63,14 +58,9 @@ export interface AuthService {
 
 export class AuthServiceImpl implements AuthService {
   private logger: winston.Logger;
-  private orgMembershipCache: Cache<boolean>;
 
   constructor(private readonly app: FdrApplication) {
     this.logger = app.logger;
-    this.orgMembershipCache = new Cache<boolean>(
-      MAX_CACHE_KEYS,
-      CACHE_TTL_SECONDS
-    );
   }
 
   async getOrgIdsFromAuthHeader({
@@ -116,18 +106,6 @@ export class AuthServiceImpl implements AuthService {
     }
     const token = getTokenFromAuthHeader(authHeader);
 
-    // create a key for a user in an org
-    const cacheKey = `${token}:${orgId}`;
-
-    // check if we have a cached result
-    const cachedResult = this.orgMembershipCache.get(cacheKey);
-    if (cachedResult !== undefined) {
-      if (!cachedResult) {
-        throw new UserNotInOrgError("User does not belong to organization");
-      }
-      return;
-    }
-
     const venus = getVenusClient({
       config: this.app.config,
       token,
@@ -140,9 +118,6 @@ export class AuthServiceImpl implements AuthService {
       throw new UnavailableError("Failed to resolve user's organizations");
     }
     const belongsToOrg = response.body;
-
-    // cache the result
-    this.orgMembershipCache.set(cacheKey, belongsToOrg);
 
     if (!belongsToOrg) {
       throw new UserNotInOrgError("User does not belong to organization");
