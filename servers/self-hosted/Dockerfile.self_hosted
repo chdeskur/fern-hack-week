@@ -1,7 +1,9 @@
-FROM node:20.18-bookworm-slim
+FROM node:lts-bookworm-slim
 
 RUN npm install -g turbo@2.0.1
+
 COPY . .
+RUN npm install -g pnpm@9.15.9
 RUN rm -rf fern/
 
 RUN turbo prune @fern-docs/bundle --docker
@@ -14,7 +16,7 @@ RUN apt-get update && \
     apt-get install -y postgresql postgresql-contrib && \
     rm -rf /var/lib/apt/lists/*
 
-EXPOSE 5432
+# EXPOSE 5432
 
 # Set default Postgres user and password
 ENV POSTGRES_USER=postgres
@@ -57,7 +59,7 @@ ENV MINIO_VOLUMES="/data" \
     MINIO_USERNAME="minioadmin" \
     MINIO_PASSWORD="minioadmin"
 
-EXPOSE 9000 9001
+# EXPOSE 9000 9001
 
 # ----------- End MINIO setup  -----------
 
@@ -67,7 +69,7 @@ RUN apt-get update && \
     apt-get install -y curl && \
     bash -c 'for i in {1..5}; do curl -L https://install.meilisearch.com | sh && break || { echo "MeiliSearch install failed, retrying ($i/5)..."; sleep 5; }; done'
 
-EXPOSE 7700
+# EXPOSE 7700
 # ----------- End MeiliSearch setup -----------
 
 # ----------- Start FDR setup -----------
@@ -90,8 +92,6 @@ RUN npm install -g fern-api
 # ----------- Start nextapp setup -----------
 COPY docs_bundle.tar.gz .
 
-RUN npm install -g pnpm@v9.4.0
-RUN pnpm config set package-manager-strict false
 RUN mkdir -p /nextapp && \
     tar -xzf docs_bundle.tar.gz -C /nextapp && \
     cd /nextapp && \

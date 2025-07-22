@@ -42,6 +42,7 @@
     "vercel:up": "pnpm up -r \"@vercel/*\""
   },
   "resolutions": {
+    "@eslint/plugin-kit": "^0.3.3",
     "@types/estree": "1.0.6",
     "clipboardy": "4.0.0",
     "colorjs.io": "^0.5.2",
@@ -101,7 +102,7 @@
     "express": "^4.21.2",
     "get-port": "^7.1.0",
     "globals": "^15.15.0",
-    "http-proxy-middleware": "^3.0.3",
+    "http-proxy-middleware": "^3.0.5",
     "husky": "^8.0.1",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
