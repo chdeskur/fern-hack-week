@@ -160,6 +160,7 @@ describe("Fixture files", () => {
   let landingPageMdx: string;
   let complexOverviewMdx: string;
   let advancedFeaturesMdx: string;
+  let openApiServerMdx: string;
 
   beforeAll(async () => {
     const fs = await import("fs/promises");
@@ -177,6 +178,10 @@ describe("Fixture files", () => {
     );
     advancedFeaturesMdx = await fs.readFile(
       path.join(__dirname, "fixtures/advanced-features.mdx"),
+      "utf-8"
+    );
+    openApiServerMdx = await fs.readFile(
+      path.join(__dirname, "fixtures/openapi-server.mdx"),
       "utf-8"
     );
   });
@@ -622,6 +627,23 @@ describe("Fixture files", () => {
       await expect(JSON.stringify(mdxResult, null, 2)).toMatchFileSnapshot(
         file
       );
+    });
+  });
+
+  describe("openapi-server.mdx", () => {
+    it("round-trip conversion preserves structure", () => {
+      const { html, frontmatter, originalElements } =
+        mdxToHtml(openApiServerMdx);
+      const changedNodes = Object.fromEntries(
+        Object.entries(originalElements).map(([key, _]) => [key, false])
+      );
+      const mdxResult = htmlToMdx(
+        html,
+        frontmatter,
+        originalElements,
+        changedNodes
+      );
+      expect(mdxResult.mdx).toBe(openApiServerMdx);
     });
   });
 });

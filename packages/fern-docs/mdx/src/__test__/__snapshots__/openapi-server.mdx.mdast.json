@@ -1,0 +1,891 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "OpenAPI allows you to specify one or more base URLs under the ",
+          "position": {
+            "start": {
+              "line": 2,
+              "column": 1,
+              "offset": 1
+            },
+            "end": {
+              "line": 2,
+              "column": 63,
+              "offset": 63
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "servers",
+          "position": {
+            "start": {
+              "line": 2,
+              "column": 63,
+              "offset": 63
+            },
+            "end": {
+              "line": 2,
+              "column": 72,
+              "offset": 72
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " key.",
+          "position": {
+            "start": {
+              "line": 2,
+              "column": 72,
+              "offset": 72
+            },
+            "end": {
+              "line": 2,
+              "column": 77,
+              "offset": 77
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 2,
+          "column": 1,
+          "offset": 1
+        },
+        "end": {
+          "line": 2,
+          "column": 77,
+          "offset": 77
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "yml",
+      "meta": "openapi.yml ",
+      "value": "\nservers: \n  - url: https://api.yourcompany.com/\n  - url: https://api.eu.yourcompany.com/",
+      "position": {
+        "start": {
+          "line": 4,
+          "column": 1,
+          "offset": 79
+        },
+        "end": {
+          "line": 9,
+          "column": 4,
+          "offset": 192
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Specifying servers is valuable for both SDKs and Docs:",
+          "position": {
+            "start": {
+              "line": 11,
+              "column": 1,
+              "offset": 194
+            },
+            "end": {
+              "line": 11,
+              "column": 55,
+              "offset": 248
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 11,
+          "column": 1,
+          "offset": 194
+        },
+        "end": {
+          "line": 11,
+          "column": 56,
+          "offset": 249
+        }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "For SDKs, your users won't need to manually specify the baseURL at client instantiation",
+                  "position": {
+                    "start": {
+                      "line": 13,
+                      "column": 3,
+                      "offset": 253
+                    },
+                    "end": {
+                      "line": 13,
+                      "column": 90,
+                      "offset": 340
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 13,
+                  "column": 3,
+                  "offset": 253
+                },
+                "end": {
+                  "line": 13,
+                  "column": 90,
+                  "offset": 340
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 13,
+              "column": 1,
+              "offset": 251
+            },
+            "end": {
+              "line": 13,
+              "column": 90,
+              "offset": 340
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "For Docs, your API playground will automatically hit the correct server",
+                  "position": {
+                    "start": {
+                      "line": 14,
+                      "column": 3,
+                      "offset": 343
+                    },
+                    "end": {
+                      "line": 14,
+                      "column": 74,
+                      "offset": 414
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 14,
+                  "column": 3,
+                  "offset": 343
+                },
+                "end": {
+                  "line": 14,
+                  "column": 74,
+                  "offset": 414
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 14,
+              "column": 1,
+              "offset": 341
+            },
+            "end": {
+              "line": 14,
+              "column": 74,
+              "offset": 414
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 13,
+          "column": 1,
+          "offset": 251
+        },
+        "end": {
+          "line": 14,
+          "column": 74,
+          "offset": 414
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Naming your servers",
+          "position": {
+            "start": {
+              "line": 16,
+              "column": 4,
+              "offset": 419
+            },
+            "end": {
+              "line": 16,
+              "column": 23,
+              "offset": 438
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 16,
+          "column": 1,
+          "offset": 416
+        },
+        "end": {
+          "line": 16,
+          "column": 23,
+          "offset": 438
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "If you have more than one server, we recommend specifying an ",
+          "position": {
+            "start": {
+              "line": 18,
+              "column": 1,
+              "offset": 440
+            },
+            "end": {
+              "line": 18,
+              "column": 62,
+              "offset": 501
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "x-fern-server-name",
+          "position": {
+            "start": {
+              "line": 18,
+              "column": 62,
+              "offset": 501
+            },
+            "end": {
+              "line": 18,
+              "column": 82,
+              "offset": 521
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " to name\nthe server.",
+          "position": {
+            "start": {
+              "line": 18,
+              "column": 82,
+              "offset": 521
+            },
+            "end": {
+              "line": 19,
+              "column": 12,
+              "offset": 542
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 18,
+          "column": 1,
+          "offset": 440
+        },
+        "end": {
+          "line": 19,
+          "column": 13,
+          "offset": 543
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "yml",
+      "meta": "openapi.yml {3,5}",
+      "value": "servers: \n  - x-fern-server-name: Production\n    url: https://api.yourcompany.com/\n  - x-fern-server-name: Production_EU\n    url: https://api.eu.yourcompany.com/",
+      "position": {
+        "start": {
+          "line": 21,
+          "column": 1,
+          "offset": 545
+        },
+        "end": {
+          "line": 27,
+          "column": 4,
+          "offset": 735
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Multiple Base URLs for a single API",
+          "position": {
+            "start": {
+              "line": 29,
+              "column": 4,
+              "offset": 740
+            },
+            "end": {
+              "line": 29,
+              "column": 39,
+              "offset": 775
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 29,
+          "column": 1,
+          "offset": 737
+        },
+        "end": {
+          "line": 29,
+          "column": 39,
+          "offset": 775
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "If you have a microservice architecture, it is possible that you may have different endpoints hosted\nat different URLs. For example, your AI endpoints might be hosted at ",
+          "position": {
+            "start": {
+              "line": 31,
+              "column": 1,
+              "offset": 777
+            },
+            "end": {
+              "line": 32,
+              "column": 70,
+              "offset": 947
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "ai.yourcompany.com",
+          "position": {
+            "start": {
+              "line": 32,
+              "column": 70,
+              "offset": 947
+            },
+            "end": {
+              "line": 32,
+              "column": 90,
+              "offset": 967
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " and the rest\nof your endpoints might be hosted at ",
+          "position": {
+            "start": {
+              "line": 32,
+              "column": 90,
+              "offset": 967
+            },
+            "end": {
+              "line": 33,
+              "column": 38,
+              "offset": 1019
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "api.yourcompany.com",
+          "position": {
+            "start": {
+              "line": 33,
+              "column": 38,
+              "offset": 1019
+            },
+            "end": {
+              "line": 33,
+              "column": 59,
+              "offset": 1040
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ".",
+          "position": {
+            "start": {
+              "line": 33,
+              "column": 59,
+              "offset": 1040
+            },
+            "end": {
+              "line": 33,
+              "column": 60,
+              "offset": 1041
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 31,
+          "column": 1,
+          "offset": 777
+        },
+        "end": {
+          "line": 33,
+          "column": 61,
+          "offset": 1042
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "To specify this, you will need to add configuration to both your ",
+          "position": {
+            "start": {
+              "line": 35,
+              "column": 1,
+              "offset": 1044
+            },
+            "end": {
+              "line": 35,
+              "column": 66,
+              "offset": 1109
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "generators.yml",
+          "position": {
+            "start": {
+              "line": 35,
+              "column": 66,
+              "offset": 1109
+            },
+            "end": {
+              "line": 35,
+              "column": 82,
+              "offset": 1125
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " and OpenAPI spec. The\nsnippet directly below shows how to configure an environment with multiple urls in your ",
+          "position": {
+            "start": {
+              "line": 35,
+              "column": 82,
+              "offset": 1125
+            },
+            "end": {
+              "line": 36,
+              "column": 89,
+              "offset": 1237
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "generators.yml",
+          "position": {
+            "start": {
+              "line": 36,
+              "column": 89,
+              "offset": 1237
+            },
+            "end": {
+              "line": 36,
+              "column": 105,
+              "offset": 1253
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ".",
+          "position": {
+            "start": {
+              "line": 36,
+              "column": 105,
+              "offset": 1253
+            },
+            "end": {
+              "line": 36,
+              "column": 106,
+              "offset": 1254
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 35,
+          "column": 1,
+          "offset": 1044
+        },
+        "end": {
+          "line": 36,
+          "column": 107,
+          "offset": 1255
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "yml",
+      "meta": "generators.yml {3-8}",
+      "value": "api: \n  default-environment: Production\n  default-url: api\n  environments: \n    Production: \n      api: api.yourcompany.com\n      ai: ai.yourcompany.com\n  specs: \n    - openapi: ./path/to/your/openapi\n      overrides: ./path/to/your/overrides # optional",
+      "position": {
+        "start": {
+          "line": 38,
+          "column": 1,
+          "offset": 1257
+        },
+        "end": {
+          "line": 49,
+          "column": 4,
+          "offset": 1542
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Once you've specified the environments in your ",
+          "position": {
+            "start": {
+              "line": 51,
+              "column": 1,
+              "offset": 1544
+            },
+            "end": {
+              "line": 51,
+              "column": 48,
+              "offset": 1591
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "generators.yml",
+          "position": {
+            "start": {
+              "line": 51,
+              "column": 48,
+              "offset": 1591
+            },
+            "end": {
+              "line": 51,
+              "column": 64,
+              "offset": 1607
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ", you can use the ",
+          "position": {
+            "start": {
+              "line": 51,
+              "column": 64,
+              "offset": 1607
+            },
+            "end": {
+              "line": 51,
+              "column": 82,
+              "offset": 1625
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "x-fern-server-name",
+          "position": {
+            "start": {
+              "line": 51,
+              "column": 82,
+              "offset": 1625
+            },
+            "end": {
+              "line": 51,
+              "column": 102,
+              "offset": 1645
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": "\nextension to specify which server the operation belongs to.",
+          "position": {
+            "start": {
+              "line": 51,
+              "column": 103,
+              "offset": 1646
+            },
+            "end": {
+              "line": 52,
+              "column": 60,
+              "offset": 1706
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 51,
+          "column": 1,
+          "offset": 1544
+        },
+        "end": {
+          "line": 52,
+          "column": 61,
+          "offset": 1707
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "yml",
+      "meta": "openapi.yml {4}",
+      "value": "paths: \n  /chat: \n    post: \n      x-fern-server-name: ai ",
+      "position": {
+        "start": {
+          "line": 54,
+          "column": 1,
+          "offset": 1709
+        },
+        "end": {
+          "line": 59,
+          "column": 4,
+          "offset": 1794
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "If you have multiple environments like development or staging, you can model those in your ",
+          "position": {
+            "start": {
+              "line": 61,
+              "column": 1,
+              "offset": 1796
+            },
+            "end": {
+              "line": 61,
+              "column": 92,
+              "offset": 1887
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "generators.yml",
+          "position": {
+            "start": {
+              "line": 61,
+              "column": 92,
+              "offset": 1887
+            },
+            "end": {
+              "line": 61,
+              "column": 108,
+              "offset": 1903
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": "\nas well.",
+          "position": {
+            "start": {
+              "line": 61,
+              "column": 109,
+              "offset": 1904
+            },
+            "end": {
+              "line": 62,
+              "column": 9,
+              "offset": 1913
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 61,
+          "column": 1,
+          "offset": 1796
+        },
+        "end": {
+          "line": 62,
+          "column": 10,
+          "offset": 1914
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "yml",
+      "meta": "generators.yml {7-12}",
+      "value": "api: \n  default-environment: Production\n  default-url: api\n  environments: \n    Production: \n      api: api.yourcompany.com\n      ai: ai.yourcompany.com\n    Staging: \n      api: api.staging.yourcompany.com\n      ai: ai.staging.yourcompany.com    \n    Dev: \n      api: api.dev.yourcompany.com\n      ai: ai.dev.yourcompany.com          ",
+      "position": {
+        "start": {
+          "line": 64,
+          "column": 1,
+          "offset": 1916
+        },
+        "end": {
+          "line": 78,
+          "column": 4,
+          "offset": 2283
+        }
+      }
+    },
+    {
+      "type": "mdxJsxFlowElement",
+      "name": "Info",
+      "attributes": [],
+      "children": [
+        {
+          "type": "text",
+          "value": "To see an example of this in production, check out the Chariot ",
+          "position": {
+            "start": {
+              "line": 80,
+              "column": 7,
+              "offset": 2291
+            },
+            "end": {
+              "line": 80,
+              "column": 70,
+              "offset": 2354
+            }
+          }
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "https://github.com/chariot-giving/chariot-openapi/blob/main/fern/apis/2025-02-24/generators.yml",
+          "children": [
+            {
+              "type": "text",
+              "value": "generators.yml",
+              "position": {
+                "start": {
+                  "line": 80,
+                  "column": 71,
+                  "offset": 2355
+                },
+                "end": {
+                  "line": 80,
+                  "column": 85,
+                  "offset": 2369
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 80,
+              "column": 70,
+              "offset": 2354
+            },
+            "end": {
+              "line": 80,
+              "column": 183,
+              "offset": 2467
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 80,
+          "column": 1,
+          "offset": 2285
+        },
+        "end": {
+          "line": 80,
+          "column": 190,
+          "offset": 2474
+        }
+      },
+      "data": {
+        "_mdxExplicitJsx": true
+      }
+    }
+  ],
+  "position": {
+    "start": {
+      "line": 1,
+      "column": 1,
+      "offset": 0
+    },
+    "end": {
+      "line": 81,
+      "column": 1,
+      "offset": 2475
+    }
+  }
+}

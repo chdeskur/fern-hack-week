@@ -25,10 +25,15 @@ export const GlobalDataHashAttribute = Node.create({
           keepOnSplit: false,
           parseHTML: (element) => element.getAttribute("data-hash") || null,
           renderHTML: (attributes) => {
-            if (attributes["data-hash"] == null) {
-              return {};
+            // Sometimes Tiptap will output extraneous elements that inherit other elements' attributes
+            // Check data-type to ensure data-hash is only kept for elements that were created by mdxToHtml
+            if (
+              attributes["data-hash"] != null &&
+              attributes["data-type"] != null
+            ) {
+              return { "data-hash": attributes["data-hash"] };
             }
-            return { "data-hash": attributes["data-hash"] };
+            return {};
           },
         },
       },
