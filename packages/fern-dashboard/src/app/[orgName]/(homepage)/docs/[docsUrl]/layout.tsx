@@ -1,4 +1,5 @@
 import { getCurrentSessionOrThrow } from "@/app/services/auth0/getCurrentSession";
+import { Auth0OrgName } from "@/app/services/auth0/types";
 import { DocsSiteLayout } from "@/components/docs-page/DocsSiteLayout";
 import { getAllFeatureFlags } from "@/components/posthog/feature-flags/server-side";
 import { parseDocsUrlParam } from "@/utils/parseDocsUrlParam";
@@ -8,7 +9,7 @@ export default async function Layout({
   params,
   children,
 }: Readonly<{
-  params: Promise<{ orgName: string; docsUrl: EncodedDocsUrl }>;
+  params: Promise<{ orgName: Auth0OrgName; docsUrl: EncodedDocsUrl }>;
   children: React.JSX.Element;
 }>) {
   const { orgName, ..._params } = await params;

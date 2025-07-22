@@ -1,5 +1,6 @@
 "use client";
 
+import { Auth0OrgName } from "@/app/services/auth0/types";
 import { useDocsSite } from "@/state/useMyDocsSites";
 import { DocsUrl } from "@/utils/types";
 
@@ -11,7 +12,7 @@ import { DocsSiteNavBar } from "./DocsSiteNavBar";
 export declare namespace DocsSiteLayout {
   export interface Props {
     docsUrl: DocsUrl;
-    orgName: string;
+    orgName: Auth0OrgName;
     featureFlags: PosthogFeatureFlags;
     children: React.JSX.Element;
   }
@@ -24,6 +25,7 @@ export function DocsSiteLayout({
   children,
 }: DocsSiteLayout.Props) {
   const docsSite = useDocsSite(docsUrl);
+
   if (docsSite.type === "loaded" && docsSite.value == null) {
     return <Page404 />;
   }
