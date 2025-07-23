@@ -438,54 +438,58 @@ const getAllApisForDomain = async (
   );
 };
 
-const getEndpointById =
-  (cacheConfig: Required<CacheConfig>) =>
-  async (
-    domain: string,
-    apiDefinitionId: string,
-    endpointId: EndpointId
-  ): Promise<{
-    endpoint: ApiDefinition.EndpointDefinition;
-    nodes: FernNavigation.EndpointNode[];
-    globalHeaders: ObjectProperty[];
-    authSchemes: AuthScheme[];
-    types: Record<TypeId, TypeDefinition>;
-  }> => {
-    "use cache";
-    unstable_cacheTag(domain, "getEndpointById", apiDefinitionId, endpointId);
+const getEndpointById = async ({
+  domain,
+  apiDefinitionId,
+  endpointId,
+  cacheConfig,
+}: {
+  domain: string;
+  apiDefinitionId: string;
+  endpointId: EndpointId;
+  cacheConfig: Required<CacheConfig>;
+}): Promise<{
+  endpoint: ApiDefinition.EndpointDefinition;
+  nodes: FernNavigation.EndpointNode[];
+  globalHeaders: ObjectProperty[];
+  authSchemes: AuthScheme[];
+  types: Record<TypeId, TypeDefinition>;
+}> => {
+  "use cache";
+  unstable_cacheTag(domain, "getEndpointById", apiDefinitionId, endpointId);
 
-    const api = await createGetPrunedApiCached(domain, cacheConfig)(
-      apiDefinitionId,
-      {
-        type: "endpoint",
-        endpointId,
-      }
-    );
-
-    const endpoint = api.endpoints[endpointId];
-    if (endpoint == null) {
-      console.error("Could not find endpoint with ID", endpointId);
-      notFound();
+  const api = await createGetPrunedApiCached(domain, cacheConfig)(
+    apiDefinitionId,
+    {
+      type: "endpoint",
+      endpointId,
     }
+  );
 
-    const root = await unsafe_getFullRoot(domain);
-    return {
-      endpoint,
-      nodes: FernNavigation.NodeCollector.collect(root)
-        .getNodesInOrder()
-        .filter(FernNavigation.hasMetadata)
-        .filter(
-          (node): node is FernNavigation.EndpointNode =>
-            node.type === "endpoint" &&
-            node.apiDefinitionId === api.id &&
-            node.endpointId === endpoint.id
-        ),
-      globalHeaders: api.globalHeaders ?? [],
-      authSchemes:
-        endpoint.auth?.map((id) => api.auths[id]).filter(isNonNullish) ?? [],
-      types: api.types,
-    };
+  const endpoint = api.endpoints[endpointId];
+  if (endpoint == null) {
+    console.error("Could not find endpoint with ID", endpointId);
+    notFound();
+  }
+
+  const root = await unsafe_getFullRoot(domain);
+  return {
+    endpoint,
+    nodes: FernNavigation.NodeCollector.collect(root)
+      .getNodesInOrder()
+      .filter(FernNavigation.hasMetadata)
+      .filter(
+        (node): node is FernNavigation.EndpointNode =>
+          node.type === "endpoint" &&
+          node.apiDefinitionId === api.id &&
+          node.endpointId === endpoint.id
+      ),
+    globalHeaders: api.globalHeaders ?? [],
+    authSchemes:
+      endpoint.auth?.map((id) => api.auths[id]).filter(isNonNullish) ?? [],
+    types: api.types,
   };
+};
 
 const getEndpointByLocator = async (
   domain: string,
@@ -1036,7 +1040,12 @@ export const createCachedDocsLoader = async (
     getMdxBundlerFiles: () => getMdxBundlerFiles(config)(domain),
     getPrunedApi: cache(createGetPrunedApiCached(domain, config)),
     getEndpointById: cache((apiDefinitionId: string, endpointId: EndpointId) =>
-      getEndpointById(config)(domain, apiDefinitionId, endpointId)
+      getEndpointById({
+        domain,
+        apiDefinitionId,
+        endpointId,
+        cacheConfig: config,
+      })
     ),
     getEndpointByLocator: cache(
       unstable_cache(
