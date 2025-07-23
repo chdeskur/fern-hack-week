@@ -26,7 +26,7 @@ async function OAuthReferencedEndpointForm({
     if (endpoint == null) {
       return (
         <PlaygroundBearerAuthForm
-          bearerAuth={{ tokenName: "token" }}
+          bearerAuth={{ tokenName: "token", description: undefined }}
           disabled={disabled}
         />
       );
@@ -50,7 +50,7 @@ async function OAuthReferencedEndpointForm({
     console.error(`[playground-oauth-form-server] ${JSON.stringify(e)}`);
     return (
       <PlaygroundBearerAuthForm
-        bearerAuth={{ tokenName: "token" }}
+        bearerAuth={{ tokenName: "token", description: undefined }}
         disabled={disabled}
       />
     );

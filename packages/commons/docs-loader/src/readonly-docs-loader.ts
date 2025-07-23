@@ -1035,13 +1035,8 @@ export const createCachedDocsLoader = async (
     getFiles: () => getFiles(config)(domain),
     getMdxBundlerFiles: () => getMdxBundlerFiles(config)(domain),
     getPrunedApi: cache(createGetPrunedApiCached(domain, config)),
-    getEndpointById: cache(
-      unstable_cache(
-        (apiDefinitionId: string, endpointId: EndpointId) =>
-          getEndpointById(config)(domain, apiDefinitionId, endpointId),
-        [domain, cacheSeed(), config.cacheKeySuffix],
-        { tags: [domain, "endpointById"] }
-      )
+    getEndpointById: cache((apiDefinitionId: string, endpointId: EndpointId) =>
+      getEndpointById(config)(domain, apiDefinitionId, endpointId)
     ),
     getEndpointByLocator: cache(
       unstable_cache(
