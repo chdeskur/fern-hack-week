@@ -33,6 +33,7 @@ types:
       headers: list<Header>
       request: optional<HttpRequest>
       response: optional<HttpResponse>
+      responsesV2: optional<HttpResponsesV2>
       errors:
         type: optional<list<ErrorDeclaration>>
         availability: deprecated
@@ -113,6 +114,10 @@ types:
       statusCode:
         type: optional<integer>
         docs: Defaults to 200
+  
+  HttpResponsesV2:
+    properties:
+      responses: optional<list<HttpResponse>>
 
   ErrorDeclaration:
     extends:

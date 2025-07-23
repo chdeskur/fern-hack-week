@@ -89,6 +89,7 @@ function transformEndpoint({
         ? transformHttpRequest({ dbShape: dbShape.request })
         : undefined,
     response: dbShape.response,
+    responsesV2: dbShape.responsesV2,
     errors: dbShape.errors ?? [],
     errorsV2: transformErrorsV2(dbShape),
     examples: dbShape.examples.map((example) =>

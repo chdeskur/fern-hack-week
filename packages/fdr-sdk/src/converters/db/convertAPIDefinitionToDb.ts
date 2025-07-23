@@ -241,6 +241,19 @@ function transformEndpoint({
             endpointDefinition: writeShape,
           })
         : undefined,
+    responsesV2:
+      writeShape.responsesV2 != null
+        ? {
+            responses: writeShape.responsesV2.responses?.map((response) =>
+              convertResponseToDb({
+                writeShape: response,
+                apiDefinition,
+                sdkSnippetHolder: snippets,
+                endpointDefinition: writeShape,
+              })
+            ),
+          }
+        : undefined,
     errors: writeShape.errors ?? [],
     errorsV2: transformErrorsV2(writeShape),
     examples: getExampleEndpointCalls({

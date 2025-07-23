@@ -9,6 +9,7 @@ export * from "./HttpRequestBodyShape.js";
 export * from "./JsonRequestBody.js";
 export * from "./JsonBodyShape.js";
 export * from "./HttpResponse.js";
+export * from "./HttpResponsesV2.js";
 export * from "./ErrorDeclaration.js";
 export * from "./ErrorDeclarationV2.js";
 export * from "./HttpResponseBodyShape.js";

@@ -17,6 +17,7 @@ export interface DbEndpointDefinition extends FernRegistry.api.v1.WithDescriptio
     headers: FernRegistry.api.v1.read.Header[];
     request: FernRegistry.api.v1.db.DbHttpRequest | undefined;
     response: FernRegistry.api.v1.read.HttpResponse | undefined;
+    responsesV2: FernRegistry.api.v1.read.HttpResponsesV2 | undefined;
     errors: FernRegistry.api.v1.read.ErrorDeclaration[] | undefined;
     errorsV2: FernRegistry.api.v1.read.ErrorDeclarationV2[] | undefined;
     examples: FernRegistry.api.v1.read.ExampleEndpointCall[];

@@ -8,6 +8,7 @@ export * from "./Header.js";
 export * from "./HttpRequest.js";
 export * from "./HttpRequestBodyShape.js";
 export * from "./HttpResponse.js";
+export * from "./HttpResponsesV2.js";
 export * from "./JsonBodyShape.js";
 export * from "./HttpResponseBodyShape.js";
 export * from "./FileDownloadResponseBodyShape.js";

@@ -8,6 +8,7 @@ export * from "./Header";
 export * from "./HttpRequest";
 export * from "./HttpRequestBodyShape";
 export * from "./HttpResponse";
+export * from "./HttpResponsesV2";
 export * from "./JsonBodyShape";
 export * from "./HttpResponseBodyShape";
 export * from "./FileDownloadResponseBodyShape";

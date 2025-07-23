@@ -9,6 +9,7 @@ export * from "./HttpRequestBodyShape";
 export * from "./JsonRequestBody";
 export * from "./JsonBodyShape";
 export * from "./HttpResponse";
+export * from "./HttpResponsesV2";
 export * from "./ErrorDeclaration";
 export * from "./ErrorDeclarationV2";
 export * from "./HttpResponseBodyShape";
