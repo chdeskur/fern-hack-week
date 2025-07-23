@@ -1,4 +1,7 @@
-FROM node:lts-bookworm-slim
+FROM cgr.dev/chainguard/wolfi-base:latest
+
+# Install Node.js and npm
+RUN apk add --no-cache nodejs npm
 
 RUN npm install -g turbo@2.0.1
 
@@ -12,23 +15,29 @@ COPY servers/self-hosted/scripts /scripts
 
 # -----------  Start Postgres setup  -----------
 
-RUN apt-get update && \
-    apt-get install -y postgresql postgresql-contrib && \
-    rm -rf /var/lib/apt/lists/*
+# Create postgres user first
+RUN addgroup -g 70 -S postgres && \
+    adduser -u 70 -S -D -G postgres -H -h /var/lib/postgresql -s /bin/sh postgres
 
-# EXPOSE 5432
+# Install PostgreSQL packages
+RUN apk add --no-cache postgresql postgresql-contrib postgresql-dev && \
+    mkdir -p /run/postgresql /var/lib/postgresql/data && \
+    chown -R postgres:postgres /run/postgresql /var/lib/postgresql
 
 # Set default Postgres user and password
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=postgres
 ENV DATABASE_NAME=fdr
 
-RUN service postgresql start && \
+# Initialize PostgreSQL as postgres user
+RUN su - postgres -c "initdb -D /var/lib/postgresql/data" && \
+    su - postgres -c "pg_ctl -D /var/lib/postgresql/data -l /var/lib/postgresql/logfile start" && \
     su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'postgres';\"" && \
     su - postgres -c "createdb fdr" && \
-    service postgresql stop
+    su - postgres -c "pg_ctl -D /var/lib/postgresql/data stop"
 
-RUN sed -i "s/local   all             postgres                                peer/local   all             postgres                                md5/" /etc/postgresql/*/main/pg_hba.conf
+# Configure PostgreSQL authentication
+RUN sed -i "s/local   all             postgres                                peer/local   all             postgres                                md5/" /var/lib/postgresql/data/pg_hba.conf
 
 ENV DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fdr
 
@@ -40,12 +49,11 @@ COPY servers/fdr/prisma /prisma
 
 # ----------- Start MINIO setup  -----------
 
-RUN apt-get update && \
-    apt-get install -y wget && \
+RUN apk add --no-cache wget && \
     wget https://dl.min.io/server/minio/release/linux-amd64/minio && \
     chmod +x minio && \
     mv minio /usr/local/bin/ && \
-    useradd -m -s /bin/bash minio-user && \
+    adduser -D -s /bin/sh minio-user && \
     mkdir -p /data && \
     chown -R minio-user:minio-user /data && \
     wget https://dl.min.io/client/mc/release/linux-amd64/mc && \
@@ -59,17 +67,12 @@ ENV MINIO_VOLUMES="/data" \
     MINIO_USERNAME="minioadmin" \
     MINIO_PASSWORD="minioadmin"
 
-# EXPOSE 9000 9001
-
 # ----------- End MINIO setup  -----------
 
-
 # ----------- Start MeiliSearch setup -----------
-RUN apt-get update && \
-    apt-get install -y curl && \
+RUN apk add --no-cache curl bash && \
     bash -c 'for i in {1..5}; do curl -L https://install.meilisearch.com | sh && break || { echo "MeiliSearch install failed, retrying ($i/5)..."; sleep 5; }; done'
 
-# EXPOSE 7700
 # ----------- End MeiliSearch setup -----------
 
 # ----------- Start FDR setup -----------
@@ -95,11 +98,12 @@ COPY docs_bundle.tar.gz .
 RUN mkdir -p /nextapp && \
     tar -xzf docs_bundle.tar.gz -C /nextapp && \
     cd /nextapp && \
+    node -e "const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); delete pkg.devDependencies['typescript-plugin-css-modules']; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));" && \
     pnpm add esbuild
 
 # ----------- End nextapp setup -------------
 
-RUN apt-get update && apt-get install -y jq yq
+RUN apk add --no-cache jq yq
 
 # ----------- Start Buf CLI setup -----------
 RUN wget https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_64 -O /usr/local/bin/buf && \
@@ -107,5 +111,4 @@ RUN wget https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_
 # ----------- End Buf CLI setup -----------
 
 ENTRYPOINT ["/bin/bash", "/scripts/run.sh"]
-
 

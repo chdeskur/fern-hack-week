@@ -16,12 +16,12 @@ fi
 
 # -----------  Start Postgres setup  -----------
 echo "Starting PostgreSQL service..."
-service postgresql start
+# Use pg_ctl instead of service command (which doesn't exist in Wolfi)
+su - postgres -c "pg_ctl -D /var/lib/postgresql/data start"
 echo "PostgreSQL service started."
 
-# 'pgrep' may not be available in slim images; use alternative to get postgres PID
-# 'ps' is not available; fallback to pgrep or skip PID retrieval if unavailable
-postgres_pid=$(pgrep -u postgres -n postgres || true)
+# Use pidof or ps to get postgres PID (pgrep might not be available)
+postgres_pid=$(pidof postgres || ps aux | grep postgres | grep -v grep | awk '{print $2}' | head -1 || true)
 echo "PostgreSQL PID: $postgres_pid"
 
 echo "Creating Postgres database..."
