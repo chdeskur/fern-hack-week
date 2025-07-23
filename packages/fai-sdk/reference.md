@@ -146,6 +146,92 @@ await client.analytics.getInsights("domain");
 </dl>
 </details>
 
+## Chat
+
+<details><summary><code>client.chat.<a href="/src/api/resources/chat/client/Client.ts">chatCompletion</a>(domain, { ...params }) -> FernFai.ChatCompletionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a docs chat completion for a given domain
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.chat.chatCompletion("domain", {
+    model: undefined,
+    system_prompt: undefined,
+    messages: [
+        {
+            role: "role",
+            text: "text",
+        },
+        {
+            role: "role",
+            text: "text",
+        },
+    ],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FernFai.ChatCompletionRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Chat.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Conversations
 
 <details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client/Client.ts">getConversation</a>(domain, conversationId) -> FernFai.Conversation</code></summary>
@@ -209,6 +295,84 @@ await client.conversations.getConversation("domain", "conversation_id");
 <dd>
 
 **requestOptions:** `Conversations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Index
+
+<details><summary><code>client.index.<a href="/src/api/resources/index/client/Client.ts">indexDocument</a>(domain, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Index a document for a given domain
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.index.indexDocument("domain", {
+    index_name: undefined,
+    document_id: "document_id",
+    context: "context",
+    content: "content",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FernFai.IndexRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Index.RequestOptions`
 
 </dd>
 </dl>

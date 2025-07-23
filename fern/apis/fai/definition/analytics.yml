@@ -1,4 +1,4 @@
-docs: APIs for the FAI (Acorn) Service
+docs: FAI Analytics API
 
 imports:
   commons: ./commons.yml

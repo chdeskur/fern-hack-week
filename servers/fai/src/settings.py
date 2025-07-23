@@ -10,6 +10,8 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from src.types.embedding_model import EmbeddingModel
+
 
 load_dotenv()
 logging.config.fileConfig("logging.conf")
@@ -34,6 +36,11 @@ class Variables:
 class Config:
     INSIGHTS_NUM_CLUSTERS: int = 8
     EMBEDDING_BATCH_SIZE: int = 100
+    DEFAULT_EMBEDDING_MODEL: EmbeddingModel = EmbeddingModel(
+        model_name="text-embedding-3-large",
+        model_id="text-embedding-3-large",
+        model_provider="openai",
+    )
 
 
 class SingletonFactory:

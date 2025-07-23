@@ -1,6 +1,6 @@
 .DS_Store
 
-
+servers/fai
 lib
 build
 **/dist/**

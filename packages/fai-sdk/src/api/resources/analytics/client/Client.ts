@@ -31,7 +31,7 @@ export declare namespace Analytics {
 }
 
 /**
- * APIs for the FAI (Acorn) Service
+ * FAI Analytics API
  */
 export class Analytics {
     protected readonly _options: Analytics.Options;

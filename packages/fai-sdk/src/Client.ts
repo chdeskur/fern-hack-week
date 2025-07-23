@@ -6,7 +6,9 @@ import * as environments from "./environments.js";
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Analytics } from "./api/resources/analytics/client/Client.js";
+import { Chat } from "./api/resources/chat/client/Client.js";
 import { Conversations } from "./api/resources/conversations/client/Client.js";
+import { Index } from "./api/resources/index/client/Client.js";
 import { Queries } from "./api/resources/queries/client/Client.js";
 
 export declare namespace FernFaiClient {
@@ -34,7 +36,9 @@ export declare namespace FernFaiClient {
 export class FernFaiClient {
     protected readonly _options: FernFaiClient.Options;
     protected _analytics: Analytics | undefined;
+    protected _chat: Chat | undefined;
     protected _conversations: Conversations | undefined;
+    protected _index: Index | undefined;
     protected _queries: Queries | undefined;
 
     constructor(_options: FernFaiClient.Options = {}) {
@@ -44,7 +48,7 @@ export class FernFaiClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern-api/fai-sdk",
-                    "X-Fern-SDK-Version": "0.0.38",
+                    "X-Fern-SDK-Version": "0.0.43",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -57,8 +61,16 @@ export class FernFaiClient {
         return (this._analytics ??= new Analytics(this._options));
     }
 
+    public get chat(): Chat {
+        return (this._chat ??= new Chat(this._options));
+    }
+
     public get conversations(): Conversations {
         return (this._conversations ??= new Conversations(this._options));
+    }
+
+    public get index(): Index {
+        return (this._index ??= new Index(this._options));
     }
 
     public get queries(): Queries {
