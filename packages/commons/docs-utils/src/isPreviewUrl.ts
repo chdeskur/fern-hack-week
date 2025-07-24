@@ -3,12 +3,6 @@ export function isPreviewDomain(domain: string): boolean {
   // The uuid part can be truncated, so allow trailing dash and partial uuid
   const previewUuidPattern = /preview-[0-9a-f-]+/i;
   const hasPattern = previewUuidPattern.test(domain);
-  // Add logs for debugging
-  if (typeof console !== "undefined" && typeof console.log === "function") {
-    console.log(`[isPreviewDomain] Checking domain: ${domain}`);
-    console.log(`[isPreviewDomain] Pattern: ${previewUuidPattern}`);
-    console.log(`[isPreviewDomain] Match result: ${hasPattern}`);
-  }
   return hasPattern;
 }
 
