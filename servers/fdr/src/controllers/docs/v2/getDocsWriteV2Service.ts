@@ -270,20 +270,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             )
           )
         ).filter(isNonNullish);
-        const apiDefinitionsLatest = (
-          await Promise.all(
-            dbDocsDefinition.referencedApis.map(
-              async (id) => await app.services.db.getApiLatestDefinition(id)
-            )
-          )
-        ).filter(isNonNullish);
 
-        const apiDefinitionsById = Object.fromEntries(
-          apiDefinitions.map((definition) => [definition.id, definition])
-        );
-        const apiDefinitionsLatestById = Object.fromEntries(
-          apiDefinitionsLatest.map((definition) => [definition.id, definition])
-        );
         const warmEndpointCachePromises = apiDefinitions.flatMap(
           (apiDefinition) => {
             return Object.entries(apiDefinition.subpackages).flatMap(
