@@ -9,7 +9,6 @@ import {
   DocsDefinitionCache,
   DocsDefinitionCacheImpl,
 } from "../services/docs-cache/DocsDefinitionCache";
-import LocalDocsDefinitionStore from "../services/docs-cache/LocalDocsDefinitionStore";
 import RedisDocsDefinitionStore from "../services/docs-cache/RedisDocsDefinitionStore";
 import { LocalRevalidatorServiceImpl } from "../services/revalidator/LocalRevalidatorService";
 import {
@@ -87,7 +86,6 @@ export class FdrApplication {
     this.docsDefinitionCache = new DocsDefinitionCacheImpl(
       this,
       this.dao,
-      new LocalDocsDefinitionStore(),
       this.redisDatastore
     );
 

@@ -12,7 +12,6 @@ import {
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import { FdrDao } from "../../db";
 import { Semaphore } from "../revalidator/Semaphore";
-import LocalDocsDefinitionStore from "./LocalDocsDefinitionStore";
 import RedisDocsDefinitionStore from "./RedisDocsDefinitionStore";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
@@ -66,7 +65,6 @@ export interface CachedDocsResponse {
 }
 
 export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
-  private localDocsCache: LocalDocsDefinitionStore;
   private redisDocsCache: RedisDocsDefinitionStore | undefined;
   private DOCS_WRITE_MONITOR: Record<string, Semaphore> = {};
   private initialized: boolean = false;
@@ -74,10 +72,8 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
   constructor(
     private readonly app: FdrApplication,
     private readonly dao: FdrDao,
-    localDocsCache: LocalDocsDefinitionStore,
     redisDocsCache: RedisDocsDefinitionStore | undefined
   ) {
-    this.localDocsCache = localDocsCache;
     this.redisDocsCache = redisDocsCache;
   }
 
@@ -106,7 +102,6 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     if (this.redisDocsCache) {
       await this.redisDocsCache.delete({ url });
     }
-    this.localDocsCache.delete({ url });
   }
 
   public async getDocsForUrl({
@@ -228,7 +223,6 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     if (this.redisDocsCache) {
       await this.redisDocsCache.set({ url, value });
     }
-    this.localDocsCache.set({ url, value });
   }
 
   private async getDocsForUrlFromCache({
@@ -240,7 +234,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     if (this.redisDocsCache) {
       record = await this.redisDocsCache.get({ url });
     } else {
-      record = this.localDocsCache.get({ url }) ?? null;
+      record = null;
     }
     if (record != null && record.version !== SEMANTIC_VERSION) {
       return null;
