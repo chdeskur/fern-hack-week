@@ -294,7 +294,9 @@ it("preview domain truncation - valid preview link", async () => {
   // check link is valid
   expect(startDocsPreviewResponse.previewUrl).toBeDefined();
   const previewUrl = new URL(startDocsPreviewResponse.previewUrl);
-  expect(previewUrl.hostname.length).toBeLessThanOrEqual(63);
+  const subdomains = previewUrl.hostname.split(".");
+  const mainSubdomain = subdomains[0];
+  expect(mainSubdomain.length).toBeLessThanOrEqual(63);
   expect(previewUrl.hostname).toMatch(
     /^short-preview-[a-f0-9-]+\.docs\.buildwithfern\.com$/
   );
@@ -312,7 +314,7 @@ it("preview domain truncation - requires truncation", async () => {
 
   const startDocsPreviewResponse =
     await fdr.docs.v2.write.startDocsPreviewRegister({
-      orgId: FdrAPI.OrgId("medium-org-name"),
+      orgId: FdrAPI.OrgId("medium-org-name-for-truncation"),
       filepaths: [
         DocsV1Write.FilePath("logo.png"),
         DocsV1Write.FilePath("guides/guide.mdx"),
@@ -329,9 +331,11 @@ it("preview domain truncation - requires truncation", async () => {
   expect(startDocsPreviewResponse.ok).toBe(true);
   if (startDocsPreviewResponse.ok) {
     const previewUrl = new URL(startDocsPreviewResponse.body.previewUrl);
-    expect(previewUrl.hostname.length).toBeLessThanOrEqual(63);
+    const subdomains = previewUrl.hostname.split(".");
+    const mainSubdomain = subdomains[0];
+    expect(mainSubdomain.length).toBeLessThanOrEqual(63);
     expect(previewUrl.hostname).toMatch(
-      /^medium-org-name-preview-[a-f0-9-]{8,}\.docs\.buildwithfern\.com$/
+      /^medium-org-name-for-truncation-preview-[a-f0-9-]{23,}\.docs\.buildwithfern\.com$/
     );
   }
 });

@@ -52,7 +52,7 @@ function truncateDomainName({
   docsRegistrationId: string;
   domainSuffix: string;
 }): string {
-  const subdomainLimit = 63;
+  const subdomainLimit = 62;
   const fullDomain = `${orgId}-preview-${docsRegistrationId}.${domainSuffix}`;
 
   if (fullDomain.length <= subdomainLimit) {
@@ -61,7 +61,7 @@ function truncateDomainName({
 
   const prefix = `${orgId}-preview-`;
   const suffix = `.${domainSuffix}`;
-  const availableSpace = subdomainLimit - prefix.length - suffix.length;
+  const availableSpace = subdomainLimit - prefix.length;
 
   // keep 8 characters of obscurity for security
   const minRegistrationIdLength = 8;
@@ -72,7 +72,8 @@ function truncateDomainName({
   }
 
   const truncatedRegistrationId = docsRegistrationId.slice(0, availableSpace);
-  return `${prefix}${truncatedRegistrationId}${suffix}`;
+  const cleanRegistrationId = truncatedRegistrationId.replace(/-+$/, "");
+  return `${prefix}${cleanRegistrationId}${suffix}`;
 }
 
 function validateAndParseFernDomainUrl({
