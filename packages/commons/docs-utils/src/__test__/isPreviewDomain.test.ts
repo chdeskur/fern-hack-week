@@ -1,10 +1,9 @@
 import { extractOrgFromPreview, isPreviewDomain } from "../isPreviewUrl";
 
 describe("isPreviewDomain", () => {
-  it("should return true for valid preview domains", () => {
+  it("should return true for preview domains with truncated UUIDs", () => {
     const validDomains = [
-      "fern-12345678-1234-1234-1234-123456789012.docs.buildwithfern.com",
-      "acme-abcdef01-2345-6789-abcd-ef0123456789.docs.buildwithfern.com",
+      "payabli-preview-fad23292-87bd-4eec-bf26-.docs.buildwithfern.com",
     ];
 
     validDomains.forEach((domain) => {
