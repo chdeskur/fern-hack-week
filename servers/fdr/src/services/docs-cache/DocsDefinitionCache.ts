@@ -148,10 +148,6 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     this.app.logger.info(`Cache MISS for ${url}`);
     const dbResponse = await this.getDocsForUrlFromDatabase({ url });
-    await this.app.services.s3.writeLoadDocsForUrlResponse({
-      domain: url.hostname,
-      readDocsDefinition: dbResponse.response,
-    });
 
     // we don't want to cache from READ if we are currently updating the cache via WRITE
     if (!this.getDocsWriteMonitor(url.hostname).isLocked()) {
