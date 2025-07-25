@@ -9,8 +9,10 @@ from typing import Optional
 from anthropic import Anthropic
 from dotenv import load_dotenv
 from openai import OpenAI
+from turbopuffer import Turbopuffer
 
-from src.types.embedding_model import EmbeddingModel
+from src.enums.embedding_models import EmbeddingModels
+from src.types.model import EmbeddingModel
 
 
 load_dotenv()
@@ -36,11 +38,9 @@ class Variables:
 class Config:
     INSIGHTS_NUM_CLUSTERS: int = 8
     EMBEDDING_BATCH_SIZE: int = 100
-    DEFAULT_EMBEDDING_MODEL: EmbeddingModel = EmbeddingModel(
-        model_name="text-embedding-3-large",
-        model_id="text-embedding-3-large",
-        model_provider="openai",
-    )
+    TURBOPUFFER_DEFAULT_REGION: str = "gcp-us-east4"
+    CUSTOM_INDEX_NAME: str = "custom"
+    DEFAULT_EMBEDDING_MODEL: EmbeddingModel = EmbeddingModels.TEXT_EMBEDDING_3_LARGE.value
 
 
 class SingletonFactory:
@@ -55,6 +55,11 @@ class SingletonFactory:
 
 VARIABLES = SingletonFactory.get_instance(Variables)
 CONFIG = SingletonFactory.get_instance(Config)
+VARIABLES.validate_env_variables()
+
 openai_client = OpenAI(api_key=VARIABLES.OPENAI_API_KEY)
 anthropic_client = Anthropic(api_key=VARIABLES.ANTHROPIC_API_KEY)
-VARIABLES.validate_env_variables()
+tbuf_client = Turbopuffer(
+    region=CONFIG.TURBOPUFFER_DEFAULT_REGION,
+    api_key=VARIABLES.TURBOPUFFER_API_KEY,
+)

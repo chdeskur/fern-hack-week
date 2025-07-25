@@ -338,7 +338,7 @@ Index a document for a given domain
 await client.index.indexDocument("domain", {
     index_name: undefined,
     document_id: "document_id",
-    context: "context",
+    context: ["context", "context"],
     content: "content",
 });
 ```
@@ -365,6 +365,155 @@ await client.index.indexDocument("domain", {
 <dd>
 
 **request:** `FernFai.IndexRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Index.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.index.<a href="/src/api/resources/index/client/Client.ts">getDocument</a>(domain, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a document for a given domain
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.index.getDocument("domain", {
+    document_id: "document_id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FernFai.GetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Index.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.index.<a href="/src/api/resources/index/client/Client.ts">updateDocument</a>(domain, { ...params }) -> FernFai.ContextResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a document for a given domain
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.index.updateDocument("domain", {
+    document_id: "document_id",
+    is_active: true,
+    context: ["context", "context"],
+    content: "content",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `FernFai.UpdateRequest`
 
 </dd>
 </dl>

@@ -1,1 +1,3 @@
 export { type IndexRequest } from "./IndexRequest.js";
+export { type GetRequest } from "./GetRequest.js";
+export { type UpdateRequest } from "./UpdateRequest.js";

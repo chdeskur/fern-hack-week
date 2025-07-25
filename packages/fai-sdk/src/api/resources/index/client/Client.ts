@@ -7,6 +7,7 @@ import * as core from "../../../../core/index.js";
 import * as FernFai from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
+import { toJson } from "../../../../core/json.js";
 
 export declare namespace Index {
     export interface Options {
@@ -54,7 +55,7 @@ export class Index {
      *     await client.index.indexDocument("domain", {
      *         index_name: undefined,
      *         document_id: "document_id",
-     *         context: "context",
+     *         context: ["context", "context"],
      *         content: "content"
      *     })
      */
@@ -119,6 +120,182 @@ export class Index {
                 });
             case "timeout":
                 throw new errors.FernFaiTimeoutError("Timeout exceeded when calling POST /index/{domain}.");
+            case "unknown":
+                throw new errors.FernFaiError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Get a document for a given domain
+     *
+     * @param {string} domain
+     * @param {FernFai.GetRequest} request
+     * @param {Index.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link FernFai.BadRequestError}
+     * @throws {@link FernFai.InternalError}
+     *
+     * @example
+     *     await client.index.getDocument("domain", {
+     *         document_id: "document_id"
+     *     })
+     */
+    public getDocument(
+        domain: string,
+        request: FernFai.GetRequest,
+        requestOptions?: Index.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getDocument(domain, request, requestOptions));
+    }
+
+    private async __getDocument(
+        domain: string,
+        request: FernFai.GetRequest,
+        requestOptions?: Index.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { document_id: documentId } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["document_id"] = documentId;
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernFaiEnvironment.Prod,
+                `/index/${encodeURIComponent(domain)}`,
+            ),
+            method: "GET",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as any)?.["error"]) {
+                case "BadRequestError":
+                    throw new FernFai.BadRequestError(_response.error.body as string, _response.rawResponse);
+                case "InternalError":
+                    throw new FernFai.InternalError(_response.error.body as string, _response.rawResponse);
+                default:
+                    throw new errors.FernFaiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FernFaiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FernFaiTimeoutError("Timeout exceeded when calling GET /index/{domain}.");
+            case "unknown":
+                throw new errors.FernFaiError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Update a document for a given domain
+     *
+     * @param {string} domain
+     * @param {FernFai.UpdateRequest} request
+     * @param {Index.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link FernFai.BadRequestError}
+     * @throws {@link FernFai.InternalError}
+     *
+     * @example
+     *     await client.index.updateDocument("domain", {
+     *         document_id: "document_id",
+     *         is_active: true,
+     *         context: ["context", "context"],
+     *         content: "content"
+     *     })
+     */
+    public updateDocument(
+        domain: string,
+        request: FernFai.UpdateRequest,
+        requestOptions?: Index.RequestOptions,
+    ): core.HttpResponsePromise<FernFai.ContextResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__updateDocument(domain, request, requestOptions));
+    }
+
+    private async __updateDocument(
+        domain: string,
+        request: FernFai.UpdateRequest,
+        requestOptions?: Index.RequestOptions,
+    ): Promise<core.WithRawResponse<FernFai.ContextResponse>> {
+        const { document_id: documentId, is_active: isActive, context, content } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["document_id"] = documentId;
+        _queryParams["is_active"] = isActive.toString();
+        _queryParams["context"] = toJson(context);
+        _queryParams["content"] = content;
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FernFaiEnvironment.Prod,
+                `/index/${encodeURIComponent(domain)}/update`,
+            ),
+            method: "POST",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as FernFai.ContextResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as any)?.["error"]) {
+                case "BadRequestError":
+                    throw new FernFai.BadRequestError(_response.error.body as string, _response.rawResponse);
+                case "InternalError":
+                    throw new FernFai.InternalError(_response.error.body as string, _response.rawResponse);
+                default:
+                    throw new errors.FernFaiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FernFaiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FernFaiTimeoutError("Timeout exceeded when calling POST /index/{domain}/update.");
             case "unknown":
                 throw new errors.FernFaiError({
                     message: _response.error.errorMessage,

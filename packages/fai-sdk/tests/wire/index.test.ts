@@ -12,7 +12,7 @@ describe("Index", () => {
         const rawRequestBody = {
             index_name: undefined,
             document_id: "document_id",
-            context: "context",
+            context: ["context", "context"],
             content: "content",
         };
 
@@ -21,9 +21,61 @@ describe("Index", () => {
         const response = await client.index.indexDocument("domain", {
             index_name: undefined,
             document_id: "document_id",
-            context: "context",
+            context: ["context", "context"],
             content: "content",
         });
         expect(response).toEqual(undefined);
+    });
+
+    test("getDocument", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
+
+        server.mockEndpoint().get("/index/domain").respondWith().statusCode(200).build();
+
+        const response = await client.index.getDocument("domain", {
+            document_id: "document_id",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("updateDocument", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FernFaiClient({ token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            document_id: "document_id",
+            domain: "domain",
+            context_id: "context_id",
+            context: ["context", "context"],
+            content: "content",
+            is_active: true,
+            created_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+        };
+        server
+            .mockEndpoint()
+            .post("/index/domain/update")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.index.updateDocument("domain", {
+            document_id: "document_id",
+            is_active: true,
+            context: ["context", "context"],
+            content: "content",
+        });
+        expect(response).toEqual({
+            document_id: "document_id",
+            domain: "domain",
+            context_id: "context_id",
+            context: ["context", "context"],
+            content: "content",
+            is_active: true,
+            created_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+        });
     });
 });
