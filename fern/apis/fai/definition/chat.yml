@@ -27,10 +27,9 @@ service:
 
 types:
   ChatCompletionResponse:
-    properties:
-      turn: ChatTurn
+    type: list<ChatTurn>
 
   ChatTurn:
     properties:
       role: string
-      text: string
+      content: string
