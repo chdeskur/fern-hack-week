@@ -304,13 +304,21 @@ export const EndpointContentCodeSnippets = memo(
   UnmemoizedEndpointContentCodeSnippets
 );
 
-function renderResponseTitle(title: string, statusCode: number | string) {
+export function renderResponseTitle(
+  title: string,
+  statusCode: number | string,
+  hideTitle?: boolean
+) {
   return (
     <span className="inline-flex items-center gap-2">
       <StatusCodeBadge statusCode={statusCode} />
-      <span className={`text-intent-${statusCodeToIntent(String(statusCode))}`}>
-        {title}
-      </span>
+      {!hideTitle && (
+        <span
+          className={`text-intent-${statusCodeToIntent(String(statusCode))}`}
+        >
+          {title}
+        </span>
+      )}
     </span>
   );
 }

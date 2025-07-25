@@ -7,6 +7,7 @@ import { noop } from "ts-essentials";
 import {
   EndpointDefinition,
   ErrorResponse,
+  HttpResponse,
   Protocol,
 } from "@fern-api/fdr-sdk/api-definition";
 import { useCurrentAnchor } from "@fern-docs/components/hooks/use-anchor";
@@ -18,11 +19,19 @@ export const EndpointContext = React.createContext<
   {
     selectedError: ErrorResponse | undefined;
     setSelectedError: (error: ErrorResponse | undefined) => void;
+    selectedResponse: HttpResponse | undefined;
+    setSelectedResponse: (response: HttpResponse | undefined) => void;
+    setSelectedResponseByStatusCode: (
+      statusCode: number | string | undefined
+    ) => void;
     endpointProtocol: Protocol | undefined;
   } & Omit<ReturnType<typeof useExampleSelection>, "defaultLanguage">
 >({
   selectedError: undefined,
   setSelectedError: noop,
+  selectedResponse: undefined,
+  setSelectedResponse: noop,
+  setSelectedResponseByStatusCode: noop,
   selectedExample: undefined,
   examplesByStatusCode: {},
   examplesByKeyAndStatusCode: {},
@@ -52,6 +61,30 @@ export function EndpointContextProvider({
     availableLanguages,
     setSelectedExampleKey,
   } = useExampleSelection(endpoint);
+
+  const [selectedResponse, setSelectedResponse] = React.useState<
+    HttpResponse | undefined
+  >(endpoint.responses?.[0]);
+
+  const responseByStatusCode = React.useMemo(() => {
+    const map: Record<string, HttpResponse> = {};
+    endpoint.responses?.forEach((response) => {
+      map[String(response.statusCode)] = response;
+    });
+    return map;
+  }, [endpoint.responses]);
+
+  const setSelectedResponseByStatusCode = React.useCallback(
+    (statusCode: number | string | undefined) => {
+      if (statusCode != null) {
+        const response = responseByStatusCode[String(statusCode)];
+        if (response) {
+          setSelectedResponse(response);
+        }
+      }
+    },
+    [responseByStatusCode, setSelectedResponse]
+  );
 
   const setStatusCode = React.useCallback(
     (statusCode: number | string | undefined) => {
@@ -105,6 +138,9 @@ export function EndpointContextProvider({
     () => ({
       selectedError,
       setSelectedError: handleSelectError,
+      selectedResponse,
+      setSelectedResponse,
+      setSelectedResponseByStatusCode,
       selectedExample,
       examplesByStatusCode,
       examplesByKeyAndStatusCode,
@@ -116,6 +152,9 @@ export function EndpointContextProvider({
     [
       selectedError,
       handleSelectError,
+      selectedResponse,
+      setSelectedResponse,
+      setSelectedResponseByStatusCode,
       selectedExample,
       examplesByStatusCode,
       examplesByKeyAndStatusCode,

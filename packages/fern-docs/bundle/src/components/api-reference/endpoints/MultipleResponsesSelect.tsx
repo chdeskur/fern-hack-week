@@ -1,8 +1,16 @@
-import { FC, Fragment, PropsWithChildren, ReactNode, forwardRef } from "react";
+import {
+  FC,
+  PropsWithChildren,
+  ReactNode,
+  SetStateAction,
+  forwardRef,
+} from "react";
 
 import * as Select from "@radix-ui/react-select";
+import { RESET } from "jotai/utils";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
+import { HttpResponse } from "@fern-api/fdr-sdk/api-definition";
 import { cn } from "@fern-docs/components";
 import {
   FernButton,
@@ -10,55 +18,47 @@ import {
   statusCodeToIntent,
 } from "@fern-docs/components";
 
-import { CodeExample } from "../examples/code-example";
-import {
-  ExamplesByStatusCode,
-  StatusCode,
-} from "../type-definitions/EndpointContent";
-import { useEndpointContext } from "./EndpointContext";
+import { SelectedExampleKey } from "../type-definitions/EndpointContent";
 
-export declare namespace ErrorExampleSelect {
+export declare namespace ResponseSelect {
   export interface Props {
-    selectedExample: CodeExample | undefined;
-    examplesByStatusCode: ExamplesByStatusCode;
+    selectedResponse: HttpResponse;
+    responses: HttpResponse[];
+    setSelectedResponse: (response: HttpResponse) => void;
+    getResponseId: (response: HttpResponse) => ReactNode;
     setSelectedExampleKey: (
-      statusCode: StatusCode,
-      responseIndex: number
+      update: typeof RESET | SetStateAction<SelectedExampleKey>
     ) => void;
-    getExampleId: (example: CodeExample | undefined) => ReactNode;
   }
 }
 
-export const ErrorExampleSelect: FC<
-  PropsWithChildren<ErrorExampleSelect.Props>
-> = ({
-  selectedExample,
+export const ResponseSelect: FC<PropsWithChildren<ResponseSelect.Props>> = ({
+  selectedResponse,
+  responses,
+  setSelectedResponse,
+  getResponseId,
   setSelectedExampleKey,
-  examplesByStatusCode,
-  getExampleId,
 }) => {
-  const { setSelectedResponseByStatusCode } = useEndpointContext();
-
   const handleValueChange = (value: string) => {
-    const [statusCode, responseIndex] = value.split(":");
-    setSelectedExampleKey(String(statusCode ?? ""), Number(responseIndex ?? 0));
-    setSelectedResponseByStatusCode(statusCode ?? "");
+    const responseIndex = Number(value);
+    const response = responses[responseIndex];
+    if (response != null) {
+      setSelectedResponse(response);
+      setSelectedExampleKey((prev) => ({
+        ...prev,
+        statusCode: String(response.statusCode),
+      }));
+    }
   };
 
-  const statusCode = selectedExample?.exampleCall.responseStatusCode;
-  const responseIndex =
-    examplesByStatusCode[statusCode ?? ""]?.findIndex(
-      (example) => example.key === selectedExample?.key
-    ) ?? -1;
+  const selectedIndex = selectedResponse
+    ? responses.findIndex((r) => r === selectedResponse)
+    : -1;
 
   return (
     <Select.Root
       onValueChange={handleValueChange}
-      value={
-        statusCode != null && responseIndex >= 0
-          ? `${statusCode}:${responseIndex}`
-          : undefined
-      }
+      value={selectedIndex >= 0 ? String(selectedIndex) : undefined}
     >
       <Select.Trigger asChild={true}>
         <FernButton
@@ -70,14 +70,12 @@ export const ErrorExampleSelect: FC<
           variant="minimal"
           className="-ml-1 pl-1"
           intent={
-            selectedExample != null
-              ? statusCodeToIntent(
-                  String(selectedExample.exampleCall.responseStatusCode)
-                )
+            selectedResponse != null
+              ? statusCodeToIntent(String(selectedResponse.statusCode))
               : "none"
           }
         >
-          <Select.Value>{getExampleId(selectedExample)}</Select.Value>
+          <Select.Value>{getResponseId(selectedResponse)}</Select.Value>
         </FernButton>
       </Select.Trigger>
       <Select.Portal>
@@ -86,28 +84,17 @@ export const ErrorExampleSelect: FC<
             <ChevronUp className="size-icon" />
           </Select.ScrollUpButton>
           <Select.Viewport className="p-[5px]">
-            {Object.entries(examplesByStatusCode).map(
-              ([statusCode, examples], idx) => (
-                <Fragment key={statusCode}>
-                  {idx > 0 && (
-                    <Select.Separator className="bg-(color:--grayscale-a3) m-[5px] h-px" />
-                  )}
-                  <Select.Group>
-                    {examples.map((example, j) => {
-                      return (
-                        <FernSelectItem
-                          value={`${statusCode}:${j}`}
-                          key={j}
-                          intent={statusCodeToIntent(statusCode)}
-                        >
-                          {getExampleId(example)}
-                        </FernSelectItem>
-                      );
-                    })}
-                  </Select.Group>
-                </Fragment>
-              )
-            )}
+            <Select.Group>
+              {responses.map((response, index) => (
+                <FernSelectItem
+                  value={String(index)}
+                  key={index}
+                  intent={statusCodeToIntent(String(response.statusCode))}
+                >
+                  {getResponseId(response)}
+                </FernSelectItem>
+              ))}
+            </Select.Group>
           </Select.Viewport>
           <Select.ScrollDownButton className="text-(color:--accent-a11) bg-card-background flex h-8 cursor-default items-center justify-center">
             <ChevronDown className="size-icon" />
