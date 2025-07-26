@@ -23,3 +23,4 @@ export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { unknownToString } from "./unknownToString";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
 export { withDefaultProtocol } from "./withDefaultProtocol";
+export { sanitizeUrl } from "./sanitizeUrl";

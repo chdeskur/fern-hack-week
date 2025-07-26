@@ -1,6 +1,6 @@
 import qs from "qs";
 
-import { unknownToString } from "@fern-api/ui-core-utils";
+import { sanitizeUrl, unknownToString } from "@fern-api/ui-core-utils";
 
 import type { EndpointDefinition, PathPart } from "./latest";
 
@@ -11,15 +11,14 @@ function buildQueryParams(
     return "";
   }
 
-  const filteredParams = Object.entries(queryParameters).reduce(
-    (acc, [key, value]) => {
-      if (value != null) {
-        acc[key] = value;
-      }
-      return acc;
-    },
-    {} as Record<string, unknown>
-  );
+  const filteredParams = Object.entries(queryParameters).reduce<
+    Record<string, unknown>
+  >((acc, [key, value]) => {
+    if (value != null) {
+      acc[key] = value;
+    }
+    return acc;
+  }, {});
 
   if (Object.keys(filteredParams).length === 0) {
     return "";
@@ -65,8 +64,17 @@ export function buildRequestUrl({
   pathParameters,
   queryParameters,
 }: BuildRequestUrlOptions): string {
+  const sanitizedBaseUrl = sanitizeUrl(baseUrl) || "";
+
+  if (sanitizedBaseUrl.endsWith("/")) {
+    return (
+      sanitizedBaseUrl.slice(0, -1) +
+      buildPath(path, pathParameters) +
+      buildQueryParams(queryParameters)
+    );
+  }
   return (
-    baseUrl +
+    sanitizedBaseUrl +
     buildPath(path, pathParameters) +
     buildQueryParams(queryParameters)
   );
@@ -84,14 +92,19 @@ export function buildEndpointUrl({
   queryParameters,
   baseUrl,
 }: BuildEndpointUrlOptions): string {
+  const environmentBaseUrl =
+    baseUrl ??
+    (
+      endpoint?.environments?.find(
+        (env) => env.id === endpoint.defaultEnvironment
+      ) ?? endpoint?.environments?.[0]
+    )?.baseUrl;
+
+  // sanitize the base URL - if invalid, it will be null
+  const sanitizedBaseUrl = sanitizeUrl(environmentBaseUrl);
+
   return buildRequestUrl({
-    baseUrl:
-      baseUrl ??
-      (
-        endpoint?.environments?.find(
-          (env) => env.id === endpoint.defaultEnvironment
-        ) ?? endpoint?.environments?.[0]
-      )?.baseUrl,
+    baseUrl: sanitizedBaseUrl || "",
     path: endpoint?.path,
     pathParameters,
     queryParameters,

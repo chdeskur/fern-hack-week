@@ -2,6 +2,7 @@ import { compact } from "es-toolkit/array";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
 
+import { sanitizeUrl } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 
 import type * as Latest from "../latest";
@@ -73,7 +74,9 @@ export function toSnippetHttpRequest(
       (env) => env.id === endpoint.defaultEnvironment
     ) ?? endpoint.environments?.[0]
   )?.baseUrl;
-  const url = urljoin(compact([environmentUrl, example.path]));
+  const sanitizedEnvironment = sanitizeUrl(environmentUrl);
+
+  const url = urljoin(compact([sanitizedEnvironment, example.path]));
 
   const headers: Record<string, unknown> = { ...example.headers };
 

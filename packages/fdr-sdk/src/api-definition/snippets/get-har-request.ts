@@ -70,7 +70,7 @@ export function getHarRequest(
           if (
             Array.isArray(valueObj) ||
             typeof valueObj !== "object" ||
-            valueObj === null
+            valueObj == null
           ) {
             return true;
           }

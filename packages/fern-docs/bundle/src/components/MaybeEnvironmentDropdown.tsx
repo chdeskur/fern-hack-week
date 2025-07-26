@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { parse } from "url";
 
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { sanitizeUrl } from "@fern-api/ui-core-utils";
 import {
   FernButton,
   FernDropdown,
@@ -67,7 +68,7 @@ export function MaybeEnvironmentDropdown({
   // TODO: revisit the order of precedence for the baseUrl... this is a temporary fix
   const preParsedUrl =
     playgroundEnvironment ?? selectedEnvironment?.baseUrl ?? baseUrl;
-  const url = preParsedUrl && parse(preParsedUrl);
+  const url = preParsedUrl && parse(sanitizeUrl(preParsedUrl) ?? "");
 
   // TODO: clean up this component
   useEffect(() => {

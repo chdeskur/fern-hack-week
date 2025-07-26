@@ -6,6 +6,7 @@ import {
   EnvironmentId,
   WebSocketChannel,
 } from "@fern-api/fdr-sdk/api-definition";
+import { sanitizeUrl } from "@fern-api/ui-core-utils";
 
 import { SELECTED_ENVIRONMENT_ATOM } from "@/state/environment";
 import { usePlaygroundEnvironment } from "@/state/playground";
@@ -37,5 +38,6 @@ export function usePlaygroundBaseUrl(
 ): [baseUrl: string | undefined, environmentId: EnvironmentId | undefined] {
   const environment = useSelectedEnvironment(endpoint);
   const playgroundBaseUrl = usePlaygroundEnvironment();
-  return [playgroundBaseUrl ?? environment?.baseUrl, environment?.id];
+  const sanitizedUrl = sanitizeUrl(playgroundBaseUrl ?? environment?.baseUrl);
+  return [sanitizedUrl, environment?.id];
 }
