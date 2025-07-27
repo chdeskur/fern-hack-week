@@ -18,4 +18,12 @@
   .fern-header-search-bar {
     @apply max-w-content-width hidden w-full min-w-0 shrink lg:inline-flex;
   }
+
+  [data-testid="product-dropdown-content"] {
+    max-width: calc(-3rem + 100dvw);
+  }
+
+  div:has([data-testid="product-dropdown-content"]) {
+    max-width: calc(-3rem + 100dvw);
+  }
 }
