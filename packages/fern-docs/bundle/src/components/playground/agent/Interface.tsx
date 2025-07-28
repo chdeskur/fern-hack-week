@@ -7,6 +7,7 @@ import { Bot, Send, User } from "lucide-react";
 import { FernButton, FernCard, FernInput } from "@fern-docs/components";
 import { mdxToHtml } from "@fern-docs/mdx";
 
+import { closeButton } from "../PlaygroundCloseButton";
 import { ChatAgent, ChatMessage, getChatAgent, userMessage } from "./ChatAgent";
 
 interface ChatBotInterfaceProps {
@@ -78,7 +79,8 @@ export function ChatBotInterface({
 
   return (
     <div className={`flex h-full w-full flex-col ${className}`}>
-      {/* Messages Container */}
+      <div className="absolute right-4 top-4 z-10">{<closeButton.Out />}</div>
+
       <div className="flex-1 space-y-4 overflow-y-auto p-4">
         {messages.length === 0 ? (
           <div className="text-(color:--grayscale-a11) flex h-full items-center justify-center">
