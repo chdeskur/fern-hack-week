@@ -33,6 +33,7 @@ import {
 
 import { track } from "../../analytics";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
+import { PlaygroundContextProvider } from "../PlaygroundContext";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { ProxyRequest } from "../types";
@@ -219,7 +220,7 @@ export const PlaygroundEndpoint = ({
 
   const settings = usePlaygroundSettings();
 
-  return (
+  const playgroundContent = (
     <FernTooltipProvider>
       <div className="flex size-full min-h-0 flex-1 shrink flex-col">
         <div className="flex-0">
@@ -276,5 +277,20 @@ export const PlaygroundEndpoint = ({
         </div>
       </div>
     </FernTooltipProvider>
+  );
+
+  return (
+    <PlaygroundContextProvider
+      context={context}
+      formState={formState}
+      setFormState={setFormState}
+      response={response}
+      setResponse={setResponse}
+      sendRequest={sendRequest}
+      resetWithExample={resetWithExample}
+      resetWithoutExample={resetWithoutExample}
+    >
+      {playgroundContent}
+    </PlaygroundContextProvider>
   );
 };
