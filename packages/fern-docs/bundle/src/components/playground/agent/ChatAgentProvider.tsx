@@ -1,8 +1,9 @@
 "use client";
 
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useMemo } from "react";
 
 import { ChatAgent } from "./ChatAgent";
+import { usePlaygroundTools } from "./PlaygroundToolsProvider";
 
 interface ChatAgentContextType {
   agent: ChatAgent;
@@ -16,6 +17,13 @@ interface ChatAgentProviderProps {
 }
 
 export function ChatAgentProvider({ children, agent }: ChatAgentProviderProps) {
+  const playgroundTools = usePlaygroundTools();
+
+  // Update the agent's tools when playground tools change
+  useEffect(() => {
+    agent.updateTools(playgroundTools);
+  }, [agent, playgroundTools]);
+
   const contextValue = useMemo(() => ({ agent }), [agent]);
 
   return (

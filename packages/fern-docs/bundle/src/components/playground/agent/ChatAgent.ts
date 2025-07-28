@@ -2,6 +2,8 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { ToolSet, generateObject, generateText } from "ai";
 import { z } from "zod";
 
+import { PLAYGROUND_SYSTEM_PROMPT } from "./PlaygroundSystemPrompt";
+
 const openai = createOpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   organization: "org-EdIIJRQNvyUgF54KIY64fW9i",
@@ -44,7 +46,7 @@ export interface ChatAgentConfig {
 }
 
 export class ChatAgent {
-  private readonly tools: ToolSet;
+  private tools: ToolSet;
 
   public messages: ChatMessage[] = [];
 
@@ -58,6 +60,7 @@ export class ChatAgent {
 
   private get generateResponseMessages() {
     return [
+      systemMessage(PLAYGROUND_SYSTEM_PROMPT),
       systemMessage(`[Date] ${new Date().toLocaleString()}`),
       ...this.messages,
     ];
@@ -101,6 +104,14 @@ export class ChatAgent {
     const assistantMsg = assistantMessage(JSON.stringify(object));
     this.messages.push(assistantMsg);
     return assistantMsg;
+  }
+
+  // Method to update tools dynamically
+  public updateTools(newTools: ToolSet) {
+    this.tools = {
+      ...defaultTools,
+      ...newTools,
+    };
   }
 }
 
