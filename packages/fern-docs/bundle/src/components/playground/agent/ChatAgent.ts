@@ -1,6 +1,10 @@
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { ToolSet, generateObject, generateText } from "ai";
 import { z } from "zod";
+
+const openai = createOpenAI({
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+});
 
 export interface ChatMessage {
   role: "system" | "assistant" | "user";
