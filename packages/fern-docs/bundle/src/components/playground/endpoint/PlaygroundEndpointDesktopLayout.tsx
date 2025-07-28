@@ -226,11 +226,11 @@ export function PlaygroundEndpointDesktopLayout({
   responseCard,
   // endpointId,
 }: PlaygroundEndpointDesktopLayoutProps): ReactElement<any> {
-  const [activeTab, setActiveTab] = useState<"preview" | "basic">("preview");
+  const [activeTab, setActiveTab] = useState<"preview" | "context">("context");
 
   const tabOptions: FernDropdown.Option[] = [
     { type: "value", value: "preview", label: "Request Preview" },
-    { type: "value", value: "basic", label: "Basic Interface" },
+    { type: "value", value: "context", label: "Context Interface" },
   ];
 
   return (
@@ -243,12 +243,12 @@ export function PlaygroundEndpointDesktopLayout({
 
       <div className="sticky inset-0 pr-6">
         {/* Tab Selector */}
-        <div className="flex h-10 items-center justify-end px-3 py-2">
+        <div className="my-3 flex h-10 items-center justify-end px-3">
           <FernSegmentedControl
             options={tabOptions}
             value={activeTab}
             onValueChange={(value) =>
-              setActiveTab(value as "preview" | "basic")
+              setActiveTab(value as "preview" | "context")
             }
           />
         </div>
