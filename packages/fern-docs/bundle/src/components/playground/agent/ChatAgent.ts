@@ -2,8 +2,11 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { ToolSet, generateObject, generateText } from "ai";
 import { z } from "zod";
 
+import { mdxToHtml } from "@fern-docs/mdx";
+
 const openai = createOpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  organization: "org-EdIIJRQNvyUgF54KIY64fW9i",
 });
 
 export interface ChatMessage {
@@ -79,7 +82,11 @@ export class ChatAgent {
       messages: this.generateResponseMessages,
       tools: this.tools,
     });
-    const assistantMsg = assistantMessage(text);
+
+    // Convert markdown to HTML
+    const { html } = mdxToHtml(text);
+
+    const assistantMsg = assistantMessage(html ?? text);
     this.messages.push(assistantMsg);
     return assistantMsg;
   }

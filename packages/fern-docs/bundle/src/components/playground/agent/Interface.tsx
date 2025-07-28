@@ -82,43 +82,54 @@ export function ChatBotInterface({
             </div>
           </div>
         ) : (
-          messages.map((message, index) => (
-            <div
-              key={index}
-              className={`flex gap-3 ${
-                message.role === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
+          messages.map((message, index) => {
+            // Debug logging
+            if (!message.content) {
+              console.warn("Message with null/undefined content:", message);
+            }
+            return (
               <div
-                className={`flex max-w-[80%] gap-3 ${
-                  message.role === "user" ? "flex-row-reverse" : "flex-row"
+                key={index}
+                className={`flex gap-3 ${
+                  message.role === "user" ? "justify-end" : "justify-start"
                 }`}
               >
                 <div
-                  className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${
-                    message.role === "user"
-                      ? "bg-(color:--accent) text-(color:--accent-contrast)"
-                      : "bg-(color:--grayscale-a3) text-(color:--grayscale-a11)"
+                  className={`flex max-w-[80%] gap-3 ${
+                    message.role === "user" ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
-                  {message.role === "user" ? (
-                    <User className="h-4 w-4" />
-                  ) : (
-                    <Bot className="h-4 w-4" />
-                  )}
+                  <div
+                    className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${
+                      message.role === "user"
+                        ? "bg-(color:--accent) text-(color:--accent-contrast)"
+                        : "bg-(color:--grayscale-a3) text-(color:--grayscale-a11)"
+                    }`}
+                  >
+                    {message.role === "user" ? (
+                      <User className="h-4 w-4" />
+                    ) : (
+                      <Bot className="h-4 w-4" />
+                    )}
+                  </div>
+                  <FernCard
+                    className={`rounded-2 px-3 py-2 text-sm ${
+                      message.role === "user"
+                        ? "bg-(color:--accent) text-(color:--accent-contrast)"
+                        : "bg-card-background border-border-default border"
+                    }`}
+                  >
+                    <div
+                      className="whitespace-pre-wrap"
+                      dangerouslySetInnerHTML={{
+                        __html: message.content,
+                      }}
+                    />
+                  </FernCard>
                 </div>
-                <FernCard
-                  className={`rounded-2 px-3 py-2 text-sm ${
-                    message.role === "user"
-                      ? "bg-(color:--accent) text-(color:--accent-contrast)"
-                      : "bg-card-background border-border-default border"
-                  }`}
-                >
-                  <div className="whitespace-pre-wrap">{message.content}</div>
-                </FernCard>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
         {isLoading && (
           <div className="flex justify-start gap-3">

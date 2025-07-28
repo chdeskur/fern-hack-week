@@ -264,6 +264,9 @@ export function mdxToHtml(
     },
   });
 
+  console.log("mdast:", mdast);
+  console.log("hast:", hast);
+
   // Get html from hast
   const html = toHtml(hast);
 
@@ -650,7 +653,7 @@ function mdxBaseElementNode(
     case "object": {
       if (Array.isArray(defaultNode)) {
         // Expects defaultNode: ElementContent[]
-        return defaultNode.map(() => null);
+        return defaultNode;
       } else if (defaultNode.type === "element") {
         // Expects defaultNode: Element
         // Note: we add a data-hash property to the element for the client's reference
