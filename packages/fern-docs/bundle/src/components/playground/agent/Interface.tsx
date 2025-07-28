@@ -8,7 +8,8 @@ import { FernButton, FernCard, FernInput } from "@fern-docs/components";
 import { mdxToHtml } from "@fern-docs/mdx";
 
 import { closeButton } from "../PlaygroundCloseButton";
-import { ChatAgent, ChatMessage, getChatAgent, userMessage } from "./ChatAgent";
+import { ChatAgent, ChatMessage, userMessage } from "./ChatAgent";
+import { useChatAgent } from "./ChatAgentProvider";
 
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
@@ -19,8 +20,9 @@ export function ChatBotInterface({
   agent,
   className = "",
 }: ChatBotInterfaceProps) {
-  // Use the singleton agent if none is provided, otherwise use the provided agent
-  const chatAgent = agent ?? getChatAgent();
+  // Use the provided agent if available, otherwise get from context
+  const contextAgent = useChatAgent();
+  const chatAgent = agent ?? contextAgent;
   const [messages, setMessages] = useState<ChatMessage[]>(chatAgent.messages);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);

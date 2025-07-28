@@ -12,12 +12,10 @@ const ChatAgentContext = createContext<ChatAgentContextType | null>(null);
 
 interface ChatAgentProviderProps {
   children: React.ReactNode;
+  agent: ChatAgent;
 }
 
-export function ChatAgentProvider({ children }: ChatAgentProviderProps) {
-  // Create a single instance of ChatAgent that persists for the entire app session
-  const agent = useMemo(() => new ChatAgent(), []);
-
+export function ChatAgentProvider({ children, agent }: ChatAgentProviderProps) {
   const contextValue = useMemo(() => ({ agent }), [agent]);
 
   return (

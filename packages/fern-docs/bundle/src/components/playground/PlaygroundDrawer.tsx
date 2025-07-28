@@ -12,6 +12,8 @@ import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 import { useUrlParams } from "@/hooks/use-url-params";
 
 import { useHeaderHeight, useViewportSize } from "../hooks/useViewportSize";
+import { getChatAgent } from "./agent/ChatAgent";
+import { ChatAgentProvider } from "./agent/ChatAgentProvider";
 
 export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
   const [snap, setSnap] = React.useState<number | string | null>(null);
@@ -21,6 +23,8 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const viewport = useViewportSize();
   const headerHeight = useHeaderHeight();
+
+  const chatAgent = getChatAgent();
 
   useIsomorphicLayoutEffect(() => {
     if (open) {
@@ -75,30 +79,32 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
     >
       <Drawer.Portal>
         <Drawer.Overlay />
-        <Drawer.Content
-          onCloseAutoFocus={(e) => {
-            e.preventDefault();
-            document
-              .getElementById(
-                `playground-button:${slugjoin(removeUrlParamFromPathname("explore"))}`
-              )
-              ?.focus();
-          }}
-          className="api-explorer width-before-scroll-bar"
-        >
-          <Drawer.Handle
-            className="bg-(color:--grayscale-a4) absolute mx-auto -mb-1.5 h-1.5 w-12 flex-shrink-0 -translate-y-3 cursor-pointer rounded-full"
-            preventCycle
-          />
-          <VisuallyHidden>
-            <Drawer.Title>API Explorer</Drawer.Title>
-            <Drawer.Description>
-              Browse, explore, and try out API endpoints without leaving the
-              documentation.
-            </Drawer.Description>
-          </VisuallyHidden>
-          {children}
-        </Drawer.Content>
+        <ChatAgentProvider agent={chatAgent}>
+          <Drawer.Content
+            onCloseAutoFocus={(e) => {
+              e.preventDefault();
+              document
+                .getElementById(
+                  `playground-button:${slugjoin(removeUrlParamFromPathname("explore"))}`
+                )
+                ?.focus();
+            }}
+            className="api-explorer width-before-scroll-bar"
+          >
+            <Drawer.Handle
+              className="bg-(color:--grayscale-a4) absolute mx-auto -mb-1.5 h-1.5 w-12 flex-shrink-0 -translate-y-3 cursor-pointer rounded-full"
+              preventCycle
+            />
+            <VisuallyHidden>
+              <Drawer.Title>API Explorer</Drawer.Title>
+              <Drawer.Description>
+                Browse, explore, and try out API endpoints without leaving the
+                documentation.
+              </Drawer.Description>
+            </VisuallyHidden>
+            {children}
+          </Drawer.Content>
+        </ChatAgentProvider>
       </Drawer.Portal>
     </Drawer.Root>
   );
