@@ -5,8 +5,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Bot, Send, User } from "lucide-react";
 
 import { FernButton, FernCard, FernInput } from "@fern-docs/components";
+import { mdxToHtml } from "@fern-docs/mdx";
 
-import { ChatAgent, ChatMessage, userMessage } from "./ChatAgent";
+import { ChatAgent, ChatMessage, getChatAgent, userMessage } from "./ChatAgent";
 
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
@@ -14,10 +15,12 @@ interface ChatBotInterfaceProps {
 }
 
 export function ChatBotInterface({
-  agent = new ChatAgent(),
+  agent,
   className = "",
 }: ChatBotInterfaceProps) {
-  const [messages, setMessages] = useState<ChatMessage[]>(agent.messages);
+  // Use the singleton agent if none is provided, otherwise use the provided agent
+  const chatAgent = agent ?? getChatAgent();
+  const [messages, setMessages] = useState<ChatMessage[]>(chatAgent.messages);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -29,6 +32,11 @@ export function ChatBotInterface({
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Sync messages with the agent's messages when the component mounts or agent changes
+  useEffect(() => {
+    setMessages(chatAgent.messages);
+  }, [chatAgent]);
 
   const handleSendMessage = () => {
     if (!inputValue.trim() || isLoading) return;
@@ -42,7 +50,7 @@ export function ChatBotInterface({
     setMessages(updatedMessages);
 
     // Generate response from agent
-    agent
+    chatAgent
       .generateResponse(userMsg)
       .then((response) => {
         setMessages([...updatedMessages, response]);
@@ -122,7 +130,7 @@ export function ChatBotInterface({
                     <div
                       className="whitespace-pre-wrap"
                       dangerouslySetInnerHTML={{
-                        __html: message.content,
+                        __html: mdxToHtml(message.content).html,
                       }}
                     />
                   </FernCard>

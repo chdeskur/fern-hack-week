@@ -2,8 +2,6 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { ToolSet, generateObject, generateText } from "ai";
 import { z } from "zod";
 
-import { mdxToHtml } from "@fern-docs/mdx";
-
 const openai = createOpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   organization: "org-EdIIJRQNvyUgF54KIY64fW9i",
@@ -83,13 +81,9 @@ export class ChatAgent {
       tools: this.tools,
     });
 
-    const { html } = mdxToHtml(text);
+    const assistantMsg = assistantMessage(text);
 
-    // fallback to plaintext if html parsing failed
-    const assistantMsg = assistantMessage(html ?? text);
-
-    // use raw text for messaget tracking
-    this.messages.push(assistantMessage(text));
+    this.messages.push(assistantMsg);
     return assistantMsg;
   }
 
@@ -103,7 +97,32 @@ export class ChatAgent {
       prompt: this.generateSchemaResponsePrompt,
       schema: schema,
     });
-    this.messages.push(assistantMessage(JSON.stringify(object)));
-    return object;
+
+    const assistantMsg = assistantMessage(JSON.stringify(object));
+    this.messages.push(assistantMsg);
+    return assistantMsg;
   }
+}
+
+// Singleton instance for the chat agent
+let singletonChatAgent: ChatAgent | null = null;
+
+/**
+ * Get the singleton ChatAgent instance.
+ * This ensures only one instance exists per user session.
+ */
+export function getChatAgent(): ChatAgent {
+  if (!singletonChatAgent) {
+    singletonChatAgent = new ChatAgent();
+  }
+
+  return singletonChatAgent;
+}
+
+/**
+ * Reset the singleton ChatAgent instance.
+ * This is useful for testing or when you want to start a fresh conversation.
+ */
+export function resetChatAgent(): void {
+  singletonChatAgent = null;
 }

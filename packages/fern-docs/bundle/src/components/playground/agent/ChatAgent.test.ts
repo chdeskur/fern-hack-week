@@ -4,11 +4,18 @@ import { z } from "zod";
 import {
   ChatAgent,
   assistantMessage,
+  getChatAgent,
+  resetChatAgent,
   systemMessage,
   userMessage,
 } from "./ChatAgent";
 
 describe("ChatAgent", () => {
+  beforeEach(() => {
+    // Reset the singleton before each test to ensure clean state
+    resetChatAgent();
+  });
+
   describe("Message creation functions", () => {
     it("should create system messages", () => {
       const message = systemMessage("You are a helpful assistant");
@@ -66,6 +73,37 @@ describe("ChatAgent", () => {
     it("should have messages property accessible", () => {
       expect(agent.messages).toBeDefined();
       expect(Array.isArray(agent.messages)).toBe(true);
+    });
+  });
+
+  describe("Singleton pattern", () => {
+    it("should return the same instance when calling getChatAgent multiple times", () => {
+      const agent1 = getChatAgent();
+      const agent2 = getChatAgent();
+      expect(agent1).toBe(agent2);
+    });
+
+    it("should reset the singleton when calling resetChatAgent", () => {
+      const agent1 = getChatAgent();
+      agent1.messages.push(userMessage("test message"));
+
+      resetChatAgent();
+
+      const agent2 = getChatAgent();
+      expect(agent2).not.toBe(agent1);
+      expect(agent2.messages).toEqual([]);
+    });
+
+    it("should maintain conversation state across multiple calls", () => {
+      const agent1 = getChatAgent();
+      agent1.messages.push(userMessage("Hello"));
+      agent1.messages.push(assistantMessage("Hi there!"));
+
+      const agent2 = getChatAgent();
+      expect(agent2.messages).toEqual([
+        userMessage("Hello"),
+        assistantMessage("Hi there!"),
+      ]);
     });
   });
 
