@@ -83,11 +83,13 @@ export class ChatAgent {
       tools: this.tools,
     });
 
-    // Convert markdown to HTML
     const { html } = mdxToHtml(text);
 
+    // fallback to plaintext if html parsing failed
     const assistantMsg = assistantMessage(html ?? text);
-    this.messages.push(assistantMsg);
+
+    // use raw text for messaget tracking
+    this.messages.push(assistantMessage(text));
     return assistantMsg;
   }
 
