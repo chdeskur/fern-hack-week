@@ -9,7 +9,11 @@ import { SendHorizonal } from "lucide-react";
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
-import { FernTooltipProvider } from "@fern-docs/components";
+import {
+  FernDropdown,
+  FernSegmentedControl,
+  FernTooltipProvider,
+} from "@fern-docs/components";
 import { fernUserAtom } from "@fern-docs/components/state/fern-user";
 import { jotaiStore } from "@fern-docs/components/state/jotai-provider";
 import {
@@ -34,6 +38,7 @@ import {
 import { track } from "../../analytics";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { PlaygroundContextProvider } from "../PlaygroundContext";
+import { ChatBotInterface } from "../agent/Interface";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { ProxyRequest } from "../types";
@@ -57,6 +62,13 @@ export const PlaygroundEndpoint = ({
 }) => {
   const user = useAtomValue(fernUserAtom);
   const { node, endpoint, auth } = context;
+
+  const [activeTab, setActiveTab] = useState<"manual" | "chat">("chat");
+
+  const tabOptions: FernDropdown.Option[] = [
+    { type: "value", value: "manual", label: "Manual Mode" },
+    { type: "value", value: "chat", label: "Chat Mode" },
+  ];
 
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);
 
@@ -223,58 +235,76 @@ export const PlaygroundEndpoint = ({
   const playgroundContent = (
     <FernTooltipProvider>
       <div className="flex size-full min-h-0 flex-1 shrink flex-col">
-        <div className="flex-0">
-          <PlaygroundEndpointPath
-            method={endpoint.method}
-            formState={formState}
-            sendRequest={() => {
-              void (async () => {
-                try {
-                  await sendRequest();
-                } catch (e) {
-                  console.error("Failed to send request:", e);
-                }
-              })();
-            }}
-            environmentId={environmentId}
-            baseUrl={baseUrl}
-            // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
-            // this is so that the playground can be specifically disabled for certain environments
-            options={
-              settings?.environments
-                ? endpoint.environments?.filter(
-                    (env) => settings.environments?.includes(env.id) ?? true
-                  )
-                : endpoint.environments
-            }
-            path={endpoint.path}
-            queryParameters={endpoint.queryParameters}
-            sendRequestIcon={
-              <SendHorizonal className="transition-transform group-hover:translate-x-0.5" />
-            }
-            types={context.types}
+        <div className="my-6 flex h-10 items-center justify-center px-3">
+          <FernSegmentedControl
+            options={tabOptions}
+            value={activeTab}
+            onValueChange={(value) => setActiveTab(value as "manual" | "chat")}
           />
         </div>
-        <div className="flex min-h-0 flex-1 shrink">
-          <PlaygroundEndpointContent
-            authForm={authForm}
-            context={context}
-            formState={formState}
-            setFormState={setFormState}
-            resetWithExample={resetWithExample}
-            resetWithoutExample={resetWithoutExample}
-            response={response}
-            sendRequest={() => {
-              void (async () => {
-                try {
-                  await sendRequest();
-                } catch (e) {
-                  console.error("Failed to send request:", e);
+
+        {activeTab === "manual" && (
+          <>
+            <div className="flex-0">
+              <PlaygroundEndpointPath
+                method={endpoint.method}
+                formState={formState}
+                sendRequest={() => {
+                  void (async () => {
+                    try {
+                      await sendRequest();
+                    } catch (e) {
+                      console.error("Failed to send request:", e);
+                    }
+                  })();
+                }}
+                environmentId={environmentId}
+                baseUrl={baseUrl}
+                // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
+                // this is so that the playground can be specifically disabled for certain environments
+                options={
+                  settings?.environments
+                    ? endpoint.environments?.filter(
+                        (env) => settings.environments?.includes(env.id) ?? true
+                      )
+                    : endpoint.environments
                 }
-              })();
-            }}
-          />
-        </div>
+                path={endpoint.path}
+                queryParameters={endpoint.queryParameters}
+                sendRequestIcon={
+                  <SendHorizonal className="transition-transform group-hover:translate-x-0.5" />
+                }
+                types={context.types}
+              />
+            </div>
+            <div className="flex min-h-0 flex-1 shrink">
+              <PlaygroundEndpointContent
+                authForm={authForm}
+                context={context}
+                formState={formState}
+                setFormState={setFormState}
+                resetWithExample={resetWithExample}
+                resetWithoutExample={resetWithoutExample}
+                response={response}
+                sendRequest={() => {
+                  void (async () => {
+                    try {
+                      await sendRequest();
+                    } catch (e) {
+                      console.error("Failed to send request:", e);
+                    }
+                  })();
+                }}
+              />
+            </div>
+          </>
+        )}
+
+        {activeTab === "chat" && (
+          <div className="flex h-full min-h-0 w-full flex-1">
+            <ChatBotInterface />
+          </div>
+        )}
       </div>
     </FernTooltipProvider>
   );
