@@ -13,9 +13,67 @@ import { Loadable } from "@fern-ui/loadable";
 import {
   PlaygroundEndpointRequestFormState,
   PlaygroundWebSocketRequestFormState,
-} from "./types";
-import { PlaygroundResponse } from "./types/playgroundResponse";
-import { getEmptyValueForHttpRequestBody } from "./utils/default-values";
+} from "../types";
+import { PlaygroundResponse } from "../types/playgroundResponse";
+import { getEmptyValueForHttpRequestBody } from "../utils/default-values";
+
+// Structured logging utility for chat agent integration
+const PlaygroundLogger = {
+  debug: (message: string, data?: any) => {
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[Playground] ${message}`, data);
+    }
+  },
+
+  info: (message: string, data?: any) => {
+    console.log(`[Playground] ${message}`, data);
+  },
+
+  warn: (message: string, data?: any) => {
+    console.warn(`[Playground] ${message}`, data);
+  },
+
+  error: (message: string, error?: any) => {
+    console.error(`[Playground] ${message}`, error);
+  },
+
+  // Specialized logging for chat agent integration
+  agentAction: (action: string, details: any) => {
+    console.log(`[Agent] ${action}`, details);
+  },
+
+  // Log state changes that are relevant for the agent
+  stateChange: (component: string, change: any) => {
+    PlaygroundLogger.debug(`State change in ${component}:`, change);
+  },
+
+  // Log parameter updates
+  parameterUpdate: (
+    type: "header" | "path" | "query" | "body",
+    key: string,
+    value: any
+  ) => {
+    PlaygroundLogger.debug(`${type} parameter updated`, { key, value });
+  },
+
+  // Log request lifecycle events
+  requestLifecycle: (
+    event: "started" | "completed" | "failed",
+    details?: any
+  ) => {
+    PlaygroundLogger.info(`Request ${event}`, details);
+  },
+
+  // Log response analysis for debugging
+  responseAnalysis: (analysis: any) => {
+    PlaygroundLogger.debug("Response analysis", analysis);
+  },
+
+  // Log context changes
+  contextChange: (change: any) => {
+    PlaygroundLogger.debug("Context changed", change);
+  },
+};
 
 // Helper function to resolve alias types recursively
 function resolveAliasType(
@@ -35,13 +93,13 @@ function resolveAliasType(
     const typeId = typeShape.id || typeShape.value;
     if (visitedTypeIds.has(typeId)) {
       // Circular reference detected
-      console.warn(`Circular reference detected for type: ${typeId}`);
+      PlaygroundLogger.warn(`Circular reference detected for type: ${typeId}`);
       return typeShape;
     }
 
     const typeDefinition = types[typeId];
     if (!typeDefinition) {
-      console.warn(`Type definition not found for: ${typeId}`);
+      PlaygroundLogger.warn(`Type definition not found for: ${typeId}`);
       return typeShape;
     }
 
@@ -216,11 +274,10 @@ function extractProperties(
 
       // Debug logging for list types
       if (isListType) {
-        console.log(
-          "Found list type property:",
-          property.key,
-          property.valueShape
-        );
+        PlaygroundLogger.debug("Found list type property", {
+          key: property.key,
+          shape: property.valueShape,
+        });
       }
 
       properties.push({
@@ -643,7 +700,7 @@ export function PlaygroundContextProvider({
   // Simplified setter methods using the context information
   const setHeader = React.useCallback(
     (key: string, value: unknown) => {
-      console.log("setHeader called:", { key, value });
+      PlaygroundLogger.parameterUpdate("header", key, value);
 
       // Check if the value is empty (undefined, null, empty string, or NaN)
       const isEmpty =
@@ -657,14 +714,14 @@ export function PlaygroundContextProvider({
         if (isEmpty) {
           // Remove the header entirely if it's empty
           const { [key]: _removed, ...rest } = prev.headers || {};
-          console.log("Removing empty header:", key);
+          PlaygroundLogger.debug("Removing empty header", { key });
           return {
             ...prev,
             headers: rest,
           };
         } else {
           // Set the value if it's not empty
-          console.log("Setting header:", key, "to:", value);
+          PlaygroundLogger.debug("Setting header", { key, value });
           return {
             ...prev,
             headers: {
@@ -680,7 +737,7 @@ export function PlaygroundContextProvider({
 
   const setPathParameter = React.useCallback(
     (key: string, value: unknown) => {
-      console.log("setPathParameter called:", { key, value });
+      PlaygroundLogger.parameterUpdate("path", key, value);
 
       // Check if the value is empty (undefined, null, empty string, or NaN)
       const isEmpty =
@@ -694,14 +751,14 @@ export function PlaygroundContextProvider({
         if (isEmpty) {
           // Remove the parameter entirely if it's empty
           const { [key]: _removed, ...rest } = prev.pathParameters || {};
-          console.log("Removing empty path parameter:", key);
+          PlaygroundLogger.debug("Removing empty path parameter", { key });
           return {
             ...prev,
             pathParameters: rest,
           };
         } else {
           // Set the value if it's not empty
-          console.log("Setting path parameter:", key, "to:", value);
+          PlaygroundLogger.debug("Setting path parameter", { key, value });
           return {
             ...prev,
             pathParameters: {
@@ -717,7 +774,7 @@ export function PlaygroundContextProvider({
 
   const setQueryParameter = React.useCallback(
     (key: string, value: unknown) => {
-      console.log("setQueryParameter called:", { key, value });
+      PlaygroundLogger.parameterUpdate("query", key, value);
 
       // Check if the value is empty (undefined, null, empty string, or NaN)
       const isEmpty =
@@ -731,14 +788,14 @@ export function PlaygroundContextProvider({
         if (isEmpty) {
           // Remove the parameter entirely if it's empty
           const { [key]: _removed, ...rest } = prev.queryParameters || {};
-          console.log("Removing empty query parameter:", key);
+          PlaygroundLogger.debug("Removing empty query parameter", { key });
           return {
             ...prev,
             queryParameters: rest,
           };
         } else {
           // Set the value if it's not empty
-          console.log("Setting query parameter:", key, "to:", value);
+          PlaygroundLogger.debug("Setting query parameter", { key, value });
           return {
             ...prev,
             queryParameters: {
@@ -754,6 +811,7 @@ export function PlaygroundContextProvider({
 
   const setBody = React.useCallback(
     (body: unknown) => {
+      PlaygroundLogger.parameterUpdate("body", "body", body);
       if (formState.type === "endpoint") {
         setFormState((prev: typeof formState) => ({
           ...prev,
@@ -826,18 +884,14 @@ export function PlaygroundContextProvider({
   // Request body parameter control methods
   const setRequestBodyParameter = React.useCallback(
     (path: (string | number)[], value: unknown) => {
-      console.log("setRequestBodyParameter called:", {
-        path,
-        value,
-        formStateType: formState.type,
-      });
+      PlaygroundLogger.parameterUpdate("body", path.join("."), value);
       if (formState.type !== "endpoint") return;
 
       setFormState((prev: typeof formState) => {
         if (prev.type !== "endpoint") return prev;
 
         const current = prev.body;
-        console.log("Current body:", current);
+        PlaygroundLogger.debug("Current body:", current);
         if (current?.type !== "json") return prev;
 
         // Get current body value or create empty object
@@ -846,7 +900,7 @@ export function PlaygroundContextProvider({
         // Use the helper function to safely set the value
         const newBodyValue = setValueAtPath(currentBodyValue, path, value);
 
-        console.log("Updated body value:", newBodyValue);
+        PlaygroundLogger.debug("Updated body value:", newBodyValue);
 
         const newFormState = {
           ...prev,
@@ -855,7 +909,7 @@ export function PlaygroundContextProvider({
             value: newBodyValue,
           },
         };
-        console.log("New form state:", newFormState);
+        PlaygroundLogger.debug("New form state:", newFormState);
         return newFormState;
       });
     },
@@ -864,21 +918,18 @@ export function PlaygroundContextProvider({
 
   const getRequestBodyParameter = React.useCallback(
     (path: (string | number)[]) => {
-      console.log("getRequestBodyParameter called:", {
-        path,
-        formStateType: formState.type,
-      });
+      PlaygroundLogger.debug("getRequestBodyParameter called", { path });
       if (formState.type !== "endpoint") return undefined;
 
       const body = formState.body;
-      console.log("Body:", body);
+      PlaygroundLogger.debug("Body:", body);
       if (body?.type === "json") {
         const current = body.value;
-        console.log("Body value:", current);
+        PlaygroundLogger.debug("Body value", { current });
 
         // Use the helper function to safely navigate to the path
         const result = navigateToPath(current, path);
-        console.log("Final value for path:", path, "is:", result);
+        PlaygroundLogger.debug("Final value for path", { path, result });
         return result;
       }
       return undefined;
@@ -925,7 +976,9 @@ export function PlaygroundContextProvider({
       context.types
     );
 
-    console.log("Extracted properties:", extractedProperties);
+    PlaygroundLogger.debug("Extracted properties", {
+      count: extractedProperties.length,
+    });
 
     // Convert to the expected format and add current values and setters
     const properties = extractedProperties.map((prop) => ({
@@ -957,7 +1010,9 @@ export function PlaygroundContextProvider({
       contentType = "application/octet-stream";
     }
 
-    console.log("resolvedRequestBody", resolvedRequestBody);
+    PlaygroundLogger.debug("Resolved request body", {
+      type: resolvedRequestBody.type,
+    });
 
     return {
       schema: resolvedRequestBody,
@@ -970,6 +1025,7 @@ export function PlaygroundContextProvider({
 
   // Simplified response analysis
   const responseAnalysis = React.useMemo(() => {
+    PlaygroundLogger.responseAnalysis({ responseType: response.type });
     if (response.type !== "loaded") {
       return {
         isSuccess: false,

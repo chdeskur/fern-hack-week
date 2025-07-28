@@ -6,8 +6,8 @@ import {
   FernSegmentedControl,
 } from "@fern-docs/components";
 
-import { usePlaygroundContext } from "../PlaygroundContext";
 import { HorizontalSplitPane, VerticalSplitPane } from "../VerticalSplitPane";
+import { usePlaygroundContext } from "../agent/PlaygroundContext";
 
 interface PlaygroundEndpointDesktopLayoutProps {
   scrollAreaHeight: number;

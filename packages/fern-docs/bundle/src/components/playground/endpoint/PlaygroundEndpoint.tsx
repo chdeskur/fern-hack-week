@@ -37,8 +37,8 @@ import {
 
 import { track } from "../../analytics";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
-import { PlaygroundContextProvider } from "../PlaygroundContext";
 import { ChatBotInterface } from "../agent/Interface";
+import { PlaygroundContextProvider } from "../agent/PlaygroundContext";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { ProxyRequest } from "../types";
