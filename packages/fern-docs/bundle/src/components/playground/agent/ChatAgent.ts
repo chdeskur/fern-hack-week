@@ -110,6 +110,7 @@ let singletonChatAgent: ChatAgent | null = null;
 /**
  * Get the singleton ChatAgent instance.
  * This ensures only one instance exists per user session.
+ * TODO: move the instantiation so this persists when the API Explorer is closed
  */
 export function getChatAgent(): ChatAgent {
   if (!singletonChatAgent) {
