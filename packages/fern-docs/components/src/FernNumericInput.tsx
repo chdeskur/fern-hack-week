@@ -108,6 +108,12 @@ export const FernNumericInput = forwardRef<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Clear internal value when external value changes
+  useEffect(() => {
+    console.log("FernNumericInput: External value changed to:", value);
+    setInternalValue(undefined);
+  }, [value]);
+
   return (
     <div className={cn("fern-numeric-input-group", className)}>
       {onValueChange && (
@@ -133,8 +139,17 @@ export const FernNumericInput = forwardRef<
         ref={composeRefs(inputRef, forwardedRef)}
         type="number"
         className={cn("fern-input", inputClassName)}
-        value={internalValue ?? value}
+        value={(() => {
+          const finalValue = internalValue ?? value;
+          console.log("FernNumericInput: Final input value:", {
+            internalValue,
+            value,
+            finalValue,
+          });
+          return finalValue;
+        })()}
         onChange={(e) => {
+          console.log("FernNumericInput: Input changed to:", e.target.value);
           onChange?.(e);
           onValueChange?.(
             disallowFloat

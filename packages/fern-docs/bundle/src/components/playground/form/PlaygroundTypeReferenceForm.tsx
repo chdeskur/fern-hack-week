@@ -233,131 +233,226 @@ const PlaygroundTypeReferenceFormInternal =
               </WithLabel>
             );
           },
-          integer: (integer) => (
-            <WithLabel
-              property={property}
-              value={value}
-              onChange={onChange}
-              onRemove={onRemove}
-              types={types}
-              htmlFor={id}
-              isNullSelected={isNullSelected}
-            >
-              <span
-                className={cn("block w-full", isNullSelected && "invisible")}
+          integer: (integer) => {
+            console.log(
+              "PlaygroundTypeReferenceForm: integer value:",
+              value,
+              "type:",
+              typeof value
+            );
+            // Convert string to number if needed
+            const numericValue =
+              typeof value === "number"
+                ? value
+                : typeof value === "string"
+                  ? parseFloat(value)
+                  : undefined;
+            console.log(
+              "PlaygroundTypeReferenceForm: converted integer value:",
+              numericValue
+            );
+            return (
+              <WithLabel
+                property={property}
+                value={value}
+                onChange={onChange}
+                onRemove={onRemove}
+                types={types}
+                htmlFor={id}
+                isNullSelected={isNullSelected}
               >
-                <FernNumericInput
-                  id={id}
-                  className="w-full"
-                  value={typeof value === "number" ? value : undefined}
-                  onValueChange={onChange}
-                  disallowFloat={true}
-                  // resettable={typeof defaultValue === "number"}
-                  max={integer.maximum}
-                  min={integer.minimum}
-                />
-              </span>
-            </WithLabel>
-          ),
-          double: (double) => (
-            <WithLabel
-              property={property}
-              value={value}
-              onChange={onChange}
-              onRemove={onRemove}
-              types={types}
-              htmlFor={id}
-              isNullSelected={isNullSelected}
-            >
-              <span
-                className={cn("block w-full", isNullSelected && "invisible")}
+                <span
+                  className={cn("block w-full", isNullSelected && "invisible")}
+                >
+                  <FernNumericInput
+                    id={id}
+                    className="w-full"
+                    value={numericValue}
+                    onValueChange={onChange}
+                    disallowFloat={true}
+                    // resettable={typeof defaultValue === "number"}
+                    max={integer.maximum}
+                    min={integer.minimum}
+                  />
+                </span>
+              </WithLabel>
+            );
+          },
+          double: (double) => {
+            console.log(
+              "PlaygroundTypeReferenceForm: double value:",
+              value,
+              "type:",
+              typeof value
+            );
+            // Convert string to number if needed
+            const numericValue =
+              typeof value === "number"
+                ? value
+                : typeof value === "string"
+                  ? parseFloat(value)
+                  : undefined;
+            console.log(
+              "PlaygroundTypeReferenceForm: converted double value:",
+              numericValue
+            );
+            return (
+              <WithLabel
+                property={property}
+                value={value}
+                onChange={onChange}
+                onRemove={onRemove}
+                types={types}
+                htmlFor={id}
+                isNullSelected={isNullSelected}
               >
-                <FernNumericInput
-                  id={id}
-                  className="w-full"
-                  value={typeof value === "number" ? value : undefined}
-                  onValueChange={onChange}
-                  // resettable={typeof defaultValue === "number"}
-                  max={double.maximum}
-                  min={double.minimum}
-                />
-              </span>
-            </WithLabel>
-          ),
-          long: (long) => (
-            <WithLabel
-              property={property}
-              value={value}
-              onChange={onChange}
-              onRemove={onRemove}
-              types={types}
-              htmlFor={id}
-              isNullSelected={isNullSelected}
-            >
-              <span
-                className={cn("block w-full", isNullSelected && "invisible")}
+                <span
+                  className={cn("block w-full", isNullSelected && "invisible")}
+                >
+                  <FernNumericInput
+                    id={id}
+                    className="w-full"
+                    value={numericValue}
+                    onValueChange={onChange}
+                    // resettable={typeof defaultValue === "number"}
+                    max={double.maximum}
+                    min={double.minimum}
+                  />
+                </span>
+              </WithLabel>
+            );
+          },
+          long: (long) => {
+            console.log(
+              "PlaygroundTypeReferenceForm: long value:",
+              value,
+              "type:",
+              typeof value
+            );
+            // Convert string to number if needed
+            const numericValue =
+              typeof value === "number"
+                ? value
+                : typeof value === "string"
+                  ? parseFloat(value)
+                  : undefined;
+            console.log(
+              "PlaygroundTypeReferenceForm: converted long value:",
+              numericValue
+            );
+            return (
+              <WithLabel
+                property={property}
+                value={value}
+                onChange={onChange}
+                onRemove={onRemove}
+                types={types}
+                htmlFor={id}
+                isNullSelected={isNullSelected}
               >
-                <FernNumericInput
-                  id={id}
-                  className="w-full"
-                  value={typeof value === "number" ? value : undefined}
-                  onValueChange={onChange}
-                  disallowFloat={true}
-                  // resettable={typeof defaultValue === "number"}
-                  max={long.maximum}
-                  min={long.minimum}
-                />
-              </span>
-            </WithLabel>
-          ),
-          uint: () => (
-            <WithLabel
-              property={property}
-              value={value}
-              onChange={onChange}
-              onRemove={onRemove}
-              types={types}
-              htmlFor={id}
-              isNullSelected={isNullSelected}
-            >
-              <span
-                className={cn("block w-full", isNullSelected && "invisible")}
+                <span
+                  className={cn("block w-full", isNullSelected && "invisible")}
+                >
+                  <FernNumericInput
+                    id={id}
+                    className="w-full"
+                    value={numericValue}
+                    onValueChange={onChange}
+                    disallowFloat={true}
+                    // resettable={typeof defaultValue === "number"}
+                    max={long.maximum}
+                    min={long.minimum}
+                  />
+                </span>
+              </WithLabel>
+            );
+          },
+          uint: () => {
+            console.log(
+              "PlaygroundTypeReferenceForm: uint value:",
+              value,
+              "type:",
+              typeof value
+            );
+            // Convert string to number if needed
+            const numericValue =
+              typeof value === "number"
+                ? value
+                : typeof value === "string"
+                  ? parseFloat(value)
+                  : undefined;
+            console.log(
+              "PlaygroundTypeReferenceForm: converted uint value:",
+              numericValue
+            );
+            return (
+              <WithLabel
+                property={property}
+                value={value}
+                onChange={onChange}
+                onRemove={onRemove}
+                types={types}
+                htmlFor={id}
+                isNullSelected={isNullSelected}
               >
-                <FernNumericInput
-                  id={id}
-                  className="w-full"
-                  value={typeof value === "number" ? value : undefined}
-                  // resettable={typeof defaultValue === "number"}
-                  onValueChange={onChange}
-                  disallowFloat={true}
-                />
-              </span>
-            </WithLabel>
-          ),
-          uint64: () => (
-            <WithLabel
-              property={property}
-              value={value}
-              onChange={onChange}
-              onRemove={onRemove}
-              types={types}
-              htmlFor={id}
-              isNullSelected={isNullSelected}
-            >
-              <span
-                className={cn("block w-full", isNullSelected && "invisible")}
+                <span
+                  className={cn("block w-full", isNullSelected && "invisible")}
+                >
+                  <FernNumericInput
+                    id={id}
+                    className="w-full"
+                    value={numericValue}
+                    // resettable={typeof defaultValue === "number"}
+                    onValueChange={onChange}
+                    disallowFloat={true}
+                  />
+                </span>
+              </WithLabel>
+            );
+          },
+          uint64: () => {
+            console.log(
+              "PlaygroundTypeReferenceForm: uint64 value:",
+              value,
+              "type:",
+              typeof value
+            );
+            // Convert string to number if needed
+            const numericValue =
+              typeof value === "number"
+                ? value
+                : typeof value === "string"
+                  ? parseFloat(value)
+                  : undefined;
+            console.log(
+              "PlaygroundTypeReferenceForm: converted uint64 value:",
+              numericValue
+            );
+            return (
+              <WithLabel
+                property={property}
+                value={value}
+                onChange={onChange}
+                onRemove={onRemove}
+                types={types}
+                htmlFor={id}
+                isNullSelected={isNullSelected}
               >
-                <FernNumericInput
-                  id={id}
-                  className="w-full"
-                  value={typeof value === "number" ? value : undefined}
-                  // resettable={typeof defaultValue === "number"}
-                  onValueChange={onChange}
-                  disallowFloat={true}
-                />
-              </span>
-            </WithLabel>
-          ),
+                <span
+                  className={cn("block w-full", isNullSelected && "invisible")}
+                >
+                  <FernNumericInput
+                    id={id}
+                    className="w-full"
+                    value={numericValue}
+                    // resettable={typeof defaultValue === "number"}
+                    onValueChange={onChange}
+                    disallowFloat={true}
+                  />
+                </span>
+              </WithLabel>
+            );
+          },
           datetime: () => (
             <WithLabel
               property={property}

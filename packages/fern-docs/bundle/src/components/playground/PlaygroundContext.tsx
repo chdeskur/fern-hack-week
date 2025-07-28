@@ -15,6 +15,415 @@ import {
   PlaygroundWebSocketRequestFormState,
 } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
+import { getEmptyValueForHttpRequestBody } from "./utils/default-values";
+
+// Helper function to resolve alias types recursively
+function resolveAliasType(
+  typeShape: any,
+  types: Record<string, any>,
+  visitedTypeIds = new Set<string>()
+): any {
+  if (!typeShape) return typeShape;
+
+  // Handle alias types
+  if (typeShape.type === "alias") {
+    return resolveAliasType(typeShape.value, types, visitedTypeIds);
+  }
+
+  // Handle type references (id)
+  if (typeShape.type === "id") {
+    const typeId = typeShape.id || typeShape.value;
+    if (visitedTypeIds.has(typeId)) {
+      // Circular reference detected
+      console.warn(`Circular reference detected for type: ${typeId}`);
+      return typeShape;
+    }
+
+    const typeDefinition = types[typeId];
+    if (!typeDefinition) {
+      console.warn(`Type definition not found for: ${typeId}`);
+      return typeShape;
+    }
+
+    visitedTypeIds.add(typeId);
+    return resolveAliasType(typeDefinition.shape, types, visitedTypeIds);
+  }
+
+  // Handle optional types
+  if (typeShape.type === "optional") {
+    return resolveAliasType(typeShape.shape, types, visitedTypeIds);
+  }
+
+  // Handle nullable types
+  if (typeShape.type === "nullable") {
+    return resolveAliasType(typeShape.shape, types, visitedTypeIds);
+  }
+
+  // Handle list/array types
+  if (typeShape.type === "list") {
+    return {
+      ...typeShape,
+      shape: resolveAliasType(
+        typeShape.shape || typeShape.itemShape,
+        types,
+        visitedTypeIds
+      ),
+    };
+  }
+
+  // Handle set types (similar to list)
+  if (typeShape.type === "set") {
+    return {
+      ...typeShape,
+      shape: resolveAliasType(
+        typeShape.shape || typeShape.itemShape,
+        types,
+        visitedTypeIds
+      ),
+    };
+  }
+
+  // Handle map types
+  if (typeShape.type === "map") {
+    return {
+      ...typeShape,
+      keyType: resolveAliasType(typeShape.keyType, types, visitedTypeIds),
+      valueType: resolveAliasType(typeShape.valueType, types, visitedTypeIds),
+    };
+  }
+
+  // Handle union types
+  if (typeShape.type === "union") {
+    return {
+      ...typeShape,
+      union: typeShape.union.map((member: any) =>
+        resolveAliasType(member, types, visitedTypeIds)
+      ),
+    };
+  }
+
+  // For object types, resolve properties recursively
+  if (typeShape.type === "object" && typeShape.properties) {
+    return {
+      ...typeShape,
+      properties: typeShape.properties.map((property: any) => ({
+        ...property,
+        valueShape: resolveAliasType(
+          property.valueShape,
+          types,
+          visitedTypeIds
+        ),
+      })),
+    };
+  }
+
+  // For other types, return as is
+  return typeShape;
+}
+
+// Helper function to get type information for a shape
+function getTypeInfo(typeShape: any): { type: string; description?: string } {
+  if (!typeShape) return { type: "unknown" };
+
+  switch (typeShape.type) {
+    case "string":
+      return { type: "string", description: typeShape.description };
+    case "integer":
+    case "long":
+    case "double":
+    case "float":
+      return { type: "number", description: typeShape.description };
+    case "boolean":
+      return { type: "boolean", description: typeShape.description };
+    case "date":
+    case "datetime":
+      return { type: "date", description: typeShape.description };
+    case "list":
+      return {
+        type: "array",
+        description: typeShape.description || "Array of items",
+      };
+    case "set":
+      return {
+        type: "set",
+        description: typeShape.description || "Set of unique items",
+      };
+    case "map":
+      return {
+        type: "object",
+        description: typeShape.description || "Key-value pairs",
+      };
+    case "object":
+      return {
+        type: "object",
+        description: typeShape.description || "Object with properties",
+      };
+    case "union":
+      return {
+        type: "union",
+        description: typeShape.description || "One of multiple types",
+      };
+    case "optional":
+      return getTypeInfo(typeShape.shape);
+    case "nullable":
+      return getTypeInfo(typeShape.shape);
+    case "alias":
+      return getTypeInfo(typeShape.value);
+    case "id":
+      return { type: "reference", description: typeShape.description };
+    default:
+      return { type: "unknown", description: typeShape.description };
+  }
+}
+
+// Helper function to recursively extract properties from complex types
+function extractProperties(
+  typeShape: any,
+  basePath: string[] = [],
+  types: Record<string, any> = {},
+  visitedTypes = new Set<string>()
+): {
+  key: string;
+  type: string;
+  description?: string;
+  isRequired: boolean;
+  defaultValue: unknown;
+  path: string[];
+  currentValue: unknown;
+  setValue: (value: unknown) => void;
+  isArray?: boolean;
+  isNested?: boolean;
+  children?: any[];
+}[] {
+  const properties: any[] = [];
+
+  if (!typeShape) return properties;
+
+  // Resolve the type shape first
+  const resolvedShape = resolveAliasType(typeShape, types, visitedTypes);
+
+  if (resolvedShape.type === "object" && resolvedShape.properties) {
+    // Handle object properties
+    resolvedShape.properties.forEach((property: any) => {
+      const propertyPath = [...basePath, property.key];
+      const propertyTypeInfo = getTypeInfo(property.valueShape);
+
+      // Special handling for list/set types - they should be treated as arrays
+      const isListType =
+        property.valueShape?.type === "list" ||
+        property.valueShape?.type === "set";
+      const actualType = isListType ? "array" : propertyTypeInfo.type;
+
+      // Debug logging for list types
+      if (isListType) {
+        console.log(
+          "Found list type property:",
+          property.key,
+          property.valueShape
+        );
+      }
+
+      properties.push({
+        key: property.key,
+        type: actualType,
+        description: property.description || propertyTypeInfo.description,
+        isRequired: !property.isOptional,
+        defaultValue: isListType ? [] : undefined,
+        path: propertyPath,
+        currentValue: undefined, // Will be set by caller
+        setValue: () => {
+          // Will be set by caller
+        }, // Will be set by caller
+        isArray: isListType || propertyTypeInfo.type === "array",
+        isNested:
+          propertyTypeInfo.type === "object" ||
+          propertyTypeInfo.type === "array" ||
+          isListType,
+        children:
+          propertyTypeInfo.type === "object" ||
+          propertyTypeInfo.type === "array" ||
+          isListType
+            ? extractProperties(
+                property.valueShape,
+                propertyPath,
+                types,
+                visitedTypes
+              )
+            : undefined,
+      });
+    });
+  } else if (resolvedShape.type === "list" || resolvedShape.type === "set") {
+    // Handle array/set types - extract the item shape for better type information
+    const itemShape = resolvedShape.shape || resolvedShape.itemShape;
+    const itemTypeInfo = getTypeInfo(itemShape);
+
+    properties.push({
+      key: "items",
+      type: "array",
+      description: resolvedShape.description || `Array of ${itemTypeInfo.type}`,
+      isRequired: true,
+      defaultValue: [],
+      path: [...basePath, "items"],
+      currentValue: undefined,
+      setValue: () => {
+        // Will be set by caller
+      },
+      isArray: true,
+      isNested: itemTypeInfo.type === "object" || itemTypeInfo.type === "array",
+      children:
+        itemTypeInfo.type === "object" || itemTypeInfo.type === "array"
+          ? extractProperties(
+              itemShape,
+              [...basePath, "items"],
+              types,
+              visitedTypes
+            )
+          : undefined,
+    });
+  } else if (resolvedShape.type === "map") {
+    // Handle map types
+    const keyTypeInfo = getTypeInfo(resolvedShape.keyType);
+    const valueTypeInfo = getTypeInfo(resolvedShape.valueType);
+    properties.push({
+      key: "entries",
+      type: "object",
+      description:
+        resolvedShape.description ||
+        `Map of ${keyTypeInfo.type} to ${valueTypeInfo.type}`,
+      isRequired: true,
+      defaultValue: {},
+      path: [...basePath, "entries"],
+      currentValue: undefined,
+      setValue: () => {
+        // Will be set by caller
+      },
+      isNested:
+        valueTypeInfo.type === "object" || valueTypeInfo.type === "array",
+      children:
+        valueTypeInfo.type === "object" || valueTypeInfo.type === "array"
+          ? extractProperties(
+              resolvedShape.valueType,
+              [...basePath, "entries"],
+              types,
+              visitedTypes
+            )
+          : undefined,
+    });
+  } else if (resolvedShape.type === "union") {
+    // Handle union types
+    resolvedShape.union.forEach((member: any, index: number) => {
+      const memberTypeInfo = getTypeInfo(member);
+      properties.push({
+        key: `option_${index}`,
+        type: memberTypeInfo.type,
+        description: memberTypeInfo.description || `Union option ${index + 1}`,
+        isRequired: false,
+        defaultValue: undefined,
+        path: [...basePath, `option_${index}`],
+        currentValue: undefined,
+        setValue: () => {
+          // Will be set by caller
+        },
+        isNested:
+          memberTypeInfo.type === "object" || memberTypeInfo.type === "array",
+        children:
+          memberTypeInfo.type === "object" || memberTypeInfo.type === "array"
+            ? extractProperties(
+                member,
+                [...basePath, `option_${index}`],
+                types,
+                visitedTypes
+              )
+            : undefined,
+      });
+    });
+  }
+
+  return properties;
+}
+
+// Helper function to safely navigate to a path in a nested object/array
+function navigateToPath(obj: any, path: (string | number)[]): any {
+  let current = obj;
+
+  for (const key of path) {
+    if (current == null) return undefined;
+
+    if (Array.isArray(current)) {
+      // Handle array navigation
+      const index = typeof key === "string" ? parseInt(key, 10) : key;
+      if (isNaN(index) || index < 0 || index >= current.length) {
+        return undefined;
+      }
+      current = current[index];
+    } else if (typeof current === "object") {
+      // Handle object navigation
+      current = current[key];
+    } else {
+      return undefined;
+    }
+  }
+
+  return current;
+}
+
+// Helper function to safely set a value at a path in a nested object/array
+function setValueAtPath(
+  obj: any,
+  path: (string | number)[],
+  value: unknown
+): any {
+  if (path.length === 0) return value;
+
+  // Create a deep copy to avoid mutating the original
+  const newObj =
+    obj != null && typeof obj === "object"
+      ? Array.isArray(obj)
+        ? [...obj]
+        : { ...obj }
+      : Array.isArray(obj)
+        ? []
+        : {};
+
+  let current = newObj;
+
+  // Navigate to the parent of the target
+  for (let i = 0; i < path.length - 1; i++) {
+    const key = path[i];
+    if (key == null) continue;
+
+    if (Array.isArray(current)) {
+      const index = typeof key === "string" ? parseInt(key, 10) : key;
+      if (isNaN(index) || index < 0) {
+        // Create array if needed
+        (current as any)[key] = typeof path[i + 1] === "number" ? [] : {};
+      } else {
+        // Ensure the array element exists
+        if (!(index in current)) {
+          (current as any)[index] = typeof path[i + 1] === "number" ? [] : {};
+        }
+      }
+      current = (current as any)[key];
+    } else if (typeof current === "object" && current != null) {
+      if (!(key in current)) {
+        (current as any)[key] = typeof path[i + 1] === "number" ? [] : {};
+      }
+      current = (current as any)[key];
+    } else {
+      // Create new object/array as needed
+      (current as any)[key] = typeof path[i + 1] === "number" ? [] : {};
+      current = (current as any)[key];
+    }
+  }
+
+  // Set the final value
+  const lastKey = path[path.length - 1];
+  if (lastKey != null) {
+    (current as any)[lastKey] = value;
+  }
+
+  return newObj;
+}
 
 export interface PlaygroundContextValue {
   // Current playground state
@@ -89,6 +498,24 @@ export interface PlaygroundContextValue {
   getAvailableQueryParameters: () => string[];
   getAvailableHeaders: () => string[];
   getRequestBodySchema: () => unknown;
+  unpackRequestBody: () => {
+    schema: unknown;
+    defaultValues: unknown;
+    contentType: string | undefined;
+    isRequired: boolean;
+    properties: {
+      key: string;
+      type: string;
+      description?: string;
+      isRequired: boolean;
+      defaultValue: unknown;
+      path: string[];
+      currentValue: unknown;
+      setValue: (value: unknown) => void;
+    }[];
+  };
+  setRequestBodyParameter: (path: (string | number)[], value: unknown) => void;
+  getRequestBodyParameter: (path: (string | number)[]) => unknown;
 
   // Debugging helpers
   getResponseDebugInfo: () => {
@@ -158,6 +585,15 @@ export const PlaygroundContext = React.createContext<PlaygroundContextValue>({
   getAvailableQueryParameters: () => [],
   getAvailableHeaders: () => [],
   getRequestBodySchema: () => undefined,
+  unpackRequestBody: () => ({
+    schema: undefined,
+    defaultValues: undefined,
+    contentType: undefined,
+    isRequired: false,
+    properties: [],
+  }),
+  setRequestBodyParameter: noop,
+  getRequestBodyParameter: () => undefined,
   getResponseDebugInfo: () => ({
     request: {
       url: undefined,
@@ -204,66 +640,146 @@ export function PlaygroundContextProvider({
   resetWithExample: () => void;
   resetWithoutExample: () => void;
 }) {
+  // Simplified setter methods using the context information
   const setHeader = React.useCallback(
     (key: string, value: unknown) => {
-      setFormState({
-        ...formState,
-        headers: {
-          ...formState.headers,
-          [key]: value,
-        },
+      console.log("setHeader called:", { key, value });
+
+      // Check if the value is empty (undefined, null, empty string, or NaN)
+      const isEmpty =
+        value == null ||
+        value === "" ||
+        (typeof value === "number" && isNaN(value));
+
+      setFormState((prev: typeof formState) => {
+        if (prev.type !== "endpoint") return prev;
+
+        if (isEmpty) {
+          // Remove the header entirely if it's empty
+          const { [key]: _removed, ...rest } = prev.headers || {};
+          console.log("Removing empty header:", key);
+          return {
+            ...prev,
+            headers: rest,
+          };
+        } else {
+          // Set the value if it's not empty
+          console.log("Setting header:", key, "to:", value);
+          return {
+            ...prev,
+            headers: {
+              ...prev.headers,
+              [key]: value,
+            },
+          };
+        }
       });
     },
-    [formState, setFormState]
+    [setFormState]
   );
 
   const setPathParameter = React.useCallback(
     (key: string, value: unknown) => {
-      setFormState({
-        ...formState,
-        pathParameters: {
-          ...formState.pathParameters,
-          [key]: value,
-        },
+      console.log("setPathParameter called:", { key, value });
+
+      // Check if the value is empty (undefined, null, empty string, or NaN)
+      const isEmpty =
+        value == null ||
+        value === "" ||
+        (typeof value === "number" && isNaN(value));
+
+      setFormState((prev: typeof formState) => {
+        if (prev.type !== "endpoint") return prev;
+
+        if (isEmpty) {
+          // Remove the parameter entirely if it's empty
+          const { [key]: _removed, ...rest } = prev.pathParameters || {};
+          console.log("Removing empty path parameter:", key);
+          return {
+            ...prev,
+            pathParameters: rest,
+          };
+        } else {
+          // Set the value if it's not empty
+          console.log("Setting path parameter:", key, "to:", value);
+          return {
+            ...prev,
+            pathParameters: {
+              ...prev.pathParameters,
+              [key]: value,
+            },
+          };
+        }
       });
     },
-    [formState, setFormState]
+    [setFormState]
   );
 
   const setQueryParameter = React.useCallback(
     (key: string, value: unknown) => {
-      setFormState({
-        ...formState,
-        queryParameters: {
-          ...formState.queryParameters,
-          [key]: value,
-        },
+      console.log("setQueryParameter called:", { key, value });
+
+      // Check if the value is empty (undefined, null, empty string, or NaN)
+      const isEmpty =
+        value == null ||
+        value === "" ||
+        (typeof value === "number" && isNaN(value));
+
+      setFormState((prev: typeof formState) => {
+        if (prev.type !== "endpoint") return prev;
+
+        if (isEmpty) {
+          // Remove the parameter entirely if it's empty
+          const { [key]: _removed, ...rest } = prev.queryParameters || {};
+          console.log("Removing empty query parameter:", key);
+          return {
+            ...prev,
+            queryParameters: rest,
+          };
+        } else {
+          // Set the value if it's not empty
+          console.log("Setting query parameter:", key, "to:", value);
+          return {
+            ...prev,
+            queryParameters: {
+              ...prev.queryParameters,
+              [key]: value,
+            },
+          };
+        }
       });
     },
-    [formState, setFormState]
+    [setFormState]
   );
 
   const setBody = React.useCallback(
     (body: unknown) => {
       if (formState.type === "endpoint") {
-        setFormState({
-          ...formState,
-          body: body as PlaygroundEndpointRequestFormState["body"],
-        });
+        setFormState((prev: typeof formState) => ({
+          ...prev,
+          body: {
+            type: "json",
+            value: body,
+          } as PlaygroundEndpointRequestFormState["body"],
+        }));
       }
     },
-    [formState, setFormState]
+    [setFormState, formState.type]
   );
 
   const setAuth = React.useCallback(
     (auth: PlaygroundContextValue["availableValues"]["auth"]) => {
-      // This would need to be implemented based on the auth state management
-      // For now, this is a placeholder
-      console.log("Setting auth:", auth);
+      if (context && "auth" in context) {
+        setFormState((prev: typeof formState) => ({
+          ...prev,
+          auth: auth,
+        }));
+      }
     },
-    []
+    [context, setFormState]
   );
 
+  // Simplified utility methods using context information
   const getAvailablePathParameters = React.useCallback(() => {
     if (context && "endpoint" in context) {
       return context.endpoint.pathParameters?.map((param) => param.key) || [];
@@ -279,16 +795,21 @@ export function PlaygroundContextProvider({
   }, [context]);
 
   const getAvailableHeaders = React.useCallback(() => {
-    // This would return available headers based on the endpoint definition
-    // For now, return common headers
-    return [
-      "Content-Type",
-      "Accept",
-      "Authorization",
-      "User-Agent",
-      "X-Requested-With",
-    ];
-  }, []);
+    let headers: string[] = [];
+
+    if (context && "endpoint" in context) {
+      headers =
+        context.endpoint.requestHeaders?.map((header) => header.key) || [];
+    }
+
+    if (context && "globalHeaders" in context) {
+      headers = [
+        ...headers,
+        ...context.globalHeaders.map((header) => header.key),
+      ];
+    }
+    return headers;
+  }, [context]);
 
   const getRequestBodySchema = React.useCallback(() => {
     if (
@@ -296,12 +817,158 @@ export function PlaygroundContextProvider({
       "endpoint" in context &&
       context.endpoint.requests?.[0]?.body
     ) {
-      return context.endpoint.requests[0].body;
+      const requestBody = context.endpoint.requests[0].body;
+      return resolveAliasType(requestBody, context.types);
     }
     return undefined;
   }, [context]);
 
-  // Response analysis for debugging
+  // Request body parameter control methods
+  const setRequestBodyParameter = React.useCallback(
+    (path: (string | number)[], value: unknown) => {
+      console.log("setRequestBodyParameter called:", {
+        path,
+        value,
+        formStateType: formState.type,
+      });
+      if (formState.type !== "endpoint") return;
+
+      setFormState((prev: typeof formState) => {
+        if (prev.type !== "endpoint") return prev;
+
+        const current = prev.body;
+        console.log("Current body:", current);
+        if (current?.type !== "json") return prev;
+
+        // Get current body value or create empty object
+        const currentBodyValue = current.value || {};
+
+        // Use the helper function to safely set the value
+        const newBodyValue = setValueAtPath(currentBodyValue, path, value);
+
+        console.log("Updated body value:", newBodyValue);
+
+        const newFormState = {
+          ...prev,
+          body: {
+            type: "json",
+            value: newBodyValue,
+          },
+        };
+        console.log("New form state:", newFormState);
+        return newFormState;
+      });
+    },
+    [setFormState, formState.type]
+  );
+
+  const getRequestBodyParameter = React.useCallback(
+    (path: (string | number)[]) => {
+      console.log("getRequestBodyParameter called:", {
+        path,
+        formStateType: formState.type,
+      });
+      if (formState.type !== "endpoint") return undefined;
+
+      const body = formState.body;
+      console.log("Body:", body);
+      if (body?.type === "json") {
+        const current = body.value;
+        console.log("Body value:", current);
+
+        // Use the helper function to safely navigate to the path
+        const result = navigateToPath(current, path);
+        console.log("Final value for path:", path, "is:", result);
+        return result;
+      }
+      return undefined;
+    },
+    [formState]
+  );
+
+  // Enhanced request body unpacking using type context
+  const unpackRequestBody = React.useCallback(() => {
+    if (!context || !("endpoint" in context)) {
+      return {
+        schema: undefined,
+        defaultValues: undefined,
+        contentType: undefined,
+        isRequired: false,
+        properties: [],
+      };
+    }
+
+    const requestBody = context.endpoint.requests?.[0]?.body;
+    if (!requestBody) {
+      return {
+        schema: undefined,
+        defaultValues: undefined,
+        contentType: undefined,
+        isRequired: false,
+        properties: [],
+      };
+    }
+
+    // Resolve alias types to get the actual schema
+    const resolvedRequestBody = resolveAliasType(requestBody, context.types);
+
+    // Get default values using the existing utility
+    const defaultValues = getEmptyValueForHttpRequestBody(
+      requestBody,
+      context.types
+    );
+
+    // Extract properties from the resolved request body schema using the new helper
+    const extractedProperties = extractProperties(
+      requestBody,
+      [],
+      context.types
+    );
+
+    console.log("Extracted properties:", extractedProperties);
+
+    // Convert to the expected format and add current values and setters
+    const properties = extractedProperties.map((prop) => ({
+      key: prop.key,
+      type: prop.type,
+      description: prop.description,
+      isRequired: prop.isRequired,
+      defaultValue: prop.defaultValue,
+      path: prop.path,
+      currentValue: getRequestBodyParameter(prop.path),
+      setValue: (value: unknown) => {
+        setRequestBodyParameter(prop.path, value);
+      },
+      isArray: prop.isArray,
+      isNested: prop.isNested,
+      children: prop.children,
+    }));
+
+    // Determine content type based on resolved request body type
+    let contentType: string | undefined;
+    if (
+      resolvedRequestBody.type === "object" ||
+      resolvedRequestBody.type === "alias"
+    ) {
+      contentType = "application/json";
+    } else if (resolvedRequestBody.type === "formData") {
+      contentType = "multipart/form-data";
+    } else if (resolvedRequestBody.type === "bytes") {
+      contentType = "application/octet-stream";
+    }
+
+    console.log("resolvedRequestBody", resolvedRequestBody);
+
+    return {
+      schema: resolvedRequestBody,
+      defaultValues,
+      contentType,
+      isRequired: true, // Assume required for now
+      properties,
+    };
+  }, [context, getRequestBodyParameter, setRequestBodyParameter]);
+
+  // Simplified response analysis
   const responseAnalysis = React.useMemo(() => {
     if (response.type !== "loaded") {
       return {
@@ -346,7 +1013,6 @@ export function PlaygroundContextProvider({
       }
     }
 
-    // Handle different response types
     const responseBody = responseData.response?.body;
     const responseHeaders =
       "headers" in responseData.response
@@ -384,6 +1050,7 @@ export function PlaygroundContextProvider({
     };
   }, [response, context]);
 
+  // Simplified debug info
   const getResponseDebugInfo = React.useCallback(() => {
     const requestUrl =
       context && "endpoint" in context ? `${context.endpoint.path}` : undefined;
@@ -434,12 +1101,17 @@ export function PlaygroundContextProvider({
     };
   }, [responseAnalysis, context, formState]);
 
+  // Simplified available values
   const availableValues = React.useMemo(() => {
+    // Body value is already clean since we remove empty properties
+    const bodyValue =
+      formState.type === "endpoint" ? formState.body?.value : undefined;
+
     const baseValues = {
       headers: formState.headers || {},
       pathParameters: formState.pathParameters || {},
       queryParameters: formState.queryParameters || {},
-      body: formState.type === "endpoint" ? formState.body : undefined,
+      body: bodyValue,
     };
 
     // Add auth information if available
@@ -491,6 +1163,19 @@ export function PlaygroundContextProvider({
       getAvailableQueryParameters,
       getAvailableHeaders,
       getRequestBodySchema,
+      unpackRequestBody,
+      setRequestBodyParameter,
+      getRequestBodyParameter,
+      unpackResponseBody: () => ({
+        schema: undefined,
+        contentType: undefined,
+        properties: [],
+        responseBody: undefined,
+        responseHeaders: undefined,
+      }),
+      setResponseParameter: noop,
+      setResponseHeader: noop,
+      getResponseParameter: () => undefined,
       getResponseDebugInfo,
     }),
     [
@@ -513,7 +1198,10 @@ export function PlaygroundContextProvider({
       getAvailableQueryParameters,
       getAvailableHeaders,
       getRequestBodySchema,
+      unpackRequestBody,
       getResponseDebugInfo,
+      setRequestBodyParameter,
+      getRequestBodyParameter,
     ]
   );
 
