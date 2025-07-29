@@ -264,9 +264,6 @@ export function mdxToHtml(
     },
   });
 
-  console.log("mdast:", mdast);
-  console.log("hast:", hast);
-
   // Get html from hast
   const html = toHtml(hast);
 
