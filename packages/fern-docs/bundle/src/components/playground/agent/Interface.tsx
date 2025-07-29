@@ -2,16 +2,21 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import { Bot, Send, User } from "lucide-react";
+import { Bot, Send } from "lucide-react";
 import { z } from "zod";
 
-import { FernButton, FernCard, FernInput } from "@fern-docs/components";
-import { mdxToHtml } from "@fern-docs/mdx";
+import {
+  FernButton,
+  FernCard,
+  FernInput,
+  FernTooltipProvider,
+} from "@fern-docs/components";
 import { visitLoadable } from "@fern-ui/loadable";
 
 import { closeButton } from "../PlaygroundCloseButton";
 import { ChatAgent, ChatMessage, userMessage } from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
+import { ChatMessageComponent } from "./ChatMessage";
 import { PlaygroundLogger, usePlaygroundContext } from "./PlaygroundContext";
 
 interface ChatBotInterfaceProps {
@@ -215,126 +220,76 @@ export function ChatBotInterface({
   };
 
   return (
-    <div className={`flex h-full w-full flex-col ${className}`}>
-      <div className="absolute right-4 top-4 z-10">{<closeButton.Out />}</div>
+    <FernTooltipProvider>
+      <div className={`flex h-full w-full flex-col ${className}`}>
+        <div className="absolute right-4 top-4 z-10">{<closeButton.Out />}</div>
 
-      <div className="flex-1 space-y-4 overflow-y-auto p-4">
-        {messages.length === 0 ? (
-          <div className="text-(color:--grayscale-a11) flex h-full items-center justify-center">
-            <div className="text-center">
-              <Bot className="mx-auto mb-2 h-8 w-8 opacity-50" />
-              <p className="text-sm">
-                Start a conversation with the AI assistant
-              </p>
-            </div>
-          </div>
-        ) : (
-          messages.map((message, index) => {
-            // Debug logging
-            if (!message.content) {
-              PlaygroundLogger.warn(
-                "[message] null/undefined content:",
-                message
-              );
-            }
-            return (
-              <div
-                key={index}
-                className={`flex gap-3 ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                <div
-                  className={`flex max-w-[80%] gap-3 ${
-                    message.role === "user" ? "flex-row-reverse" : "flex-row"
-                  }`}
-                >
-                  <div
-                    className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${
-                      message.role === "user"
-                        ? "bg-(color:--accent) text-(color:--accent-contrast)"
-                        : "bg-(color:--grayscale-a3) text-(color:--grayscale-a11)"
-                    }`}
-                  >
-                    {message.role === "user" ? (
-                      <User className="h-4 w-4" />
-                    ) : (
-                      <Bot className="h-4 w-4" />
-                    )}
-                  </div>
-                  <FernCard
-                    className={`rounded-2 w-full px-3 py-2 text-sm ${
-                      message.role === "user"
-                        ? "bg-(color:--accent) text-(color:--accent-contrast)"
-                        : "bg-card-background border-border-default border"
-                    }`}
-                  >
-                    <div
-                      className="whitespace-pre-wrap"
-                      dangerouslySetInnerHTML={{
-                        __html: mdxToHtml(
-                          message.content.includes("{")
-                            ? `\`\`\`json\n${message.content}\n\`\`\``
-                            : message.content
-                        ).html,
-                      }}
-                    />
-                  </FernCard>
-                </div>
+        <div className="flex-1 space-y-4 overflow-y-auto p-4">
+          {messages.length === 0 ? (
+            <div className="text-(color:--grayscale-a11) flex h-full items-center justify-center">
+              <div className="text-center">
+                <Bot className="mx-auto mb-2 h-8 w-8 opacity-50" />
+                <p className="text-sm">
+                  Start a conversation with the AI assistant
+                </p>
               </div>
-            );
-          })
-        )}
-        {isLoading && (
-          <div className="flex justify-start gap-3">
-            <div className="flex max-w-[80%] gap-3">
-              <div className="bg-(color:--grayscale-a3) flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
-                <Bot className="text-(color:--grayscale-a11) h-4 w-4" />
-              </div>
-              <FernCard className="rounded-2 border-border-default border px-3 py-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="flex space-x-1">
-                    <div className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"></div>
-                    <div
-                      className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
-                      style={{ animationDelay: "0.1s" }}
-                    ></div>
-                    <div
-                      className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
-                      style={{ animationDelay: "0.2s" }}
-                    ></div>
-                  </div>
-                  <span className="text-(color:--grayscale-a11)">
-                    Thinking...
-                  </span>
-                </div>
-              </FernCard>
             </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+          ) : (
+            messages.map((message, index) => (
+              <ChatMessageComponent key={index} message={message} />
+            ))
+          )}
+          {isLoading && (
+            <div className="flex justify-start gap-3">
+              <div className="flex max-w-[80%] gap-3">
+                <div className="bg-(color:--grayscale-a3) flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
+                  <Bot className="text-(color:--grayscale-a11) h-4 w-4" />
+                </div>
+                <FernCard className="rounded-2 border-border-default border px-3 py-2 text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="flex space-x-1">
+                      <div className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"></div>
+                      <div
+                        className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
+                        style={{ animationDelay: "0.1s" }}
+                      ></div>
+                      <div
+                        className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
+                    </div>
+                    <span className="text-(color:--grayscale-a11)">
+                      Thinking...
+                    </span>
+                  </div>
+                </FernCard>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
 
-      <div className="border-border-default border-t p-4">
-        <div className="flex gap-2">
-          <FernInput
-            value={inputValue}
-            onValueChange={setInputValue}
-            placeholder="Type your message..."
-            onKeyDown={handleKeyPress}
-            className="flex-1"
-          />
-          <FernButton
-            onClick={handleSendMessage}
-            disabled={!inputValue.trim() || isLoading}
-            icon={<Send className="h-4 w-4" />}
-            className="shrink-0"
-            intent="primary"
-          >
-            Send
-          </FernButton>
+        <div className="border-border-default border-t p-4">
+          <div className="flex gap-2">
+            <FernInput
+              value={inputValue}
+              onValueChange={setInputValue}
+              placeholder="Type your message..."
+              onKeyDown={handleKeyPress}
+              className="flex-1"
+            />
+            <FernButton
+              onClick={handleSendMessage}
+              disabled={!inputValue.trim() || isLoading}
+              icon={<Send className="h-4 w-4" />}
+              className="shrink-0"
+              intent="primary"
+            >
+              Send
+            </FernButton>
+          </div>
         </div>
       </div>
-    </div>
+    </FernTooltipProvider>
   );
 }
