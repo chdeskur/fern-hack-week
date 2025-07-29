@@ -18,7 +18,7 @@ import { PlaygroundResponse } from "../types/playgroundResponse";
 import { getEmptyValueForHttpRequestBody } from "../utils/default-values";
 
 // Structured logging utility for chat agent integration
-const PlaygroundLogger = {
+export const PlaygroundLogger = {
   debug: (message: string, data?: any) => {
     if (process.env.NODE_ENV === "development") {
       console.log(`[Playground] ${message}`, data);

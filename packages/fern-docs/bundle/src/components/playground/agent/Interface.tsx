@@ -7,11 +7,12 @@ import { z } from "zod";
 
 import { FernButton, FernCard, FernInput } from "@fern-docs/components";
 import { mdxToHtml } from "@fern-docs/mdx";
+import { visitLoadable } from "@fern-ui/loadable";
 
 import { closeButton } from "../PlaygroundCloseButton";
 import { ChatAgent, ChatMessage, userMessage } from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
-import { usePlaygroundContext } from "./PlaygroundContext";
+import { PlaygroundLogger, usePlaygroundContext } from "./PlaygroundContext";
 
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
@@ -50,7 +51,7 @@ export function ChatBotInterface({
     // Parse the response and update playground context
     const parsedResponse = JSON.parse(content);
 
-    console.log(parsedResponse);
+    PlaygroundLogger.debug("[parsedResponse]:", parsedResponse);
 
     // Process flattened parameters
     Object.entries(parsedResponse).forEach(([key, value]) => {
@@ -120,7 +121,7 @@ export function ChatBotInterface({
       .object(allParameters)
       .required(Object.keys(allParameters) as any);
 
-    console.log("allParameters", Object.keys(allParameters));
+    PlaygroundLogger.debug("[allParameters]:", Object.keys(allParameters));
 
     // Generate response from agent
     chatAgent
@@ -128,9 +129,43 @@ export function ChatBotInterface({
       .then((response) => {
         setParams(response.content);
         setMessages([...updatedMessages, response]);
+        return playground.sendRequest();
+      })
+      .then(async () => {
+        return new Promise<string>((resolve, reject) => {
+          visitLoadable(playground.response, {
+            loading: () => {
+              PlaygroundLogger.debug("[playground.response] LOADING");
+            },
+            loaded: (response) => {
+              const parsed =
+                typeof response.response.body === "string"
+                  ? response.response.body
+                  : JSON.stringify(response.response.body, null, 2);
+              PlaygroundLogger.debug("[playground.response] LOADED:", parsed);
+              resolve(parsed);
+            },
+            failed: (error) => {
+              PlaygroundLogger.error("[playground.response] FAILED:", error);
+              reject(new Error(JSON.stringify(error)));
+            },
+          });
+        });
+      })
+      .then((parsed) => {
+        setMessages([
+          ...updatedMessages,
+          {
+            role: "assistant",
+            content: parsed,
+          },
+        ]);
       })
       .catch((error: unknown) => {
-        console.error("Error generating response:", error);
+        PlaygroundLogger.error(
+          "[chatAgent.generateSchemaResponse] FAILED:",
+          error
+        );
         // Add error message
         const errorMsg: ChatMessage = {
           role: "assistant",
@@ -168,7 +203,10 @@ export function ChatBotInterface({
           messages.map((message, index) => {
             // Debug logging
             if (!message.content) {
-              console.warn("Message with null/undefined content:", message);
+              PlaygroundLogger.warn(
+                "[message] null/undefined content:",
+                message
+              );
             }
             return (
               <div
