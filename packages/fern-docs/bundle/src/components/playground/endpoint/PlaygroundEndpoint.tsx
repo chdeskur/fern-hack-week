@@ -243,7 +243,7 @@ export const PlaygroundEndpoint = ({
           />
         </div>
 
-        {activeTab === "manual" && (
+        {activeTab === "manual" ? (
           <>
             <div className="flex-0">
               <PlaygroundEndpointPath
@@ -298,9 +298,7 @@ export const PlaygroundEndpoint = ({
               />
             </div>
           </>
-        )}
-
-        {activeTab === "chat" && (
+        ) : (
           <div className="flex h-full min-h-0 w-full flex-1">
             <ChatBotInterface />
           </div>

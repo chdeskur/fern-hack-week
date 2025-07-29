@@ -198,7 +198,7 @@ export function ChatBotInterface({
                     )}
                   </div>
                   <FernCard
-                    className={`rounded-2 px-3 py-2 text-sm ${
+                    className={`rounded-2 w-full px-3 py-2 text-sm ${
                       message.role === "user"
                         ? "bg-(color:--accent) text-(color:--accent-contrast)"
                         : "bg-card-background border-border-default border"
