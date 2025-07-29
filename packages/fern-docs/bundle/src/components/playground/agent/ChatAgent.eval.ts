@@ -165,118 +165,118 @@ beforeEach(() => {
   resetChatAgent();
 });
 
-// describeEval("evaluate generateParameterSettingResponse", {
-//   data: async () => [
-//     {
-//       input: "Set the user_id to 12345 and the status to active",
-//       expected: {
-//         path_user_id: "12345",
-//         query_status: "active",
-//       },
-//       description: "Path and query parameter extraction",
-//     },
-//     {
-//       input: "Set the Authorization header to Bearer token123",
-//       expected: {
-//         header_Authorization: "Bearer token123",
-//       },
-//       description: "Header parameter extraction",
-//     },
-//     {
-//       input: "The user's name is Alice",
-//       expected: {
-//         body_name: "Alice",
-//       },
-//       description: "Body property extraction",
-//     },
-//     {
-//       input: "I don't have any values to provide",
-//       expected: {
-//         path_user_id: "",
-//         query_status: "",
-//         header_Authorization: "",
-//         body_name: "",
-//       },
-//       description: "No parameter values provided",
-//     },
-//   ],
-//   task: async (input: string) => {
-//     try {
-//       const { agent } = createAgentWithContext();
+describeEval("evaluate generateParameterSettingResponse", {
+  data: async () => [
+    {
+      input: "Set the user_id to 12345 and the status to active",
+      expected: {
+        path_user_id: "12345",
+        query_status: "active",
+      },
+      description: "Path and query parameter extraction",
+    },
+    {
+      input: "Set the Authorization header to Bearer token123",
+      expected: {
+        header_Authorization: "Bearer token123",
+      },
+      description: "Header parameter extraction",
+    },
+    {
+      input: "The user's name is Alice",
+      expected: {
+        body_name: "Alice",
+      },
+      description: "Body property extraction",
+    },
+    {
+      input: "I don't have any values to provide",
+      expected: {
+        path_user_id: "",
+        query_status: "",
+        header_Authorization: "",
+        body_name: "",
+      },
+      description: "No parameter values provided",
+    },
+  ],
+  task: async (input: string) => {
+    try {
+      const { agent } = createAgentWithContext();
 
-//       // For parameter extraction, we need to define the missing values inline
-//       // This is a limitation of the current eval structure
-//       const missingValues = {
-//         missingPathParameters: ["user_id"],
-//         missingQueryParameters: ["status"],
-//         missingHeaders: ["Authorization"],
-//         missingBodyProperties: [
-//           { key: "name", type: "string", path: ["name"] },
-//         ],
-//       };
+      // For parameter extraction, we need to define the missing values inline
+      // This is a limitation of the current eval structure
+      const missingValues = {
+        missingPathParameters: ["user_id"],
+        missingQueryParameters: ["status"],
+        missingHeaders: ["Authorization"],
+        missingBodyProperties: [
+          { key: "name", type: "string", path: ["name"] },
+        ],
+      };
 
-//       // Use a promise to handle the async call
-//       const response = await agent.generateParameterSettingResponse(
-//         userMessage(input),
-//         missingValues
-//       );
+      // Use a promise to handle the async call
+      const response = await agent.generateParameterSettingResponse(
+        userMessage(input),
+        missingValues
+      );
 
-//       const parsed = safeParseJSON(response.content);
+      const parsed = safeParseJSON(response.content);
 
-//       // Return as JSON string
-//       return JSON.stringify(parsed);
-//     } catch (error) {
-//       console.error("Error in task function:", error);
-//       return "{}";
-//     }
-//   },
-//   scorers: [
-//     async ({ output, expected }) => {
-//       // Parse the output as JSON
-//       let parsedOutput;
-//       try {
-//         parsedOutput = JSON.parse(output);
-//       } catch (error) {
-//         console.error("Failed to parse output as JSON:", error);
-//         return {
-//           score: 0.0,
-//           reasoning: `Failed to parse output as JSON: ${output}`,
-//         };
-//       }
+      // Return as JSON string
+      return JSON.stringify(parsed);
+    } catch (error) {
+      console.error("Error in task function:", error);
+      return "{}";
+    }
+  },
+  scorers: [
+    async ({ output, expected }) => {
+      // Parse the output as JSON
+      let parsedOutput;
+      try {
+        parsedOutput = JSON.parse(output);
+      } catch (error) {
+        console.error("Failed to parse output as JSON:", error);
+        return {
+          score: 0.0,
+          reasoning: `Failed to parse output as JSON: ${output}`,
+        };
+      }
 
-//       // Ensure output is an object
-//       if (!parsedOutput || typeof parsedOutput !== "object") {
-//         return {
-//           score: 0.0,
-//           reasoning: `Expected object, got: ${typeof parsedOutput} - ${JSON.stringify(parsedOutput)}`,
-//         };
-//       }
+      // Ensure output is an object
+      if (!parsedOutput || typeof parsedOutput !== "object") {
+        return {
+          score: 0.0,
+          reasoning: `Expected object, got: ${typeof parsedOutput} - ${JSON.stringify(parsedOutput)}`,
+        };
+      }
 
-//       const expectedKeys = Object.keys(expected);
-//       const outputKeys = Object.keys(parsedOutput);
+      const expectedKeys = Object.keys(expected);
+      const outputKeys = Object.keys(parsedOutput);
 
-//       if (expectedKeys.length === 0) {
-//         // If expected is empty, output should also be empty
-//         return {
-//           score: outputKeys.length === 0 ? 1.0 : 0.0,
-//           reasoning: `Expected empty object, got: ${JSON.stringify(parsedOutput)}`,
-//         };
-//       }
+      if (expectedKeys.length === 0) {
+        // If expected is empty, output should also be empty
+        return {
+          score: outputKeys.length === 0 ? 1.0 : 0.0,
+          reasoning: `Expected empty object, got: ${JSON.stringify(parsedOutput)}`,
+        };
+      }
 
-//       const score = expectedKeys.every(
-//         (key) => parsedOutput[key] === expected[key]
-//       )
-//         ? 1.0
-//         : 0.0;
+      const score = expectedKeys.every(
+        (key) => parsedOutput[key] === expected[key]
+      )
+        ? 1.0
+        : 0.0;
 
-//       return {
-//         score,
-//         reasoning: `Expected: ${JSON.stringify(expected)}, Got: ${JSON.stringify(parsedOutput)}`,
-//       };
-//     },
-//   ],
-//   threshold: 0.75,
-// });
+      return {
+        score,
+        reasoning: `Expected: ${JSON.stringify(expected)}, Got: ${JSON.stringify(parsedOutput)}`,
+      };
+    },
+  ],
+  threshold: 0.75,
+});
 
 // Input-output mapping dictionary
 const inputOutputMapping = {
