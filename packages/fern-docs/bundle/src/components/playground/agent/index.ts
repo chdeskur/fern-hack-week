@@ -1,1 +1,1 @@
-export { ChatBotInterface } from "./Interface";
+export { ChatBotInterface } from "./ChatInterface";
