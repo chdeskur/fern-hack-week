@@ -249,7 +249,7 @@ export const PLAYGROUND_AUTH_STATE_OAUTH_ATOM = atom(
   }
 );
 
-const playgroundFormStateFamily = atomFamily(
+export const playgroundFormStateFamily = atomFamily(
   (nodeId: FernNavigation.NodeId) => {
     const formStateAtom = atomWithStorage<
       PlaygroundRequestFormState | undefined

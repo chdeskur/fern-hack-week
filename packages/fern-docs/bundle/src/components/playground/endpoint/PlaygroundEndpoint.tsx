@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomCallback } from "jotai/utils";
 import { SendHorizonal } from "lucide-react";
 
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
@@ -32,6 +33,7 @@ import {
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+  playgroundFormStateFamily,
   usePlaygroundEndpointFormState,
 } from "@/state/playground";
 
@@ -103,132 +105,144 @@ export const PlaygroundEndpoint = ({
 
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
-  const sendRequest = useCallback(async () => {
-    if (endpoint == null) {
-      return;
-    }
-    setResponse(loading());
-    try {
-      track("api_playground_request_sent", {
-        endpointId: endpoint.id,
-        endpointName: node.title,
-        method: endpoint.method,
-        docsRoute: `/${node.slug}`,
-      });
-      const authHeaders = buildAuthHeaders(
-        auth,
-        jotaiStore.get(PLAYGROUND_AUTH_STATE_ATOM),
-        {
-          redacted: false,
-        },
-        {
-          formState,
-          endpoint,
-          baseUrl,
-          setValue: setOAuthValue,
+  const sendRequest = useAtomCallback(
+    useCallback(
+      async (get) => {
+        if (endpoint == null) {
+          return;
         }
-      );
-      const headers = {
-        ...authHeaders,
-        ...mapValues(formState.headers ?? {}, (value) =>
-          unknownToString(value)
-        ),
-      };
-
-      if (
-        endpoint.method !== "GET" &&
-        endpoint.requests?.[0]?.contentType != null
-      ) {
-        headers["Content-Type"] = endpoint.requests[0].contentType;
-      }
-
-      // Add application/json content type for OpenRPC endpoints
-      if (endpoint.protocol?.type === "openrpc") {
-        headers["Content-Type"] = "application/json";
-      }
-
-      const req: ProxyRequest = {
-        url: buildEndpointUrl({
-          endpoint,
-          pathParameters: formState.pathParameters,
-          queryParameters: formState.queryParameters,
-          baseUrl,
-        }),
-        method: endpoint.method,
-        headers,
-        body: await serializeFormStateBody({
-          shape: endpoint.requests?.[0]?.body,
-          body: formState.body,
-          usesApplicationJsonInFormDataValue,
-          protocol: endpoint.protocol,
-        }),
-      };
-      if (endpoint.responses?.[0]?.body.type === "stream") {
-        const [res, stream] = await executeProxyStream(
-          req,
-          isProxyDisabled || isLocal()
-        );
-
-        const time = Date.now();
-        const reader = stream.getReader();
-        let result = "";
-        const decoder = new TextDecoder();
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) {
-            break;
-          }
-          result += decoder.decode(value);
-          setResponse(
-            loaded({
-              type: "stream",
-              response: {
-                status: res.status,
-                body: result,
-              },
-              time: Date.now() - time,
-            })
-          );
-        }
-      } else {
-        const res = await executeProxyRest(req, isProxyDisabled || isLocal());
-        setResponse(loaded(res));
-        if (res.type !== "stream") {
-          track("api_playground_request_received", {
+        setResponse(loading());
+        try {
+          const _formState = get(playgroundFormStateFamily(context.node.id));
+          const latestFormState =
+            _formState?.type === "endpoint" ? _formState : formState;
+          track("api_playground_request_sent", {
             endpointId: endpoint.id,
             endpointName: node.title,
             method: endpoint.method,
             docsRoute: `/${node.slug}`,
-            response: {
-              status: res.response.status,
-              statusText: res.response.statusText,
-              time: res.time,
-              size: res.size,
-            },
           });
-        }
-      }
-    } catch (e) {
-      // TODO: sentry
+          const authHeaders = buildAuthHeaders(
+            auth,
+            jotaiStore.get(PLAYGROUND_AUTH_STATE_ATOM),
+            {
+              redacted: false,
+            },
+            {
+              formState: latestFormState,
+              endpoint,
+              baseUrl,
+              setValue: setOAuthValue,
+            }
+          );
+          const headers = {
+            ...authHeaders,
+            ...mapValues(latestFormState.headers ?? {}, (value) =>
+              unknownToString(value)
+            ),
+          };
 
-      console.error(
-        "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
-        e
-      );
-      setResponse(failed(e));
-    }
-  }, [
-    endpoint,
-    node.title,
-    node.slug,
-    auth,
-    formState,
-    baseUrl,
-    setOAuthValue,
-    usesApplicationJsonInFormDataValue,
-    isProxyDisabled,
-  ]);
+          if (
+            endpoint.method !== "GET" &&
+            endpoint.requests?.[0]?.contentType != null
+          ) {
+            headers["Content-Type"] = endpoint.requests[0].contentType;
+          }
+
+          // Add application/json content type for OpenRPC endpoints
+          if (endpoint.protocol?.type === "openrpc") {
+            headers["Content-Type"] = "application/json";
+          }
+
+          const req: ProxyRequest = {
+            url: buildEndpointUrl({
+              endpoint,
+              pathParameters: latestFormState.pathParameters,
+              queryParameters: latestFormState.queryParameters,
+              baseUrl,
+            }),
+            method: endpoint.method,
+            headers,
+            body: await serializeFormStateBody({
+              shape: endpoint.requests?.[0]?.body,
+              body: latestFormState.body,
+              usesApplicationJsonInFormDataValue,
+              protocol: endpoint.protocol,
+            }),
+          };
+          if (endpoint.responses?.[0]?.body.type === "stream") {
+            const [res, stream] = await executeProxyStream(
+              req,
+              isProxyDisabled || isLocal()
+            );
+
+            const time = Date.now();
+            const reader = stream.getReader();
+            let result = "";
+            const decoder = new TextDecoder();
+
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) {
+                break;
+              }
+              result += decoder.decode(value);
+              setResponse(
+                loaded({
+                  type: "stream",
+                  response: {
+                    status: res.status,
+                    body: result,
+                  },
+                  time: Date.now() - time,
+                })
+              );
+            }
+          } else {
+            const res = await executeProxyRest(
+              req,
+              isProxyDisabled || isLocal()
+            );
+            setResponse(loaded(res));
+            if (res.type !== "stream") {
+              track("api_playground_request_received", {
+                endpointId: endpoint.id,
+                endpointName: node.title,
+                method: endpoint.method,
+                docsRoute: `/${node.slug}`,
+                response: {
+                  status: res.response.status,
+                  statusText: res.response.statusText,
+                  time: res.time,
+                  size: res.size,
+                },
+              });
+            }
+          }
+        } catch (e) {
+          // TODO: sentry
+
+          console.error(
+            "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
+            e
+          );
+          setResponse(failed(e));
+        }
+      },
+      [
+        endpoint,
+        node.title,
+        node.slug,
+        auth,
+        formState,
+        baseUrl,
+        setOAuthValue,
+        usesApplicationJsonInFormDataValue,
+        isProxyDisabled,
+        context.node.id,
+      ]
+    )
+  );
 
   const settings = usePlaygroundSettings();
 
