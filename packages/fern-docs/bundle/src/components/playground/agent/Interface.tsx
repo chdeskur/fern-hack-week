@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { Bot, Send, User } from "lucide-react";
+import { z } from "zod";
 
 import { FernButton, FernCard, FernInput } from "@fern-docs/components";
 import { mdxToHtml } from "@fern-docs/mdx";
@@ -10,6 +11,7 @@ import { mdxToHtml } from "@fern-docs/mdx";
 import { closeButton } from "../PlaygroundCloseButton";
 import { ChatAgent, ChatMessage, userMessage } from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
+import { usePlaygroundContext } from "./PlaygroundContext";
 
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
@@ -23,6 +25,7 @@ export function ChatBotInterface({
   // Use the provided agent if available, otherwise get from context
   const contextAgent = useChatAgent();
   const chatAgent = agent ?? contextAgent;
+  const playground = usePlaygroundContext();
   const [messages, setMessages] = useState<ChatMessage[]>(chatAgent.messages);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +44,40 @@ export function ChatBotInterface({
     setMessages(chatAgent.messages);
   }, [chatAgent]);
 
+  const setParams = (content: string) => {
+    // Create a simple flat schema that includes all available parameters
+
+    // Parse the response and update playground context
+    const parsedResponse = JSON.parse(content);
+
+    console.log(parsedResponse);
+
+    // Process flattened parameters
+    Object.entries(parsedResponse).forEach(([key, value]) => {
+      if (!value) return;
+
+      if (key.startsWith("path_")) {
+        const paramName = key.substring(5); // Remove 'path_' prefix
+        playground.setPathParameter(paramName, value as string);
+      } else if (key.startsWith("query_")) {
+        const paramName = key.substring(6); // Remove 'query_' prefix
+        playground.setQueryParameter(paramName, value as string);
+      } else if (key.startsWith("header_")) {
+        const paramName = key.substring(7); // Remove 'header_' prefix
+        playground.setHeader(paramName, value as string);
+      } else if (key.startsWith("body_")) {
+        const paramName = key.substring(5); // Remove 'body_' prefix
+        // For body parameters, we need to set them properly in the body object
+        const currentBody = playground.availableValues.body || {};
+        const newBody =
+          typeof currentBody === "object" && currentBody != null
+            ? { ...currentBody, [paramName]: value }
+            : { [paramName]: value };
+        playground.setBody(newBody);
+      }
+    });
+  };
+
   const handleSendMessage = () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -52,10 +89,46 @@ export function ChatBotInterface({
     const updatedMessages = [...messages, userMsg];
     setMessages(updatedMessages);
 
+    const pathParameters = playground.getAvailablePathParameters();
+    const queryParameters = playground.getAvailableQueryParameters();
+    const headers = playground.getAvailableHeaders();
+    const requestBodyInfo = playground.unpackRequestBody();
+
+    // Create a single flat object with all parameters
+    const allParameters: Record<string, z.ZodString> = {};
+
+    // Add path parameters with prefix
+    pathParameters.forEach((param) => {
+      allParameters[`path_${param}`] = z.string();
+    });
+
+    // Add query parameters with prefix
+    queryParameters.forEach((param) => {
+      allParameters[`query_${param}`] = z.string();
+    });
+
+    // // Add headers with prefix
+    headers.forEach((header) => {
+      allParameters[`header_${header}`] = z.string();
+    });
+
+    // Add body properties with prefix
+    requestBodyInfo.properties.forEach((prop) => {
+      allParameters[`body_${prop.key}`] = z.string();
+    });
+
+    // Create simple flat schema
+    const parameterSchema = z
+      .object(allParameters)
+      .required(Object.keys(allParameters) as any);
+
+    console.log("allParameters", Object.keys(allParameters));
+
     // Generate response from agent
     chatAgent
-      .generateResponse(userMsg)
+      .generateSchemaResponse(userMsg, parameterSchema)
       .then((response) => {
+        setParams(response.content);
         setMessages([...updatedMessages, response]);
       })
       .catch((error: unknown) => {
@@ -134,7 +207,11 @@ export function ChatBotInterface({
                     <div
                       className="whitespace-pre-wrap"
                       dangerouslySetInnerHTML={{
-                        __html: mdxToHtml(message.content).html,
+                        __html: mdxToHtml(
+                          message.content.includes("{")
+                            ? `\`\`\`json\n${message.content}\n\`\`\``
+                            : message.content
+                        ).html,
                       }}
                     />
                   </FernCard>
