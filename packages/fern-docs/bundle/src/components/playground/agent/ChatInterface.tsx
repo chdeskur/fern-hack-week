@@ -138,6 +138,144 @@ export function ChatBotInterface({
     const updatedMessages = [...messages, userMsg];
     setMessages(updatedMessages);
 
+    // Check for missing required values before proceeding
+    const missingValues = playground.checkMissingRequiredValues();
+
+    PlaygroundLogger.debug("Missing values check result", missingValues);
+
+    if (missingValues.hasMissingValues) {
+      PlaygroundLogger.info(
+        "Missing required values detected, attempting to extract from user message"
+      );
+      // Try to extract parameter values from the user's message first
+      chatAgent
+        .generateParameterSettingResponse(userMsg, missingValues)
+        .then((response) => {
+          PlaygroundLogger.debug(
+            "Parameter setting response received",
+            response.content
+          );
+
+          // Check if the response contains any valid parameters
+          let hasValidParameters = false;
+          try {
+            const parsedResponse = JSON.parse(response.content);
+            hasValidParameters = Object.keys(parsedResponse).length > 0;
+          } catch (error) {
+            PlaygroundLogger.debug("Failed to parse parameter response", error);
+          }
+
+          if (hasValidParameters) {
+            setParams(response.content);
+            setMessages([...updatedMessages, response]);
+          } else {
+            // No valid parameters found, provide helpful feedback
+            const noParamsMsg: ChatMessage = {
+              role: "assistant",
+              content:
+                "I couldn't find the required parameter values in your message. Let me ask you specifically for the missing values.",
+            };
+            setMessages([...updatedMessages, noParamsMsg]);
+          }
+
+          // After setting parameters (if any), check if we still have missing values
+          const updatedMissingValues = playground.checkMissingRequiredValues();
+          PlaygroundLogger.debug(
+            "Updated missing values check",
+            updatedMissingValues
+          );
+
+          if (updatedMissingValues.hasMissingValues) {
+            PlaygroundLogger.info(
+              "Still missing required values after parameter setting"
+            );
+            // Still missing values, ask for them
+            let missingValuesMessage =
+              "I still need the following required values:\n\n";
+
+            if (updatedMissingValues.missingPathParameters.length > 0) {
+              missingValuesMessage += "**Path Parameters:**\n";
+              updatedMissingValues.missingPathParameters.forEach((param) => {
+                missingValuesMessage += `- ${param}\n`;
+              });
+              missingValuesMessage += "\n";
+            }
+
+            if (updatedMissingValues.missingQueryParameters.length > 0) {
+              missingValuesMessage += "**Query Parameters:**\n";
+              updatedMissingValues.missingQueryParameters.forEach((param) => {
+                missingValuesMessage += `- ${param}\n`;
+              });
+              missingValuesMessage += "\n";
+            }
+
+            if (updatedMissingValues.missingHeaders.length > 0) {
+              missingValuesMessage += "**Headers:**\n";
+              updatedMissingValues.missingHeaders.forEach((header) => {
+                missingValuesMessage += `- ${header}\n`;
+              });
+              missingValuesMessage += "\n";
+            }
+
+            if (updatedMissingValues.missingBodyProperties.length > 0) {
+              missingValuesMessage += "**Body Properties:**\n";
+              updatedMissingValues.missingBodyProperties.forEach((prop) => {
+                missingValuesMessage += `- ${prop.key} (${prop.type})`;
+                if (prop.description) {
+                  missingValuesMessage += `: ${prop.description}`;
+                }
+                missingValuesMessage += "\n";
+              });
+              missingValuesMessage += "\n";
+            }
+
+            missingValuesMessage +=
+              "Please provide values for these required fields and I'll make the request for you.";
+
+            const retryMsg: ChatMessage = {
+              role: "assistant",
+              content: missingValuesMessage,
+            };
+            setMessages([...updatedMessages, response, retryMsg]);
+            setIsLoading(false); // Stop loading since we're waiting for user input
+            return; // Don't proceed with request
+          } else {
+            // All values set, make the request
+            return playground.sendRequest();
+          }
+        })
+        .then(async () => {
+          return new Promise<string>((resolve, reject) => {
+            setPendingResponse({ resolve, reject });
+          });
+        })
+        .then((parsed) => {
+          setMessages([
+            ...updatedMessages,
+            {
+              role: "assistant",
+              content: parsed,
+            },
+          ]);
+        })
+        .catch((error: unknown) => {
+          PlaygroundLogger.error(
+            "[chatAgent.generateParameterSettingResponse] FAILED:",
+            error
+          );
+          const errorMsg: ChatMessage = {
+            role: "assistant",
+            content:
+              "Sorry, I encountered an error while setting the parameters. Please try again.",
+          };
+          setMessages([...updatedMessages, errorMsg]);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+      return;
+    }
+
     const pathParameters = playground.getAvailablePathParameters();
     const queryParameters = playground.getAvailableQueryParameters();
     const headers = playground.getAvailableHeaders();

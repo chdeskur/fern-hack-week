@@ -102,6 +102,75 @@ export class ChatAgent {
     this.messages.push(assistantMsg);
     return assistantMsg;
   }
+
+  public async generateParameterSettingResponse(
+    userMsg: UserMessage,
+    missingValues: {
+      missingPathParameters: string[];
+      missingQueryParameters: string[];
+      missingHeaders: string[];
+      missingBodyProperties: {
+        key: string;
+        type: string;
+        description?: string;
+        path: string[];
+      }[];
+    }
+  ) {
+    this.messages.push(userMsg);
+
+    // Create a schema for the missing values
+    const parameterSchema: Record<string, z.ZodString> = {};
+
+    missingValues.missingPathParameters.forEach((param) => {
+      parameterSchema[`path_${param}`] = z.string();
+    });
+
+    missingValues.missingQueryParameters.forEach((param) => {
+      parameterSchema[`query_${param}`] = z.string();
+    });
+
+    missingValues.missingHeaders.forEach((header) => {
+      parameterSchema[`header_${header}`] = z.string();
+    });
+
+    missingValues.missingBodyProperties.forEach((prop) => {
+      parameterSchema[`body_${prop.key}`] = z.string();
+    });
+
+    const schema = z.object(parameterSchema);
+
+    const prompt =
+      "The user is providing values for missing required parameters. " +
+      "Extract the parameter values from their message and return them in the correct format.\n\n" +
+      "Available parameters to set:\n" +
+      Object.keys(parameterSchema)
+        .map((key) => `- ${key}`)
+        .join("\n") +
+      "\n\n" +
+      "User message: " +
+      userMsg.content +
+      "\n\n" +
+      "If the user's message doesn't contain values for the required parameters, return an empty object {}.";
+
+    try {
+      const { object } = await generateObject({
+        model: openai("gpt-4.1-mini"),
+        prompt: prompt,
+        schema: schema,
+      });
+
+      const assistantMsg = assistantMessage(JSON.stringify(object));
+      this.messages.push(assistantMsg);
+      return assistantMsg;
+    } catch (error) {
+      // If the AI fails to extract parameters, return an empty response
+      console.warn("Failed to extract parameters from user message:", error);
+      const assistantMsg = assistantMessage("{}");
+      this.messages.push(assistantMsg);
+      return assistantMsg;
+    }
+  }
 }
 
 // Singleton instance for the chat agent

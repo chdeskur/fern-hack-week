@@ -7,6 +7,7 @@ import { noop } from "ts-essentials";
 import {
   EndpointContext,
   WebSocketContext,
+  unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { Loadable } from "@fern-ui/loadable";
 
@@ -617,6 +618,195 @@ function getParameterTypeInfo(
   return { type: "string" };
 }
 
+// Helper function to check for missing required values
+function checkMissingRequiredValues(
+  context: EndpointContext | WebSocketContext,
+  formState:
+    | PlaygroundEndpointRequestFormState
+    | PlaygroundWebSocketRequestFormState
+): {
+  missingPathParameters: string[];
+  missingQueryParameters: string[];
+  missingHeaders: string[];
+  missingBodyProperties: {
+    key: string;
+    type: string;
+    description?: string;
+    path: string[];
+  }[];
+  hasMissingValues: boolean;
+} {
+  if (!context || !("endpoint" in context)) {
+    PlaygroundLogger.debug("No context or endpoint found for validation");
+    return {
+      missingPathParameters: [],
+      missingQueryParameters: [],
+      missingHeaders: [],
+      missingBodyProperties: [],
+      hasMissingValues: false,
+    };
+  }
+
+  const endpoint = context.endpoint;
+  const missingPathParameters: string[] = [];
+  const missingQueryParameters: string[] = [];
+  const missingHeaders: string[] = [];
+  const missingBodyProperties: {
+    key: string;
+    type: string;
+    description?: string;
+    path: string[];
+  }[] = [];
+
+  PlaygroundLogger.debug("Checking for missing required values", {
+    pathParameters: endpoint.pathParameters?.length || 0,
+    queryParameters: endpoint.queryParameters?.length || 0,
+    requestHeaders: endpoint.requestHeaders?.length || 0,
+    globalHeaders:
+      context && "globalHeaders" in context
+        ? context.globalHeaders?.length || 0
+        : 0,
+    hasRequestBody: !!endpoint.requests?.[0]?.body,
+  });
+
+  // Check path parameters
+  if (endpoint.pathParameters) {
+    endpoint.pathParameters.forEach((param) => {
+      const unwrapped = unwrapReference(param.valueShape, context.types);
+      if (!unwrapped.isOptional) {
+        const currentValue = formState.pathParameters?.[param.key];
+        if (
+          currentValue == null ||
+          currentValue === "" ||
+          (typeof currentValue === "number" && isNaN(currentValue))
+        ) {
+          missingPathParameters.push(param.key);
+          PlaygroundLogger.debug(
+            `Missing required path parameter: ${param.key}`
+          );
+        }
+      }
+    });
+  }
+
+  // Check query parameters
+  if (endpoint.queryParameters) {
+    endpoint.queryParameters.forEach((param) => {
+      const unwrapped = unwrapReference(param.valueShape, context.types);
+      if (!unwrapped.isOptional) {
+        const currentValue = formState.queryParameters?.[param.key];
+        if (
+          currentValue == null ||
+          currentValue === "" ||
+          (typeof currentValue === "number" && isNaN(currentValue))
+        ) {
+          missingQueryParameters.push(param.key);
+          PlaygroundLogger.debug(
+            `Missing required query parameter: ${param.key}`
+          );
+        }
+      }
+    });
+  }
+
+  // Check headers
+  if (endpoint.requestHeaders) {
+    endpoint.requestHeaders.forEach((header) => {
+      const unwrapped = unwrapReference(header.valueShape, context.types);
+      if (!unwrapped.isOptional) {
+        const currentValue = formState.headers?.[header.key];
+        if (
+          currentValue == null ||
+          currentValue === "" ||
+          (typeof currentValue === "number" && isNaN(currentValue))
+        ) {
+          missingHeaders.push(header.key);
+          PlaygroundLogger.debug(`Missing required header: ${header.key}`);
+        }
+      }
+    });
+  }
+
+  // Check global headers
+  if (context && "globalHeaders" in context && context.globalHeaders) {
+    context.globalHeaders.forEach((header) => {
+      const unwrapped = unwrapReference(header.valueShape, context.types);
+      if (!unwrapped.isOptional) {
+        const currentValue = formState.headers?.[header.key];
+        if (
+          currentValue == null ||
+          currentValue === "" ||
+          (typeof currentValue === "number" && isNaN(currentValue))
+        ) {
+          missingHeaders.push(header.key);
+          PlaygroundLogger.debug(
+            `Missing required global header: ${header.key}`
+          );
+        }
+      }
+    });
+  }
+
+  // Check body properties
+  if (endpoint.requests?.[0]?.body) {
+    const requestBody = endpoint.requests[0].body;
+    const resolvedBody = resolveAliasType(requestBody, context.types);
+
+    if (resolvedBody.type === "object" && resolvedBody.properties) {
+      resolvedBody.properties.forEach((property: any) => {
+        const unwrapped = unwrapReference(property.valueShape, context.types);
+        if (!unwrapped.isOptional) {
+          // Check if the property is set in the current body
+          const currentBodyValue =
+            formState.type === "endpoint" ? formState.body?.value : undefined;
+          const propertyValue =
+            currentBodyValue && typeof currentBodyValue === "object"
+              ? (currentBodyValue as any)[property.key]
+              : undefined;
+
+          if (
+            propertyValue == null ||
+            propertyValue === "" ||
+            (typeof propertyValue === "number" && isNaN(propertyValue))
+          ) {
+            missingBodyProperties.push({
+              key: property.key,
+              type: getTypeInfo(property.valueShape).type,
+              description: property.description,
+              path: [property.key],
+            });
+            PlaygroundLogger.debug(
+              `Missing required body property: ${property.key}`
+            );
+          }
+        }
+      });
+    }
+  }
+
+  const hasMissingValues =
+    missingPathParameters.length > 0 ||
+    missingQueryParameters.length > 0 ||
+    missingHeaders.length > 0 ||
+    missingBodyProperties.length > 0;
+
+  PlaygroundLogger.debug("Missing required values check complete", {
+    missingPathParameters,
+    missingQueryParameters,
+    missingHeaders,
+    missingBodyProperties,
+    hasMissingValues,
+  });
+
+  return {
+    missingPathParameters,
+    missingQueryParameters,
+    missingHeaders,
+    missingBodyProperties,
+    hasMissingValues,
+  };
+}
+
 export interface PlaygroundContextValue {
   // Current playground state
   formState:
@@ -731,6 +921,20 @@ export interface PlaygroundContextValue {
       suggestions: string[];
     };
   };
+
+  // Validation helpers
+  checkMissingRequiredValues: () => {
+    missingPathParameters: string[];
+    missingQueryParameters: string[];
+    missingHeaders: string[];
+    missingBodyProperties: {
+      key: string;
+      type: string;
+      description?: string;
+      path: string[];
+    }[];
+    hasMissingValues: boolean;
+  };
 }
 
 export const PlaygroundContext = React.createContext<PlaygroundContextValue>({
@@ -806,6 +1010,13 @@ export const PlaygroundContext = React.createContext<PlaygroundContextValue>({
       errorType: "none",
       suggestions: [],
     },
+  }),
+  checkMissingRequiredValues: () => ({
+    missingPathParameters: [],
+    missingQueryParameters: [],
+    missingHeaders: [],
+    missingBodyProperties: [],
+    hasMissingValues: false,
   }),
 });
 
@@ -1473,6 +1684,8 @@ export function PlaygroundContextProvider({
       setResponseHeader: noop,
       getResponseParameter: () => undefined,
       getResponseDebugInfo,
+      checkMissingRequiredValues: () =>
+        checkMissingRequiredValues(context, formState),
     }),
     [
       formState,
@@ -1498,6 +1711,7 @@ export function PlaygroundContextProvider({
       getResponseDebugInfo,
       setRequestBodyParameter,
       getRequestBodyParameter,
+      checkMissingRequiredValues,
     ]
   );
 
