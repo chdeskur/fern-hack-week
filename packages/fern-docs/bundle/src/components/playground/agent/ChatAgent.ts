@@ -177,6 +177,19 @@ export class ChatAgent {
       return assistantMsg;
     }
   }
+
+  public async generateSummary(assistantMsg: AssistantMessage) {
+    const { text } = await generateText({
+      model: openai("gpt-4.1-mini"),
+      messages: [
+        systemMessage(
+          "Given this JSON object, summarize its contents in a few sentences."
+        ),
+        assistantMsg,
+      ],
+    });
+    return assistantMessage(text);
+  }
 }
 
 // Singleton instance for the chat agent

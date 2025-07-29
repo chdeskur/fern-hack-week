@@ -15,7 +15,12 @@ import {
 import { visitLoadable } from "@fern-ui/loadable";
 
 import { closeButton } from "../PlaygroundCloseButton";
-import { ChatAgent, ChatMessage, userMessage } from "./ChatAgent";
+import {
+  ChatAgent,
+  ChatMessage,
+  assistantMessage,
+  userMessage,
+} from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
 import { ChatMessageComponent } from "./ChatMessage";
 import { PlaygroundLogger, usePlaygroundContext } from "./PlaygroundContext";
@@ -71,6 +76,17 @@ export function ChatBotInterface({
           PlaygroundLogger.debug("[playground.response] LOADED:", parsed);
           pendingResponse.resolve(parsed);
           setPendingResponse(null);
+          chatAgent
+            .generateSummary(assistantMessage(parsed))
+            .then((summary) => {
+              setMessages([...messages, summary]);
+            })
+            .catch((error: unknown) => {
+              PlaygroundLogger.error(
+                "[chatAgent.generateSummary] FAILED:",
+                error
+              );
+            });
         },
         failed: (error) => {
           PlaygroundLogger.error("[playground.response] FAILED:", error);
@@ -79,7 +95,7 @@ export function ChatBotInterface({
         },
       });
     }
-  }, [playground.response, pendingResponse]);
+  }, [playground.response, pendingResponse, chatAgent, messages]);
 
   const setParams = (content: string) => {
     // Create a simple flat schema that includes all available parameters
@@ -251,15 +267,6 @@ export function ChatBotInterface({
             setPendingResponse({ resolve, reject });
           });
         })
-        .then((parsed) => {
-          setMessages([
-            ...updatedMessages,
-            {
-              role: "assistant",
-              content: parsed,
-            },
-          ]);
-        })
         .catch((error: unknown) => {
           PlaygroundLogger.error(
             "[chatAgent.generateParameterSettingResponse] FAILED:",
@@ -325,15 +332,6 @@ export function ChatBotInterface({
         return new Promise<string>((resolve, reject) => {
           setPendingResponse({ resolve, reject });
         });
-      })
-      .then((parsed) => {
-        setMessages([
-          ...updatedMessages,
-          {
-            role: "assistant",
-            content: parsed,
-          },
-        ]);
       })
       .catch((error: unknown) => {
         PlaygroundLogger.error(
