@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Bot, Send } from "lucide-react";
 import { z } from "zod";
 
+import { ApiDefinition } from "@fern-api/fdr-sdk";
 import {
   FernButton,
   FernCard,
@@ -22,6 +23,7 @@ import { PlaygroundLogger, usePlaygroundContext } from "./PlaygroundContext";
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
   className?: string;
+  apiDefinition: ApiDefinition.ApiDefinition;
 }
 
 export function ChatBotInterface({

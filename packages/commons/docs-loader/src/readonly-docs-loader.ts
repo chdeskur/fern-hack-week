@@ -996,6 +996,11 @@ function calcDefaultPageWidth(sidebarWidth: number, contentWidth: number) {
 
 const getAuthConfig = getAuthEdgeConfig;
 
+export interface CachedDocsLoader extends DocsLoader {
+  clearKvCache: () => Promise<void>;
+  getApi: (id: string) => Promise<ApiDefinition.ApiDefinition>;
+}
+
 /**
  * The "use cache" tags help us speed up rendering specific parts of the page that are static.
  * It has a hard-limit of 2MB which is why we cannot use it to cache the entire response.
@@ -1007,7 +1012,7 @@ export const createCachedDocsLoader = async (
   domain: string,
   fern_token?: string,
   cacheConfig?: CacheConfig
-): Promise<DocsLoader & { clearKvCache: () => Promise<void> }> => {
+): Promise<CachedDocsLoader> => {
   assertDocsDomain(domain);
 
   const config = { ...DEFAULT_CACHE_CONFIG, ...cacheConfig };
@@ -1038,6 +1043,7 @@ export const createCachedDocsLoader = async (
     getMetadata: () => metadata,
     getFiles: () => getFiles(config)(domain),
     getMdxBundlerFiles: () => getMdxBundlerFiles(config)(domain),
+    getApi: (id: string) => getApi(domain, id),
     getPrunedApi: cache(createGetPrunedApiCached(domain, config)),
     getEndpointById: cache((apiDefinitionId: string, endpointId: EndpointId) =>
       getEndpointById({

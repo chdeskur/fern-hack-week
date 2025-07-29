@@ -1,7 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 
-import { createPruneKey } from "@fern-api/docs-loader";
-import { DocsLoader } from "@fern-api/docs-server/docs-loader";
+import { CachedDocsLoader, createPruneKey } from "@fern-api/docs-loader";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import {
   createEndpointContext,
@@ -17,7 +16,7 @@ export async function ExplorerContent({
   loader,
   node,
 }: {
-  loader: DocsLoader;
+  loader: CachedDocsLoader;
   node: NavigationNodePage;
 }) {
   if (!FernNavigation.isApiLeaf(node)) {
@@ -38,6 +37,8 @@ export async function ExplorerContent({
     return <NoEndpointSelected />;
   }
 
+  const fullApiDefinition = await loader.getApi(node.apiDefinitionId);
+
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);
     if (!context) return null;
@@ -48,7 +49,13 @@ export async function ExplorerContent({
         auth={context.auth}
       />
     );
-    return <PlaygroundEndpoint context={context} authForm={authForm} />;
+    return (
+      <PlaygroundEndpoint
+        context={context}
+        authForm={authForm}
+        apiDefinition={fullApiDefinition}
+      />
+    );
   } else if (node.type === "webSocket") {
     const context = createWebSocketContext(node, api);
     if (!context) return null;
