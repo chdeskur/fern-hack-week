@@ -30,6 +30,10 @@ export function ChatBotInterface({
   const [messages, setMessages] = useState<ChatMessage[]>(chatAgent.messages);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingResponse, setPendingResponse] = useState<{
+    resolve: (value: string) => void;
+    reject: (error: Error) => void;
+  } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -44,6 +48,31 @@ export function ChatBotInterface({
   useEffect(() => {
     setMessages(chatAgent.messages);
   }, [chatAgent]);
+
+  // Watch for response changes when we have a pending response
+  useEffect(() => {
+    if (pendingResponse) {
+      visitLoadable(playground.response, {
+        loading: () => {
+          PlaygroundLogger.debug("[playground.response] LOADING");
+        },
+        loaded: (response) => {
+          const parsed =
+            typeof response.response.body === "string"
+              ? response.response.body
+              : JSON.stringify(response.response.body, null, 2);
+          PlaygroundLogger.debug("[playground.response] LOADED:", parsed);
+          pendingResponse.resolve(parsed);
+          setPendingResponse(null);
+        },
+        failed: (error) => {
+          PlaygroundLogger.error("[playground.response] FAILED:", error);
+          pendingResponse.reject(new Error(JSON.stringify(error)));
+          setPendingResponse(null);
+        },
+      });
+    }
+  }, [playground.response, pendingResponse]);
 
   const setParams = (content: string) => {
     // Create a simple flat schema that includes all available parameters
@@ -133,23 +162,7 @@ export function ChatBotInterface({
       })
       .then(async () => {
         return new Promise<string>((resolve, reject) => {
-          visitLoadable(playground.response, {
-            loading: () => {
-              PlaygroundLogger.debug("[playground.response] LOADING");
-            },
-            loaded: (response) => {
-              const parsed =
-                typeof response.response.body === "string"
-                  ? response.response.body
-                  : JSON.stringify(response.response.body, null, 2);
-              PlaygroundLogger.debug("[playground.response] LOADED:", parsed);
-              resolve(parsed);
-            },
-            failed: (error) => {
-              PlaygroundLogger.error("[playground.response] FAILED:", error);
-              reject(new Error(JSON.stringify(error)));
-            },
-          });
+          setPendingResponse({ resolve, reject });
         });
       })
       .then((parsed) => {
