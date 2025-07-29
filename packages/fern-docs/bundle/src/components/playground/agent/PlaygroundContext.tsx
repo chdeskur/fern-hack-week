@@ -16,6 +16,7 @@ import {
 } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { getEmptyValueForHttpRequestBody } from "../utils/default-values";
+import { TypeConverter } from "./TypeConverter";
 
 // Structured logging utility for chat agent integration
 const PlaygroundLogger = {
@@ -184,6 +185,8 @@ function getTypeInfo(typeShape: any): { type: string; description?: string } {
   if (!typeShape) return { type: "unknown" };
 
   switch (typeShape.type) {
+    case "primitive":
+      return getTypeInfo(typeShape.value);
     case "string":
       return { type: "string", description: typeShape.description };
     case "integer":
@@ -482,6 +485,138 @@ function setValueAtPath(
   return newObj;
 }
 
+// Helper function to get parameter type information
+function getParameterTypeInfo(
+  parameterKey: string,
+  context: EndpointContext | WebSocketContext,
+  parameterType: "path" | "query" | "header" | "body"
+): { type: string; shape?: any; description?: string } {
+  if (!context || !("endpoint" in context)) {
+    PlaygroundLogger.debug(
+      `No context or endpoint found for ${parameterType} parameter '${parameterKey}'`
+    );
+    return { type: "string" };
+  }
+
+  const endpoint = context.endpoint;
+
+  console.log("full context:", context);
+
+  // Debug: Log the endpoint structure to understand the schema
+  PlaygroundLogger.debug(`Endpoint structure for ${parameterType} lookup:`, {
+    endpoint: {
+      pathParameters: endpoint.pathParameters?.length || 0,
+      queryParameters: endpoint.queryParameters?.length || 0,
+      requestHeaders: endpoint.requestHeaders?.length || 0,
+      requests: endpoint.requests?.length || 0,
+    },
+    parameterKey,
+    parameterType,
+  });
+
+  switch (parameterType) {
+    case "path": {
+      const pathParam = endpoint.pathParameters?.find(
+        (p: any) => p.key === parameterKey
+      );
+      if (pathParam) {
+        const typeInfo = getTypeInfo(pathParam.valueShape);
+        PlaygroundLogger.debug(
+          `Found path parameter '${parameterKey}' with type '${typeInfo.type}'`
+        );
+        return {
+          type: typeInfo.type,
+          shape: pathParam.valueShape,
+          description: pathParam.description || typeInfo.description,
+        };
+      }
+      PlaygroundLogger.debug(
+        `Path parameter '${parameterKey}' not found in schema. Available:`,
+        endpoint.pathParameters?.map((p: any) => p.key) || []
+      );
+      break;
+    }
+
+    case "query": {
+      const queryParam = endpoint.queryParameters?.find(
+        (p: any) => p.key === parameterKey
+      );
+      if (queryParam) {
+        const typeInfo = getTypeInfo(queryParam.valueShape);
+        PlaygroundLogger.debug(
+          `Found query parameter '${parameterKey}' with type '${typeInfo.type}'`
+        );
+        return {
+          type: typeInfo.type,
+          shape: queryParam.valueShape,
+          description: queryParam.description || typeInfo.description,
+        };
+      }
+      PlaygroundLogger.debug(
+        `Query parameter '${parameterKey}' not found in schema. Available:`,
+        endpoint.queryParameters?.map((p: any) => p.key) || []
+      );
+      break;
+    }
+
+    case "header": {
+      const headerParam = endpoint.requestHeaders?.find(
+        (h: any) => h.key === parameterKey
+      );
+      if (headerParam) {
+        const typeInfo = getTypeInfo(headerParam.valueShape);
+        PlaygroundLogger.debug(
+          `Found header parameter '${parameterKey}' with type '${typeInfo.type}'`
+        );
+        return {
+          type: typeInfo.type,
+          shape: headerParam.valueShape,
+          description: headerParam.description || typeInfo.description,
+        };
+      }
+      PlaygroundLogger.debug(
+        `Header parameter '${parameterKey}' not found in schema. Available:`,
+        endpoint.requestHeaders?.map((h: any) => h.key) || []
+      );
+      break;
+    }
+
+    case "body": {
+      // For body parameters, we need to look up the property in the request body schema
+      const requestBody = endpoint.requests?.[0]?.body;
+      if (requestBody) {
+        const resolvedBody = resolveAliasType(requestBody, context.types);
+        if (resolvedBody.type === "object" && resolvedBody.properties) {
+          const bodyProperty = resolvedBody.properties.find(
+            (p: any) => p.key === parameterKey
+          );
+          if (bodyProperty) {
+            const typeInfo = getTypeInfo(bodyProperty.valueShape);
+            PlaygroundLogger.debug(
+              `Found body parameter '${parameterKey}' with type '${typeInfo.type}'`
+            );
+            return {
+              type: typeInfo.type,
+              shape: bodyProperty.valueShape,
+              description: bodyProperty.description || typeInfo.description,
+            };
+          }
+        }
+      }
+      PlaygroundLogger.debug(
+        `Body parameter '${parameterKey}' not found in schema`
+      );
+      break;
+    }
+  }
+
+  // Default to string if type information is not available
+  PlaygroundLogger.debug(
+    `Using default type 'string' for ${parameterType} parameter '${parameterKey}'`
+  );
+  return { type: "string" };
+}
+
 export interface PlaygroundContextValue {
   // Current playground state
   formState:
@@ -702,11 +837,36 @@ export function PlaygroundContextProvider({
     (key: string, value: unknown) => {
       PlaygroundLogger.parameterUpdate("header", key, value);
 
+      // Get type information for the header
+      const typeInfo = getParameterTypeInfo(key, context, "header");
+      const contextStr = `header '${key}'`;
+
+      // Convert value to the correct type
+      const conversion = TypeConverter.convertValue(
+        value,
+        typeInfo.type,
+        typeInfo.shape,
+        contextStr
+      );
+
+      if (!conversion.success) {
+        PlaygroundLogger.error(
+          `Type conversion failed for ${contextStr}:`,
+          conversion.error
+        );
+        // You could throw an error or handle it gracefully
+        console.error(
+          `Type conversion failed for ${contextStr}:`,
+          conversion.error
+        );
+        return;
+      }
+
       // Check if the value is empty (undefined, null, empty string, or NaN)
       const isEmpty =
-        value == null ||
-        value === "" ||
-        (typeof value === "number" && isNaN(value));
+        conversion.value == null ||
+        conversion.value === "" ||
+        (typeof conversion.value === "number" && isNaN(conversion.value));
 
       setFormState((prev: typeof formState) => {
         if (prev.type !== "endpoint") return prev;
@@ -721,29 +881,56 @@ export function PlaygroundContextProvider({
           };
         } else {
           // Set the value if it's not empty
-          PlaygroundLogger.debug("Setting header", { key, value });
+          PlaygroundLogger.debug("Setting header", {
+            key,
+            value: conversion.value,
+          });
           return {
             ...prev,
             headers: {
               ...prev.headers,
-              [key]: value,
+              [key]: conversion.value,
             },
           };
         }
       });
     },
-    [setFormState]
+    [setFormState, context]
   );
 
   const setPathParameter = React.useCallback(
     (key: string, value: unknown) => {
       PlaygroundLogger.parameterUpdate("path", key, value);
 
+      // Get type information for the path parameter
+      const typeInfo = getParameterTypeInfo(key, context, "path");
+      const contextStr = `path parameter '${key}'`;
+
+      // Convert value to the correct type
+      const conversion = TypeConverter.convertValue(
+        value,
+        typeInfo.type,
+        typeInfo.shape,
+        contextStr
+      );
+
+      if (!conversion.success) {
+        PlaygroundLogger.error(
+          `Type conversion failed for ${contextStr}:`,
+          conversion.error
+        );
+        console.error(
+          `Type conversion failed for ${contextStr}:`,
+          conversion.error
+        );
+        return;
+      }
+
       // Check if the value is empty (undefined, null, empty string, or NaN)
       const isEmpty =
-        value == null ||
-        value === "" ||
-        (typeof value === "number" && isNaN(value));
+        conversion.value == null ||
+        conversion.value === "" ||
+        (typeof conversion.value === "number" && isNaN(conversion.value));
 
       setFormState((prev: typeof formState) => {
         if (prev.type !== "endpoint") return prev;
@@ -758,23 +945,76 @@ export function PlaygroundContextProvider({
           };
         } else {
           // Set the value if it's not empty
-          PlaygroundLogger.debug("Setting path parameter", { key, value });
+          PlaygroundLogger.debug("Setting path parameter", {
+            key,
+            value: conversion.value,
+          });
           return {
             ...prev,
             pathParameters: {
               ...prev.pathParameters,
-              [key]: value,
+              [key]: conversion.value,
             },
           };
         }
       });
     },
-    [setFormState]
+    [setFormState, context]
   );
 
   const setQueryParameter = React.useCallback(
     (key: string, value: unknown) => {
       PlaygroundLogger.parameterUpdate("query", key, value);
+
+      // Get type information for the query parameter
+      const typeInfo = getParameterTypeInfo(key, context, "query");
+      const contextStr = `query parameter '${key}'`;
+
+      PlaygroundLogger.debug(
+        `Setting ${contextStr} with type '${typeInfo.type}' and value:`,
+        value
+      );
+
+      // Convert value to the correct type
+      const conversion = TypeConverter.convertValue(
+        value,
+        typeInfo.type,
+        typeInfo.shape,
+        contextStr
+      );
+
+      if (!conversion.success) {
+        PlaygroundLogger.error(
+          `Type conversion failed for ${contextStr}:`,
+          conversion.error
+        );
+        console.error(
+          `Type conversion failed for ${contextStr}:`,
+          conversion.error
+        );
+        // Instead of returning early, try to set as string as a fallback
+        PlaygroundLogger.debug(`Attempting string fallback for ${contextStr}`);
+        const stringConversion = TypeConverter.convertValue(
+          value,
+          "string",
+          undefined,
+          contextStr
+        );
+        if (stringConversion.success) {
+          PlaygroundLogger.debug(
+            `String fallback successful for ${contextStr}`
+          );
+          value = stringConversion.value;
+        } else {
+          console.error(
+            `String fallback also failed for ${contextStr}:`,
+            stringConversion.error
+          );
+          return;
+        }
+      } else {
+        value = conversion.value;
+      }
 
       // Check if the value is empty (undefined, null, empty string, or NaN)
       const isEmpty =
@@ -806,7 +1046,7 @@ export function PlaygroundContextProvider({
         }
       });
     },
-    [setFormState]
+    [setFormState, context]
   );
 
   const setBody = React.useCallback(
