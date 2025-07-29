@@ -1504,6 +1504,9 @@ importers:
       vitest:
         specifier: ^3.0.5
         version: 3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vitest-evals:
+        specifier: ^0.4.1
+        version: 0.4.1(tinyrainbow@2.0.0)(vitest@3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       webpack:
         specifier: 5.94.0
         version: 5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.15))(esbuild@0.25.0)
@@ -19943,6 +19946,12 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  vitest-evals@0.4.1:
+    resolution: {integrity: sha512-4QPnV+H5Sffhtm2D5kofi9W5Dk+PrSsdSqf2eonUMFnK8bcF5mcQjHcNZ04iOQWilZYWYs67OPjQdU5Gbc7Mnw==}
+    peerDependencies:
+      tinyrainbow: '*'
+      vitest: '*'
 
   vitest@2.1.9:
     resolution: {integrity: sha512-MSmPM9REYqDGBI8439mA4mWhV5sKmDlBKWIYbA3lRb2PTHACE0mgKwA8yQ2xq9vxDTuk4iPrECBAEW2aoFXY0Q==}
@@ -44181,6 +44190,11 @@ snapshots:
       terser: 5.39.0
       tsx: 4.9.3
       yaml: 2.8.0
+
+  vitest-evals@0.4.1(tinyrainbow@2.0.0)(vitest@3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)):
+    dependencies:
+      tinyrainbow: 2.0.0
+      vitest: 3.0.5(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@18.19.33)(jiti@2.4.2)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@18.19.33)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
   vitest@2.1.9(@edge-runtime/vm@5.0.0)(@types/node@22.15.29)(jsdom@24.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(less@4.2.0)(lightningcss@1.29.1)(msw@2.10.3(@types/node@22.15.29)(typescript@5.7.3))(sass@1.77.0)(stylus@0.62.0)(terser@5.39.0):
     dependencies:
