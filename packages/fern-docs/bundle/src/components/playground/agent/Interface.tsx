@@ -54,8 +54,6 @@ export function ChatBotInterface({
 
     // Process flattened parameters
     Object.entries(parsedResponse).forEach(([key, value]) => {
-      if (!value) return;
-
       if (key.startsWith("path_")) {
         const paramName = key.substring(5); // Remove 'path_' prefix
         playground.setPathParameter(paramName, value as string);
