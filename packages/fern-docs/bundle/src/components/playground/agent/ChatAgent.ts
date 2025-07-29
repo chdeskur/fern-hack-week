@@ -92,15 +92,21 @@ export class ChatAgent {
     schema: z.ZodSchema
   ) {
     this.messages.push(userMsg);
-    const { object } = await generateObject({
-      model: openai("gpt-4.1-mini"),
-      prompt: this.generateSchemaResponsePrompt,
-      schema: schema,
-    });
 
-    const assistantMsg = assistantMessage(JSON.stringify(object));
-    this.messages.push(assistantMsg);
-    return assistantMsg;
+    try {
+      const { object } = await generateObject({
+        model: openai("gpt-4.1-mini"),
+        prompt: this.generateSchemaResponsePrompt,
+        schema: schema,
+      });
+
+      const assistantMsg = assistantMessage(JSON.stringify(object));
+      this.messages.push(assistantMsg);
+      return assistantMsg;
+    } catch (error) {
+      console.error("Error in generateSchemaResponse:", error);
+      throw error;
+    }
   }
 
   public async generateParameterSettingResponse(
