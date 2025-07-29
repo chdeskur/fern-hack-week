@@ -82,28 +82,44 @@ export function ChatBotInterface({
 
     PlaygroundLogger.debug("[parsedResponse]:", parsedResponse);
 
+    // Track any conversion errors
+    const conversionErrors: string[] = [];
+
     // Process flattened parameters
     Object.entries(parsedResponse).forEach(([key, value]) => {
-      if (key.startsWith("path_")) {
-        const paramName = key.substring(5); // Remove 'path_' prefix
-        playground.setPathParameter(paramName, value as string);
-      } else if (key.startsWith("query_")) {
-        const paramName = key.substring(6); // Remove 'query_' prefix
-        playground.setQueryParameter(paramName, value as string);
-      } else if (key.startsWith("header_")) {
-        const paramName = key.substring(7); // Remove 'header_' prefix
-        playground.setHeader(paramName, value as string);
-      } else if (key.startsWith("body_")) {
-        const paramName = key.substring(5); // Remove 'body_' prefix
-        // For body parameters, we need to set them properly in the body object
-        const currentBody = playground.availableValues.body || {};
-        const newBody =
-          typeof currentBody === "object" && currentBody != null
-            ? { ...currentBody, [paramName]: value }
-            : { [paramName]: value };
-        playground.setBody(newBody);
+      try {
+        if (key.startsWith("path_")) {
+          const paramName = key.substring(5); // Remove 'path_' prefix
+          playground.setPathParameter(paramName, value as string);
+        } else if (key.startsWith("query_")) {
+          const paramName = key.substring(6); // Remove 'query_' prefix
+          playground.setQueryParameter(paramName, value as string);
+        } else if (key.startsWith("header_")) {
+          const paramName = key.substring(7); // Remove 'header_' prefix
+          playground.setHeader(paramName, value as string);
+        } else if (key.startsWith("body_")) {
+          const paramName = key.substring(5); // Remove 'body_' prefix
+          // For body parameters, we need to set them properly in the body object
+          const currentBody = playground.availableValues.body || {};
+          const newBody =
+            typeof currentBody === "object" && currentBody != null
+              ? { ...currentBody, [paramName]: value }
+              : { [paramName]: value };
+          playground.setBody(newBody);
+        }
+      } catch (error) {
+        // Log conversion errors but don't fail the entire operation
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        conversionErrors.push(`${key}: ${errorMessage}`);
+        console.warn(`Type conversion failed for ${key}:`, error);
       }
     });
+
+    // If there were conversion errors, log them for debugging
+    if (conversionErrors.length > 0) {
+      console.warn("Some parameter conversions failed:", conversionErrors);
+    }
   };
 
   const handleSendMessage = () => {
