@@ -70,9 +70,15 @@ export interface ChatAgentConfig {
 
 export class ChatAgent {
   private readonly tools: ToolSet;
-  private readonly apiDefinition?: ApiDefinition.ApiDefinition;
-  private readonly onNavigateToEndpoint?: (endpointId: string) => Promise<void>;
-  private readonly onExecuteSequence?: (sequence: string[]) => Promise<void>;
+  private apiDefinition?: ApiDefinition.ApiDefinition;
+  private readonly onNavigateToEndpoint?: (
+    endpointId: string,
+    agent: ChatAgent
+  ) => Promise<void>;
+  private readonly onExecuteSequence?: (
+    sequence: string[],
+    agent: ChatAgent
+  ) => Promise<void>;
 
   public messages: ChatMessage[] = [];
 
@@ -94,22 +100,7 @@ export class ChatAgent {
       listEndpoints: {
         description:
           "List all available API endpoints with their methods and paths",
-        execute: async () => {
-          const endpoints = Object.entries(
-            this.apiDefinition?.endpoints || {}
-          ).map(([id, endpoint]) => ({
-            id,
-            method: endpoint.method,
-            path:
-              endpoint.path
-                ?.map((part: any) =>
-                  part.type === "literal" ? part.value : `{${part.value}}`
-                )
-                .join("") || "",
-            description: endpoint.description,
-          }));
-          return JSON.stringify(endpoints);
-        },
+        execute: this.listEndpoints,
       },
 
       getEndpointDetails: {
@@ -120,67 +111,95 @@ export class ChatAgent {
             .string()
             .describe("The ID of the endpoint to get details for"),
         }),
-        execute: async ({ endpointId }: { endpointId: string }) => {
-          const endpoints = this.apiDefinition?.endpoints;
-          if (!endpoints) {
-            return "No endpoints available";
-          }
-
-          // Find endpoint by matching the ID as string
-          const endpointEntry = Object.entries(endpoints).find(
-            ([id, _]) => id === endpointId
-          );
-          if (!endpointEntry) {
-            return `Endpoint with ID "${endpointId}" not found`;
-          }
-
-          const [, endpoint] = endpointEntry;
-          const details = {
-            id: endpointId,
-            method: endpoint.method,
-            path:
-              endpoint.path
-                ?.map((part: any) =>
-                  part.type === "literal" ? part.value : `{${part.value}}`
-                )
-                .join("") || "",
-            description: endpoint.description,
-            pathParameters:
-              endpoint.pathParameters?.map((p: any) => ({
-                key: p.key,
-                description: p.description,
-                type: p.valueShape?.type,
-              })) || [],
-            queryParameters:
-              endpoint.queryParameters?.map((p: any) => ({
-                key: p.key,
-                description: p.description,
-                type: p.valueShape?.type,
-              })) || [],
-            requestHeaders:
-              endpoint.requestHeaders?.map((h: any) => ({
-                key: h.key,
-                description: h.description,
-                type: h.valueShape?.type,
-              })) || [],
-            requestBody: endpoint.requests?.[0]?.body
-              ? {
-                  type: endpoint.requests[0].body.type,
-                }
-              : null,
-            responses:
-              endpoint.responses?.map((r: any) => ({
-                statusCode: r.statusCode,
-                description: r.description,
-                type: r.body?.type,
-              })) || [],
-          };
-
-          return JSON.stringify(details);
-        },
+        execute: this.getEndpointDetails,
       },
     };
   }
+
+  private listEndpoints = () => {
+    const endpoints = Object.entries(this.apiDefinition?.endpoints || {}).map(
+      ([id, endpoint]) => ({
+        id,
+        method: endpoint.method,
+        path:
+          endpoint.path
+            ?.map((part: any) =>
+              part.type === "literal" ? part.value : `{${part.value}}`
+            )
+            .join("") || "",
+        description: endpoint.description,
+      })
+    );
+    PlaygroundLogger.debug("[listEndpoints] Listing endpoints", endpoints);
+    return JSON.stringify(endpoints);
+  };
+
+  private getEndpointDetails = async ({
+    endpointId,
+  }: {
+    endpointId: string;
+  }) => {
+    PlaygroundLogger.debug(
+      "[getEndpointDetails] Getting details for endpoint",
+      endpointId
+    );
+    const endpoints = this.apiDefinition?.endpoints;
+    if (!endpoints) {
+      return "No endpoints available";
+    }
+
+    // Find endpoint by matching the ID as string
+    const endpointEntry = Object.entries(endpoints).find(
+      ([id, _]) => id === endpointId
+    );
+    if (!endpointEntry) {
+      return `Endpoint with ID "${endpointId}" not found`;
+    }
+
+    const [, endpoint] = endpointEntry;
+    const details = {
+      id: endpointId,
+      method: endpoint.method,
+      path:
+        endpoint.path
+          ?.map((part: any) =>
+            part.type === "literal" ? part.value : `{${part.value}}`
+          )
+          .join("") || "",
+      description: endpoint.description,
+      pathParameters:
+        endpoint.pathParameters?.map((p: any) => ({
+          key: p.key,
+          description: p.description,
+          type: p.valueShape?.type,
+        })) || [],
+      queryParameters:
+        endpoint.queryParameters?.map((p: any) => ({
+          key: p.key,
+          description: p.description,
+          type: p.valueShape?.type,
+        })) || [],
+      requestHeaders:
+        endpoint.requestHeaders?.map((h: any) => ({
+          key: h.key,
+          description: h.description,
+          type: h.valueShape?.type,
+        })) || [],
+      requestBody: endpoint.requests?.[0]?.body
+        ? {
+            type: endpoint.requests[0].body.type,
+          }
+        : null,
+      responses:
+        endpoint.responses?.map((r: any) => ({
+          statusCode: r.statusCode,
+          description: r.description,
+          type: r.body?.type,
+        })) || [],
+    };
+
+    return JSON.stringify(details);
+  };
 
   private get baseSystemPrompt() {
     return systemMessage(
@@ -216,8 +235,10 @@ Always be helpful and concise. When you need more information, ask specific ques
         path: string[];
       }[];
     },
-    currentEndpointId?: string
+    currentEndpointId?: string,
+    apiDefinition?: ApiDefinition.ApiDefinition
   ): Promise<ChatAgentResponse> {
+    this.apiDefinition = apiDefinition;
     this.messages.push(userMsg);
 
     // First, determine what action is needed
@@ -387,11 +408,16 @@ Return parameter values in the correct format. Use empty strings for parameters 
   private async handleMultiCall(): Promise<ChatAgentResponse> {
     // Use tools to explore API and create a plan
     const { text } = await generateText({
-      model: openai("gpt-4.1-mini"),
+      model: openai("gpt-4.1"),
       messages: [
         systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
 Use the available tools to explore endpoints and determine the sequence needed.
-Be specific about which endpoints to call and in what order.`),
+Be specific about which endpoints to call and in what order.
+IMPORTANT: Make sure to use the tools to explore endpoints and include the endpoint IDs in the plan.
+
+Here are the available endpoints:
+${this.listEndpoints()}
+`),
         ...this.getMessagesWithSystem(),
       ],
       tools: this.tools,
@@ -682,14 +708,14 @@ Return parameter values in the correct format. Use empty strings for parameters 
   // Execute a multi-step API sequence
   public async executeSequence(endpointIds: string[]): Promise<void> {
     if (this.onExecuteSequence) {
-      await this.onExecuteSequence(endpointIds);
+      await this.onExecuteSequence(endpointIds, this);
     }
   }
 
   // Navigate to a specific endpoint
   public async navigateToEndpoint(endpointId: string): Promise<void> {
     if (this.onNavigateToEndpoint) {
-      await this.onNavigateToEndpoint(endpointId);
+      await this.onNavigateToEndpoint(endpointId, this);
     }
   }
 }

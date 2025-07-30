@@ -28,11 +28,14 @@ interface ChatBotInterfaceProps {
   agent?: ChatAgent;
   className?: string;
   apiDefinition: ApiDefinition.ApiDefinition;
+  endpoint: ApiDefinition.EndpointDefinition;
 }
 
 export function ChatBotInterface({
   agent,
   className = "",
+  apiDefinition,
+  endpoint,
 }: ChatBotInterfaceProps) {
   // Use the provided agent if available, otherwise get from context
   const contextAgent = useChatAgent();
@@ -208,7 +211,8 @@ export function ChatBotInterface({
       const response = await chatAgent.processUserMessage(
         userMsg,
         availableParameters,
-        "current-endpoint" // TODO: Get actual current endpoint ID
+        endpoint.id,
+        apiDefinition
       );
 
       // Add the assistant's response to messages

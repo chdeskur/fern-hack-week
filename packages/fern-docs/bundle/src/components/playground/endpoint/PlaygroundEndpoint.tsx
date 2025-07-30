@@ -317,7 +317,10 @@ export const PlaygroundEndpoint = ({
           </>
         ) : (
           <div className="flex h-full min-h-0 w-full flex-1">
-            <ChatBotInterface apiDefinition={apiDefinition} />
+            <ChatBotInterface
+              apiDefinition={apiDefinition}
+              endpoint={endpoint}
+            />
           </div>
         )}
       </div>
