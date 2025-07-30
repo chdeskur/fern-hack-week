@@ -11,11 +11,16 @@ const openai = createOpenAI({
   organization: "org-EdIIJRQNvyUgF54KIY64fW9i",
 });
 
-// Types for better structure
-type ActionType = "single_call" | "multi_call" | "ask_parameters" | "general";
+// These types help us handle responses from the agent in a structured way
+// They mirror the action types for simplicity, but could be decoupled if needed
+type ResponseClassification =
+  | "single_call"
+  | "multi_call"
+  | "ask_parameters"
+  | "general_response";
 
 type ChatAgentResponse = {
-  action: ActionType;
+  classification: ResponseClassification;
   message: ChatMessage;
   parameters?: Record<string, unknown>;
   endpointSequence?: string[];
@@ -148,77 +153,60 @@ export class ChatAgent {
     };
   }
 
-  private askFern = async ({ query }: { query: string }) => {
+  private askFern = async ({
+    query,
+    includeMessages,
+  }: {
+    query: string;
+    includeMessages?: boolean;
+  }): Promise<string> => {
     try {
       // Generate a conversation ID for this chat session
       const conversationId = crypto.randomUUID();
 
+      // TODO: get from the environment
+      const BASE_URL = "http://localhost:3000";
+
       // Prepare the chat request for the chat endpoint
       const chatRequest = {
         messages: [
-          {
-            role: "user",
-            content: query,
-          },
+          // Don't include query if includeMessages is true, since it's typically the last message
+          // TODO: make this more robust
+          ...(includeMessages
+            ? this.messages.map((message) => ({
+                role: message.role,
+                parts: [{ type: "text", text: message.content }],
+              }))
+            : [
+                {
+                  role: "user",
+                  parts: [{ type: "text", text: query }],
+                },
+              ]),
         ],
-        source: "PLAYGROUND",
+        url: BASE_URL,
         conversationId,
       };
 
       // Make the API call to the chat endpoint
-      const response = await fetch(`/api/fern-docs/search/v2/chat`, {
+      const response = await fetch(`${BASE_URL}/api/fern-docs/search/v2/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-fern-host": "buildwithfern.com",
         },
         body: JSON.stringify(chatRequest),
       });
 
+      // Check if the response is ok
       if (!response.ok) {
         const errorText = await response.text();
-        return `Error calling Fern AI: ${response.status} - ${errorText}`;
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      // The chat endpoint returns a streaming response, so we need to read it
-      const reader = response.body?.getReader();
-      if (!reader) {
-        return "Error: No response body received from Fern AI.";
-      }
-
-      let responseText = "";
-      const decoder = new TextDecoder();
-
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          const chunk = decoder.decode(value);
-          const lines = chunk.split("\n");
-
-          for (const line of lines) {
-            if (line.startsWith("data: ")) {
-              const data = line.slice(6);
-              if (data === "[DONE]") {
-                break;
-              }
-
-              try {
-                const parsed = JSON.parse(data);
-                if (parsed.type === "text-delta" && parsed.textDelta) {
-                  responseText += parsed.textDelta;
-                }
-              } catch (_) {
-                // Ignore parsing errors for non-JSON lines
-              }
-            }
-          }
-        }
-      } finally {
-        reader.releaseLock();
-      }
-
-      return responseText || "No response received from Fern AI.";
+      // Parse the stream and extract human-readable text
+      const streamText = await response.text();
+      return this.parseStreamResponse(streamText);
     } catch (error) {
       PlaygroundLogger.error("Error calling Fern AI:", error);
       return `Error calling Fern AI: ${error instanceof Error ? error.message : "Unknown error"}`;
@@ -374,7 +362,7 @@ Available actions:
 - single_call: User wants to make one API call with the current endpoint. IMPORTANT: if there is an active sequence, use single_call to make the next call in the sequence.
 - multi_call: User wants to perform a sequence of multiple related API calls that might require different endpoints. IMPORTANT: if there is an active sequence, never use multi_call. Instead, use single_call to make the next call in the sequence.
 - ask_parameters: User is providing parameter values (like setting headers, providing names, IDs, etc.) for API calls, OR user is explicitly setting parameter values, OR user is responding to a request for parameters (including saying they don't have values)
-- general_response: General question or conversation that doesn't require API calls
+- general_response: General question or conversation that doesn't fit into the other categories
 
 IMPORTANT: If the user message contains parameter values (like "Set X to Y", "The name is Z", "Authorization header to Bearer token", etc.) OR if user says they don't have parameter values, classify as ask_parameters.
 
@@ -409,8 +397,9 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
         "I need to know what parameters are available for this endpoint."
       );
       this.messages.push(response);
+      // Re-classify response as ask_parameters
       return {
-        action: "ask_parameters",
+        classification: "ask_parameters",
         message: response,
       };
     }
@@ -426,7 +415,7 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
       const response = assistantMessage("I've will make an API call");
       this.messages.push(response);
       return {
-        action: "single_call",
+        classification: "single_call",
         message: response,
         parameters: {},
       };
@@ -471,7 +460,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         );
         this.messages.push(response);
         return {
-          action: "single_call",
+          classification: "single_call",
           message: response,
           parameters: completeParameters,
         };
@@ -480,8 +469,9 @@ Return parameter values in the correct format. Use empty strings for parameters 
           "I need more information about the parameters for this API call."
         );
         this.messages.push(response);
+        // Re-classify response as ask_parameters
         return {
-          action: "ask_parameters",
+          classification: "ask_parameters",
           message: response,
           parameters: completeParameters,
         };
@@ -495,8 +485,9 @@ Return parameter values in the correct format. Use empty strings for parameters 
 
       // Even on error, return empty parameters object
       const emptyParams = this.createEmptyParametersObject(availableParameters);
+      // Re-classify response as ask_parameters
       return {
-        action: "ask_parameters",
+        classification: "ask_parameters",
         message: response,
         parameters: emptyParams,
       };
@@ -543,7 +534,7 @@ ${this.listEndpoints()}
     this.sequence = sequence.endpoints;
 
     return {
-      action: "multi_call",
+      classification: "multi_call",
       message: response,
       endpointSequence: sequence.endpoints,
     };
@@ -558,7 +549,7 @@ ${this.listEndpoints()}
       );
       this.messages.push(response);
       return {
-        action: "ask_parameters",
+        classification: "ask_parameters",
         message: response,
       };
     }
@@ -573,8 +564,9 @@ ${this.listEndpoints()}
     if (!hasAvailableParameters) {
       const response = assistantMessage("Making a call to the endpoint.");
       this.messages.push(response);
+      // Re-classify response as single_call
       return {
-        action: "single_call",
+        classification: "single_call",
         message: response,
       };
     }
@@ -617,8 +609,9 @@ Return parameter values in the correct format. Use empty strings for parameters 
           `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
         );
         this.messages.push(response);
+        // If there is enough information, re-classify response as single_call
         return {
-          action: "single_call",
+          classification: "single_call",
           message: response,
           parameters: completeParameters,
         };
@@ -628,7 +621,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         );
         this.messages.push(response);
         return {
-          action: "ask_parameters",
+          classification: "ask_parameters",
           message: response,
           parameters: completeParameters,
         };
@@ -643,7 +636,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
       // Even on error, return empty parameters object
       const emptyParams = this.createEmptyParametersObject(availableParameters);
       return {
-        action: "ask_parameters",
+        classification: "ask_parameters",
         message: response,
         parameters: emptyParams,
       };
@@ -659,19 +652,21 @@ Return parameter values in the correct format. Use empty strings for parameters 
       );
       this.messages.push(response);
       return {
-        action: "general",
+        classification: "general_response",
         message: response,
       };
     }
 
     const query = lastUserMessage.content;
-    const aiResponse = await this.askFern({ query });
+    const aiResponse = await this.askFern({ query, includeMessages: true });
 
-    const response = assistantMessage(aiResponse);
+    const response = assistantMessage(
+      aiResponse || "I couldn't get a response from Fern AI. Please try again."
+    );
     this.messages.push(response);
 
     return {
-      action: "general",
+      classification: "general_response",
       message: response,
     };
   }
@@ -807,6 +802,55 @@ Return parameter values in the correct format. Use empty strings for parameters 
   // Reset the agent's state
   public reset(): void {
     this.messages = [];
+  }
+
+  /**
+   * Parse the SSE stream response and extract human-readable text
+   */
+  private parseStreamResponse(streamText: string): string {
+    const lines = streamText.split("\n");
+    let fullText = "";
+
+    for (const line of lines) {
+      if (line.startsWith("data: ")) {
+        const data = line.slice(6); // Remove 'data: ' prefix
+
+        // Skip the [DONE] message
+        if (data === "[DONE]") {
+          continue;
+        }
+
+        try {
+          const parsed = JSON.parse(data);
+
+          // Extract text from text-delta events
+          if (parsed.type === "text-delta" && parsed.delta) {
+            fullText += parsed.delta;
+          }
+
+          // Handle text-start (optional, for debugging)
+          if (parsed.type === "text-start") {
+            // Text is starting, we can add a newline if needed
+            if (fullText && !fullText.endsWith("\n")) {
+              fullText += "\n";
+            }
+          }
+
+          // Handle text-end (optional, for debugging)
+          if (parsed.type === "text-end") {
+            // Text has ended, we can add a newline if needed
+            if (fullText && !fullText.endsWith("\n")) {
+              fullText += "\n";
+            }
+          }
+        } catch (_error) {
+          // Skip malformed JSON lines
+          PlaygroundLogger.debug("Skipping malformed JSON line:", line);
+        }
+      }
+    }
+
+    return fullText.trim();
   }
 }
 

@@ -287,19 +287,19 @@ export function ChatBotInterface({
       // Add the assistant's response to messages
       setMessages([...updatedMessages, response.message]);
 
-      // Handle different action types
-      if (response.action === "single_call") {
+      // Handle different response types
+      if (response.classification === "single_call") {
         if (response.parameters) {
           setParams(response.parameters);
         }
 
         await sendRequestWithConsent(updatedMessages);
-      } else if (response.action === "multi_call") {
+      } else if (response.classification === "multi_call") {
         if (response.endpointSequence && response.endpointSequence.length > 0) {
           // Execute the sequence
           await chatAgent.executeSequence(response.endpointSequence);
         }
-      } else if (response.action === "ask_parameters") {
+      } else if (response.classification === "ask_parameters") {
         if (response.parameters) {
           setParams(response.parameters);
           // if we need more parameters ask
@@ -312,6 +312,8 @@ export function ChatBotInterface({
             await sendRequestWithConsent(updatedMessages);
           }
         }
+      } else if (response.classification === "general_response") {
+        // no-op: no need to further handle general responses
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("[handleSendMessage] FAILED:", error);
