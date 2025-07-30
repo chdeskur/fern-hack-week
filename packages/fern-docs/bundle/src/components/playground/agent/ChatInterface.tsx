@@ -354,7 +354,7 @@ export function ChatBotInterface({
               />
             ))
           )}
-          {(isLoading || pendingResponse) && !pendingConsent && (
+          {(isLoading || pendingResponse) && pendingConsent == null && (
             <div className="flex justify-start gap-3">
               <div className="flex max-w-[80%] gap-3">
                 <div className="bg-(color:--grayscale-a3) flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
