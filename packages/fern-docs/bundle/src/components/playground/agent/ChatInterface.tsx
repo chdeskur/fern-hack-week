@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import { Bot, Send } from "lucide-react";
+import { Bot, RotateCcw, Send } from "lucide-react";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 import {
@@ -334,10 +334,29 @@ export function ChatBotInterface({
     }
   };
 
+  const handleReset = () => {
+    chatAgent.reset();
+    setMessages([]);
+    setInputValue("");
+    setIsLoading(false);
+    setPendingResponse(null);
+    setPendingConsent(null);
+  };
+
   return (
     <FernTooltipProvider>
       <div className={`flex h-full w-full flex-col ${className}`}>
-        <div className="absolute right-4 top-4 z-10">{<closeButton.Out />}</div>
+        <div className="absolute right-4 top-4 z-10 flex gap-2">
+          <FernButton
+            onClick={handleReset}
+            icon={<RotateCcw className="h-4 w-4" />}
+            className="shrink-0"
+            size="small"
+          >
+            Reset
+          </FernButton>
+          {<closeButton.Out />}
+        </div>
 
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
           {messages.length === 0 ? (

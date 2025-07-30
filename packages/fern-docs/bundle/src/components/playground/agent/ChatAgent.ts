@@ -718,6 +718,11 @@ Return parameter values in the correct format. Use empty strings for parameters 
       await this.onNavigateToEndpoint(endpointId, this);
     }
   }
+
+  // Reset the agent's state
+  public reset(): void {
+    this.messages = [];
+  }
 }
 
 // Singleton instance for the chat agent
