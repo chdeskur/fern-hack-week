@@ -97,7 +97,6 @@ export class ChatAgent {
     sequence: string[],
     agent: ChatAgent
   ) => Promise<void>;
-
   public messages: ChatMessage[] = [];
   public sequence: string[] = [];
 
@@ -107,6 +106,7 @@ export class ChatAgent {
     this.onExecuteSequence = config?.onExecuteSequence;
     this.tools = {
       ...this.createApiTools(),
+      ...this.createAskFernTools(),
       ...(config?.additionalTools ?? {}),
     };
     this.messages = config?.initialMessages ?? [];
@@ -134,6 +134,96 @@ export class ChatAgent {
       },
     };
   }
+
+  private createAskFernTools(): ToolSet {
+    return {
+      askDocsAi: {
+        description:
+          "Ask a question to the Fern AI service trained on the documentation for this API domain",
+        inputSchema: z.object({
+          query: z.string().describe("The question to ask the Fern AI service"),
+        }),
+        execute: this.askFern,
+      },
+    };
+  }
+
+  private askFern = async ({ query }: { query: string }) => {
+    try {
+      // Generate a conversation ID for this chat session
+      const conversationId = crypto.randomUUID();
+
+      // Prepare the chat request for the chat endpoint
+      const chatRequest = {
+        messages: [
+          {
+            role: "user",
+            content: query,
+          },
+        ],
+        source: "PLAYGROUND",
+        conversationId,
+      };
+
+      // Make the API call to the chat endpoint
+      const response = await fetch(`/api/fern-docs/search/v2/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(chatRequest),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        return `Error calling Fern AI: ${response.status} - ${errorText}`;
+      }
+
+      // The chat endpoint returns a streaming response, so we need to read it
+      const reader = response.body?.getReader();
+      if (!reader) {
+        return "Error: No response body received from Fern AI.";
+      }
+
+      let responseText = "";
+      const decoder = new TextDecoder();
+
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split("\n");
+
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const data = line.slice(6);
+              if (data === "[DONE]") {
+                break;
+              }
+
+              try {
+                const parsed = JSON.parse(data);
+                if (parsed.type === "text-delta" && parsed.textDelta) {
+                  responseText += parsed.textDelta;
+                }
+              } catch (_) {
+                // Ignore parsing errors for non-JSON lines
+              }
+            }
+          }
+        }
+      } finally {
+        reader.releaseLock();
+      }
+
+      return responseText || "No response received from Fern AI.";
+    } catch (error) {
+      PlaygroundLogger.error("Error calling Fern AI:", error);
+      return `Error calling Fern AI: ${error instanceof Error ? error.message : "Unknown error"}`;
+    }
+  };
 
   private listEndpoints = () => {
     const endpoints = Object.entries(this.apiDefinition?.endpoints || {}).map(
@@ -561,13 +651,23 @@ Return parameter values in the correct format. Use empty strings for parameters 
   }
 
   private async handleGeneralResponse(): Promise<ChatAgentResponse> {
-    const { text } = await generateText({
-      model: openai("gpt-4.1-mini"),
-      messages: this.getMessagesWithSystem(),
-      tools: this.tools,
-    });
+    // Use the askDocsAi tool for general responses
+    const lastUserMessage = this.messages[this.messages.length - 1];
+    if (!lastUserMessage || lastUserMessage.role !== "user") {
+      const response = assistantMessage(
+        "I couldn't find your question. Could you please ask again?"
+      );
+      this.messages.push(response);
+      return {
+        action: "general",
+        message: response,
+      };
+    }
 
-    const response = assistantMessage(text);
+    const query = lastUserMessage.content;
+    const aiResponse = await this.askFern({ query });
+
+    const response = assistantMessage(aiResponse);
     this.messages.push(response);
 
     return {

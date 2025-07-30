@@ -312,9 +312,6 @@ export function ChatBotInterface({
             await sendRequestWithConsent(updatedMessages);
           }
         }
-      } else if (response.action === "general") {
-        const consentMsg = assistantMessage("Can you provide more context?");
-        setMessages([...updatedMessages, consentMsg]);
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("[handleSendMessage] FAILED:", error);
