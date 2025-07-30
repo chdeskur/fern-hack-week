@@ -501,8 +501,6 @@ function getParameterTypeInfo(
 
   const endpoint = context.endpoint;
 
-  console.log("full context:", context);
-
   // Debug: Log the endpoint structure to understand the schema
   PlaygroundLogger.debug(`Endpoint structure for ${parameterType} lookup:`, {
     endpoint: {
