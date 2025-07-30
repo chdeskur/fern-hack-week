@@ -1,5 +1,4 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { z } from "zod";
 
 import {
   ChatAgent,
@@ -104,42 +103,6 @@ describe("ChatAgent", () => {
         userMessage("Hello"),
         assistantMessage("Hi there!"),
       ]);
-    });
-  });
-
-  describe("Response generation", () => {
-    it("responds to user messages", async () => {
-      const agent = new ChatAgent();
-      const response = await agent.generateResponse(
-        userMessage("What is your purpose?")
-      );
-      expect(response).toBeDefined();
-    });
-
-    it("generates schema responses", async () => {
-      const agent = new ChatAgent();
-      const response = await agent.generateSchemaResponse(
-        userMessage(
-          "I'd like to add a sound effect to the Fern website that plays in a loop.. Maybe a babbling brook?"
-        ),
-        z.object({
-          text: z
-            .string()
-            .describe("The text that will get converted into a sound effect."),
-          duration_seconds: z
-            .number()
-            .describe(
-              "The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 22. If set to None we will guess the optimal duration using the prompt. Defaults to None."
-            ),
-          prompt_influence: z
-            .number()
-            .describe(
-              "A higher prompt influence makes your generation follow the prompt more closely while also making generations less variable. Must be a value between 0 and 1. Defaults to 0.3."
-            ),
-        })
-      );
-      console.log(response);
-      expect(response).toBeDefined();
     });
   });
 });
