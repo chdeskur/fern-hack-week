@@ -144,22 +144,6 @@ const createAgentWithContext = () => {
   return { agent, testEnv };
 };
 
-// Helper function to safely parse JSON responses
-const safeParseJSON = (content: string) => {
-  try {
-    // Try to extract JSON from the response if it's wrapped in text
-    const jsonMatch = content.match(/\{.*\}/s);
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
-    }
-    // If no JSON found, try parsing the entire content
-    return JSON.parse(content);
-  } catch (_error) {
-    console.warn("Failed to parse JSON response:", content);
-    return {};
-  }
-};
-
 // Reset the singleton before each eval to ensure clean state
 beforeEach(() => {
   resetChatAgent();
@@ -206,25 +190,25 @@ describeEval("evaluate generateParameterSettingResponse", {
 
       // For parameter extraction, we need to define the missing values inline
       // This is a limitation of the current eval structure
-      const missingValues = {
-        missingPathParameters: ["user_id"],
-        missingQueryParameters: ["status"],
-        missingHeaders: ["Authorization"],
-        missingBodyProperties: [
-          { key: "name", type: "string", path: ["name"] },
-        ],
+      const availableParameters = {
+        pathParameters: ["user_id"],
+        queryParameters: ["status"],
+        headers: ["Authorization"],
+        bodyProperties: [{ key: "name", type: "string", path: ["name"] }],
       };
 
-      // Use a promise to handle the async call
-      const response = await agent.generateParameterSettingResponse(
+      // Use the new processUserMessage method
+      const response = await agent.processUserMessage(
         userMessage(input),
-        missingValues
+        availableParameters,
+        "test-endpoint"
       );
 
-      const parsed = safeParseJSON(response.content);
+      // Extract parameters from the response
+      const parameters = response.parameters || {};
 
       // Return as JSON string
-      return JSON.stringify(parsed);
+      return JSON.stringify(parameters);
     } catch (error) {
       console.error("Error in task function:", error);
       return "{}";
@@ -346,32 +330,63 @@ describeEval("schema-based API parameter formatting", {
   task: async (input: string) => {
     const { agent } = createAgentWithContext();
 
-    // Find matching pattern and get schema
-    let schema;
+    // Find matching pattern and get available parameters
+    let availableParameters;
     for (const [_key, config] of Object.entries(inputOutputMapping)) {
       if (config.pattern(input)) {
-        schema = config.schema;
+        if (_key === "body") {
+          availableParameters = {
+            pathParameters: [],
+            queryParameters: [],
+            headers: [],
+            bodyProperties: [
+              { key: "name", type: "string", path: ["name"] },
+              { key: "age", type: "string", path: ["age"] },
+              { key: "email", type: "string", path: ["email"] },
+            ],
+          };
+        } else if (_key === "query") {
+          availableParameters = {
+            pathParameters: [],
+            queryParameters: ["limit", "offset"],
+            headers: [],
+            bodyProperties: [],
+          };
+        } else if (_key === "mixed") {
+          availableParameters = {
+            pathParameters: ["userId"],
+            queryParameters: [],
+            headers: ["Authorization"],
+            bodyProperties: [],
+          };
+        }
         break;
       }
     }
 
-    // Default schema if no pattern matches
-    if (!schema) {
-      schema = z.object({
-        body_name: z.string(),
-        body_age: z.string(),
-        body_email: z.string(),
-      });
+    // Default available parameters if no pattern matches
+    if (!availableParameters) {
+      availableParameters = {
+        pathParameters: [],
+        queryParameters: [],
+        headers: [],
+        bodyProperties: [
+          { key: "name", type: "string", path: ["name"] },
+          { key: "age", type: "string", path: ["age"] },
+          { key: "email", type: "string", path: ["email"] },
+        ],
+      };
     }
 
     try {
-      const response = await agent.generateSchemaResponse(
+      const response = await agent.processUserMessage(
         userMessage(input),
-        schema
+        availableParameters,
+        "test-endpoint"
       );
 
-      const parsed = safeParseJSON(response.content);
-      return JSON.stringify(parsed);
+      const parameters = response.parameters || {};
+      return JSON.stringify(parameters);
     } catch (error) {
       console.error("Error in task function:", error);
       return "{}";

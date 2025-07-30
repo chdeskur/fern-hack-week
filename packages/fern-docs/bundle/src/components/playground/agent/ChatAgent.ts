@@ -9,6 +9,17 @@ const openai = createOpenAI({
   organization: "org-EdIIJRQNvyUgF54KIY64fW9i",
 });
 
+// Types for better structure
+type ActionType = "single_call" | "multi_call" | "ask_parameters";
+
+type ChatAgentResponse = {
+  action: ActionType;
+  message: ChatMessage;
+  parameters?: Record<string, unknown>;
+  endpointSequence?: string[];
+  needsMoreInfo?: boolean;
+};
+
 export interface ChatMessage {
   role: "system" | "assistant" | "user";
   content: string;
@@ -42,16 +53,22 @@ export interface ChatAgentConfig {
   additionalTools?: ToolSet;
   initialMessages?: ChatMessage[];
   apiDefinition?: ApiDefinition.ApiDefinition;
+  onNavigateToEndpoint?: (endpointId: string) => Promise<void>;
+  onExecuteSequence?: (sequence: string[]) => Promise<void>;
 }
 
 export class ChatAgent {
   private readonly tools: ToolSet;
   private readonly apiDefinition?: ApiDefinition.ApiDefinition;
+  private readonly onNavigateToEndpoint?: (endpointId: string) => Promise<void>;
+  private readonly onExecuteSequence?: (sequence: string[]) => Promise<void>;
 
   public messages: ChatMessage[] = [];
 
   constructor(config?: ChatAgentConfig) {
     this.apiDefinition = config?.apiDefinition;
+    this.onNavigateToEndpoint = config?.onNavigateToEndpoint;
+    this.onExecuteSequence = config?.onExecuteSequence;
     this.tools = {
       ...this.createApiTools(),
       ...(config?.additionalTools ?? {}),
@@ -154,201 +171,550 @@ export class ChatAgent {
     };
   }
 
-  private get generateResponseMessages() {
-    return [
-      systemMessage(`[Date] ${new Date().toLocaleString()}`),
-      ...this.messages,
-    ];
-  }
+  private get baseSystemPrompt() {
+    return systemMessage(
+      `[Date] ${new Date().toLocaleString()}
+You are an intelligent API assistant that helps users interact with APIs. 
 
-  private get generateSchemaResponsePrompt() {
-    return (
-      "Based on the user's latest message, generate an object that matches the schema.\n" +
-      "[Messages]\n" +
-      this.messages.map((msg) => JSON.stringify(msg)).join("\n")
+Capabilities:
+1. Analyze user requests to determine if they need single or multiple API calls
+2. Extract parameter values from user messages
+3. Generate structured parameter objects for API calls
+4. Plan and execute multi-step API sequences
+5. Navigate to different endpoints when needed
+
+Always be helpful and concise. When you need more information, ask specific questions.`
     );
   }
 
-  public async generateResponse(
-    userMsg: UserMessage
-  ): Promise<AssistantMessage> {
-    this.messages.push(userMsg);
-    const { text } = await generateText({
-      model: openai("gpt-4.1-mini"),
-      messages: this.generateResponseMessages,
-      tools: this.tools,
-    });
-
-    const assistantMsg = assistantMessage(text);
-
-    this.messages.push(assistantMsg);
-    return assistantMsg;
+  private getMessagesWithSystem() {
+    return [this.baseSystemPrompt, ...this.messages];
   }
 
-  public async generateSchemaResponse(
+  // Main method to handle user input and determine the appropriate action
+  public async processUserMessage(
     userMsg: UserMessage,
-    schema: z.ZodSchema
-  ) {
-    this.messages.push(userMsg);
-
-    try {
-      const { object } = await generateObject({
-        model: openai("gpt-4.1-mini"),
-        prompt: this.generateSchemaResponsePrompt,
-        schema: schema,
-      });
-
-      const assistantMsg = assistantMessage(JSON.stringify(object));
-      this.messages.push(assistantMsg);
-      return assistantMsg;
-    } catch (error) {
-      console.error("Error in generateSchemaResponse:", error);
-      throw error;
-    }
-  }
-
-  public async generateMultiStepResponse(
-    userMsg: UserMessage
-  ): Promise<[AssistantMessage, endpointCallSequence: string[]]> {
-    this.messages.push(userMsg);
-
-    // STEP 1: Determine which endpoints are relevant to the user's request
-    const planPrompt = systemMessage(
-      `You are an API assistant that can help users make multiple sequential API calls to fulfill complex requests. 
-      You have access to tools that can:
-      1. List available endpoints
-      2. Get detailed endpoint information
-      
-      When a user asks for something that might require multiple API calls, use the tools to:
-      1. First explore available endpoints with listEndpoints
-      2. Get details about relevant endpoints with getEndpointDetails
-      3. Determine which endpoints are relevant to the user's request. Prefer fewer endpoints over more endpoints.
-      4. Create a plan for a sequence of API calls to fulfill the user's request.
-      5. If there is not enough information to create a plan, prompt the user for more information.`
-    );
-
-    const { text: plan } = await generateText({
-      model: openai("gpt-4.1-mini"),
-      messages: [planPrompt, ...this.generateResponseMessages],
-      tools: this.tools,
-    });
-
-    this.messages.push(assistantMessage(plan));
-
-    // STEP 2: Determine if there is sufficient information to make the API call(s)
-    const sufficientInfoPrompt = systemMessage(
-      `Determine if there is sufficient information to make the API call(s).
-      Pay particular attention to whether the user has provided all the required parameters for each endpoint.
-      If there is, return an array of the endpoint IDs that are needed to execute the plan in order of execution.
-      If there is not, just return an empty array.`
-    );
-
-    const { object: endpointCallSequence } = await generateObject({
-      model: openai("gpt-4.1-mini"),
-      prompt: [sufficientInfoPrompt, ...this.generateResponseMessages].join(
-        "\n"
-      ),
-      schema: z.array(z.string()),
-    });
-
-    if (endpointCallSequence.length === 0) {
-      const missingInfoPrompt = systemMessage(
-        `The user has provided a plan for a sequence of API calls to fulfill the user's request, but there is not enough information to make the API call(s).
-        Ask the user for the missing information.`
-      );
-
-      const { text: missingInfo } = await generateText({
-        model: openai("gpt-4.1-mini"),
-        messages: [missingInfoPrompt, ...this.generateResponseMessages],
-        tools: this.tools,
-      });
-      this.messages.push(assistantMessage(missingInfo));
-      return [assistantMessage(missingInfo), endpointCallSequence];
-    }
-    return [assistantMessage(plan), endpointCallSequence];
-  }
-
-  public async generateParameterSettingResponse(
-    userMsg: UserMessage,
-    missingValues: {
-      missingPathParameters: string[];
-      missingQueryParameters: string[];
-      missingHeaders: string[];
-      missingBodyProperties: {
+    availableParameters?: {
+      pathParameters: string[];
+      queryParameters: string[];
+      headers: string[];
+      bodyProperties: {
         key: string;
         type: string;
         description?: string;
         path: string[];
       }[];
-    }
-  ) {
+    },
+    currentEndpointId?: string
+  ): Promise<ChatAgentResponse> {
     this.messages.push(userMsg);
 
-    // Create a schema for the missing values
-    const parameterSchema: Record<string, z.ZodString> = {};
-
-    missingValues.missingPathParameters.forEach((param) => {
-      parameterSchema[`path_${param}`] = z.string();
+    // First, determine what action is needed
+    const actionSchema = z.object({
+      action: z.enum([
+        "single_call",
+        "multi_call",
+        "ask_parameters",
+        "general_response",
+      ]),
+      reasoning: z
+        .string()
+        .describe("Brief explanation of why this action was chosen"),
+      confidence: z
+        .number()
+        .min(0)
+        .max(1)
+        .describe("Confidence in this decision"),
     });
 
-    missingValues.missingQueryParameters.forEach((param) => {
-      parameterSchema[`query_${param}`] = z.string();
+    const { object: actionDecision } = await generateObject({
+      model: openai("gpt-4.1-mini"),
+      messages: [
+        ...this.getMessagesWithSystem(),
+        systemMessage(`Analyze this user message and determine what type of action is needed.
+
+Available actions:
+- single_call: User wants to make one API call with the current endpoint
+- multi_call: User wants to perform multiple related API calls that might require different endpoints
+- ask_parameters: User is providing parameter values (like setting headers, providing names, IDs, etc.) for API calls, OR user is explicitly setting parameter values, OR user is responding to a request for parameters (including saying they don't have values)
+- general_response: General question or conversation that doesn't require API calls
+
+IMPORTANT: If the user message contains parameter values (like "Set X to Y", "The name is Z", "Authorization header to Bearer token", etc.) OR if user says they don't have parameter values, classify as ask_parameters.
+
+Context: ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No current endpoint"}`),
+      ],
+      schema: actionSchema,
     });
 
-    missingValues.missingHeaders.forEach((header) => {
-      parameterSchema[`header_${header}`] = z.string();
-    });
-
-    missingValues.missingBodyProperties.forEach((prop) => {
-      parameterSchema[`body_${prop.key}`] = z.string();
-    });
-
-    const schema = z.object(parameterSchema);
-
-    const prompt =
-      "The user is providing values for missing required parameters. " +
-      "Extract the parameter values from their message and return them in the correct format.\n\n" +
-      "Available parameters to set:\n" +
-      Object.keys(parameterSchema)
-        .map((key) => `- ${key}`)
-        .join("\n") +
-      "\n\n" +
-      "User message: " +
-      userMsg.content +
-      "\n\n" +
-      "If the user's message doesn't contain values for the required parameters, return an empty object {}.";
-
-    try {
-      const { object } = await generateObject({
-        model: openai("gpt-4.1-mini"),
-        prompt: prompt,
-        schema: schema,
-      });
-
-      const assistantMsg = assistantMessage(JSON.stringify(object));
-      this.messages.push(assistantMsg);
-      return assistantMsg;
-    } catch (error) {
-      // If the AI fails to extract parameters, return an empty response
-      console.warn("Failed to extract parameters from user message:", error);
-      const assistantMsg = assistantMessage("{}");
-      this.messages.push(assistantMsg);
-      return assistantMsg;
+    // Handle different action types
+    switch (actionDecision.action) {
+      case "single_call":
+        return await this.handleSingleCall(availableParameters);
+      case "multi_call":
+        return await this.handleMultiCall();
+      case "ask_parameters":
+        return await this.handleParameterExtraction(availableParameters);
+      case "general_response":
+      default:
+        return await this.handleGeneralResponse();
     }
   }
 
-  public async generateSummary(assistantMsg: AssistantMessage) {
+  private async handleSingleCall(availableParameters?: {
+    pathParameters: string[];
+    queryParameters: string[];
+    headers: string[];
+    bodyProperties: {
+      key: string;
+      type: string;
+      description?: string;
+      path: string[];
+    }[];
+  }): Promise<ChatAgentResponse> {
+    if (!availableParameters) {
+      const response = assistantMessage(
+        "I need to know what parameters are available for this endpoint."
+      );
+      this.messages.push(response);
+      return {
+        action: "single_call",
+        message: response,
+        needsMoreInfo: true,
+      };
+    }
+
+    // Check if there are actually any parameters available
+    const hasAvailableParameters =
+      availableParameters.pathParameters.length > 0 ||
+      availableParameters.queryParameters.length > 0 ||
+      availableParameters.headers.length > 0 ||
+      availableParameters.bodyProperties.length > 0;
+
+    if (!hasAvailableParameters) {
+      const response = assistantMessage(
+        "This endpoint doesn't require any parameters."
+      );
+      this.messages.push(response);
+      return {
+        action: "single_call",
+        message: response,
+        parameters: {},
+      };
+    }
+
+    // Create schema for all available parameters
+    const parameterSchema = this.createParameterSchema(availableParameters);
+
+    try {
+      const { object: parameters } = await generateObject({
+        model: openai("gpt-4.1-mini"),
+        messages: [
+          systemMessage(`Extract parameter values from the user's message for making an API call.
+
+Available parameters:
+${this.formatAvailableParameters(availableParameters)}
+
+IMPORTANT: Look for values being set in the user message. Examples:
+- "Set the Authorization header to Bearer token123" → header_Authorization: "Bearer token123"
+- "include the Authorization header" → header_Authorization: "Bearer YOUR_AUTH_TOKEN"
+- "The user's name is Alice" → body_name: "Alice"
+- "Set user_id to 12345" → path_user_id: "12345"
+
+For headers that are mentioned but no specific value is provided, use placeholder values like "Bearer YOUR_AUTH_TOKEN" for Authorization headers.
+Return parameter values in the correct format. Use empty strings for parameters that cannot be extracted from the user's message.`),
+          ...this.getMessagesWithSystem(),
+        ],
+        schema: parameterSchema,
+      });
+
+      // Create a complete parameters object with empty strings for missing values
+      const emptyParams = this.createEmptyParametersObject(availableParameters);
+      const completeParameters = { ...emptyParams, ...parameters };
+
+      // Check if any non-empty parameters were extracted
+      const hasExtractedParameters = Object.values(parameters).some(
+        (value) => value && value.trim() !== ""
+      );
+
+      const response = hasExtractedParameters
+        ? assistantMessage(
+            `I've extracted the parameters from your message and will make the API call:
+${JSON.stringify(completeParameters)}`
+          )
+        : assistantMessage(
+            "I need more information about the parameters for this API call."
+          );
+      this.messages.push(response);
+
+      return {
+        action: "single_call",
+        message: response,
+        parameters: completeParameters,
+        needsMoreInfo: !hasExtractedParameters,
+      };
+    } catch (error) {
+      console.error("Error extracting parameters:", error);
+      const response = assistantMessage(
+        "I had trouble understanding the parameters. Could you provide them more clearly?"
+      );
+      this.messages.push(response);
+
+      // Even on error, return empty parameters object
+      const emptyParams = this.createEmptyParametersObject(availableParameters);
+      return {
+        action: "single_call",
+        message: response,
+        parameters: emptyParams,
+        needsMoreInfo: true,
+      };
+    }
+  }
+
+  private async handleMultiCall(): Promise<ChatAgentResponse> {
+    // Use tools to explore API and create a plan
+    const { text } = await generateText({
+      model: openai("gpt-4.1-mini"),
+      messages: [
+        systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
+Use the available tools to explore endpoints and determine the sequence needed.
+Be specific about which endpoints to call and in what order.`),
+        ...this.getMessagesWithSystem(),
+      ],
+      tools: this.tools,
+    });
+
+    // Extract endpoint sequence from the plan
+    const sequenceSchema = z.object({
+      endpoints: z
+        .array(z.string())
+        .describe("Array of endpoint IDs in execution order"),
+      explanation: z.string().describe("Brief explanation of the plan"),
+    });
+
+    const { object: sequence } = await generateObject({
+      model: openai("gpt-4.1-mini"),
+      messages: [
+        systemMessage("Extract the sequence of endpoint IDs from the plan."),
+        assistantMessage(text),
+      ],
+      schema: sequenceSchema,
+    });
+
+    const response = assistantMessage(text);
+    this.messages.push(response);
+
+    return {
+      action: "multi_call",
+      message: response,
+      endpointSequence: sequence.endpoints,
+      needsMoreInfo: sequence.endpoints.length === 0,
+    };
+  }
+
+  private async handleParameterExtraction(availableParameters?: {
+    pathParameters: string[];
+    queryParameters: string[];
+    headers: string[];
+    bodyProperties: {
+      key: string;
+      type: string;
+      description?: string;
+      path: string[];
+    }[];
+  }): Promise<ChatAgentResponse> {
+    if (!availableParameters) {
+      const response = assistantMessage(
+        "I need to know what parameters are available."
+      );
+      this.messages.push(response);
+      return {
+        action: "ask_parameters",
+        message: response,
+        needsMoreInfo: true,
+      };
+    }
+
+    // Check if there are actually any parameters available
+    const hasAvailableParameters =
+      availableParameters.pathParameters.length > 0 ||
+      availableParameters.queryParameters.length > 0 ||
+      availableParameters.headers.length > 0 ||
+      availableParameters.bodyProperties.length > 0;
+
+    if (!hasAvailableParameters) {
+      const response = assistantMessage(
+        "This endpoint doesn't require any parameters."
+      );
+      this.messages.push(response);
+      return {
+        action: "ask_parameters",
+        message: response,
+        parameters: {},
+      };
+    }
+
+    const parameterSchema = this.createParameterSchema(availableParameters);
+
+    try {
+      const { object: parameters } = await generateObject({
+        model: openai("gpt-4.1-mini"),
+        messages: [
+          systemMessage(`Extract parameter values from the user's message:
+
+Available parameters:
+${this.formatAvailableParameters(availableParameters)}
+
+IMPORTANT: Look for values being set in the user message. Examples:
+- "Set the Authorization header to Bearer token123" → header_Authorization: "Bearer token123"
+- "include the Authorization header" → header_Authorization: "Bearer YOUR_AUTH_TOKEN"
+- "The user's name is Alice" → body_name: "Alice"
+- "Set user_id to 12345" → path_user_id: "12345"
+
+For headers that are mentioned but no specific value is provided, use placeholder values like "Bearer YOUR_AUTH_TOKEN" for Authorization headers.
+Return parameter values in the correct format. Use empty strings for parameters that cannot be extracted from the user's message.`),
+          ...this.getMessagesWithSystem(),
+        ],
+        schema: parameterSchema,
+      });
+
+      // Create a complete parameters object with empty strings for missing values
+      const emptyParams = this.createEmptyParametersObject(availableParameters);
+      const completeParameters = { ...emptyParams, ...parameters };
+
+      // Check if any non-empty parameters were extracted
+      const hasExtractedParameters = Object.values(parameters).some(
+        (value) => value && value.trim() !== ""
+      );
+
+      const response = hasExtractedParameters
+        ? assistantMessage(
+            `Got it! I've extracted the parameter values:
+${JSON.stringify(completeParameters)}`
+          )
+        : assistantMessage(
+            "I couldn't find parameter values in your message. Could you be more specific?"
+          );
+      this.messages.push(response);
+
+      return {
+        action: "ask_parameters",
+        message: response,
+        parameters: completeParameters,
+        needsMoreInfo: !hasExtractedParameters,
+      };
+    } catch (error) {
+      console.error("Parameter extraction error:", error);
+      const response = assistantMessage(
+        "I had trouble extracting parameters. Could you provide them more clearly?"
+      );
+      this.messages.push(response);
+
+      // Even on error, return empty parameters object
+      const emptyParams = this.createEmptyParametersObject(availableParameters);
+      return {
+        action: "ask_parameters",
+        message: response,
+        parameters: emptyParams,
+        needsMoreInfo: true,
+      };
+    }
+  }
+
+  private async handleGeneralResponse(): Promise<ChatAgentResponse> {
+    const { text } = await generateText({
+      model: openai("gpt-4.1-mini"),
+      messages: this.getMessagesWithSystem(),
+      tools: this.tools,
+    });
+
+    const response = assistantMessage(text);
+    this.messages.push(response);
+
+    return {
+      action: "single_call",
+      message: response,
+      parameters: {}, // Always return empty parameters object for consistency
+    };
+  }
+
+  // Helper methods
+  private createParameterSchema(availableParameters: {
+    pathParameters: string[];
+    queryParameters: string[];
+    headers: string[];
+    bodyProperties: {
+      key: string;
+      type: string;
+      description?: string;
+      path: string[];
+    }[];
+  }) {
+    const schema: Record<string, z.ZodString> = {};
+
+    availableParameters.pathParameters.forEach((param) => {
+      schema[`path_${param}`] = z.string();
+    });
+
+    availableParameters.queryParameters.forEach((param) => {
+      schema[`query_${param}`] = z.string();
+    });
+
+    availableParameters.headers.forEach((header) => {
+      schema[`header_${header}`] = z.string();
+    });
+
+    availableParameters.bodyProperties.forEach((prop) => {
+      schema[`body_${prop.key}`] = z.string();
+    });
+
+    return z.object(schema);
+  }
+
+  private createEmptyParametersObject(availableParameters: {
+    pathParameters: string[];
+    queryParameters: string[];
+    headers: string[];
+    bodyProperties: {
+      key: string;
+      type: string;
+      description?: string;
+      path: string[];
+    }[];
+  }): Record<string, string> {
+    const emptyParams: Record<string, string> = {};
+
+    availableParameters.pathParameters.forEach((param) => {
+      emptyParams[`path_${param}`] = "";
+    });
+
+    availableParameters.queryParameters.forEach((param) => {
+      emptyParams[`query_${param}`] = "";
+    });
+
+    availableParameters.headers.forEach((header) => {
+      emptyParams[`header_${header}`] = "";
+    });
+
+    availableParameters.bodyProperties.forEach((prop) => {
+      emptyParams[`body_${prop.key}`] = "";
+    });
+
+    return emptyParams;
+  }
+
+  private formatAvailableParameters(availableParameters: {
+    pathParameters: string[];
+    queryParameters: string[];
+    headers: string[];
+    bodyProperties: {
+      key: string;
+      type: string;
+      description?: string;
+      path: string[];
+    }[];
+  }): string {
+    let formatted = "";
+
+    if (availableParameters.pathParameters.length > 0) {
+      formatted +=
+        "Path Parameters: " +
+        availableParameters.pathParameters.join(", ") +
+        "\n";
+    }
+
+    if (availableParameters.queryParameters.length > 0) {
+      formatted +=
+        "Query Parameters: " +
+        availableParameters.queryParameters.join(", ") +
+        "\n";
+    }
+
+    if (availableParameters.headers.length > 0) {
+      formatted += "Headers: " + availableParameters.headers.join(", ") + "\n";
+    }
+
+    if (availableParameters.bodyProperties.length > 0) {
+      formatted +=
+        "Body Properties: " +
+        availableParameters.bodyProperties
+          .map((p) => `${p.key} (${p.type})`)
+          .join(", ") +
+        "\n";
+    }
+
+    return formatted;
+  }
+
+  public async generateSummary(
+    responseData: unknown
+  ): Promise<AssistantMessage> {
     const { text } = await generateText({
       model: openai("gpt-4.1-mini"),
       messages: [
         systemMessage(
-          "Given this JSON object, summarize its contents. If there are multiple items, summarize each item."
+          "Summarize this API response in a helpful, human-readable way. Focus on the key information and results."
         ),
-        assistantMsg,
+        userMessage(
+          typeof responseData === "string"
+            ? responseData
+            : JSON.stringify(responseData)
+        ),
       ],
     });
-    return assistantMessage(text);
+    const summary = assistantMessage(text);
+    this.messages.push(summary);
+    return summary;
   }
+
+  // Execute a multi-step API sequence
+  public async executeSequence(endpointIds: string[]): Promise<void> {
+    if (this.onExecuteSequence) {
+      await this.onExecuteSequence(endpointIds);
+    }
+  }
+
+  // Navigate to a specific endpoint
+  public async navigateToEndpoint(endpointId: string): Promise<void> {
+    if (this.onNavigateToEndpoint) {
+      await this.onNavigateToEndpoint(endpointId);
+    }
+  }
+
+  // // Legacy method for backward compatibility
+  // public async generateResponse(
+  //   userMsg: UserMessage
+  // ): Promise<AssistantMessage> {
+  //   const result = await this.processUserMessage(userMsg);
+  //   return assistantMessage(result.message);
+  // }
+
+  // // Legacy method for backward compatibility
+  // public async generateSchemaResponse(
+  //   userMsg: UserMessage,
+  //   schema: z.ZodSchema
+  // ): Promise<AssistantMessage> {
+  //   this.messages.push(userMsg);
+
+  //   try {
+  //     const { object } = await generateObject({
+  //       model: openai("gpt-4.1-mini"),
+  //       messages: [
+  //         systemMessage(
+  //           "Based on the conversation, generate an object that matches the schema."
+  //         ),
+  //         ...this.getMessagesWithSystem(),
+  //       ],
+  //       schema: schema,
+  //     });
+
+  //     const assistantMsg = assistantMessage(JSON.stringify(object));
+  //     this.messages.push(assistantMsg);
+  //     return assistantMsg;
+  //   } catch (error) {
+  //     console.error("Error in generateSchemaResponse:", error);
+  //     throw error;
+  //   }
+  // }
 }
 
 // Singleton instance for the chat agent
@@ -358,9 +724,9 @@ let singletonChatAgent: ChatAgent | null = null;
  * Get the singleton ChatAgent instance.
  * This ensures only one instance exists per user session.
  */
-export function getChatAgent(): ChatAgent {
+export function getChatAgent(config?: ChatAgentConfig): ChatAgent {
   if (!singletonChatAgent) {
-    singletonChatAgent = new ChatAgent();
+    singletonChatAgent = new ChatAgent(config);
   }
 
   return singletonChatAgent;

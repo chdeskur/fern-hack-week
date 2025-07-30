@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Drawer } from "vaul";
@@ -12,7 +12,7 @@ import { useIsomorphicLayoutEffect } from "@fern-ui/react-commons";
 import { useUrlParams } from "@/hooks/use-url-params";
 
 import { useHeaderHeight, useViewportSize } from "../hooks/useViewportSize";
-import { getChatAgent } from "./agent/ChatAgent";
+import { getChatAgent, ChatAgentConfig } from "./agent/ChatAgent";
 import { ChatAgentProvider } from "./agent/ChatAgentProvider";
 
 export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
@@ -24,7 +24,44 @@ export function PlaygroundDrawer({ children }: { children: React.ReactNode }) {
   const viewport = useViewportSize();
   const headerHeight = useHeaderHeight();
 
-  const chatAgent = getChatAgent();
+  // Create navigation callbacks for the ChatAgent
+  const onNavigateToEndpoint = useCallback(async (endpointId: string) => {
+    console.log(`Navigation to endpoint ${endpointId} requested`);
+    // TODO: Implement actual navigation logic
+    // This would typically involve:
+    // 1. Finding the endpoint's URL/route
+    // 2. Using the router to navigate to that page
+    // 3. Potentially updating the URL parameters
+    
+    // For now, we'll just log the request
+    // In a full implementation, this might look like:
+    // const endpointRoute = findEndpointRoute(endpointId);
+    // router.push(endpointRoute);
+  }, []);
+
+  const onExecuteSequence = useCallback(async (endpointIds: string[]) => {
+    console.log(`Multi-step sequence execution requested:`, endpointIds);
+    // TODO: Implement multi-step execution
+    // This would involve:
+    // 1. Navigate to first endpoint
+    // 2. Execute request with available parameters
+    // 3. Use response from first call as input to second call
+    // 4. Continue sequence until complete
+    
+    // For now, we'll navigate through each endpoint in sequence
+    for (const endpointId of endpointIds) {
+      await onNavigateToEndpoint(endpointId);
+      // In a real implementation, we'd wait for user to provide parameters
+      // and execute the request before moving to the next endpoint
+    }
+  }, [onNavigateToEndpoint]);
+
+  const chatAgentConfig: ChatAgentConfig = useMemo(() => ({
+    onNavigateToEndpoint,
+    onExecuteSequence,
+  }), [onNavigateToEndpoint, onExecuteSequence]);
+
+  const chatAgent = getChatAgent(chatAgentConfig);
 
   useIsomorphicLayoutEffect(() => {
     if (open) {
