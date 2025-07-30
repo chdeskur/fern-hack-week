@@ -38,6 +38,19 @@ export async function ExplorerContent({
   }
 
   const fullApiDefinition = await loader.getApi(node.apiDefinitionId);
+  const endpointsData = await Promise.all(
+    Object.values(fullApiDefinition.endpoints).map(async (_endpoint) => {
+      const endpointId = _endpoint.id;
+      const endpoint = await loader.getEndpointById(
+        node.apiDefinitionId,
+        endpointId
+      );
+      return {
+        id: endpointId,
+        nodes: endpoint.nodes,
+      };
+    })
+  );
 
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);
@@ -54,6 +67,7 @@ export async function ExplorerContent({
         context={context}
         authForm={authForm}
         apiDefinition={fullApiDefinition}
+        endpointsData={endpointsData}
       />
     );
   } else if (node.type === "webSocket") {

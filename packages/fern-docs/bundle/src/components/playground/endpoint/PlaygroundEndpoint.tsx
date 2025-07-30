@@ -7,9 +7,10 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { SendHorizonal } from "lucide-react";
 
-import { ApiDefinition } from "@fern-api/fdr-sdk";
+import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
+import { EndpointId } from "@fern-api/fdr-sdk/navigation";
 import { unknownToString } from "@fern-api/ui-core-utils";
 import {
   FernDropdown,
@@ -60,10 +61,15 @@ export const PlaygroundEndpoint = ({
   context,
   authForm,
   apiDefinition,
+  endpointsData,
 }: {
   context: EndpointContext;
   authForm: React.ReactNode;
   apiDefinition: ApiDefinition.ApiDefinition;
+  endpointsData?: {
+    id: EndpointId;
+    nodes: FernNavigation.EndpointNode[];
+  }[];
 }) => {
   const user = useAtomValue(fernUserAtom);
   const { node, endpoint, auth } = context;
@@ -320,6 +326,7 @@ export const PlaygroundEndpoint = ({
             <ChatBotInterface
               apiDefinition={apiDefinition}
               endpoint={endpoint}
+              endpointsData={endpointsData}
             />
           </div>
         )}

@@ -81,6 +81,7 @@ export class ChatAgent {
   ) => Promise<void>;
 
   public messages: ChatMessage[] = [];
+  public sequence: string[] = [];
 
   constructor(config?: ChatAgentConfig) {
     this.apiDefinition = config?.apiDefinition;
@@ -269,17 +270,19 @@ Always be helpful and concise. When you need more information, ask specific ques
       model: openai("gpt-4.1-mini"),
       messages: [
         ...this.getMessagesWithSystem(),
-        systemMessage(`Analyze this user message and determine what type of action is needed.
+        systemMessage(`Analyze the latest user message and determine what type of action is needed.
 
 Available actions:
-- single_call: User wants to make one API call with the current endpoint
-- multi_call: User wants to perform multiple related API calls that might require different endpoints
+- single_call: User wants to make one API call with the current endpoint. If there is an active sequence, use single_call to make the next call in the sequence.
+- multi_call: User wants to perform a sequence of multiple related API calls that might require different endpoints
 - ask_parameters: User is providing parameter values (like setting headers, providing names, IDs, etc.) for API calls, OR user is explicitly setting parameter values, OR user is responding to a request for parameters (including saying they don't have values)
 - general_response: General question or conversation that doesn't require API calls
 
 IMPORTANT: If the user message contains parameter values (like "Set X to Y", "The name is Z", "Authorization header to Bearer token", etc.) OR if user says they don't have parameter values, classify as ask_parameters.
 
-Context: ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No current endpoint"}`),
+Context:
+${this.sequence.length > 0 ? `Remaining endpoints in active sequence: ${this.sequence.join(", ")}` : "No active sequence"}
+${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No current endpoint"}`),
       ],
       schema: actionSchema,
     });
@@ -448,6 +451,7 @@ ${this.listEndpoints()}
 
     const response = assistantMessage(text);
     this.messages.push(response);
+    this.sequence = sequence.endpoints;
 
     return {
       action: "multi_call",

@@ -1,10 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 import { Bot, RotateCcw, Send } from "lucide-react";
 
-import { ApiDefinition } from "@fern-api/fdr-sdk";
+import { conformExplorerRoute } from "@fern-api/docs-utils";
+import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { EndpointId } from "@fern-api/fdr-sdk/navigation";
 import {
   FernButton,
   FernCard,
@@ -29,6 +32,10 @@ interface ChatBotInterfaceProps {
   className?: string;
   apiDefinition: ApiDefinition.ApiDefinition;
   endpoint: ApiDefinition.EndpointDefinition;
+  endpointsData?: {
+    id: EndpointId;
+    nodes: FernNavigation.EndpointNode[];
+  }[];
 }
 
 export function ChatBotInterface({
@@ -36,11 +43,13 @@ export function ChatBotInterface({
   className = "",
   apiDefinition,
   endpoint,
+  endpointsData,
 }: ChatBotInterfaceProps) {
   // Use the provided agent if available, otherwise get from context
   const contextAgent = useChatAgent();
   const chatAgent = agent ?? contextAgent;
   const playground = usePlaygroundContext();
+  const router = useRouter();
   const [messages, setMessages] = useState<ChatMessage[]>(chatAgent.messages);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -78,14 +87,61 @@ export function ChatBotInterface({
           const parsed =
             typeof response.response.body === "string"
               ? response.response.body
-              : JSON.stringify(response.response.body, null, 2);
+              : JSON.stringify(response.response.body);
           PlaygroundLogger.debug("[playground.response] LOADED:", parsed);
+          // TODO: Handle status codes more robustly
+          const status = response.response.status;
+          PlaygroundLogger.debug("[playground.response] STATUS:", status);
           pendingResponse.resolve(parsed);
           // Generate a simple summary message
           chatAgent
             .generateSummary(parsed)
             .then((msg) => {
               setMessages([...messages, msg]);
+              if (status >= 200 && status < 300) {
+                chatAgent.sequence.shift();
+                PlaygroundLogger.debug(
+                  "[playground.response] SUCCESS, SHIFTED SEQUENCE",
+                  chatAgent.sequence
+                );
+                // If there are more endpoints in the sequence, navigate to the next one
+                if (chatAgent.sequence.length > 0) {
+                  const nextEndpointId = chatAgent.sequence[0];
+                  if (nextEndpointId) {
+                    // Find the endpoint in the API definition
+                    const nextEndpointData = endpointsData?.find(
+                      (endpoint) => endpoint.id === nextEndpointId
+                    );
+                    PlaygroundLogger.debug(
+                      "[playground.response] NEXT ENDPOINT:",
+                      nextEndpointData
+                    );
+                    if (nextEndpointData) {
+                      // Construct the explorer URL for the next endpoint
+                      // We need to find the endpoint node's slug from the navigation
+                      // For now, we'll construct a basic URL pattern using the endpoint ID
+                      const endpointSlug = nextEndpointData.nodes.find(
+                        (node) => node.endpointId === nextEndpointId
+                      )?.slug;
+                      if (!endpointSlug) {
+                        throw new Error(
+                          `No nodes found for endpoint ${nextEndpointId}`
+                        );
+                      }
+                      PlaygroundLogger.debug(
+                        "[playground.response] NEXT ENDPOINT SLUG:",
+                        endpointSlug
+                      );
+                      const explorerUrl = conformExplorerRoute(endpointSlug);
+                      PlaygroundLogger.debug(
+                        "[playground.response] NEXT ENDPOINT URL:",
+                        explorerUrl
+                      );
+                      router.push(explorerUrl);
+                    }
+                  }
+                }
+              }
               setPendingResponse(null);
             })
             .catch((error: unknown) => {
@@ -100,7 +156,15 @@ export function ChatBotInterface({
         },
       });
     }
-  }, [playground.response, pendingResponse, chatAgent, messages]);
+  }, [
+    playground.response,
+    pendingResponse,
+    chatAgent,
+    messages,
+    router,
+    apiDefinition,
+    endpointsData,
+  ]);
 
   const setParams = (parameters: Record<string, unknown>) => {
     PlaygroundLogger.debug("[setParams]:", parameters);
