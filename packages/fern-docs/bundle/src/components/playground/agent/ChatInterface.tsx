@@ -14,7 +14,12 @@ import {
 import { visitLoadable } from "@fern-ui/loadable";
 
 import { closeButton } from "../PlaygroundCloseButton";
-import { ChatAgent, ChatMessage, userMessage } from "./ChatAgent";
+import {
+  ChatAgent,
+  ChatMessage,
+  assistantMessage,
+  userMessage,
+} from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
 import { ChatMessageComponent } from "./ChatMessage";
 import { PlaygroundLogger, usePlaygroundContext } from "./PlaygroundContext";
@@ -38,6 +43,10 @@ export function ChatBotInterface({
   const [isLoading, setIsLoading] = useState(false);
   const [pendingResponse, setPendingResponse] = useState<{
     resolve: (value: string) => void;
+    reject: (error: Error) => void;
+  } | null>(null);
+  const [pendingConsent, setPendingConsent] = useState<{
+    resolve: (value: boolean) => void;
     reject: (error: Error) => void;
   } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -133,6 +142,43 @@ export function ChatBotInterface({
     }
   };
 
+  const sendRequestWithConsent = async (updatedMessages: ChatMessage[]) => {
+    const consentMsg = assistantMessage(
+      "Would you like to allow me to send a request to this endpoint?",
+      { consent_required: true }
+    );
+    setMessages([...updatedMessages, consentMsg]);
+
+    // Wait for user consent
+    const userConsented = await new Promise<boolean>((resolve, reject) => {
+      setPendingConsent({ resolve, reject });
+    }).catch((_error: unknown) => {
+      // Handle timeout or other consent errors
+      const timeoutMsg = assistantMessage(
+        "Request timed out. Please try again if you'd like to send the request.",
+        { consent_required: false }
+      );
+      setMessages([...updatedMessages, consentMsg, timeoutMsg]);
+      return false;
+    });
+
+    if (userConsented) {
+      await playground.sendRequest();
+
+      // Wait for response
+      await new Promise<string>((resolve, reject) => {
+        setPendingResponse({ resolve, reject });
+      });
+    } else {
+      // User declined consent
+      const declinedMsg = assistantMessage(
+        "Request cancelled. Let me know if you'd like to try again with different parameters.",
+        { consent_required: false }
+      );
+      setMessages([...updatedMessages, consentMsg, declinedMsg]);
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -170,46 +216,39 @@ export function ChatBotInterface({
 
       // Handle different action types
       if (response.action === "single_call") {
-        if (response.parameters && !response.needsMoreInfo) {
-          // Set parameters and make the request
+        if (response.parameters) {
           setParams(response.parameters);
-          await playground.sendRequest();
-
-          // Wait for response
-          await new Promise<string>((resolve, reject) => {
-            setPendingResponse({ resolve, reject });
-          });
-        } else if (response.needsMoreInfo) {
-          // Check what's missing and ask for it
-          const missingValues = playground.checkMissingRequiredValues();
-          if (missingValues.hasMissingValues) {
-            const missingMsg = createMissingParametersMessage(missingValues);
-            setMessages([...updatedMessages, response.message, missingMsg]);
-          }
         }
+
+        await sendRequestWithConsent(updatedMessages);
       } else if (response.action === "multi_call") {
         if (response.endpointSequence && response.endpointSequence.length > 0) {
           // Execute the sequence
           await chatAgent.executeSequence(response.endpointSequence);
         }
       } else if (response.action === "ask_parameters") {
-        if (response.parameters && !response.needsMoreInfo) {
+        if (response.parameters) {
           setParams(response.parameters);
-          // Check if we can make the request now
+          // if we need more parameters ask
+          // otherwise, generally gather more info
           const missingValues = playground.checkMissingRequiredValues();
-          if (!missingValues.hasMissingValues) {
-            await playground.sendRequest();
-            await new Promise<string>((resolve, reject) => {
-              setPendingResponse({ resolve, reject });
-            });
+          if (missingValues.hasMissingValues) {
+            const missingMsg = createMissingParametersMessage(missingValues);
+            setMessages([...updatedMessages, response.message, missingMsg]);
+          } else {
+            await sendRequestWithConsent(updatedMessages);
           }
         }
+      } else if (response.action === "general") {
+        const consentMsg = assistantMessage("Can you provide more context?");
+        setMessages([...updatedMessages, consentMsg]);
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("[handleSendMessage] FAILED:", error);
       const errorMsg: ChatMessage = {
         role: "assistant",
         content: "Sorry, I encountered an error. Please try again.",
+        consent_required: false,
       };
       setMessages([...updatedMessages, errorMsg]);
     } finally {
@@ -273,7 +312,15 @@ export function ChatBotInterface({
     return {
       role: "assistant",
       content: missingValuesMessage,
+      consent_required: false,
     };
+  };
+
+  const handleConsent = (consented: boolean) => {
+    if (pendingConsent) {
+      pendingConsent.resolve(consented);
+      setPendingConsent(null);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -300,7 +347,11 @@ export function ChatBotInterface({
             </div>
           ) : (
             messages.map((message, index) => (
-              <ChatMessageComponent key={index} message={message} />
+              <ChatMessageComponent
+                key={index}
+                message={message}
+                onConsent={handleConsent}
+              />
             ))
           )}
           {(isLoading || pendingResponse) && (

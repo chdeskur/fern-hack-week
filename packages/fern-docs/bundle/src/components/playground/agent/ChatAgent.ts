@@ -10,19 +10,19 @@ const openai = createOpenAI({
 });
 
 // Types for better structure
-type ActionType = "single_call" | "multi_call" | "ask_parameters";
+type ActionType = "single_call" | "multi_call" | "ask_parameters" | "general";
 
 type ChatAgentResponse = {
   action: ActionType;
   message: ChatMessage;
   parameters?: Record<string, unknown>;
   endpointSequence?: string[];
-  needsMoreInfo?: boolean;
 };
 
 export interface ChatMessage {
   role: "system" | "assistant" | "user";
   content: string;
+  consent_required: boolean;
 }
 
 interface SystemMessage extends ChatMessage {
@@ -30,15 +30,24 @@ interface SystemMessage extends ChatMessage {
 }
 
 export function systemMessage(content: string): SystemMessage {
-  return { role: "system", content };
+  return { role: "system", content, consent_required: false };
 }
 
 interface AssistantMessage extends ChatMessage {
   role: "assistant";
 }
 
-export function assistantMessage(content: string): AssistantMessage {
-  return { role: "assistant", content };
+export function assistantMessage(
+  content: string,
+  options?: {
+    consent_required: boolean;
+  }
+): AssistantMessage {
+  return {
+    role: "assistant",
+    content,
+    consent_required: options?.consent_required ?? false,
+  };
 }
 
 interface UserMessage extends ChatMessage {
@@ -46,7 +55,7 @@ interface UserMessage extends ChatMessage {
 }
 
 export function userMessage(content: string): UserMessage {
-  return { role: "user", content };
+  return { role: "user", content, consent_required: false };
 }
 
 export interface ChatAgentConfig {
@@ -277,9 +286,8 @@ Context: ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "
       );
       this.messages.push(response);
       return {
-        action: "single_call",
+        action: "ask_parameters",
         message: response,
-        needsMoreInfo: true,
       };
     }
 
@@ -291,9 +299,7 @@ Context: ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "
       availableParameters.bodyProperties.length > 0;
 
     if (!hasAvailableParameters) {
-      const response = assistantMessage(
-        "This endpoint doesn't require any parameters."
-      );
+      const response = assistantMessage("I've will make an API call");
       this.messages.push(response);
       return {
         action: "single_call",
@@ -336,22 +342,27 @@ Return parameter values in the correct format. Use empty strings for parameters 
         (value) => value && value.trim() !== ""
       );
 
-      const response = hasExtractedParameters
-        ? assistantMessage(
-            `I've extracted the parameters from your message and will make the API call:
-${JSON.stringify(completeParameters)}`
-          )
-        : assistantMessage(
-            "I need more information about the parameters for this API call."
-          );
-      this.messages.push(response);
-
-      return {
-        action: "single_call",
-        message: response,
-        parameters: completeParameters,
-        needsMoreInfo: !hasExtractedParameters,
-      };
+      if (hasExtractedParameters) {
+        const response = assistantMessage(
+          `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
+        );
+        this.messages.push(response);
+        return {
+          action: "single_call",
+          message: response,
+          parameters: completeParameters,
+        };
+      } else {
+        const response = assistantMessage(
+          "I need more information about the parameters for this API call."
+        );
+        this.messages.push(response);
+        return {
+          action: "ask_parameters",
+          message: response,
+          parameters: completeParameters,
+        };
+      }
     } catch (error) {
       console.error("Error extracting parameters:", error);
       const response = assistantMessage(
@@ -362,10 +373,9 @@ ${JSON.stringify(completeParameters)}`
       // Even on error, return empty parameters object
       const emptyParams = this.createEmptyParametersObject(availableParameters);
       return {
-        action: "single_call",
+        action: "ask_parameters",
         message: response,
         parameters: emptyParams,
-        needsMoreInfo: true,
       };
     }
   }
@@ -407,7 +417,6 @@ Be specific about which endpoints to call and in what order.`),
       action: "multi_call",
       message: response,
       endpointSequence: sequence.endpoints,
-      needsMoreInfo: sequence.endpoints.length === 0,
     };
   }
 
@@ -430,7 +439,6 @@ Be specific about which endpoints to call and in what order.`),
       return {
         action: "ask_parameters",
         message: response,
-        needsMoreInfo: true,
       };
     }
 
@@ -442,14 +450,11 @@ Be specific about which endpoints to call and in what order.`),
       availableParameters.bodyProperties.length > 0;
 
     if (!hasAvailableParameters) {
-      const response = assistantMessage(
-        "This endpoint doesn't require any parameters."
-      );
+      const response = assistantMessage("Making a call to the endpoint.");
       this.messages.push(response);
       return {
-        action: "ask_parameters",
+        action: "single_call",
         message: response,
-        parameters: {},
       };
     }
 
@@ -486,22 +491,27 @@ Return parameter values in the correct format. Use empty strings for parameters 
         (value) => value && value.trim() !== ""
       );
 
-      const response = hasExtractedParameters
-        ? assistantMessage(
-            `Got it! I've extracted the parameter values:
-${JSON.stringify(completeParameters)}`
-          )
-        : assistantMessage(
-            "I couldn't find parameter values in your message. Could you be more specific?"
-          );
-      this.messages.push(response);
-
-      return {
-        action: "ask_parameters",
-        message: response,
-        parameters: completeParameters,
-        needsMoreInfo: !hasExtractedParameters,
-      };
+      if (hasExtractedParameters) {
+        const response = assistantMessage(
+          `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
+        );
+        this.messages.push(response);
+        return {
+          action: "single_call",
+          message: response,
+          parameters: completeParameters,
+        };
+      } else {
+        const response = assistantMessage(
+          "I couldn't find parameter values in your message. Could you be more specific?"
+        );
+        this.messages.push(response);
+        return {
+          action: "ask_parameters",
+          message: response,
+          parameters: completeParameters,
+        };
+      }
     } catch (error) {
       console.error("Parameter extraction error:", error);
       const response = assistantMessage(
@@ -515,7 +525,6 @@ ${JSON.stringify(completeParameters)}`
         action: "ask_parameters",
         message: response,
         parameters: emptyParams,
-        needsMoreInfo: true,
       };
     }
   }
@@ -531,9 +540,8 @@ ${JSON.stringify(completeParameters)}`
     this.messages.push(response);
 
     return {
-      action: "single_call",
+      action: "general",
       message: response,
-      parameters: {}, // Always return empty parameters object for consistency
     };
   }
 
