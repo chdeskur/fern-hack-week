@@ -17,6 +17,7 @@ import {
 } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { getEmptyValueForHttpRequestBody } from "../utils/default-values";
+import { ParameterState } from "./ChatAgent";
 import { TypeConverter } from "./TypeConverter";
 
 // Structured logging utility for chat agent integration
@@ -830,10 +831,16 @@ export interface PlaygroundContextValue {
 
   // Available values that can be set by AI
   availableValues: {
-    headers: Record<string, unknown>;
-    pathParameters: Record<string, unknown>;
-    queryParameters: Record<string, unknown>;
-    body: unknown;
+    headers: { name: string; currentValue: any }[];
+    pathParameters: { name: string; currentValue: any }[];
+    queryParameters: { name: string; currentValue: any }[];
+    bodyProperties: {
+      key: string;
+      type: string;
+      description?: string;
+      path: string[];
+      currentValue: any;
+    }[];
     auth?: {
       bearerToken?: string;
       basicAuth?: {
@@ -877,9 +884,9 @@ export interface PlaygroundContextValue {
   };
 
   // Utility methods
-  getAvailablePathParameters: () => string[];
-  getAvailableQueryParameters: () => string[];
-  getAvailableHeaders: () => string[];
+  getAvailablePathParameters: () => ParameterState[];
+  getAvailableQueryParameters: () => ParameterState[];
+  getAvailableHeaders: () => ParameterState[];
   getRequestBodySchema: () => unknown;
   unpackRequestBody: () => {
     schema: unknown;
@@ -950,10 +957,10 @@ export const PlaygroundContext = React.createContext<PlaygroundContextValue>({
   resetWithExample: noop,
   resetWithoutExample: noop,
   availableValues: {
-    headers: {},
-    pathParameters: {},
-    queryParameters: {},
-    body: undefined,
+    headers: [],
+    pathParameters: [],
+    queryParameters: [],
+    bodyProperties: [],
   },
   setHeader: noop,
   setPathParameter: noop,
@@ -1086,7 +1093,7 @@ export function PlaygroundContextProvider({
         if (isEmpty) {
           // Remove the header entirely if it's empty
           const { [key]: _removed, ...rest } = prev.headers || {};
-          PlaygroundLogger.debug("Removing empty header", { key });
+          PlaygroundLogger.debug("Removing empty header", { key: key });
           return {
             ...prev,
             headers: rest,
@@ -1094,7 +1101,7 @@ export function PlaygroundContextProvider({
         } else {
           // Set the value if it's not empty
           PlaygroundLogger.debug("Setting header", {
-            key,
+            key: key,
             value: conversion.value,
           });
           return {
@@ -1150,7 +1157,7 @@ export function PlaygroundContextProvider({
         if (isEmpty) {
           // Remove the parameter entirely if it's empty
           const { [key]: _removed, ...rest } = prev.pathParameters || {};
-          PlaygroundLogger.debug("Removing empty path parameter", { key });
+          PlaygroundLogger.debug("Removing empty path parameter", { key: key });
           return {
             ...prev,
             pathParameters: rest,
@@ -1158,7 +1165,7 @@ export function PlaygroundContextProvider({
         } else {
           // Set the value if it's not empty
           PlaygroundLogger.debug("Setting path parameter", {
-            key,
+            key: key,
             value: conversion.value,
           });
           return {
@@ -1240,14 +1247,19 @@ export function PlaygroundContextProvider({
         if (isEmpty) {
           // Remove the parameter entirely if it's empty
           const { [key]: _removed, ...rest } = prev.queryParameters || {};
-          PlaygroundLogger.debug("Removing empty query parameter", { key });
+          PlaygroundLogger.debug("Removing empty query parameter", {
+            key: key,
+          });
           return {
             ...prev,
             queryParameters: rest,
           };
         } else {
           // Set the value if it's not empty
-          PlaygroundLogger.debug("Setting query parameter", { key, value });
+          PlaygroundLogger.debug("Setting query parameter", {
+            key: key,
+            value,
+          });
           return {
             ...prev,
             queryParameters: {
@@ -1292,34 +1304,48 @@ export function PlaygroundContextProvider({
   // Simplified utility methods using context information
   const getAvailablePathParameters = React.useCallback(() => {
     if (context && "endpoint" in context) {
-      return context.endpoint.pathParameters?.map((param) => param.key) || [];
+      return (
+        context.endpoint.pathParameters?.map((param) => ({
+          name: param.key,
+          currentValue: formState.pathParameters?.[param.key] ?? "",
+        })) || []
+      );
     }
     return [];
-  }, [context]);
+  }, [context, formState]);
 
   const getAvailableQueryParameters = React.useCallback(() => {
     if (context && "endpoint" in context) {
-      return context.endpoint.queryParameters?.map((param) => param.key) || [];
+      return (
+        context.endpoint.queryParameters?.map((param) => ({
+          name: param.key,
+          currentValue: formState.queryParameters?.[param.key] ?? "",
+        })) || []
+      );
     }
     return [];
-  }, [context]);
+  }, [context, formState]);
 
   const getAvailableHeaders = React.useCallback(() => {
-    let headers: string[] = [];
+    let headers: { name: string; currentValue: any }[] = [];
 
     if (context && "endpoint" in context) {
       headers =
-        context.endpoint.requestHeaders?.map((header) => header.key) || [];
+        context.endpoint.requestHeaders?.map((header) => ({
+          name: header.key,
+          currentValue: formState.headers?.[header.key] ?? "",
+        })) || [];
     }
 
     if (context && "globalHeaders" in context) {
-      headers = [
-        ...headers,
-        ...context.globalHeaders.map((header) => header.key),
-      ];
+      const globalHeaders = context.globalHeaders.map((header) => ({
+        name: header.key,
+        currentValue: formState.headers?.[header.key] ?? "",
+      }));
+      headers = [...headers, ...globalHeaders];
     }
     return headers;
-  }, [context]);
+  }, [context, formState]);
 
   const getRequestBodySchema = React.useCallback(() => {
     if (
@@ -1611,44 +1637,82 @@ export function PlaygroundContextProvider({
 
   // Simplified available values
   const availableValues = React.useMemo(() => {
-    // Body value is already clean since we remove empty properties
-    const bodyValue =
-      formState.type === "endpoint" ? formState.body?.value : undefined;
+    // Path parameters
+    const pathParameters =
+      context && "endpoint" in context
+        ? (context.endpoint.pathParameters || []).map((param) => ({
+            name: param.key,
+            currentValue: formState.pathParameters?.[param.key] ?? "",
+          }))
+        : [];
 
-    const baseValues = {
-      headers: formState.headers || {},
-      pathParameters: formState.pathParameters || {},
-      queryParameters: formState.queryParameters || {},
-      body: bodyValue,
-    };
+    // Query parameters
+    const queryParameters =
+      context && "endpoint" in context
+        ? (context.endpoint.queryParameters || []).map((param) => ({
+            name: param.key,
+            currentValue: formState.queryParameters?.[param.key] ?? "",
+          }))
+        : [];
 
-    // Add auth information if available
-    const auth = context && "auth" in context ? context.auth : undefined;
+    // Headers (including global headers)
+    let headerParams: { name: string; currentValue: any }[] = [];
+    if (context && "endpoint" in context) {
+      headerParams = [
+        ...(context.endpoint.requestHeaders || []),
+        ...((context as any).globalHeaders || []),
+      ].map((header) => ({
+        name: header.key,
+        currentValue: formState.headers?.[header.key] ?? "",
+      }));
+    }
+
+    // Body properties
+    const bodyProperties =
+      unpackRequestBody().properties.map((prop) => ({
+        key: prop.key,
+        type: prop.type,
+        description: prop.description,
+        path: prop.path,
+        currentValue: prop.currentValue,
+      })) || [];
+
+    // Auth - convert to expected format
+    const auth =
+      context && "auth" in context && context.auth
+        ? (() => {
+            const contextAuth = context.auth as any;
+            if (contextAuth.type === "bearerAuth") {
+              return { bearerToken: contextAuth.tokenName || "token" };
+            } else if (contextAuth.type === "basicAuth") {
+              return {
+                basicAuth: {
+                  username: contextAuth.usernameName || "username",
+                  password: contextAuth.passwordName || "password",
+                },
+              };
+            } else if (contextAuth.type === "header") {
+              return {
+                headerAuth: {
+                  [contextAuth.headerWireValue || "Authorization"]:
+                    contextAuth.nameOverride ||
+                    contextAuth.headerWireValue ||
+                    "Authorization",
+                },
+              };
+            }
+            return undefined;
+          })()
+        : undefined;
 
     return {
-      ...baseValues,
-      auth: auth
-        ? {
-            bearerToken:
-              auth.type === "bearerAuth" ? auth.tokenName : undefined,
-            basicAuth:
-              auth.type === "basicAuth"
-                ? {
-                    username: auth.usernameName || "username",
-                    password: auth.passwordName || "password",
-                  }
-                : undefined,
-            headerAuth:
-              auth.type === "header"
-                ? {
-                    [auth.headerWireValue]:
-                      auth.nameOverride || auth.headerWireValue,
-                  }
-                : undefined,
-          }
-        : undefined,
+      pathParameters,
+      queryParameters,
+      headers: headerParams,
+      bodyProperties,
+      auth,
     };
-  }, [formState, context]);
+  }, [formState, context, unpackRequestBody]);
 
   const value = React.useMemo(
     () => ({

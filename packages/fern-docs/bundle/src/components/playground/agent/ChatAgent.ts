@@ -39,6 +39,24 @@ interface AssistantMessage extends ChatMessage {
   role: "assistant";
 }
 
+export interface ParameterState {
+  name: string;
+  currentValue: any;
+}
+
+export interface AvailableParameters {
+  pathParameters: ParameterState[];
+  queryParameters: ParameterState[];
+  headers: ParameterState[];
+  bodyProperties: {
+    key: string;
+    type: string;
+    description?: string;
+    path: string[];
+    currentValue: any;
+  }[];
+}
+
 export function assistantMessage(
   content: string,
   options?: {
@@ -231,17 +249,7 @@ Always be helpful and concise. When you need more information, ask specific ques
   // Main method to handle user input and determine the appropriate action
   public async processUserMessage(
     userMsg: UserMessage,
-    availableParameters?: {
-      pathParameters: string[];
-      queryParameters: string[];
-      headers: string[];
-      bodyProperties: {
-        key: string;
-        type: string;
-        description?: string;
-        path: string[];
-      }[];
-    },
+    availableParameters?: AvailableParameters,
     currentEndpointId?: string,
     apiDefinition?: ApiDefinition.ApiDefinition
   ): Promise<ChatAgentResponse> {
@@ -303,17 +311,9 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
     }
   }
 
-  private async handleSingleCall(availableParameters?: {
-    pathParameters: string[];
-    queryParameters: string[];
-    headers: string[];
-    bodyProperties: {
-      key: string;
-      type: string;
-      description?: string;
-      path: string[];
-    }[];
-  }): Promise<ChatAgentResponse> {
+  private async handleSingleCall(
+    availableParameters?: AvailableParameters
+  ): Promise<ChatAgentResponse> {
     if (!availableParameters) {
       const response = assistantMessage(
         "I need to know what parameters are available for this endpoint."
@@ -355,12 +355,11 @@ Available parameters:
 ${this.formatAvailableParameters(availableParameters)}
 
 IMPORTANT: Look for values being set in the user message. Examples:
-- "Set the Authorization header to Bearer token123" → header_Authorization: "Bearer token123"
-- "include the Authorization header" → header_Authorization: "Bearer YOUR_AUTH_TOKEN"
+- "Set the Authorization header to token123" → header_Authorization: "token123"
 - "The user's name is Alice" → body_name: "Alice"
 - "Set user_id to 12345" → path_user_id: "12345"
 
-For headers that are mentioned but no specific value is provided, use placeholder values like "Bearer YOUR_AUTH_TOKEN" for Authorization headers.
+For headers that are mentioned but no specific value is provided, do not set a placeholder value. Instead, ask the user for more context.
 Return parameter values in the correct format. Use empty strings for parameters that cannot be extracted from the user's message.`),
           ...this.getMessagesWithSystem(),
         ],
@@ -460,17 +459,9 @@ ${this.listEndpoints()}
     };
   }
 
-  private async handleParameterExtraction(availableParameters?: {
-    pathParameters: string[];
-    queryParameters: string[];
-    headers: string[];
-    bodyProperties: {
-      key: string;
-      type: string;
-      description?: string;
-      path: string[];
-    }[];
-  }): Promise<ChatAgentResponse> {
+  private async handleParameterExtraction(
+    availableParameters?: AvailableParameters
+  ): Promise<ChatAgentResponse> {
     if (!availableParameters) {
       const response = assistantMessage(
         "I need to know what parameters are available."
@@ -586,29 +577,19 @@ Return parameter values in the correct format. Use empty strings for parameters 
   }
 
   // Helper methods
-  private createParameterSchema(availableParameters: {
-    pathParameters: string[];
-    queryParameters: string[];
-    headers: string[];
-    bodyProperties: {
-      key: string;
-      type: string;
-      description?: string;
-      path: string[];
-    }[];
-  }) {
+  private createParameterSchema(availableParameters: AvailableParameters) {
     const schema: Record<string, z.ZodString> = {};
 
     availableParameters.pathParameters.forEach((param) => {
-      schema[`path_${param}`] = z.string();
+      schema[`path_${param.name}`] = z.string();
     });
 
     availableParameters.queryParameters.forEach((param) => {
-      schema[`query_${param}`] = z.string();
+      schema[`query_${param.name}`] = z.string();
     });
 
     availableParameters.headers.forEach((header) => {
-      schema[`header_${header}`] = z.string();
+      schema[`header_${header.name}`] = z.string();
     });
 
     availableParameters.bodyProperties.forEach((prop) => {
@@ -618,29 +599,21 @@ Return parameter values in the correct format. Use empty strings for parameters 
     return z.object(schema);
   }
 
-  private createEmptyParametersObject(availableParameters: {
-    pathParameters: string[];
-    queryParameters: string[];
-    headers: string[];
-    bodyProperties: {
-      key: string;
-      type: string;
-      description?: string;
-      path: string[];
-    }[];
-  }): Record<string, string> {
+  private createEmptyParametersObject(
+    availableParameters: AvailableParameters
+  ): Record<string, string> {
     const emptyParams: Record<string, string> = {};
 
     availableParameters.pathParameters.forEach((param) => {
-      emptyParams[`path_${param}`] = "";
+      emptyParams[`path_${param.name}`] = "";
     });
 
     availableParameters.queryParameters.forEach((param) => {
-      emptyParams[`query_${param}`] = "";
+      emptyParams[`query_${param.name}`] = "";
     });
 
     availableParameters.headers.forEach((header) => {
-      emptyParams[`header_${header}`] = "";
+      emptyParams[`header_${header.name}`] = "";
     });
 
     availableParameters.bodyProperties.forEach((prop) => {
@@ -650,42 +623,45 @@ Return parameter values in the correct format. Use empty strings for parameters 
     return emptyParams;
   }
 
-  private formatAvailableParameters(availableParameters: {
-    pathParameters: string[];
-    queryParameters: string[];
-    headers: string[];
-    bodyProperties: {
-      key: string;
-      type: string;
-      description?: string;
-      path: string[];
-    }[];
-  }): string {
+  private formatAvailableParameters(
+    availableParameters: AvailableParameters
+  ): string {
     let formatted = "";
 
     if (availableParameters.pathParameters.length > 0) {
       formatted +=
         "Path Parameters: " +
-        availableParameters.pathParameters.join(", ") +
+        availableParameters.pathParameters
+          .map((p) => `${p.name} (current: ${p.currentValue || "empty"})`)
+          .join(", ") +
         "\n";
     }
 
     if (availableParameters.queryParameters.length > 0) {
       formatted +=
         "Query Parameters: " +
-        availableParameters.queryParameters.join(", ") +
+        availableParameters.queryParameters
+          .map((p) => `${p.name} (current: ${p.currentValue || "empty"})`)
+          .join(", ") +
         "\n";
     }
 
     if (availableParameters.headers.length > 0) {
-      formatted += "Headers: " + availableParameters.headers.join(", ") + "\n";
+      formatted +=
+        "Headers: " +
+        availableParameters.headers
+          .map((h) => `${h.name} (current: ${h.currentValue || "empty"})`)
+          .join(", ") +
+        "\n";
     }
 
     if (availableParameters.bodyProperties.length > 0) {
       formatted +=
         "Body Properties: " +
         availableParameters.bodyProperties
-          .map((p) => `${p.key} (${p.type})`)
+          .map(
+            (p) => `${p.key} (${p.type}, current: ${p.currentValue || "empty"})`
+          )
           .join(", ") +
         "\n";
     }

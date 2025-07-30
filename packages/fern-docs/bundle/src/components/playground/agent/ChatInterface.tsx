@@ -187,11 +187,12 @@ export function ChatBotInterface({
         } else if (key.startsWith("body_")) {
           const paramName = key.substring(5); // Remove 'body_' prefix
           // For body parameters, we need to set them properly in the body object
-          const currentBody = playground.availableValues.body || {};
-          const newBody =
-            typeof currentBody === "object" && currentBody != null
-              ? { ...currentBody, [paramName]: value }
-              : { [paramName]: value };
+          const currentBody = playground.availableValues.bodyProperties || [];
+          const newBody = currentBody.find((p) => p.key === paramName)
+            ? currentBody.map((p) =>
+                p.key === paramName ? { ...p, currentValue: value } : p
+              )
+            : [...currentBody, { key: paramName, currentValue: value }];
           playground.setBody(newBody);
         }
       } catch (error) {
