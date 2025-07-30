@@ -38,6 +38,7 @@
     "lint:style:fix": "pnpm lint:style --fix",
     "storybook": "storybook dev -p 6006",
     "test": "vitest --run --passWithNoTests --globals",
+    "test:evals": "vitest --run --passWithNoTests --globals --config=vitest.evals.config.ts",
     "test:update": "vitest --run -u --passWithNoTests --globals",
     "typecheck": "tsc --noEmit"
   },

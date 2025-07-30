@@ -2,6 +2,8 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { ToolSet, generateObject, generateText } from "ai";
 import { z } from "zod";
 
+import { ApiDefinition } from "@fern-api/fdr-sdk";
+
 const openai = createOpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   organization: "org-EdIIJRQNvyUgF54KIY64fW9i",
@@ -36,24 +38,120 @@ export function userMessage(content: string): UserMessage {
   return { role: "user", content };
 }
 
-const defaultTools: ToolSet = {};
-
 export interface ChatAgentConfig {
   additionalTools?: ToolSet;
   initialMessages?: ChatMessage[];
+  apiDefinition?: ApiDefinition.ApiDefinition;
 }
 
 export class ChatAgent {
   private readonly tools: ToolSet;
+  private readonly apiDefinition?: ApiDefinition.ApiDefinition;
 
   public messages: ChatMessage[] = [];
 
   constructor(config?: ChatAgentConfig) {
+    this.apiDefinition = config?.apiDefinition;
     this.tools = {
-      ...defaultTools,
+      ...this.createApiTools(),
       ...(config?.additionalTools ?? {}),
     };
     this.messages = config?.initialMessages ?? [];
+  }
+
+  private createApiTools(): ToolSet {
+    if (!this.apiDefinition) return {};
+
+    return {
+      listEndpoints: {
+        description:
+          "List all available API endpoints with their methods and paths",
+        execute: async () => {
+          const endpoints = Object.entries(
+            this.apiDefinition?.endpoints || {}
+          ).map(([id, endpoint]) => ({
+            id,
+            method: endpoint.method,
+            path:
+              endpoint.path
+                ?.map((part: any) =>
+                  part.type === "literal" ? part.value : `{${part.value}}`
+                )
+                .join("") || "",
+            description: endpoint.description,
+          }));
+          return JSON.stringify(endpoints);
+        },
+      },
+
+      getEndpointDetails: {
+        description:
+          "Get detailed information about a specific endpoint including parameters and request/response schemas",
+        inputSchema: z.object({
+          endpointId: z
+            .string()
+            .describe("The ID of the endpoint to get details for"),
+        }),
+        execute: async ({ endpointId }: { endpointId: string }) => {
+          const endpoints = this.apiDefinition?.endpoints;
+          if (!endpoints) {
+            return "No endpoints available";
+          }
+
+          // Find endpoint by matching the ID as string
+          const endpointEntry = Object.entries(endpoints).find(
+            ([id, _]) => id === endpointId
+          );
+          if (!endpointEntry) {
+            return `Endpoint with ID "${endpointId}" not found`;
+          }
+
+          const [, endpoint] = endpointEntry;
+          const details = {
+            id: endpointId,
+            method: endpoint.method,
+            path:
+              endpoint.path
+                ?.map((part: any) =>
+                  part.type === "literal" ? part.value : `{${part.value}}`
+                )
+                .join("") || "",
+            description: endpoint.description,
+            pathParameters:
+              endpoint.pathParameters?.map((p: any) => ({
+                key: p.key,
+                description: p.description,
+                type: p.valueShape?.type,
+              })) || [],
+            queryParameters:
+              endpoint.queryParameters?.map((p: any) => ({
+                key: p.key,
+                description: p.description,
+                type: p.valueShape?.type,
+              })) || [],
+            requestHeaders:
+              endpoint.requestHeaders?.map((h: any) => ({
+                key: h.key,
+                description: h.description,
+                type: h.valueShape?.type,
+              })) || [],
+            requestBody: endpoint.requests?.[0]?.body
+              ? {
+                  type: endpoint.requests[0].body.type,
+                }
+              : null,
+            responses:
+              endpoint.responses?.map((r: any) => ({
+                statusCode: r.statusCode,
+                description: r.description,
+                type: r.body?.type,
+              })) || [],
+          };
+
+          return JSON.stringify(details);
+        },
+      },
+    };
   }
 
   private get generateResponseMessages() {
@@ -107,6 +205,67 @@ export class ChatAgent {
       console.error("Error in generateSchemaResponse:", error);
       throw error;
     }
+  }
+
+  public async generateMultiStepResponse(
+    userMsg: UserMessage
+  ): Promise<[AssistantMessage, endpointCallSequence: string[]]> {
+    this.messages.push(userMsg);
+
+    // STEP 1: Determine which endpoints are relevant to the user's request
+    const planPrompt = systemMessage(
+      `You are an API assistant that can help users make multiple sequential API calls to fulfill complex requests. 
+      You have access to tools that can:
+      1. List available endpoints
+      2. Get detailed endpoint information
+      
+      When a user asks for something that might require multiple API calls, use the tools to:
+      1. First explore available endpoints with listEndpoints
+      2. Get details about relevant endpoints with getEndpointDetails
+      3. Determine which endpoints are relevant to the user's request. Prefer fewer endpoints over more endpoints.
+      4. Create a plan for a sequence of API calls to fulfill the user's request.
+      5. If there is not enough information to create a plan, prompt the user for more information.`
+    );
+
+    const { text: plan } = await generateText({
+      model: openai("gpt-4.1-mini"),
+      messages: [planPrompt, ...this.generateResponseMessages],
+      tools: this.tools,
+    });
+
+    this.messages.push(assistantMessage(plan));
+
+    // STEP 2: Determine if there is sufficient information to make the API call(s)
+    const sufficientInfoPrompt = systemMessage(
+      `Determine if there is sufficient information to make the API call(s).
+      Pay particular attention to whether the user has provided all the required parameters for each endpoint.
+      If there is, return an array of the endpoint IDs that are needed to execute the plan in order of execution.
+      If there is not, just return an empty array.`
+    );
+
+    const { object: endpointCallSequence } = await generateObject({
+      model: openai("gpt-4.1-mini"),
+      prompt: [sufficientInfoPrompt, ...this.generateResponseMessages].join(
+        "\n"
+      ),
+      schema: z.array(z.string()),
+    });
+
+    if (endpointCallSequence.length === 0) {
+      const missingInfoPrompt = systemMessage(
+        `The user has provided a plan for a sequence of API calls to fulfill the user's request, but there is not enough information to make the API call(s).
+        Ask the user for the missing information.`
+      );
+
+      const { text: missingInfo } = await generateText({
+        model: openai("gpt-4.1-mini"),
+        messages: [missingInfoPrompt, ...this.generateResponseMessages],
+        tools: this.tools,
+      });
+      this.messages.push(assistantMessage(missingInfo));
+      return [assistantMessage(missingInfo), endpointCallSequence];
+    }
+    return [assistantMessage(plan), endpointCallSequence];
   }
 
   public async generateParameterSettingResponse(
@@ -183,7 +342,7 @@ export class ChatAgent {
       model: openai("gpt-4.1-mini"),
       messages: [
         systemMessage(
-          "Given this JSON object, summarize its contents in a few sentences."
+          "Given this JSON object, summarize its contents. If there are multiple items, summarize each item."
         ),
         assistantMsg,
       ],
