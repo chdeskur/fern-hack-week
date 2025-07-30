@@ -1,8 +1,10 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { ToolSet, generateObject, generateText } from "ai";
+import { RepairTextFunction, ToolSet, generateObject, generateText } from "ai";
 import { z } from "zod";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
+
+import { PlaygroundLogger } from "./PlaygroundContext";
 
 const openai = createOpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -246,6 +248,8 @@ Context: ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "
       schema: actionSchema,
     });
 
+    PlaygroundLogger.debug("Action decision:", actionDecision);
+
     // Handle different action types
     switch (actionDecision.action) {
       case "single_call":
@@ -353,7 +357,7 @@ ${JSON.stringify(completeParameters)}`
         needsMoreInfo: !hasExtractedParameters,
       };
     } catch (error) {
-      console.error("Error extracting parameters:", error);
+      PlaygroundLogger.error("Error extracting parameters:", error);
       const response = assistantMessage(
         "I had trouble understanding the parameters. Could you provide them more clearly?"
       );
@@ -475,6 +479,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
           ...this.getMessagesWithSystem(),
         ],
         schema: parameterSchema,
+        experimental_repairText: repairJsonObject,
       });
 
       // Create a complete parameters object with empty strings for missing values
@@ -503,7 +508,7 @@ ${JSON.stringify(completeParameters)}`
         needsMoreInfo: !hasExtractedParameters,
       };
     } catch (error) {
-      console.error("Parameter extraction error:", error);
+      PlaygroundLogger.error("Parameter extraction error:", error);
       const response = assistantMessage(
         "I had trouble extracting parameters. Could you provide them more clearly?"
       );
@@ -679,42 +684,6 @@ ${JSON.stringify(completeParameters)}`
       await this.onNavigateToEndpoint(endpointId);
     }
   }
-
-  // // Legacy method for backward compatibility
-  // public async generateResponse(
-  //   userMsg: UserMessage
-  // ): Promise<AssistantMessage> {
-  //   const result = await this.processUserMessage(userMsg);
-  //   return assistantMessage(result.message);
-  // }
-
-  // // Legacy method for backward compatibility
-  // public async generateSchemaResponse(
-  //   userMsg: UserMessage,
-  //   schema: z.ZodSchema
-  // ): Promise<AssistantMessage> {
-  //   this.messages.push(userMsg);
-
-  //   try {
-  //     const { object } = await generateObject({
-  //       model: openai("gpt-4.1-mini"),
-  //       messages: [
-  //         systemMessage(
-  //           "Based on the conversation, generate an object that matches the schema."
-  //         ),
-  //         ...this.getMessagesWithSystem(),
-  //       ],
-  //       schema: schema,
-  //     });
-
-  //     const assistantMsg = assistantMessage(JSON.stringify(object));
-  //     this.messages.push(assistantMsg);
-  //     return assistantMsg;
-  //   } catch (error) {
-  //     console.error("Error in generateSchemaResponse:", error);
-  //     throw error;
-  //   }
-  // }
 }
 
 // Singleton instance for the chat agent
@@ -738,4 +707,42 @@ export function getChatAgent(config?: ChatAgentConfig): ChatAgent {
  */
 export function resetChatAgent(): void {
   singletonChatAgent = null;
+}
+
+/**
+ * Attempt to malformed JSON where multiple objects are concatenated.
+ */
+async function repairJsonObject({
+  text,
+}: Parameters<RepairTextFunction>[0]): ReturnType<RepairTextFunction> {
+  // Find the first complete JSON object
+  let braceCount = 0;
+  let startIndex = -1;
+  let endIndex = -1;
+
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] === "{") {
+      if (startIndex === -1) {
+        startIndex = i;
+      }
+      braceCount++;
+    } else if (text[i] === "}") {
+      braceCount--;
+      if (braceCount === 0 && startIndex !== -1) {
+        endIndex = i;
+        break;
+      }
+    }
+  }
+
+  if (startIndex !== -1 && endIndex !== -1) {
+    return text.substring(startIndex, endIndex + 1);
+  }
+
+  // Fallback: try to add closing brace if we have an opening brace
+  if (text.includes("{") && !text.includes("}")) {
+    return text + "}";
+  }
+
+  return text;
 }
