@@ -506,12 +506,11 @@ Available parameters:
 ${this.formatAvailableParameters(availableParameters)}
 
 IMPORTANT: Look for values being set in the user message. Examples:
-- "Set the Authorization header to Bearer token123" → header_Authorization: "Bearer token123"
-- "include the Authorization header" → header_Authorization: "Bearer YOUR_AUTH_TOKEN"
+- "Set the Authorization header to token123" → header_Authorization: "token123"
 - "The user's name is Alice" → body_name: "Alice"
 - "Set user_id to 12345" → path_user_id: "12345"
 
-For headers that are mentioned but no specific value is provided, use placeholder values like "Bearer YOUR_AUTH_TOKEN" for Authorization headers.
+For headers that are mentioned but no specific value is provided, do not set a placeholder value. Instead, ask the user for more context.
 Return parameter values in the correct format. Use empty strings for parameters that cannot be extracted from the user's message.`),
           ...this.getMessagesWithSystem(),
         ],
