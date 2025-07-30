@@ -179,12 +179,18 @@ export class ChatAgent {
           description: p.description,
           type: p.valueShape?.type,
         })) || [],
-      requestHeaders:
-        endpoint.requestHeaders?.map((h: any) => ({
+      requestHeaders: [
+        ...(this.apiDefinition?.globalHeaders?.map((h: any) => ({
           key: h.key,
           description: h.description,
           type: h.valueShape?.type,
-        })) || [],
+        })) || []),
+        ...(endpoint.requestHeaders?.map((h: any) => ({
+          key: h.key,
+          description: h.description,
+          type: h.valueShape?.type,
+        })) || []),
+      ],
       requestBody: endpoint.requests?.[0]?.body
         ? {
             type: endpoint.requests[0].body.type,

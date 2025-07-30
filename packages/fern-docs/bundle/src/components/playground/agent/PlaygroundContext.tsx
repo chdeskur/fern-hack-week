@@ -508,7 +508,9 @@ function getParameterTypeInfo(
     endpoint: {
       pathParameters: endpoint.pathParameters?.length || 0,
       queryParameters: endpoint.queryParameters?.length || 0,
-      requestHeaders: endpoint.requestHeaders?.length || 0,
+      requestHeaders:
+        (endpoint.requestHeaders?.length || 0) +
+        (context.globalHeaders?.length || 0),
       requests: endpoint.requests?.length || 0,
     },
     parameterKey,
@@ -561,9 +563,9 @@ function getParameterTypeInfo(
     }
 
     case "header": {
-      const headerParam = endpoint.requestHeaders?.find(
-        (h: any) => h.key === parameterKey
-      );
+      const headerParam =
+        endpoint.requestHeaders?.find((h: any) => h.key === parameterKey) ||
+        context.globalHeaders?.find((h: any) => h.key === parameterKey);
       if (headerParam) {
         const typeInfo = getTypeInfo(headerParam.valueShape);
         PlaygroundLogger.debug(
@@ -577,7 +579,10 @@ function getParameterTypeInfo(
       }
       PlaygroundLogger.debug(
         `Header parameter '${parameterKey}' not found in schema. Available:`,
-        endpoint.requestHeaders?.map((h: any) => h.key) || []
+        [
+          ...(endpoint.requestHeaders?.map((h: any) => h.key) || []),
+          ...(context.globalHeaders?.map((h: any) => h.key) || []),
+        ]
       );
       break;
     }
@@ -661,11 +666,9 @@ function checkMissingRequiredValues(
   PlaygroundLogger.debug("Checking for missing required values", {
     pathParameters: endpoint.pathParameters?.length || 0,
     queryParameters: endpoint.queryParameters?.length || 0,
-    requestHeaders: endpoint.requestHeaders?.length || 0,
-    globalHeaders:
-      context && "globalHeaders" in context
-        ? context.globalHeaders?.length || 0
-        : 0,
+    requestHeaders:
+      (endpoint.requestHeaders?.length || 0) +
+      (context.globalHeaders?.length || 0),
     hasRequestBody: !!endpoint.requests?.[0]?.body,
   });
 
