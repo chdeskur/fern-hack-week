@@ -1,6 +1,6 @@
 import { Bot, User } from "lucide-react";
 
-import { FernTooltip } from "@fern-docs/components";
+import { FernButton, FernTooltip } from "@fern-docs/components";
 import { FernCard } from "@fern-docs/components";
 import { mdxToHtml } from "@fern-docs/mdx";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
@@ -8,7 +8,13 @@ import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { ChatMessage } from "./ChatAgent";
 
 // Separate component for chat message with copy functionality
-export function ChatMessageComponent({ message }: { message: ChatMessage }) {
+export function ChatMessageComponent({
+  message,
+  onConsent,
+}: {
+  message: ChatMessage;
+  onConsent?: (consented: boolean) => void;
+}) {
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(
     message.content
   );
@@ -69,6 +75,20 @@ export function ChatMessageComponent({ message }: { message: ChatMessage }) {
           </FernCard>
         </FernTooltip>
       </div>
+      {message.consent_required && onConsent && (
+        <div className="mt-3 flex gap-2">
+          <FernButton
+            onClick={() => onConsent(true)}
+            intent="primary"
+            size="small"
+          >
+            Yes, send request
+          </FernButton>
+          <FernButton onClick={() => onConsent(false)} size="small">
+            No, cancel
+          </FernButton>
+        </div>
+      )}
     </div>
   );
 }
