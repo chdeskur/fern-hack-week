@@ -281,8 +281,8 @@ Always be helpful and concise. When you need more information, ask specific ques
         systemMessage(`Analyze the latest user message and determine what type of action is needed.
 
 Available actions:
-- single_call: User wants to make one API call with the current endpoint. If there is an active sequence, use single_call to make the next call in the sequence.
-- multi_call: User wants to perform a sequence of multiple related API calls that might require different endpoints
+- single_call: User wants to make one API call with the current endpoint. IMPORTANT: if there is an active sequence, use single_call to make the next call in the sequence.
+- multi_call: User wants to perform a sequence of multiple related API calls that might require different endpoints. IMPORTANT: if there is an active sequence, never use multi_call. Instead, use single_call to make the next call in the sequence.
 - ask_parameters: User is providing parameter values (like setting headers, providing names, IDs, etc.) for API calls, OR user is explicitly setting parameter values, OR user is responding to a request for parameters (including saying they don't have values)
 - general_response: General question or conversation that doesn't require API calls
 
@@ -416,7 +416,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
   private async handleMultiCall(): Promise<ChatAgentResponse> {
     // Use tools to explore API and create a plan
     const { text } = await generateText({
-      model: openai("gpt-4.1"),
+      model: openai("gpt-4.1-mini"),
       messages: [
         systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
 Use the available tools to explore endpoints and determine the sequence needed.

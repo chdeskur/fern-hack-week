@@ -108,6 +108,10 @@ export function ChatBotInterface({
                 if (chatAgent.sequence.length > 0) {
                   const nextEndpointId = chatAgent.sequence[0];
                   if (nextEndpointId) {
+                    PlaygroundLogger.debug(
+                      "[playground.response] ENDPOINTS DATA:",
+                      endpointsData
+                    );
                     // Find the endpoint in the API definition
                     const nextEndpointData = endpointsData?.find(
                       (endpoint) => endpoint.id === nextEndpointId
