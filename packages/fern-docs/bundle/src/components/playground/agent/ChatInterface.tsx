@@ -52,6 +52,10 @@ export function ChatBotInterface({
   const [messages, setMessages] = useState<ChatMessage[]>(chatAgent.messages);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [streamingMessage, setStreamingMessage] = useState<ChatMessage | null>(
+    null
+  );
   const [pendingResponse, setPendingResponse] = useState<{
     resolve: (value: string) => void;
     reject: (error: Error) => void;
@@ -61,6 +65,9 @@ export function ChatBotInterface({
     reject: (error: Error) => void;
   } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const isStreamingRef = useRef(false);
+  const isProcessingResponseRef = useRef(false);
+  const streamingMessageRef = useRef<ChatMessage | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -68,7 +75,12 @@ export function ChatBotInterface({
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, streamingMessage]);
+
+  // Keep streamingMessageRef in sync with streamingMessage state
+  useEffect(() => {
+    streamingMessageRef.current = streamingMessage;
+  }, [streamingMessage]);
 
   // Sync messages with the agent's messages when the component mounts or agent changes
   useEffect(() => {
@@ -77,7 +89,8 @@ export function ChatBotInterface({
 
   // Watch for response changes when we have a pending response
   useEffect(() => {
-    if (pendingResponse) {
+    if (pendingResponse && !isProcessingResponseRef.current) {
+      isProcessingResponseRef.current = true;
       visitLoadable(playground.response, {
         loading: () => {
           PlaygroundLogger.debug("[playground.response] LOADING");
@@ -93,10 +106,30 @@ export function ChatBotInterface({
           PlaygroundLogger.debug("[playground.response] STATUS:", statusCode);
           pendingResponse.resolve(parsed);
           // Generate a simple summary message
+          const handleSummaryStreamingChunk = (chunk: string) => {
+            if (!isStreamingRef.current) {
+              isStreamingRef.current = true;
+              setIsStreaming(true);
+              // Create initial streaming message for summary
+              const initialStreamingMessage = assistantMessage(chunk);
+              setStreamingMessage(initialStreamingMessage);
+            } else {
+              // Update existing streaming message
+              setStreamingMessage((prev) => {
+                if (prev) {
+                  return {
+                    ...prev,
+                    content: prev.content + chunk,
+                  };
+                }
+                return assistantMessage(chunk);
+              });
+            }
+          };
+
           chatAgent
-            .generateSummary(parsed, statusCode)
-            .then((msg) => {
-              setMessages([...messages, msg]);
+            .generateSummary(parsed, statusCode, handleSummaryStreamingChunk)
+            .then((_msg) => {
               if (statusCode >= 200 && statusCode < 300) {
                 chatAgent.sequence.shift();
                 PlaygroundLogger.debug(
@@ -145,17 +178,50 @@ export function ChatBotInterface({
                   }
                 }
               }
+              console.log("[FOOBARmessages]", messages);
+              console.log(
+                "[FOOBARstreamingMessage]",
+                streamingMessageRef.current
+              );
+              // If we were streaming, finalize the streaming message and clear streaming state
+              if (streamingMessageRef.current) {
+                const currentStreamingMessage = streamingMessageRef.current;
+                setMessages((prevMessages) => [
+                  ...prevMessages,
+                  currentStreamingMessage,
+                ]);
+              }
+              console.log("[FOOBAR(null)] 5");
+              setStreamingMessage(null);
+              setIsStreaming(false);
+              isStreamingRef.current = false;
               setPendingResponse(null);
+              setIsLoading(false);
+              isProcessingResponseRef.current = false;
             })
             .catch((error: unknown) => {
               PlaygroundLogger.error("[generateSummary] FAILED:", error);
+              // Clear streaming state on error
+              console.log("[FOOBAR(null)] 6");
+              setStreamingMessage(null);
+              setIsStreaming(false);
+              isStreamingRef.current = false;
               setPendingResponse(null);
+              setIsLoading(false);
+              isProcessingResponseRef.current = false;
             });
         },
         failed: (error) => {
           PlaygroundLogger.error("[playground.response] FAILED:", error);
           pendingResponse.reject(new Error(JSON.stringify(error)));
           setPendingResponse(null);
+          // Clear loading and streaming states on error
+          setIsLoading(false);
+          setIsStreaming(false);
+          console.log("[FOOBAR(null)] 7");
+          setStreamingMessage(null);
+          isStreamingRef.current = false;
+          isProcessingResponseRef.current = false;
         },
       });
     }
@@ -167,6 +233,8 @@ export function ChatBotInterface({
     router,
     apiDefinition,
     endpointsData,
+    isStreaming,
+    streamingMessage,
   ]);
 
   const setParams = (parameters: Record<string, unknown>) => {
@@ -213,12 +281,12 @@ export function ChatBotInterface({
     }
   };
 
-  const sendRequestWithConsent = async (updatedMessages: ChatMessage[]) => {
+  const sendRequestWithConsent = async (_updatedMessages: ChatMessage[]) => {
     const consentMsg = assistantMessage(
       "Would you like to allow me to send a request to this endpoint?",
       { consent_required: true }
     );
-    setMessages([...updatedMessages, consentMsg]);
+    setMessages((prevMessages) => [...prevMessages, consentMsg]);
 
     // Wait for user consent
     const userConsented = await new Promise<boolean>((resolve, reject) => {
@@ -229,7 +297,7 @@ export function ChatBotInterface({
         "Request timed out. Please try again if you'd like to send the request.",
         { consent_required: false }
       );
-      setMessages([...updatedMessages, consentMsg, timeoutMsg]);
+      setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
       return false;
     });
 
@@ -246,12 +314,12 @@ export function ChatBotInterface({
         "Request cancelled. Let me know if you'd like to try again with different parameters.",
         { consent_required: false }
       );
-      setMessages([...updatedMessages, consentMsg, declinedMsg]);
+      setMessages((prevMessages) => [...prevMessages, declinedMsg]);
     }
   };
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+    if (!inputValue.trim() || isLoading || isStreaming) return;
 
     const userMsg = userMessage(inputValue.trim());
     setInputValue("");
@@ -275,16 +343,52 @@ export function ChatBotInterface({
         bodyProperties: requestBodyInfo.properties,
       };
 
+      // Create streaming callback
+      const handleStreamingChunk = (chunk: string) => {
+        if (!isStreamingRef.current) {
+          isStreamingRef.current = true;
+          setIsStreaming(true);
+          // Create initial streaming message
+          const initialStreamingMessage = assistantMessage(chunk);
+          setStreamingMessage(initialStreamingMessage);
+        } else {
+          // Update existing streaming message
+          setStreamingMessage((prev) => {
+            if (prev) {
+              return {
+                ...prev,
+                content: prev.content + chunk,
+              };
+            }
+            return assistantMessage(chunk);
+          });
+        }
+      };
+
+      console.log("[FOOBARprocessUserMessage]", userMsg);
+
       // Process the user message with the simplified ChatAgent
       const response = await chatAgent.processUserMessage(
         userMsg,
         availableParameters,
         endpoint.id,
-        apiDefinition
+        apiDefinition,
+        handleStreamingChunk
       );
 
-      // Add the assistant's response to messages
-      setMessages([...updatedMessages, response.message]);
+      // If we were streaming, finalize the streaming message and clear streaming state
+      if (isStreamingRef.current && streamingMessageRef.current) {
+        // Use the final streaming message content
+        const finalMessage = { ...streamingMessageRef.current };
+        setMessages([...updatedMessages, finalMessage]);
+        console.log("[FOOBAR(null)] 1");
+        setStreamingMessage(null);
+        setIsStreaming(false);
+        isStreamingRef.current = false;
+      } else {
+        // Only add the response message if we weren't streaming
+        setMessages([...updatedMessages, response.message]);
+      }
 
       // Handle different response types
       if (response.classification === "single_call") {
@@ -306,7 +410,12 @@ export function ChatBotInterface({
           const missingValues = playground.checkMissingRequiredValues();
           if (missingValues.hasMissingValues) {
             const missingMsg = createMissingParametersMessage(missingValues);
-            setMessages([...updatedMessages, response.message, missingMsg]);
+            // Ensure we don't add duplicate messages if streaming was used
+            if (!(isStreaming && streamingMessageRef.current)) {
+              setMessages([...updatedMessages, response.message, missingMsg]);
+            } else {
+              setMessages((prevMessages) => [...prevMessages, missingMsg]);
+            }
           } else {
             await sendRequestWithConsent(updatedMessages);
           }
@@ -322,8 +431,21 @@ export function ChatBotInterface({
         consent_required: false,
       };
       setMessages([...updatedMessages, errorMsg]);
+      // Clear streaming state on error
+      console.log("[FOOBAR(null)] 2");
+      setStreamingMessage(null);
+      setIsStreaming(false);
+      isStreamingRef.current = false;
     } finally {
+      // Always reset loading state
       setIsLoading(false);
+      // Also ensure streaming state is cleared in case of any edge cases
+      if (isStreamingRef.current) {
+        setIsStreaming(false);
+        isStreamingRef.current = false;
+        console.log("[FOOBAR(null)] 3");
+        setStreamingMessage(null);
+      }
     }
   };
 
@@ -406,6 +528,12 @@ export function ChatBotInterface({
     setMessages([]);
     setInputValue("");
     setIsLoading(false);
+    setIsStreaming(false);
+    console.log("[FOOBAR(null)] 4");
+    setStreamingMessage(null);
+    streamingMessageRef.current = null;
+    isStreamingRef.current = false;
+    isProcessingResponseRef.current = false;
     setPendingResponse(null);
     setPendingConsent(null);
   };
@@ -434,7 +562,7 @@ export function ChatBotInterface({
         </div>
 
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
-          {messages.length === 0 ? (
+          {messages.length === 0 && !streamingMessage ? (
             <div className="text-(color:--grayscale-a11) flex h-full items-center justify-center">
               <div className="text-center">
                 <Bot className="mx-auto mb-2 h-8 w-8 opacity-50" />
@@ -444,41 +572,52 @@ export function ChatBotInterface({
               </div>
             </div>
           ) : (
-            messages.map((message, index) => (
-              <ChatMessageComponent
-                key={index}
-                message={message}
-                onConsent={handleConsent}
-              />
-            ))
+            <>
+              {messages.map((message, index) => (
+                <ChatMessageComponent
+                  key={index}
+                  message={message}
+                  onConsent={handleConsent}
+                />
+              ))}
+              {streamingMessage && (
+                <ChatMessageComponent
+                  key="streaming"
+                  message={streamingMessage}
+                  isStreaming={true}
+                  onConsent={handleConsent}
+                />
+              )}
+            </>
           )}
-          {(isLoading || pendingResponse) && pendingConsent == null && (
-            <div className="flex justify-start gap-3">
-              <div className="flex max-w-[80%] gap-3">
-                <div className="bg-(color:--grayscale-a3) flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
-                  <Bot className="text-(color:--grayscale-a11) h-4 w-4" />
-                </div>
-                <FernCard className="rounded-2 border-border-default border px-3 py-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="flex space-x-1">
-                      <div className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"></div>
-                      <div
-                        className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
-                        style={{ animationDelay: "0.1s" }}
-                      ></div>
-                      <div
-                        className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
-                        style={{ animationDelay: "0.2s" }}
-                      ></div>
-                    </div>
-                    <span className="text-(color:--grayscale-a11)">
-                      Thinking...
-                    </span>
+          {(isLoading || pendingResponse || isStreaming) &&
+            pendingConsent == null && (
+              <div className="flex justify-start gap-3">
+                <div className="flex max-w-[80%] gap-3">
+                  <div className="bg-(color:--grayscale-a3) flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
+                    <Bot className="text-(color:--grayscale-a11) h-4 w-4" />
                   </div>
-                </FernCard>
+                  <FernCard className="rounded-2 border-border-default border px-3 py-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="flex space-x-1">
+                        <div className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"></div>
+                        <div
+                          className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
+                          style={{ animationDelay: "0.1s" }}
+                        ></div>
+                        <div
+                          className="bg-(color:--grayscale-a8) h-2 w-2 animate-bounce rounded-full"
+                          style={{ animationDelay: "0.2s" }}
+                        ></div>
+                      </div>
+                      <span className="text-(color:--grayscale-a11)">
+                        Thinking...
+                      </span>
+                    </div>
+                  </FernCard>
+                </div>
               </div>
-            </div>
-          )}
+            )}
           <div ref={messagesEndRef} />
         </div>
 
@@ -493,7 +632,7 @@ export function ChatBotInterface({
             />
             <FernButton
               onClick={() => void handleSendMessage()}
-              disabled={!inputValue.trim() || isLoading}
+              disabled={!inputValue.trim() || isLoading || isStreaming}
               icon={<Send className="h-4 w-4" />}
               className="shrink-0"
               intent="primary"

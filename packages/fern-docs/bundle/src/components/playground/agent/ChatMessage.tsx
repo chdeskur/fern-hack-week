@@ -11,9 +11,11 @@ import { ChatMessage } from "./ChatAgent";
 export function ChatMessageComponent({
   message,
   onConsent,
+  isStreaming,
 }: {
   message: ChatMessage;
   onConsent?: (consented: boolean) => void;
+  isStreaming?: boolean;
 }) {
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(
     message.content
@@ -65,11 +67,15 @@ export function ChatMessageComponent({
             <div
               className="select-text whitespace-pre-wrap"
               dangerouslySetInnerHTML={{
-                __html: mdxToHtml(
-                  message.content.includes("{")
-                    ? `\`\`\`json\n${message.content}\n\`\`\``
-                    : message.content
-                ).html,
+                __html: isStreaming
+                  ? message.content
+                  : (() => {
+                      try {
+                        return mdxToHtml(message.content).html;
+                      } catch {
+                        return message.content;
+                      }
+                    })(),
               }}
             />
           </FernCard>

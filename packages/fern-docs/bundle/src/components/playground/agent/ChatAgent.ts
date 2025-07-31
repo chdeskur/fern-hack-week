@@ -1,5 +1,11 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { RepairTextFunction, ToolSet, generateObject, generateText } from "ai";
+import {
+  RepairTextFunction,
+  ToolSet,
+  generateObject,
+  generateText,
+  streamText,
+} from "ai";
 import { z } from "zod";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
@@ -475,7 +481,7 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
       case "single_call":
         return await this.handleSingleCall(availableParameters);
       case "multi_call":
-        return await this.handleMultiCall();
+        return await this.handleMultiCall(onChunk);
       case "ask_parameters":
         return await this.handleParameterExtraction(availableParameters);
       case "general_response":
@@ -589,12 +595,15 @@ Return parameter values in the correct format. Use empty strings for parameters 
     }
   }
 
-  private async handleMultiCall(): Promise<ChatAgentResponse> {
-    // Use tools to explore API and create a plan
-    const { text } = await generateText({
-      model: openai("gpt-4.1-mini"),
-      messages: [
-        systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
+  private async handleMultiCall(
+    onChunk?: (chunk: string) => void
+  ): Promise<ChatAgentResponse> {
+    let text = "";
+    if (onChunk) {
+      const { textStream } = streamText({
+        model: openai("gpt-4.1-mini"),
+        messages: [
+          systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
 Use the available tools to explore endpoints and determine the sequence needed.
 Be specific about which endpoints to call and in what order.
 IMPORTANT: Make sure to use the tools to explore endpoints and include the endpoint IDs in the plan.
@@ -602,10 +611,34 @@ IMPORTANT: Make sure to use the tools to explore endpoints and include the endpo
 Here are the available endpoints:
 ${this.listEndpoints()}
 `),
-        ...this.getMessagesWithSystem(),
-      ],
-      tools: this.tools,
-    });
+          ...this.getMessagesWithSystem(),
+        ],
+        tools: this.tools,
+      });
+
+      for await (const textPart of textStream) {
+        text += textPart;
+        onChunk(textPart);
+      }
+    } else {
+      // Use tools to explore API and create a plan
+      const { text: _text } = await generateText({
+        model: openai("gpt-4.1-mini"),
+        messages: [
+          systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
+Use the available tools to explore endpoints and determine the sequence needed.
+Be specific about which endpoints to call and in what order.
+IMPORTANT: Make sure to use the tools to explore endpoints and include the endpoint IDs in the plan.
+
+Here are the available endpoints:
+${this.listEndpoints()}
+`),
+          ...this.getMessagesWithSystem(),
+        ],
+        tools: this.tools,
+      });
+      text = _text;
+    }
 
     // Extract endpoint sequence from the plan
     const sequenceSchema = z.object({
@@ -623,6 +656,18 @@ ${this.listEndpoints()}
       ],
       schema: sequenceSchema,
     });
+
+    if (onChunk) {
+      const textPart = `\n\n${sequence.explanation}\n\n${JSON.stringify(
+        sequence.endpoints
+      )}`;
+      PlaygroundLogger.debug(
+        "[handleMultiCall] appending sequence explanation and endpoints",
+        textPart
+      );
+      text += textPart;
+      onChunk(textPart);
+    }
 
     const response = assistantMessage(text);
     this.messages.push(response);
@@ -897,8 +942,10 @@ Return parameter values in the correct format. Use empty strings for parameters 
     } else {
       // ERROR
       const aiResponse = await this.askFern({
-        userQuery: `The following API response is an error. Explain the error in a helpful way. If the response is not an error, explain the response in a helpful way:
-  ${JSON.stringify(responseData)}`,
+        userQuery: `I received the following API error response when I made a call to the API. Explain the following in a concise, helpful way:
+  ${JSON.stringify(responseData)}
+  
+  IMPORTANT: I am aware that you are unable to make API calls, so no need to mention that. Just focus on explaining the error in a helpful way.`,
         includeMessages: true,
         onChunk,
       });
