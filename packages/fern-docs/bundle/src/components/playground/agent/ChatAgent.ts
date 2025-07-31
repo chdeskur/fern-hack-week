@@ -283,7 +283,9 @@ export class ChatAgent {
               }
             } catch (_error) {
               // Skip malformed JSON lines
-              PlaygroundLogger.debug("Skipping malformed JSON line:", line);
+              PlaygroundLogger.debug("Skipping malformed JSON in stream", {
+                line: line.slice(0, 100),
+              });
             }
           }
         }
@@ -309,7 +311,9 @@ export class ChatAgent {
         description: endpoint.description,
       })
     );
-    PlaygroundLogger.debug("[listEndpoints] Listing endpoints", endpoints);
+    PlaygroundLogger.debug("Listing available API endpoints", {
+      count: endpoints.length,
+    });
     return JSON.stringify(endpoints);
   };
 
@@ -318,10 +322,7 @@ export class ChatAgent {
   }: {
     endpointId: string;
   }) => {
-    PlaygroundLogger.debug(
-      "[getEndpointDetails] Getting details for endpoint",
-      endpointId
-    );
+    PlaygroundLogger.debug("Retrieving endpoint details", { endpointId });
     const endpoints = this.apiDefinition?.endpoints;
     if (!endpoints) {
       return "No endpoints available";
@@ -474,7 +475,11 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
       schema: actionSchema,
     });
 
-    PlaygroundLogger.debug("Action decision:", actionDecision);
+    PlaygroundLogger.debug("AI action decision", {
+      action: actionDecision.action,
+      confidence: actionDecision.confidence,
+      reasoning: actionDecision.reasoning,
+    });
 
     // Handle different action types
     switch (actionDecision.action) {
@@ -578,7 +583,10 @@ Return parameter values in the correct format. Use empty strings for parameters 
         };
       }
     } catch (error) {
-      PlaygroundLogger.error("Error extracting parameters:", error);
+      PlaygroundLogger.error(
+        "Failed to extract parameters from user message",
+        error
+      );
       const response = assistantMessage(
         "I had trouble understanding the parameters. Could you provide them more clearly?"
       );
@@ -649,7 +657,7 @@ ${this.listEndpoints()}
     });
 
     const { object: sequence } = await generateObject({
-      model: openai("gpt-4.1-mini"),
+      model: openai("gpt-4.1-nano"),
       messages: [
         systemMessage("Extract the sequence of endpoint IDs from the plan."),
         assistantMessage(text),
@@ -661,10 +669,10 @@ ${this.listEndpoints()}
       const textPart = `\n\n${sequence.explanation}\n\n${JSON.stringify(
         sequence.endpoints
       )}`;
-      PlaygroundLogger.debug(
-        "[handleMultiCall] appending sequence explanation and endpoints",
-        textPart
-      );
+      PlaygroundLogger.debug("Appending multi-call sequence to response", {
+        endpoints: sequence.endpoints,
+        explanationLength: sequence.explanation.length,
+      });
       text += textPart;
       onChunk(textPart);
     }
@@ -767,7 +775,8 @@ Return parameter values in the correct format. Use empty strings for parameters 
         };
       }
     } catch (error) {
-      PlaygroundLogger.error("Parameter extraction error:", error);
+      // Truncate long lines to first 100 characters to avoid log spam
+      PlaygroundLogger.error("Parameter extraction failed", error);
       const response = assistantMessage(
         "I had trouble extracting parameters. Could you provide them more clearly?"
       );
@@ -1001,7 +1010,9 @@ Return parameter values in the correct format. Use empty strings for parameters 
           }
         } catch (_error) {
           // Skip malformed JSON lines
-          PlaygroundLogger.debug("Skipping malformed JSON line:", line);
+          PlaygroundLogger.debug("Skipping malformed JSON in stream", {
+            line: line.slice(0, 100),
+          });
         }
       }
     }

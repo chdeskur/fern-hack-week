@@ -178,11 +178,6 @@ export function ChatBotInterface({
                   }
                 }
               }
-              console.log("[FOOBARmessages]", messages);
-              console.log(
-                "[FOOBARstreamingMessage]",
-                streamingMessageRef.current
-              );
               // If we were streaming, finalize the streaming message and clear streaming state
               if (streamingMessageRef.current) {
                 const currentStreamingMessage = streamingMessageRef.current;
@@ -191,7 +186,6 @@ export function ChatBotInterface({
                   currentStreamingMessage,
                 ]);
               }
-              console.log("[FOOBAR(null)] 5");
               setStreamingMessage(null);
               setIsStreaming(false);
               isStreamingRef.current = false;
@@ -202,7 +196,6 @@ export function ChatBotInterface({
             .catch((error: unknown) => {
               PlaygroundLogger.error("[generateSummary] FAILED:", error);
               // Clear streaming state on error
-              console.log("[FOOBAR(null)] 6");
               setStreamingMessage(null);
               setIsStreaming(false);
               isStreamingRef.current = false;
@@ -218,7 +211,6 @@ export function ChatBotInterface({
           // Clear loading and streaming states on error
           setIsLoading(false);
           setIsStreaming(false);
-          console.log("[FOOBAR(null)] 7");
           setStreamingMessage(null);
           isStreamingRef.current = false;
           isProcessingResponseRef.current = false;
@@ -271,13 +263,16 @@ export function ChatBotInterface({
         const errorMessage =
           error instanceof Error ? error.message : String(error);
         conversionErrors.push(`${key}: ${errorMessage}`);
-        console.warn(`Type conversion failed for ${key}:`, error);
+        PlaygroundLogger.warn(`Type conversion failed for ${key}:`, error);
       }
     });
 
     // If there were conversion errors, log them for debugging
     if (conversionErrors.length > 0) {
-      console.warn("Some parameter conversions failed:", conversionErrors);
+      PlaygroundLogger.warn(
+        "Some parameter conversions failed:",
+        conversionErrors
+      );
     }
   };
 
@@ -365,8 +360,6 @@ export function ChatBotInterface({
         }
       };
 
-      console.log("[FOOBARprocessUserMessage]", userMsg);
-
       // Process the user message with the simplified ChatAgent
       const response = await chatAgent.processUserMessage(
         userMsg,
@@ -382,7 +375,6 @@ export function ChatBotInterface({
         // This ensures we capture any additional content added after streaming (like generateObject results)
         const finalMessage = { ...response.message };
         setMessages([...updatedMessages, finalMessage]);
-        console.log("[FOOBAR(null)] 1");
         setStreamingMessage(null);
         setIsStreaming(false);
         isStreamingRef.current = false;
@@ -425,7 +417,7 @@ export function ChatBotInterface({
         // no-op: no need to further handle general responses
       }
     } catch (error: unknown) {
-      PlaygroundLogger.error("[handleSendMessage] FAILED:", error);
+      PlaygroundLogger.error("Failed to process user message", error);
       const errorMsg: ChatMessage = {
         role: "assistant",
         content: "Sorry, I encountered an error. Please try again.",
@@ -433,7 +425,6 @@ export function ChatBotInterface({
       };
       setMessages([...updatedMessages, errorMsg]);
       // Clear streaming state on error
-      console.log("[FOOBAR(null)] 2");
       setStreamingMessage(null);
       setIsStreaming(false);
       isStreamingRef.current = false;
@@ -444,7 +435,6 @@ export function ChatBotInterface({
       if (isStreamingRef.current) {
         setIsStreaming(false);
         isStreamingRef.current = false;
-        console.log("[FOOBAR(null)] 3");
         setStreamingMessage(null);
       }
     }
@@ -530,7 +520,6 @@ export function ChatBotInterface({
     setInputValue("");
     setIsLoading(false);
     setIsStreaming(false);
-    console.log("[FOOBAR(null)] 4");
     setStreamingMessage(null);
     streamingMessageRef.current = null;
     isStreamingRef.current = false;

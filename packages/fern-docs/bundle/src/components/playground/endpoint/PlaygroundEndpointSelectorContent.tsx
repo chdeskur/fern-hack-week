@@ -56,14 +56,14 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
 
   const [filterValue, setFilterValue] = useState<string>("");
 
-  const isChatMode = searchParams.get("mode") === "chat";
+  const isChatMode = searchParams.get("mode") !== "manual";
 
   const toggleChatMode = (enabled: boolean) => {
     const newSearchParams = new URLSearchParams(searchParams);
     if (enabled) {
-      newSearchParams.set("mode", "chat");
+      newSearchParams.delete("mode"); // Default is now chat mode
     } else {
-      newSearchParams.delete("mode");
+      newSearchParams.set("mode", "manual");
     }
     const newUrl =
       pathname +

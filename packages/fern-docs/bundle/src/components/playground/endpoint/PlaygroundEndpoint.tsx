@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useCallback, useRef, useState } from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -13,9 +13,7 @@ import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { EndpointId } from "@fern-api/fdr-sdk/navigation";
 import { unknownToString } from "@fern-api/ui-core-utils";
-import {
-  FernTooltipProvider,
-} from "@fern-docs/components";
+import { FernTooltipProvider } from "@fern-docs/components";
 import { fernUserAtom } from "@fern-docs/components/state/fern-user";
 import { jotaiStore } from "@fern-docs/components/state/jotai-provider";
 import {
@@ -75,8 +73,8 @@ export const PlaygroundEndpoint = ({
   const { node, endpoint, auth } = context;
 
   const searchParams = useSearchParams();
-  const activeTab = (searchParams.get("mode") as "manual" | "chat") ?? "manual";
-  
+  const activeTab = (searchParams.get("mode") as "manual" | "chat") ?? "chat";
+
   const [chatPanelWidth, setChatPanelWidth] = useState(400);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -299,7 +297,6 @@ export const PlaygroundEndpoint = ({
           paddingRight: activeTab === "chat" ? `${chatPanelWidth}px` : 0,
         }}
       >
-
         <div className="flex-0">
           <PlaygroundEndpointPath
             method={endpoint.method}
