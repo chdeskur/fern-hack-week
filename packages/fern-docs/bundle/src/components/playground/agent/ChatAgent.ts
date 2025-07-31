@@ -138,17 +138,27 @@ export class ChatAgent {
             .string()
             .describe("The question to ask the Fern AI service"),
         }),
-        execute: this.askFern,
+        execute: ({ userQuery }) => this.askFern({ userQuery }),
       },
     };
   }
 
+  /**
+   * Ask Fern AI a question with optional streaming support
+   *
+   * @param userQuery - The question to ask
+   * @param includeMessages - Whether to include conversation history
+   * @param onChunk - Optional callback for streaming chunks (enables streaming mode)
+   * @returns Promise<string> - The complete response
+   */
   private askFern = async ({
     userQuery,
     includeMessages,
+    onChunk,
   }: {
     userQuery?: string;
     includeMessages?: boolean;
+    onChunk?: (chunk: string) => void;
   }): Promise<string> => {
     try {
       // Generate a conversation ID for this chat session
@@ -196,14 +206,88 @@ export class ChatAgent {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      // Parse the stream and extract human-readable text
-      const streamText = await response.text();
-      return this.parseStreamResponse(streamText);
+      if (onChunk) {
+        // Handle streaming with callback
+        return await this.handleStreamingResponse(response, onChunk);
+      } else {
+        // Parse the stream and extract human-readable text
+        const streamText = await response.text();
+        return this.parseStreamResponse(streamText);
+      }
     } catch (error) {
       PlaygroundLogger.error("Error calling Fern AI:", error);
-      return `Error calling Fern AI: ${error instanceof Error ? error.message : "Unknown error"}`;
+      const errorMessage = `Error calling Fern AI: ${error instanceof Error ? error.message : "Unknown error"}`;
+
+      if (onChunk) {
+        onChunk(errorMessage);
+      }
+
+      return errorMessage;
     }
   };
+
+  /**
+   * Handle streaming response with callback
+   *
+   * Usage example:
+   * const result = await this.askFern({
+   *   userQuery: "What is the API?",
+   *   onChunk: (chunk) => console.log("Received chunk:", chunk)
+   * });
+   */
+  private async handleStreamingResponse(
+    response: Response,
+    onChunk: (chunk: string) => void
+  ): Promise<string> {
+    if (!response.body) {
+      throw new Error("Response body is null");
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let fullText = "";
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) {
+          break;
+        }
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
+
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const data = line.slice(6); // Remove 'data: ' prefix
+
+            // Skip the [DONE] message
+            if (data === "[DONE]") {
+              continue;
+            }
+
+            try {
+              const parsed = JSON.parse(data);
+
+              // Extract text from text-delta events
+              if (parsed.type === "text-delta" && parsed.delta) {
+                fullText += parsed.delta;
+                onChunk(parsed.delta);
+              }
+            } catch (_error) {
+              // Skip malformed JSON lines
+              PlaygroundLogger.debug("Skipping malformed JSON line:", line);
+            }
+          }
+        }
+      }
+    } finally {
+      reader.releaseLock();
+    }
+
+    return fullText.trim();
+  }
 
   private listEndpoints = () => {
     const endpoints = Object.entries(this.apiDefinition?.endpoints || {}).map(
@@ -316,12 +400,31 @@ Always be helpful and concise. When you need more information, ask specific ques
     return [this.baseSystemPrompt, ...this.messages];
   }
 
-  // Main method to handle user input and determine the appropriate action
+  /**
+   * Main method to handle user input and determine the appropriate action
+   *
+   * @param userMsg - The user message to process
+   * @param availableParameters - Available parameters for API calls
+   * @param currentEndpointId - Current endpoint ID
+   * @param apiDefinition - API definition
+   * @param onChunk - Optional callback for streaming chunks (enables streaming mode)
+   * @returns Promise<ChatAgentResponse> - The response with classification and message
+   *
+   * Usage example:
+   * const response = await chatAgent.processUserMessage(
+   *   userMessage("What is this API?"),
+   *   undefined,
+   *   undefined,
+   *   apiDefinition,
+   *   (chunk) => console.log("Received chunk:", chunk)
+   * );
+   */
   public async processUserMessage(
     userMsg: UserMessage,
     availableParameters?: AvailableParameters,
     currentEndpointId?: string,
-    apiDefinition?: ApiDefinition.ApiDefinition
+    apiDefinition?: ApiDefinition.ApiDefinition,
+    onChunk?: (chunk: string) => void
   ): Promise<ChatAgentResponse> {
     this.apiDefinition = apiDefinition;
     this.messages.push(userMsg);
@@ -377,7 +480,7 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
         return await this.handleParameterExtraction(availableParameters);
       case "general_response":
       default:
-        return await this.handleGeneralResponse();
+        return await this.handleGeneralResponse(onChunk);
     }
   }
 
@@ -635,7 +738,9 @@ Return parameter values in the correct format. Use empty strings for parameters 
     }
   }
 
-  private async handleGeneralResponse(): Promise<ChatAgentResponse> {
+  private async handleGeneralResponse(
+    onChunk?: (chunk: string) => void
+  ): Promise<ChatAgentResponse> {
     // Use the askDocsAi tool for general responses
     const lastUserMessage = this.messages[this.messages.length - 1];
     if (!lastUserMessage || lastUserMessage.role !== "user") {
@@ -649,7 +754,10 @@ Return parameter values in the correct format. Use empty strings for parameters 
       };
     }
 
-    const aiResponse = await this.askFern({ includeMessages: true });
+    const aiResponse = await this.askFern({
+      includeMessages: true,
+      onChunk,
+    });
 
     const response = assistantMessage(
       aiResponse || "I couldn't get a response from Fern AI. Please try again."
@@ -755,9 +863,18 @@ Return parameter values in the correct format. Use empty strings for parameters 
     return formatted;
   }
 
+  /**
+   * Generate a summary of API response data with optional streaming support
+   *
+   * @param responseData - The response data to summarize
+   * @param statusCode - The HTTP status code
+   * @param onChunk - Optional callback for streaming chunks (enables streaming mode)
+   * @returns Promise<AssistantMessage> - The summary message
+   */
   public async generateSummary(
     responseData: unknown,
-    statusCode: number
+    statusCode: number,
+    onChunk?: (chunk: string) => void
   ): Promise<AssistantMessage> {
     if (statusCode >= 200 && statusCode < 300) {
       // SUCCESS
@@ -783,6 +900,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         userQuery: `The following API response is an error. Explain the error in a helpful way. If the response is not an error, explain the response in a helpful way:
   ${JSON.stringify(responseData)}`,
         includeMessages: true,
+        onChunk,
       });
       const summary = assistantMessage(aiResponse);
       this.messages.push(summary);
