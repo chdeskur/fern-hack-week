@@ -90,15 +90,15 @@ export function ChatBotInterface({
               : JSON.stringify(response.response.body);
           PlaygroundLogger.debug("[playground.response] LOADED:", parsed);
           // TODO: Handle status codes more robustly
-          const status = response.response.status;
-          PlaygroundLogger.debug("[playground.response] STATUS:", status);
+          const statusCode = response.response.status;
+          PlaygroundLogger.debug("[playground.response] STATUS:", statusCode);
           pendingResponse.resolve(parsed);
           // Generate a simple summary message
           chatAgent
-            .generateSummary(parsed)
+            .generateSummary(parsed, statusCode)
             .then((msg) => {
               setMessages([...messages, msg]);
-              if (status >= 200 && status < 300) {
+              if (statusCode >= 200 && statusCode < 300) {
                 chatAgent.sequence.shift();
                 PlaygroundLogger.debug(
                   "[playground.response] SUCCESS, SHIFTED SEQUENCE",

@@ -146,7 +146,9 @@ export class ChatAgent {
         description:
           "Ask a question to the Fern AI service trained on the documentation for this API domain",
         inputSchema: z.object({
-          query: z.string().describe("The question to ask the Fern AI service"),
+          userQuery: z
+            .string()
+            .describe("The question to ask the Fern AI service"),
         }),
         execute: this.askFern,
       },
@@ -154,10 +156,10 @@ export class ChatAgent {
   }
 
   private askFern = async ({
-    query,
+    userQuery,
     includeMessages,
   }: {
-    query: string;
+    userQuery?: string;
     includeMessages?: boolean;
   }): Promise<string> => {
     try {
@@ -170,19 +172,21 @@ export class ChatAgent {
       // Prepare the chat request for the chat endpoint
       const chatRequest = {
         messages: [
-          // Don't include query if includeMessages is true, since it's typically the last message
-          // TODO: make this more robust
           ...(includeMessages
             ? this.messages.map((message) => ({
-                role: message.role,
+                // Treat all our messages as user, since askFern treats itself as the assistant
+                role: "user",
                 parts: [{ type: "text", text: message.content }],
               }))
-            : [
+            : []),
+          ...(userQuery
+            ? [
                 {
                   role: "user",
-                  parts: [{ type: "text", text: query }],
+                  parts: [{ type: "text", text: userQuery }],
                 },
-              ]),
+              ]
+            : []),
         ],
         url: BASE_URL,
         conversationId,
@@ -657,8 +661,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
       };
     }
 
-    const query = lastUserMessage.content;
-    const aiResponse = await this.askFern({ query, includeMessages: true });
+    const aiResponse = await this.askFern({ includeMessages: true });
 
     const response = assistantMessage(
       aiResponse || "I couldn't get a response from Fern AI. Please try again."
@@ -765,24 +768,38 @@ Return parameter values in the correct format. Use empty strings for parameters 
   }
 
   public async generateSummary(
-    responseData: unknown
+    responseData: unknown,
+    statusCode: number
   ): Promise<AssistantMessage> {
-    const { text } = await generateText({
-      model: openai("gpt-4.1-mini"),
-      messages: [
-        systemMessage(
-          "Summarize this API response in a helpful, human-readable way. Focus on the key information and results."
-        ),
-        userMessage(
-          typeof responseData === "string"
-            ? responseData
-            : JSON.stringify(responseData)
-        ),
-      ],
-    });
-    const summary = assistantMessage(text);
-    this.messages.push(summary);
-    return summary;
+    if (statusCode >= 200 && statusCode < 300) {
+      // SUCCESS
+      const { text } = await generateText({
+        model: openai("gpt-4.1-mini"),
+        messages: [
+          systemMessage(
+            "Summarize this API response in a helpful, human-readable way. Focus on the key information and results."
+          ),
+          userMessage(
+            typeof responseData === "string"
+              ? responseData
+              : JSON.stringify(responseData)
+          ),
+        ],
+      });
+      const summary = assistantMessage(text);
+      this.messages.push(summary);
+      return summary;
+    } else {
+      // ERROR
+      const aiResponse = await this.askFern({
+        userQuery: `The following API response is an error. Explain the error in a helpful way. If the response is not an error, explain the response in a helpful way:
+  ${JSON.stringify(responseData)}`,
+        includeMessages: true,
+      });
+      const summary = assistantMessage(aiResponse);
+      this.messages.push(summary);
+      return summary;
+    }
   }
 
   // Execute a multi-step API sequence
