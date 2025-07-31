@@ -295,8 +295,8 @@ export function ChatBotInterface({
         await sendRequestWithConsent(updatedMessages);
       } else if (response.classification === "multi_call") {
         if (response.endpointSequence && response.endpointSequence.length > 0) {
-          // Execute the sequence
-          await chatAgent.executeSequence(response.endpointSequence);
+          // no-op: no need to further handle multi-call responses
+          // TODO: automatically navigate to the first endpoint in the sequence
         }
       } else if (response.classification === "ask_parameters") {
         if (response.parameters) {
@@ -412,11 +412,13 @@ export function ChatBotInterface({
 
   return (
     <FernTooltipProvider>
-      <div className={`flex h-full w-full flex-col overflow-hidden ${className}`}>
+      <div
+        className={`flex h-full w-full flex-col overflow-hidden ${className}`}
+      >
         <div className="bg-(color:--grayscale-a2) border-border-default flex shrink-0 items-center justify-between border-b px-4 py-3">
           <div className="flex items-center gap-2">
-            <Bot className="h-4 w-4 text-(color:--grayscale-a11)" />
-            <span className="text-sm font-medium text-(color:--grayscale-a12)">
+            <Bot className="text-(color:--grayscale-a11) h-4 w-4" />
+            <span className="text-(color:--grayscale-a12) text-sm font-medium">
               AI Assistant
             </span>
           </div>

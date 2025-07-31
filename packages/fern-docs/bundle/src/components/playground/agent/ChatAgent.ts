@@ -87,28 +87,16 @@ export interface ChatAgentConfig {
   additionalTools?: ToolSet;
   initialMessages?: ChatMessage[];
   apiDefinition?: ApiDefinition.ApiDefinition;
-  onNavigateToEndpoint?: (endpointId: string) => Promise<void>;
-  onExecuteSequence?: (sequence: string[]) => Promise<void>;
 }
 
 export class ChatAgent {
   private readonly tools: ToolSet;
   private apiDefinition?: ApiDefinition.ApiDefinition;
-  private readonly onNavigateToEndpoint?: (
-    endpointId: string,
-    agent: ChatAgent
-  ) => Promise<void>;
-  private readonly onExecuteSequence?: (
-    sequence: string[],
-    agent: ChatAgent
-  ) => Promise<void>;
   public messages: ChatMessage[] = [];
   public sequence: string[] = [];
 
   constructor(config?: ChatAgentConfig) {
     this.apiDefinition = config?.apiDefinition;
-    this.onNavigateToEndpoint = config?.onNavigateToEndpoint;
-    this.onExecuteSequence = config?.onExecuteSequence;
     this.tools = {
       ...this.createApiTools(),
       ...this.createAskFernTools(),
@@ -799,20 +787,6 @@ Return parameter values in the correct format. Use empty strings for parameters 
       const summary = assistantMessage(aiResponse);
       this.messages.push(summary);
       return summary;
-    }
-  }
-
-  // Execute a multi-step API sequence
-  public async executeSequence(endpointIds: string[]): Promise<void> {
-    if (this.onExecuteSequence) {
-      await this.onExecuteSequence(endpointIds, this);
-    }
-  }
-
-  // Navigate to a specific endpoint
-  public async navigateToEndpoint(endpointId: string): Promise<void> {
-    if (this.onNavigateToEndpoint) {
-      await this.onNavigateToEndpoint(endpointId, this);
     }
   }
 
