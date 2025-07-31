@@ -16,7 +16,6 @@ import {
 } from "@fern-docs/components";
 import { visitLoadable } from "@fern-ui/loadable";
 
-import { closeButton } from "../PlaygroundCloseButton";
 import {
   ChatAgent,
   ChatMessage,
@@ -413,8 +412,8 @@ export function ChatBotInterface({
 
   return (
     <FernTooltipProvider>
-      <div className={`flex h-full w-full flex-col ${className}`}>
-        <div className="absolute right-4 top-4 z-10 flex gap-2">
+      <div className={`flex h-full w-full flex-col overflow-hidden ${className}`}>
+        <div className="border-border-default flex shrink-0 items-center justify-end border-b p-4">
           <FernButton
             onClick={handleReset}
             icon={<RotateCcw className="h-4 w-4" />}
@@ -423,7 +422,6 @@ export function ChatBotInterface({
           >
             Reset
           </FernButton>
-          {<closeButton.Out />}
         </div>
 
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
@@ -475,7 +473,7 @@ export function ChatBotInterface({
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="border-border-default border-t p-4">
+        <div className="border-border-default shrink-0 border-t p-4">
           <div className="flex gap-2">
             <FernInput
               value={inputValue}
