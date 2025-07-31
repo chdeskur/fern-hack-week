@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { Bot, RotateCcw, Send } from "lucide-react";
 
@@ -87,6 +87,54 @@ export function ChatBotInterface({
     setMessages(chatAgent.messages);
   }, [chatAgent]);
 
+  const navigateWithConsent = useCallback(
+    async (explorerUrl: string) => {
+      const consentMsg = assistantMessage(
+        `Would you like me to navigate to the next endpoint: ${explorerUrl}?`,
+        { consent_required: true }
+      );
+      // Add to both local state and chatAgent messages for persistence
+      setMessages((prevMessages) => [...prevMessages, consentMsg]);
+      chatAgent.messages.push(consentMsg);
+
+      // Wait for user consent
+      const userConsented = await new Promise<boolean>((resolve, reject) => {
+        setPendingConsent({ resolve, reject });
+      }).catch((_error: unknown) => {
+        // Handle timeout or other consent errors
+        const timeoutMsg = assistantMessage(
+          "Navigation timed out. You can continue manually if needed.",
+          { consent_required: false }
+        );
+        setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
+        chatAgent.messages.push(timeoutMsg);
+        return false;
+      });
+
+      if (userConsented) {
+        const navigatedMsg = assistantMessage(
+          `Navigated to ${explorerUrl}. Let's continue with the next step.`,
+          { consent_required: false }
+        );
+        // Add to chatAgent messages before navigation so it persists
+        chatAgent.messages.push(navigatedMsg);
+        setMessages((prevMessages) => [...prevMessages, navigatedMsg]);
+        
+        // Navigate after adding the message
+        router.push(explorerUrl);
+      } else {
+        // User declined navigation
+        const declinedMsg = assistantMessage(
+          "Navigation cancelled. You can continue manually or I can help with other tasks.",
+          { consent_required: false }
+        );
+        setMessages((prevMessages) => [...prevMessages, declinedMsg]);
+        chatAgent.messages.push(declinedMsg);
+      }
+    },
+    [router, setMessages, setPendingConsent, chatAgent]
+  );
+
   // Watch for response changes when we have a pending response
   useEffect(() => {
     if (pendingResponse && !isProcessingResponseRef.current) {
@@ -129,7 +177,7 @@ export function ChatBotInterface({
 
           chatAgent
             .generateSummary(parsed, statusCode, handleSummaryStreamingChunk)
-            .then((_msg) => {
+            .then(async (_msg) => {
               if (statusCode >= 200 && statusCode < 300) {
                 chatAgent.sequence.shift();
                 PlaygroundLogger.debug(
@@ -173,7 +221,7 @@ export function ChatBotInterface({
                         "[playground.response] NEXT ENDPOINT URL:",
                         explorerUrl
                       );
-                      router.push(explorerUrl);
+                      await navigateWithConsent(explorerUrl);
                     }
                   }
                 }
@@ -227,6 +275,7 @@ export function ChatBotInterface({
     endpointsData,
     isStreaming,
     streamingMessage,
+    navigateWithConsent,
   ]);
 
   const setParams = (parameters: Record<string, unknown>) => {
@@ -392,8 +441,24 @@ export function ChatBotInterface({
         await sendRequestWithConsent(updatedMessages);
       } else if (response.classification === "multi_call") {
         if (response.endpointSequence && response.endpointSequence.length > 0) {
-          // no-op: no need to further handle multi-call responses
-          // TODO: automatically navigate to the first endpoint in the sequence
+          const nextEndpointId = response.endpointSequence[0];
+          // If the current endpoint is NOT the same as the first endpoint in the sequence, navigate
+          if (nextEndpointId !== endpoint.id) {
+            // Find the endpoint data for navigation
+            const nextEndpointData = endpointsData?.find(
+              (endpointData) => endpointData.id === nextEndpointId
+            );
+            if (nextEndpointData) {
+              const endpointNode = nextEndpointData.nodes.find(
+                (node) => node.endpointId === nextEndpointId
+              );
+              const endpointSlug = endpointNode?.slug;
+              if (endpointSlug) {
+                const explorerUrl = conformExplorerRoute(endpointSlug);
+                await navigateWithConsent(explorerUrl);
+              }
+            }
+          }
         }
       } else if (response.classification === "ask_parameters") {
         if (response.parameters) {
