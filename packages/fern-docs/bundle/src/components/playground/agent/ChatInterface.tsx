@@ -413,12 +413,19 @@ export function ChatBotInterface({
   return (
     <FernTooltipProvider>
       <div className={`flex h-full w-full flex-col overflow-hidden ${className}`}>
-        <div className="border-border-default flex shrink-0 items-center justify-end border-b p-4">
+        <div className="bg-(color:--grayscale-a2) border-border-default flex shrink-0 items-center justify-between border-b px-4 py-3">
+          <div className="flex items-center gap-2">
+            <Bot className="h-4 w-4 text-(color:--grayscale-a11)" />
+            <span className="text-sm font-medium text-(color:--grayscale-a12)">
+              AI Assistant
+            </span>
+          </div>
           <FernButton
             onClick={handleReset}
             icon={<RotateCcw className="h-4 w-4" />}
             className="shrink-0"
             size="small"
+            variant="minimal"
           >
             Reset
           </FernButton>

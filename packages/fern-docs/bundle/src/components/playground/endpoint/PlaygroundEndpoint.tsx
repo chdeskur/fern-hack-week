@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -47,6 +47,7 @@ import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { ProxyRequest } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
+import { useResizeX } from "../useSplitPlane";
 import {
   buildAuthHeaders,
   getInitialEndpointRequestFormStateWithExample,
@@ -74,7 +75,9 @@ export const PlaygroundEndpoint = ({
   const user = useAtomValue(fernUserAtom);
   const { node, endpoint, auth } = context;
 
-  const [activeTab, setActiveTab] = useState<"manual" | "chat">("manual");
+  const [activeTab, setActiveTab] = useState<"manual" | "chat">("chat");
+  const [chatPanelWidth, setChatPanelWidth] = useState(400);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const tabOptions: FernDropdown.Option[] = [
     { type: "value", value: "manual", label: "Manual Mode" },
@@ -255,21 +258,50 @@ export const PlaygroundEndpoint = ({
 
   const settings = usePlaygroundSettings();
 
+  const setChatPanelWidthFromClientX = useCallback((clientX: number) => {
+    if (containerRef.current != null) {
+      const { left, width } = containerRef.current.getBoundingClientRect();
+      const newWidth = left + width - clientX;
+      // Clamp width between 300px and 60% of container width
+      const minWidth = 300;
+      const maxWidth = width * 0.6;
+      setChatPanelWidth(Math.max(minWidth, Math.min(maxWidth, newWidth)));
+    }
+  }, []);
+
+  const resizeX = useResizeX(setChatPanelWidthFromClientX);
+
   const chatInterface =
     activeTab === "chat" ? (
-      <div className="border-border-default bg-background absolute bottom-0 right-0 top-0 w-[400px] overflow-hidden border-l">
-        <ChatBotInterface
-          apiDefinition={apiDefinition}
-          endpoint={endpoint}
-          endpointsData={endpointsData}
-        />
-      </div>
+      <>
+        <div
+          className="bg-background border-border-default absolute bottom-0 right-0 top-0 overflow-hidden border-l"
+          style={{ width: `${chatPanelWidth}px` }}
+        >
+          <ChatBotInterface
+            apiDefinition={apiDefinition}
+            endpoint={endpoint}
+            endpointsData={endpointsData}
+          />
+        </div>
+        <div
+          className="shink-0 group absolute bottom-0 top-0 z-10 flex w-3 flex-none cursor-col-resize touch-none items-center justify-center opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-1 after:w-6 after:content-[''] hover:opacity-100 hover:delay-300"
+          style={{ right: `${chatPanelWidth - 6}px` }}
+          onPointerDown={resizeX.onPointerDown}
+        >
+          <div className="bg-(color:--accent-a5) group-active:bg-(color:--accent) relative z-10 h-full w-0.5 rounded-full group-active:transition-[background]" />
+        </div>
+      </>
     ) : null;
 
   const playgroundContent = (
     <FernTooltipProvider>
       <div
-        className={`relative flex size-full min-h-0 flex-1 shrink flex-col ${activeTab === "chat" ? "pr-[400px]" : ""}`}
+        ref={containerRef}
+        className="relative flex size-full min-h-0 flex-1 shrink flex-col"
+        style={{
+          paddingRight: activeTab === "chat" ? `${chatPanelWidth}px` : 0,
+        }}
       >
         <div className="my-6 flex h-10 items-center justify-center px-3">
           <FernSegmentedControl
