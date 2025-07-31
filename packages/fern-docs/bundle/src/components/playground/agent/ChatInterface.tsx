@@ -378,8 +378,9 @@ export function ChatBotInterface({
 
       // If we were streaming, finalize the streaming message and clear streaming state
       if (isStreamingRef.current && streamingMessageRef.current) {
-        // Use the final streaming message content
-        const finalMessage = { ...streamingMessageRef.current };
+        // Use the response message content which contains the complete final content
+        // This ensures we capture any additional content added after streaming (like generateObject results)
+        const finalMessage = { ...response.message };
         setMessages([...updatedMessages, finalMessage]);
         console.log("[FOOBAR(null)] 1");
         setStreamingMessage(null);
