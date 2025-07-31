@@ -484,7 +484,10 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
     // Handle different action types
     switch (actionDecision.action) {
       case "single_call":
-        return await this.handleSingleCall(availableParameters);
+        return await this.handleSingleCall(
+          availableParameters,
+          currentEndpointId
+        );
       case "multi_call":
         return await this.handleMultiCall(onChunk);
       case "ask_parameters":
@@ -496,8 +499,88 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
   }
 
   private async handleSingleCall(
-    availableParameters?: AvailableParameters
+    availableParameters?: AvailableParameters,
+    currentEndpointId?: string
   ): Promise<ChatAgentResponse> {
+    // First, determine which endpoint should be used for this single call
+    let targetEndpointId: string | undefined;
+    let shouldNavigate = false;
+
+    // Check if user's query might require a different endpoint
+    if (this.apiDefinition) {
+      const endpointAnalysisSchema = z.object({
+        recommendedEndpointId: z
+          .string()
+          .describe(
+            "The endpoint ID that best matches the user's intent, or undefined if current endpoint is appropriate"
+          ),
+        reasoning: z
+          .string()
+          .describe("Brief explanation of why this endpoint was chosen"),
+        confidence: z
+          .number()
+          .min(0)
+          .max(1)
+          .describe("Confidence in this recommendation"),
+      });
+
+      try {
+        const { object: endpointAnalysis } = await generateObject({
+          model: openai("gpt-4.1-nano"),
+          messages: [
+            systemMessage(`Analyze the user's message to determine if it requires a different endpoint than the current one.
+
+Available endpoints:
+${this.listEndpoints()}
+
+Current endpoint: ${currentEndpointId || "none"}
+
+Look for clues in the user's message about what they want to accomplish. If the user's intent is better served by a different endpoint, recommend it. Otherwise, use the current endpoint.
+
+IMPORTANT: Only recommend a different endpoint if the user's query clearly indicates they want to perform an action that's better suited to a different endpoint.`),
+            ...this.getMessagesWithSystem(),
+          ],
+          schema: endpointAnalysisSchema,
+        });
+
+        PlaygroundLogger.debug("Endpoint analysis for single_call", {
+          recommendedEndpointId: endpointAnalysis.recommendedEndpointId,
+          currentEndpointId,
+          confidence: endpointAnalysis.confidence,
+          reasoning: endpointAnalysis.reasoning,
+        });
+
+        if (
+          endpointAnalysis.recommendedEndpointId &&
+          endpointAnalysis.recommendedEndpointId !== currentEndpointId &&
+          endpointAnalysis.confidence > 0.7
+        ) {
+          targetEndpointId = endpointAnalysis.recommendedEndpointId;
+          shouldNavigate = true;
+        }
+      } catch (error) {
+        PlaygroundLogger.warn(
+          "Failed to analyze endpoint for single_call",
+          error
+        );
+        // Continue with current endpoint on analysis failure
+      }
+    }
+
+    // If we need to navigate to a different endpoint, return navigation instructions
+    if (shouldNavigate && targetEndpointId) {
+      const response = assistantMessage(
+        `I need to navigate to a different endpoint (${targetEndpointId}) to handle your request.`,
+        { consent_required: true }
+      );
+      this.messages.push(response);
+      return {
+        classification: "single_call",
+        message: response,
+        endpointSequence: [targetEndpointId],
+      };
+    }
+
     if (!availableParameters) {
       const response = assistantMessage(
         "I need to know what parameters are available for this endpoint."

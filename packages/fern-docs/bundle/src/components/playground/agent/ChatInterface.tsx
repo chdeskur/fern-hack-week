@@ -112,14 +112,13 @@ export function ChatBotInterface({
       });
 
       if (userConsented) {
-        const navigatedMsg = assistantMessage(
-          `Navigated to ${explorerUrl}. Let's continue with the next step.`,
-          { consent_required: false }
-        );
+        const navigatedMsg = assistantMessage(`Navigating to ${explorerUrl}`, {
+          consent_required: false,
+        });
         // Add to chatAgent messages before navigation so it persists
         chatAgent.messages.push(navigatedMsg);
         setMessages((prevMessages) => [...prevMessages, navigatedMsg]);
-        
+
         // Navigate after adding the message
         router.push(explorerUrl);
       } else {
@@ -434,6 +433,29 @@ export function ChatBotInterface({
 
       // Handle different response types
       if (response.classification === "single_call") {
+        // Check if we need to navigate to a different endpoint first
+        if (response.endpointSequence && response.endpointSequence.length > 0) {
+          const targetEndpointId = response.endpointSequence[0];
+          // If the target endpoint is different from the current one, navigate
+          if (targetEndpointId !== endpoint.id) {
+            // Find the endpoint data for navigation
+            const targetEndpointData = endpointsData?.find(
+              (endpointData) => endpointData.id === targetEndpointId
+            );
+            if (targetEndpointData) {
+              const endpointNode = targetEndpointData.nodes.find(
+                (node) => node.endpointId === targetEndpointId
+              );
+              const endpointSlug = endpointNode?.slug;
+              if (endpointSlug) {
+                const explorerUrl = conformExplorerRoute(endpointSlug);
+                await navigateWithConsent(explorerUrl);
+                return; // Exit early since we're navigating
+              }
+            }
+          }
+        }
+
         if (response.parameters) {
           setParams(response.parameters);
         }
