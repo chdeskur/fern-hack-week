@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { mapValues } from "es-toolkit/object";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -13,8 +14,6 @@ import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { EndpointId } from "@fern-api/fdr-sdk/navigation";
 import { unknownToString } from "@fern-api/ui-core-utils";
 import {
-  FernDropdown,
-  FernSegmentedControl,
   FernTooltipProvider,
 } from "@fern-docs/components";
 import { fernUserAtom } from "@fern-docs/components/state/fern-user";
@@ -75,14 +74,11 @@ export const PlaygroundEndpoint = ({
   const user = useAtomValue(fernUserAtom);
   const { node, endpoint, auth } = context;
 
-  const [activeTab, setActiveTab] = useState<"manual" | "chat">("chat");
+  const searchParams = useSearchParams();
+  const activeTab = (searchParams.get("mode") as "manual" | "chat") ?? "manual";
+  
   const [chatPanelWidth, setChatPanelWidth] = useState(400);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const tabOptions: FernDropdown.Option[] = [
-    { type: "value", value: "manual", label: "Manual Mode" },
-    { type: "value", value: "chat", label: "Chat Mode" },
-  ];
 
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);
 
@@ -303,13 +299,6 @@ export const PlaygroundEndpoint = ({
           paddingRight: activeTab === "chat" ? `${chatPanelWidth}px` : 0,
         }}
       >
-        <div className="my-6 flex h-10 items-center justify-center px-3">
-          <FernSegmentedControl
-            options={tabOptions}
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value as "manual" | "chat")}
-          />
-        </div>
 
         <div className="flex-0">
           <PlaygroundEndpointPath

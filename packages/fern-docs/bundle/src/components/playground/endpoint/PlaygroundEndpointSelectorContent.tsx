@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
 import { Search, Slash, X } from "lucide-react";
@@ -12,6 +13,7 @@ import {
   FernButton,
   FernInput,
   FernScrollArea,
+  FernSwitch,
   FernTooltipProvider,
 } from "@fern-docs/components";
 import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
@@ -49,8 +51,25 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
   PlaygroundEndpointSelectorContentProps
 >(({ apiGroups, className, shallow, replace }, forwardedRef) => {
   const pathname = useCurrentPathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [filterValue, setFilterValue] = useState<string>("");
+
+  const isChatMode = searchParams.get("mode") === "chat";
+
+  const toggleChatMode = (enabled: boolean) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (enabled) {
+      newSearchParams.set("mode", "chat");
+    } else {
+      newSearchParams.delete("mode");
+    }
+    const newUrl =
+      pathname +
+      (newSearchParams.toString() ? `?${newSearchParams.toString()}` : "");
+    router.replace(newUrl);
+  };
 
   const selectedItemRef = useRef<HTMLLIElement>(null);
 
@@ -117,6 +136,16 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         ref={forwardedRef}
       >
         <div className={cn("relative z-20 px-3 pb-0 pt-3")}>
+          <div className="mb-3 flex items-center justify-between">
+            <span className="text-(color:--grayscale-a12) text-sm font-medium">
+              AI Assistant
+            </span>
+            <FernSwitch
+              className="cursor-pointer"
+              checked={isChatMode}
+              onCheckedChange={toggleChatMode}
+            />
+          </div>
           <FernInput
             leftIcon={<Search className="size-icon" />}
             data-1p-ignore="true"
