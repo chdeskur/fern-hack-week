@@ -68,6 +68,7 @@ export function ChatBotInterface({
   const isStreamingRef = useRef(false);
   const isProcessingResponseRef = useRef(false);
   const streamingMessageRef = useRef<ChatMessage | null>(null);
+  const hasHandledMultiCallRef = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -86,6 +87,89 @@ export function ChatBotInterface({
   useEffect(() => {
     setMessages(chatAgent.messages);
   }, [chatAgent]);
+
+  const sendRequestWithConsent = useCallback(
+    async (_updatedMessages: ChatMessage[]) => {
+      const consentMsg = assistantMessage(
+        "Would you like to allow me to send a request to this endpoint?",
+        { consent_required: true }
+      );
+      setMessages((prevMessages) => [...prevMessages, consentMsg]);
+
+      // Wait for user consent
+      const userConsented = await new Promise<boolean>((resolve, reject) => {
+        setPendingConsent({ resolve, reject });
+      }).catch((_error: unknown) => {
+        // Handle timeout or other consent errors
+        const timeoutMsg = assistantMessage(
+          "Request timed out. Please try again if you'd like to send the request.",
+          { consent_required: false }
+        );
+        setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
+        return false;
+      });
+
+      if (userConsented) {
+        await playground.sendRequest();
+
+        // Wait for response
+        await new Promise<string>((resolve, reject) => {
+          setPendingResponse({ resolve, reject });
+        });
+      } else {
+        // User declined consent
+        const declinedMsg = assistantMessage(
+          "Request cancelled. Let me know if you'd like to try again with different parameters.",
+          { consent_required: false }
+        );
+        setMessages((prevMessages) => [...prevMessages, declinedMsg]);
+      }
+    },
+    [playground, setMessages, setPendingConsent, setPendingResponse]
+  );
+
+  // Check if we should auto-request consent after navigating to the first endpoint in a sequence
+  useEffect(() => {
+    const checkAutoRequestConsent = async () => {
+      // Only proceed if we have a sequence and we're not already processing something
+      // and we haven't already handled a multi_call directly
+      if (
+        chatAgent.sequence.length > 0 &&
+        !isLoading &&
+        !isStreaming &&
+        !pendingResponse &&
+        !pendingConsent &&
+        !hasHandledMultiCallRef.current
+      ) {
+        const firstEndpointId = chatAgent.sequence[0];
+
+        // Check if we're currently on the first endpoint in the sequence
+        if (firstEndpointId === endpoint.id) {
+          PlaygroundLogger.debug(
+            "[auto-consent] Auto-requesting consent for first endpoint in sequence:",
+            firstEndpointId
+          );
+
+          // Automatically request consent to make the API call
+          await sendRequestWithConsent([]);
+        }
+      }
+    };
+
+    // Add a small delay to ensure the component is fully mounted and states are settled
+    const timeoutId = setTimeout(() => {
+      void checkAutoRequestConsent();
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, [
+    chatAgent.sequence,
+    endpoint.id,
+    isLoading,
+    isStreaming,
+    pendingResponse,
+    pendingConsent,
+    sendRequestWithConsent,
+  ]);
 
   const navigateWithConsent = useCallback(
     async (explorerUrl: string) => {
@@ -201,6 +285,15 @@ export function ChatBotInterface({
                   "[playground.response] SUCCESS, SHIFTED SEQUENCE",
                   chatAgent.sequence
                 );
+
+                // Reset multi_call handling flag if sequence is complete
+                if (chatAgent.sequence.length === 0) {
+                  hasHandledMultiCallRef.current = false;
+                  PlaygroundLogger.debug(
+                    "[auto-consent] Multi_call sequence completed, reset handling flag"
+                  );
+                }
+
                 // If there are more endpoints in the sequence, navigate to the next one
                 if (chatAgent.sequence.length > 0) {
                   const nextEndpointId = chatAgent.sequence[0];
@@ -325,43 +418,6 @@ export function ChatBotInterface({
         "Some parameter conversions failed:",
         conversionErrors
       );
-    }
-  };
-
-  const sendRequestWithConsent = async (_updatedMessages: ChatMessage[]) => {
-    const consentMsg = assistantMessage(
-      "Would you like to allow me to send a request to this endpoint?",
-      { consent_required: true }
-    );
-    setMessages((prevMessages) => [...prevMessages, consentMsg]);
-
-    // Wait for user consent
-    const userConsented = await new Promise<boolean>((resolve, reject) => {
-      setPendingConsent({ resolve, reject });
-    }).catch((_error: unknown) => {
-      // Handle timeout or other consent errors
-      const timeoutMsg = assistantMessage(
-        "Request timed out. Please try again if you'd like to send the request.",
-        { consent_required: false }
-      );
-      setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
-      return false;
-    });
-
-    if (userConsented) {
-      await playground.sendRequest();
-
-      // Wait for response
-      await new Promise<string>((resolve, reject) => {
-        setPendingResponse({ resolve, reject });
-      });
-    } else {
-      // User declined consent
-      const declinedMsg = assistantMessage(
-        "Request cancelled. Let me know if you'd like to try again with different parameters.",
-        { consent_required: false }
-      );
-      setMessages((prevMessages) => [...prevMessages, declinedMsg]);
     }
   };
 
@@ -513,13 +569,32 @@ export function ChatBotInterface({
         // Check if we can automatically request consent for the first endpoint
         if (response.endpointSequence && response.endpointSequence.length > 0) {
           const firstEndpointId = response.endpointSequence[0];
-          
+
           // If the first endpoint in the sequence is the current endpoint, request consent to start
           if (firstEndpointId === endpoint.id) {
+            // Mark that we've handled this multi_call directly
+            hasHandledMultiCallRef.current = true;
             await sendRequestWithConsent(updatedMessages);
+          } else {
+            // We're not on the first endpoint, auto-ask consent to navigate there
+            const firstEndpointData = endpointsData?.find(
+              (endpointData) => endpointData.id === firstEndpointId
+            );
+            
+            if (firstEndpointData) {
+              const endpointNode = firstEndpointData.nodes.find(
+                (node) => node.endpointId === firstEndpointId
+              );
+              const endpointSlug = endpointNode?.slug;
+              
+              if (endpointSlug) {
+                const explorerUrl = conformExplorerRoute(endpointSlug);
+                
+                // Automatically ask for navigation consent to start the sequence
+                await navigateWithConsent(explorerUrl);
+              }
+            }
           }
-          // If it's a different endpoint, the sequence will start after navigation
-          // (handled by the existing post-response navigation logic)
         }
       } else if (response.classification === "ask_parameters") {
         if (response.parameters) {
@@ -650,6 +725,7 @@ export function ChatBotInterface({
     streamingMessageRef.current = null;
     isStreamingRef.current = false;
     isProcessingResponseRef.current = false;
+    hasHandledMultiCallRef.current = false;
     setPendingResponse(null);
     setPendingConsent(null);
   };

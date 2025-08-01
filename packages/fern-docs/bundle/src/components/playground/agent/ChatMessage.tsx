@@ -88,7 +88,7 @@ export function ChatMessageComponent({
             intent="primary"
             size="small"
           >
-            Yes, send request
+            Yes
           </FernButton>
           <FernButton onClick={() => onConsent(false)} size="small">
             No, cancel
