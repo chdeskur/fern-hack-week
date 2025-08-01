@@ -10,7 +10,7 @@ import { z } from "zod";
 
 import { ApiDefinition } from "@fern-api/fdr-sdk";
 
-import { PlaygroundLogger } from "./PlaygroundContext";
+import { PlaygroundLogger } from "./PlaygroundLogger";
 
 const openai = createOpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -37,6 +37,47 @@ export interface ChatMessage {
   content: string;
   consent_required: boolean;
 }
+
+// State management interfaces
+export type ChatAgentStatus =
+  | "idle"
+  | "processing"
+  | "streaming"
+  | "waiting_consent"
+  | "waiting_response";
+
+export interface PendingAction {
+  type: "navigate" | "send_request" | "parameter_input";
+  data: any;
+}
+
+export interface ChatAgentState {
+  messages: ChatMessage[];
+  status: ChatAgentStatus;
+  currentStreamingMessage?: ChatMessage;
+  pendingAction?: PendingAction;
+  sequence: string[];
+  errors: string[];
+}
+
+// Event system interfaces
+export type ChatAgentEventType =
+  | "state_changed"
+  | "message_added"
+  | "streaming_started"
+  | "streaming_chunk"
+  | "streaming_ended"
+  | "consent_requested"
+  | "navigation_requested"
+  | "request_needed"
+  | "error_occurred";
+
+export interface ChatAgentEvent {
+  type: ChatAgentEventType;
+  data?: any;
+}
+
+export type ChatAgentEventListener = (event: ChatAgentEvent) => void;
 
 interface SystemMessage extends ChatMessage {
   role: "system";
@@ -98,8 +139,20 @@ export interface ChatAgentConfig {
 export class ChatAgent {
   private readonly tools: ToolSet;
   private apiDefinition?: ApiDefinition.ApiDefinition;
-  public messages: ChatMessage[] = [];
-  public sequence: string[] = [];
+
+  // Internal state
+  private _state: ChatAgentState;
+
+  // Event system
+  private _listeners = new Map<ChatAgentEventType, ChatAgentEventListener[]>();
+
+  // Legacy public properties for backward compatibility
+  public get messages(): ChatMessage[] {
+    return this._state.messages;
+  }
+  public get sequence(): string[] {
+    return this._state.sequence;
+  }
 
   constructor(config?: ChatAgentConfig) {
     this.apiDefinition = config?.apiDefinition;
@@ -108,7 +161,254 @@ export class ChatAgent {
       ...this.createAskFernTools(),
       ...(config?.additionalTools ?? {}),
     };
-    this.messages = config?.initialMessages ?? [];
+
+    // Initialize state
+    this._state = {
+      messages: config?.initialMessages ?? [],
+      status: "idle",
+      sequence: [],
+      errors: [],
+    };
+  }
+
+  // State management methods
+  public getState(): Readonly<ChatAgentState> {
+    return { ...this._state };
+  }
+
+  private setState(newState: Partial<ChatAgentState>): void {
+    const oldState = { ...this._state };
+    this._state = { ...this._state, ...newState };
+
+    // Emit state change event
+    this.emit("state_changed", { oldState, newState: this._state });
+  }
+
+  // Event system methods
+  public on(
+    eventType: ChatAgentEventType,
+    listener: ChatAgentEventListener
+  ): void {
+    if (!this._listeners.has(eventType)) {
+      this._listeners.set(eventType, []);
+    }
+    const listeners = this._listeners.get(eventType);
+    if (listeners) {
+      listeners.push(listener);
+    }
+  }
+
+  public off(
+    eventType: ChatAgentEventType,
+    listener: ChatAgentEventListener
+  ): void {
+    const listeners = this._listeners.get(eventType);
+    if (listeners) {
+      const index = listeners.indexOf(listener);
+      if (index > -1) {
+        listeners.splice(index, 1);
+      }
+    }
+  }
+
+  private emit(eventType: ChatAgentEventType, data?: any): void {
+    const listeners = this._listeners.get(eventType);
+    if (listeners) {
+      const event: ChatAgentEvent = { type: eventType, data };
+      listeners.forEach((listener) => {
+        try {
+          listener(event);
+        } catch (error) {
+          PlaygroundLogger.error(
+            `Error in event listener for ${eventType}:`,
+            error
+          );
+        }
+      });
+    }
+  }
+
+  // Message management methods
+  public addMessage(message: ChatMessage): void {
+    this.setState({
+      messages: [...this._state.messages, message],
+    });
+    this.emit("message_added", { message });
+  }
+
+  public updateStreamingMessage(content: string): void {
+    if (this._state.currentStreamingMessage) {
+      const updatedMessage = {
+        ...this._state.currentStreamingMessage,
+        content: this._state.currentStreamingMessage.content + content,
+      };
+      this.setState({
+        currentStreamingMessage: updatedMessage,
+      });
+      this.emit("streaming_chunk", { content, message: updatedMessage });
+    }
+  }
+
+  public startStreaming(initialContent: string = ""): void {
+    const streamingMessage = assistantMessage(initialContent);
+    this.setState({
+      status: "streaming",
+      currentStreamingMessage: streamingMessage,
+    });
+    this.emit("streaming_started", { message: streamingMessage });
+  }
+
+  public finishStreaming(): void {
+    if (this._state.currentStreamingMessage) {
+      const finalMessage = this._state.currentStreamingMessage;
+      this.setState({
+        messages: [...this._state.messages, finalMessage],
+        status: "idle",
+        currentStreamingMessage: undefined,
+      });
+      this.emit("streaming_ended", { message: finalMessage });
+      this.emit("message_added", { message: finalMessage });
+    }
+  }
+
+  // Consent and navigation methods
+  public requestConsent(message: string, actionData?: any): void {
+    const consentMessage = assistantMessage(message, {
+      consent_required: true,
+    });
+    this.addMessage(consentMessage);
+    this.setState({
+      status: "waiting_consent",
+      pendingAction: {
+        type: "send_request", // default action type
+        data: actionData,
+      },
+    });
+    this.emit("consent_requested", { message: consentMessage, actionData });
+  }
+
+  public handleConsentResponse(consented: boolean): void {
+    if (this._state.status !== "waiting_consent") {
+      PlaygroundLogger.warn(
+        "Received consent response when not waiting for consent"
+      );
+      return;
+    }
+
+    const pendingAction = this._state.pendingAction;
+    this.setState({
+      status: "idle",
+      pendingAction: undefined,
+    });
+
+    if (consented && pendingAction) {
+      // Emit appropriate event based on action type
+      switch (pendingAction.type) {
+        case "navigate":
+          this.emit("navigation_requested", pendingAction.data);
+          break;
+        case "send_request":
+          this.emit("request_needed", pendingAction.data);
+          break;
+        default:
+          PlaygroundLogger.warn(
+            "Unknown pending action type:",
+            pendingAction.type
+          );
+      }
+    } else if (!consented) {
+      const declinedMessage = assistantMessage(
+        pendingAction?.type === "navigate"
+          ? "Navigation cancelled. You can continue manually or I can help with other tasks."
+          : "Request cancelled. Let me know if you'd like to try again with different parameters.",
+        { consent_required: false }
+      );
+      this.addMessage(declinedMessage);
+    }
+  }
+
+  public requestNavigation(explorerUrl: string, endpointId?: string): void {
+    const navigationMessage = assistantMessage(
+      `Would you like me to navigate to ${explorerUrl}?`,
+      { consent_required: true }
+    );
+    this.addMessage(navigationMessage);
+    this.setState({
+      status: "waiting_consent",
+      pendingAction: {
+        type: "navigate",
+        data: { explorerUrl, endpointId },
+      },
+    });
+    this.emit("consent_requested", {
+      message: navigationMessage,
+      actionData: { explorerUrl, endpointId },
+    });
+  }
+
+  public confirmNavigation(explorerUrl: string): void {
+    const navigatedMessage = assistantMessage(`Navigating to ${explorerUrl}`, {
+      consent_required: false,
+    });
+    this.addMessage(navigatedMessage);
+    this.emit("navigation_requested", { explorerUrl });
+  }
+
+  // Response processing methods
+  public setWaitingForResponse(): void {
+    this.setState({ status: "waiting_response" });
+  }
+
+  public async processApiResponse(
+    responseData: unknown,
+    statusCode: number,
+    onChunk?: (chunk: string) => void
+  ): Promise<void> {
+    try {
+      // Generate summary with streaming support
+      await this.generateSummary(responseData, statusCode, onChunk);
+
+      // Handle sequence progression for successful responses
+      if (statusCode >= 200 && statusCode < 300) {
+        // Remove completed endpoint from sequence
+        const newSequence = [...this._state.sequence];
+        if (newSequence.length > 0) {
+          newSequence.shift();
+          this.setState({ sequence: newSequence });
+
+          // If there are more endpoints, emit navigation request
+          if (newSequence.length > 0) {
+            this.emit("navigation_requested", {
+              nextEndpointId: newSequence[0],
+              sequenceRemaining: newSequence,
+            });
+          }
+        }
+      }
+
+      this.setState({ status: "idle" });
+    } catch (error) {
+      PlaygroundLogger.error("Error processing API response:", error);
+      this.setState({
+        status: "idle",
+        errors: [
+          ...this._state.errors,
+          `Response processing error: ${error instanceof Error ? error.message : "Unknown error"}`,
+        ],
+      });
+      this.emit("error_occurred", { error, context: "response_processing" });
+    }
+  }
+
+  public handleResponseError(error: any): void {
+    const errorMessage = `Error during API call: ${error instanceof Error ? error.message : "Unknown error"}`;
+    const errorResponse = assistantMessage(errorMessage);
+    this.addMessage(errorResponse);
+    this.setState({
+      status: "idle",
+      errors: [...this._state.errors, errorMessage],
+    });
+    this.emit("error_occurred", { error, context: "api_call" });
   }
 
   private createApiTools(): ToolSet {
@@ -434,7 +734,8 @@ Always be helpful and concise. When you need more information, ask specific ques
     onChunk?: (chunk: string) => void
   ): Promise<ChatAgentResponse> {
     this.apiDefinition = apiDefinition;
-    this.messages.push(userMsg);
+    this.addMessage(userMsg);
+    this.setState({ status: "processing" });
 
     // First, determine what action is needed
     const actionSchema = z.object({
@@ -572,7 +873,7 @@ IMPORTANT: Only recommend a different endpoint if the user's query clearly indic
       const response = assistantMessage(
         `I need to navigate to a different endpoint (${targetEndpointId}) to handle your request.`
       );
-      this.messages.push(response);
+      this.addMessage(response);
       return {
         classification: "single_call",
         message: response,
@@ -584,7 +885,7 @@ IMPORTANT: Only recommend a different endpoint if the user's query clearly indic
       const response = assistantMessage(
         "I need to know what parameters are available for this endpoint."
       );
-      this.messages.push(response);
+      this.addMessage(response);
       // Re-classify response as ask_parameters
       return {
         classification: "ask_parameters",
@@ -601,7 +902,7 @@ IMPORTANT: Only recommend a different endpoint if the user's query clearly indic
 
     if (!hasAvailableParameters) {
       const response = assistantMessage("I've will make an API call");
-      this.messages.push(response);
+      this.addMessage(response);
       return {
         classification: "single_call",
         message: response,
@@ -648,7 +949,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         const response = assistantMessage(
           `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
         );
-        this.messages.push(response);
+        this.addMessage(response);
         return {
           classification: "single_call",
           message: response,
@@ -658,7 +959,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         const response = assistantMessage(
           "I need more information about the parameters for this API call."
         );
-        this.messages.push(response);
+        this.addMessage(response);
         // Re-classify response as ask_parameters
         return {
           classification: "ask_parameters",
@@ -674,7 +975,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
       const response = assistantMessage(
         "I had trouble understanding the parameters. Could you provide them more clearly?"
       );
-      this.messages.push(response);
+      this.addMessage(response);
 
       // Even on error, return parameters object preserving existing values
       const preservedParams = this.createParametersObjectPreservingExisting(
@@ -695,6 +996,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
   ): Promise<ChatAgentResponse> {
     let text = "";
     if (onChunk) {
+      this.startStreaming();
       const { textStream } = streamText({
         model: openai("gpt-4.1-mini"),
         messages: [
@@ -713,6 +1015,7 @@ ${this.listEndpoints()}
 
       for await (const textPart of textStream) {
         text += textPart;
+        this.updateStreamingMessage(textPart);
         onChunk(textPart);
       }
     } else {
@@ -765,12 +1068,23 @@ ${this.listEndpoints()}
         explanationLength: sequence.explanation.length,
       });
       text += textPart;
+      this.updateStreamingMessage(textPart);
       onChunk(textPart);
+
+      // Finish streaming
+      this.finishStreaming();
+      const response = this._state.messages[this._state.messages.length - 1] as ChatMessage;
+      this.setState({ sequence: sequence.endpoints, status: "idle" });
+      return {
+        classification: "multi_call",
+        message: response,
+        endpointSequence: sequence.endpoints,
+      };
     }
 
     const response = assistantMessage(text);
-    this.messages.push(response);
-    this.sequence = sequence.endpoints;
+    this.addMessage(response);
+    this.setState({ sequence: sequence.endpoints, status: "idle" });
 
     return {
       classification: "multi_call",
@@ -786,7 +1100,7 @@ ${this.listEndpoints()}
       const response = assistantMessage(
         "I need to know what parameters are available."
       );
-      this.messages.push(response);
+      this.addMessage(response);
       return {
         classification: "ask_parameters",
         message: response,
@@ -802,7 +1116,7 @@ ${this.listEndpoints()}
 
     if (!hasAvailableParameters) {
       const response = assistantMessage("Making a call to the endpoint.");
-      this.messages.push(response);
+      this.addMessage(response);
       // Re-classify response as single_call
       return {
         classification: "single_call",
@@ -849,7 +1163,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         const response = assistantMessage(
           `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
         );
-        this.messages.push(response);
+        this.addMessage(response);
         // If there is enough information, re-classify response as single_call
         return {
           classification: "single_call",
@@ -860,7 +1174,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         const response = assistantMessage(
           "I couldn't find parameter values in your message. Could you be more specific?"
         );
-        this.messages.push(response);
+        this.addMessage(response);
         return {
           classification: "ask_parameters",
           message: response,
@@ -873,7 +1187,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
       const response = assistantMessage(
         "I had trouble extracting parameters. Could you provide them more clearly?"
       );
-      this.messages.push(response);
+      this.addMessage(response);
 
       // Even on error, return parameters object preserving existing values
       const preservedParams = this.createParametersObjectPreservingExisting(
@@ -892,27 +1206,48 @@ Return parameter values in the correct format. Use empty strings for parameters 
     onChunk?: (chunk: string) => void
   ): Promise<ChatAgentResponse> {
     // Use the askDocsAi tool for general responses
-    const lastUserMessage = this.messages[this.messages.length - 1];
+    const lastUserMessage =
+      this._state.messages[this._state.messages.length - 1];
     if (!lastUserMessage || lastUserMessage.role !== "user") {
       const response = assistantMessage(
         "I couldn't find your question. Could you please ask again?"
       );
-      this.messages.push(response);
+      this.addMessage(response);
       return {
         classification: "general_response",
         message: response,
       };
     }
 
+    if (onChunk) {
+      this.startStreaming();
+    }
+
     const aiResponse = await this.askFern({
       includeMessages: true,
-      onChunk,
+      onChunk: onChunk
+        ? (chunk: string) => {
+            this.updateStreamingMessage(chunk);
+            onChunk(chunk);
+          }
+        : undefined,
     });
 
-    const response = assistantMessage(
-      aiResponse || "I couldn't get a response from Fern AI. Please try again."
-    );
-    this.messages.push(response);
+    let response: AssistantMessage;
+    if (onChunk) {
+      this.finishStreaming();
+      response = this._state.messages[
+        this._state.messages.length - 1
+      ] as AssistantMessage;
+    } else {
+      response = assistantMessage(
+        aiResponse ||
+          "I couldn't get a response from Fern AI. Please try again."
+      );
+      this.addMessage(response);
+    }
+
+    this.setState({ status: "idle" });
 
     return {
       classification: "general_response",
@@ -1056,6 +1391,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
       let text = "";
 
       if (onChunk) {
+        this.startStreaming();
         const { textStream } = streamText({
           model: openai("gpt-4.1-mini"),
           messages: [
@@ -1072,8 +1408,14 @@ Return parameter values in the correct format. Use empty strings for parameters 
 
         for await (const textPart of textStream) {
           text += textPart;
+          this.updateStreamingMessage(textPart);
           onChunk(textPart);
         }
+
+        this.finishStreaming();
+        return this._state.messages[
+          this._state.messages.length - 1
+        ] as AssistantMessage;
       } else {
         const { text: _text } = await generateText({
           model: openai("gpt-4.1-mini"),
@@ -1092,7 +1434,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
       }
 
       const summary = assistantMessage(text);
-      this.messages.push(summary);
+      this.addMessage(summary);
       return summary;
     } else {
       // ERROR
@@ -1105,14 +1447,21 @@ Return parameter values in the correct format. Use empty strings for parameters 
         onChunk,
       });
       const summary = assistantMessage(aiResponse);
-      this.messages.push(summary);
+      this.addMessage(summary);
       return summary;
     }
   }
 
   // Reset the agent's state
   public reset(): void {
-    this.messages = [];
+    this.setState({
+      messages: [],
+      status: "idle",
+      currentStreamingMessage: undefined,
+      pendingAction: undefined,
+      sequence: [],
+      errors: [],
+    });
   }
 
   /**
@@ -1195,7 +1544,7 @@ export function resetChatAgent(): void {
  */
 async function repairJsonObject({
   text,
-}: Parameters<RepairTextFunction>[0]): ReturnType<RepairTextFunction> {
+}: Parameters<RepairTextFunction>[0]): Promise<string> {
   // Find the first complete JSON object
   let braceCount = 0;
   let startIndex = -1;
