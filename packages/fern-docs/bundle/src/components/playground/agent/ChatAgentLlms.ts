@@ -201,6 +201,66 @@ IMPORTANT: If an endpoint is versioned e.g. v1, v2, etc. ALWAYS use the latest v
 }
 
 /**
+ * HACK: helper function to find API keys in chat message history
+ */
+function findApiKeysInHistory(messages: ChatMessage[]): Record<string, string> {
+  const apiKeys: Record<string, string> = {};
+
+  // Common API key patterns
+  const patterns = [
+    // Bearer tokens
+    /(?:bearer\s+|authorization[:\s]+bearer\s+)([a-zA-Z0-9._-]+)/gi,
+    // API key formats
+    /(?:api[_\s-]*key[:\s]+)([a-zA-Z0-9._-]+)/gi,
+    // Token formats
+    /(?:token[:\s]+)([a-zA-Z0-9._-]+)/gi,
+    // Authorization header values
+    /authorization[:\s]+([a-zA-Z0-9._\s-]+)/gi,
+  ];
+
+  messages.forEach((message) => {
+    const content = message.content.toLowerCase();
+
+    patterns.forEach((pattern) => {
+      const matches = [...content.matchAll(pattern)];
+      matches.forEach((match) => {
+        const value = match[1]?.trim();
+        if (value && value.length > 8) {
+          // Basic validation for reasonable key length
+          // Detect common header names from context
+          if (content.includes("authorization") && !apiKeys.Authorization) {
+            apiKeys.Authorization = match[0].includes("bearer") ? value : value;
+          } else if (
+            content.includes("api") &&
+            content.includes("key") &&
+            !apiKeys["X-API-Key"]
+          ) {
+            apiKeys["X-API-Key"] = value;
+          } else if (content.includes("xi-api-key") && !apiKeys["xi-api-key"]) {
+            apiKeys["xi-api-key"] = value;
+          } else if (content.includes("token") && !apiKeys.Authorization) {
+            apiKeys.Authorization = `Bearer ${value}`;
+          }
+        }
+      });
+    });
+  });
+
+  return apiKeys;
+}
+
+/**
+ * HACK: helper function to check if a header value looks like a valid API key
+ */
+function isValidApiKey(value: string): boolean {
+  if (!value || typeof value !== "string") return false;
+
+  const trimmed = value.trim();
+  // Consider it valid if it's longer than 8 characters and contains alphanumeric characters
+  return trimmed.length > 8 && /^[a-zA-Z0-9._\s-]+$/.test(trimmed);
+}
+
+/**
  * Extracts parameter values from user messages
  */
 export async function extractParameters(options: LlmCallOptions) {
@@ -209,6 +269,9 @@ export async function extractParameters(options: LlmCallOptions) {
   if (!availableParameters) {
     throw new Error("availableParameters is required for parameter extraction");
   }
+
+  // HACK: find API keys from message history
+  const historicalApiKeys = findApiKeysInHistory(messages);
 
   // Create schema for all available parameters
   const schema: Record<string, z.ZodString> = {};
@@ -293,11 +356,60 @@ Return parameter values in the correct format. Use empty strings for parameters 
     experimental_repairText: repairJsonObject,
   });
 
-  PlaygroundLogger.debug("[extractParameters] AI extracted parameters", {
-    rawParameters: parameters,
+  // Enhance parameters with API keys from history if needed
+  const enhancedParameters = { ...parameters };
+
+  // HACK: check each header parameter to see if we should use a historical API key
+  availableParameters.headers.forEach((header) => {
+    const headerKey = `header_${header.name}`;
+    const currentValue = enhancedParameters[headerKey] || header.currentValue;
+
+    // If no valid API key is present but we have one from history, use it
+    if (!isValidApiKey(currentValue)) {
+      // Check for exact header name match first
+      const exactMatch = historicalApiKeys[header.name];
+      if (exactMatch) {
+        enhancedParameters[headerKey] = exactMatch;
+        PlaygroundLogger.debug(
+          `[extractParameters] Using historical API key for ${header.name}`
+        );
+      }
+      // Check for common API key header patterns
+      else if (
+        header.name.toLowerCase().includes("authorization") &&
+        historicalApiKeys.Authorization
+      ) {
+        enhancedParameters[headerKey] = historicalApiKeys.Authorization;
+        PlaygroundLogger.debug(
+          `[extractParameters] Using historical Authorization header`
+        );
+      } else if (
+        header.name.toLowerCase().includes("api") &&
+        historicalApiKeys["X-API-Key"]
+      ) {
+        enhancedParameters[headerKey] = historicalApiKeys["X-API-Key"];
+        PlaygroundLogger.debug(
+          `[extractParameters] Using historical X-API-Key header`
+        );
+      } else if (
+        header.name.toLowerCase().includes("xi-api-key") &&
+        historicalApiKeys["xi-api-key"]
+      ) {
+        enhancedParameters[headerKey] = historicalApiKeys["xi-api-key"];
+        PlaygroundLogger.debug(
+          `[extractParameters] Using historical xi-api-key header`
+        );
+      }
+    }
   });
 
-  return parameters;
+  PlaygroundLogger.debug("[extractParameters] AI extracted parameters", {
+    rawParameters: parameters,
+    enhancedParameters,
+    historicalApiKeys,
+  });
+
+  return enhancedParameters;
 }
 
 /**
@@ -319,7 +431,7 @@ export async function createMultiCallPlan(options: LlmCallOptions) {
 
 ${listEndpoints()}
 
-IMPORTANT: Be very specific about which endpoints IDs to call, and in what order.
+IMPORTANT: DO NOT USE displayName or path in sequence, only use endpoint IDs. Be very specific about which endpoints IDs to call, and in what order.
 IMPORTANT: If an endpoint is versioned e.g. v1, v2, etc. ALWAYS use the latest version.`);
 
   let text = "";
