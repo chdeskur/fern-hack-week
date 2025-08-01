@@ -69,9 +69,10 @@ export type ChatAgentEventType =
   | "streaming_ended"
   | "consent_requested"
   | "navigation_requested"
-  | "request_needed"
+  | "send_requested"
   | "error_occurred";
 
+// TODO: make events typesafe
 export interface ChatAgentEvent {
   type: ChatAgentEventType;
   data?: any;
@@ -318,7 +319,7 @@ export class ChatAgent {
           break;
         }
         case "send_request":
-          this.emit("request_needed", pendingAction.data);
+          this.emit("send_requested", pendingAction.data);
           break;
         default:
           PlaygroundLogger.warn(

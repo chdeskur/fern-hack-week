@@ -2,32 +2,29 @@
 export const PlaygroundLogger = {
   debug: (message: string, data?: any) => {
     if (process.env.NODE_ENV === "development") {
-      console.log(`[Playground] ${message}`, data);
+      data
+        ? console.log(`[Playground] ${message}`, data)
+        : console.log(`[Playground] ${message}`);
     }
   },
 
   info: (message: string, data?: any) => {
-    console.log(`[Playground] ${message}`, data);
+    data
+      ? console.log(`[Playground] ${message}`, data)
+      : console.log(`[Playground] ${message}`);
   },
 
   warn: (message: string, data?: any) => {
-    console.warn(`[Playground] ${message}`, data);
+    data
+      ? console.warn(`[Playground] ${message}`, data)
+      : console.warn(`[Playground] ${message}`);
   },
 
   error: (message: string, error?: any) => {
-    console.error(`[Playground] ${message}`, error);
+    error
+      ? console.error(`[Playground] ${message}`, error)
+      : console.error(`[Playground] ${message}`);
   },
-
-  // Specialized logging for chat agent integration
-  agentAction: (action: string, details: any) => {
-    console.log(`[Agent] ${action}`, details);
-  },
-
-  // Log state changes that are relevant for the agent
-  stateChange: (component: string, change: any) => {
-    PlaygroundLogger.debug(`State change in ${component}:`, change);
-  },
-
   // Log parameter updates
   parameterUpdate: (
     type: "header" | "path" | "query" | "body",
@@ -37,21 +34,8 @@ export const PlaygroundLogger = {
     PlaygroundLogger.debug(`${type} parameter updated`, { key, value });
   },
 
-  // Log request lifecycle events
-  requestLifecycle: (
-    event: "started" | "completed" | "failed",
-    details?: any
-  ) => {
-    PlaygroundLogger.info(`Request ${event}`, details);
-  },
-
   // Log response analysis for debugging
   responseAnalysis: (analysis: any) => {
     PlaygroundLogger.debug("Response analysis", analysis);
-  },
-
-  // Log context changes
-  contextChange: (change: any) => {
-    PlaygroundLogger.debug("Context changed", change);
   },
 };

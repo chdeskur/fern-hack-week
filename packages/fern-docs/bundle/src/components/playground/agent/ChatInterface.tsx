@@ -81,10 +81,6 @@ export function ChatBotInterface({
   const setParams = useCallback(
     (parameters: Record<string, unknown>) => {
       PlaygroundLogger.debug("[setParams] Called with parameters:", parameters);
-      PlaygroundLogger.debug(
-        "[setParams] Parameter entries:",
-        Object.entries(parameters)
-      );
 
       // Track any conversion errors
       const conversionErrors: string[] = [];
@@ -122,6 +118,9 @@ export function ChatBotInterface({
                   p.key === paramName ? { ...p, currentValue: value } : p
                 )
               : [...currentBody, { key: paramName, currentValue: value }];
+            PlaygroundLogger.debug(
+              `[setParams] Setting body parameter: ${paramName} = ${value}`
+            );
             playground.setBody(newBody);
           }
         } catch (error) {
@@ -129,14 +128,13 @@ export function ChatBotInterface({
           const errorMessage =
             error instanceof Error ? error.message : String(error);
           conversionErrors.push(`${key}: ${errorMessage}`);
-          PlaygroundLogger.warn(`Type conversion failed for ${key}:`, error);
         }
       });
 
       // If there were conversion errors, log them for debugging
       if (conversionErrors.length > 0) {
         PlaygroundLogger.warn(
-          "Some parameter conversions failed:",
+          "[setParams] Some parameter conversions failed:",
           conversionErrors
         );
       }
@@ -147,25 +145,21 @@ export function ChatBotInterface({
   // Helper function to find endpoint slug from endpointsData
   const getEndpointSlug = useCallback(
     (endpointId: string): string => {
-      if (!endpointsData) return "";
-
       // Find the endpoint data group that contains this endpoint
-      const endpointDataGroup = endpointsData.find(
+      const endpointDataGroup = endpointsData?.find(
         (endpoint) => endpoint.id === endpointId
       );
 
-      if (endpointDataGroup) {
-        // Find the node within this endpoint's nodes that matches the endpointId
-        const node = endpointDataGroup.nodes.find(
-          (node) => node.endpointId === endpointId
-        );
+      // Find the node within this endpoint's nodes that matches the endpointId
+      const node = endpointDataGroup?.nodes.find(
+        (node) => node.endpointId === endpointId
+      );
 
-        if (node) {
-          return conformExplorerRoute(node.slug);
-        }
+      if (node) {
+        return conformExplorerRoute(node.slug);
       }
 
-      // Fallback
+      // Fallback to empty string
       return "";
     },
     [endpointsData]
@@ -197,8 +191,8 @@ export function ChatBotInterface({
       }
     };
 
-    const handleRequestNeeded = (event: ChatAgentEvent) => {
-      if (event.type === "request_needed") {
+    const handleSendRequested = (event: ChatAgentEvent) => {
+      if (event.type === "send_requested") {
         // Handle API request - parameters should already be set
         void sendRequest();
       }
@@ -213,7 +207,7 @@ export function ChatBotInterface({
     // Subscribe to events
     chatAgent.on("state_changed", handleStateChange);
     chatAgent.on("navigation_requested", handleNavigationRequest);
-    chatAgent.on("request_needed", handleRequestNeeded);
+    chatAgent.on("send_requested", handleSendRequested);
     chatAgent.on("error_occurred", handleError);
 
     // Initialize state
@@ -223,7 +217,7 @@ export function ChatBotInterface({
       // Cleanup subscriptions
       chatAgent.off("state_changed", handleStateChange);
       chatAgent.off("navigation_requested", handleNavigationRequest);
-      chatAgent.off("request_needed", handleRequestNeeded);
+      chatAgent.off("send_requested", handleSendRequested);
       chatAgent.off("error_occurred", handleError);
     };
   }, [chatAgent, router, sendRequest, setParams, getEndpointSlug]);
@@ -253,7 +247,8 @@ export function ChatBotInterface({
         // Let ChatAgent handle the response processing with streaming
         chatAgent
           .processApiResponse(parsed, statusCode, (_chunk: string) => {
-            // ChatAgent handles streaming internally now
+            // ChatAgent checks for the existence of the `onChunk` callback, then handles streaming internally
+            // TODO: instead of checking for the callback, make an explicit flag for streaming
           })
           .then(() => {
             isProcessingResponseRef.current = false;
@@ -311,8 +306,9 @@ export function ChatBotInterface({
         availableParameters,
         endpoint.id,
         apiDefinition,
-        () => {
-          // no-op: ChatAgent handles streaming internally
+        (_chunk: string) => {
+          // ChatAgent checks for the existence of the `onChunk` callback, then handles streaming internally
+          // TODO: instead of checking for the callback, make an explicit flag for streaming
         }
       );
 
@@ -325,7 +321,6 @@ export function ChatBotInterface({
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("Failed to process user message", error);
-      // ChatAgent handles error states internally
     }
   };
 
