@@ -47,7 +47,7 @@ describe("ChatAgent", () => {
   describe("Constructor", () => {
     it("should create agent with default configuration", () => {
       const agent = new ChatAgent();
-      expect(agent.messages).toEqual([]);
+      expect(agent.getMessagesWithoutSystem()).toEqual([]);
     });
 
     it("should create agent with initial messages", () => {
@@ -57,7 +57,7 @@ describe("ChatAgent", () => {
         assistantMessage("Hi there!"),
       ];
       const agent = new ChatAgent({ initialMessages });
-      expect(agent.messages).toEqual(initialMessages);
+      expect(agent.getMessagesWithoutSystem()).toEqual(initialMessages);
     });
   });
 
@@ -69,12 +69,12 @@ describe("ChatAgent", () => {
     });
 
     it("should start with empty messages", () => {
-      expect(agent.messages).toEqual([]);
+      expect(agent.getMessagesWithoutSystem()).toEqual([]);
     });
 
     it("should have messages property accessible", () => {
-      expect(agent.messages).toBeDefined();
-      expect(Array.isArray(agent.messages)).toBe(true);
+      expect(agent.getMessagesWithoutSystem()).toBeDefined();
+      expect(Array.isArray(agent.getMessagesWithoutSystem())).toBe(true);
     });
   });
 
@@ -87,22 +87,22 @@ describe("ChatAgent", () => {
 
     it("should reset the singleton when calling resetChatAgent", () => {
       const agent1 = getChatAgent();
-      agent1.messages.push(userMessage("test message"));
+      agent1.getMessagesWithoutSystem().push(userMessage("test message"));
 
       resetChatAgent();
 
       const agent2 = getChatAgent();
       expect(agent2).not.toBe(agent1);
-      expect(agent2.messages).toEqual([]);
+      expect(agent2.getMessagesWithoutSystem()).toEqual([]);
     });
 
     it("should maintain conversation state across multiple calls", () => {
       const agent1 = getChatAgent();
-      agent1.messages.push(userMessage("Hello"));
-      agent1.messages.push(assistantMessage("Hi there!"));
+      agent1.getMessagesWithoutSystem().push(userMessage("Hello"));
+      agent1.getMessagesWithoutSystem().push(assistantMessage("Hi there!"));
 
       const agent2 = getChatAgent();
-      expect(agent2.messages).toEqual([
+      expect(agent2.getMessagesWithoutSystem()).toEqual([
         userMessage("Hello"),
         assistantMessage("Hi there!"),
       ]);

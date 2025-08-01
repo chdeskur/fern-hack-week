@@ -144,10 +144,6 @@ export class ChatAgent {
   // Event system
   private _listeners = new Map<ChatAgentEventType, ChatAgentEventListener[]>();
 
-  // Legacy public properties for backward compatibility
-  public get messages(): ChatMessage[] {
-    return this._state.messages;
-  }
   public get sequence(): string[] {
     return this._state.sequence;
   }
@@ -426,7 +422,6 @@ export class ChatAgent {
                 sequenceRemaining: newSequence,
               }
             );
-            // Don't set status to idle here - requestConsent sets it to waiting_consent
             return;
           } else {
             // Sequence is complete
@@ -598,21 +593,26 @@ export class ChatAgent {
   private get baseSystemPrompt() {
     return systemMessage(
       `[Date] ${new Date().toLocaleString()}
-You are an intelligent API assistant that helps users interact with APIs. 
 
-Capabilities:
+You are an intelligent AI Copilot that helps users interact with APIs. 
+
+[Capabilities]
+
 1. Analyze user requests to determine if they need single or multiple API calls
 2. Extract parameter values from user messages
 3. Generate structured parameter objects for API calls
 4. Plan and execute multi-step API sequences
-5. Navigate to different endpoints when needed
 
 Always be helpful and concise. When you need more information, ask specific questions.`
     );
   }
 
-  private getMessagesWithSystem() {
-    return [this.baseSystemPrompt, ...this.messages];
+  public getMessagesWithSystem() {
+    return [this.baseSystemPrompt, ...this._state.messages];
+  }
+
+  public getMessagesWithoutSystem() {
+    return [...this._state.messages];
   }
 
   /**
@@ -650,6 +650,7 @@ Always be helpful and concise. When you need more information, ask specific ques
       messages: this.getMessagesWithSystem(),
       currentEndpointId,
       sequence: this.sequence,
+      listEndpoints: this.listEndpoints,
     });
 
     // Handle different action types
@@ -708,13 +709,23 @@ Always be helpful and concise. When you need more information, ask specific ques
 
     // If we need to navigate to a different endpoint, return navigation instructions
     if (shouldNavigate && targetEndpointId) {
-      const response = assistantMessage(
-        `I need to navigate to a different endpoint (${targetEndpointId}) to handle your request.`
+      // Request consent to navigate to first endpoint
+      this.requestConsent(
+        `I need to navigate to a different endpoint (${targetEndpointId}) to handle your request.`,
+        {
+          type: "navigate",
+          endpointId: targetEndpointId,
+          isMultiCallSequence: false,
+        }
       );
-      this.addMessage(response);
+
+      // Return the consent message
+      const consentMessage = this._state.messages[
+        this._state.messages.length - 1
+      ] as ChatMessage;
       return {
         classification: "single_call",
-        message: response,
+        message: consentMessage,
         endpointSequence: [targetEndpointId],
       };
     }
@@ -889,7 +900,6 @@ Always be helpful and concise. When you need more information, ask specific ques
         const consentMessage = this._state.messages[
           this._state.messages.length - 1
         ] as ChatMessage;
-        this.setState({ status: "waiting_consent" });
         return {
           classification: "multi_call",
           message: consentMessage,
@@ -910,7 +920,6 @@ Always be helpful and concise. When you need more information, ask specific ques
         const consentMessage = this._state.messages[
           this._state.messages.length - 1
         ] as ChatMessage;
-        this.setState({ status: "waiting_consent" });
         return {
           classification: "multi_call",
           message: consentMessage,
@@ -1236,10 +1245,11 @@ Always be helpful and concise. When you need more information, ask specific ques
       }
 
       const aiResponse = await callFernAi({
-        userQuery: `I received the following API error response when I made a call to the API. Explain the following in a concise, helpful way:
+        userQuery: `I received the following error response when I made a call to the API. Explain in a helpful and concise way:
+
   ${JSON.stringify(responseData)}
   
-  IMPORTANT: I am aware that you are unable to make API calls, so no need to mention that. Just focus on explaining the error in a helpful way.`,
+  IMPORTANT: I am aware that you are unable to make API calls yourself, so no need to mention that.`,
         includeMessages: true,
         messages: this._state.messages,
         onChunk: onChunk

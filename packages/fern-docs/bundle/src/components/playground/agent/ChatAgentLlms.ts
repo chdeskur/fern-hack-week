@@ -111,12 +111,19 @@ export interface LlmCallOptions {
  * Classifies user message to determine what type of action is needed
  */
 export async function classifyUserAction(options: LlmCallOptions) {
-  const { messages, currentEndpointId, sequence = [] } = options;
+  const { messages, currentEndpointId, sequence = [], listEndpoints } = options;
+
+  if (!listEndpoints) {
+    throw new Error(
+      "listEndpoints function is required for action classification"
+    );
+  }
 
   const systemPrompt =
     systemMessage(`Analyze the latest user message and determine what type of action is needed.
 
-Available actions:
+[Available actions]
+
 - single_call: User wants to make one API call with the current endpoint. IMPORTANT: if there is an active sequence, use single_call to make the next call in the sequence.
 - multi_call: User wants to perform ANY sequence of multiple related API calls that might require different endpoints. IMPORTANT: if there is an active sequence, never use multi_call. Instead, use single_call to make the next call in the sequence.
 - ask_parameters: User is providing parameter values (like setting headers, providing names, IDs, etc.) for API calls, OR user is explicitly setting parameter values, OR user is responding to a request for parameters (including saying they don't have values)
@@ -124,9 +131,17 @@ Available actions:
 
 IMPORTANT: If the user message contains parameter values (like "Set X to Y", "The name is Z", "Authorization header to Bearer token", etc.) OR if user says they don't have parameter values, classify as ask_parameters.
 
-Context:
-${sequence.length > 0 ? `Remaining endpoints in active sequence: ${sequence.join(", ")}` : "No active sequence"}
-${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No current endpoint"}`);
+[All endpoints]
+
+${listEndpoints()}
+
+[Current endpoint]
+
+${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No current endpoint"}
+
+[Active sequence?]
+
+${sequence.length > 0 ? `Remaining endpoints in active sequence: ${sequence.join(", ")}` : "No active sequence"}`);
 
   const { object: actionDecision } = await generateObject({
     model: openai("gpt-4.1-mini"),
@@ -155,18 +170,21 @@ export async function analyzeEndpointForSingleCall(options: LlmCallOptions) {
   }
 
   const systemPrompt =
-    systemMessage(`Analyze the user's message to determine if it requires a different endpoint than the current one.
+    systemMessage(`Analyze the user's message to determine if it requires a different endpoint than the current one. Use endpoints displayName, description, and path to help you determine this.
 
-Current endpoint: ${currentEndpointId || "none"}
+[All endpoints]
 
-Available endpoints:
 ${listEndpoints()}
 
+[Current endpoint]
+
+${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No current endpoint"}
+
 IMPORTANT: Use the current endpoint unless the user's query clearly indicates they want to perform an action better suited to a different endpoint.
-IMPORTANT: AVOID legacy endpoints if possible.`);
+IMPORTANT: If an endpoint is versioned e.g. v1, v2, etc. ALWAYS use the latest version.`);
 
   const { object: endpointAnalysis } = await generateObject({
-    model: openai("gpt-4.1-nano"),
+    model: openai("gpt-4.1-mini"),
     messages: [systemPrompt, ...messages],
     schema: endpointAnalysisSchema,
     experimental_repairText: repairJsonObject,
@@ -260,7 +278,7 @@ export async function extractParameters(options: LlmCallOptions) {
 Available parameters:
 ${formatted}
 
-IMPORTANT: Look for values being set in the user message. Examples:
+IMPORTANT: Look for values being specified in the user message. Examples:
 - "Set the Authorization header to token123" → header_Authorization: "token123"
 - "The user's name is Alice" → body_name: "Alice"
 - "Set user_id to 12345" → path_user_id: "12345"
@@ -295,14 +313,14 @@ export async function createMultiCallPlan(options: LlmCallOptions) {
   }
 
   const systemPrompt =
-    systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
-Use the available tools to explore endpoints and determine the sequence needed.
-Be specific about which endpoints to call and in what order.
-IMPORTANT: Try to AVOID legacy endpoints if possible.
-IMPORTANT: Make sure to use the tools to explore endpoints and include the endpoint IDs in the plan.
+    systemMessage(`Create a plan for multiple API calls to fulfill the user's request. Use endpoints displayName, description, and path to help you determine the best sequence.
 
-Here are the available endpoints:
-${listEndpoints()}`);
+[All endpoints]
+
+${listEndpoints()}
+
+IMPORTANT: Be very specific about which endpoints IDs to call, and in what order.
+IMPORTANT: If an endpoint is versioned e.g. v1, v2, etc. ALWAYS use the latest version.`);
 
   let text = "";
   if (onChunk) {
@@ -343,16 +361,13 @@ export async function extractEndpointSequence(
   }
 
   const systemPrompt = systemMessage(
-    `You are a precise API endpoint sequence extractor. Find all endpoint IDs mentioned in the plan and return them in the exact order they appear. 
+    `Find all endpoint IDs mentioned in the previous message and return them in the exact order they appear. 
 
-IMPORTANT: Only use endpoint IDs from this exact list:
-${listEndpoints()}
-
-Match the endpoint IDs exactly as they appear in the list above. Do not modify or invent endpoint IDs.`
+IMPORTANT: Match the endpoint IDs exactly as they appear. Do not modify or invent endpoint IDs.`
   );
 
   const { object: sequence } = await generateObject({
-    model: openai("gpt-4.1-nano"),
+    model: openai("gpt-4.1-mini"),
     messages: [systemPrompt, assistantMessage(planText)],
     schema: sequenceSchema,
     experimental_repairText: repairJsonObject,
