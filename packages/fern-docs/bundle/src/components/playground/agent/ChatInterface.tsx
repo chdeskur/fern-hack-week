@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { Bot, RotateCcw, Send } from "lucide-react";
 
+import { conformExplorerRoute } from "@fern-api/docs-utils";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { EndpointId } from "@fern-api/fdr-sdk/navigation";
 import {
@@ -42,7 +43,7 @@ export function ChatBotInterface({
   className = "",
   apiDefinition,
   endpoint,
-  endpointsData: _endpointsData,
+  endpointsData,
 }: ChatBotInterfaceProps) {
   // Use the provided agent if available, otherwise get from context
   const contextAgent = useChatAgent();
@@ -73,6 +74,56 @@ export function ChatBotInterface({
     await playground.sendRequest();
   }, [chatAgent, playground]);
 
+  const setParams = useCallback(
+    (parameters: Record<string, unknown>) => {
+      PlaygroundLogger.debug("[setParams]:", parameters);
+
+      // Track any conversion errors
+      const conversionErrors: string[] = [];
+
+      // Process flattened parameters
+      Object.entries(parameters).forEach(([key, value]) => {
+        try {
+          if (key.startsWith("path_")) {
+            const paramName = key.substring(5); // Remove 'path_' prefix
+            playground.setPathParameter(paramName, value as string);
+          } else if (key.startsWith("query_")) {
+            const paramName = key.substring(6); // Remove 'query_' prefix
+            playground.setQueryParameter(paramName, value as string);
+          } else if (key.startsWith("header_")) {
+            const paramName = key.substring(7); // Remove 'header_' prefix
+            playground.setHeader(paramName, value as string);
+          } else if (key.startsWith("body_")) {
+            const paramName = key.substring(5); // Remove 'body_' prefix
+            // For body parameters, we need to set them properly in the body object
+            const currentBody = playground.availableValues.bodyProperties || [];
+            const newBody = currentBody.find((p) => p.key === paramName)
+              ? currentBody.map((p) =>
+                  p.key === paramName ? { ...p, currentValue: value } : p
+                )
+              : [...currentBody, { key: paramName, currentValue: value }];
+            playground.setBody(newBody);
+          }
+        } catch (error) {
+          // Log conversion errors but don't fail the entire operation
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          conversionErrors.push(`${key}: ${errorMessage}`);
+          PlaygroundLogger.warn(`Type conversion failed for ${key}:`, error);
+        }
+      });
+
+      // If there were conversion errors, log them for debugging
+      if (conversionErrors.length > 0) {
+        PlaygroundLogger.warn(
+          "Some parameter conversions failed:",
+          conversionErrors
+        );
+      }
+    },
+    [playground]
+  );
+
   // Subscribe to ChatAgent state changes
   useEffect(() => {
     const handleStateChange = (event: ChatAgentEvent) => {
@@ -100,8 +151,17 @@ export function ChatBotInterface({
 
     const handleRequestNeeded = (event: ChatAgentEvent) => {
       if (event.type === "request_needed") {
-        // Handle API request
-        void sendRequest();
+        // Handle API request - set parameters first if they exist
+        const actionData = event.data;
+        if (actionData?.parameters) {
+          setParams(actionData.parameters);
+          // Small delay to ensure parameters are set before request
+          setTimeout(() => {
+            void sendRequest();
+          }, 10);
+        } else {
+          void sendRequest();
+        }
       }
     };
 
@@ -129,7 +189,7 @@ export function ChatBotInterface({
       chatAgent.off("request_needed", handleRequestNeeded);
       chatAgent.off("error_occurred", handleError);
     };
-  }, [chatAgent, router, sendRequest]);
+  }, [chatAgent, router, sendRequest, setParams]);
 
   // Auto-scroll when messages change
   useEffect(() => {
@@ -182,53 +242,6 @@ export function ChatBotInterface({
     [chatAgent]
   );
 
-  const setParams = (parameters: Record<string, unknown>) => {
-    PlaygroundLogger.debug("[setParams]:", parameters);
-
-    // Track any conversion errors
-    const conversionErrors: string[] = [];
-
-    // Process flattened parameters
-    Object.entries(parameters).forEach(([key, value]) => {
-      try {
-        if (key.startsWith("path_")) {
-          const paramName = key.substring(5); // Remove 'path_' prefix
-          playground.setPathParameter(paramName, value as string);
-        } else if (key.startsWith("query_")) {
-          const paramName = key.substring(6); // Remove 'query_' prefix
-          playground.setQueryParameter(paramName, value as string);
-        } else if (key.startsWith("header_")) {
-          const paramName = key.substring(7); // Remove 'header_' prefix
-          playground.setHeader(paramName, value as string);
-        } else if (key.startsWith("body_")) {
-          const paramName = key.substring(5); // Remove 'body_' prefix
-          // For body parameters, we need to set them properly in the body object
-          const currentBody = playground.availableValues.bodyProperties || [];
-          const newBody = currentBody.find((p) => p.key === paramName)
-            ? currentBody.map((p) =>
-                p.key === paramName ? { ...p, currentValue: value } : p
-              )
-            : [...currentBody, { key: paramName, currentValue: value }];
-          playground.setBody(newBody);
-        }
-      } catch (error) {
-        // Log conversion errors but don't fail the entire operation
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        conversionErrors.push(`${key}: ${errorMessage}`);
-        PlaygroundLogger.warn(`Type conversion failed for ${key}:`, error);
-      }
-    });
-
-    // If there were conversion errors, log them for debugging
-    if (conversionErrors.length > 0) {
-      PlaygroundLogger.warn(
-        "Some parameter conversions failed:",
-        conversionErrors
-      );
-    }
-  };
-
   // Simplified message sending - ChatAgent handles complexity
   const handleSendMessage = async () => {
     if (
@@ -263,13 +276,50 @@ export function ChatBotInterface({
         apiDefinition
       );
 
+      PlaygroundLogger.debug("Response:", response);
+
       // Handle response actions based on classification
-      if (response.classification === "single_call" && response.parameters) {
-        setParams(response.parameters);
+      if (response.classification === "single_call") {
+        if (response.parameters) {
+          // Single call flow: ChatAgent has already requested consent, parameters will be set when request_needed event fires
+          // No additional action needed here
+        } else if (
+          response.endpointSequence &&
+          response.endpointSequence.length > 0
+        ) {
+          // Navigation needed for single call
+          const targetEndpoint = response.endpointSequence[0];
+          if (targetEndpoint && targetEndpoint !== endpoint.id) {
+            const explorerUrl = getEndpointSlug(targetEndpoint);
+            chatAgent.requestNavigation(explorerUrl, targetEndpoint);
+          } else {
+            // Current endpoint is correct, just request consent
+            chatAgent.requestConsent(
+              "Would you like me to make this API call?"
+            );
+          }
+        }
+      } else if (response.classification === "multi_call") {
+        if (response.endpointSequence && response.endpointSequence.length > 0) {
+          // Multi call flow: plan → generate sequence → check if navigation needed or request consent
+          const firstEndpoint = response.endpointSequence[0];
+          if (firstEndpoint && firstEndpoint !== endpoint.id) {
+            // Navigation needed to start the sequence
+            const explorerUrl = getEndpointSlug(firstEndpoint);
+            chatAgent.requestNavigation(explorerUrl, firstEndpoint);
+          } else {
+            // Current endpoint matches first in sequence, request consent to proceed
+            chatAgent.requestConsent(
+              "Would you like me to execute this sequence of API calls?",
+              { sequence: response.endpointSequence }
+            );
+          }
+        }
       } else if (
         response.classification === "ask_parameters" &&
         response.parameters
       ) {
+        // For ask_parameters, just set the parameters without consent
         setParams(response.parameters);
       }
     } catch (error: unknown) {
@@ -290,6 +340,22 @@ export function ChatBotInterface({
     setInputValue("");
     isProcessingResponseRef.current = false;
     hasHandledMultiCallRef.current = false;
+  };
+
+  // Helper function to find endpoint slug from endpointsData
+  const getEndpointSlug = (endpointId: string): string => {
+    if (!endpointsData) return `explorer/${endpointId}`;
+
+    for (const endpointDataGroup of endpointsData) {
+      for (const node of endpointDataGroup.nodes) {
+        if (node.id === endpointId) {
+          return conformExplorerRoute(node.slug);
+        }
+      }
+    }
+
+    // Fallback: construct a basic route
+    return `explorer/${endpointId}`;
   };
 
   return (

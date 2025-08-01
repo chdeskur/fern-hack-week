@@ -950,9 +950,18 @@ Return parameter values in the correct format. Use empty strings for parameters 
           `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
         );
         this.addMessage(response);
+        
+        // Now automatically request consent for the API call
+        this.requestConsent(
+          "Would you like me to proceed with this API call?",
+          { parameters: completeParameters }
+        );
+        
+        // Return the consent message instead of the extraction message
+        const consentMessage = this._state.messages[this._state.messages.length - 1] as ChatMessage;
         return {
           classification: "single_call",
-          message: response,
+          message: consentMessage,
           parameters: completeParameters,
         };
       } else {
