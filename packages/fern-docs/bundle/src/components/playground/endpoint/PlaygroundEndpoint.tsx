@@ -33,7 +33,9 @@ import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   playgroundFormStateFamily,
+  usePlaygroundChatPanelWidth,
   usePlaygroundEndpointFormState,
+  useSetPlaygroundChatPanelWidth,
 } from "@/state/playground";
 
 import { track } from "../../analytics";
@@ -75,7 +77,8 @@ export const PlaygroundEndpoint = ({
   const searchParams = useSearchParams();
   const activeTab = (searchParams.get("mode") as "manual" | "chat") ?? "chat";
 
-  const [chatPanelWidth, setChatPanelWidth] = useState(400);
+  const chatPanelWidth = usePlaygroundChatPanelWidth();
+  const setChatPanelWidth = useSetPlaygroundChatPanelWidth();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);

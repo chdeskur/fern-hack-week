@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useEffect } from "react";
 
-import { WritableAtom, atom, useAtomValue } from "jotai";
+import { WritableAtom, atom, useAtomValue, useSetAtom } from "jotai";
 import {
   RESET,
   atomFamily,
@@ -379,4 +379,18 @@ export const PLAYGROUND_ENVIRONMENT_ATOM = atom<string | undefined>(undefined);
 
 export const usePlaygroundEnvironment = (): string | undefined => {
   return useAtomValue(PLAYGROUND_ENVIRONMENT_ATOM);
+};
+
+// Chat panel width state that persists between endpoints
+export const PLAYGROUND_CHAT_PANEL_WIDTH_ATOM = atomWithStorage<number>(
+  "playground-chat-panel-width",
+  400
+);
+
+export const usePlaygroundChatPanelWidth = () => {
+  return useAtomValue(PLAYGROUND_CHAT_PANEL_WIDTH_ATOM);
+};
+
+export const useSetPlaygroundChatPanelWidth = () => {
+  return useSetAtom(PLAYGROUND_CHAT_PANEL_WIDTH_ATOM);
 };
