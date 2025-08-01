@@ -351,13 +351,20 @@ export class ChatAgent {
   }
 
   public confirmNavigation(explorerUrl: string, endpointId?: string): void {
-    console.log("🚀 [confirmNavigation] Called with:", { explorerUrl, endpointId, sequenceLength: this._state.sequence.length });
-    
+    PlaygroundLogger.debug("[confirmNavigation] Called with:", {
+      explorerUrl,
+      endpointId,
+      sequenceLength: this._state.sequence.length,
+    });
+
     if (!explorerUrl || explorerUrl.trim() === "") {
-      console.error("confirmNavigation called with empty explorerUrl:", {
-        explorerUrl,
-        endpointId,
-      });
+      PlaygroundLogger.error(
+        "confirmNavigation called with empty explorerUrl:",
+        {
+          explorerUrl,
+          endpointId,
+        }
+      );
       const errorMessage = assistantMessage(
         `Navigation failed: Could not determine URL for endpoint ${endpointId || "unknown"}. You may need to navigate manually to continue.`,
         {
@@ -374,11 +381,18 @@ export class ChatAgent {
     this.addMessage(navigatedMessage);
     // Don't emit navigation_requested here - navigation is already happening!
 
+    PlaygroundLogger.debug(
+      "[confirmNavigation] Sequence:",
+      this._state.sequence
+    );
+
     // Check if we're in a multi-call sequence and should automatically request the first call
     if (this._state.sequence.length > 0 && endpointId) {
       // If this navigation was for the first endpoint in sequence, request consent for the call
       if (this._state.sequence[0] === endpointId) {
-        console.log("✅ [confirmNavigation] Requesting consent for MULTI-CALL");
+        PlaygroundLogger.debug(
+          "✅ [confirmNavigation] Requesting consent for MULTI-CALL"
+        );
         this.requestConsent(
           `Now that we're on the ${endpointId} endpoint, would you like me to make the API call?`,
           {
@@ -388,11 +402,19 @@ export class ChatAgent {
           }
         );
       } else {
-        console.log("❌ [confirmNavigation] Multi-call sequence mismatch:", { firstInSequence: this._state.sequence[0], currentEndpoint: endpointId });
+        PlaygroundLogger.debug(
+          "❌ [confirmNavigation] Multi-call sequence mismatch:",
+          {
+            firstInSequence: this._state.sequence[0],
+            currentEndpoint: endpointId,
+          }
+        );
       }
     } else if (endpointId) {
       // For single calls that required navigation, automatically request consent for the API call
-      console.log("✅ [confirmNavigation] Requesting consent for SINGLE-CALL");
+      PlaygroundLogger.debug(
+        "✅ [confirmNavigation] Requesting consent for SINGLE-CALL"
+      );
       this.requestConsent(
         `Now that we're on the ${endpointId} endpoint, would you like me to make the API call?`,
         {
@@ -402,7 +424,9 @@ export class ChatAgent {
         }
       );
     } else {
-      console.log("❌ [confirmNavigation] No consent request - endpointId is missing");
+      PlaygroundLogger.debug(
+        "❌ [confirmNavigation] No consent request - endpointId is missing"
+      );
     }
   }
 
@@ -649,7 +673,7 @@ Always be helpful and concise. When you need more information, ask specific ques
    *   undefined,
    *   undefined,
    *   apiDefinition,
-   *   (chunk) => console.log("Received chunk:", chunk)
+   *   (chunk) => PlaygroundLogger.debug("Received chunk:", chunk)
    * );
    */
   public async processUserMessage(
