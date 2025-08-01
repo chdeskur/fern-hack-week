@@ -185,13 +185,17 @@ export function ChatBotInterface({
     const handleNavigationRequest = (event: ChatAgentEvent) => {
       if (event.type === "navigation_requested") {
         // Handle navigation request
-        const { explorerUrl, nextEndpointId } = event.data;
+        const { explorerUrl, nextEndpointId, endpointId } = event.data;
         if (explorerUrl) {
           router.push(explorerUrl);
+          // Notify ChatAgent that navigation is happening
+          chatAgent.confirmNavigation(explorerUrl, endpointId);
         } else if (nextEndpointId) {
           // Construct URL for next endpoint in sequence
           const explorerUrlForNext = getEndpointSlug(nextEndpointId);
           router.push(explorerUrlForNext);
+          // Notify ChatAgent that navigation is happening
+          chatAgent.confirmNavigation(explorerUrlForNext, nextEndpointId);
         }
       }
     };
@@ -342,21 +346,15 @@ export function ChatBotInterface({
           }
         }
       } else if (response.classification === "multi_call") {
-        if (response.endpointSequence && response.endpointSequence.length > 0) {
-          // Multi call flow: plan → generate sequence → check if navigation needed or request consent
-          const firstEndpoint = response.endpointSequence[0];
-          if (firstEndpoint && firstEndpoint !== endpoint.id) {
-            // Navigation needed to start the sequence
-            const explorerUrl = getEndpointSlug(firstEndpoint);
-            chatAgent.requestNavigation(explorerUrl, firstEndpoint);
-          } else {
-            // Current endpoint matches first in sequence, request consent to proceed
-            chatAgent.requestConsent(
-              "Would you like me to execute this sequence of API calls?",
-              { sequence: response.endpointSequence }
-            );
+        // Multi call flow is now handled entirely by ChatAgent
+        // The response.message already contains the appropriate consent request
+        PlaygroundLogger.debug(
+          "[ChatInterface] Multi-call response received, ChatAgent has handled consent requests",
+          {
+            endpointSequence: response.endpointSequence,
+            messageContent: response.message.content,
           }
-        }
+        );
       } else if (
         response.classification === "ask_parameters" &&
         response.parameters

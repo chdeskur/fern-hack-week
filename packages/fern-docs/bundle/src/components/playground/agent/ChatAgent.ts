@@ -277,10 +277,14 @@ export class ChatAgent {
       consent_required: true,
     });
     this.addMessage(consentMessage);
+
+    // Determine action type from actionData or default to send_request
+    const actionType = actionData?.type || "send_request";
+
     this.setState({
       status: "waiting_consent",
       pendingAction: {
-        type: "send_request", // default action type
+        type: actionType,
         data: actionData,
       },
     });
@@ -304,9 +308,15 @@ export class ChatAgent {
     if (consented && pendingAction) {
       // Emit appropriate event based on action type
       switch (pendingAction.type) {
-        case "navigate":
-          this.emit("navigation_requested", pendingAction.data);
+        case "navigate": {
+          // Ensure the navigation data has the correct structure for ChatInterface
+          const navigationData = {
+            ...pendingAction.data,
+            nextEndpointId: pendingAction.data.endpointId,
+          };
+          this.emit("navigation_requested", navigationData);
           break;
+        }
         case "send_request":
           this.emit("request_needed", pendingAction.data);
           break;
@@ -346,12 +356,27 @@ export class ChatAgent {
     });
   }
 
-  public confirmNavigation(explorerUrl: string): void {
+  public confirmNavigation(explorerUrl: string, endpointId?: string): void {
     const navigatedMessage = assistantMessage(`Navigating to ${explorerUrl}`, {
       consent_required: false,
     });
     this.addMessage(navigatedMessage);
-    this.emit("navigation_requested", { explorerUrl });
+    // Don't emit navigation_requested here - navigation is already happening!
+
+    // Check if we're in a multi-call sequence and should automatically request the first call
+    if (this._state.sequence.length > 0 && endpointId) {
+      // If this navigation was for the first endpoint in sequence, request consent for the call
+      if (this._state.sequence[0] === endpointId) {
+        this.requestConsent(
+          `Now that we're on the ${endpointId} endpoint, would you like me to make the API call?`,
+          {
+            type: "send_request",
+            endpointId: endpointId,
+            isMultiCallSequence: true,
+          }
+        );
+      }
+    }
   }
 
   // Response processing methods
@@ -383,10 +408,20 @@ export class ChatAgent {
               `Would you like me to navigate to the next endpoint (${nextEndpointId}) to continue the sequence?`,
               {
                 type: "navigate",
-                nextEndpointId,
+                endpointId: nextEndpointId,
+                isMultiCallSequence: true,
                 sequenceRemaining: newSequence,
               }
             );
+            // Don't set status to idle here - requestConsent sets it to waiting_consent
+            return;
+          } else {
+            // Sequence is complete
+            const completionMessage = assistantMessage(
+              "Multi-call sequence completed successfully! All API calls have been executed.",
+              { consent_required: false }
+            );
+            this.addMessage(completionMessage);
           }
         }
       }
@@ -799,7 +834,7 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
           currentEndpointId
         );
       case "multi_call":
-        return await this.handleMultiCall(onChunk);
+        return await this.handleMultiCall(onChunk, currentEndpointId);
       case "ask_parameters":
         return await this.handleParameterExtraction(availableParameters);
       case "general_response":
@@ -1016,7 +1051,8 @@ Return parameter values in the correct format. Use empty strings for parameters 
   }
 
   private async handleMultiCall(
-    onChunk?: (chunk: string) => void
+    onChunk?: (chunk: string) => void,
+    currentEndpointId?: string
   ): Promise<ChatAgentResponse> {
     let text = "";
     if (onChunk) {
@@ -1076,7 +1112,12 @@ ${this.listEndpoints()}
       model: openai("gpt-4.1-nano"),
       messages: [
         systemMessage(
-          "You are a precise API endpoint sequence extractor. Find all endpoint IDs mentioned in the plan and return them in the exact order they appear. Look for patterns like 'endpoint_abc.def' or endpoint references. Be direct and fast."
+          `You are a precise API endpoint sequence extractor. Find all endpoint IDs mentioned in the plan and return them in the exact order they appear. 
+
+IMPORTANT: Only use endpoint IDs from this exact list:
+${this.listEndpoints()}
+
+Match the endpoint IDs exactly as they appear in the list above. Do not modify or invent endpoint IDs.`
         ),
         assistantMessage(text),
       ],
@@ -1084,38 +1125,94 @@ ${this.listEndpoints()}
       experimental_repairText: repairJsonObject,
     });
 
+    // Set the sequence in state
+    this.setState({ sequence: sequence.endpoints });
+
+    // After creating the plan, automatically start the sequence
+    if (sequence.endpoints.length > 0) {
+      const firstEndpointId = sequence.endpoints[0];
+
+      // Finish streaming the plan and explanation
+      if (onChunk) {
+        const textPart = `\n\n${sequence.explanation}`;
+        text += textPart;
+        this.updateStreamingMessage(textPart);
+        onChunk(textPart);
+        this.finishStreaming();
+      } else {
+        // Add the plan message
+        const planMessage = assistantMessage(
+          text + `\n\n${sequence.explanation}`
+        );
+        this.addMessage(planMessage);
+      }
+
+      // Check if we need to navigate to the first endpoint
+      if (currentEndpointId !== firstEndpointId) {
+        // Request consent to navigate to first endpoint
+        this.requestConsent(
+          `Would you like me to navigate to the first endpoint (${firstEndpointId}) to start the sequence?`,
+          {
+            type: "navigate",
+            endpointId: firstEndpointId,
+            isMultiCallSequence: true,
+          }
+        );
+
+        // Return the consent message
+        const consentMessage = this._state.messages[
+          this._state.messages.length - 1
+        ] as ChatMessage;
+        this.setState({ status: "waiting_consent" });
+        return {
+          classification: "multi_call",
+          message: consentMessage,
+          endpointSequence: sequence.endpoints,
+        };
+      } else {
+        // Already on the first endpoint, request consent to make the call
+        this.requestConsent(
+          `I'm ready to make the first API call in the sequence. Would you like me to proceed?`,
+          {
+            type: "send_request",
+            endpointId: firstEndpointId,
+            isMultiCallSequence: true,
+          }
+        );
+
+        // Return the consent message
+        const consentMessage = this._state.messages[
+          this._state.messages.length - 1
+        ] as ChatMessage;
+        this.setState({ status: "waiting_consent" });
+        return {
+          classification: "multi_call",
+          message: consentMessage,
+          endpointSequence: sequence.endpoints,
+        };
+      }
+    }
+
+    // If no endpoints in sequence, just return the plan message
+    let finalMessage: ChatMessage;
     if (onChunk) {
-      const textPart = `\n\n${sequence.explanation}\n\n${JSON.stringify(
-        sequence.endpoints
-      )}`;
-      PlaygroundLogger.debug("Appending multi-call sequence to response", {
-        endpoints: sequence.endpoints,
-        explanationLength: sequence.explanation.length,
-      });
+      const textPart = `\n\n${sequence.explanation}`;
       text += textPart;
       this.updateStreamingMessage(textPart);
       onChunk(textPart);
-
-      // Finish streaming
       this.finishStreaming();
-      const response = this._state.messages[
+      finalMessage = this._state.messages[
         this._state.messages.length - 1
       ] as ChatMessage;
-      this.setState({ sequence: sequence.endpoints, status: "idle" });
-      return {
-        classification: "multi_call",
-        message: response,
-        endpointSequence: sequence.endpoints,
-      };
+    } else {
+      finalMessage = assistantMessage(text + `\n\n${sequence.explanation}`);
+      this.addMessage(finalMessage);
     }
 
-    const response = assistantMessage(text);
-    this.addMessage(response);
-    this.setState({ sequence: sequence.endpoints, status: "idle" });
-
+    this.setState({ status: "idle" });
     return {
       classification: "multi_call",
-      message: response,
+      message: finalMessage,
       endpointSequence: sequence.endpoints,
     };
   }
