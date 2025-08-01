@@ -17,14 +17,14 @@ import { visitLoadable } from "@fern-ui/loadable";
 
 import {
   ChatAgent,
-  ChatAgentState,
   ChatAgentEvent,
+  ChatAgentState,
   userMessage,
 } from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
 import { ChatMessageComponent } from "./ChatMessage";
-import { PlaygroundLogger } from "./PlaygroundLogger";
 import { usePlaygroundContext } from "./PlaygroundContext";
+import { PlaygroundLogger } from "./PlaygroundLogger";
 
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
@@ -49,11 +49,13 @@ export function ChatBotInterface({
   const chatAgent = agent ?? contextAgent;
   const playground = usePlaygroundContext();
   const router = useRouter();
-  
+
   // Simple UI state - ChatAgent now owns the complex state
   const [inputValue, setInputValue] = useState("");
-  const [chatState, setChatState] = useState<ChatAgentState>(chatAgent.getState());
-  
+  const [chatState, setChatState] = useState<ChatAgentState>(
+    chatAgent.getState()
+  );
+
   // Refs for UI management
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const isProcessingResponseRef = useRef(false);
@@ -65,6 +67,7 @@ export function ChatBotInterface({
 
   // Simplified request handling - ChatAgent manages consent now
   const sendRequest = useCallback(async () => {
+    PlaygroundLogger.debug("Sending request");
     chatAgent.setWaitingForResponse();
     isProcessingResponseRef.current = true;
     await playground.sendRequest();
@@ -73,20 +76,20 @@ export function ChatBotInterface({
   // Subscribe to ChatAgent state changes
   useEffect(() => {
     const handleStateChange = (event: ChatAgentEvent) => {
-      if (event.type === 'state_changed') {
+      if (event.type === "state_changed") {
         setChatState(event.data.newState);
       }
     };
 
     const handleConsentRequest = (event: ChatAgentEvent) => {
-      if (event.type === 'consent_requested') {
+      if (event.type === "consent_requested") {
         // Handle consent request - this will be implemented below
-        PlaygroundLogger.debug('Consent requested:', event.data);
+        PlaygroundLogger.debug("Consent requested:", event.data);
       }
     };
 
     const handleNavigationRequest = (event: ChatAgentEvent) => {
-      if (event.type === 'navigation_requested') {
+      if (event.type === "navigation_requested") {
         // Handle navigation request
         const { explorerUrl } = event.data;
         if (explorerUrl) {
@@ -96,35 +99,35 @@ export function ChatBotInterface({
     };
 
     const handleRequestNeeded = (event: ChatAgentEvent) => {
-      if (event.type === 'request_needed') {
+      if (event.type === "request_needed") {
         // Handle API request
         void sendRequest();
       }
     };
 
     const handleError = (event: ChatAgentEvent) => {
-      if (event.type === 'error_occurred') {
-        PlaygroundLogger.error('ChatAgent error:', event.data.error);
+      if (event.type === "error_occurred") {
+        PlaygroundLogger.error("ChatAgent error:", event.data.error);
       }
     };
 
     // Subscribe to events
-    chatAgent.on('state_changed', handleStateChange);
-    chatAgent.on('consent_requested', handleConsentRequest);
-    chatAgent.on('navigation_requested', handleNavigationRequest);
-    chatAgent.on('request_needed', handleRequestNeeded);
-    chatAgent.on('error_occurred', handleError);
+    chatAgent.on("state_changed", handleStateChange);
+    chatAgent.on("consent_requested", handleConsentRequest);
+    chatAgent.on("navigation_requested", handleNavigationRequest);
+    chatAgent.on("request_needed", handleRequestNeeded);
+    chatAgent.on("error_occurred", handleError);
 
     // Initialize state
     setChatState(chatAgent.getState());
 
     return () => {
       // Cleanup subscriptions
-      chatAgent.off('state_changed', handleStateChange);
-      chatAgent.off('consent_requested', handleConsentRequest);
-      chatAgent.off('navigation_requested', handleNavigationRequest);
-      chatAgent.off('request_needed', handleRequestNeeded);
-      chatAgent.off('error_occurred', handleError);
+      chatAgent.off("state_changed", handleStateChange);
+      chatAgent.off("consent_requested", handleConsentRequest);
+      chatAgent.off("navigation_requested", handleNavigationRequest);
+      chatAgent.off("request_needed", handleRequestNeeded);
+      chatAgent.off("error_occurred", handleError);
     };
   }, [chatAgent, router, sendRequest]);
 
@@ -136,31 +139,35 @@ export function ChatBotInterface({
   // Watch for API responses and delegate to ChatAgent
   useEffect(() => {
     if (!isProcessingResponseRef.current) return;
-    
+
     visitLoadable(playground.response, {
       loading: () => {
-        PlaygroundLogger.debug('[playground.response] LOADING');
+        PlaygroundLogger.debug("[playground.response] LOADING");
       },
       loaded: (response) => {
-        const parsed = typeof response.response.body === "string"
-          ? response.response.body
-          : JSON.stringify(response.response.body);
+        const parsed =
+          typeof response.response.body === "string"
+            ? response.response.body
+            : JSON.stringify(response.response.body);
         const statusCode = response.response.status;
-        
-        PlaygroundLogger.debug('[playground.response] LOADED:', { statusCode });
-        
+
+        PlaygroundLogger.debug("[playground.response] LOADED:", { statusCode });
+
         // Let ChatAgent handle the response processing with streaming
-        chatAgent.processApiResponse(parsed, statusCode, (_chunk: string) => {
-          // ChatAgent handles streaming internally now
-        }).then(() => {
-          isProcessingResponseRef.current = false;
-        }).catch((error: unknown) => {
-          PlaygroundLogger.error('[processApiResponse] FAILED:', error);
-          isProcessingResponseRef.current = false;
-        });
+        chatAgent
+          .processApiResponse(parsed, statusCode, (_chunk: string) => {
+            // ChatAgent handles streaming internally now
+          })
+          .then(() => {
+            isProcessingResponseRef.current = false;
+          })
+          .catch((error: unknown) => {
+            PlaygroundLogger.error("[processApiResponse] FAILED:", error);
+            isProcessingResponseRef.current = false;
+          });
       },
       failed: (error) => {
-        PlaygroundLogger.error('[playground.response] FAILED:', error);
+        PlaygroundLogger.error("[playground.response] FAILED:", error);
         chatAgent.handleResponseError(error);
         isProcessingResponseRef.current = false;
       },
@@ -168,11 +175,12 @@ export function ChatBotInterface({
   }, [playground.response, chatAgent]);
 
   // Handle consent responses
-  const handleConsent = useCallback((consented: boolean) => {
-    chatAgent.handleConsentResponse(consented);
-  }, [chatAgent]);
-
-
+  const handleConsent = useCallback(
+    (consented: boolean) => {
+      chatAgent.handleConsentResponse(consented);
+    },
+    [chatAgent]
+  );
 
   const setParams = (parameters: Record<string, unknown>) => {
     PlaygroundLogger.debug("[setParams]:", parameters);
@@ -223,7 +231,12 @@ export function ChatBotInterface({
 
   // Simplified message sending - ChatAgent handles complexity
   const handleSendMessage = async () => {
-    if (!inputValue.trim() || chatState.status === 'processing' || chatState.status === 'streaming') return;
+    if (
+      !inputValue.trim() ||
+      chatState.status === "processing" ||
+      chatState.status === "streaming"
+    )
+      return;
 
     const userMsg = userMessage(inputValue.trim());
     setInputValue("");
@@ -253,16 +266,17 @@ export function ChatBotInterface({
       // Handle response actions based on classification
       if (response.classification === "single_call" && response.parameters) {
         setParams(response.parameters);
-      } else if (response.classification === "ask_parameters" && response.parameters) {
+      } else if (
+        response.classification === "ask_parameters" &&
+        response.parameters
+      ) {
         setParams(response.parameters);
       }
-
     } catch (error: unknown) {
       PlaygroundLogger.error("Failed to process user message", error);
       // ChatAgent handles error states internally
     }
   };
-
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -302,7 +316,8 @@ export function ChatBotInterface({
         </div>
 
         <div className="flex-1 space-y-3 overflow-y-auto p-3">
-          {chatState.messages.length === 0 && !chatState.currentStreamingMessage ? (
+          {chatState.messages.length === 0 &&
+          !chatState.currentStreamingMessage ? (
             <div className="text-(color:--grayscale-a11) flex h-full items-center justify-center">
               <div className="text-center">
                 <Bot className="mx-auto mb-2 h-8 w-8 opacity-50" />
@@ -330,7 +345,8 @@ export function ChatBotInterface({
               )}
             </>
           )}
-          {(chatState.status === 'processing' || chatState.status === 'streaming') &&
+          {(chatState.status === "processing" ||
+            chatState.status === "streaming") &&
             !chatState.pendingAction && (
               <div className="flex justify-start gap-3">
                 <div className="flex max-w-[80%] gap-3">
@@ -381,7 +397,11 @@ export function ChatBotInterface({
             />
             <FernButton
               onClick={() => void handleSendMessage()}
-              disabled={!inputValue.trim() || chatState.status === 'processing' || chatState.status === 'streaming'}
+              disabled={
+                !inputValue.trim() ||
+                chatState.status === "processing" ||
+                chatState.status === "streaming"
+              }
               icon={<Send className="h-4 w-4" />}
               className="shrink-0"
               intent="primary"

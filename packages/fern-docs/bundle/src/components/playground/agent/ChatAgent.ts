@@ -1073,7 +1073,9 @@ ${this.listEndpoints()}
 
       // Finish streaming
       this.finishStreaming();
-      const response = this._state.messages[this._state.messages.length - 1] as ChatMessage;
+      const response = this._state.messages[
+        this._state.messages.length - 1
+      ] as ChatMessage;
       this.setState({ sequence: sequence.endpoints, status: "idle" });
       return {
         classification: "multi_call",
