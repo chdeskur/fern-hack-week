@@ -177,6 +177,24 @@ export function ChatBotInterface({
           chatAgent
             .generateSummary(parsed, statusCode, handleSummaryStreamingChunk)
             .then(async (_msg) => {
+              // If we were streaming, finalize the streaming message first
+              if (streamingMessageRef.current) {
+                const currentStreamingMessage = streamingMessageRef.current;
+                setMessages((prevMessages) => [
+                  ...prevMessages,
+                  currentStreamingMessage,
+                ]);
+              }
+              
+              // Clear streaming state
+              setStreamingMessage(null);
+              setIsStreaming(false);
+              isStreamingRef.current = false;
+              setPendingResponse(null);
+              setIsLoading(false);
+              isProcessingResponseRef.current = false;
+
+              // Handle navigation after streaming is complete
               if (statusCode >= 200 && statusCode < 300) {
                 chatAgent.sequence.shift();
                 PlaygroundLogger.debug(
@@ -225,20 +243,6 @@ export function ChatBotInterface({
                   }
                 }
               }
-              // If we were streaming, finalize the streaming message and clear streaming state
-              if (streamingMessageRef.current) {
-                const currentStreamingMessage = streamingMessageRef.current;
-                setMessages((prevMessages) => [
-                  ...prevMessages,
-                  currentStreamingMessage,
-                ]);
-              }
-              setStreamingMessage(null);
-              setIsStreaming(false);
-              isStreamingRef.current = false;
-              setPendingResponse(null);
-              setIsLoading(false);
-              isProcessingResponseRef.current = false;
             })
             .catch((error: unknown) => {
               PlaygroundLogger.error("[generateSummary] FAILED:", error);
@@ -436,7 +440,7 @@ export function ChatBotInterface({
         // Check if we need to navigate to a different endpoint first
         if (response.endpointSequence && response.endpointSequence.length > 0) {
           const targetEndpointId = response.endpointSequence[0];
-          // If the target endpoint is different from the current one, navigate
+          // If the target endpoint is different from the current one, ask for consent and navigate
           if (targetEndpointId !== endpoint.id) {
             // Find the endpoint data for navigation
             const targetEndpointData = endpointsData?.find(
@@ -449,8 +453,44 @@ export function ChatBotInterface({
               const endpointSlug = endpointNode?.slug;
               if (endpointSlug) {
                 const explorerUrl = conformExplorerRoute(endpointSlug);
-                await navigateWithConsent(explorerUrl);
-                return; // Exit early since we're navigating
+                
+                // Create consent message without using navigateWithConsent to avoid double messaging
+                const consentMsg = assistantMessage(
+                  `Would you like me to navigate to ${explorerUrl}?`,
+                  { consent_required: true }
+                );
+                setMessages((prevMessages) => [...prevMessages, consentMsg]);
+                chatAgent.messages.push(consentMsg);
+
+                // Wait for user consent
+                const userConsented = await new Promise<boolean>((resolve, reject) => {
+                  setPendingConsent({ resolve, reject });
+                }).catch((_error: unknown) => {
+                  const timeoutMsg = assistantMessage(
+                    "Navigation timed out. You can continue manually if needed.",
+                    { consent_required: false }
+                  );
+                  setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
+                  chatAgent.messages.push(timeoutMsg);
+                  return false;
+                });
+
+                if (userConsented) {
+                  const navigatedMsg = assistantMessage(`Navigating to ${explorerUrl}`, {
+                    consent_required: false,
+                  });
+                  chatAgent.messages.push(navigatedMsg);
+                  setMessages((prevMessages) => [...prevMessages, navigatedMsg]);
+                  router.push(explorerUrl);
+                } else {
+                  const declinedMsg = assistantMessage(
+                    "Navigation cancelled. You can continue manually or I can help with other tasks.",
+                    { consent_required: false }
+                  );
+                  setMessages((prevMessages) => [...prevMessages, declinedMsg]);
+                  chatAgent.messages.push(declinedMsg);
+                }
+                return; // Exit early since we're handling navigation
               }
             }
           }
@@ -462,26 +502,9 @@ export function ChatBotInterface({
 
         await sendRequestWithConsent(updatedMessages);
       } else if (response.classification === "multi_call") {
-        if (response.endpointSequence && response.endpointSequence.length > 0) {
-          const nextEndpointId = response.endpointSequence[0];
-          // If the current endpoint is NOT the same as the first endpoint in the sequence, navigate
-          if (nextEndpointId !== endpoint.id) {
-            // Find the endpoint data for navigation
-            const nextEndpointData = endpointsData?.find(
-              (endpointData) => endpointData.id === nextEndpointId
-            );
-            if (nextEndpointData) {
-              const endpointNode = nextEndpointData.nodes.find(
-                (node) => node.endpointId === nextEndpointId
-              );
-              const endpointSlug = endpointNode?.slug;
-              if (endpointSlug) {
-                const explorerUrl = conformExplorerRoute(endpointSlug);
-                await navigateWithConsent(explorerUrl);
-              }
-            }
-          }
-        }
+        // Multi_call responses don't need immediate navigation - the sequence will start
+        // executing after user requests are made, and navigation happens between API calls
+        // No action needed here - the sequence is already stored in chatAgent.sequence
       } else if (response.classification === "ask_parameters") {
         if (response.parameters) {
           setParams(response.parameters);

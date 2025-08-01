@@ -535,7 +535,7 @@ ${this.listEndpoints()}
 
 Current endpoint: ${currentEndpointId || "none"}
 
-Look for clues in the user's message about what they want to accomplish. If the user's intent is better served by a different endpoint, recommend it. Otherwise, use the current endpoint.
+Look for clues in the user's message about what they want to accomplish. If the user's intent is better served by a different endpoint, recommend it. Otherwise, use the current endpoint. Try to use the best, most current endpoint.
 
 IMPORTANT: Only recommend a different endpoint if the user's query clearly indicates they want to perform an action that's better suited to a different endpoint.`),
             ...this.getMessagesWithSystem(),
@@ -570,8 +570,7 @@ IMPORTANT: Only recommend a different endpoint if the user's query clearly indic
     // If we need to navigate to a different endpoint, return navigation instructions
     if (shouldNavigate && targetEndpointId) {
       const response = assistantMessage(
-        `I need to navigate to a different endpoint (${targetEndpointId}) to handle your request.`,
-        { consent_required: true }
+        `I need to navigate to a different endpoint (${targetEndpointId}) to handle your request.`
       );
       this.messages.push(response);
       return {
@@ -634,9 +633,11 @@ Return parameter values in the correct format. Use empty strings for parameters 
         schema: parameterSchema,
       });
 
-      // Create a complete parameters object with empty strings for missing values
-      const emptyParams = this.createEmptyParametersObject(availableParameters);
-      const completeParameters = { ...emptyParams, ...parameters };
+      // Create a complete parameters object preserving existing values for missing parameters
+      const completeParameters = this.createParametersObjectPreservingExisting(
+        availableParameters,
+        parameters
+      );
 
       // Check if any non-empty parameters were extracted
       const hasExtractedParameters = Object.values(parameters).some(
@@ -675,13 +676,16 @@ Return parameter values in the correct format. Use empty strings for parameters 
       );
       this.messages.push(response);
 
-      // Even on error, return empty parameters object
-      const emptyParams = this.createEmptyParametersObject(availableParameters);
+      // Even on error, return parameters object preserving existing values
+      const preservedParams = this.createParametersObjectPreservingExisting(
+        availableParameters,
+        {}
+      );
       // Re-classify response as ask_parameters
       return {
         classification: "ask_parameters",
         message: response,
-        parameters: emptyParams,
+        parameters: preservedParams,
       };
     }
   }
@@ -718,7 +722,7 @@ ${this.listEndpoints()}
         messages: [
           systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
 Use the available tools to explore endpoints and determine the sequence needed.
-Be specific about which endpoints to call and in what order.
+Be specific about which endpoints to call and in what order.  Try to use the best, most current endpoints.
 IMPORTANT: Make sure to use the tools to explore endpoints and include the endpoint IDs in the plan.
 
 Here are the available endpoints:
@@ -826,9 +830,11 @@ Return parameter values in the correct format. Use empty strings for parameters 
         experimental_repairText: repairJsonObject,
       });
 
-      // Create a complete parameters object with empty strings for missing values
-      const emptyParams = this.createEmptyParametersObject(availableParameters);
-      const completeParameters = { ...emptyParams, ...parameters };
+      // Create a complete parameters object preserving existing values for missing parameters
+      const completeParameters = this.createParametersObjectPreservingExisting(
+        availableParameters,
+        parameters
+      );
 
       // Check if any non-empty parameters were extracted
       const hasExtractedParameters = Object.values(parameters).some(
@@ -865,12 +871,15 @@ Return parameter values in the correct format. Use empty strings for parameters 
       );
       this.messages.push(response);
 
-      // Even on error, return empty parameters object
-      const emptyParams = this.createEmptyParametersObject(availableParameters);
+      // Even on error, return parameters object preserving existing values
+      const preservedParams = this.createParametersObjectPreservingExisting(
+        availableParameters,
+        {}
+      );
       return {
         classification: "ask_parameters",
         message: response,
-        parameters: emptyParams,
+        parameters: preservedParams,
       };
     }
   }
@@ -930,28 +939,53 @@ Return parameter values in the correct format. Use empty strings for parameters 
     return z.object(schema);
   }
 
-  private createEmptyParametersObject(
-    availableParameters: AvailableParameters
+  private createParametersObjectPreservingExisting(
+    availableParameters: AvailableParameters,
+    extractedParameters: Record<string, string>
   ): Record<string, string> {
-    const emptyParams: Record<string, string> = {};
+    const completeParams: Record<string, string> = {};
 
+    // For path parameters, use extracted value or current value or empty string
     availableParameters.pathParameters.forEach((param) => {
-      emptyParams[`path_${param.name}`] = "";
+      const key = `path_${param.name}`;
+      const extractedValue = extractedParameters[key];
+      completeParams[key] =
+        extractedValue && extractedValue.trim() !== ""
+          ? extractedValue
+          : param.currentValue || "";
     });
 
+    // For query parameters, use extracted value or current value or empty string
     availableParameters.queryParameters.forEach((param) => {
-      emptyParams[`query_${param.name}`] = "";
+      const key = `query_${param.name}`;
+      const extractedValue = extractedParameters[key];
+      completeParams[key] =
+        extractedValue && extractedValue.trim() !== ""
+          ? extractedValue
+          : param.currentValue || "";
     });
 
+    // For headers, use extracted value or current value or empty string
     availableParameters.headers.forEach((header) => {
-      emptyParams[`header_${header.name}`] = "";
+      const key = `header_${header.name}`;
+      const extractedValue = extractedParameters[key];
+      completeParams[key] =
+        extractedValue && extractedValue.trim() !== ""
+          ? extractedValue
+          : header.currentValue || "";
     });
 
+    // For body properties, use extracted value or current value or empty string
     availableParameters.bodyProperties.forEach((prop) => {
-      emptyParams[`body_${prop.key}`] = "";
+      const key = `body_${prop.key}`;
+      const extractedValue = extractedParameters[key];
+      completeParams[key] =
+        extractedValue && extractedValue.trim() !== ""
+          ? extractedValue
+          : prop.currentValue || "";
     });
 
-    return emptyParams;
+    return completeParams;
   }
 
   private formatAvailableParameters(
@@ -1014,20 +1048,45 @@ Return parameter values in the correct format. Use empty strings for parameters 
     onChunk?: (chunk: string) => void
   ): Promise<AssistantMessage> {
     if (statusCode >= 200 && statusCode < 300) {
-      // SUCCESS
-      const { text } = await generateText({
-        model: openai("gpt-4.1-mini"),
-        messages: [
-          systemMessage(
-            "Summarize this API response in a helpful, human-readable way. Focus on the key information and results."
-          ),
-          userMessage(
-            typeof responseData === "string"
-              ? responseData
-              : JSON.stringify(responseData)
-          ),
-        ],
-      });
+      // SUCCESS - use streaming if onChunk is provided
+      let text = "";
+      
+      if (onChunk) {
+        const { textStream } = streamText({
+          model: openai("gpt-4.1-mini"),
+          messages: [
+            systemMessage(
+              "Summarize this API response in a helpful, human-readable way. Focus on the key information and results."
+            ),
+            userMessage(
+              typeof responseData === "string"
+                ? responseData
+                : JSON.stringify(responseData)
+            ),
+          ],
+        });
+
+        for await (const textPart of textStream) {
+          text += textPart;
+          onChunk(textPart);
+        }
+      } else {
+        const { text: _text } = await generateText({
+          model: openai("gpt-4.1-mini"),
+          messages: [
+            systemMessage(
+              "Summarize this API response in a helpful, human-readable way. Focus on the key information and results."
+            ),
+            userMessage(
+              typeof responseData === "string"
+                ? responseData
+                : JSON.stringify(responseData)
+            ),
+          ],
+        });
+        text = _text;
+      }
+      
       const summary = assistantMessage(text);
       this.messages.push(summary);
       return summary;
