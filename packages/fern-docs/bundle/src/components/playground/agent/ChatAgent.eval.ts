@@ -9,7 +9,7 @@ import {
   extractEndpointSequence,
   extractParameters,
   generateResponseSummary,
-} from "./ChatAgentLlmCalls";
+} from "./ChatAgentLlms";
 
 // Mock EndpointContext for testing
 const createMockEndpointContext = () => ({
@@ -467,7 +467,7 @@ describeEval("schema-based API parameter formatting", {
 });
 
 // =============================================================================
-// LLM CALL EVALS - Test individual functions from ChatAgentLlmCalls.ts
+// LLM CALL EVALS - Test individual functions from ChatAgentLlms.ts
 // =============================================================================
 
 describeEval("classifyUserAction - Action Classification", {

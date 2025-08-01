@@ -6,7 +6,7 @@ import {
   classifyUserAction,
   extractParameters,
   generateResponseSummary,
-} from "./ChatAgentLlmCalls";
+} from "./ChatAgentLlms";
 
 // Mock the AI SDK functions
 vi.mock("ai", () => ({
@@ -29,7 +29,7 @@ vi.mock("./PlaygroundLogger", () => ({
   },
 }));
 
-describe("ChatAgentLlmCalls", () => {
+describe("ChatAgentLlms", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

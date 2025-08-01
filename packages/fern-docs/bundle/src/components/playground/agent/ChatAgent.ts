@@ -11,7 +11,7 @@ import {
   extractEndpointSequence,
   extractParameters,
   generateResponseSummary,
-} from "./ChatAgentLlmCalls";
+} from "./ChatAgentLlms";
 import { PlaygroundLogger } from "./PlaygroundLogger";
 
 // These types help us handle responses from the agent in a structured way
