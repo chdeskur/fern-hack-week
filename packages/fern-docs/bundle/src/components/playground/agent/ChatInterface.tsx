@@ -28,6 +28,7 @@ import {
   ChatAgent,
   ChatAgentEvent,
   ChatAgentState,
+  assistantMessage,
   userMessage,
 } from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
@@ -153,21 +154,56 @@ export function ChatBotInterface({
   // Helper function to find endpoint slug from endpointsData
   const getEndpointSlug = useCallback(
     (endpointId: string): string => {
+      // Log what we're searching for
+      console.log("🔍 [getEndpointSlug] Looking for endpoint:", endpointId);
+
+      if (!endpointsData) {
+        console.log("❌ [getEndpointSlug] No endpointsData available");
+        return "";
+      }
+
       // Find the endpoint data group that contains this endpoint
-      const endpointDataGroup = endpointsData?.find(
+      const endpointDataGroup = endpointsData.find(
         (endpoint) => endpoint.id === endpointId
       );
 
-      // Find the node within this endpoint's nodes that matches the endpointId
-      const node = endpointDataGroup?.nodes.find(
-        (node) => node.endpointId === endpointId
-      );
+      if (endpointDataGroup) {
+        console.log(
+          "✅ [getEndpointSlug] Found endpointDataGroup:",
+          endpointDataGroup
+        );
 
-      if (node) {
-        return conformExplorerRoute(node.slug);
+        // Find the node within this endpoint's nodes that matches the endpointId
+        const node = endpointDataGroup.nodes.find(
+          (node) => node.endpointId === endpointId
+        );
+
+        console.log("🔍 [getEndpointSlug] Found node:", node);
+
+        if (node) {
+          const result = conformExplorerRoute(node.slug);
+          console.log(`✅ [getEndpointSlug] Found node, returning: ${result}`);
+          return result;
+        } else {
+          console.log("❌ [getEndpointSlug] No matching node found in group");
+        }
+      } else {
+        // Log available endpoints for debugging
+        const allEndpoints = endpointsData.flatMap((group) =>
+          group.nodes.map((node) => ({
+            groupId: group.id,
+            nodeId: node.endpointId,
+            slug: node.slug,
+            method: (node as any).method,
+          }))
+        );
+        console.log("📋 [getEndpointSlug] Available endpoints:", allEndpoints);
+        console.log(
+          `❌ [getEndpointSlug] No group found for endpoint ID: ${endpointId}`
+        );
       }
 
-      // Fallback to empty string
+      // Return empty string instead of invalid fallback
       return "";
     },
     [endpointsData]
@@ -182,6 +218,7 @@ export function ChatBotInterface({
     };
 
     const handleNavigationRequest = (event: ChatAgentEvent) => {
+      PlaygroundLogger.debug("[handleNavigationRequest]", event.data);
       if (event.type === "navigation_requested") {
         // Handle navigation request
         const { explorerUrl, nextEndpointId, endpointId } = event.data;
@@ -192,9 +229,22 @@ export function ChatBotInterface({
         } else if (nextEndpointId) {
           // Construct URL for next endpoint in sequence
           const explorerUrlForNext = getEndpointSlug(nextEndpointId);
-          router.push(explorerUrlForNext);
-          // Notify ChatAgent that navigation is happening
-          chatAgent.confirmNavigation(explorerUrlForNext, nextEndpointId);
+          if (explorerUrlForNext) {
+            router.push(explorerUrlForNext);
+            // Notify ChatAgent that navigation is happening
+            chatAgent.confirmNavigation(explorerUrlForNext, nextEndpointId);
+          } else {
+            PlaygroundLogger.error(
+              `Failed to find endpoint slug for: ${nextEndpointId}`
+            );
+            const errorMessage = assistantMessage(
+              `Could not navigate to endpoint: ${nextEndpointId}. The endpoint exists in the API but I couldn't find its URL. You may need to navigate manually to continue.`,
+              {
+                consent_required: false,
+              }
+            );
+            chatAgent.addMessage(errorMessage);
+          }
         }
       }
     };

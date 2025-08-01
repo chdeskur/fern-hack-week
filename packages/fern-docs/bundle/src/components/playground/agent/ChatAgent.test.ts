@@ -21,6 +21,7 @@ describe("ChatAgent", () => {
       expect(message).toEqual({
         role: "system",
         content: "You are a helpful assistant",
+        consent_required: false,
       });
     });
 
@@ -29,6 +30,7 @@ describe("ChatAgent", () => {
       expect(message).toEqual({
         role: "assistant",
         content: "Hello! How can I help you?",
+        consent_required: false,
       });
     });
 
@@ -37,6 +39,7 @@ describe("ChatAgent", () => {
       expect(message).toEqual({
         role: "user",
         content: "What is your purpose?",
+        consent_required: false,
       });
     });
   });
