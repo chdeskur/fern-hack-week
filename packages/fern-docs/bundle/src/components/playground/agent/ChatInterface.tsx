@@ -15,6 +15,7 @@ import {
   FernTooltip,
   FernTooltipProvider,
 } from "@fern-docs/components";
+import { cn } from "@fern-docs/components";
 import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
 import { visitLoadable } from "@fern-ui/loadable";
 
@@ -428,7 +429,15 @@ export function ChatBotInterface({
           </div>
         </div>
 
-        <div className="flex-1 space-y-3 overflow-y-auto p-3">
+        <div
+          className={cn(
+            "flex flex-1 flex-col space-y-3 overflow-y-auto p-3",
+            chatState.messages.length === 0 &&
+              !chatState.currentStreamingMessage
+              ? "items-center justify-center"
+              : "items-between justify-end"
+          )}
+        >
           {chatState.messages.length === 0 &&
           !chatState.currentStreamingMessage ? (
             <div className="text-(color:--grayscale-a11) flex h-full items-center justify-center">
