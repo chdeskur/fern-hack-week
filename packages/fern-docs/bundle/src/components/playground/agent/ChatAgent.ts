@@ -535,8 +535,8 @@ ${this.listEndpoints()}
 
 Current endpoint: ${currentEndpointId || "none"}
 
-Look for clues in the user's message about what they want to accomplish. If the user's intent is better served by a different endpoint, recommend it. Otherwise, use the current endpoint. Try to AVOID legacy endpoints if possible.
-
+Look for clues in the user's message about what they want to accomplish. If the user's intent is better served by a different endpoint, recommend it. Otherwise, use the current endpoint.
+IMPORTANT: Try to AVOID legacy endpoints if possible.
 IMPORTANT: Only recommend a different endpoint if the user's query clearly indicates they want to perform an action that's better suited to a different endpoint.`),
             ...this.getMessagesWithSystem(),
           ],
@@ -722,7 +722,8 @@ ${this.listEndpoints()}
         messages: [
           systemMessage(`Create a plan for multiple API calls to fulfill the user's request. 
 Use the available tools to explore endpoints and determine the sequence needed.
-Be specific about which endpoints to call and in what order.  Try to AVOID legacy endpoints if possible.
+Be specific about which endpoints to call and in what order.
+IMPORTANT: Try to AVOID legacy endpoints if possible.
 IMPORTANT: Make sure to use the tools to explore endpoints and include the endpoint IDs in the plan.
 
 Here are the available endpoints:
