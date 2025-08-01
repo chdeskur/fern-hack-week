@@ -77,26 +77,37 @@ export function ChatBotInterface({
   const setParams = useCallback(
     (parameters: Record<string, unknown>) => {
       PlaygroundLogger.debug("[setParams] Called with parameters:", parameters);
-      PlaygroundLogger.debug("[setParams] Parameter entries:", Object.entries(parameters));
+      PlaygroundLogger.debug(
+        "[setParams] Parameter entries:",
+        Object.entries(parameters)
+      );
 
       // Track any conversion errors
       const conversionErrors: string[] = [];
 
       // Process flattened parameters
       Object.entries(parameters).forEach(([key, value]) => {
-        PlaygroundLogger.debug(`[setParams] Processing parameter: ${key} = ${value}`);
+        PlaygroundLogger.debug(
+          `[setParams] Processing parameter: ${key} = ${value}`
+        );
         try {
           if (key.startsWith("path_")) {
             const paramName = key.substring(5); // Remove 'path_' prefix
-            PlaygroundLogger.debug(`[setParams] Setting path parameter: ${paramName} = ${value}`);
+            PlaygroundLogger.debug(
+              `[setParams] Setting path parameter: ${paramName} = ${value}`
+            );
             playground.setPathParameter(paramName, value as string);
           } else if (key.startsWith("query_")) {
             const paramName = key.substring(6); // Remove 'query_' prefix
-            PlaygroundLogger.debug(`[setParams] Setting query parameter: ${paramName} = ${value}`);
+            PlaygroundLogger.debug(
+              `[setParams] Setting query parameter: ${paramName} = ${value}`
+            );
             playground.setQueryParameter(paramName, value as string);
           } else if (key.startsWith("header_")) {
             const paramName = key.substring(7); // Remove 'header_' prefix
-            PlaygroundLogger.debug(`[setParams] Setting header: ${paramName} = ${value}`);
+            PlaygroundLogger.debug(
+              `[setParams] Setting header: ${paramName} = ${value}`
+            );
             playground.setHeader(paramName, value as string);
           } else if (key.startsWith("body_")) {
             const paramName = key.substring(5); // Remove 'body_' prefix
@@ -320,15 +331,23 @@ export function ChatBotInterface({
         response.parameters
       ) {
         // For ask_parameters, just set the parameters without consent
-        PlaygroundLogger.debug("[ChatInterface] Received ask_parameters response, setting parameters", {
-          parameters: response.parameters
-        });
+        PlaygroundLogger.debug(
+          "[ChatInterface] Received ask_parameters response, setting parameters",
+          {
+            parameters: response.parameters,
+          }
+        );
         setParams(response.parameters);
-        PlaygroundLogger.debug("[ChatInterface] setParams called for ask_parameters");
+        PlaygroundLogger.debug(
+          "[ChatInterface] setParams called for ask_parameters"
+        );
       } else if (response.classification === "ask_parameters") {
-        PlaygroundLogger.debug("[ChatInterface] Received ask_parameters response without parameters", {
-          response
-        });
+        PlaygroundLogger.debug(
+          "[ChatInterface] Received ask_parameters response without parameters",
+          {
+            response,
+          }
+        );
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("Failed to process user message", error);
@@ -354,11 +373,19 @@ export function ChatBotInterface({
   const getEndpointSlug = (endpointId: string): string => {
     if (!endpointsData) return `explorer/${endpointId}`;
 
-    for (const endpointDataGroup of endpointsData) {
-      for (const node of endpointDataGroup.nodes) {
-        if (node.id === endpointId) {
-          return conformExplorerRoute(node.slug);
-        }
+    // Find the endpoint data group that contains this endpoint
+    const endpointDataGroup = endpointsData.find(
+      (endpoint) => endpoint.id === endpointId
+    );
+
+    if (endpointDataGroup) {
+      // Find the node within this endpoint's nodes that matches the endpointId
+      const node = endpointDataGroup.nodes.find(
+        (node) => node.endpointId === endpointId
+      );
+
+      if (node) {
+        return conformExplorerRoute(node.slug);
       }
     }
 
