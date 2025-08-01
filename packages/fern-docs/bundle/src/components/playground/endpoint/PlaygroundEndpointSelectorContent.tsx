@@ -19,6 +19,7 @@ import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-path
 
 import { BuiltWithFern } from "@/components/built-with-fern";
 
+import { returnChatModePath } from "../agent/ToggleChatMode";
 import { ApiGroup } from "../utils/flatten-apis";
 import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelectorLeafNode";
 
@@ -57,17 +58,10 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
 
   const isChatMode = searchParams.get("mode") !== "manual";
 
-  const toggleChatMode = (enabled: boolean) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    if (enabled) {
-      newSearchParams.delete("mode"); // Default is now chat mode
-    } else {
-      newSearchParams.set("mode", "manual");
-    }
-    const newUrl =
-      pathname +
-      (newSearchParams.toString() ? `?${newSearchParams.toString()}` : "");
-    router.replace(newUrl);
+  const toggleChatMode = (enable: boolean) => {
+    const currentUrl =
+      pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+    router.replace(returnChatModePath({ slug: currentUrl, enable }));
   };
 
   const selectedItemRef = useRef<HTMLLIElement>(null);

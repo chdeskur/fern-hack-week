@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { Bot, RotateCcw, Send } from "lucide-react";
+import { ArrowUp, Bot, Maximize2, RotateCcw, X } from "lucide-react";
 
 import { conformExplorerRoute } from "@fern-api/docs-utils";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
@@ -12,8 +12,10 @@ import {
   FernButton,
   FernCard,
   FernInput,
+  FernTooltip,
   FernTooltipProvider,
 } from "@fern-docs/components";
+import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
 import { visitLoadable } from "@fern-ui/loadable";
 
 import {
@@ -26,6 +28,7 @@ import { useChatAgent } from "./ChatAgentProvider";
 import { ChatMessageComponent } from "./ChatMessage";
 import { usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundLogger } from "./PlaygroundLogger";
+import { returnChatModePath } from "./ToggleChatMode";
 
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
@@ -50,6 +53,8 @@ export function ChatBotInterface({
   const chatAgent = agent ?? contextAgent;
   const playground = usePlaygroundContext();
   const router = useRouter();
+  const pathname = useCurrentPathname();
+  const searchParams = useSearchParams();
 
   // Simple UI state - ChatAgent now owns the complex state
   const [inputValue, setInputValue] = useState("");
@@ -340,7 +345,7 @@ export function ChatBotInterface({
   return (
     <FernTooltipProvider>
       <div
-        className={`flex h-full w-full flex-col overflow-hidden ${className}`}
+        className={`rounded-tr-4 border-border-default flex h-full w-full flex-col overflow-hidden border-r border-t ${className}`}
       >
         <div className="bg-(color:--grayscale-a2) border-border-default flex shrink-0 items-center justify-between border-b px-3 py-2">
           <div className="flex items-center gap-2">
@@ -349,15 +354,54 @@ export function ChatBotInterface({
               AI Copilot
             </span>
           </div>
-          <FernButton
-            onClick={handleReset}
-            icon={<RotateCcw className="h-4 w-4" />}
-            className="shrink-0"
-            size="small"
-            variant="minimal"
-          >
-            Reset
-          </FernButton>
+          <div className="flex items-center gap-2">
+            <FernTooltip
+              content="Reset the conversation"
+              side="bottom"
+              align="start"
+            >
+              <FernButton
+                onClick={handleReset}
+                icon={<RotateCcw className="h-4 w-4" />}
+                className="shrink-0 rounded-full"
+                size="small"
+                variant="minimal"
+              />
+            </FernTooltip>
+            <FernTooltip content="View full screen" side="bottom" align="start">
+              <FernButton
+                onClick={() => {
+                  console.log("maximize");
+                }}
+                icon={<Maximize2 className="h-4 w-4" />}
+                className="shrink-0 rounded-full"
+                size="small"
+                variant="minimal"
+              />
+            </FernTooltip>
+            <FernTooltip
+              content="Exit AI Copilot mode"
+              side="bottom"
+              align="start"
+            >
+              <FernButton
+                onClick={() => {
+                  const currentUrl =
+                    pathname +
+                    (searchParams.toString()
+                      ? `?${searchParams.toString()}`
+                      : "");
+                  router.replace(
+                    returnChatModePath({ slug: currentUrl, enable: false })
+                  );
+                }}
+                icon={<X className="h-4 w-4" />}
+                className="shrink-0 rounded-full"
+                size="small"
+                variant="minimal"
+              />
+            </FernTooltip>
+          </div>
         </div>
 
         <div className="flex-1 space-y-3 overflow-y-auto p-3">
@@ -425,7 +469,7 @@ export function ChatBotInterface({
         <div className="border-border-default bg-(color:--grayscale-a1) shrink-0 border-t px-3 py-1.5">
           <div className="text-(color:--grayscale-a11) text-xs">
             <span className="font-medium">Active endpoint:</span>{" "}
-            <span className="bg-(color:--accent-a3) text-(color:--accent-a11) rounded px-1.5 py-0.5 font-mono text-xs">
+            <span className="bg-(color:--accent-a3) text-(color:--accent-a11) rounded-1 px-1.5 py-0.5 font-mono text-xs">
               {endpoint.id}
             </span>
           </div>
@@ -447,12 +491,11 @@ export function ChatBotInterface({
                 chatState.status === "processing" ||
                 chatState.status === "streaming"
               }
-              icon={<Send className="h-4 w-4" />}
+              icon={<ArrowUp className="h-4 w-4" />}
               className="shrink-0"
               intent="primary"
-            >
-              Send
-            </FernButton>
+              rounded
+            />
           </div>
         </div>
       </div>
