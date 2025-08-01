@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 
-import { Search, Slash, X } from "lucide-react";
+import { ArrowLeft, Bot, Search, Slash, X } from "lucide-react";
 
 import { getExplorerBasePath, removeTrailingSlash } from "@fern-api/docs-utils";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -13,7 +13,6 @@ import {
   FernButton,
   FernInput,
   FernScrollArea,
-  FernSwitch,
   FernTooltipProvider,
 } from "@fern-docs/components";
 import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
@@ -137,14 +136,35 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
       >
         <div className={cn("relative z-20 px-3 pb-0 pt-3")}>
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-(color:--grayscale-a12) text-sm font-medium">
-              AI Copilot
-            </span>
-            <FernSwitch
-              className="cursor-pointer"
-              checked={isChatMode}
-              onCheckedChange={toggleChatMode}
-            />
+            {isChatMode ? (
+              <FernButton
+                icon={<ArrowLeft className="h-4 w-4" />}
+                className={
+                  "group relative w-full overflow-hidden font-semibold"
+                }
+                rounded
+                size="large"
+                variant="minimal"
+                onClick={() => toggleChatMode(false)}
+              >
+                Back to manual mode
+              </FernButton>
+            ) : (
+              <FernButton
+                icon={<Bot className="h-4 w-4" />}
+                className={cn(
+                  "group relative w-full overflow-hidden font-semibold",
+                  "after:animate-shine after:absolute after:inset-y-0 after:w-8 after:bg-white/50 after:blur after:content-['']"
+                )}
+                intent="primary"
+                rounded
+                size="large"
+                variant="filled"
+                onClick={() => toggleChatMode(true)}
+              >
+                Explore with AI Copilot
+              </FernButton>
+            )}
           </div>
           <FernInput
             leftIcon={<Search className="size-icon" />}
