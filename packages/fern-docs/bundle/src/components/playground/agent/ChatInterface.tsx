@@ -60,7 +60,6 @@ export function ChatBotInterface({
   // Refs for UI management
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const isProcessingResponseRef = useRef(false);
-  const hasHandledMultiCallRef = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -161,8 +160,8 @@ export function ChatBotInterface({
         }
       }
 
-      // Fallback: construct a basic route
-      return `explorer/${endpointId}`;
+      // Fallback
+      return "";
     },
     [endpointsData]
   );
@@ -172,13 +171,6 @@ export function ChatBotInterface({
     const handleStateChange = (event: ChatAgentEvent) => {
       if (event.type === "state_changed") {
         setChatState(event.data.newState);
-      }
-    };
-
-    const handleConsentRequest = (event: ChatAgentEvent) => {
-      if (event.type === "consent_requested") {
-        // Handle consent request - this will be implemented below
-        PlaygroundLogger.debug("Consent requested:", event.data);
       }
     };
 
@@ -215,7 +207,6 @@ export function ChatBotInterface({
 
     // Subscribe to events
     chatAgent.on("state_changed", handleStateChange);
-    chatAgent.on("consent_requested", handleConsentRequest);
     chatAgent.on("navigation_requested", handleNavigationRequest);
     chatAgent.on("request_needed", handleRequestNeeded);
     chatAgent.on("error_occurred", handleError);
@@ -226,7 +217,6 @@ export function ChatBotInterface({
     return () => {
       // Cleanup subscriptions
       chatAgent.off("state_changed", handleStateChange);
-      chatAgent.off("consent_requested", handleConsentRequest);
       chatAgent.off("navigation_requested", handleNavigationRequest);
       chatAgent.off("request_needed", handleRequestNeeded);
       chatAgent.off("error_occurred", handleError);
@@ -395,7 +385,6 @@ export function ChatBotInterface({
     chatAgent.reset();
     setInputValue("");
     isProcessingResponseRef.current = false;
-    hasHandledMultiCallRef.current = false;
   };
 
   return (
