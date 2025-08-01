@@ -510,8 +510,11 @@ export class ChatAgent {
       // Generate a conversation ID for this chat session
       const conversationId = crypto.randomUUID();
 
-      // TODO: get from the environment
-      const BASE_URL = "http://localhost:3000";
+      // Get base URL from environment or default to current origin in browser
+      const BASE_URL =
+        typeof window !== "undefined"
+          ? window.location.origin
+          : process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
       // Prepare the chat request for the chat endpoint
       const chatRequest = {
@@ -1608,17 +1611,35 @@ Return parameter values in the correct format. Use empty strings for parameters 
       this.addMessage(summary);
       return summary;
     } else {
-      // ERROR
+      // ERROR - handle streaming for error responses too
+      if (onChunk) {
+        this.startStreaming();
+      }
+
       const aiResponse = await this.askFern({
         userQuery: `I received the following API error response when I made a call to the API. Explain the following in a concise, helpful way:
   ${JSON.stringify(responseData)}
   
   IMPORTANT: I am aware that you are unable to make API calls, so no need to mention that. Just focus on explaining the error in a helpful way.`,
         includeMessages: true,
-        onChunk,
+        onChunk: onChunk
+          ? (chunk: string) => {
+              this.updateStreamingMessage(chunk);
+              onChunk(chunk);
+            }
+          : undefined,
       });
-      const summary = assistantMessage(aiResponse);
-      this.addMessage(summary);
+
+      let summary: AssistantMessage;
+      if (onChunk) {
+        this.finishStreaming();
+        summary = this._state.messages[
+          this._state.messages.length - 1
+        ] as AssistantMessage;
+      } else {
+        summary = assistantMessage(aiResponse);
+        this.addMessage(summary);
+      }
       return summary;
     }
   }
