@@ -82,7 +82,7 @@ export function ChatMessageComponent({
         </FernTooltip>
       </div>
       {message.consent_required && onConsent && (
-        <div className="mt-3 flex gap-2">
+        <div className="flex items-center justify-center gap-2">
           <FernButton
             onClick={() => onConsent(true)}
             intent="primary"
@@ -90,7 +90,11 @@ export function ChatMessageComponent({
           >
             Yes
           </FernButton>
-          <FernButton onClick={() => onConsent(false)} size="small">
+          <FernButton
+            onClick={() => onConsent(false)}
+            size="small"
+            variant="outlined"
+          >
             No, cancel
           </FernButton>
         </div>

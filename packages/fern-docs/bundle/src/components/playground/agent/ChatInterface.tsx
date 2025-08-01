@@ -431,11 +431,11 @@ export function ChatBotInterface({
 
         <div
           className={cn(
-            "flex flex-1 flex-col space-y-3 overflow-y-auto p-3",
+            "flex-1 flex-col space-y-3 overflow-y-auto p-3",
             chatState.messages.length === 0 &&
               !chatState.currentStreamingMessage
-              ? "items-center justify-center"
-              : "items-between justify-end"
+              ? "flex items-center justify-center"
+              : "block"
           )}
         >
           {chatState.messages.length === 0 &&
@@ -444,7 +444,7 @@ export function ChatBotInterface({
               <div className="text-center">
                 <Bot className="mx-auto mb-2 h-8 w-8 opacity-50" />
                 <p className="text-sm">
-                  Start a conversation with the AI assistant
+                  AI Copilot can help you explore and use the API.
                 </p>
               </div>
             </div>
