@@ -570,6 +570,7 @@ export function ChatBotInterface({
               placeholder="Type your message..."
               onKeyDown={handleKeyPress}
               className="flex-1"
+              autoFocus
             />
             <FernButton
               onClick={() => void handleSendMessage()}
