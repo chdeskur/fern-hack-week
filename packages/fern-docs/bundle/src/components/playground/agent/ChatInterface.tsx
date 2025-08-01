@@ -140,6 +140,33 @@ export function ChatBotInterface({
     [playground]
   );
 
+  // Helper function to find endpoint slug from endpointsData
+  const getEndpointSlug = useCallback(
+    (endpointId: string): string => {
+      if (!endpointsData) return `explorer/${endpointId}`;
+
+      // Find the endpoint data group that contains this endpoint
+      const endpointDataGroup = endpointsData.find(
+        (endpoint) => endpoint.id === endpointId
+      );
+
+      if (endpointDataGroup) {
+        // Find the node within this endpoint's nodes that matches the endpointId
+        const node = endpointDataGroup.nodes.find(
+          (node) => node.endpointId === endpointId
+        );
+
+        if (node) {
+          return conformExplorerRoute(node.slug);
+        }
+      }
+
+      // Fallback: construct a basic route
+      return `explorer/${endpointId}`;
+    },
+    [endpointsData]
+  );
+
   // Subscribe to ChatAgent state changes
   useEffect(() => {
     const handleStateChange = (event: ChatAgentEvent) => {
@@ -158,9 +185,13 @@ export function ChatBotInterface({
     const handleNavigationRequest = (event: ChatAgentEvent) => {
       if (event.type === "navigation_requested") {
         // Handle navigation request
-        const { explorerUrl } = event.data;
+        const { explorerUrl, nextEndpointId } = event.data;
         if (explorerUrl) {
           router.push(explorerUrl);
+        } else if (nextEndpointId) {
+          // Construct URL for next endpoint in sequence
+          const explorerUrlForNext = getEndpointSlug(nextEndpointId);
+          router.push(explorerUrlForNext);
         }
       }
     };
@@ -196,7 +227,7 @@ export function ChatBotInterface({
       chatAgent.off("request_needed", handleRequestNeeded);
       chatAgent.off("error_occurred", handleError);
     };
-  }, [chatAgent, router, sendRequest, setParams]);
+  }, [chatAgent, router, sendRequest, setParams, getEndpointSlug]);
 
   // Auto-scroll when messages change
   useEffect(() => {
@@ -367,30 +398,6 @@ export function ChatBotInterface({
     setInputValue("");
     isProcessingResponseRef.current = false;
     hasHandledMultiCallRef.current = false;
-  };
-
-  // Helper function to find endpoint slug from endpointsData
-  const getEndpointSlug = (endpointId: string): string => {
-    if (!endpointsData) return `explorer/${endpointId}`;
-
-    // Find the endpoint data group that contains this endpoint
-    const endpointDataGroup = endpointsData.find(
-      (endpoint) => endpoint.id === endpointId
-    );
-
-    if (endpointDataGroup) {
-      // Find the node within this endpoint's nodes that matches the endpointId
-      const node = endpointDataGroup.nodes.find(
-        (node) => node.endpointId === endpointId
-      );
-
-      if (node) {
-        return conformExplorerRoute(node.slug);
-      }
-    }
-
-    // Fallback: construct a basic route
-    return `explorer/${endpointId}`;
   };
 
   return (

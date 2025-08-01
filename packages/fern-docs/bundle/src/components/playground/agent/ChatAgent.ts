@@ -376,12 +376,17 @@ export class ChatAgent {
           newSequence.shift();
           this.setState({ sequence: newSequence });
 
-          // If there are more endpoints, emit navigation request
+          // If there are more endpoints, request consent to navigate to next one
           if (newSequence.length > 0) {
-            this.emit("navigation_requested", {
-              nextEndpointId: newSequence[0],
-              sequenceRemaining: newSequence,
-            });
+            const nextEndpointId = newSequence[0];
+            this.requestConsent(
+              `Would you like me to navigate to the next endpoint (${nextEndpointId}) to continue the sequence?`,
+              {
+                type: "navigate",
+                nextEndpointId,
+                sequenceRemaining: newSequence,
+              }
+            );
           }
         }
       }
@@ -774,6 +779,7 @@ ${this.sequence.length > 0 ? `Remaining endpoints in active sequence: ${this.seq
 ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No current endpoint"}`),
       ],
       schema: actionSchema,
+      experimental_repairText: repairJsonObject,
     });
 
     PlaygroundLogger.debug("[processUserMessage] AI action decision", {
@@ -783,7 +789,9 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
     });
 
     // Handle different action types
-    PlaygroundLogger.debug(`[processUserMessage] Handling action: ${actionDecision.action}`);
+    PlaygroundLogger.debug(
+      `[processUserMessage] Handling action: ${actionDecision.action}`
+    );
     switch (actionDecision.action) {
       case "single_call":
         return await this.handleSingleCall(
@@ -843,6 +851,7 @@ IMPORTANT: Only recommend a different endpoint if the user's query clearly indic
             ...this.getMessagesWithSystem(),
           ],
           schema: endpointAnalysisSchema,
+          experimental_repairText: repairJsonObject,
         });
 
         PlaygroundLogger.debug("Endpoint analysis for single_call", {
@@ -933,6 +942,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
           ...this.getMessagesWithSystem(),
         ],
         schema: parameterSchema,
+        experimental_repairText: repairJsonObject,
       });
 
       // Create a complete parameters object preserving existing values for missing parameters
@@ -951,15 +961,17 @@ Return parameter values in the correct format. Use empty strings for parameters 
           `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
         );
         this.addMessage(response);
-        
+
         // Now automatically request consent for the API call
         this.requestConsent(
           "Would you like me to proceed with this API call?",
           { parameters: completeParameters }
         );
-        
+
         // Return the consent message instead of the extraction message
-        const consentMessage = this._state.messages[this._state.messages.length - 1] as ChatMessage;
+        const consentMessage = this._state.messages[
+          this._state.messages.length - 1
+        ] as ChatMessage;
         return {
           classification: "single_call",
           message: consentMessage,
@@ -1069,6 +1081,7 @@ ${this.listEndpoints()}
         assistantMessage(text),
       ],
       schema: sequenceSchema,
+      experimental_repairText: repairJsonObject,
     });
 
     if (onChunk) {
@@ -1110,10 +1123,14 @@ ${this.listEndpoints()}
   private async handleParameterExtraction(
     availableParameters?: AvailableParameters
   ): Promise<ChatAgentResponse> {
-    PlaygroundLogger.debug("[handleParameterExtraction] Started", { availableParameters });
-    
+    PlaygroundLogger.debug("[handleParameterExtraction] Started", {
+      availableParameters,
+    });
+
     if (!availableParameters) {
-      PlaygroundLogger.debug("[handleParameterExtraction] No available parameters provided");
+      PlaygroundLogger.debug(
+        "[handleParameterExtraction] No available parameters provided"
+      );
       const response = assistantMessage(
         "I need to know what parameters are available."
       );
@@ -1130,17 +1147,22 @@ ${this.listEndpoints()}
       availableParameters.queryParameters.length > 0 ||
       availableParameters.headers.length > 0 ||
       availableParameters.bodyProperties.length > 0;
-    
-    PlaygroundLogger.debug("[handleParameterExtraction] Parameter availability check", {
-      hasAvailableParameters,
-      pathCount: availableParameters.pathParameters.length,
-      queryCount: availableParameters.queryParameters.length,
-      headerCount: availableParameters.headers.length,
-      bodyCount: availableParameters.bodyProperties.length
-    });
+
+    PlaygroundLogger.debug(
+      "[handleParameterExtraction] Parameter availability check",
+      {
+        hasAvailableParameters,
+        pathCount: availableParameters.pathParameters.length,
+        queryCount: availableParameters.queryParameters.length,
+        headerCount: availableParameters.headers.length,
+        bodyCount: availableParameters.bodyProperties.length,
+      }
+    );
 
     if (!hasAvailableParameters) {
-      PlaygroundLogger.debug("[handleParameterExtraction] No parameters available, switching to single_call");
+      PlaygroundLogger.debug(
+        "[handleParameterExtraction] No parameters available, switching to single_call"
+      );
       const response = assistantMessage("Making a call to the endpoint.");
       this.addMessage(response);
       // Re-classify response as single_call
@@ -1150,11 +1172,15 @@ ${this.listEndpoints()}
       };
     }
 
-    PlaygroundLogger.debug("[handleParameterExtraction] Creating parameter schema");
+    PlaygroundLogger.debug(
+      "[handleParameterExtraction] Creating parameter schema"
+    );
     const parameterSchema = this.createParameterSchema(availableParameters);
 
     try {
-      PlaygroundLogger.debug("[handleParameterExtraction] Starting AI parameter extraction");
+      PlaygroundLogger.debug(
+        "[handleParameterExtraction] Starting AI parameter extraction"
+      );
       const { object: parameters } = await generateObject({
         model: openai("gpt-4.1-mini"),
         messages: [
@@ -1182,23 +1208,31 @@ Return parameter values in the correct format. Use empty strings for parameters 
         parameters
       );
 
-      PlaygroundLogger.debug("[handleParameterExtraction] AI extracted parameters", { 
-        rawParameters: parameters,
-        completeParameters 
-      });
+      PlaygroundLogger.debug(
+        "[handleParameterExtraction] AI extracted parameters",
+        {
+          rawParameters: parameters,
+          completeParameters,
+        }
+      );
 
       // Check if any non-empty parameters were extracted
       const hasExtractedParameters = Object.values(parameters).some(
         (value) => value && value.trim() !== ""
       );
 
-      PlaygroundLogger.debug("[handleParameterExtraction] Parameter extraction check", {
-        hasExtractedParameters,
-        parameterValues: Object.values(parameters)
-      });
+      PlaygroundLogger.debug(
+        "[handleParameterExtraction] Parameter extraction check",
+        {
+          hasExtractedParameters,
+          parameterValues: Object.values(parameters),
+        }
+      );
 
       if (hasExtractedParameters) {
-        PlaygroundLogger.debug("[handleParameterExtraction] Parameters extracted successfully, returning ask_parameters response");
+        PlaygroundLogger.debug(
+          "[handleParameterExtraction] Parameters extracted successfully, returning ask_parameters response"
+        );
         const response = assistantMessage(
           `I've set the following parameters: ${JSON.stringify(completeParameters)}`
         );
