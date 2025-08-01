@@ -76,22 +76,27 @@ export function ChatBotInterface({
 
   const setParams = useCallback(
     (parameters: Record<string, unknown>) => {
-      PlaygroundLogger.debug("[setParams]:", parameters);
+      PlaygroundLogger.debug("[setParams] Called with parameters:", parameters);
+      PlaygroundLogger.debug("[setParams] Parameter entries:", Object.entries(parameters));
 
       // Track any conversion errors
       const conversionErrors: string[] = [];
 
       // Process flattened parameters
       Object.entries(parameters).forEach(([key, value]) => {
+        PlaygroundLogger.debug(`[setParams] Processing parameter: ${key} = ${value}`);
         try {
           if (key.startsWith("path_")) {
             const paramName = key.substring(5); // Remove 'path_' prefix
+            PlaygroundLogger.debug(`[setParams] Setting path parameter: ${paramName} = ${value}`);
             playground.setPathParameter(paramName, value as string);
           } else if (key.startsWith("query_")) {
             const paramName = key.substring(6); // Remove 'query_' prefix
+            PlaygroundLogger.debug(`[setParams] Setting query parameter: ${paramName} = ${value}`);
             playground.setQueryParameter(paramName, value as string);
           } else if (key.startsWith("header_")) {
             const paramName = key.substring(7); // Remove 'header_' prefix
+            PlaygroundLogger.debug(`[setParams] Setting header: ${paramName} = ${value}`);
             playground.setHeader(paramName, value as string);
           } else if (key.startsWith("body_")) {
             const paramName = key.substring(5); // Remove 'body_' prefix
@@ -151,17 +156,8 @@ export function ChatBotInterface({
 
     const handleRequestNeeded = (event: ChatAgentEvent) => {
       if (event.type === "request_needed") {
-        // Handle API request - set parameters first if they exist
-        const actionData = event.data;
-        if (actionData?.parameters) {
-          setParams(actionData.parameters);
-          // Small delay to ensure parameters are set before request
-          setTimeout(() => {
-            void sendRequest();
-          }, 10);
-        } else {
-          void sendRequest();
-        }
+        // Handle API request - parameters should already be set
+        void sendRequest();
       }
     };
 
@@ -273,7 +269,11 @@ export function ChatBotInterface({
         userMsg,
         availableParameters,
         endpoint.id,
-        apiDefinition
+        apiDefinition,
+        (chunk: string) => {
+          // ChatAgent handles streaming internally, just log for debugging
+          PlaygroundLogger.debug("[Streaming chunk]:", chunk);
+        }
       );
 
       PlaygroundLogger.debug("Response:", response);
@@ -281,8 +281,8 @@ export function ChatBotInterface({
       // Handle response actions based on classification
       if (response.classification === "single_call") {
         if (response.parameters) {
-          // Single call flow: ChatAgent has already requested consent, parameters will be set when request_needed event fires
-          // No additional action needed here
+          // Single call flow: Set parameters first, then consent will be handled by ChatAgent
+          setParams(response.parameters);
         } else if (
           response.endpointSequence &&
           response.endpointSequence.length > 0
@@ -320,7 +320,15 @@ export function ChatBotInterface({
         response.parameters
       ) {
         // For ask_parameters, just set the parameters without consent
+        PlaygroundLogger.debug("[ChatInterface] Received ask_parameters response, setting parameters", {
+          parameters: response.parameters
+        });
         setParams(response.parameters);
+        PlaygroundLogger.debug("[ChatInterface] setParams called for ask_parameters");
+      } else if (response.classification === "ask_parameters") {
+        PlaygroundLogger.debug("[ChatInterface] Received ask_parameters response without parameters", {
+          response
+        });
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("Failed to process user message", error);

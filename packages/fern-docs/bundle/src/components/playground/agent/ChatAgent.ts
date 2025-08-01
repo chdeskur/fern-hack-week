@@ -776,13 +776,14 @@ ${currentEndpointId ? `Currently on endpoint: ${currentEndpointId}` : "No curren
       schema: actionSchema,
     });
 
-    PlaygroundLogger.debug("AI action decision", {
+    PlaygroundLogger.debug("[processUserMessage] AI action decision", {
       action: actionDecision.action,
       confidence: actionDecision.confidence,
       reasoning: actionDecision.reasoning,
     });
 
     // Handle different action types
+    PlaygroundLogger.debug(`[processUserMessage] Handling action: ${actionDecision.action}`);
     switch (actionDecision.action) {
       case "single_call":
         return await this.handleSingleCall(
@@ -969,6 +970,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
           "I need more information about the parameters for this API call."
         );
         this.addMessage(response);
+        this.setState({ status: "idle" });
         // Re-classify response as ask_parameters
         return {
           classification: "ask_parameters",
@@ -985,6 +987,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         "I had trouble understanding the parameters. Could you provide them more clearly?"
       );
       this.addMessage(response);
+      this.setState({ status: "idle" });
 
       // Even on error, return parameters object preserving existing values
       const preservedParams = this.createParametersObjectPreservingExisting(
@@ -1107,7 +1110,10 @@ ${this.listEndpoints()}
   private async handleParameterExtraction(
     availableParameters?: AvailableParameters
   ): Promise<ChatAgentResponse> {
+    PlaygroundLogger.debug("[handleParameterExtraction] Started", { availableParameters });
+    
     if (!availableParameters) {
+      PlaygroundLogger.debug("[handleParameterExtraction] No available parameters provided");
       const response = assistantMessage(
         "I need to know what parameters are available."
       );
@@ -1124,8 +1130,17 @@ ${this.listEndpoints()}
       availableParameters.queryParameters.length > 0 ||
       availableParameters.headers.length > 0 ||
       availableParameters.bodyProperties.length > 0;
+    
+    PlaygroundLogger.debug("[handleParameterExtraction] Parameter availability check", {
+      hasAvailableParameters,
+      pathCount: availableParameters.pathParameters.length,
+      queryCount: availableParameters.queryParameters.length,
+      headerCount: availableParameters.headers.length,
+      bodyCount: availableParameters.bodyProperties.length
+    });
 
     if (!hasAvailableParameters) {
+      PlaygroundLogger.debug("[handleParameterExtraction] No parameters available, switching to single_call");
       const response = assistantMessage("Making a call to the endpoint.");
       this.addMessage(response);
       // Re-classify response as single_call
@@ -1135,9 +1150,11 @@ ${this.listEndpoints()}
       };
     }
 
+    PlaygroundLogger.debug("[handleParameterExtraction] Creating parameter schema");
     const parameterSchema = this.createParameterSchema(availableParameters);
 
     try {
+      PlaygroundLogger.debug("[handleParameterExtraction] Starting AI parameter extraction");
       const { object: parameters } = await generateObject({
         model: openai("gpt-4.1-mini"),
         messages: [
@@ -1165,19 +1182,31 @@ Return parameter values in the correct format. Use empty strings for parameters 
         parameters
       );
 
+      PlaygroundLogger.debug("[handleParameterExtraction] AI extracted parameters", { 
+        rawParameters: parameters,
+        completeParameters 
+      });
+
       // Check if any non-empty parameters were extracted
       const hasExtractedParameters = Object.values(parameters).some(
         (value) => value && value.trim() !== ""
       );
 
+      PlaygroundLogger.debug("[handleParameterExtraction] Parameter extraction check", {
+        hasExtractedParameters,
+        parameterValues: Object.values(parameters)
+      });
+
       if (hasExtractedParameters) {
+        PlaygroundLogger.debug("[handleParameterExtraction] Parameters extracted successfully, returning ask_parameters response");
         const response = assistantMessage(
-          `I've extracted the parameters from your message and will make the API call: ${JSON.stringify(completeParameters)}`
+          `I've set the following parameters: ${JSON.stringify(completeParameters)}`
         );
         this.addMessage(response);
-        // If there is enough information, re-classify response as single_call
+        this.setState({ status: "idle" });
+        // Keep as ask_parameters to trigger parameter setting in ChatInterface
         return {
-          classification: "single_call",
+          classification: "ask_parameters",
           message: response,
           parameters: completeParameters,
         };
@@ -1186,6 +1215,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
           "I couldn't find parameter values in your message. Could you be more specific?"
         );
         this.addMessage(response);
+        this.setState({ status: "idle" });
         return {
           classification: "ask_parameters",
           message: response,
@@ -1199,6 +1229,7 @@ Return parameter values in the correct format. Use empty strings for parameters 
         "I had trouble extracting parameters. Could you provide them more clearly?"
       );
       this.addMessage(response);
+      this.setState({ status: "idle" });
 
       // Even on error, return parameters object preserving existing values
       const preservedParams = this.createParametersObjectPreservingExisting(
