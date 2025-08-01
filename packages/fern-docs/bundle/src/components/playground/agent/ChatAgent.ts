@@ -743,10 +743,13 @@ ${this.listEndpoints()}
       explanation: z.string().describe("Brief explanation of the plan"),
     });
 
+    // TODO: this call is VERY slow, come up with a better strategy here
     const { object: sequence } = await generateObject({
       model: openai("gpt-4.1-nano"),
       messages: [
-        systemMessage("Extract the sequence of endpoint IDs from the plan."),
+        systemMessage(
+          "You are a precise API endpoint sequence extractor. Find all endpoint IDs mentioned in the plan and return them in the exact order they appear. Look for patterns like 'endpoint_abc.def' or endpoint references. Be direct and fast."
+        ),
         assistantMessage(text),
       ],
       schema: sequenceSchema,
