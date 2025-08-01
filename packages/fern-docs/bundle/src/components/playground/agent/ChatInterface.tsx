@@ -185,7 +185,7 @@ export function ChatBotInterface({
                   currentStreamingMessage,
                 ]);
               }
-              
+
               // Clear streaming state
               setStreamingMessage(null);
               setIsStreaming(false);
@@ -453,7 +453,7 @@ export function ChatBotInterface({
               const endpointSlug = endpointNode?.slug;
               if (endpointSlug) {
                 const explorerUrl = conformExplorerRoute(endpointSlug);
-                
+
                 // Create consent message without using navigateWithConsent to avoid double messaging
                 const consentMsg = assistantMessage(
                   `Would you like me to navigate to ${explorerUrl}?`,
@@ -463,9 +463,11 @@ export function ChatBotInterface({
                 chatAgent.messages.push(consentMsg);
 
                 // Wait for user consent
-                const userConsented = await new Promise<boolean>((resolve, reject) => {
-                  setPendingConsent({ resolve, reject });
-                }).catch((_error: unknown) => {
+                const userConsented = await new Promise<boolean>(
+                  (resolve, reject) => {
+                    setPendingConsent({ resolve, reject });
+                  }
+                ).catch((_error: unknown) => {
                   const timeoutMsg = assistantMessage(
                     "Navigation timed out. You can continue manually if needed.",
                     { consent_required: false }
@@ -476,11 +478,17 @@ export function ChatBotInterface({
                 });
 
                 if (userConsented) {
-                  const navigatedMsg = assistantMessage(`Navigating to ${explorerUrl}`, {
-                    consent_required: false,
-                  });
+                  const navigatedMsg = assistantMessage(
+                    `Navigating to ${explorerUrl}`,
+                    {
+                      consent_required: false,
+                    }
+                  );
                   chatAgent.messages.push(navigatedMsg);
-                  setMessages((prevMessages) => [...prevMessages, navigatedMsg]);
+                  setMessages((prevMessages) => [
+                    ...prevMessages,
+                    navigatedMsg,
+                  ]);
                   router.push(explorerUrl);
                 } else {
                   const declinedMsg = assistantMessage(
@@ -502,9 +510,17 @@ export function ChatBotInterface({
 
         await sendRequestWithConsent(updatedMessages);
       } else if (response.classification === "multi_call") {
-        // Multi_call responses don't need immediate navigation - the sequence will start
-        // executing after user requests are made, and navigation happens between API calls
-        // No action needed here - the sequence is already stored in chatAgent.sequence
+        // Check if we can automatically request consent for the first endpoint
+        if (response.endpointSequence && response.endpointSequence.length > 0) {
+          const firstEndpointId = response.endpointSequence[0];
+          
+          // If the first endpoint in the sequence is the current endpoint, request consent to start
+          if (firstEndpointId === endpoint.id) {
+            await sendRequestWithConsent(updatedMessages);
+          }
+          // If it's a different endpoint, the sequence will start after navigation
+          // (handled by the existing post-response navigation logic)
+        }
       } else if (response.classification === "ask_parameters") {
         if (response.parameters) {
           setParams(response.parameters);
