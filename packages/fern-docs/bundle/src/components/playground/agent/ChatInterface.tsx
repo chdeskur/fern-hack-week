@@ -18,13 +18,14 @@ import { visitLoadable } from "@fern-ui/loadable";
 
 import {
   ChatAgent,
-  ChatMessage,
-  assistantMessage,
+  ChatAgentEvent,
+  ChatAgentState,
   userMessage,
 } from "./ChatAgent";
 import { useChatAgent } from "./ChatAgentProvider";
 import { ChatMessageComponent } from "./ChatMessage";
-import { PlaygroundLogger, usePlaygroundContext } from "./PlaygroundContext";
+import { usePlaygroundContext } from "./PlaygroundContext";
+import { PlaygroundLogger } from "./PlaygroundLogger";
 
 interface ChatBotInterfaceProps {
   agent?: ChatAgent;
@@ -49,388 +50,251 @@ export function ChatBotInterface({
   const chatAgent = agent ?? contextAgent;
   const playground = usePlaygroundContext();
   const router = useRouter();
-  const [messages, setMessages] = useState<ChatMessage[]>(chatAgent.messages);
+
+  // Simple UI state - ChatAgent now owns the complex state
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isStreaming, setIsStreaming] = useState(false);
-  const [streamingMessage, setStreamingMessage] = useState<ChatMessage | null>(
-    null
+  const [chatState, setChatState] = useState<ChatAgentState>(
+    chatAgent.getState()
   );
-  const [pendingResponse, setPendingResponse] = useState<{
-    resolve: (value: string) => void;
-    reject: (error: Error) => void;
-  } | null>(null);
-  const [pendingConsent, setPendingConsent] = useState<{
-    resolve: (value: boolean) => void;
-    reject: (error: Error) => void;
-  } | null>(null);
+
+  // Refs for UI management
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const isStreamingRef = useRef(false);
   const isProcessingResponseRef = useRef(false);
-  const streamingMessageRef = useRef<ChatMessage | null>(null);
   const hasHandledMultiCallRef = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, streamingMessage]);
+  // Simplified request handling - ChatAgent manages consent now
+  const sendRequest = useCallback(async () => {
+    PlaygroundLogger.debug("Sending request");
+    chatAgent.setWaitingForResponse();
+    isProcessingResponseRef.current = true;
+    await playground.sendRequest();
+  }, [chatAgent, playground]);
 
-  // Keep streamingMessageRef in sync with streamingMessage state
-  useEffect(() => {
-    streamingMessageRef.current = streamingMessage;
-  }, [streamingMessage]);
-
-  // Sync messages with the agent's messages when the component mounts or agent changes
-  useEffect(() => {
-    setMessages(chatAgent.messages);
-  }, [chatAgent]);
-
-  const sendRequestWithConsent = useCallback(
-    async (_updatedMessages: ChatMessage[]) => {
-      const consentMsg = assistantMessage(
-        "Would you like to allow me to send a request to this endpoint?",
-        { consent_required: true }
+  const setParams = useCallback(
+    (parameters: Record<string, unknown>) => {
+      PlaygroundLogger.debug("[setParams] Called with parameters:", parameters);
+      PlaygroundLogger.debug(
+        "[setParams] Parameter entries:",
+        Object.entries(parameters)
       );
-      setMessages((prevMessages) => [...prevMessages, consentMsg]);
 
-      // Wait for user consent
-      const userConsented = await new Promise<boolean>((resolve, reject) => {
-        setPendingConsent({ resolve, reject });
-      }).catch((_error: unknown) => {
-        // Handle timeout or other consent errors
-        const timeoutMsg = assistantMessage(
-          "Request timed out. Please try again if you'd like to send the request.",
-          { consent_required: false }
+      // Track any conversion errors
+      const conversionErrors: string[] = [];
+
+      // Process flattened parameters
+      Object.entries(parameters).forEach(([key, value]) => {
+        PlaygroundLogger.debug(
+          `[setParams] Processing parameter: ${key} = ${value}`
         );
-        setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
-        return false;
+        try {
+          if (key.startsWith("path_")) {
+            const paramName = key.substring(5); // Remove 'path_' prefix
+            PlaygroundLogger.debug(
+              `[setParams] Setting path parameter: ${paramName} = ${value}`
+            );
+            playground.setPathParameter(paramName, value as string);
+          } else if (key.startsWith("query_")) {
+            const paramName = key.substring(6); // Remove 'query_' prefix
+            PlaygroundLogger.debug(
+              `[setParams] Setting query parameter: ${paramName} = ${value}`
+            );
+            playground.setQueryParameter(paramName, value as string);
+          } else if (key.startsWith("header_")) {
+            const paramName = key.substring(7); // Remove 'header_' prefix
+            PlaygroundLogger.debug(
+              `[setParams] Setting header: ${paramName} = ${value}`
+            );
+            playground.setHeader(paramName, value as string);
+          } else if (key.startsWith("body_")) {
+            const paramName = key.substring(5); // Remove 'body_' prefix
+            // For body parameters, we need to set them properly in the body object
+            const currentBody = playground.availableValues.bodyProperties || [];
+            const newBody = currentBody.find((p) => p.key === paramName)
+              ? currentBody.map((p) =>
+                  p.key === paramName ? { ...p, currentValue: value } : p
+                )
+              : [...currentBody, { key: paramName, currentValue: value }];
+            playground.setBody(newBody);
+          }
+        } catch (error) {
+          // Log conversion errors but don't fail the entire operation
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          conversionErrors.push(`${key}: ${errorMessage}`);
+          PlaygroundLogger.warn(`Type conversion failed for ${key}:`, error);
+        }
       });
 
-      if (userConsented) {
-        await playground.sendRequest();
-
-        // Wait for response
-        await new Promise<string>((resolve, reject) => {
-          setPendingResponse({ resolve, reject });
-        });
-      } else {
-        // User declined consent
-        const declinedMsg = assistantMessage(
-          "Request cancelled. Let me know if you'd like to try again with different parameters.",
-          { consent_required: false }
+      // If there were conversion errors, log them for debugging
+      if (conversionErrors.length > 0) {
+        PlaygroundLogger.warn(
+          "Some parameter conversions failed:",
+          conversionErrors
         );
-        setMessages((prevMessages) => [...prevMessages, declinedMsg]);
       }
     },
-    [playground, setMessages, setPendingConsent, setPendingResponse]
+    [playground]
   );
 
-  // Check if we should auto-request consent after navigating to the first endpoint in a sequence
+  // Helper function to find endpoint slug from endpointsData
+  const getEndpointSlug = useCallback(
+    (endpointId: string): string => {
+      if (!endpointsData) return `explorer/${endpointId}`;
+
+      // Find the endpoint data group that contains this endpoint
+      const endpointDataGroup = endpointsData.find(
+        (endpoint) => endpoint.id === endpointId
+      );
+
+      if (endpointDataGroup) {
+        // Find the node within this endpoint's nodes that matches the endpointId
+        const node = endpointDataGroup.nodes.find(
+          (node) => node.endpointId === endpointId
+        );
+
+        if (node) {
+          return conformExplorerRoute(node.slug);
+        }
+      }
+
+      // Fallback: construct a basic route
+      return `explorer/${endpointId}`;
+    },
+    [endpointsData]
+  );
+
+  // Subscribe to ChatAgent state changes
   useEffect(() => {
-    const checkAutoRequestConsent = async () => {
-      // Only proceed if we have a sequence and we're not already processing something
-      // and we haven't already handled a multi_call directly
-      if (
-        chatAgent.sequence.length > 0 &&
-        !isLoading &&
-        !isStreaming &&
-        !pendingResponse &&
-        !pendingConsent &&
-        !hasHandledMultiCallRef.current
-      ) {
-        const firstEndpointId = chatAgent.sequence[0];
+    const handleStateChange = (event: ChatAgentEvent) => {
+      if (event.type === "state_changed") {
+        setChatState(event.data.newState);
+      }
+    };
 
-        // Check if we're currently on the first endpoint in the sequence
-        if (firstEndpointId === endpoint.id) {
-          PlaygroundLogger.debug(
-            "[auto-consent] Auto-requesting consent for first endpoint in sequence:",
-            firstEndpointId
-          );
+    const handleConsentRequest = (event: ChatAgentEvent) => {
+      if (event.type === "consent_requested") {
+        // Handle consent request - this will be implemented below
+        PlaygroundLogger.debug("Consent requested:", event.data);
+      }
+    };
 
-          // Automatically request consent to make the API call
-          await sendRequestWithConsent([]);
+    const handleNavigationRequest = (event: ChatAgentEvent) => {
+      if (event.type === "navigation_requested") {
+        // Handle navigation request
+        const { explorerUrl, nextEndpointId, endpointId } = event.data;
+        if (explorerUrl) {
+          router.push(explorerUrl);
+          // Notify ChatAgent that navigation is happening
+          chatAgent.confirmNavigation(explorerUrl, endpointId);
+        } else if (nextEndpointId) {
+          // Construct URL for next endpoint in sequence
+          const explorerUrlForNext = getEndpointSlug(nextEndpointId);
+          router.push(explorerUrlForNext);
+          // Notify ChatAgent that navigation is happening
+          chatAgent.confirmNavigation(explorerUrlForNext, nextEndpointId);
         }
       }
     };
 
-    // Add a small delay to ensure the component is fully mounted and states are settled
-    const timeoutId = setTimeout(() => {
-      void checkAutoRequestConsent();
-    }, 500);
-    return () => clearTimeout(timeoutId);
-  }, [
-    chatAgent.sequence,
-    endpoint.id,
-    isLoading,
-    isStreaming,
-    pendingResponse,
-    pendingConsent,
-    sendRequestWithConsent,
-  ]);
-
-  const navigateWithConsent = useCallback(
-    async (explorerUrl: string) => {
-      const consentMsg = assistantMessage(
-        `Would you like me to navigate to the next endpoint: ${explorerUrl}?`,
-        { consent_required: true }
-      );
-      // Add to both local state and chatAgent messages for persistence
-      setMessages((prevMessages) => [...prevMessages, consentMsg]);
-      chatAgent.messages.push(consentMsg);
-
-      // Wait for user consent
-      const userConsented = await new Promise<boolean>((resolve, reject) => {
-        setPendingConsent({ resolve, reject });
-      }).catch((_error: unknown) => {
-        // Handle timeout or other consent errors
-        const timeoutMsg = assistantMessage(
-          "Navigation timed out. You can continue manually if needed.",
-          { consent_required: false }
-        );
-        setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
-        chatAgent.messages.push(timeoutMsg);
-        return false;
-      });
-
-      if (userConsented) {
-        const navigatedMsg = assistantMessage(`Navigating to ${explorerUrl}`, {
-          consent_required: false,
-        });
-        // Add to chatAgent messages before navigation so it persists
-        chatAgent.messages.push(navigatedMsg);
-        setMessages((prevMessages) => [...prevMessages, navigatedMsg]);
-
-        // Navigate after adding the message
-        router.push(explorerUrl);
-      } else {
-        // User declined navigation
-        const declinedMsg = assistantMessage(
-          "Navigation cancelled. You can continue manually or I can help with other tasks.",
-          { consent_required: false }
-        );
-        setMessages((prevMessages) => [...prevMessages, declinedMsg]);
-        chatAgent.messages.push(declinedMsg);
+    const handleRequestNeeded = (event: ChatAgentEvent) => {
+      if (event.type === "request_needed") {
+        // Handle API request - parameters should already be set
+        void sendRequest();
       }
+    };
+
+    const handleError = (event: ChatAgentEvent) => {
+      if (event.type === "error_occurred") {
+        PlaygroundLogger.error("ChatAgent error:", event.data.error);
+      }
+    };
+
+    // Subscribe to events
+    chatAgent.on("state_changed", handleStateChange);
+    chatAgent.on("consent_requested", handleConsentRequest);
+    chatAgent.on("navigation_requested", handleNavigationRequest);
+    chatAgent.on("request_needed", handleRequestNeeded);
+    chatAgent.on("error_occurred", handleError);
+
+    // Initialize state
+    setChatState(chatAgent.getState());
+
+    return () => {
+      // Cleanup subscriptions
+      chatAgent.off("state_changed", handleStateChange);
+      chatAgent.off("consent_requested", handleConsentRequest);
+      chatAgent.off("navigation_requested", handleNavigationRequest);
+      chatAgent.off("request_needed", handleRequestNeeded);
+      chatAgent.off("error_occurred", handleError);
+    };
+  }, [chatAgent, router, sendRequest, setParams, getEndpointSlug]);
+
+  // Auto-scroll when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatState.messages, chatState.currentStreamingMessage]);
+
+  // Watch for API responses and delegate to ChatAgent
+  useEffect(() => {
+    if (!isProcessingResponseRef.current) return;
+
+    visitLoadable(playground.response, {
+      loading: () => {
+        PlaygroundLogger.debug("[playground.response] LOADING");
+      },
+      loaded: (response) => {
+        const parsed =
+          typeof response.response.body === "string"
+            ? response.response.body
+            : JSON.stringify(response.response.body);
+        const statusCode = response.response.status;
+
+        PlaygroundLogger.debug("[playground.response] LOADED:", { statusCode });
+
+        // Let ChatAgent handle the response processing with streaming
+        chatAgent
+          .processApiResponse(parsed, statusCode, (_chunk: string) => {
+            // ChatAgent handles streaming internally now
+          })
+          .then(() => {
+            isProcessingResponseRef.current = false;
+          })
+          .catch((error: unknown) => {
+            PlaygroundLogger.error("[processApiResponse] FAILED:", error);
+            isProcessingResponseRef.current = false;
+          });
+      },
+      failed: (error) => {
+        PlaygroundLogger.error("[playground.response] FAILED:", error);
+        chatAgent.handleResponseError(error);
+        isProcessingResponseRef.current = false;
+      },
+    });
+  }, [playground.response, chatAgent]);
+
+  // Handle consent responses
+  const handleConsent = useCallback(
+    (consented: boolean) => {
+      chatAgent.handleConsentResponse(consented);
     },
-    [router, setMessages, setPendingConsent, chatAgent]
+    [chatAgent]
   );
 
-  // Watch for response changes when we have a pending response
-  useEffect(() => {
-    if (pendingResponse && !isProcessingResponseRef.current) {
-      isProcessingResponseRef.current = true;
-      visitLoadable(playground.response, {
-        loading: () => {
-          PlaygroundLogger.debug("[playground.response] LOADING");
-        },
-        loaded: (response) => {
-          const parsed =
-            typeof response.response.body === "string"
-              ? response.response.body
-              : JSON.stringify(response.response.body);
-          PlaygroundLogger.debug("[playground.response] LOADED:", parsed);
-          // TODO: Handle status codes more robustly
-          const statusCode = response.response.status;
-          PlaygroundLogger.debug("[playground.response] STATUS:", statusCode);
-          pendingResponse.resolve(parsed);
-          // Generate a simple summary message
-          const handleSummaryStreamingChunk = (chunk: string) => {
-            if (!isStreamingRef.current) {
-              isStreamingRef.current = true;
-              setIsStreaming(true);
-              // Create initial streaming message for summary
-              const initialStreamingMessage = assistantMessage(chunk);
-              setStreamingMessage(initialStreamingMessage);
-            } else {
-              // Update existing streaming message
-              setStreamingMessage((prev) => {
-                if (prev) {
-                  return {
-                    ...prev,
-                    content: prev.content + chunk,
-                  };
-                }
-                return assistantMessage(chunk);
-              });
-            }
-          };
-
-          chatAgent
-            .generateSummary(parsed, statusCode, handleSummaryStreamingChunk)
-            .then(async (_msg) => {
-              // If we were streaming, finalize the streaming message first
-              if (streamingMessageRef.current) {
-                const currentStreamingMessage = streamingMessageRef.current;
-                setMessages((prevMessages) => [
-                  ...prevMessages,
-                  currentStreamingMessage,
-                ]);
-              }
-
-              // Clear streaming state
-              setStreamingMessage(null);
-              setIsStreaming(false);
-              isStreamingRef.current = false;
-              setPendingResponse(null);
-              setIsLoading(false);
-              isProcessingResponseRef.current = false;
-
-              // Handle navigation after streaming is complete
-              if (statusCode >= 200 && statusCode < 300) {
-                chatAgent.sequence.shift();
-                PlaygroundLogger.debug(
-                  "[playground.response] SUCCESS, SHIFTED SEQUENCE",
-                  chatAgent.sequence
-                );
-
-                // Reset multi_call handling flag if sequence is complete
-                if (chatAgent.sequence.length === 0) {
-                  hasHandledMultiCallRef.current = false;
-                  PlaygroundLogger.debug(
-                    "[auto-consent] Multi_call sequence completed, reset handling flag"
-                  );
-                }
-
-                // If there are more endpoints in the sequence, navigate to the next one
-                if (chatAgent.sequence.length > 0) {
-                  const nextEndpointId = chatAgent.sequence[0];
-                  if (nextEndpointId) {
-                    PlaygroundLogger.debug(
-                      "[playground.response] ENDPOINTS DATA:",
-                      endpointsData
-                    );
-                    // Find the endpoint in the API definition
-                    const nextEndpointData = endpointsData?.find(
-                      (endpoint) => endpoint.id === nextEndpointId
-                    );
-                    PlaygroundLogger.debug(
-                      "[playground.response] NEXT ENDPOINT:",
-                      nextEndpointData
-                    );
-                    if (nextEndpointData) {
-                      // Construct the explorer URL for the next endpoint
-                      // We need to find the endpoint node's slug from the navigation
-                      // For now, we'll construct a basic URL pattern using the endpoint ID
-                      const endpointSlug = nextEndpointData.nodes.find(
-                        (node) => node.endpointId === nextEndpointId
-                      )?.slug;
-                      if (!endpointSlug) {
-                        throw new Error(
-                          `No nodes found for endpoint ${nextEndpointId}`
-                        );
-                      }
-                      PlaygroundLogger.debug(
-                        "[playground.response] NEXT ENDPOINT SLUG:",
-                        endpointSlug
-                      );
-                      const explorerUrl = conformExplorerRoute(endpointSlug);
-                      PlaygroundLogger.debug(
-                        "[playground.response] NEXT ENDPOINT URL:",
-                        explorerUrl
-                      );
-                      await navigateWithConsent(explorerUrl);
-                    }
-                  }
-                }
-              }
-            })
-            .catch((error: unknown) => {
-              PlaygroundLogger.error("[generateSummary] FAILED:", error);
-              // Clear streaming state on error
-              setStreamingMessage(null);
-              setIsStreaming(false);
-              isStreamingRef.current = false;
-              setPendingResponse(null);
-              setIsLoading(false);
-              isProcessingResponseRef.current = false;
-            });
-        },
-        failed: (error) => {
-          PlaygroundLogger.error("[playground.response] FAILED:", error);
-          pendingResponse.reject(new Error(JSON.stringify(error)));
-          setPendingResponse(null);
-          // Clear loading and streaming states on error
-          setIsLoading(false);
-          setIsStreaming(false);
-          setStreamingMessage(null);
-          isStreamingRef.current = false;
-          isProcessingResponseRef.current = false;
-        },
-      });
-    }
-  }, [
-    playground.response,
-    pendingResponse,
-    chatAgent,
-    messages,
-    router,
-    apiDefinition,
-    endpointsData,
-    isStreaming,
-    streamingMessage,
-    navigateWithConsent,
-  ]);
-
-  const setParams = (parameters: Record<string, unknown>) => {
-    PlaygroundLogger.debug("[setParams]:", parameters);
-
-    // Track any conversion errors
-    const conversionErrors: string[] = [];
-
-    // Process flattened parameters
-    Object.entries(parameters).forEach(([key, value]) => {
-      try {
-        if (key.startsWith("path_")) {
-          const paramName = key.substring(5); // Remove 'path_' prefix
-          playground.setPathParameter(paramName, value as string);
-        } else if (key.startsWith("query_")) {
-          const paramName = key.substring(6); // Remove 'query_' prefix
-          playground.setQueryParameter(paramName, value as string);
-        } else if (key.startsWith("header_")) {
-          const paramName = key.substring(7); // Remove 'header_' prefix
-          playground.setHeader(paramName, value as string);
-        } else if (key.startsWith("body_")) {
-          const paramName = key.substring(5); // Remove 'body_' prefix
-          // For body parameters, we need to set them properly in the body object
-          const currentBody = playground.availableValues.bodyProperties || [];
-          const newBody = currentBody.find((p) => p.key === paramName)
-            ? currentBody.map((p) =>
-                p.key === paramName ? { ...p, currentValue: value } : p
-              )
-            : [...currentBody, { key: paramName, currentValue: value }];
-          playground.setBody(newBody);
-        }
-      } catch (error) {
-        // Log conversion errors but don't fail the entire operation
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        conversionErrors.push(`${key}: ${errorMessage}`);
-        PlaygroundLogger.warn(`Type conversion failed for ${key}:`, error);
-      }
-    });
-
-    // If there were conversion errors, log them for debugging
-    if (conversionErrors.length > 0) {
-      PlaygroundLogger.warn(
-        "Some parameter conversions failed:",
-        conversionErrors
-      );
-    }
-  };
-
+  // Simplified message sending - ChatAgent handles complexity
   const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading || isStreaming) return;
+    if (
+      !inputValue.trim() ||
+      chatState.status === "processing" ||
+      chatState.status === "streaming"
+    )
+      return;
 
     const userMsg = userMessage(inputValue.trim());
     setInputValue("");
-    setIsLoading(true);
-
-    // Add user message to the list
-    const updatedMessages = [...messages, userMsg];
-    setMessages(updatedMessages);
 
     try {
       // Get available parameters
@@ -446,265 +310,77 @@ export function ChatBotInterface({
         bodyProperties: requestBodyInfo.properties,
       };
 
-      // Create streaming callback
-      const handleStreamingChunk = (chunk: string) => {
-        if (!isStreamingRef.current) {
-          isStreamingRef.current = true;
-          setIsStreaming(true);
-          // Create initial streaming message
-          const initialStreamingMessage = assistantMessage(chunk);
-          setStreamingMessage(initialStreamingMessage);
-        } else {
-          // Update existing streaming message
-          setStreamingMessage((prev) => {
-            if (prev) {
-              return {
-                ...prev,
-                content: prev.content + chunk,
-              };
-            }
-            return assistantMessage(chunk);
-          });
-        }
-      };
-
-      // Process the user message with the simplified ChatAgent
+      // Process the user message - ChatAgent handles all the complexity
       const response = await chatAgent.processUserMessage(
         userMsg,
         availableParameters,
         endpoint.id,
         apiDefinition,
-        handleStreamingChunk
+        (chunk: string) => {
+          // ChatAgent handles streaming internally, just log for debugging
+          PlaygroundLogger.debug("[Streaming chunk]:", chunk);
+        }
       );
 
-      // If we were streaming, finalize the streaming message and clear streaming state
-      if (isStreamingRef.current && streamingMessageRef.current) {
-        // Use the response message content which contains the complete final content
-        // This ensures we capture any additional content added after streaming (like generateObject results)
-        const finalMessage = { ...response.message };
-        setMessages([...updatedMessages, finalMessage]);
-        setStreamingMessage(null);
-        setIsStreaming(false);
-        isStreamingRef.current = false;
-      } else {
-        // Only add the response message if we weren't streaming
-        setMessages([...updatedMessages, response.message]);
-      }
+      PlaygroundLogger.debug("Response:", response);
 
-      // Handle different response types
+      // Handle response actions based on classification
       if (response.classification === "single_call") {
-        // Check if we need to navigate to a different endpoint first
-        if (response.endpointSequence && response.endpointSequence.length > 0) {
-          const targetEndpointId = response.endpointSequence[0];
-          // If the target endpoint is different from the current one, ask for consent and navigate
-          if (targetEndpointId !== endpoint.id) {
-            // Find the endpoint data for navigation
-            const targetEndpointData = endpointsData?.find(
-              (endpointData) => endpointData.id === targetEndpointId
+        if (response.parameters) {
+          // Single call flow: Set parameters first, then consent will be handled by ChatAgent
+          setParams(response.parameters);
+        } else if (
+          response.endpointSequence &&
+          response.endpointSequence.length > 0
+        ) {
+          // Navigation needed for single call
+          const targetEndpoint = response.endpointSequence[0];
+          if (targetEndpoint && targetEndpoint !== endpoint.id) {
+            const explorerUrl = getEndpointSlug(targetEndpoint);
+            chatAgent.requestNavigation(explorerUrl, targetEndpoint);
+          } else {
+            // Current endpoint is correct, just request consent
+            chatAgent.requestConsent(
+              "Would you like me to make this API call?"
             );
-            if (targetEndpointData) {
-              const endpointNode = targetEndpointData.nodes.find(
-                (node) => node.endpointId === targetEndpointId
-              );
-              const endpointSlug = endpointNode?.slug;
-              if (endpointSlug) {
-                const explorerUrl = conformExplorerRoute(endpointSlug);
-
-                // Create consent message without using navigateWithConsent to avoid double messaging
-                const consentMsg = assistantMessage(
-                  `Would you like me to navigate to ${explorerUrl}?`,
-                  { consent_required: true }
-                );
-                setMessages((prevMessages) => [...prevMessages, consentMsg]);
-                chatAgent.messages.push(consentMsg);
-
-                // Wait for user consent
-                const userConsented = await new Promise<boolean>(
-                  (resolve, reject) => {
-                    setPendingConsent({ resolve, reject });
-                  }
-                ).catch((_error: unknown) => {
-                  const timeoutMsg = assistantMessage(
-                    "Navigation timed out. You can continue manually if needed.",
-                    { consent_required: false }
-                  );
-                  setMessages((prevMessages) => [...prevMessages, timeoutMsg]);
-                  chatAgent.messages.push(timeoutMsg);
-                  return false;
-                });
-
-                if (userConsented) {
-                  const navigatedMsg = assistantMessage(
-                    `Navigating to ${explorerUrl}`,
-                    {
-                      consent_required: false,
-                    }
-                  );
-                  chatAgent.messages.push(navigatedMsg);
-                  setMessages((prevMessages) => [
-                    ...prevMessages,
-                    navigatedMsg,
-                  ]);
-                  router.push(explorerUrl);
-                } else {
-                  const declinedMsg = assistantMessage(
-                    "Navigation cancelled. You can continue manually or I can help with other tasks.",
-                    { consent_required: false }
-                  );
-                  setMessages((prevMessages) => [...prevMessages, declinedMsg]);
-                  chatAgent.messages.push(declinedMsg);
-                }
-                return; // Exit early since we're handling navigation
-              }
-            }
           }
         }
-
-        if (response.parameters) {
-          setParams(response.parameters);
-        }
-
-        await sendRequestWithConsent(updatedMessages);
       } else if (response.classification === "multi_call") {
-        // Check if we can automatically request consent for the first endpoint
-        if (response.endpointSequence && response.endpointSequence.length > 0) {
-          const firstEndpointId = response.endpointSequence[0];
-
-          // If the first endpoint in the sequence is the current endpoint, request consent to start
-          if (firstEndpointId === endpoint.id) {
-            // Mark that we've handled this multi_call directly
-            hasHandledMultiCallRef.current = true;
-            await sendRequestWithConsent(updatedMessages);
-          } else {
-            // We're not on the first endpoint, auto-ask consent to navigate there
-            const firstEndpointData = endpointsData?.find(
-              (endpointData) => endpointData.id === firstEndpointId
-            );
-
-            if (firstEndpointData) {
-              const endpointNode = firstEndpointData.nodes.find(
-                (node) => node.endpointId === firstEndpointId
-              );
-              const endpointSlug = endpointNode?.slug;
-
-              if (endpointSlug) {
-                const explorerUrl = conformExplorerRoute(endpointSlug);
-
-                // Automatically ask for navigation consent to start the sequence
-                await navigateWithConsent(explorerUrl);
-              }
-            }
+        // Multi call flow is now handled entirely by ChatAgent
+        // The response.message already contains the appropriate consent request
+        PlaygroundLogger.debug(
+          "[ChatInterface] Multi-call response received, ChatAgent has handled consent requests",
+          {
+            endpointSequence: response.endpointSequence,
+            messageContent: response.message.content,
           }
-        }
+        );
+      } else if (
+        response.classification === "ask_parameters" &&
+        response.parameters
+      ) {
+        // For ask_parameters, just set the parameters without consent
+        PlaygroundLogger.debug(
+          "[ChatInterface] Received ask_parameters response, setting parameters",
+          {
+            parameters: response.parameters,
+          }
+        );
+        setParams(response.parameters);
+        PlaygroundLogger.debug(
+          "[ChatInterface] setParams called for ask_parameters"
+        );
       } else if (response.classification === "ask_parameters") {
-        if (response.parameters) {
-          setParams(response.parameters);
-          // if we need more parameters ask
-          // otherwise, generally gather more info
-          const missingValues = playground.checkMissingRequiredValues();
-          if (missingValues.hasMissingValues) {
-            const missingMsg = createMissingParametersMessage(missingValues);
-            // Ensure we don't add duplicate messages if streaming was used
-            if (!(isStreaming && streamingMessageRef.current)) {
-              setMessages([...updatedMessages, response.message, missingMsg]);
-            } else {
-              setMessages((prevMessages) => [...prevMessages, missingMsg]);
-            }
-          } else {
-            await sendRequestWithConsent(updatedMessages);
+        PlaygroundLogger.debug(
+          "[ChatInterface] Received ask_parameters response without parameters",
+          {
+            response,
           }
-        }
-      } else if (response.classification === "general_response") {
-        // no-op: no need to further handle general responses
+        );
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("Failed to process user message", error);
-      const errorMsg: ChatMessage = {
-        role: "assistant",
-        content: "Sorry, I encountered an error. Please try again.",
-        consent_required: false,
-      };
-      setMessages([...updatedMessages, errorMsg]);
-      // Clear streaming state on error
-      setStreamingMessage(null);
-      setIsStreaming(false);
-      isStreamingRef.current = false;
-    } finally {
-      // Always reset loading state
-      setIsLoading(false);
-      // Also ensure streaming state is cleared in case of any edge cases
-      if (isStreamingRef.current) {
-        setIsStreaming(false);
-        isStreamingRef.current = false;
-        setStreamingMessage(null);
-      }
-    }
-  };
-
-  const createMissingParametersMessage = (missingValues: {
-    missingPathParameters: string[];
-    missingQueryParameters: string[];
-    missingHeaders: string[];
-    missingBodyProperties: {
-      key: string;
-      type: string;
-      description?: string;
-      path: string[];
-    }[];
-  }): ChatMessage => {
-    let missingValuesMessage =
-      "I still need the following required values:\n\n";
-
-    if (missingValues.missingPathParameters.length > 0) {
-      missingValuesMessage += "**Path Parameters:**\n";
-      missingValues.missingPathParameters.forEach((param) => {
-        missingValuesMessage += `- ${param}\n`;
-      });
-      missingValuesMessage += "\n";
-    }
-
-    if (missingValues.missingQueryParameters.length > 0) {
-      missingValuesMessage += "**Query Parameters:**\n";
-      missingValues.missingQueryParameters.forEach((param) => {
-        missingValuesMessage += `- ${param}\n`;
-      });
-      missingValuesMessage += "\n";
-    }
-
-    if (missingValues.missingHeaders.length > 0) {
-      missingValuesMessage += "**Headers:**\n";
-      missingValues.missingHeaders.forEach((header) => {
-        missingValuesMessage += `- ${header}\n`;
-      });
-      missingValuesMessage += "\n";
-    }
-
-    if (missingValues.missingBodyProperties.length > 0) {
-      missingValuesMessage += "**Body Properties:**\n";
-      missingValues.missingBodyProperties.forEach((prop) => {
-        missingValuesMessage += `- ${prop.key} (${prop.type})`;
-        if (prop.description) {
-          missingValuesMessage += `: ${prop.description}`;
-        }
-        missingValuesMessage += "\n";
-      });
-      missingValuesMessage += "\n";
-    }
-
-    missingValuesMessage +=
-      "Please provide values for these required fields and I'll make the request for you.";
-
-    return {
-      role: "assistant",
-      content: missingValuesMessage,
-      consent_required: false,
-    };
-  };
-
-  const handleConsent = (consented: boolean) => {
-    if (pendingConsent) {
-      pendingConsent.resolve(consented);
-      setPendingConsent(null);
+      // ChatAgent handles error states internally
     }
   };
 
@@ -717,17 +393,9 @@ export function ChatBotInterface({
 
   const handleReset = () => {
     chatAgent.reset();
-    setMessages([]);
     setInputValue("");
-    setIsLoading(false);
-    setIsStreaming(false);
-    setStreamingMessage(null);
-    streamingMessageRef.current = null;
-    isStreamingRef.current = false;
     isProcessingResponseRef.current = false;
     hasHandledMultiCallRef.current = false;
-    setPendingResponse(null);
-    setPendingConsent(null);
   };
 
   return (
@@ -754,7 +422,8 @@ export function ChatBotInterface({
         </div>
 
         <div className="flex-1 space-y-3 overflow-y-auto p-3">
-          {messages.length === 0 && !streamingMessage ? (
+          {chatState.messages.length === 0 &&
+          !chatState.currentStreamingMessage ? (
             <div className="text-(color:--grayscale-a11) flex h-full items-center justify-center">
               <div className="text-center">
                 <Bot className="mx-auto mb-2 h-8 w-8 opacity-50" />
@@ -765,25 +434,26 @@ export function ChatBotInterface({
             </div>
           ) : (
             <>
-              {messages.map((message, index) => (
+              {chatState.messages.map((message, index) => (
                 <ChatMessageComponent
                   key={index}
                   message={message}
                   onConsent={handleConsent}
                 />
               ))}
-              {streamingMessage && (
+              {chatState.currentStreamingMessage && (
                 <ChatMessageComponent
                   key="streaming"
-                  message={streamingMessage}
+                  message={chatState.currentStreamingMessage}
                   isStreaming={true}
                   onConsent={handleConsent}
                 />
               )}
             </>
           )}
-          {(isLoading || pendingResponse || isStreaming) &&
-            pendingConsent == null && (
+          {(chatState.status === "processing" ||
+            chatState.status === "streaming") &&
+            !chatState.pendingAction && (
               <div className="flex justify-start gap-3">
                 <div className="flex max-w-[80%] gap-3">
                   <div className="bg-(color:--grayscale-a3) flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
@@ -833,7 +503,11 @@ export function ChatBotInterface({
             />
             <FernButton
               onClick={() => void handleSendMessage()}
-              disabled={!inputValue.trim() || isLoading || isStreaming}
+              disabled={
+                !inputValue.trim() ||
+                chatState.status === "processing" ||
+                chatState.status === "streaming"
+              }
               icon={<Send className="h-4 w-4" />}
               className="shrink-0"
               intent="primary"
