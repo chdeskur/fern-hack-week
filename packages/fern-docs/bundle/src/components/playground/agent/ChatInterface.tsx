@@ -457,14 +457,15 @@ export function ChatBotInterface({
                   onConsent={handleConsent}
                 />
               ))}
-              {chatState.currentStreamingMessage && (
-                <ChatMessageComponent
-                  key="streaming"
-                  message={chatState.currentStreamingMessage}
-                  isStreaming={true}
-                  onConsent={handleConsent}
-                />
-              )}
+              {chatState.currentStreamingMessage &&
+                chatState.currentStreamingMessage.content.length > 0 && (
+                  <ChatMessageComponent
+                    key="streaming"
+                    message={chatState.currentStreamingMessage}
+                    isStreaming={true}
+                    onConsent={handleConsent}
+                  />
+                )}
             </>
           )}
           {(chatState.status === "processing" ||

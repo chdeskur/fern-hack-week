@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Bot, User } from "lucide-react";
 
 import { FernButton, FernTooltip } from "@fern-docs/components";
@@ -20,6 +22,8 @@ export function ChatMessageComponent({
   const { copyToClipboard, wasJustCopied } = useCopyToClipboard(
     message.content
   );
+
+  const [gaveConsent, setGaveConsent] = useState(false);
 
   return (
     <div
@@ -81,17 +85,23 @@ export function ChatMessageComponent({
           </FernCard>
         </FernTooltip>
       </div>
-      {message.consent_required && onConsent && (
+      {message.consent_required && onConsent && !gaveConsent && (
         <div className="flex items-center justify-center gap-2">
           <FernButton
-            onClick={() => onConsent(true)}
+            onClick={() => {
+              onConsent(true);
+              setGaveConsent(true);
+            }}
             intent="primary"
             size="small"
           >
             Yes
           </FernButton>
           <FernButton
-            onClick={() => onConsent(false)}
+            onClick={() => {
+              onConsent(false);
+              setGaveConsent(true);
+            }}
             size="small"
             variant="outlined"
           >
