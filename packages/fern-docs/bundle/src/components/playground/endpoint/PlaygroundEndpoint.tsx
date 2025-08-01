@@ -255,16 +255,19 @@ export const PlaygroundEndpoint = ({
 
   const settings = usePlaygroundSettings();
 
-  const setChatPanelWidthFromClientX = useCallback((clientX: number) => {
-    if (containerRef.current != null) {
-      const { left, width } = containerRef.current.getBoundingClientRect();
-      const newWidth = left + width - clientX;
-      // Clamp width between 300px and 60% of container width
-      const minWidth = 300;
-      const maxWidth = width * 0.6;
-      setChatPanelWidth(Math.max(minWidth, Math.min(maxWidth, newWidth)));
-    }
-  }, []);
+  const setChatPanelWidthFromClientX = useCallback(
+    (clientX: number) => {
+      if (containerRef.current != null) {
+        const { left, width } = containerRef.current.getBoundingClientRect();
+        const newWidth = left + width - clientX;
+        // Clamp width between 300px and 60% of container width
+        const minWidth = 300;
+        const maxWidth = width * 0.6;
+        setChatPanelWidth(Math.max(minWidth, Math.min(maxWidth, newWidth)));
+      }
+    },
+    [setChatPanelWidth]
+  );
 
   const resizeX = useResizeX(setChatPanelWidthFromClientX);
 

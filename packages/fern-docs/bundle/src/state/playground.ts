@@ -381,7 +381,7 @@ export const usePlaygroundEnvironment = (): string | undefined => {
   return useAtomValue(PLAYGROUND_ENVIRONMENT_ATOM);
 };
 
-// Chat panel width state that persists between endpoints
+// chat panel width state that persists between endpoints
 export const PLAYGROUND_CHAT_PANEL_WIDTH_ATOM = atomWithStorage<number>(
   "playground-chat-panel-width",
   400
