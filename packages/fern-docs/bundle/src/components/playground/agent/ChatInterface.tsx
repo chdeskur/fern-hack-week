@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { ArrowUp, Bot, Maximize2, RotateCcw, X } from "lucide-react";
+import { ArrowUp, Bot, Maximize2, Minimize2, RotateCcw, X } from "lucide-react";
 
 import { conformExplorerRoute } from "@fern-api/docs-utils";
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
@@ -17,6 +17,11 @@ import {
 } from "@fern-docs/components";
 import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-pathname";
 import { visitLoadable } from "@fern-ui/loadable";
+
+import {
+  usePlaygroundChatPanelWidth,
+  useSetPlaygroundChatPanelWidth,
+} from "@/state/playground";
 
 import {
   ChatAgent,
@@ -55,6 +60,8 @@ export function ChatBotInterface({
   const router = useRouter();
   const pathname = useCurrentPathname();
   const searchParams = useSearchParams();
+  const chatPanelWidth = usePlaygroundChatPanelWidth();
+  const setChatPanelWidth = useSetPlaygroundChatPanelWidth();
 
   // Simple UI state - ChatAgent now owns the complex state
   const [inputValue, setInputValue] = useState("");
@@ -363,16 +370,38 @@ export function ChatBotInterface({
                 variant="minimal"
               />
             </FernTooltip>
-            <FernTooltip content="View full screen" side="bottom" align="start">
-              <FernButton
-                onClick={() => {
-                  console.log("maximize");
-                }}
-                icon={<Maximize2 className="h-4 w-4" />}
-                className="shrink-0 rounded-full"
-                size="small"
-                variant="minimal"
-              />
+            <FernTooltip
+              content={
+                typeof chatPanelWidth === "string" &&
+                chatPanelWidth.includes("%")
+                  ? "View in panel"
+                  : "View full screen"
+              }
+              side="bottom"
+              align="start"
+            >
+              {typeof chatPanelWidth === "string" &&
+              chatPanelWidth.includes("%") ? (
+                <FernButton
+                  onClick={() => {
+                    setChatPanelWidth(400);
+                  }}
+                  icon={<Minimize2 className="h-4 w-4" />}
+                  className="shrink-0 rounded-full"
+                  size="small"
+                  variant="minimal"
+                />
+              ) : (
+                <FernButton
+                  onClick={() => {
+                    setChatPanelWidth("100%");
+                  }}
+                  icon={<Maximize2 className="h-4 w-4" />}
+                  className="shrink-0 rounded-full"
+                  size="small"
+                  variant="minimal"
+                />
+              )}
             </FernTooltip>
             <FernTooltip
               content="Exit AI Copilot mode"

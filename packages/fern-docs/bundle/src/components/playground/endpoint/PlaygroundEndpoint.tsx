@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { mapValues } from "es-toolkit/object";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -78,8 +78,19 @@ export const PlaygroundEndpoint = ({
   const activeTab = (searchParams.get("mode") as "manual" | "chat") ?? "chat";
 
   const chatPanelWidth = usePlaygroundChatPanelWidth();
+  const [formattedChatPanelWidth, setFormattedChatPanelWidth] =
+    useState(chatPanelWidth);
   const setChatPanelWidth = useSetPlaygroundChatPanelWidth();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log("chatPanelWidth", chatPanelWidth);
+    if (typeof chatPanelWidth === "string" && chatPanelWidth.includes("%")) {
+      setFormattedChatPanelWidth(chatPanelWidth);
+    } else {
+      setFormattedChatPanelWidth(chatPanelWidth + "px");
+    }
+  }, [chatPanelWidth]);
 
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);
 
@@ -257,6 +268,8 @@ export const PlaygroundEndpoint = ({
 
   const setChatPanelWidthFromClientX = useCallback(
     (clientX: number) => {
+      console.log("clientX", clientX);
+
       if (containerRef.current != null) {
         const { left, width } = containerRef.current.getBoundingClientRect();
         const newWidth = left + width - clientX;
@@ -276,7 +289,7 @@ export const PlaygroundEndpoint = ({
       <>
         <div
           className="bg-background border-border-default absolute bottom-0 right-0 top-0 overflow-hidden border-l"
-          style={{ width: `${chatPanelWidth}px` }}
+          style={{ width: formattedChatPanelWidth }}
         >
           <ChatBotInterface
             apiDefinition={apiDefinition}
@@ -286,7 +299,7 @@ export const PlaygroundEndpoint = ({
         </div>
         <div
           className="shink-0 group absolute bottom-0 top-0 z-10 flex w-3 flex-none cursor-col-resize touch-none items-center justify-center opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-1 after:w-6 after:content-[''] hover:opacity-100 hover:delay-300"
-          style={{ right: `${chatPanelWidth - 6}px` }}
+          style={{ right: `calc(${formattedChatPanelWidth} - 6px)` }}
           onPointerDown={resizeX.onPointerDown}
         >
           <div className="bg-(color:--accent-a5) group-active:bg-(color:--accent) relative z-10 h-full w-0.5 rounded-full group-active:transition-[background]" />
@@ -300,7 +313,7 @@ export const PlaygroundEndpoint = ({
         ref={containerRef}
         className="relative flex size-full min-h-0 flex-1 shrink flex-col"
         style={{
-          paddingRight: activeTab === "chat" ? `${chatPanelWidth}px` : 0,
+          paddingRight: activeTab === "chat" ? formattedChatPanelWidth : 0,
         }}
       >
         <div className="flex-0">
