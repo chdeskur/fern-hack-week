@@ -314,59 +314,10 @@ export function ChatBotInterface({
 
       PlaygroundLogger.debug("Response:", response);
 
-      // Handle response actions based on classification
-      if (response.classification === "single_call") {
-        if (response.parameters) {
-          // Single call flow: Set parameters first, then consent will be handled by ChatAgent
-          setParams(response.parameters);
-        } else if (
-          response.endpointSequence &&
-          response.endpointSequence.length > 0
-        ) {
-          // Navigation needed for single call
-          const targetEndpoint = response.endpointSequence[0];
-          if (targetEndpoint && targetEndpoint !== endpoint.id) {
-            const explorerUrl = getEndpointSlug(targetEndpoint);
-            chatAgent.requestNavigation(explorerUrl, targetEndpoint);
-          } else {
-            // Current endpoint is correct, just request consent
-            chatAgent.requestConsent(
-              "Would you like me to make this API call?"
-            );
-          }
-        }
-      } else if (response.classification === "multi_call") {
-        // Multi call flow is now handled entirely by ChatAgent
-        // The response.message already contains the appropriate consent request
-        PlaygroundLogger.debug(
-          "[ChatInterface] Multi-call response received, ChatAgent has handled consent requests",
-          {
-            endpointSequence: response.endpointSequence,
-            messageContent: response.message.content,
-          }
-        );
-      } else if (
-        response.classification === "ask_parameters" &&
-        response.parameters
-      ) {
-        // For ask_parameters, just set the parameters without consent
-        PlaygroundLogger.debug(
-          "[ChatInterface] Received ask_parameters response, setting parameters",
-          {
-            parameters: response.parameters,
-          }
-        );
+      // ChatAgent handles classifications (single_call, multi_call, ask_parameters, general_response) internally
+      if (response.parameters) {
+        // If we have parameters, just set them
         setParams(response.parameters);
-        PlaygroundLogger.debug(
-          "[ChatInterface] setParams called for ask_parameters"
-        );
-      } else if (response.classification === "ask_parameters") {
-        PlaygroundLogger.debug(
-          "[ChatInterface] Received ask_parameters response without parameters",
-          {
-            response,
-          }
-        );
       }
     } catch (error: unknown) {
       PlaygroundLogger.error("Failed to process user message", error);
