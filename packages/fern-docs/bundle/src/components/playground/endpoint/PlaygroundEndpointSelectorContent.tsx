@@ -138,7 +138,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         <div className={cn("relative z-20 px-3 pb-0 pt-3")}>
           <div className="mb-3 flex items-center justify-between">
             <span className="text-(color:--grayscale-a12) text-sm font-medium">
-              AI Assistant
+              AI Copilot
             </span>
             <FernSwitch
               className="cursor-pointer"
