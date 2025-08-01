@@ -77,7 +77,7 @@ export function ChatMessageComponent({
                       try {
                         return mdxToHtml(message.content).html;
                       } catch {
-                        return message.content;
+                        return `<p>${message.content}</p>`;
                       }
                     })(),
               }}

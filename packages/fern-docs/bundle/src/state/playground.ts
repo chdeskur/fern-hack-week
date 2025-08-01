@@ -393,3 +393,17 @@ export const usePlaygroundChatPanelWidth = () => {
 export const useSetPlaygroundChatPanelWidth = () => {
   return useSetAtom(PLAYGROUND_CHAT_PANEL_WIDTH_ATOM);
 };
+
+// chat input state that persists between endpoints
+export const PLAYGROUND_CHAT_INPUT_ATOM = atomWithStorage<string>(
+  "playground-chat-input",
+  "I want to call this endpoint."
+);
+
+export const usePlaygroundChatInputAtom = () => {
+  return useAtomValue(PLAYGROUND_CHAT_INPUT_ATOM);
+};
+
+export const useSetPlaygroundChatInputAtom = () => {
+  return useSetAtom(PLAYGROUND_CHAT_INPUT_ATOM);
+};

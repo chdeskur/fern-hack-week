@@ -20,7 +20,9 @@ import { useCurrentPathname } from "@fern-docs/components/hooks/use-current-path
 import { visitLoadable } from "@fern-ui/loadable";
 
 import {
+  usePlaygroundChatInputAtom,
   usePlaygroundChatPanelWidth,
+  useSetPlaygroundChatInputAtom,
   useSetPlaygroundChatPanelWidth,
 } from "@/state/playground";
 
@@ -66,7 +68,8 @@ export function ChatBotInterface({
   const setChatPanelWidth = useSetPlaygroundChatPanelWidth();
 
   // Simple UI state - ChatAgent now owns the complex state
-  const [inputValue, setInputValue] = useState("");
+  const inputValue = usePlaygroundChatInputAtom();
+  const setInputValue = useSetPlaygroundChatInputAtom();
   const [chatState, setChatState] = useState<ChatAgentState>(
     chatAgent.getState()
   );
