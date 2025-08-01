@@ -651,9 +651,7 @@ export class ChatAgent {
         description: endpoint.description,
       })
     );
-    PlaygroundLogger.debug("Listing available API endpoints", {
-      count: endpoints.length,
-    });
+    PlaygroundLogger.debug("Listing available API endpoints", endpoints);
     return JSON.stringify(endpoints);
   };
 

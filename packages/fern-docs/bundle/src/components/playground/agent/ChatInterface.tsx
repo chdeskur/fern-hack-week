@@ -142,7 +142,7 @@ export function ChatBotInterface({
   // Helper function to find endpoint slug from endpointsData
   const getEndpointSlug = useCallback(
     (endpointId: string): string => {
-      if (!endpointsData) return `explorer/${endpointId}`;
+      if (!endpointsData) return "";
 
       // Find the endpoint data group that contains this endpoint
       const endpointDataGroup = endpointsData.find(
@@ -306,9 +306,8 @@ export function ChatBotInterface({
         availableParameters,
         endpoint.id,
         apiDefinition,
-        (chunk: string) => {
-          // ChatAgent handles streaming internally, just log for debugging
-          PlaygroundLogger.debug("[Streaming chunk]:", chunk);
+        () => {
+          // no-op: ChatAgent handles streaming internally
         }
       );
 
